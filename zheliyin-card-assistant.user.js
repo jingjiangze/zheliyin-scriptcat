@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.2.3.8
+// @version      0.2.3.9
 // @description  在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时再按原样式补充。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -31,7 +31,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.2.3.8";
+  const VERSION = "0.2.3.9";
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   const DEFAULT_BASE_URL = "https://ark.cn-beijing.volces.com/api/v3";
@@ -1313,10 +1313,9 @@
         if (!match) return;
         const latest = match[1];
         if (compareVersion(latest, VERSION) > 0) {
-          setStatus("发现脚本新版 " + latest + "，当前 " + VERSION + "。\n将打开新版安装地址。");
-          if (confirm("发现脚本新版 " + latest + "，当前版本 " + VERSION + "。是否立即打开更新地址？")) {
-            window.open(DOWNLOAD_URL + "?t=" + Date.now(), "_blank");
-          }
+          setStatus("发现脚本新版 " + latest + "，当前 " + VERSION + "。\n正在打开新版安装地址。");
+          alert("发现脚本新版 " + latest + "，当前版本 " + VERSION + "，将为你打开更新安装地址。");
+          window.open(DOWNLOAD_URL + "?t=" + Date.now(), "_blank");
         }
       }
     });
