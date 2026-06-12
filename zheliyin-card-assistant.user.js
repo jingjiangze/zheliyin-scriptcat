@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.2.3.9
+// @version      0.2.3.10
 // @description  在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时再按原样式补充。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -31,7 +31,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.2.3.9";
+  const VERSION = "0.2.3.10";
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   const DEFAULT_BASE_URL = "https://ark.cn-beijing.volces.com/api/v3";
@@ -554,12 +554,36 @@
         if (shouldBelongToBack(line)) fallbackBack.push(line);
         else fallbackFront.push(line);
       });
-      if (fallbackBack.length) {
-        return { front: fallbackFront.join("\n"), back: fallbackBack.join("\n") };
-      }
+      if (fallbackBack.length) return rebalanceSideBuckets(fallbackFront, fallbackBack);
     }
 
-    return { front: front.join("\n"), back: back.join("\n") };
+    return rebalanceSideBuckets(front, back);
+  }
+
+  function rebalanceSideBuckets(frontLines, backLines) {
+    const front = [];
+    const back = [];
+    const allFront = Array.isArray(frontLines) ? frontLines.slice() : [];
+    const allBack = Array.isArray(backLines) ? backLines.slice() : [];
+
+    allFront.forEach((line) => {
+      const text = clean(line);
+      if (!text) return;
+      if (shouldBelongToBack(text) && !isFrontPriorityLine(text)) back.push(text);
+      else front.push(text);
+    });
+
+    allBack.forEach((line) => {
+      const text = clean(line);
+      if (!text) return;
+      if (isFrontPriorityLine(text)) front.push(text);
+      else back.push(text);
+    });
+
+    return {
+      front: unique(front).join("\n"),
+      back: unique(back).join("\n")
+    };
   }
 
   function shouldSwitchToBack(line, front, back) {
@@ -571,8 +595,31 @@
   function shouldBelongToBack(line) {
     const text = clean(line);
     if (!text) return false;
+    if (isFrontPriorityLine(text)) return false;
     if (isAddressLine(text)) return false;
     if (isBusinessLine(text) || isBackExtraLine(text) || isLongBackText(text)) return true;
+    return false;
+  }
+
+  function isFrontPriorityLine(value) {
+    const text = clean(value);
+    if (!text) return false;
+    if (isCompanyLine(text)) return true;
+    if (isAddressLine(text)) return true;
+    if (/(?:\+?86[-\s]?)?(1[3-9]\d{9})/.test(text)) return true;
+    if (/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(text)) return true;
+    if (/(微信|wechat|wx|微信号|网址|网站|web|www\.|https?:\/\/)/i.test(text)) return true;
+    if (/(销售经理|客户经理|业务经理|总经理|经理|主管|总监|工程师|负责人|业务员|销售|Sales Manager|Manager|Director|Engineer)/i.test(text)) return true;
+    if (/^[\u4e00-\u9fa5]{2,4}$/.test(text)) return true;
+    return false;
+  }
+
+  function isCompanyLine(value) {
+    const text = clean(value);
+    if (!text) return false;
+    if (isAddressLine(text) || isBusinessLine(text)) return false;
+    if (/公司|集团|科技|贸易|实业|有限公司|有限责任公司|厂/.test(text) && /[\u4e00-\u9fa5]/.test(text)) return true;
+    if (/\b(CO\.?|COMPANY|LTD\.?|LIMITED|TRADING|TECH|TECHNOLOGY|GROUP|INDUSTRY|INDUSTRIAL|HOLDINGS?)\b/i.test(text) && /[A-Z]/i.test(text)) return true;
     return false;
   }
 
@@ -689,8 +736,10 @@
       "只返回严格 JSON，不要 Markdown。",
       "JSON 格式固定为：{\"front\":\"...\",\"back\":\"...\"}",
       "front 放姓名、职位、公司、电话、微信、邮箱、网址、地址等适合正面的内容。",
+      "中文公司名和英文公司名都必须放在 front，绝对不要放到 back，即使它们出现在全文靠后位置。",
       "back 放主营范围、公司简介、优势、承诺、二维码提示、宣传语等适合反面的内容。",
       "如果无法确定，联系方式和地址优先放 front；主营范围和成段说明优先放 back。",
+      "不要因为某一行紧跟在主营范围后面，就把公司名误放到 back。",
       "不要虚构内容，不要改写原文，只做粗分配。",
       "",
       "本地规则粗分结果：",
@@ -747,6 +796,7 @@
       "JSON 字段固定为：company_cn, company_en, name, title, phones, wechats, emails, websites, addresses, business, back_extra。",
       "phones, wechats, emails, websites, addresses, business, back_extra 都必须是字符串数组。没有的信息填空字符串或空数组。",
       "frontText 是正面内容来源，backText 是反面内容来源。",
+      "company_cn 和 company_en 优先从 frontText 提取，不要从 backText 误提。",
       "不要把 backText 里的主营范围塞到 addresses，也不要把 frontText 里的地址塞到 business。",
       "addresses 只允许放真实地址，例如包含省、市、区、街道、路、号、楼、室、工业园、园区等地点信息。",
       "business 只允许放主营范围、经营范围、业务范围、产品、服务、生产销售内容。",
