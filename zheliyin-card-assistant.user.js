@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.2.3.10
+// @version      0.2.3.11
 // @description  在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时再按原样式补充。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -31,7 +31,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.2.3.10";
+  const VERSION = "0.2.3.11";
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   const DEFAULT_BASE_URL = "https://ark.cn-beijing.volces.com/api/v3";
@@ -516,9 +516,44 @@
 
   function splitFrontBackText(raw) {
     const lines = String(raw || "").replace(/\r/g, "\n").split(/\n+/).map(clean).filter(Boolean);
+    const explicit = splitByExplicitMarkers(lines);
+    const pool = explicit.remaining;
+    const front = explicit.front.slice();
+    const back = explicit.back.slice();
+    const used = {};
+
+    pool.forEach((line) => {
+      if (isStrongFrontLine(line)) {
+        front.push(line);
+        used[line] = true;
+      }
+    });
+
+    pool.forEach((line) => {
+      if (used[line]) return;
+      if (isStrongBackLine(line)) {
+        back.push(line);
+        used[line] = true;
+      }
+    });
+
+    pool.forEach((line) => {
+      if (used[line]) return;
+      if (isLikelyBackLine(line, front, back)) back.push(line);
+      else front.push(line);
+    });
+
+    return {
+      front: unique(front).join("\n"),
+      back: unique(back).join("\n")
+    };
+  }
+
+  function splitByExplicitMarkers(lines) {
     const front = [];
     const back = [];
-    let side = "front";
+    const remaining = [];
+    let side = "";
 
     lines.forEach((line) => {
       if (/^(正面|正面内容)[:：]?$/i.test(line)) {
@@ -542,66 +577,15 @@
         return;
       }
 
-      if (side === "front" && shouldSwitchToBack(line, front, back)) side = "back";
-      if (side === "back") back.push(line);
-      else front.push(line);
+      if (side === "front") front.push(line);
+      else if (side === "back") back.push(line);
+      else remaining.push(line);
     });
 
-    if (!back.length) {
-      const fallbackBack = [];
-      const fallbackFront = [];
-      lines.forEach((line) => {
-        if (shouldBelongToBack(line)) fallbackBack.push(line);
-        else fallbackFront.push(line);
-      });
-      if (fallbackBack.length) return rebalanceSideBuckets(fallbackFront, fallbackBack);
-    }
-
-    return rebalanceSideBuckets(front, back);
+    return { front: front, back: back, remaining: remaining };
   }
 
-  function rebalanceSideBuckets(frontLines, backLines) {
-    const front = [];
-    const back = [];
-    const allFront = Array.isArray(frontLines) ? frontLines.slice() : [];
-    const allBack = Array.isArray(backLines) ? backLines.slice() : [];
-
-    allFront.forEach((line) => {
-      const text = clean(line);
-      if (!text) return;
-      if (shouldBelongToBack(text) && !isFrontPriorityLine(text)) back.push(text);
-      else front.push(text);
-    });
-
-    allBack.forEach((line) => {
-      const text = clean(line);
-      if (!text) return;
-      if (isFrontPriorityLine(text)) front.push(text);
-      else back.push(text);
-    });
-
-    return {
-      front: unique(front).join("\n"),
-      back: unique(back).join("\n")
-    };
-  }
-
-  function shouldSwitchToBack(line, front, back) {
-    if (back.length) return false;
-    if (front.length < 2) return false;
-    return shouldBelongToBack(line);
-  }
-
-  function shouldBelongToBack(line) {
-    const text = clean(line);
-    if (!text) return false;
-    if (isFrontPriorityLine(text)) return false;
-    if (isAddressLine(text)) return false;
-    if (isBusinessLine(text) || isBackExtraLine(text) || isLongBackText(text)) return true;
-    return false;
-  }
-
-  function isFrontPriorityLine(value) {
+  function isStrongFrontLine(value) {
     const text = clean(value);
     if (!text) return false;
     if (isCompanyLine(text)) return true;
@@ -612,6 +596,29 @@
     if (/(销售经理|客户经理|业务经理|总经理|经理|主管|总监|工程师|负责人|业务员|销售|Sales Manager|Manager|Director|Engineer)/i.test(text)) return true;
     if (/^[\u4e00-\u9fa5]{2,4}$/.test(text)) return true;
     return false;
+  }
+
+  function isStrongBackLine(value) {
+    const text = clean(value);
+    if (!text) return false;
+    if (isStrongFrontLine(text)) return false;
+    if (isBusinessLine(text)) return true;
+    if (isBackExtraLine(text)) return true;
+    return false;
+  }
+
+  function isLikelyBackLine(value, front, back) {
+    const text = clean(value);
+    if (!text) return false;
+    if (isStrongFrontLine(text)) return false;
+    if (isStrongBackLine(text)) return true;
+    if (isLongBackText(text)) return true;
+    if (!back.length && front.length < 2) return false;
+    return false;
+  }
+
+  function isFrontPriorityLine(value) {
+    return isStrongFrontLine(value);
   }
 
   function isCompanyLine(value) {
