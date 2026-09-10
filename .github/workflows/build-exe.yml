@@ -11,6 +11,11 @@ on:
       - ".github/workflows/build-exe.yml"
   workflow_dispatch:
 
+# 仓库默认 Actions token 是只读，这里显式授予 contents 写权限，
+# 否则 softprops 发布 Release 会被 403 拒绝。
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
