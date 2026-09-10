@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.2.3.11
+// @version      0.3.0.0
 // @description  在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时再按原样式补充。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -31,13 +31,17 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.2.3.11";
+  const VERSION = "0.3.0.0";
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   const DEFAULT_BASE_URL = "https://ark.cn-beijing.volces.com/api/v3";
   const DEFAULT_MODEL = "doubao-seed-2-0-mini-260428";
   const UPDATE_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js";
   const DOWNLOAD_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js";
+
+  // 带边界断言的电话正则：前面不能紧跟数字，避免从 QQ 号/订单号等长数字串里误截 11 位。
+  const PHONE_BOUND_RE = /(?<!\d)(?:\+?86[-\s]?)?(1[3-9]\d{9})(?!\d)/;
+  const PHONE_BOUND_RE_G = /(?<!\d)(?:\+?86[-\s]?)?(1[3-9]\d{9})(?!\d)/g;
 
   const FIELD_LABELS = {
     company_cn: "中文公司",
@@ -308,6 +312,7 @@
           <button class="zy-btn secondary" id="zy-apply-back">填反面</button>
         </div>
         <div class="zy-divider"></div>
+        <div class="zy-update" id="zy-update"></div>
         <div class="zy-status" id="zy-status">${escapeHtml(state.logs.join("\n"))}</div>
       </div>
     `;
@@ -442,7 +447,7 @@
     const rawText = panel.querySelector("#zy-raw").value.trim();
     const config = {
       apiKey: panel.querySelector("#zy-api-key").value.trim(),
-      baseUrl: DEFAULT_BASE_URL,
+      baseUrl: GM_getValue("zyBaseUrl", DEFAULT_BASE_URL),
       model: panel.querySelector("#zy-model").value.trim() || DEFAULT_MODEL
     };
     saveConfig(config);
@@ -588,13 +593,17 @@
   function isStrongFrontLine(value) {
     const text = clean(value);
     if (!text) return false;
+    // 主营范围/公司简介/产品中心这类行语义上属于反面，绝不强判为正面。
+    if (isBusinessLine(text) || isBackExtraLine(text)) return false;
     if (isCompanyLine(text)) return true;
     if (isAddressLine(text)) return true;
-    if (/(?:\+?86[-\s]?)?(1[3-9]\d{9})/.test(text)) return true;
+    if (PHONE_BOUND_RE.test(text)) return true;
     if (/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(text)) return true;
     if (/(微信|wechat|wx|微信号|网址|网站|web|www\.|https?:\/\/)/i.test(text)) return true;
     if (/(销售经理|客户经理|业务经理|总经理|经理|主管|总监|工程师|负责人|业务员|销售|Sales Manager|Manager|Director|Engineer)/i.test(text)) return true;
-    if (/^[\u4e00-\u9fa5]{2,4}$/.test(text)) return true;
+    if (/^[\u4e00-\u9fa5]{2,4}$/.test(text)) {
+      return !isNameExcluded(text);
+    }
     return false;
   }
 
@@ -639,7 +648,7 @@
     const lines = frontLines.concat(backLines);
     const result = emptyFields();
 
-    result.phones = unique(Array.from(text.matchAll(/(?:\+?86[-\s]?)?(1[3-9]\d{9})/g)).map((match) => match[1]));
+    result.phones = unique(Array.from(text.matchAll(PHONE_BOUND_RE_G)).map((match) => match[1]));
     result.emails = unique(Array.from(text.matchAll(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi)).map((match) => match[0]));
 
     const websiteMatches = Array.from(text.matchAll(/(?:https?:\/\/)?(?:www\.)?[a-z0-9][a-z0-9-]*(?:\.[a-z0-9][a-z0-9-]*)+\S*/gi));
@@ -648,15 +657,21 @@
       return result.emails.some((email) => email.includes(value)) ? "" : value;
     }).filter(Boolean));
 
-    result.wechats = unique(frontLines.filter((line) => /微信|wechat|wx/i.test(line)).map((line) => {
+    result.wechats = unique([].concat(frontLines, backLines).filter((line) => /微信|wechat|wx/i.test(line)).map((line) => {
       return clean(line.replace(/^(微信|wechat|wx|微信号)[:：]?\s*/i, ""));
     }).filter(Boolean));
 
     const businessLines = [];
     const backExtraLines = [];
     const titleWords = /(销售经理|客户经理|业务经理|总经理|经理|主管|总监|工程师|负责人|业务员|销售|Sales Manager|Manager|Director|Engineer)/i;
+    // B5：中文公司名从候选中择优：优先“有限公司/集团”结尾、行文完整且不带部门杂质的行。
+    const companyCandidates = frontLines.filter((line) => isCompanyLine(line) && /[\u4e00-\u9fa5]/.test(line));
+    if (companyCandidates.length) {
+      const rankCompany = (line) => (/有限公司/.test(line) ? 4 : 0) + (/集团$/.test(line) ? 3 : 0) + (/公司$/.test(line) ? 2 : 0) + (line.length <= 24 ? 2 : 0) + (/(部|中心|办事处)$/.test(line) ? -2 : 0);
+      companyCandidates.sort((a, b) => rankCompany(b) - rankCompany(a));
+      result.company_cn = stripTrailingDept(companyCandidates[0]);
+    }
     frontLines.forEach((line) => {
-      if (!result.company_cn && /公司|集团|科技|贸易|实业|有限公司|厂/.test(line) && /[\u4e00-\u9fa5]/.test(line)) result.company_cn = line;
       if (!result.company_en && /\b(CO\.?|COMPANY|LTD\.?|LIMITED|TRADING|TECH|TECHNOLOGY|GROUP)\b/i.test(line) && /[A-Z]/i.test(line)) result.company_en = line;
       if (!result.title && titleWords.test(line)) result.title = line.match(titleWords)[0];
       if (isAddressLine(line)) result.addresses.push(stripLabel(line));
@@ -670,9 +685,10 @@
     const ignored = [].concat(result.phones, result.emails, result.websites, result.wechats, result.addresses, [result.company_cn, result.company_en]);
     for (const line of frontLines) {
       if (ignored.some((item) => item && line.includes(item))) continue;
-      if (!result.name && /^[\u4e00-\u9fa5]{2,4}$/.test(line) && !titleWords.test(line)) result.name = line;
+      const isPureChineseName = /^[\u4e00-\u9fa5]{2,4}$/.test(line) && !titleWords.test(line) && !isBusinessLine(line) && !isBackExtraLine(line) && !isNameExcluded(line);
+      if (!result.name && isPureChineseName) result.name = line;
       const nameTitle = line.match(/^([\u4e00-\u9fa5]{2,4})\s+(.+)$/);
-      if (!result.name && nameTitle && titleWords.test(nameTitle[2])) {
+      if (!result.name && nameTitle && titleWords.test(nameTitle[2]) && !isNameExcluded(nameTitle[1])) {
         result.name = nameTitle[1];
         result.title = result.title || nameTitle[2];
       }
@@ -697,12 +713,26 @@
     return clean(String(value || "").replace(/^(地址|电话|手机|微信|邮箱|网址|网站|Tel|Phone|Mobile|Email|Web)[:：]?\s*/i, ""));
   }
 
+  // B5：剥掉公司名行尾的部门/分支机构说明，如“XX有限公司营销部” → “XX有限公司”。
+  function stripTrailingDept(value) {
+    const text = String(value || "").trim();
+    const match = text.match(/^(.*(?:公司|集团|实业|贸易|厂|科技|电子|五金|塑胶|模具|包装|印刷|服装|鞋帽|建材|进出口|玩具|家具|设备|机械|制品))\s*[，,、:]?\s*(?:[\u4e00-\u9fa5]{1,8}?(?:部|中心|办事处|分公司|子公司|分部)(?:[（(][^）)]*[)）])?)?$/);
+    return match ? clean(match[1]) : clean(text);
+  }
+
   function stripBusinessLabel(value) {
     return clean(String(value || "").replace(/^(主营业务|主营范围|经营范围|业务范围|主营|经营|产品|服务)[:：]?\s*/i, ""));
   }
 
   function stripBackExtraLabel(value) {
     return clean(String(value || "").replace(/^(反面内容|反面|补充说明|说明|备注|简介|口号|标语|优势|承诺)[:：]?\s*/i, ""));
+  }
+
+  // 常见会被误当成姓名的短中文行（正面区块的区块名/文案等）。
+  const NAME_EXCLUDED_RE = /(中心|范围|热线|联系|产品|主营|简介|合作|服务|保障|诚信|品质|优惠|电话|地址|微信|邮箱|订购|批发|零售|招聘|售后|网络|企业|商务|管理|代表|欢迎|期待)/;
+
+  function isNameExcluded(value) {
+    return NAME_EXCLUDED_RE.test(clean(value));
   }
 
   function isAddressLine(value) {
@@ -731,7 +761,7 @@
     const text = clean(value);
     if (!text || text.length < 18) return false;
     if (isAddressLine(text)) return false;
-    if (/(?:\+?86[-\s]?)?(1[3-9]\d{9})/.test(text)) return false;
+    if (PHONE_BOUND_RE.test(text)) return false;
     if (/@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(text)) return false;
     return /[，。；、,.]/.test(text) || /我们|本公司|专业|提供|承接|多年|欢迎|诚信|品质|服务/.test(text);
   }
@@ -1133,7 +1163,10 @@
     function buildItems(fields, side) {
       const items = [];
       if (side === "back") {
-        if (fields.business && fields.business.length) addItem(items, "business", "主营范围", "主营范围：" + fields.business.join("；"));
+        // C3：多个主营项拆成多个图层面板，第一个带“主营范围：”前缀，其余直接放内容。
+        const biz = (fields.business || []).filter(Boolean);
+        if (biz.length === 1) addItem(items, "business", "主营范围", "主营范围：" + biz[0]);
+        else biz.forEach(function (value, i) { addItem(items, "business", "主营范围", i === 0 ? "主营范围：" + value : value); });
         (fields.back_extra || []).forEach(function (value) { addItem(items, "back_extra", "反面补充", value); });
         return items;
       }
@@ -1141,12 +1174,24 @@
       addItem(items, "company_en", "英文公司", fields.company_en);
       addItem(items, "name", "姓名", fields.name);
       addItem(items, "title", "职位", fields.title);
-      (fields.phones || []).forEach(function (value) { addItem(items, "phone", "电话", line("电话", value)); });
-      (fields.wechats || []).forEach(function (value) { addItem(items, "wechat", "微信", line("微信", value)); });
-      (fields.emails || []).forEach(function (value) { addItem(items, "email", "邮箱", line("邮箱", value)); });
-      (fields.websites || []).forEach(function (value) { addItem(items, "website", "网址", line("网址", value)); });
-      (fields.addresses || []).forEach(function (value) { addItem(items, "address", "地址", line("地址", value)); });
+      addMultiItems(items, "phone", "电话", fields.phones);
+      addMultiItems(items, "wechat", "微信", fields.wechats);
+      addMultiItems(items, "email", "邮箱", fields.emails);
+      addMultiItems(items, "website", "网址", fields.websites);
+      addMultiItems(items, "address", "地址", fields.addresses);
       return items;
+    }
+
+    // C2：每个多值字段最多生成 3 个图层项，超出部分并入最后一项，避免图层数量过多导致溢出/重叠。
+    function addMultiItems(items, key, label, values) {
+      const list = (values || []).filter(Boolean);
+      const cap = 3;
+      list.slice(0, cap).forEach(function (value) { addItem(items, key, label, line(label, value)); });
+      const rest = list.slice(cap);
+      if (rest.length && items.length) {
+        const last = items[items.length - 1];
+        last.text = last.text + "；" + rest.join("；");
+      }
     }
 
     function addItem(items, key, label, text) {
@@ -1172,13 +1217,9 @@
         }
       });
       if (bestScore >= 35) return best;
-      return firstPlainUnused(objects, used);
-    }
-
-    function firstPlainUnused(objects, used) {
-      for (let i = 0; i < objects.length; i += 1) {
-        if (used.indexOf(objects[i]) < 0) return objects[i];
-      }
+      // C1：分数不足时只接受“轻度不匹配”（还有位置/排版依据）的对象；
+      // 明显错位（分数过低）宁可返回 null 由上层新建图层，也不乱填已有图层。
+      if (best && bestScore >= -20) return best;
       return null;
     }
 
@@ -1247,26 +1288,75 @@
 
     function createTextObject(canvas, text, reference, index, layout) {
       const fabric = window.fabric || (canvas.constructor && canvas.constructor.fabric);
-      if (!fabric) return null;
       const style = getReferenceStyle(reference);
-      const Klass = fabric.Textbox || fabric.IText || fabric.Text;
-      if (!Klass) return null;
-      const obj = new Klass(text, {
-        left: reference ? style.left : layout.left,
-        top: reference ? style.top + Math.max(style.height, style.fontSize * 1.55) : layout.top + index * layout.step,
-        width: reference ? style.width : layout.contentWidth,
-        fontSize: style.fontSize,
-        fill: style.fill,
-        fontFamily: style.fontFamily,
-        fontWeight: style.fontWeight,
-        fontStyle: style.fontStyle,
-        lineHeight: style.lineHeight,
-        textAlign: style.textAlign,
-        charSpacing: style.charSpacing,
-        editable: true
-      });
+      let obj = null;
+      // A1：优先“克隆”参考文字图层——复用设计器自己的文字类并继承其自定义属性
+      // （字体标识、可编辑标记、数据模型等），这样新图层可双击编辑、字体与周边一致、不会与画布割裂。
+      if (reference && reference.constructor) {
+        try {
+          const Klass = reference.constructor;
+          if (typeof Klass === "function") {
+            obj = new Klass("", {
+              left: style.left,
+              top: style.top,
+              width: style.width,
+              fontSize: style.fontSize,
+              fill: style.fill,
+              fontFamily: style.fontFamily,
+              fontWeight: style.fontWeight,
+              fontStyle: style.fontStyle,
+              lineHeight: style.lineHeight,
+              textAlign: style.textAlign,
+              charSpacing: style.charSpacing,
+              editable: true
+            });
+            inheritReferenceProps(obj, reference);
+          }
+        } catch (_error) {
+          obj = null;
+        }
+      }
+      if (!obj) {
+        if (!fabric) return null;
+        const Klass = fabric.Textbox || fabric.IText || fabric.Text;
+        if (!Klass) return null;
+        obj = new Klass(text, {
+          left: reference ? style.left : layout.left,
+          top: reference ? style.top + Math.max(style.height, style.fontSize * 1.55) : layout.top + index * layout.step,
+          width: reference ? style.width : layout.contentWidth,
+          fontSize: style.fontSize,
+          fill: style.fill,
+          fontFamily: style.fontFamily,
+          fontWeight: style.fontWeight,
+          fontStyle: style.fontStyle,
+          lineHeight: style.lineHeight,
+          textAlign: style.textAlign,
+          charSpacing: style.charSpacing,
+          editable: true
+        });
+      }
       obj.zyCreatedByAssistant = true;
+      obj.zyFieldKey = null;
       canvas.add(obj);
+      return obj;
+    }
+
+    // A1：把参考对象（含其原型链）上的自有属性拷到新对象上，只跳过内部/画布引用类字段。
+    function inheritReferenceProps(obj, reference) {
+      const skipBox = new Set(["canvas", "_canvas", "group", "_group", "ctx", "_ctx", "scene", "_scene", "_cacheCanvas", "_cacheContext", "_cacheCanvasDimensions", "clipPath", "text", "_text", "textLines", "_textLines", "lineWidths", "_lineWidths", "dirty", "zyCreatedByAssistant", "zyFieldKey"]);
+      const collected = {};
+      let current = reference;
+      while (current && current !== Object.prototype) {
+        Object.getOwnPropertyNames(current).forEach(function (name) {
+          if (skipBox.has(name) || name in collected) return;
+          try { collected[name] = reference[name]; } catch (_error) {}
+        });
+        current = Object.getPrototypeOf(current);
+      }
+      Object.keys(collected).forEach(function (name) {
+        if (skipBox.has(name)) return;
+        try { obj[name] = collected[name]; } catch (_error) {}
+      });
       return obj;
     }
 
@@ -1290,9 +1380,14 @@
     function placeCreatedObject(obj, reference, index, layout) {
       const style = getReferenceStyle(reference);
       const step = Math.max(style.height, style.fontSize * 1.55, layout && layout.step || 0);
+      let top = layout ? layout.top + index * step : style.top + index * step;
+      if (reference) top = Math.min(style.top + step, top);
+      // A2/C2：新图层 top 统一钳制在画布内，避免溢出/重叠；去掉原先覆盖计算值的旧逻辑。
+      const maxTop = layout && layout.height ? Math.max(4, layout.height - step) : top;
+      top = Math.max(4, Math.min(top, maxTop));
       const options = {
         left: reference ? style.left : layout.left,
-        top: reference ? Math.min(style.top + step, (layout && layout.height ? layout.height - step : style.top + step)) : layout.top + index * step,
+        top: top,
         width: reference ? style.width : layout.contentWidth,
         fontSize: style.fontSize,
         lineHeight: style.lineHeight,
@@ -1303,7 +1398,6 @@
         textAlign: style.textAlign,
         charSpacing: style.charSpacing
       };
-      if (!reference) options.top = 32 + index * step;
       if (typeof obj.set === "function") obj.set(options);
       else Object.assign(obj, options);
       if (typeof obj.setCoords === "function") obj.setCoords();
@@ -1359,6 +1453,14 @@
     setTimeout(checkForUpdate, 1500);
   }
 
+  // D2：更新提示用面板内链接展示，兼容脚本猫/扩展里 alert+window.open 被拦截的情况。
+  function showUpdateLink(url, latest) {
+    const node = document.getElementById("zy-update");
+    if (!node) return;
+    node.style.display = "block";
+    node.innerHTML = "发现新版 <b>" + escapeHtml(latest) + "</b>（当前 " + escapeHtml(VERSION) + "）。<br><a href=\"" + escapeHtml(url) + "\" target=\"_blank\" rel=\"noreferrer\">点此打开新版安装地址</a>";
+  }
+
   function checkForUpdate() {
     GM_xmlhttpRequest({
       method: "GET",
@@ -1370,9 +1472,8 @@
         if (!match) return;
         const latest = match[1];
         if (compareVersion(latest, VERSION) > 0) {
-          setStatus("发现脚本新版 " + latest + "，当前 " + VERSION + "。\n正在打开新版安装地址。");
-          alert("发现脚本新版 " + latest + "，当前版本 " + VERSION + "，将为你打开更新安装地址。");
-          window.open(DOWNLOAD_URL + "?t=" + Date.now(), "_blank");
+          setStatus("发现脚本新版 " + latest + "（当前 " + VERSION + "），请点下方链接安装。");
+          showUpdateLink(DOWNLOAD_URL + "?t=" + Date.now(), latest);
         }
       }
     });
