@@ -3,6 +3,7 @@ name: build-installer-exe
 on:
   push:
     branches: [main]
+    tags: ["v*"]
     paths:
       - "installer/**"
       - "extension/**"
