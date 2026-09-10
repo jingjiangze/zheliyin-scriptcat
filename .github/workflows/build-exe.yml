@@ -45,7 +45,7 @@ jobs:
       - name: Compile installer to single-file exe (ps2exe)
         shell: pwsh
         run: |
-          Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Scope CurrentUser -Force
+          # pwsh 7 已内置 NuGet provider，不需要 Install-PackageProvider
           Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
           Install-Module -Name ps2exe -Scope CurrentUser -Force -ErrorAction Stop
           Import-Module ps2exe -Force
