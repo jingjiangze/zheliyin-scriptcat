@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "折立印名片套版助手",
+  "version": "0.3.0",
+  "version_name": "0.3.0.0",
+  "description": "在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时按原样式补充。支持一键填正反面、AI 辅助识别。",
+  "minimum_chrome_version": "102",
+  "host_permissions": [
+    "https://diy.zheliyin.com/*",
+    "http://diy.zheliyin.com/*",
+    "https://ark.cn-beijing.volces.com/*",
+    "https://raw.githubusercontent.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://diy.zheliyin.com/diyWeb/third/*",
+        "https://diy.zheliyin.com/diyWeb/third/*/*/thirdLoginDiyEdit.do*",
+        "https://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*",
+        "https://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*",
+        "https://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*",
+        "http://diy.zheliyin.com/diyWeb/third/*",
+        "http://diy.zheliyin.com/diyWeb/third/*/*/thirdLoginDiyEdit.do*",
+        "http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*",
+        "http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*",
+        "http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*"
+      ],
+      "js": ["gm-shim.js", "assistant.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ]
+}
