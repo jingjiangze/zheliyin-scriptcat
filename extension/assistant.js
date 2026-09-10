@@ -341,6 +341,7 @@
       rebuildFieldsFromSideText();
       applyFieldsToPage(state.fields, "back");
     });
+    panel.querySelector("#zy-probe").addEventListener("click", probeCanvas);
   }
 
   function readSideTextFromPanel() {
@@ -951,6 +952,12 @@
     window.postMessage({ source: BRIDGE_SOURCE, type: "apply", fields: normalizeFields(fields), side: side || "front" }, location.origin);
   }
 
+  // 画布自检：让页面内的桥接脚本报告当前页面的画布状态，用于定位“本地填不进去”的根因。
+  function probeCanvas() {
+    window.postMessage({ source: BRIDGE_SOURCE, type: "probe" }, location.origin);
+    setStatus("已发送画布自检请求。若一直不返回结果，说明桥接脚本被页面环境拦截，把这一行提示发给我即可。");
+  }
+
   window.addEventListener("message", (event) => {
     if (event.source !== window || !event.data || event.data.source !== PAGE_SOURCE) return;
     if (event.data.type === "applyResult") {
@@ -959,6 +966,16 @@
       } else {
         setStatus(event.data.message || "没有拿到画布对象。请先打开模板，等待加载完成后再试。");
       }
+      return;
+    }
+    if (event.data.type === "probeResult") {
+      const probe = event.data || {};
+      const rows = (probe.canvases || []).map((item) => {
+        return "  " + item.side + (item.found
+          ? " 找到：" + item.ctor + " 宽" + item.width + " 高" + item.height + " 文字图层" + item.textObjects + "个"
+          : " 未找到画布对象");
+      });
+      setStatus("画布自检" + (probe.ok ? " ✓" : "") + "\n页面URL：" + (probe.href || "") + "\n" + rows.join("\n"));
     }
   });
 
@@ -1382,6 +1399,26 @@
       obj.dirty = true;
       if (typeof obj.initDimensions === "function") obj.initDimensions();
       if (typeof obj.setCoords === "function") obj.setCoords();
+    }
+
+    // 自检：报告当前页面/画布状态，帮助定位“本地填不进去”的根因。
+    function buildProbeResult() {
+      const canvases = ["front", "back"].map(function (side) {
+        try {
+          const canvas = findCanvasForSide(side);
+          return {
+            side: side,
+            found: !!canvas,
+            ctor: canvas && canvas.constructor ? canvas.constructor.name : null,
+            width: canvas && (canvas.width || (canvas.getWidth && canvas.getWidth())) || 0,
+            height: canvas && (canvas.height || (canvas.getHeight && canvas.getHeight())) || 0,
+            textObjects: canvas ? getTextObjects(canvas).length : 0
+          };
+        } catch (error) {
+          return { side: side, found: false, ctor: null, error: String(error && error.message || error) };
+        }
+      });
+      return { ok: true, href: location.href, canvases: canvases };
     }
   }
 
