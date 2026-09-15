@@ -8,7 +8,7 @@
 | 层级 | 模块 | 结果 | 证据 |
 |---|---|---|---|
 | STATIC+INTEGRATION | runtime wiring（生产入口） | **PASS 5/5** | `wiring-check.html`：pageBridge 全局可解析/注入桥接真实 probe 往返/probeResult 结构/apply 无画布显式失败/toString 唯一实现（file:// origin 归一化仅测试环境） |
-| STATIC+INTEGRATION | **bridge lifecycle（Stage 3.2）** | **PASS 5/5（stability 3/3）** | `bridge-lifecycle.html?zydebug=1`：t1 基线恰 1；t2 installPageBridge ×5 仍恰 1；t3 minimize ×4（真实 UI 路径）仍恰 1；t4 install×3+minimize×2 后 apply 恰 1（只执行一次）；t5 机制 pageBridge()×2 → +2（测试对重复注册敏感）。**Mutation A（临时移除 guard）→ FAIL 4/5**，还原后 ALL-PASS → 防重回归测试有效 |
+| STATIC+INTEGRATION | **bridge lifecycle（Stage 3.2/4.0）** | **PASS 6/6（stability 3/3）** | `bridge-lifecycle.html?zydebug=1`：t1 基线恰 1；t2 installPageBridge ×5 仍恰 1；t3 minimize ×4（真实 UI 路径）仍恰 1；t4 install×3+minimize×2 后 apply 恰 1；t5 pageBridge() 幂等（页级 marker）；**t6 跨实例注入流程 ×2 仍恰 1（AUDIT-BRIDGE-002）**。Mutation（移除 marker）→ FAIL 2/6，还原后 ALL-PASS |
 | UNIT | field-core | **PASS 43/43** | `run-tests.html` |
 | UNIT | config-core | **PASS 15/15** | `run-tests.html` |
 | UNIT+INTEGRATION | ai（传输矩阵+业务级） | **PASS 18/18** | `ai-tests.html?zydebug=1` |
