@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>zy-ai: loading</title>
+</head>
+<body>
+<pre id="zy_ai_result">running...</pre>
+<!-- 加载顺序 = 扩展真实加载顺序 + 全局 GM mock；页面以 ?zydebug=1 打开以启用 __ZY_DEBUG__ -->
+<script src="../extension/gm-shim.js"></script>
+<script>
+  "use strict";
+  // 全局 GM_xmlhttpRequest 替换为可脚本化 Mock（覆盖 gm-shim 同名绑定）。
+  // GET（更新检测）返回 404；POST（AI 通道）按 pending 队列出队响应。
+  var pending = [];
+  window.__MOCKLOG__ = [];
+  window.GM_xmlhttpRequest = function (opts) {
+    if (!opts.method || String(opts.method).toUpperCase() === "GET") {
+      if (opts.onload) opts.onload({ status: 404, responseText: "" });
+      return;
+    }
+    var h = pending.length ? pending.shift() : { status: 500, body: JSON.stringify({ error: "unexpected" }) };
+    window.__MOCKLOG__.push({ method: "POST", urlLen: (opts.url || "").length, status: h.status, bodyLen: String(h.body || "").length, body: String(h.body || "") });
+    if (h.timeout) { if (opts.ontimeout) opts.ontimeout(); return; }
+    if (h.error) { if (opts.onerror) opts.onerror(); return; }
+    if (opts.onload) opts.onload({ status: h.status || 200, responseText: h.body == null ? "" : h.body });
+  };
+</script>
+<script src="../extension/src/fields/field-core.js"></script>
+<script src="../extension/src/core/config-core.js"></script>
+<script src="../extension/src/ai/ai-client.js"></script>
+<script src="../extension/assistant.js"></script>
+<script src="ai.test.js"></script>
+</body>
+</html>
