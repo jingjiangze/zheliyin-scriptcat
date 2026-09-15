@@ -14,6 +14,10 @@
 // 页面注入入口：消息协议与主脚本 BRIDGE_SOURCE/PAGE_SOURCE 保持兼容，
 // 未引入 requestId（当前调用严格串行，见 STAGE_3_REPORT §20/§21）。
 function pageBridge() {
+    // Stage 4.0（AUDIT-BRIDGE-002, P1）：跨 userscript 实例幂等 —— 页面主世界稳定 marker。
+    // 同窗口内任何实例/热更新/重复执行的注入只会安装一次 listener；页面刷新后 window 重置自动重建。
+    // （升级兼容：旧版本注入的 bridge 未设置 marker，热升级瞬间可能共存双 listener——见 STAGE_4.0_AUDIT 记录，属一次性的低概率窗口。）
+    if (window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed) return;
     const BRIDGE_SOURCE_IN_PAGE = "zy-card-assistant";
     const PAGE_SOURCE_IN_PAGE = "zy-card-assistant-page";
     window.addEventListener("message", function (event) {
@@ -449,4 +453,7 @@ function pageBridge() {
       });
       return { ok: true, href: location.href, canvases: canvases };
     }
+
+    // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now() };
   }
