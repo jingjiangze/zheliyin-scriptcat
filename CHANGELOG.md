@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+### Stage 1（2026-09-15）— 稳定核心 + 可测试边界（行为零变更）
+- 新增 `extension/src/fields/field-core.js`：19 个字段核心纯函数单一事实来源（逐字平移，行为与 Golden Master 一致）。
+- userscript 改为经 `@require` 加载 field-core，删除主体内重复定义；浏览器扩展 manifest 按序加载同一文件；exe 安装器内嵌目录天然包含。
+- 新增无框架单元测试 `tests/field-core.test.js` + `tests/run-tests.html`，Edge headless 执行 **43/43 PASS**。
+- 新增 `CHANGE_PROPOSAL.md`、`tests/TEST_REPORT.md`。
+- 锁定 5 项 Golden Master 行为怪癖为行为契约（不修改，见 CHANGE_PROPOSAL）。
+- 未动：AI Prompt / Bridge 协议 / 字段业务规则 / UI 交互 / 版本号（仍 0.3.0.0）。
+- 待真机验证：ScriptCat `@require` 加载、画布套版、AI 链路（列为 UNVERIFIED）。
+
 ### R0（2026-09-15）— 只读审计与基线，无代码变更
 - 新增 `ARCHITECTURE_AUDIT.md`：完整架构审计（仓库结构/逐函数地图/Config/AI/Bridge/Fields/State 地图、风险编号、上帝函数分析）。
 - 新增 `BEHAVIOR_BASELINE.md`：Golden Master 快照（main `6c19b46`，tag `v0.3.0`）+ 兼容性契约 18 项。
