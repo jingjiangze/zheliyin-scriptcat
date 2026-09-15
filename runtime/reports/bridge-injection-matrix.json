@@ -1,8 +1,9 @@
 {
   "stage": "RUNTIME-8",
   "ts_init": "2026-09-15",
+  "ts_final": "2026-09-15",
   "scope": "Bridge Injection Compatibility Audit（只研究 isolated→page world 注入路径；不禁改 Bridge protocol 与生产代码）",
-  "status": "IN_PROGRESS",
+  "status": "COMPLETE_CONDITIONAL",
   "matrix": {
     "dom-inline-script": {
       "status": "FAIL_CSP_BLOCKED",
@@ -14,33 +15,39 @@
       "cts": "assistant.js:861-878 / userscript.js:861-878（同一实现）"
     },
     "scriptcat-gm-add-element": {
-      "status": "PENDING_VERIFY",
+      "status": "BLOCKED_AUTOMATION（有官方声明，缺真实运行实证）",
       "evidence": [
         "ScriptCat 官方 API 文档: GM_addElement(tag, attrs) 明示「可以绕过 CSP 限制」",
-        "注入形式候选: GM_addElement('script', {textContent: '(' + pageBridge.toString() + ')();'})"
+        "ScriptCat 扩展本体实装 GM_addElement（vendor 源码 chunk.js:194 类型声明 + 多处实现）；manifest 含 scripting/userScripts 权限",
+        "Playwright 已能真实加载 vendor ScriptCat（chrome-extension://ndcooeabab… service_worker 运行、options 页渲染）",
+        "自动安装 userscript 受限于：① Monaco 编辑器 UI 自动化不稳定（聚焦成功但模型写入不落地）② install.html?url= 返回无效页面 ③ installByCode 走 service worker 内部消息（不猜 schema，未伪造写入）"
       ],
-      "note": "需真实 ScriptCat 环境实证（不能在 harness 中以 page.evaluate 冒充）；dedicated 装载 ScriptCat 受限则如实 BLOCKED"
+      "note": "GM_addElement 为官方文档声明的 CSP 绕过通道，但依据 §27「只有证据充分才 PASS」——未取得真实运行证据前保持 BLOCKED，不写 PASS"
     },
     "extension-main-world": {
-      "status": "PENDING_VERIFY",
+      "status": "PASS（MAIN world 通道等价证明）",
       "evidence": [
-        "Chrome MV3 官方支持 chrome.scripting.executeScript({world:'MAIN'})，与页面 CSP 无关",
-        "当前 manifest 无 background/service_worker，无 scripting 权限 → 若采用需记录 EXTENSION_REQUIRES_SCRIPTING_PERMISSION（§9，不擅自改 manifest）"
+        "真实编辑器（REAL_LOGGED_IN_EDITOR）：page.evaluate 主世界注入 pageBridge（语义等价 chrome.scripting.executeScript({world:'MAIN'})）",
+        "干净流程（无 DUP_SIM）：注入前 marker=null → 注入后 marker.installed=true → 1 probe 恰 1 响应 → 5 probe 恰 5 响应 → 真实 Canvas 619.5×376.86/21 对象",
+        "证明：MAIN world 注入 → Bridge 全链路在真实页面成立，且与页面 CSP 无关"
       ],
-      "note": "备选: 任意 content script 也支持 world:'MAIN' 注入路径（需 scripting 权限）"
+      "note": "这是主世界通道的等价证明（调试通道），非「真实扩展 background executeScript」的二进制证据；production 采用需真实 executeScript 复验（§20/§21 如实区分）"
     },
     "real-scriptcat": {
-      "status": "UNVERIFIED",
-      "evidence": [],
-      "note": "需用户真实 ScriptCat 会话或 dedicated 成功装载 ScriptCat 后才能测"
+      "status": "BLOCKED（dedicated 自动化受限）",
+      "evidence": [
+        "vendored ScriptCat 可加载、可渲染管理页，但自动安装 userscript 的三条候选路径（编辑器 UI / install.html?url / 内部 installByCode）均未稳定打通",
+        "installByCode 走 service worker 内部消息流，不暴露调用面；未伪造 storage 写入（§8/§28）"
+      ],
+      "note": "当前不构成 REAL_SCRIPT_CAT_BRIDGE=PASS；如需升级需用户真实 ScriptCat 会话或后续可靠安装路径（不在本阶段伪造）"
     },
     "real-extension": {
-      "status": "UNTESTED_CLEAN",
+      "status": "MAIN_WORLD_PASS_EQUIV（无 DUP_SIM 污染）",
       "evidence": [
-        "前次运行 extension 面板真实渲染（content script 层正常）",
-        "但 installPageBridge 内联注入被页面 CSP 拦 → Bridge 未装 → 此前 bridge-apply 实为 DUP_SIM 注入后结果（已按 §14 修正为 BRIDGE_APPLY_WITH_SIMULATED_INSTALLATION）"
+        "本次 RUNTIME-8 探针以干净流程完成（注入前 marker=null），排除任何测试注入污染",
+        "真实面板渲染（content script 层）+ 真实 Canvas 619.5×376.86/21 对象"
       ],
-      "note": "在本阶段以干净流程（无 DUP_SIM）重新验证 Extension MAIN world 注入"
+      "note": "extension 侧污染路径（DUP_SIM 后的 bridge-apply）已按 §14/§38 修正为 BRIDGE_APPLY_WITH_SIMULATED_INSTALLATION"
     }
   },
   "correction_applied": {
@@ -48,9 +55,15 @@
     "fix": "已改为 BRIDGE_APPLY_WITH_SIMULATED_INSTALLATION；真实载体 Apply 需注入方案验证通过后另行完成",
     "file": "runtime/full.js bridge-apply rec evidence"
   },
+  "final_matrix_table": [
+    { "injection": "DOM inline", "browser": "REAL", "carrier": "Userscript", "page world": "MAIN", "csp": "blocked", "result": "FAIL/BLOCKED" },
+    { "injection": "GM_addElement", "browser": "REAL(ScriptCat vendored)", "carrier": "ScriptCat", "page world": "MAIN", "csp": "bypass(官方声明)", "result": "BLOCKED(未实测 PASS)" },
+    { "injection": "executeScript MAIN(等价值)", "browser": "REAL", "carrier": "MV3(通道证明)", "page world": "MAIN", "csp": "bypass", "result": "PASS(clean)" }
+  ],
   "decisions": {
     "rewrite_bridge": "NO",
     "change_protocol": "NO",
-    "production_change": "PENDING — 仅当某一路径真实 PASS 且被证明为必要（§21）才考虑新增 injection adapter（§16/§20），且独立 commit"
-  }
+    "production_change": "PENDING — MAIN world 通道已证可行；但 production 采用 executeScript/GM_addElement 需真实载体验证后再定（§39-41）。当前表现状（DOM inline）在折立印页面 CSP 下 Bridge 不可安装，属真实发现项，需在后续阶段按证据最小修复"
+  },
+  "gate": "CONDITIONAL-GO"
 }
