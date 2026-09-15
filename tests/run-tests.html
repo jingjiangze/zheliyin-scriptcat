@@ -5,8 +5,21 @@
 <title>zy-tests: loading</title>
 </head>
 <body>
-<pre id="zy_test_result">running...</pre>
+<pre id="zy_test_result">field-core running...</pre>
+<pre id="zy_config_result">config-core running...</pre>
 <script src="../extension/src/fields/field-core.js"></script>
 <script src="field-core.test.js"></script>
+<script src="../extension/src/core/config-core.js"></script>
+<script src="config-core.test.js"></script>
+<script>
+  (function () {
+    var f = document.getElementById("zy_test_result").textContent;
+    var c = document.getElementById("zy_config_result").textContent;
+    var fOk = f.indexOf("FAIL") < 0;
+    var cOk = c.indexOf("FAIL") < 0;
+    document.title = "zy-tests: " + (fOk && cOk ? "ALL-PASS" : "FAIL") +
+      " | field:" + (f.split("\n")[0]) + " | config:" + (c.split("\n")[0]);
+  })();
+</script>
 </body>
 </html>
