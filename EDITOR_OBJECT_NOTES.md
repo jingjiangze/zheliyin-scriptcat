@@ -32,23 +32,26 @@ left=32 / top=32 / width=240 / height=20 / fontSize=16 / fill="#1f2937" / fontFa
 
 每侧面布：`found / ctor / width / height / textObjects 数量`；未读 rotation/图片层。
 
-## 6. OCR 能力问卷（§二十九，逐项回答）
+## 6. OCR 能力问卷（§二十九，逐项回答 + 证据分级）
 
-| 能力 | 结论 | 依据 |
+> 证据级别：STATIC=代码静态确认；HEADLESS=canvas mock 测试确认；REAL_PAGE=真机确认；UNVERIFIED=待定。
+> （STATIC+HEADLESS 不等于 REAL_PAGE，真机项保持 UNVERIFIED。）
+
+| 能力 | 结论 | 证据级别 |
 |---|---|---|
-| 读文字对象位置 (x/y) | ✅ 代码确认 | getReferenceStyle 读 left/top；排序用 top/left |
-| 读宽高 | ✅ 代码确认 | width/height |
-| 读字号 | ✅ 代码确认 | fontSize |
-| 读字体 | ✅ 代码确认 | fontFamily |
-| 读颜色 | ✅ 代码确认 | fill |
-| 读粗细/斜体 | ✅ 代码确认 | fontWeight / fontStyle |
-| 读行高/对齐/字距 | ✅ 代码确认 | lineHeight / textAlign / charSpacing |
-| 读旋转 | ⚠️ 需真机确认 | fabric 对象惯例含 rotation，当前代码未读写 |
-| 读对象层级 | ⚠️ 依赖 getObjects() 顺序 | 代码按 top/left 排序，原生顺序未消费 |
-| 创建文字对象 | ✅ 代码确认 | createTextObject（克隆优先，fabric 兜底） |
-| 修改已有文字对象 | ✅ 代码确认 | setObjectText / placeCreatedObject |
-| 删除指定生成对象 | ✅ 代码确认 | removeAssistantExtras（按 zyCreatedByAssistant 标签） |
-| 读图片层数量 | ⚠️ 待扩展 | 现有 isTextObject 相反分支可复用，尚未实现 |
+| 读文字对象位置 (x/y) | ✅ | STATIC + HEADLESS（getReferenceStyle 读写 left/top；editor 测试 e3） |
+| 读宽高 | ✅ | STATIC（width/height） |
+| 读字号 | ✅ | STATIC + HEADLESS（fontSize；e3 克隆断言） |
+| 读字体 | ✅ | STATIC + HEADLESS（fontFamily；e3） |
+| 读颜色 | ✅ | STATIC + HEADLESS（fill；e3） |
+| 读粗细/斜体 | ✅ | STATIC（fontWeight/fontStyle） |
+| 读行高/对齐/字距 | ✅ | STATIC（lineHeight/textAlign/charSpacing） |
+| 读旋转 | ⚠️ | UNVERIFIED（fabric 惯例含 rotation，代码未读写，需真机确认） |
+| 读对象层级 | ⚠️ | STATIC 部分（排序用 top/left；getObjects 原生顺序未消费） |
+| 创建文字对象 | ✅ | STATIC + HEADLESS（e3/e7b 新建并打标签） |
+| 修改已有文字对象 | ✅ | STATIC + HEADLESS（e3 已有层只改文本样式不动） |
+| 删除指定生成对象 | ✅ | STATIC + HEADLESS（e6 富余助手层清理、模板层保护） |
+| 读图片层数量 | ⚠️ | UNVERIFIED（isTextObject 反向分支可复用，未实现） |
 
 ## 7. 稳定性判定（§二十七）
 
