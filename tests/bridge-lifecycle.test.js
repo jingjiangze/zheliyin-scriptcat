@@ -74,17 +74,30 @@
   var ca = await attemptReceive("apply", "applyResult", 2);
   case_("t4 install×3+minimize×2 后 apply 响应恰 1（apply 只执行一次）", ca === 1);
 
-  // t5 机制对照：pageBridge() 每次调用新增一个 listener（非幂等）。
-  // 页面已固有 1 个注入 listener，手动 ×2 后应为 before + 2。
-  // 该机制事实反向证明：installPageBridge 的幂等防护（t2–t4）是必要且有效的。
-  var before = await attemptReceive("probe", "probeResult", 2); // =1（无第 2 个，超时返回）
+  // t5 机制（Stage 4.0 语义更新）：pageBridge() 已通过页面主世界 marker 幂等化（AUDIT-BRIDGE-002）。
+  // Stage 3.2 时曾断言“pageBridge() 每次调用 +1 listener”；跨实例幂等修复后该机制不复存在——
+  // 这是生产行为增强（重复注入不再累积），t5 相应改为“幂等”断言，并由 Mutation 证明其对 marker 敏感。
+  var before = await attemptReceive("probe", "probeResult", 2);
   pageBridge();
   pageBridge();
-  var after = await attemptReceive("probe", "probeResult", 4); // 期望恰 3（无第 4 个，超时返回 3）
-  case_("t5 机制：pageBridge() ×2 → 响应 +2（测试对重复注册敏感）", before === 1 && after === 3);
+  var after = await attemptReceive("probe", "probeResult", 2);
+  case_("t5 机制：pageBridge() 幂等（marker 生效，重复调用不新增 listener）", before === 1 && after === 1);
+
+  // t6 跨实例：绕过当前闭包标志，再造一份“等价注入流程”（=第二个 userscript 实例的注入）。
+  // 若 page 主世界无稳定 marker，第二次注入将再注册 listener（Stage 4.0 跨实例幂等目标）。
+  function injectBridgeOnceMore() {
+    var s = document.createElement("script");
+    s.textContent = "(" + pageBridge.toString() + ")();";
+    (document.head || document.documentElement).appendChild(s);
+    s.remove();
+  }
+  injectBridgeOnceMore();
+  injectBridgeOnceMore();
+  var c6 = await attemptReceive("probe", "probeResult", 2);
+  case_("t6 跨实例注入流程 ×2 → 仍恰 1（page 主世界幂等 marker）", c6 === 1);
 
   var summary = failures === 0 ? "ALL-PASS (" + results.length + ")" : "FAIL " + failures + "/" + results.length;
-  document.title = "zy-bridge-lifecycle: " + summary + " LC=" + encodeURIComponent(JSON.stringify({ c1: c1, c2: c2, c3a: c3a, c3b: c3b, c3c: c3c, ca: ca, before: before, after: after }));
+  document.title = "zy-bridge-lifecycle: " + summary + " LC=" + encodeURIComponent(JSON.stringify({ c1: c1, c2: c2, c3a: c3a, c3b: c3b, c3c: c3c, ca: ca, before: before, after: after, c6: c6 }));
   var out = document.getElementById("zy_bridge_result");
   if (out) out.textContent = summary + "\n" + results.join("\n");
 })().catch(function (e) {
