@@ -6,6 +6,9 @@ Thumbs.db
 node_modules/
 runtime/browser/profile*/
 runtime/reports/screenshots*
+runtime/reports/dsc.log
+runtime/reports/env-probe.txt
+runtime/vendor/
 storage-state/
 *.session
 .cookies
