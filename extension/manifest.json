@@ -25,7 +25,7 @@
         "http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*",
         "http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*"
       ],
-      "js": ["gm-shim.js", "assistant.js"],
+      "js": ["gm-shim.js", "src/fields/field-core.js", "assistant.js"],
       "run_at": "document_idle",
       "all_frames": true
     }
