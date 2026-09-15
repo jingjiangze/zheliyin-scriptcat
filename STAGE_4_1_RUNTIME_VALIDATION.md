@@ -164,13 +164,14 @@ exit: 各套断言 0 FAIL（bridge 需 ?zydebug=1；ai 需 ?zydebug=1；wiring �
 - 真实编辑器页面出现「名片套版助手」面板（右侧浮动，非页面自带 UI），文案含「识别并填正反面」「填正面」「填反面」「追加信息」——与仓库 `renderPanel` 模板一致（assistant.js:274-284 / user.js:307-322 文案复核一致）；
 - @require ×4（field-core/config-core/ai-client/page-bridge）在脚本猫加载成功（面板正常渲染即证依赖链成立）。
 
-**19.2 真实运行时 P3 观察——多脚本并发边界（非本项目代码）：**
-- 同页 Console 出现 `bindEvent (折立印名片智能助手.user.js:1163) → renderPanel:137` 的 `null.addEventListener` 报错；
-- 溯源：`bindEvent` 在整个仓库历史（v0.3.0 / main / 各 stage tag）**从未存在**；本项目函数名为 `bindPanel`（assistant.js:326 / user.js:360），栈帧行号 1163 亦与任意历史版本不符；
-- 结论：该报错来自用户在脚本猫中**残留的旧版/其他脚本**（面板标题「名片智能助手」v3.3.0，非本项目），与本项目 v0.3.0.0 无关；按指令不修改无关脚本，仅记录。处理：用户在脚本猫停用旧脚本后刷新可消除。
-- 影响评估：两个脚本同页并存不互相改写对方代码，但会各自注入 UI；本项目 marker/闭包两层防重仅防**本项目自身**重复注入——第三方脚本不产生本项目 bridge 重复。
+**19.2 Console 中 `bindEvent` 报错——来源观测（P3，已按用户澄清修正）：**
+- 现象：同页 Console 曾出现 `bindEvent (折立印名片智能助手.user.js:1163) → renderPanel:137` 的 `null.addEventListener` 报错；
+- 溯源：`bindEvent` 在整个仓库历史（v0.3.0 / main / 各 stage tag）**从未存在**；本项目函数名为 `bindPanel`（assistant.js:326 / user.js:360）；
+- **用户澄清（2026-09-15）：脚本猫中只有一个脚本，即本项目 v0.3.0.0「名片套版助手」，不存在「名片智能助手 / v3.3.0」旧脚本**；
+- 修正结论：报错的函数名与文件名（`名片智能助手 / bindEvent`）均与本项目无关，且用户确认无此脚本——最可能是 DevTools **历史 Console 条目（旧页面/旧会话残留日志）**，非当前脚本实时错误；不再断言"存在残留旧脚本"（作废上一版 §19.2 推断）；
+- 影响评估：本项目 marker/闭包两层防重防**本项目自身**重复注入，机制不受影响；该报错不影响本项目面板功能（面板已正常渲染，见 §19.1）。
 
-**19.3 待完成（同一页面上一步）：** 停用旧脚本 → 只留 v0.3.0.0 → 刷新后确认 `bindEvent` 消失 + Bridge 往返 + 最小 Apply。
+**19.3 待完成（下一步）：** 刷新页面（清空旧 Console 条目）→ 确认面板正常且无实时报错 → Bridge 往返 → 最小 Apply。
 
 > 环境补遗：本会话已安装 git（winget）并将 `stage-4.1-runtime-validation` 推送 GitHub；headless 回归以真实 Chrome 完成并全部 PASS（§9/§11）。
 
