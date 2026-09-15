@@ -48,9 +48,18 @@ TOP WINDOW (diy.zheliyin.com/diyWeb/third/20408603/1/thirdLoginDiyEdit.do)  ← 
 
 页面真实 iframe/editor 拓扑、Canvas、对象模型已获真实取证（见上）。
 
-## 4. ScriptCat
+## 4. ScriptCat（已按 §19 真实回传拆分状态）
 
-**UNVERIFIED**（本机无 ScriptCat；`@require` ×4 与主脚本共 5 个 raw.githubusercontent URL 于本次真实请求**全部 HTTP 200**——`field-core 7938B / config-core 2100B / ai-client 3747B / page-bridge 21652B / 主脚本 39860B`，加载链网络层成立，安装运行证据缺失）。
+```
+ScriptCat installation       = PASS（用户已装，v0.3.0.0 单脚本）
+ScriptCat userscript exec    = PASS（面板真实渲染，§19.1）
+Assistant rendering           = PASS（真实编辑器出现「名片套版助手」面板）
+Real Bridge install           = UNVERIFIED（需 §5 真机 marker 取证）
+Real Bridge probe/response    = UNVERIFIED（需 §7-8 真机往返）
+Real Apply                    = UNVERIFIED（需 §13 真机最小修改）
+```
+
+加载链网络层：`@require` ×4 与主脚本共 5 个 raw.githubusercontent URL 本次真实请求**全部 HTTP 200**（`field-core 7938B / config-core 2100B / ai-client 3747B / page-bridge 21652B / 主脚本 39860B`）。
 
 ## 5. Extension
 
@@ -171,7 +180,7 @@ exit: 各套断言 0 FAIL（bridge 需 ?zydebug=1；ai 需 ?zydebug=1；wiring �
 - 修正结论：报错的函数名与文件名（`名片智能助手 / bindEvent`）均与本项目无关，且用户确认无此脚本——最可能是 DevTools **历史 Console 条目（旧页面/旧会话残留日志）**，非当前脚本实时错误；不再断言"存在残留旧脚本"（作废上一版 §19.2 推断）；
 - 影响评估：本项目 marker/闭包两层防重防**本项目自身**重复注入，机制不受影响；该报错不影响本项目面板功能（面板已正常渲染，见 §19.1）。
 
-**19.3 待完成（下一步）：** 刷新页面（清空旧 Console 条目）→ 确认面板正常且无实时报错 → Bridge 往返 → 最小 Apply。
+**19.3 待完成（最终收尾验证）：** 真实 Bridge 往返（marker/probe/response）+ 最小真实 Apply（含回滚）+ 刷新生命周期。用户仅需执行一次「F5 刷新 → 最小只读探针 → 一次真实 Apply」，取证数据由 Agent 归纳入报告。
 
 > 环境补遗：本会话已安装 git（winget）并将 `stage-4.1-runtime-validation` 推送 GitHub；headless 回归以真实 Chrome 完成并全部 PASS（§9/§11）。
 
