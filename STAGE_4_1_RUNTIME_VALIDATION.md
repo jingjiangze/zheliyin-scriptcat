@@ -157,6 +157,21 @@ exit: 各套断言 0 FAIL（bridge 需 ?zydebug=1；ai 需 ?zydebug=1；wiring �
 2. 点一次「识别并填正面」→ 回传状态栏结果（验证真实 Apply）；
 3. 若需 §十五 spoof 结论，在 Bridge 已装时重跑 [zy-forensics] 看 `spoof-probe` 是否变 `CAN_TRIGGER`。
 
+## 19. 真实运行时补充取证（2026-09-15 用户回传）
+
+**19.1 ScriptCat userscript 已安装并真实运行（本阶段行之关键）：**
+- 用户在脚本猫粘贴 [zheliyin-card-assistant.user.js](../zheliyin-card-assistant.user.js)（v0.3.0.0，与仓库一致）并保存启用；
+- 真实编辑器页面出现「名片套版助手」面板（右侧浮动，非页面自带 UI），文案含「识别并填正反面」「填正面」「填反面」「追加信息」——与仓库 `renderPanel` 模板一致（assistant.js:274-284 / user.js:307-322 文案复核一致）；
+- @require ×4（field-core/config-core/ai-client/page-bridge）在脚本猫加载成功（面板正常渲染即证依赖链成立）。
+
+**19.2 真实运行时 P3 观察——多脚本并发边界（非本项目代码）：**
+- 同页 Console 出现 `bindEvent (折立印名片智能助手.user.js:1163) → renderPanel:137` 的 `null.addEventListener` 报错；
+- 溯源：`bindEvent` 在整个仓库历史（v0.3.0 / main / 各 stage tag）**从未存在**；本项目函数名为 `bindPanel`（assistant.js:326 / user.js:360），栈帧行号 1163 亦与任意历史版本不符；
+- 结论：该报错来自用户在脚本猫中**残留的旧版/其他脚本**（面板标题「名片智能助手」v3.3.0，非本项目），与本项目 v0.3.0.0 无关；按指令不修改无关脚本，仅记录。处理：用户在脚本猫停用旧脚本后刷新可消除。
+- 影响评估：两个脚本同页并存不互相改写对方代码，但会各自注入 UI；本项目 marker/闭包两层防重仅防**本项目自身**重复注入——第三方脚本不产生本项目 bridge 重复。
+
+**19.3 待完成（同一页面上一步）：** 停用旧脚本 → 只留 v0.3.0.0 → 刷新后确认 `bindEvent` 消失 + Bridge 往返 + 最小 Apply。
+
 > 环境补遗：本会话已安装 git（winget）并将 `stage-4.1-runtime-validation` 推送 GitHub；headless 回归以真实 Chrome 完成并全部 PASS（§9/§11）。
 
 ## Stop
