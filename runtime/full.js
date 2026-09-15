@@ -157,9 +157,12 @@ async function waitForLogin(page, timeoutMs) {
           const applyA = await safeDirectApply(page, "TEST_RUNTIME_VALUE");
           rec("canvas-mutation", applyA.ok, applyA.detail, "REAL_CANVAS");
 
-          // §20 Bridge Apply（Test B，走 postMessage apply 协议）+ 对象级兜底恢复
+          // §20 Bridge Apply（Test B）：注意本层在 bridge-cross-instance-dup（DUP_SIM）之后执行，
+          // 页面中存在由测试注入的 pageBridge —— 因此该证据只能标
+          // BRIDGE_APPLY_WITH_SIMULATED_INSTALLATION（§14/§27），不得声称 REAL_BRIDGE_APPLY；
+          // 真实 ScriptCat/Extension 注入的 Bridge Apply 需在 RUNTIME-8 注入方案验证后另行完成。
           const applyB = await bridgeApplyAndRollback(page, "ZY_RUNTIME_TEST_VALUE");
-          rec("bridge-apply", applyB.ok, applyB.detail, "REAL_BRIDGE+REAL_APPLY");
+          rec("bridge-apply", applyB.ok, applyB.detail, "BRIDGE_APPLY_WITH_SIMULATED_INSTALLATION (DUP_SIM 注入后，非真实载体)");
         } else {
           blocked("scriptcat", "编辑态未就绪，跳过");
           blocked("scriptcat-panel", "编辑态未就绪，跳过");

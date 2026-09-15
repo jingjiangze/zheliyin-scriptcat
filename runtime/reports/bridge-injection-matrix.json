@@ -1,0 +1,56 @@
+{
+  "stage": "RUNTIME-8",
+  "ts_init": "2026-09-15",
+  "scope": "Bridge Injection Compatibility Audit（只研究 isolated→page world 注入路径；不禁改 Bridge protocol 与生产代码）",
+  "status": "IN_PROGRESS",
+  "matrix": {
+    "dom-inline-script": {
+      "status": "FAIL_CSP_BLOCKED",
+      "evidence": [
+        "真实编辑器页 Console: Executing inline script violates Content Security Policy (script-src 无 unsafe-inline)",
+        "installPageBridge 的 <script>.textContent 注入后 marker __ZY_CARD_ASSISTANT_BRIDGE__ 恒为 null",
+        "同页 page.evaluate（调试通道绕过 CSP）注入 pageBridge 后 marker/probe/防重全部 PASS —— 证明协议本身正常、仅传输载体被拦"
+      ],
+      "cts": "assistant.js:861-878 / userscript.js:861-878（同一实现）"
+    },
+    "scriptcat-gm-add-element": {
+      "status": "PENDING_VERIFY",
+      "evidence": [
+        "ScriptCat 官方 API 文档: GM_addElement(tag, attrs) 明示「可以绕过 CSP 限制」",
+        "注入形式候选: GM_addElement('script', {textContent: '(' + pageBridge.toString() + ')();'})"
+      ],
+      "note": "需真实 ScriptCat 环境实证（不能在 harness 中以 page.evaluate 冒充）；dedicated 装载 ScriptCat 受限则如实 BLOCKED"
+    },
+    "extension-main-world": {
+      "status": "PENDING_VERIFY",
+      "evidence": [
+        "Chrome MV3 官方支持 chrome.scripting.executeScript({world:'MAIN'})，与页面 CSP 无关",
+        "当前 manifest 无 background/service_worker，无 scripting 权限 → 若采用需记录 EXTENSION_REQUIRES_SCRIPTING_PERMISSION（§9，不擅自改 manifest）"
+      ],
+      "note": "备选: 任意 content script 也支持 world:'MAIN' 注入路径（需 scripting 权限）"
+    },
+    "real-scriptcat": {
+      "status": "UNVERIFIED",
+      "evidence": [],
+      "note": "需用户真实 ScriptCat 会话或 dedicated 成功装载 ScriptCat 后才能测"
+    },
+    "real-extension": {
+      "status": "UNTESTED_CLEAN",
+      "evidence": [
+        "前次运行 extension 面板真实渲染（content script 层正常）",
+        "但 installPageBridge 内联注入被页面 CSP 拦 → Bridge 未装 → 此前 bridge-apply 实为 DUP_SIM 注入后结果（已按 §14 修正为 BRIDGE_APPLY_WITH_SIMULATED_INSTALLATION）"
+      ],
+      "note": "在本阶段以干净流程（无 DUP_SIM）重新验证 Extension MAIN world 注入"
+    }
+  },
+  "correction_applied": {
+    "issue": "§14 full.js 中 bridge-apply 在 crossInstanceDuplicate(DUP_SIM) 之后执行，原证据等级 REAL_BRIDGE+REAL_APPLY 不成立",
+    "fix": "已改为 BRIDGE_APPLY_WITH_SIMULATED_INSTALLATION；真实载体 Apply 需注入方案验证通过后另行完成",
+    "file": "runtime/full.js bridge-apply rec evidence"
+  },
+  "decisions": {
+    "rewrite_bridge": "NO",
+    "change_protocol": "NO",
+    "production_change": "PENDING — 仅当某一路径真实 PASS 且被证明为必要（§21）才考虑新增 injection adapter（§16/§20），且独立 commit"
+  }
+}
