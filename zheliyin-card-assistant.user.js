@@ -15,6 +15,8 @@
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/extension/src/fields/field-core.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/extension/src/core/config-core.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/extension/src/ai/ai-client.js
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -35,8 +37,7 @@
   const VERSION = "0.3.0.0";
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
-  const DEFAULT_BASE_URL = "https://ark.cn-beijing.volces.com/api/v3";
-  const DEFAULT_MODEL = "doubao-seed-2-0-mini-260428";
+  // DEFAULT_BASE_URL / DEFAULT_MODEL 已迁移至 config-core（@require 加载，作用域共享，单一来源）
   const UPDATE_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js";
   const DOWNLOAD_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js";
 
@@ -70,17 +71,27 @@
   // emptyFields() 已迁移至 field-core（@require 首行加载）
 
   function getConfig() {
-    return {
-      apiKey: GM_getValue("zyArkApiKey", ""),
-      baseUrl: GM_getValue("zyArkBaseUrl", DEFAULT_BASE_URL),
-      model: GM_getValue("zyArkModel", DEFAULT_MODEL)
-    };
+    // Stage 2：单一事实来源 —— 经 config-core 解析，历史 key zyBaseUrl 仅作兼容只读来源并迁移一次
+    const resolved = resolveConfig({
+      zyArkApiKey: GM_getValue("zyArkApiKey", ""),
+      zyArkBaseUrl: GM_getValue("zyArkBaseUrl", ""),
+      zyBaseUrl: GM_getValue("zyBaseUrl", ""),
+      zyArkModel: GM_getValue("zyArkModel", "")
+    });
+    if (resolved.usedLegacy) {
+      // 一次性迁移：历史 zyBaseUrl → 同步写回标准 key（两 key 对齐）
+      GM_setValue("zyArkBaseUrl", resolved.baseUrl);
+      GM_setValue("zyBaseUrl", resolved.baseUrl);
+    }
+    return { apiKey: resolved.apiKey, baseUrl: resolved.baseUrl, model: resolved.model };
   }
 
   function saveConfig(config) {
-    GM_setValue("zyArkApiKey", config.apiKey || "");
-    GM_setValue("zyArkBaseUrl", config.baseUrl || DEFAULT_BASE_URL);
-    GM_setValue("zyArkModel", config.model || DEFAULT_MODEL);
+    const snap = configToStorage(config);
+    GM_setValue("zyArkApiKey", snap.zyArkApiKey);
+    GM_setValue("zyArkBaseUrl", snap.zyArkBaseUrl);
+    GM_setValue("zyBaseUrl", snap.zyBaseUrl);
+    GM_setValue("zyArkModel", snap.zyArkModel);
   }
 
   function addStyles() {
@@ -433,10 +444,11 @@
   async function parseFields(options) {
     const panel = document.getElementById("zy-card-assistant");
     const rawText = panel.querySelector("#zy-raw").value.trim();
+    const persisted = getConfig();
     const config = {
-      apiKey: panel.querySelector("#zy-api-key").value.trim(),
-      baseUrl: GM_getValue("zyBaseUrl", DEFAULT_BASE_URL),
-      model: panel.querySelector("#zy-model").value.trim() || DEFAULT_MODEL
+      apiKey: panel.querySelector("#zy-api-key").value.trim() || persisted.apiKey,
+      baseUrl: persisted.baseUrl,
+      model: panel.querySelector("#zy-model").value.trim() || persisted.model
     };
     saveConfig(config);
 
@@ -730,44 +742,32 @@
       rawText
     ].join("\n");
 
-    return new Promise((resolve, reject) => {
-      GM_xmlhttpRequest({
-        method: "POST",
-        url: config.baseUrl.replace(/\/+$/, "") + "/chat/completions",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + config.apiKey
-        },
-        data: JSON.stringify({
-          model: config.model,
-          temperature: 0,
-          response_format: { type: "json_object" },
-          messages: [
-            { role: "system", content: "你是文本分面程序。必须只返回可被 JSON.parse 解析的 JSON 对象，禁止解释、Markdown、示例和虚构内容。" },
-            { role: "user", content: prompt }
-          ]
-        }),
-        timeout: 30000,
-        onload: (response) => {
-          try {
-            if (response.status < 200 || response.status >= 300) {
-              reject(new Error("API HTTP " + response.status + ": " + response.responseText.slice(0, 220)));
-              return;
-            }
-            const body = JSON.parse(response.responseText);
-            const content = body && body.choices && body.choices[0] && body.choices[0].message && body.choices[0].message.content;
-            const parsed = parseJsonFromText(content || "{}");
-            resolve({
-              front: cleanMultiline(parsed.front || fallback.front || ""),
-              back: cleanMultiline(parsed.back || fallback.back || "")
-            });
-          } catch (error) {
-            reject(error);
-          }
-        },
-        onerror: () => reject(new Error("API 请求失败")),
-        ontimeout: () => reject(new Error("API 请求超时"))
-      });
+    // Stage 2：走统一 AI Transport（ai-client），Prompt/响应语义/fallback 不变
+    return aiRequest({
+      url: buildChatUrl(config.baseUrl),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + config.apiKey
+      },
+      data: JSON.stringify({
+        model: config.model,
+        temperature: 0,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: "你是文本分面程序。必须只返回可被 JSON.parse 解析的 JSON 对象，禁止解释、Markdown、示例和虚构内容。" },
+          { role: "user", content: prompt }
+        ]
+      }),
+      timeout: 30000,
+      operation: "splitSides"
+    }).then((result) => {
+      if (!result.ok) throwAiError(result);
+      const content = result.body && result.body.choices && result.body.choices[0] && result.body.choices[0].message && result.body.choices[0].message.content;
+      const parsed = parseJsonFromText(content || "{}");
+      return {
+        front: cleanMultiline(parsed.front || fallback.front || ""),
+        back: cleanMultiline(parsed.back || fallback.back || "")
+      };
     });
   }
 
@@ -795,40 +795,28 @@
       backText || ""
     ].join("\n");
 
-    return new Promise((resolve, reject) => {
-      GM_xmlhttpRequest({
-        method: "POST",
-        url: config.baseUrl.replace(/\/+$/, "") + "/chat/completions",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + config.apiKey
-        },
-        data: JSON.stringify({
-          model: config.model,
-          temperature: 0,
-          response_format: { type: "json_object" },
-          messages: [
-            { role: "system", content: "你是字段抽取程序。必须只返回可被 JSON.parse 解析的 JSON 对象，禁止解释、Markdown、示例和虚构信息。" },
-            { role: "user", content: prompt }
-          ]
-        }),
-        timeout: 30000,
-        onload: (response) => {
-          try {
-            if (response.status < 200 || response.status >= 300) {
-              reject(new Error("API HTTP " + response.status + ": " + response.responseText.slice(0, 220)));
-              return;
-            }
-            const body = JSON.parse(response.responseText);
-            const content = body && body.choices && body.choices[0] && body.choices[0].message && body.choices[0].message.content;
-            resolve(parseJsonFromText(content || "{}"));
-          } catch (error) {
-            reject(error);
-          }
-        },
-        onerror: () => reject(new Error("API 请求失败")),
-        ontimeout: () => reject(new Error("API 请求超时"))
-      });
+    // Stage 2：走统一 AI Transport（ai-client），Prompt/响应语义/fallback 不变
+    return aiRequest({
+      url: buildChatUrl(config.baseUrl),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + config.apiKey
+      },
+      data: JSON.stringify({
+        model: config.model,
+        temperature: 0,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: "你是字段抽取程序。必须只返回可被 JSON.parse 解析的 JSON 对象，禁止解释、Markdown、示例和虚构信息。" },
+          { role: "user", content: prompt }
+        ]
+      }),
+      timeout: 30000,
+      operation: "parseFields"
+    }).then((result) => {
+      if (!result.ok) throwAiError(result);
+      const content = result.body && result.body.choices && result.body.choices[0] && result.body.choices[0].message && result.body.choices[0].message.content;
+      return parseJsonFromText(content || "{}");
     });
   }
 
@@ -1376,6 +1364,24 @@
     document.addEventListener("DOMContentLoaded", renderPanel);
   } else {
     renderPanel();
+  }
+
+  // 测试/诊断出口（默认不启用）：URL 带 zydebug（hash 或 query）时暴露内部引用，便于无头/浏览器回归
+  const zyDebugOn = (window.location && (window.location.hash || "") + "|" + (window.location.search || "")).indexOf("zydebug") >= 0;
+  if (zyDebugOn) {
+    window.__ZY_DEBUG__ = {
+      state: state,
+      getConfig: getConfig,
+      saveConfig: saveConfig,
+      parseFields: parseFields,
+      splitFrontBackText: splitFrontBackText,
+      parseByRulesFromSides: parseByRulesFromSides,
+      emptyFields: emptyFields,
+      normalizeFields: normalizeFields,
+      mergeFields: mergeFields,
+      mergeTwoFields: mergeTwoFields,
+      setStatus: setStatus
+    };
   }
 
   console.info("折立印名片套版助手已加载", VERSION);
