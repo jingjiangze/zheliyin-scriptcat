@@ -1,67 +1,85 @@
 {
- "ts": "2026-09-15T10:13:04.081Z",
- "mode": "HEADLESS_REAL_BROWSER",
+ "ts": "2026-09-15T11:28:16.018Z",
+ "mode": "REAL_LOGGED_IN_EDITOR",
  "layers": {
   "browser": {
    "ok": true,
-   "detail": "chrome.exe",
+   "detail": "playwright-chromium",
    "evidence": "HEADLESS_REAL_BROWSER/REAL_BROWSER"
   },
   "health": {
    "ok": true,
-   "detail": "isTop=true frames=0",
+   "detail": "isTop=true frames=1",
    "evidence": "HEADLESS_REAL_BROWSER/REAL_LOGGED_IN_EDITOR"
   },
-  "scriptcat": {
-   "ok": "BLOCKED",
-   "detail": "门户页（无登录态），#zy-card-assistant 不存在属预期",
-   "evidence": "N/A"
+  "auth": {
+   "ok": true,
+   "detail": "登录完成，编辑态就绪",
+   "evidence": "REAL_LOGGED_IN_EDITOR"
   },
   "scriptcat-panel": {
-   "ok": "BLOCKED",
-   "detail": "门户页无编辑器（无登录态），面板不存在属预期",
-   "evidence": "N/A"
+   "ok": true,
+   "detail": "{\"titleOk\":true,\"versionOk\":true,\"buttonsOk\":true,\"eventOk\":true,\"visible\":true,\"title\":\"名片套版助手\",\"versionLine\":\"当前网址：https://diy.zheliyin.com/diyWeb/third/20408603/1/thirdL\",\"parseApplyText\":\"识别并填正反面\"}",
+   "evidence": "REAL_LOGGED_IN_EDITOR"
+  },
+  "scriptcat": {
+   "ok": true,
+   "detail": "{\"titleOk\":true,\"versionOk\":true,\"buttonsOk\":true,\"eventOk\":true,\"visible\":true,\"title\":\"名片套版助手\",\"versionLine\":\"当前网址：https://diy.zheliyin.com/diyWeb/third/20408603/1/thirdL\",\"parseApplyText\":\"识别并填正反面\"}",
+   "evidence": "REAL_SCRIPT_CAT(userscript v0.3.0.0)"
   },
   "bridge-marker": {
-   "ok": "BLOCKED",
-   "detail": "未进入编辑页，bridge 未安装属预期",
-   "evidence": "N/A"
+   "ok": false,
+   "detail": "null",
+   "evidence": "REAL_BRIDGE"
+  },
+  "bridge-probe-exactly-one": {
+   "ok": false,
+   "detail": "{\"marker\":null,\"sent\":1,\"responses\":0,\"samples\":[]}",
+   "evidence": "REAL_BRIDGE"
+  },
+  "bridge-probe-5x-5responses": {
+   "ok": false,
+   "detail": "{\"marker\":null,\"sent\":5,\"responses\":0,\"samples\":[]}",
+   "evidence": "REAL_BRIDGE"
+  },
+  "bridge-cross-instance-dup": {
+   "ok": true,
+   "detail": "{\"marker\":{\"installed\":true,\"ts\":\"number\"},\"sent\":1,\"responses\":1,\"samples\":[{\"ok\":true,\"canvasesCount\":2}]}",
+   "evidence": "REAL_BRIDGE+DUP_SIM"
   },
   "canvas": {
-   "ok": "BLOCKED",
-   "detail": "未进入编辑页，canvas 不存在属预期",
-   "evidence": "N/A"
-  },
-  "apply": {
-   "ok": "BLOCKED",
-   "detail": "未进入编辑页，跳过安全 Apply",
-   "evidence": "N/A"
-  },
-  "navigation": {
    "ok": true,
-   "detail": "门户可达（冒烟通过）",
-   "evidence": "HEADLESS_REAL_BROWSER"
+   "detail": "snapshot={\"canvasCount\":1,\"canvases\":[{\"index\":0,\"ctor\":\"b\",\"width\":619.5,\"height\":376.8625,\"objects\":21,\"textObjects\":4,\"sample\":{\"ctor\":\"b\",\"text\":\"简小设\",\"left\":26.16865675953352,\"top\":147.37885874780164,\"width\":95.27115,\"height\":35.03,\"fo",
+   "evidence": "REAL_CANVAS"
+  },
+  "canvas-mutation": {
+   "ok": true,
+   "detail": "{\"mode\":\"direct\",\"testValue\":\"TEST_RUNTIME_VALUE\",\"steps\":[{\"k\":\"targetCtor\",\"v\":\"b\"},{\"k\":\"original\",\"v\":\"简小设\"},{\"k\":\"targetCoords\",\"v\":{\"left\":26.16865675953352,\"top\":147.37885874780164}},{\"k\":\"afterSet\",\"v\":\"TEST_RUNTIME_VALUE\"},{\"k\":\"ch",
+   "evidence": "REAL_CANVAS"
+  },
+  "bridge-apply": {
+   "ok": true,
+   "detail": "{\"steps\":[{\"k\":\"originalTextLen\",\"v\":3},{\"k\":\"originalHash\",\"v\":19727},{\"k\":\"applyReceived\",\"v\":true},{\"k\":\"applyOk\",\"v\":true},{\"k\":\"applyAppliedCount\",\"v\":1},{\"k\":\"readbackFoundTest\",\"v\":1},{\"k\":\"restoredCount\",\"v\":1},{\"k\":\"restoreFailed\",",
+   "evidence": "REAL_BRIDGE+REAL_APPLY"
   }
  },
- "blocked": [
-  "scriptcat",
-  "scriptcat-panel",
+ "blocked": [],
+ "failures": [
   "bridge-marker",
-  "canvas",
-  "apply"
+  "bridge-probe-exactly-one",
+  "bridge-probe-5x-5responses"
  ],
- "failures": [],
  "env": {
-  "chrome": "chrome.exe"
+  "chrome": "playwright-chromium"
  },
  "health": {
-  "url": "http://diy.zheliyin.com/siteWeb/tb_wxsx.do",
+  "url": "https://diy.zheliyin.com/diyWeb/third/20408603/1/thirdLoginDiyEdit.do",
   "isTop": true,
-  "frames": 0,
+  "frames": 1,
   "bridgeMarker": false,
-  "panelCount": 0,
+  "panelCount": 1,
   "fabric": false,
-  "requirejs": false,
+  "requirejs": true,
   "canvasObjVO": false,
   "currentCanvas": false,
   "canvasDiy": false,

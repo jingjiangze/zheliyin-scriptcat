@@ -70,26 +70,37 @@ function resolveBrowserPath() {
 }
 
 // 启动独立 profile 的真实浏览器；返回 { browser, context, page }。调用方负责 close。
-async function launchDedicated({ profileDir, headless = true, loadExtensionDir = null } = {}) {
-  const exe = resolveBrowserPath();
+// options = { profileDir, headless, loadExtensionDir, forcePlaywrightChromium }
+// forcePlaywrightChromium=true 时强制用 Playwright 自带 Chromium（其官方支持 --load-extension，
+// 规避系统 Chrome 152 对命令行加载扩展的安全限制）。登录态在 profile 目录，与浏览器无关，可复用。
+async function launchDedicated({ profileDir, headless = true, loadExtensionDir = null, forcePlaywrightChromium = false } = {}) {
+  const exe = forcePlaywrightChromium ? null : resolveBrowserPath();
   const launchOptions = { headless };
+  let args = ["--disable-blink-features=AutomationControlled", "--no-first-run", "--disable-default-apps"];
+  if (loadExtensionDir) {
+    // Chrome 137+ 禁用命令行 --load-extension；138+ 另需 --enable-unsafe-extension-debugging
+    args = args.concat([
+      "--disable-features=DisableLoadExtensionCommandLineSwitch",
+      "--enable-unsafe-extension-debugging",
+      `--disable-extensions-except=${loadExtensionDir}`,
+      `--load-extension=${loadExtensionDir}`
+    ]);
+  }
+  launchOptions.args = args;
   if (exe) {
     launchOptions.executablePath = exe;
-    launchOptions.args = ["--disable-blink-features=AutomationControlled", "--no-first-run", "--disable-default-apps"];
-  } else {
-    launchOptions.args = ["--disable-blink-features=AutomationControlled", "--no-first-run"];
-  }
-  if (loadExtensionDir) {
-    launchOptions.args = launchOptions.args.concat([`--disable-extensions-except=${loadExtensionDir}`, `--load-extension=${loadExtensionDir}`]);
   }
   const browser = await chromium.launchPersistentContext(profileDir, {
     ...launchOptions,
     viewport: { width: 1440, height: 900 },
-    ignoreDefaultArgs: ["--enable-automation"]
+    // 需要加载扩展时必须移除 --disable-extensions 与 --enable-automation（否则扩展被禁用）
+    ignoreDefaultArgs: loadExtensionDir
+      ? ["--enable-automation", "--disable-extensions", "--headless"]
+      : ["--enable-automation"]
   });
   const context = browser; // persistentContext 即 context
   const page = context.pages()[0] || (await context.newPage());
-  return { browser, context, page, exe };
+  return { browser, context, page, exe: exe || "playwright-chromium" };
 }
 
 // 对指定页面注入只读健康探针并返回脱敏结果

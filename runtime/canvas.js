@@ -71,23 +71,21 @@ async function canvasSnapshot(page) {
   return page.evaluate(CANVAS_SNAPSHOT_SRC).catch((e) => ({ evalError: String(e && e.message || e) }));
 }
 
-// 与 Stage 4.1 基准 949.15×577.40 / 21 对象 对照（仅多对象场景；首家 21 可能因模板而异）
-const BASELINE = { width: 949.15, height: 577.4, objects: 21 };
-
-function assertSnapshot(snap) {
+// 注：模板画布尺寸随项目不同（实测 949×577 与 619×377 两种），不做尺寸硬编码断言；
+// 只做结构断言（canvas 存在、尺寸 >0、对象 ≥1、文本对象可枚举、fabric API 齐全）。
+async function assertSnapshot(snap) {
   const c = snap.canvases && snap.canvases[0];
   if (!c) return { ok: false, detail: "canvas not found: " + JSON.stringify(snap) };
   const checks = {
-    width: Math.abs(c.width - BASELINE.width) < 3,
-    height: Math.abs(c.height - BASELINE.height) < 3,
+    hasSize: c.width > 0 && c.height > 0,
     objects: c.objects >= 1,
-    textCtor: !!c.sample,
+    textSample: !!c.sample,
     fabricApi: !!(c.sample && c.sample.hasSet && c.sample.hasSetCoords && c.sample.canvasRenderAll)
   };
   return {
-    ok: checks.width && checks.height && checks.objects && checks.fabricApi,
+    ok: checks.hasSize && checks.objects && checks.textSample && checks.fabricApi,
     detail: JSON.stringify({ canvas: c, checks })
   };
 }
 
-module.exports = { canvasSnapshot, assertSnapshot, BASELINE };
+module.exports = { canvasSnapshot, assertSnapshot };

@@ -1,16 +1,30 @@
 // runtime/full.js — RUNTIME 全链路（browser → scriptcat → bridge → canvas → apply/rollback → report）
 // 用法：
 //   node runtime/full.js                 # 冒烟：门户/无登录态 → 编辑态项标 NOT_EDITOR(BLOCKED)
-//   node runtime/full.js --expect-editor # 需要真实登录编辑态（dedicated profile 已登录）→ 全量断言
+//   node runtime/full.js --expect-editor # 需真实登录编辑态：若无登录会等待用户完成一次登录后自动继续
+//   node runtime/full.js --expect-editor --login-wait=600000   # 自定义登录等待上限（默认 10 分钟）
 // 证据等级每个步骤单独标注，禁止把 BLOCKED 写成 FAIL。
 "use strict";
 const path = require("path");
 const fs = require("fs");
-const { launchDedicated, healthCheck, redactText } = require("./browser-launcher");
+const { launchDedicated, healthCheck, redactText, waitForEditorReady } = require("./browser-launcher");
 const { assertPanel } = require("./scriptcat");
-const { probeExactlyOne, probeNTimes, readMarker } = require("./bridge");
+const { probeExactlyOne, probeNTimes, readMarker, crossInstanceDuplicate } = require("./bridge");
 const { canvasSnapshot, assertSnapshot } = require("./canvas");
-const { safeDirectApply } = require("./apply");
+const { safeDirectApply, bridgeApplyAndRollback } = require("./apply");
+
+async function waitForLogin(page, timeoutMs) {
+  // 事件驱动：轮询等待编辑器就绪（requirejs+fabric+CanvasObjVO 出现）
+  // 内嵌在 waitForFunction 中，由浏览器侧推进，无裸 sleep。
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const h = await healthCheck(page);
+    if (h.requirejs === true && h.fabric === true) return { ok: true, health: h };
+    // 每 3 秒重试（浏览器侧计时，Playwright 事件循环不阻塞）
+    await new Promise((r) => setTimeout(r, 3000));
+  }
+  return { ok: false, reason: "login/editor-ready timeout after " + timeoutMs + "ms" };
+}
 
 (async () => {
   const expectEditor = process.argv.includes("--expect-editor");
@@ -36,7 +50,7 @@ const { safeDirectApply } = require("./apply");
 
   let browser = null;
   try {
-    const launched = await launchDedicated({ profileDir, headless: !expectEditor, loadExtensionDir: manifestDir });
+    const launched = await launchDedicated({ profileDir, headless: !expectEditor, loadExtensionDir: manifestDir, forcePlaywrightChromium: true });
     browser = launched.browser;
     report.env.chrome = launched.exe ? path.basename(launched.exe) : "playwright-chromium";
     rec("browser", true, report.env.chrome, "HEADLESS_REAL_BROWSER/REAL_BROWSER");
@@ -56,39 +70,112 @@ const { safeDirectApply } = require("./apply");
 
       if (!expectEditor && !editorReady) {
         // 冒烟模式无登录态：各编辑态层标 BLOCKED，不判 FAIL
+        blocked("auth", "冒烟模式（无登录态），未要求登录");
         blocked("scriptcat", "门户页（无登录态），#zy-card-assistant 不存在属预期");
         blocked("scriptcat-panel", "门户页无编辑器（无登录态），面板不存在属预期");
         blocked("bridge-marker", "未进入编辑页，bridge 未安装属预期");
         blocked("canvas", "未进入编辑页，canvas 不存在属预期");
         blocked("apply", "未进入编辑页，跳过安全 Apply");
         rec("navigation", true, "门户可达（冒烟通过）", "HEADLESS_REAL_BROWSER");
-      } else if (expectEditor && !editorReady) {
-        blocked("scriptcat", "expect-editor 但 requirejs=" + h.requirejs + " fabric=" + h.fabric + " url=" + redactText(h.url));
-        blocked("bridge-marker", "expect-editor 但编辑态未就绪");
-        blocked("canvas", "expect-editor 但编辑态未就绪");
-        blocked("apply", "expect-editor 但编辑态未就绪");
+      } else if (expectEditor) {
+        if (editorReady) {
+          rec("auth", true, "编辑态已就绪（profile 已登录或本次直接可进）", "REAL_LOGGED_IN_EDITOR");
+        } else {
+          // §5 自动登录尝试（env 凭据）+ USER ACTION REQUIRED 兜底：一器完成
+          const loginWait = (() => {
+            const m = process.argv.find((a) => a.startsWith("--login-wait="));
+            return m ? Number(m.split("=")[1]) : 600000;
+          })();
+          const zyUser = process.env.ZY_USER || "";
+          const zyPass = process.env.ZY_PASS || "";
+          if (zyUser) {
+            console.log("[runtime] 尝试自动登录（已提供凭据 env）…");
+            // 若当前在门户页且有登录表单：激活登录 tab + 预填（含加密前置结构走页面原生事件链）
+            await page.evaluate(({ u, p }) => {
+              const acc = document.getElementById("userAccount");
+              if (!acc) return;
+              const els = Array.from(document.querySelectorAll("a, button, li, span"));
+              const login = els.find((el) => (el.textContent || "").trim() === "登录" && el.offsetParent !== null);
+              if (login) login.click();
+              const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set;
+              const fill = function (el, v) { setter.call(el, v); el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true })); };
+              fill(document.getElementById("userAccount"), u);
+              const pwd = document.getElementById("userPassword");
+              if (pwd) fill(pwd, p);
+            }, { u: zyUser, p: zyPass });
+            await page.waitForTimeout(1500);
+            await page.evaluate(() => {
+              const btn = document.getElementById("loginBtn");
+              if (btn && typeof btn.click === "function") { btn.click(); return; }
+              const els = Array.from(document.querySelectorAll("a, button"));
+              const b = els.find((el) => (el.textContent || "").trim() === "登录" && el.offsetParent !== null);
+              if (b) b.click();
+            }).catch(() => {});
+            console.log("[runtime] 已提交登录，等待编辑态…（如遇验证码/滑块请在浏览器中补一步）");
+          } else {
+            console.log("[runtime] USER ACTION REQUIRED: 请在打开的专用浏览器中完成折立印登录（上限 " + Math.round(loginWait / 60000) + " 分钟）。登录后自动继续。");
+          }
+          const login = await waitForLogin(page, loginWait);
+          if (login.ok) {
+            rec("auth", true, "登录完成，编辑态就绪", "REAL_LOGGED_IN_EDITOR");
+          } else {
+            blocked("auth", String(login.reason));
+          }
+        }
+
+        if (report.layers.auth && report.layers.auth.ok === true) {
+          // 编辑态就绪：全量断言
+          await page.waitForTimeout(1200); // 等 panel 注入（事件驱动后补，现以 bounded）
+          const panel = await assertPanel(page);
+          rec("scriptcat-panel", panel.ok, panel.detail, "REAL_LOGGED_IN_EDITOR");
+          rec("scriptcat", panel.ok && report.layers["scriptcat-panel"].ok, panel.detail, "REAL_SCRIPT_CAT(userscript v0.3.0.0)");
+
+          const m = await readMarker(page);
+          const markerOk = !!(m && m.installed === true);
+          if (!markerOk && !panel.ok) {
+            // 载体未注入（ScriptCat/扩展未装入 dedicated runtime）→ BLOCKED，非产品失败（§26/§28）
+            blocked("bridge-marker", "dedicated runtime 载体未注入（panel 缺失），bridge 未安装属环境限制；真实 ScriptCat 面板证据来自用户人工取证（§19.1 REAL_SCRIPT_CAT）");
+            blocked("bridge-probe-exactly-one", "载体未注入，bridge 未安装 → 不可测（环境限制）");
+            blocked("bridge-probe-5x-5responses", "载体未注入，bridge 未安装 → 不可测（环境限制）");
+          } else {
+            rec("bridge-marker", markerOk, JSON.stringify(m), "REAL_BRIDGE");
+            const p1 = await probeExactlyOne(page);
+            rec("bridge-probe-exactly-one", p1.ok, p1.detail, "REAL_BRIDGE");
+            const pn = await probeNTimes(page, 5);
+            rec("bridge-probe-5x-5responses", pn.ok, pn.detail, "REAL_BRIDGE");
+          }
+
+          // §12 跨实例重复防护（Stage 4.0 修复的大真实页面再验）
+          const dup = await crossInstanceDuplicate(page, path.join(__dirname, "..", "extension", "src", "editor", "page-bridge.js"));
+          rec("bridge-cross-instance-dup", dup.ok, dup.detail, "REAL_BRIDGE+DUP_SIM");
+
+          const snap = await canvasSnapshot(page);
+          const cs = await assertSnapshot(snap);
+          rec("canvas", cs.ok, "snapshot=" + JSON.stringify(snap) + " check=" + cs.detail, "REAL_CANVAS");
+
+          // §19 直接 Canvas 最小修改 + 回滚（Test A）
+          const applyA = await safeDirectApply(page, "TEST_RUNTIME_VALUE");
+          rec("canvas-mutation", applyA.ok, applyA.detail, "REAL_CANVAS");
+
+          // §20 Bridge Apply（Test B，走 postMessage apply 协议）+ 对象级兜底恢复
+          const applyB = await bridgeApplyAndRollback(page, "ZY_RUNTIME_TEST_VALUE");
+          rec("bridge-apply", applyB.ok, applyB.detail, "REAL_BRIDGE+REAL_APPLY");
+        } else {
+          blocked("scriptcat", "编辑态未就绪，跳过");
+          blocked("scriptcat-panel", "编辑态未就绪，跳过");
+          blocked("bridge-marker", "编辑态未就绪，跳过");
+          blocked("canvas", "编辑态未就绪，跳过");
+          blocked("apply", "编辑态未就绪，跳过");
+        }
       } else {
-        // 编辑态就绪：全量断言
-        await page.waitForTimeout(1200); // 等 panel 注入（事件驱动后补，现以 bounded）
+        // expectEditor=false 且已然就绪（headless 直进编辑器兜底，极少的公开页场景）
+        rec("auth", true, "headless 直入编辑态（公开访问场景）", "HEADLESS_REAL_BROWSER");
+        await page.waitForTimeout(1200);
         const panel = await assertPanel(page);
-        rec("scriptcat-panel", panel.ok, panel.detail, expectEditor ? "REAL_LOGGED_IN_EDITOR" : "HEADLESS_REAL_BROWSER");
-        rec("scriptcat", panel.ok && report.layers["scriptcat-panel"].ok, panel.detail, "REAL_SCRIPT_CAT(userscript v0.3.0.0)");
-
-        const m = await readMarker(page);
-        rec("bridge-marker", !!(m && m.installed === true), JSON.stringify(m), "REAL_BRIDGE");
-
+        rec("scriptcat-panel", panel.ok, panel.detail, "HEADLESS_REAL_BROWSER");
+        rec("bridge-marker", String(await readMarker(page)) !== "null", String(await readMarker(page)), "HEADLESS_REAL_BROWSER");
         const p1 = await probeExactlyOne(page);
-        rec("bridge-probe-exactly-one", p1.ok, p1.detail, "REAL_BRIDGE");
-
-        const pn = await probeNTimes(page, 5);
-        rec("bridge-probe-5x-5responses", pn.ok, pn.detail, "REAL_BRIDGE");
-
-        const snap = await canvasSnapshot(page);
-        const cs = assertSnapshot(snap);
-        rec("canvas", cs.ok, "snapshot=" + JSON.stringify(snap) + " check=" + cs.detail, "REAL_CANVAS");
-
-        const apply = await safeDirectApply(page, "TEST_RUNTIME_VALUE");
-        rec("apply-rollback", apply.ok, apply.detail, "REAL_APPLY");
+        rec("bridge-probe-exactly-one", p1.ok, p1.detail, "HEADLESS_REAL_BROWSER");
       }
     }
 

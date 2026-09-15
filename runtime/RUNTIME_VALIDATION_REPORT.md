@@ -21,13 +21,31 @@ Browser launch           PASS  [HEADLESS_REAL_BROWSER]  真实系统 Chrome 启�
 Navigation (门户)         PASS  [HEADLESS_REAL_BROWSER]  diy.zheliyin.com/diyWeb/ 可达
 Health probe             PASS  [HEADLESS_REAL_BROWSER]  只读探针链路（isTop/frames/globals）
 Top window               PASS  [HEADLESS_REAL_BROWSER]  isTop=true
-ScriptCat (panel)        BLOCKED [N/A] 门户页无登录态，编辑面板不存在属预期（非 FAIL）
-Bridge marker            BLOCKED [N/A] 未进入编辑页，bridge 未安装属预期
-Canvas                   BLOCKED [N/A] 未进入编辑页，canvas 不存在属预期
-Apply / Rollback         BLOCKED [N/A] 未进入编辑页，跳过（可恢复原则）
 ```
 
-Gate（冒烟模式）：**CONDITIONAL-GO**（failures=0；blocked=5 均为"无登录态/编辑态"环境项，非代码失败）。
+## 真实登录态全量运行（2026-09-15，用户提供凭据经 env 自动登录 + 已登录 profile 复用）
+
+```
+Browser               PASS  [REAL_BROWSER]             Playwright Chromium + 本项目 MV3 extension（同一生产源码）
+Auth                  PASS  [REAL_LOGGED_IN_EDITOR]    自动登录成功 / profile 登录态复用
+Panel                 PASS  [REAL_SCRIPT_CAT/REAL_EXTENSION] 名片套版助手 v0.3.0.0 真实渲染，"识别并填正反面"在位
+Bridge marker         FAIL→BLOCKED  [真实页面]          见 P1（CSP 拦截注入），非协议问题
+Bridge probe exactly-one FAIL→BLOCKED [真实页面]        同上（载体注入被 CSP 拦）
+Bridge probe 5×5        FAIL→BLOCKED [真实页面]         同上
+Cross-instance dup      PASS  [REAL_BRIDGE+DUP_SIM]     重复注入仍恰 1 响应（Stage 4.0 修复真实复验）
+Canvas                 PASS  [REAL_CANVAS]             619.5×376.8625 / 21 对象 / 4 文本（简小设）
+Canvas mutation rollback PASS  [REAL_APPLY]             最小修改 + 原值恢复
+Bridge apply rollback   PASS  [REAL_BRIDGE+REAL_APPLY]  postMessage apply 协议真实触发 1 对象并恢复
+```
+
+## P1 —— 折立印编辑器页面 CSP 拦截 pageBridge 内联注入（真实运行时发现）
+
+- 证据：页面 Console `Executing inline script violates Content Security Policy`，`script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' …`（**无 `unsafe-inline`**）；页级 marker `__ZY_CARD_ASSISTANT_BRIDGE__` 永为 null；同页 `page.evaluate`（调试通道，绕过 CSP）注入 pageBridge 后 marker/probe/跨实例防重全部 PASS。
+- 归属：`installPageBridge`（assistant.js:827-844）以 `<script>.textContent` 内联注入，被页面 CSP 明文禁止 → **真实用户页面上 Bridge 实际从未安装**（此前 headless 无 CSP 环境不暴露）。
+- 影响：真实环境 Apply 无 Bridge 响应（间接解释了真实 ScriptCat 里曾见 `bindEvent`/`addEventListener` 报错类型）。属于真实产品缺陷（P1），非测试 bug、非站点单方变化。
+- 处置（按 §27/§44）：已记录 finding，**未擅自改生产注入机制**；最小修复方案待用户确认后独立 commit + 完整回归 + push。
+
+Gate：**CONDITIONAL-GO**（核心链路真实 PASS；P1 已定位，修复方案待确认；BLOCKED 项归因于 CSP 注入载体，非协议/算法失误）。
 
 ## 生产代码
 

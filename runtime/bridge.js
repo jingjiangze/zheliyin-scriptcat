@@ -66,4 +66,27 @@ async function readMarker(page) {
   return page.evaluate((m) => { const cb = window[m]; return cb ? { installed: cb.installed === true, ts: cb.ts } : null; }, MARKER);
 }
 
-module.exports = { probeExactlyOne, probeNTimes, readMarker, bridgeProbeScript, BRIDGE_SOURCE, PAGE_SOURCE, MARKER };
+// 跨实例重复防护回归（§12）：真实页面中把 pageBridge 注入脚本再执行 3 次，
+// 然后 1 次 probe 应仍恰 1 个 probeResult（依赖页级 marker 幂等）。
+// 注：这验证的是「真实 ScriptCat 已装 bridge 之后，额外/潜在重复注入不新增 listener」。
+// 证据等级如实标注 REAL_BRIDGE + DUP_SIM（额外注入为仿真，非 bridge 首装来源）。
+async function crossInstanceDuplicate(page, pageBridgeJsPath) {
+  const fs = require("fs");
+  try {
+    const src = fs.readFileSync(pageBridgeJsPath, "utf8");
+    // 提取 pageBridge 函数体文本（页->主世界注入用的是 toString，这里复用以保持等价）
+    const evalSrc = src + "\n;pageBridge();";
+    // 在页面主世界执行 3 次（每次重新声明同名函数会覆盖→等价新实例注入）
+    await page.evaluate(evalSrc);
+    await page.evaluate(evalSrc);
+    await page.evaluate(evalSrc);
+    // 1 次 probe → 期望恰 1 响应
+    await page.evaluate(bridgeProbeScript({ sends: 1 }));
+    const r = await readBridgeResult(page);
+    return { ok: !!(r && r.marker && r.marker.installed === true && r.responses === 1), detail: JSON.stringify(r || { read: "no-result" }) };
+  } catch (e) {
+    return { ok: false, detail: String(e && e.message || e) };
+  }
+}
+
+module.exports = { probeExactlyOne, probeNTimes, readMarker, crossInstanceDuplicate, bridgeProbeScript, BRIDGE_SOURCE, PAGE_SOURCE, MARKER };

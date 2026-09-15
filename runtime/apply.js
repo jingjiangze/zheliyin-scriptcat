@@ -66,4 +66,78 @@ async function safeDirectApply(page, testValue) {
   return { ok: !!(r && r.done === true && r.steps && r.steps.some(s => s.k === "restored" && s.v === true)), detail: JSON.stringify(r) };
 }
 
-module.exports = { safeDirectApply };
+// §20 Bridge Apply（Test B）：通过真实 postMessage apply 协议，
+// 用一个最小安全字段值尝试修改画布，之后对象级兜底恢复。
+// 只发送 {source:"zy-card-assistant", type:"apply", side:"front", fields:{...测试值}}，
+// 禁止真实用户信息；测试值 ZY_RUNTIME_TEST_VALUE。
+// 兜底恢复：无论 apply 成败，遍历 text 对象，将等于测试值的文本恢复为记录的原值（对象级）。
+// 无法恢复则 ok=false（调用方 → NO-GO）。
+const BRIDGE_APPLY_SRC = `(async function (testValue) {
+  "use strict";
+  const out = { steps: [], testValue };
+  function step(k, v) { out.steps.push({ k, v }); }
+  function findCanvas() {
+    try {
+      const req = window.requirejs || window.require;
+      const ctx = req && req.s && req.s.contexts && req.s.contexts._;
+      const vo = (ctx && ctx.defined && ctx.defined.CanvasObjVO) || window.CanvasObjVO;
+      const total = vo && vo.totalCanvasArray;
+      if (Array.isArray(total) && total[0]) return (total[0].canvas) || total[0];
+    } catch (e) { step("findCanvasError", String(e && e.message || e)); }
+    return null;
+  }
+  // 1) 记录目标原值（第一个非空 text 对象）
+  const canvas = findCanvas();
+  if (!canvas) { out.failed = "canvas-not-found"; return out; }
+  const objs = typeof canvas.getObjects === "function" ? canvas.getObjects() : [];
+  const texts = objs.filter(o => o && o.text != null && String(o.text).trim().length > 0);
+  if (!texts.length) { out.failed = "no-text-object"; return out; }
+  const target = texts[0];
+  const original = String(target.text || "");
+  out.targetKey = (function (o) { return String(o && o.type || "obj"); })();
+  step("originalTextLen", original.length); // 脱敏：不入原文
+  step("originalHash", original.split("").reduce((a, c) => ((a << 5) - a + c.charCodeAt(0)) | 0, 0) & 0xffff); // 弱摘要，用于恢复比对，非原文
+
+  // 2) 通过 Bridge apply 协议发送测试字段（front）
+  const applyResult = await new Promise((resolve) => {
+    let got = false;
+    function on(e) {
+      if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "applyResult") {
+        got = true; window.removeEventListener("message", on); resolve(e.data);
+      }
+    }
+    window.addEventListener("message", on);
+    window.postMessage({ source: "zy-card-assistant", type: "apply", side: "front", fields: { name: testValue }, rtApply: true }, location.origin);
+    setTimeout(() => { if (!got) { window.removeEventListener("message", on); resolve({ timeout: true }); } }, 4000);
+  });
+  out.applyResult = applyResult;
+  step("applyReceived", !!applyResult);
+  step("applyOk", !!(applyResult && applyResult.ok === true));
+  step("applyAppliedCount", (applyResult && Array.isArray(applyResult.applied)) ? applyResult.applied.length : null);
+  // 3) 读回：画布中是否存在测试值
+  const foundTest = typeof canvas.getObjects === "function"
+    ? canvas.getObjects().filter(o => o && o.text === testValue)
+    : [];
+  step("readbackFoundTest", foundTest.length);
+  // 4) 对象级兜底恢复：把等于测试值的对象恢复为 original
+  let restored = 0, restoreFailed = 0;
+  try {
+    (typeof canvas.getObjects === "function" ? canvas.getObjects() : []).forEach((o) => {
+      if (o && o.text === testValue) { o.set("text", original); restored += 1; }
+    });
+    canvas.renderAll();
+  } catch (e) { restoreFailed += 1; step("restoreError", String(e && e.message || e)); }
+  step("restoredCount", restored);
+  step("restoreFailed", restoreFailed);
+  out.done = true;
+  out.canRollback = restoreFailed === 0;
+  return out;
+})`;
+
+async function bridgeApplyAndRollback(page, testValue) {
+  const fn = BRIDGE_APPLY_SRC + "(" + JSON.stringify(testValue) + ")";
+  const r = await page.evaluate(fn).catch((e) => ({ evalError: String(e && e.message || e) }));
+  return { ok: !!(r && r.done === true && r.canRollback === true), detail: JSON.stringify(r) };
+}
+
+module.exports = { safeDirectApply, bridgeApplyAndRollback };
