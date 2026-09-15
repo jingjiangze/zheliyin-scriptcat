@@ -10,9 +10,10 @@
 <script src="src/fields/field-core.js"></script>
 <script src="src/core/config-core.js"></script>
 <script src="src/ai/ai-client.js"></script>
+<script src="src/editor/page-bridge.js"></script>
 <script src="assistant.js"></script>
 <script>
-  var names = ["emptyFields","normalizeFields","mergeFields","resolveConfig","configToStorage","aiRequest","buildChatUrl","throwAiError","GM_xmlhttpRequest"].filter(function (n) {
+  var names = ["emptyFields","normalizeFields","mergeFields","resolveConfig","configToStorage","aiRequest","buildChatUrl","throwAiError","pageBridge","GM_xmlhttpRequest"].filter(function (n) {
     try { return typeof window[n] === "undefined"; } catch (_e) { return true; }
   });
   // const 不挂 window：通过调用验证常量可见
