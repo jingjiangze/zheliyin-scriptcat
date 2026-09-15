@@ -1,19 +1,19 @@
-# TEST_REPORT.md — 测试报告（Stage 1 + Stage 2）
+# TEST_REPORT.md — 测试报告（Stage 1 + Stage 2 + Stage 3）
 
 > 执行方式：本机 Edge headless（`--headless=new --dump-dom`）作为 JS 运行环境；无框架断言（浏览器/Node 双跑兼容）。
-> Stage 2 日期：2026-09-15 | Baseline：main (tag `stage-2-baseline`)
+> Stage 3 日期：2026-09-15 | Baseline：main (tag `stage-3-baseline`)
 
 ## 测试层级与结果（累计）
 
 | 层级 | 模块 | 结果 | 证据 |
 |---|---|---|---|
-| STATIC | 全部 | PASS | wiring-check：field/config/ai 模块 + assistant 三形态接线，函数与常量跨文件可解析（`wired-ok`） |
-| UNIT | field-core | **PASS 43/43** | `run-tests.html` → `field:ALL-PASS (43)` |
-| UNIT | config-core | **PASS 15/15** | `run-tests.html` → `config:ALL-PASS (15)`（默认值/完整/部分/历史 key/优先级/迁移闭环/保存重读） |
-| UNIT+INTEGRATION | ai（传输矩阵） | **PASS 10/10** | `ai-tests.html`：200 合法/非法 JSON、429、500、timeout、network、空响应、缺 choices/message/content、endpoint 与脱敏断言 |
-| INTEGRATION | 业务级 fallback/merge | **PASS 8/8** | `ai-tests.html`：AI 429→本地；AI 空结果→本地；AI 正常→merge 与 reference 一致且 title/name 生效；parse 非法 JSON→本地；追加信息保留；每场景队列消费干净 |
-| BROWSER / REAL PAGE | 扩展真机、设计器画布 | 未执行（需登录与 Chrome 加载） | UNVERIFIED（TEST_PLAN Case N–T） |
-| MANUAL | ScriptCat @require 真机 | 未执行（依赖 raw.githubusercontent 可达性） | UNVERIFIED |
+| STATIC | 全部 | PASS | wiring-check：field/config/ai/page-bridge/assistant 五模块接线（`wired-ok`） |
+| UNIT | field-core | **PASS 43/43** | `run-tests.html` |
+| UNIT | config-core | **PASS 15/15** | `run-tests.html` |
+| UNIT+INTEGRATION | ai（传输矩阵+业务级） | **PASS 18/18** | `ai-tests.html?zydebug=1` |
+| UNIT+INTEGRATION | editor/bridge（页面侧，canvas mock） | **PASS 18/18** | `editor-tests.html`：协议形状/probe 只读/已有层只改文本且样式不动/克隆样式/富余助手层清理/模板层保护/C1 宽松阈值与空画布新建/both 双面/无画布友好失败 |
+| BROWSER / REAL PAGE | 扩展真机、设计器画布 | 未执行 | UNVERIFIED |
+| MANUAL | ScriptCat @require（4 模块） | 未执行 | UNVERIFIED |
 
 ## Stage 2 单元覆盖明细
 
