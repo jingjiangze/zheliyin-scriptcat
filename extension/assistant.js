@@ -35,6 +35,9 @@
     minimized: false
   };
 
+  // Stage 3.2（AUDIT-BRIDGE-001）：Bridge 安装生命周期稳定标记（同一运行内只注入一次）
+  let pageBridgeInstalled = false;
+
   // emptyFields() 已迁移至 field-core（@require 首行加载）
 
   function getConfig() {
@@ -822,11 +825,21 @@
   });
 
   function installPageBridge() {
-    if (document.getElementById("zy-card-assistant-page-bridge")) return;
+    // Stage 3.2 修复（AUDIT-BRIDGE-001, P1）：安装状态与 script DOM 生命周期解耦。
+    // 旧实现依赖“zy-card-assistant-page-bridge”DOM id 判重，但 script 注入后立即 remove()，
+    // id 永远不存在 → guard 失效 → 每次 renderPanel()（含 minimize 重建）重复注入 →
+    // 多个 message listener → 一次 apply/probe 被处理 N 次。
+    // 现改为稳定的闭包标志：同一次脚本运行内只注入一次；注入失败时允许下次重试。
+    if (pageBridgeInstalled) return;
     const script = document.createElement("script");
     script.id = "zy-card-assistant-page-bridge";
     script.textContent = "(" + pageBridge.toString() + ")();";
-    (document.head || document.documentElement).appendChild(script);
+    try {
+      (document.head || document.documentElement).appendChild(script);
+      pageBridgeInstalled = true;
+    } catch (_error) {
+      pageBridgeInstalled = false; // 注入异常时允许重试
+    }
     script.remove();
   }
 
@@ -908,6 +921,7 @@
       getConfig: getConfig,
       saveConfig: saveConfig,
       parseFields: parseFields,
+      installPageBridge: installPageBridge,
       splitFrontBackText: splitFrontBackText,
       parseByRulesFromSides: parseByRulesFromSides,
       emptyFields: emptyFields,
