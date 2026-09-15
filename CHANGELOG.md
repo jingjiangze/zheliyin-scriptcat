@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+### Stage 3.2（2026-09-15）— Bridge 运行期修复 + 再审计（P1 关闭，Stage 4 Gate=CONDITIONAL-GO）
+- 修复 AUDIT-BRIDGE-001（P1，独立审计实测 dup:1:2）：`installPageBridge` 防护由「会被 remove 的 DOM id」改为**稳定的闭包标志**（同一运行内只注入一次；注入失败允许重试）；`__ZY_DEBUG__`（仅 ?zydebug）新增 `installPageBridge` 导出。
+- 新增 Bridge 生命周期回归（5/5 PASS ×3 稳定）：installPageBridge ×5 后 probe 仍恰 1；minimize 收起/展开 ×4（真实 UI 路径）仍恰 1；install×3+minimize×2 后 apply 恰 1（只执行一次）；t5 机制验证测试对重复注册敏感。Mutation A（移除 guard）→ 测试 FAIL 4/5，证明回归有效。
+- 修复范围最小：仅 userscript 生命周期逻辑（约 12 行）+ 生成物同步；未改 Field/Config/AI/Editor/Bridge 协议/UI/标签/postMessage targetOrigin（仍 location.origin）。
+- 再审计结论：P0=0、P1=0 → Final Verdict=PASS WITH TECHNICAL DEBT；Stage 4 Gate=CONDITIONAL-GO（前提：ScriptCat/扩展/设计器真机三连验证）。
+- 详见 `STAGE_3_2_REPAIR_AND_REAUDIT.md`（Stage 3.1 独立审计报告保留原样）。
+
 ### Stage 3.1（2026-09-15）— Runtime Wiring 复核 + 生产入口检查（源码零修改）
 - 复核：main/stage-3-complete/stage-3-baseline 对应关系；6 文件 GitHub==本地一致；`function pageBridge` 唯一定义于 `extension/src/editor/page-bridge.js`（Userscript @require 4 行 / Extension manifest 6 项按序加载 / assistant 无 inline copy）。
 - 升级 `extension/wiring-check.html` 为生产入口检查（5/5 PASS）：模块可解析 → 桥接注入 → probe/apply 真实往返 → 失败不吞 → toString 唯一实现。
