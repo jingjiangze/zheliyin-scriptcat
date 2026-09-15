@@ -1,0 +1,75 @@
+{
+ "ts": "2026-09-15T10:13:04.081Z",
+ "mode": "HEADLESS_REAL_BROWSER",
+ "layers": {
+  "browser": {
+   "ok": true,
+   "detail": "chrome.exe",
+   "evidence": "HEADLESS_REAL_BROWSER/REAL_BROWSER"
+  },
+  "health": {
+   "ok": true,
+   "detail": "isTop=true frames=0",
+   "evidence": "HEADLESS_REAL_BROWSER/REAL_LOGGED_IN_EDITOR"
+  },
+  "scriptcat": {
+   "ok": "BLOCKED",
+   "detail": "门户页（无登录态），#zy-card-assistant 不存在属预期",
+   "evidence": "N/A"
+  },
+  "scriptcat-panel": {
+   "ok": "BLOCKED",
+   "detail": "门户页无编辑器（无登录态），面板不存在属预期",
+   "evidence": "N/A"
+  },
+  "bridge-marker": {
+   "ok": "BLOCKED",
+   "detail": "未进入编辑页，bridge 未安装属预期",
+   "evidence": "N/A"
+  },
+  "canvas": {
+   "ok": "BLOCKED",
+   "detail": "未进入编辑页，canvas 不存在属预期",
+   "evidence": "N/A"
+  },
+  "apply": {
+   "ok": "BLOCKED",
+   "detail": "未进入编辑页，跳过安全 Apply",
+   "evidence": "N/A"
+  },
+  "navigation": {
+   "ok": true,
+   "detail": "门户可达（冒烟通过）",
+   "evidence": "HEADLESS_REAL_BROWSER"
+  }
+ },
+ "blocked": [
+  "scriptcat",
+  "scriptcat-panel",
+  "bridge-marker",
+  "canvas",
+  "apply"
+ ],
+ "failures": [],
+ "env": {
+  "chrome": "chrome.exe"
+ },
+ "health": {
+  "url": "http://diy.zheliyin.com/siteWeb/tb_wxsx.do",
+  "isTop": true,
+  "frames": 0,
+  "bridgeMarker": false,
+  "panelCount": 0,
+  "fabric": false,
+  "requirejs": false,
+  "canvasObjVO": false,
+  "currentCanvas": false,
+  "canvasDiy": false,
+  "canvas": {
+   "canvasCount": 0,
+   "firstW": null,
+   "firstH": null
+  },
+  "title": "智能设计定制未来"
+ }
+}
