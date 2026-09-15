@@ -1,0 +1,9 @@
+张三
+销售经理
+深圳市华创科技有限公司（以下样例为虚构文本，仅用于回归测试）
+地址：广东省深圳市南山区科技园南区深南大道 9988 号华创大厦 20 楼
+电话：13800138000
+微信：zhangsan_wx
+邮箱：zhangsan@huachuang-tech.example.com
+网址：www.huachuang-tech.example.com
+主营业务：电子元器件、服务器配件、智能硬件定制
