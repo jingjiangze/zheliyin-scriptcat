@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>check-start</title>
+</head>
+<body>
+<p>wiring check stage 2</p>
+<script src="gm-shim.js"></script>
+<script src="src/fields/field-core.js"></script>
+<script src="src/core/config-core.js"></script>
+<script src="src/ai/ai-client.js"></script>
+<script src="assistant.js"></script>
+<script>
+  var names = ["emptyFields","normalizeFields","mergeFields","resolveConfig","configToStorage","aiRequest","buildChatUrl","throwAiError","GM_xmlhttpRequest"].filter(function (n) {
+    try { return typeof window[n] === "undefined"; } catch (_e) { return true; }
+  });
+  // const 不挂 window：通过调用验证常量可见
+  var constsOk = false;
+  try { constsOk = resolveConfig({}).baseUrl === DEFAULT_BASE_URL; } catch (_e) { constsOk = false; }
+  document.title = (names.length === 0 && constsOk) ? "wired-ok" : "wired-fail:" + names.join(",") + (constsOk ? "" : ",consts");
+</script>
+</body>
+</html>
