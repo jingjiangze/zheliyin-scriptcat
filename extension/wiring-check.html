@@ -5,21 +5,71 @@
 <title>check-start</title>
 </head>
 <body>
-<p>wiring check stage 2</p>
+<p>runtime wiring check (production entry)</p>
+<pre id="wiring_result">running...</pre>
 <script src="gm-shim.js"></script>
+<script>
+  // 测试环境专用：file:// 的 location.origin 为 "null"，postMessage 目标源投递失败；
+  // 归一化为 "*" 使注入桥接在本页可真实往返（生产 https 站点 origin 正常，不受影响）。
+  (function () {
+    var real = window.postMessage.bind(window);
+    window.postMessage = function (data, origin) { return real(data, "*"); };
+  })();
+</script>
 <script src="src/fields/field-core.js"></script>
 <script src="src/core/config-core.js"></script>
 <script src="src/ai/ai-client.js"></script>
 <script src="src/editor/page-bridge.js"></script>
 <script src="assistant.js"></script>
 <script>
-  var names = ["emptyFields","normalizeFields","mergeFields","resolveConfig","configToStorage","aiRequest","buildChatUrl","throwAiError","pageBridge","GM_xmlhttpRequest"].filter(function (n) {
-    try { return typeof window[n] === "undefined"; } catch (_e) { return true; }
+(async function () {
+  var results = [];
+  function case_(name, cond) { results.push(name + (cond ? " PASS" : " FAIL")); }
+  // 场景 1：assistant 启动前，pageBridge 可从唯一模块解析
+  case_("w1 pageBridge 全局可解析", typeof window.pageBridge === "function");
+  // 场景 2：assistant 已注入页面桥接（installPageBridge 在 renderPanel 中同步执行）
+  if (document.readyState === "loading") {
+    await new Promise(function (res) { window.addEventListener("DOMContentLoaded", res); });
+  } else {
+    await new Promise(function (res) { setTimeout(res, 50); });
+  }
+  var bridgePing = await new Promise(function (resolve) {
+    var to = setTimeout(function () { resolve("TIMEOUT"); }, 2000);
+    function onMsg(e) {
+      if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "probeResult") {
+        clearTimeout(to);
+        window.removeEventListener("message", onMsg);
+        resolve(e.data);
+      }
+    }
+    window.addEventListener("message", onMsg);
+    window.postMessage({ source: "zy-card-assistant", type: "probe" }, location.origin);
   });
-  // const 不挂 window：通过调用验证常量可见
-  var constsOk = false;
-  try { constsOk = resolveConfig({}).baseUrl === DEFAULT_BASE_URL; } catch (_e) { constsOk = false; }
-  document.title = (names.length === 0 && constsOk) ? "wired-ok" : "wired-fail:" + names.join(",") + (constsOk ? "" : ",consts");
+  case_("w2 probe 往返（注入桥接生效，未挂起）", bridgePing !== "TIMEOUT");
+  case_("w3 probeResult 结构", bridgePing !== "TIMEOUT" && bridgePing.ok === true && Array.isArray(bridgePing.canvases) && typeof bridgePing.href === "string");
+  // 场景 3b：apply 在无画布时友好失败（错误不静默吞掉）
+  var applyPing = await new Promise(function (resolve) {
+    var to = setTimeout(function () { resolve("TIMEOUT"); }, 2000);
+    function onMsg(e) {
+      if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "applyResult") {
+        clearTimeout(to);
+        window.removeEventListener("message", onMsg);
+        resolve(e.data);
+      }
+    }
+    window.addEventListener("message", onMsg);
+    window.postMessage({ source: "zy-card-assistant", type: "apply", side: "front", fields: { name: "张三" } }, location.origin);
+  });
+  case_("w4 apply 无画布 -> 显式失败（未吞掉）", applyPing !== "TIMEOUT" && applyPing.ok === false && String(applyPing.message || "").indexOf("未找到") >= 0);
+  // 场景 4：模块级 bridge 唯一（无第二份定义）——toString 自行包含其完整实现
+  case_("w5 pageBridge 为模块唯一实现（toString 自含）", String(window.pageBridge).indexOf("findCanvasForSide") >= 0 && String(window.pageBridge).indexOf("applyFields") >= 0);
+
+  var fails = results.filter(function (r) { return r.indexOf(" FAIL") >= 0; }).length;
+  var summary = fails === 0 ? "wired-ok (" + results.length + ")" : "wired-fail " + fails + "/" + results.length;
+  document.title = summary;
+  var out = document.getElementById("wiring_result");
+  if (out) out.textContent = summary + "\n" + results.join("\n");
+})();
 </script>
 </body>
 </html>
