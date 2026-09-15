@@ -1,3 +1,14 @@
 *.zip
 .DS_Store
 Thumbs.db
+
+# runtime harness —— 敏感/临时产物禁止入库
+node_modules/
+runtime/browser/profile*/
+runtime/reports/screenshots*
+storage-state/
+*.session
+.cookies
+[rR]untime[-_]profile/
+playwright-profile/
+.DS_Store

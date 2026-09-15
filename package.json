@@ -1,0 +1,14 @@
+{
+  "name": "zheliyin-scriptcat-runtime",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Playwright Real Runtime Harness for 折立印名片套版助手（仅 runtime 依赖，不影响生产 userscript/extension）",
+  "scripts": {
+    "runtime:check": "node runtime/check.js",
+    "runtime:full": "node runtime/full.js",
+    "runtime:attach": "node runtime/attach.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}
