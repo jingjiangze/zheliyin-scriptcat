@@ -1,19 +1,19 @@
-# TEST_REPORT.md — 测试报告（Stage 1 + Stage 2 + Stage 3）
+# TEST_REPORT.md — 测试报告（Stage 1 + 2 + 3 + 3.1）
 
 > 执行方式：本机 Edge headless（`--headless=new --dump-dom`）作为 JS 运行环境；无框架断言（浏览器/Node 双跑兼容）。
-> Stage 3 日期：2026-09-15 | Baseline：main (tag `stage-3-baseline`)
+> Stage 3.1 日期：2026-09-15 | Baseline：main (tag `stage-3-baseline`)
 
 ## 测试层级与结果（累计）
 
 | 层级 | 模块 | 结果 | 证据 |
 |---|---|---|---|
-| STATIC | 全部 | PASS | wiring-check：field/config/ai/page-bridge/assistant 五模块接线（`wired-ok`） |
+| STATIC+INTEGRATION | runtime wiring（生产入口） | **PASS 5/5** | `wiring-check.html`：pageBridge 全局可解析/注入桥接真实 probe 往返/probeResult 结构/apply 无画布显式失败/toString 唯一实现（file:// origin 归一化仅测试环境） |
 | UNIT | field-core | **PASS 43/43** | `run-tests.html` |
 | UNIT | config-core | **PASS 15/15** | `run-tests.html` |
 | UNIT+INTEGRATION | ai（传输矩阵+业务级） | **PASS 18/18** | `ai-tests.html?zydebug=1` |
-| UNIT+INTEGRATION | editor/bridge（页面侧，canvas mock） | **PASS 18/18** | `editor-tests.html`：协议形状/probe 只读/已有层只改文本且样式不动/克隆样式/富余助手层清理/模板层保护/C1 宽松阈值与空画布新建/both 双面/无画布友好失败 |
+| UNIT+INTEGRATION | editor/bridge（canvas mock） | **PASS 18/18** | `editor-tests.html` |
 | BROWSER / REAL PAGE | 扩展真机、设计器画布 | 未执行 | UNVERIFIED |
-| MANUAL | ScriptCat @require（4 模块） | 未执行 | UNVERIFIED |
+| MANUAL | ScriptCat @require（4 模块）真机 | 未执行 | UNVERIFIED |
 
 ## Stage 2 单元覆盖明细
 
