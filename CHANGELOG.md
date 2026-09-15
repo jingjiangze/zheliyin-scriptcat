@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Stage 4.0（2026-09-15）— Bridge/Runtime 独立审计 + 最小加固（Stage 4 Gate=CONDITIONAL-GO）
+- 修复 **AUDIT-BRIDGE-002（P1，跨 userscript 实例重复注入）**：`pageBridge()` 增加页面主世界稳定 marker（`window.__ZY_CARD_ASSISTANT_BRIDGE__`），同 window 内任何实例/热更新/重复执行只安装一次 listener；listener 注册成功后才落 marker（异常可重试）。
+- 回归：bridge-lifecycle 6/6（新增 t6 跨实例用例，修复前 FAIL=2 个 listener；修复后 PASS）×3 稳定；Mutation（移除 marker）→ FAIL 2/6，还原后 ALL-PASS；wiring 5/5、field 43/43、config 15/15、AI 18/18、editor 18/18 全绿。
+- 审计结论：P0=0、P1=0；P2 记录项 5（同 window 伪造消息 nonce 不引入、@connect * + 自定义 endpoint、@updateURL 指向 main、inheritReferenceProps 黑名单复制、requestId 预留）；UNVERIFIED：ScriptCat/扩展真机、iframe 拓扑、设计器画布。
+- 详见 `docs/STAGE_4.0_AUDIT.md`；未实现 OCR / 未重写任何模块。
+
 ### Stage 3.2（2026-09-15）— Bridge 运行期修复 + 再审计（P1 关闭，Stage 4 Gate=CONDITIONAL-GO）
 - 修复 AUDIT-BRIDGE-001（P1，独立审计实测 dup:1:2）：`installPageBridge` 防护由「会被 remove 的 DOM id」改为**稳定的闭包标志**（同一运行内只注入一次；注入失败允许重试）；`__ZY_DEBUG__`（仅 ?zydebug）新增 `installPageBridge` 导出。
 - 新增 Bridge 生命周期回归（5/5 PASS ×3 稳定）：installPageBridge ×5 后 probe 仍恰 1；minimize 收起/展开 ×4（真实 UI 路径）仍恰 1；install×3+minimize×2 后 apply 恰 1（只执行一次）；t5 机制验证测试对重复注册敏感。Mutation A（移除 guard）→ 测试 FAIL 4/5，证明回归有效。
