@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+### Stage 2（2026-09-15）— Config 单一来源 + AI 边界稳定 + 失败回归（行为零变更）
+- Config：新增 `extension/src/core/config-core.js` 单一事实来源；`getConfig` 统一解析并含历史 `zyBaseUrl` 一次性迁移（读优先级 zyArkBaseUrl > zyBaseUrl > 默认）；`saveConfig` 双 key 同步；`parseFields` 不再直接读 GM key。
+- AI：新增 `extension/src/ai/ai-client.js`（统一请求/结构化错误模型 NETWORK/TIMEOUT/HTTP/INVALID_JSON/CONFIG + retryable 标记 + 脱敏 + 可注入 transport）；`splitSidesByDoubao/parseByDoubao` 改为薄封装，Prompt 逐字保留。
+- 测试：config-core 15/15 PASS；ai 传输矩阵 10/10 + 业务级 fallback/merge 8/8 PASS；field-core 回归 43/43 PASS；wiring-check 通过。
+- 增加 `#zydebug`（hash/query）诊断出口，供无头/浏览器回归调用内部引用。
+- 未动：AI Prompt、Bridge 协议、字段业务规则、UI 交互、版本号（0.3.0.0）、retry（本阶段不引入，按 §十六 判定）。
+- 待真机验证：ScriptCat `@require` 三模块加载、扩展刷新、画布套版、真实 AI 链路（UNVERIFIED）。
+
 ### Stage 1（2026-09-15）— 稳定核心 + 可测试边界（行为零变更）
 - 新增 `extension/src/fields/field-core.js`：19 个字段核心纯函数单一事实来源（逐字平移，行为与 Golden Master 一致）。
 - userscript 改为经 `@require` 加载 field-core，删除主体内重复定义；浏览器扩展 manifest 按序加载同一文件；exe 安装器内嵌目录天然包含。
