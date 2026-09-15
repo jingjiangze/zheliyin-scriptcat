@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+### Stage 3（2026-09-15）— 运行时一致性 + Bridge 特征化 + 最小 Editor 边界（行为零变更）
+- 一致性核实：main HEAD 与 stage-2-complete 对齐；6 个核心文件 GitHub==本地逐字节一致；Stage 2「收口」在真实 main 中成立。
+- 新增 `extension/src/editor/page-bridge.js`（Editor 边界唯一事实来源）：pageBridge 整段逐字抽取，注入方式不变；可独立于主脚本测试。
+- 新增 Editor/Bridge 边界测试（canvas mock，18/18 PASS）：协议形状/Probe 只读/已有层只改文本样式不动/克隆样式/top 钳制/富余助手层清理/模板层保护/C1 阈值与空画布新建/both/无画布友好失败。
+- 新增 `EDITOR_OBJECT_NOTES.md`：对象属性问卷（读写能力 13/13 代码确认，rotation/图片层待真机）。
+- 未改：Bridge 协议/消息格式、标签语义、applyFields 全套行为、UI、版本号（0.3.0.0）。
+- 待真机验证：ScriptCat @require（4 模块）、扩展刷新、设计器画布（UNVERIFIED）。
+
 ### Stage 2（2026-09-15）— Config 单一来源 + AI 边界稳定 + 失败回归（行为零变更）
 - Config：新增 `extension/src/core/config-core.js` 单一事实来源；`getConfig` 统一解析并含历史 `zyBaseUrl` 一次性迁移（读优先级 zyArkBaseUrl > zyBaseUrl > 默认）；`saveConfig` 双 key 同步；`parseFields` 不再直接读 GM key。
 - AI：新增 `extension/src/ai/ai-client.js`（统一请求/结构化错误模型 NETWORK/TIMEOUT/HTTP/INVALID_JSON/CONFIG + retryable 标记 + 脱敏 + 可注入 transport）；`splitSidesByDoubao/parseByDoubao` 改为薄封装，Prompt 逐字保留。
