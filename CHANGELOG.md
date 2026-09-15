@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+### Stage 3.1（2026-09-15）— Runtime Wiring 复核 + 生产入口检查（源码零修改）
+- 复核：main/stage-3-complete/stage-3-baseline 对应关系；6 文件 GitHub==本地一致；`function pageBridge` 唯一定义于 `extension/src/editor/page-bridge.js`（Userscript @require 4 行 / Extension manifest 6 项按序加载 / assistant 无 inline copy）。
+- 升级 `extension/wiring-check.html` 为生产入口检查（5/5 PASS）：模块可解析 → 桥接注入 → probe/apply 真实往返 → 失败不吞 → toString 唯一实现。
+- `EDITOR_OBJECT_NOTES.md` OCR 能力问卷补充证据分级（STATIC/HEADLESS/UNVERIFIED）。
+- Final Verdict：**PASS WITH TECHNICAL DEBT**（EDITOR-RISK-001 业务耦合 P2、BRIDGE-RISK-001/002、KEY-UI）；生产源码零修改（§47 最小原则）。
+- 未动：旧 tag、Bridge 协议、标签语义、apply 行为、UI、版本号、OCR/Unified Object。
+
 ### Stage 3（2026-09-15）— 运行时一致性 + Bridge 特征化 + 最小 Editor 边界（行为零变更）
 - 一致性核实：main HEAD 与 stage-2-complete 对齐；6 个核心文件 GitHub==本地逐字节一致；Stage 2「收口」在真实 main 中成立。
 - 新增 `extension/src/editor/page-bridge.js`（Editor 边界唯一事实来源）：pageBridge 整段逐字抽取，注入方式不变；可独立于主脚本测试。
