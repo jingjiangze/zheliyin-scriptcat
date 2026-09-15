@@ -26,16 +26,27 @@
 真实 Chrome 打开结果（本次复取证）：
 - `https://diy.zheliyin.com/`：**HTTP GET/HEAD 均 404**（上次取证 200 ~319KB，本次 404——服务器行为/路由变动，需注意）；真实 Chrome headless 渲染后 title=`diy.zheliyin.com`，**顶层 iframe 数=0**。
 - `https://diy.zheliyin.com/diyWeb/`：HTTP 200（~17.7KB）。
-- 结论（已取证部分）：
+
+**3.1 真实设计器取证（用户真机回传，2026-09-15）：**
+
+实际运行拓扑（`http…/diyWeb/third/20408603/1/thirdLoginDiyEdit.do`，已登录编辑态）：
 
 ```
-TOP WINDOW (diy.zheliyin.com)  —— 已确认可达、无顶层 iframe（两次取证一致）
-   ├── 主站壳（/）: 当前 404（Chrome 渲染 title=diy.zheliyin.com）
-   ├── 门户（/diyWeb/）: 200, 含登录
-   └── 设计器（editor/canvas）: 需账号, 未取得 → UNVERIFIED
+TOP WINDOW (diy.zheliyin.com/diyWeb/third/20408603/1/thirdLoginDiyEdit.do)  ← 设计器本体
+   ├── fabric: true（fabric.Canvas 构造器存在）
+   ├── requirejs: true（138 个已定义模块：CanvasObjVO / CurrentCanvas / CanvasDiy 均存在）
+   ├── CanvasObjVO.totalCanvasArray = [1 个 canvas]（949.15 × 577.40，21 对象，4 个文本，首文本「简小袋」）
+   └── iframe[0] id=mattingContent src=about:blank（抠图占位，无 canvas/fabric/requirejs，与编辑器无关）
 ```
 
-页面真实 iframe/editor 拓扑、Canvas、对象模型均需登录后取证 → **UNVERIFIED**（已提供 [diy-runtime-forensics.js](./diy-runtime-forensics.js) 供用户在真实设计器 DevTools 一键取证回传）。
+**结论（§二十四核心问题 → 已可回答）：**
+- Assistant/Bridge 应注入 **top window**（设计器本体所在）；
+- Editor 引擎与 Canvas 全部位于 top window 的 requirejs/闭包作用域（`CanvasObjVO/CurrentCanvas/CanvasDiy` 均为真）；
+- `mattingContent` iframe 为抠图占位空壳，与名片编辑器无关；
+- Bridge 的 `findCanvasForSide` 定位链（`getLoadedModule("CanvasObjVO") → totalCanvasArray[0] → canvas`）在真实页面成立；
+- 仅记录 1 个 canvas（totalCanvasArray 长度 1，正面；反面/背面需模板内查看，未单独取证）。
+
+页面真实 iframe/editor 拓扑、Canvas、对象模型已获真实取证（见上）。
 
 ## 4. ScriptCat
 
@@ -47,15 +58,15 @@ TOP WINDOW (diy.zheliyin.com)  —— 已确认可达、无顶层 iframe（两�
 
 ## 6. iframe
 
-**UNVERIFIED**（未登录可见拓扑中顶层 0 iframe；设计器内部 frame 拓扑需登录后取证）。
+**PASS（真实取证）**：设计器页面顶层 **1 个 iframe（id=mattingContent, about:blank）**，为抠图占位空壳，无 fabric/requirejs/canvas，与编辑器无关；编辑器本体在 top window。→ 与"无顶层 iframe"的未登录观察一致（该 iframe 为编辑态才出现）。**extension `all_frames: true` 暂无证据证明必要，但仍未删除**（无 P0 驱动；保持现状待 Stage 5 证据）。
 
 ## 7. Canvas
 
-**UNVERIFIED**（真实 Canvas 未取得；headless mock 层全部通过不等同真实 Canvas）。
+**PASS（真实取证）**：真实 Canvas 已取得——`CanvasObjVO.totalCanvasArray` 长度 1，`total[0]` 为 fabric Canvas：**949.15 × 577.40 px，21 个对象，4 个文本对象（首个「简小袋」）**。`findCanvasForSide` 定位链在真实页面成立。
 
 ## 8. Object Snapshot
 
-**UNVERIFIED**（真实对象未取得）。已内置字段清单于取证脚本（left/top/width/height/scaleX/scaleY/angle/fontSize/fontFamily/fill/origin/constructor/zy 标签），待回传。
+**PASS（真实取证）**：真实文本对象「简小袋」已采样（n=4 个文本对象；构造器压缩名为 `b`，即 webpack 压缩类名——真实定位依赖 fabric 方法而非类名）。left/top/scale/origin/font 等字段存在但本次截图仅回传摘要；完整逐字段 object snapshot 留给 Stage 5（Editor API Contract）时按需补充。
 
 ## 9. Bridge
 
@@ -83,36 +94,39 @@ exit: 各套断言 0 FAIL（bridge 需 ?zydebug=1；ai 需 ?zydebug=1；wiring �
 |---|---|---|
 | P0 | 无 | — |
 | P1 | 无（Stage 3.2/4.0 已清零） | — |
-| P2 | 见 §17 重分类表 | 记录/延期 |
-| P3 | 见 §17 | 记录 |
-| UNVERIFIED | ScriptCat 安装运行、扩展真机、iframe 拓扑、真实 Canvas/对象/Apply、真实 AI | 环境限制 |
+| P2 | 见 §16 重分类表 | 记录/延期 |
+| P3 | 见 §16 | 记录 |
+| UNVERIFIED | ScriptCat 安装运行、扩展真机、真实 Bridge 注入往返、真实 Apply、真实 AI | 环境限制（拓扑/Canvas/对象已 PASS） |
 
 ## 13. 修改（本阶段实际修改，逐项 commit）
 
 | commit | 目的 | 文件 | 说明 |
 |---|---|---|---|
-| docs: add runtime forensics script | 取证工具（只读） | docs/diy-runtime-forensics.js | 供用户真实设计器 DevTools 一键输出拓扑/对象摘要；脱敏 |
-| docs: stage 4.1 report 更新 | 报告 | STAGE_4_1_RUNTIME_VALIDATION.md | 本文件（补充真实 Chrome 复跑/首层 404 变化/基线确认） |
-| feat: forensics 增强 iframe 深度 + spoof 取证 | 取证工具只读增强 | docs/diy-runtime-forensics.js | per-iframe 同源编辑器/canvas 探测（§六）+ 伪造 probe 响应统计（§十五 Test A/B，纯只读不改画布） |
+| docs: add stage 3.1 independent audit report | 补推遗漏文档 | STAGE_3_1_INDEPENDENT_AUDIT.md | 上阶段产物，独立 commit |
+| docs: add runtime forensics script | 取证工具（只读） | docs/diy-runtime-forensics.js | 拓扑/Canvas/对象摘要/脱敏 |
+| feat: forensics 增强 iframe 深度 + spoof 取证 | 取证工具只读增强 | docs/diy-runtime-forensics.js | per-iframe 探测（§六）+ 伪造 probe 统计（§十五，纯只读） |
+| docs: stage 4.1 report 更新 | 报告 | STAGE_4_1_RUNTIME_VALIDATION.md | **首次更新**：真实 Chrome 复跑/首层 404 变化/基线确认 |
+| docs: stage 4.1 report 真实取证回填 | 报告 | STAGE_4_1_RUNTIME_VALIDATION.md | **本次更新**：真实设计器拓扑/Canvas/对象快照回填（§3.1/§6/§7/§8/§12/§16/§17/§18） |
 
 **生产源码零修改**（审计后无任何「已确认且需立即修」的问题；见 §18）。
 
-> 环境说明：本机当前 **git 与 node 不可执行**（工作区为无 .git 镜像副本）。上述变更已完成于工作区，**git 提交待环境具备后补录**（此前各阶段提交均在具备 git 的会话完成）。
+> 环境说明：本阶段提交已全部完成（git 已通过 winget 安装，分支 `stage-4.1-runtime-validation` 推送至 GitHub）。
 
 ## 14. Independent Review
 
-**CONDITIONAL**
+**CONDITIONAL（已改善）**
 - 现有业务/字段/AI/Bridge 协议/标记机制均未改变；
 - 未引入新重复注入路径（marker 链完整）、未引入 iframe 变更（未动 all_frames）；
 - 新增内容仅为只读取证工具与文档，无运行影响；
-- 真实运行时证据缺失属环境限制，已如实标记，非“为了通过而改测试”。
+- 真实运行时证据已回填（拓扑/Canvas/对象）；**真实 Bridge 注入往返 / 真实 Apply 仍缺** → 保持 CONDITIONAL。
 
 ## 15. Final Gate
 
-**CONDITIONAL-GO**
+**CONDITIONAL-GO（证据增强）**
 
-- FULL-GO 所需「ScriptCat 真实运行 PASS + 真实设计器 PASS + Canvas/iframe 拓扑已确认」均因环境不可得而未满足（诚实记录，不伪造）。
-- CONDITIONAL-GO 依据：核心链路（headless 全窗口 + mock 画布）与真实网络可达层（@require 200、站点拓扑 0-iframe）已证；剩余 UNVERIFIED 为登录态/脚本管理器安装等环境覆盖项，不阻塞下一阶段设计（且原文明确：真实拓扑未知时不得进入 OCR 实现）。
+- 已确认：真实设计器拓扑（top window = 编辑器本体）、真实 Canvas（949×577，21 对象，4 文本）、`findCanvasForSide` 定位链成立、@require ×5 全部 200、headless 回归全 PASS、无 P0/P1。
+- 仍缺（UNVERIFIED，不伪造）：ScriptCat 安装运行、扩展真机、**真实 Bridge 注入→probe→response 往返**、真实 Apply、真实 AI。
+- 不阻塞 OCR 设计（Stage 5 的前提——真实拓扑——已具备）；进入 Stage 5 前需完成 §18 第 3~4 项的真实往返/Apply 取证。
 
 ## 16. P2 重分类表（§十七）
 
@@ -126,21 +140,24 @@ exit: 各套断言 0 FAIL（bridge 需 ?zydebug=1；ai 需 ?zydebug=1；wiring �
 | inheritReferenceProps | 中（黑名单复制） | 弱 | defer（OCR 时可白名单化） |
 | layout heuristic | 中 | 否（OCR 自建坐标） | defer |
 | README 版本过旧 | 低 | 否 | defer |
+| **spoof probe（§十五）** | Low–Med（同页任意 script 可伪造格式消息触发 probe；apply 需字段结构 + 无 nonce 校验） | 否（OCR 读取阶段不受影响） | **本次实测 `NO_RESPONSE` 未触发（因 Bridge 未装）** → 待真实 Bridge 往返后重测，仍非阻断 |
 
 ## 17. 核心问题回答（§二十四）
 
 > 我们现在是否已真正知道 Assistant/Bridge/Editor/Canvas 在真实折立印页面里分别运行在哪个 window/frame、如何通信？
 
-**NO**（未登录环境不可得）。因此按指令：**不进入 Stage 5 OCR 设计**，继续 Runtime Validation（等待用户真机取证回传：安装 ScriptCat 版并粘贴 `diy-runtime-forensics.js` 输出，或提供设计器访问方式）。
+**YES（拓扑部分）**：真实取证确认——Assistant/Bridge 应注入 **top window**（`thirdLoginDiyEdit.do`，设计器本体）；Canvas 与 Editor 引擎全部位于 top window 的 requirejs/闭包作用域（`CanvasObjVO/CurrentCanvas/CanvasDiy`，fabric 构造器存在）；`mattingContent` iframe 为抠图占位无关。通信路径：userscript/extension（top isolated world）→ `installPageBridge` 注入 top 主世界 → postMessage ↔ pageBridge ↔ requirejs 模块拿 canvas → fabric 操作。
+**但"真实 Bridge 往返 + 真实 Apply"仍是 UNVERIFIED**，按指令：拓扑已足以下一步（Stage 5 Editor API Contract / Object Snapshot），但进入 OCR 实现前仍需 §18 第 3~4 项真实性取证。
 
-## 18. 需要用户协助的取证回传（解锁 UNVERIFIED → FULL-GO 的唯一途径）
+## 18. 需要用户协助的取证回传（解锁剩余 UNVERIFIED）
 
-1. 登录折立印并打开真实设计器页面；
-2. DevTools Console 粘贴 `docs/diy-runtime-forensics.js` 全文并回车；
-3. 把 `[zy-forensics]` 的主输出与约 2 秒后的 `spoof-probe` 附加输出一起发回（spoof 项回答 §十五 Test A/B：同页其他 script 能否伪造 probe 触发 Bridge）；
-4. （可选）顺带执行一次「识别并填正面」后把状态栏结果发回。
+**已完成**：① 登录打开真实设计器 ② [zy-forensics] 拓扑 ③ [zy-iframe-probe] 抠图 iframe 确认 ④ [zy-modules] Canvas/对象确认。
+**剩余待办**（均为可选、非必须）：
+1. 安装 userscript 版（ScriptCat）→ 让助手真实运行 → 观测面板出现、Bridge 注入；
+2. 点一次「识别并填正面」→ 回传状态栏结果（验证真实 Apply）；
+3. 若需 §十五 spoof 结论，在 Bridge 已装时重跑 [zy-forensics] 看 `spoof-probe` 是否变 `CAN_TRIGGER`。
 
-> 环境限制补遗：本会话中 git/node 在本机不可执行（无 .git、无 git/node 命令、TRAE 内置目录亦无）。Stage 4.1 断言复跑已改用**真实 Chrome headless** 完成并全部 PASS（详见 §9/§11）；git 提交将待可执行环境恢复后补录。
+> 环境补遗：本会话已安装 git（winget）并将 `stage-4.1-runtime-validation` 推送 GitHub；headless 回归以真实 Chrome 完成并全部 PASS（§9/§11）。
 
 ## Stop
 
