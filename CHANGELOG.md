@@ -4,6 +4,17 @@
 
 ## [Unreleased]
 
+### 仓库治理（2026-09-16）— 文档/测试组织/版本治理，**零生产代码变更**
+- 新增 9 份治理文档（`docs/`）：`REPOSITORY_MAP`（真实目录与调用链测绘）、`STAGE_INDEX`（R0→Stage 5.4→RUNTIME-8.3 索引）、`EVIDENCE_POLICY`（REAL/FIXTURE/SYNTHETIC/SMOKE/UNIT/INTEGRATION/BLOCKED/DEFERRED 八级定义）、`CURRENT_STATUS`、`TEST_MATRIX`、`REAL_OCR_DEMO_CONTRACT`（AI-1/AI-2 共享接口契约，含 GAP-1~GAP-7）、`DEVELOPMENT_RULES`、`PARALLEL_DEVELOPMENT`（职责边界与文件所有权）、`SENSITIVE_DATA_AUDIT`。
+- 澄清历史表述：**Stage 5.3 的 Reconstruction PASS = FIXTURE_OCR 链路验证，不等于 Real OCR 已完成**；`NATIVE_OCR_RESULT_ACCESS = BLOCKED` 如实保留。
+- 记录 `RUNTIME-8.2` 的「Chromium 不支持 userScripts」结论**已被 RUNTIME-8.3 撤回**（真实根因：Chrome 138+ 需开启 Allow User Scripts）；历史结论保留不删。
+- 测试复跑确认：7 套件 **215 断言全部通过**（`editor-object-model` 110 / field 43 / config 15 / ai 18 / editor 18 / bridge-lifecycle 6 / wiring 5）。**未搬迁任何现有测试文件**。
+- `.gitignore` 窄口径加固：补 CI 生成物（`installer/embedded.generated.ps1`、`installer/installer.combined.ps1`）、`.env*`、`*.pem/*.key/*.har`、`cookies//tokens/`、通用构建日志产物；明确禁止 `*.png/*.json/*.txt/*.js` 宽通配以免误伤夹具与证据。验证 `git check-ignore` 零误伤。
+- `README.md` 规范化：修正标题版本 `v0.2.3.11` → `v0.3.0.0`（与 `@version` 一致，**不改代码版本号**）；新增 Current Status 章节，严格区分**正式能力 / 实验能力（未挂接生产）/ Real OCR（BLOCKED+DEFERRED）/ Fixture OCR**；原有 19 条功能说明与安装步骤完整保留。
+- 版本一致性核对：`@version` = `VERSION` = `version_name` = `0.3.0.0` ✅；`package.json` `0.1.0` 属 runtime harness（`private:true`）无关；**未新增/未重打任何 tag**。
+- 敏感信息扫描：无 API Key / Token / Cookie / 真实客户数据入库；1 项中低风险 finding（`runtime/autologin.js` 注释含真实账号）已记录并建议由实现线处置。
+- Stage 4.1 / RUNTIME-0~8.3 / Stage 5.0~5.4 的逐阶段记录**不在本文件重复维护**，见 `docs/STAGE_INDEX.md` 与各阶段审计报告（避免双份记录漂移）。
+
 ### Stage 4.0（2026-09-15）— Bridge/Runtime 独立审计 + 最小加固（Stage 4 Gate=CONDITIONAL-GO）
 - 修复 **AUDIT-BRIDGE-002（P1，跨 userscript 实例重复注入）**：`pageBridge()` 增加页面主世界稳定 marker（`window.__ZY_CARD_ASSISTANT_BRIDGE__`），同 window 内任何实例/热更新/重复执行只安装一次 listener；listener 注册成功后才落 marker（异常可重试）。
 - 回归：bridge-lifecycle 6/6（新增 t6 跨实例用例，修复前 FAIL=2 个 listener；修复后 PASS）×3 稳定；Mutation（移除 marker）→ FAIL 2/6，还原后 ALL-PASS；wiring 5/5、field 43/43、config 15/15、AI 18/18、editor 18/18 全绿。
