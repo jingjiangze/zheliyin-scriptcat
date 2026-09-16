@@ -1,0 +1,22 @@
+{
+ "chunk.80413": [],
+ "chunk.extMsg": [
+  {
+   "i": 26679,
+   "s": ",t(new a(r))})}sendMessage(e){return new Promise(t=>{chrome.runtime.sendMessage(e,e=>{let r=chrome.runtime.lastError;r&&console.error(\"chrome.runtime.lastError in chrome.runtime.sendMessage:\",r),t(e),t=null})})}tryEnableUserScriptConnectionListener=(...e)=>{};tryEnableUserScriptMessageListener=(...e)=>{};onConnect(e){i"
+  }
+ ],
+ "chunk.extMsg2": [
+  {
+   "i": 26672,
+   "s": "sage(e),t(new a(r))})}sendMessage(e){return new Promise(t=>{chrome.runtime.sendMessage(e,e=>{let r=chrome.runtime.lastError;r&&console.error(\"chrome.runtime.lastError in chrome.runtime.sendMessage:\",r),t(e),t=null})})}tryEnableUserScriptConnectionListener=(...e)=>{};tryEnableUserScriptMessageListener=(...e)=>{};onConne"
+  },
+  {
+   "i": 26782,
+   "s": "ime.lastError;r&&console.error(\"chrome.runtime.lastError in chrome.runtime.sendMessage:\",r),t(e),t=null})})}tryEnableUserScriptConnectionListener=(...e)=>{};tryEnableUserScriptMessageListener=(...e)=>{};onConnect(e){if(chrome.runtime.onConnect.addListener(t=>{let r=t,n=chrome.runtime.lastError;n&&console.error(\"chrome."
+  }
+ ],
+ "chunk.methodKey": [],
+ "chunk.actionKey": [],
+ "chunk.portKey": []
+}

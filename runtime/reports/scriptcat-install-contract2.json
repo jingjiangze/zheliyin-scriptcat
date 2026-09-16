@@ -1,0 +1,133 @@
+{
+ "chunk.proxy-do-impl": [
+  {
+   "i": 26249,
+   "s": "(e,t){return s(this.msgSender,`${this.prefix}${e}`,t)}async doThrow(e,t){let r=await s(this.msgSender,`${this.prefix}${e}`,t);if(!r)throw Error(`doThrow: ${this.prefix}${e}`);return r}}},75918(e,t,r){\"use strict\";r.d(t,{Dz:()=>o,fh:()=>a});var n=r(80413),i=r(11104);let s=new n.A;class o{backgroundPrimary;constructor(e=!1){this.backgroundPrimary=e}connect(e){"
+  },
+  {
+   "i": 41660,
+   "s": "super(e,\"serviceWorker/script\")}getAllScripts(){return this.doThrow(\"getAllScripts\")}getInstallInfo(e){return this.do(\"getInstallInfo\",e)}install(e){return e.upsertBy||(e.upsertBy=\"user\"),this.doThrow(\"install\",{...e})}deletes(e){return this.do(\"deletes\",e)}enable(e,t){return this.do(\"enable\",{uuid:e,enable:t})}enables(e,t){return this.do(\"enables\",{uuids:e,"
+  },
+  {
+   "i": 41793,
+   "s": "\",e)}install(e){return e.upsertBy||(e.upsertBy=\"user\"),this.doThrow(\"install\",{...e})}deletes(e){return this.do(\"deletes\",e)}enable(e,t){return this.do(\"enable\",{uuid:e,enable:t})}enables(e,t){return this.do(\"enables\",{uuids:e,enable:t})}info(e){return this.doThrow(\"fetchInfo\",e)}getFilterResult(e){return this.do(\"getFilterResult\",e)}getScriptRunResourceByUU"
+  },
+  {
+   "i": 41991,
+   "s": "n this.do(\"enables\",{uuids:e,enable:t})}info(e){return this.doThrow(\"fetchInfo\",e)}getFilterResult(e){return this.do(\"getFilterResult\",e)}getScriptRunResourceByUUID(e){return this.doThrow(\"getScriptRunResourceByUUID\",e)}excludeUrl(e,t,r){return this.do(\"excludeUrl\",{uuid:e,excludePattern:t,remove:r})}resetMatch(e,t){return this.do(\"resetMatch\",{uuid:e,match:"
+  },
+  {
+   "i": 42111,
+   "s": "tFilterResult\",e)}getScriptRunResourceByUUID(e){return this.doThrow(\"getScriptRunResourceByUUID\",e)}excludeUrl(e,t,r){return this.do(\"excludeUrl\",{uuid:e,excludePattern:t,remove:r})}resetMatch(e,t){return this.do(\"resetMatch\",{uuid:e,match:t})}resetExclude(e,t){return this.do(\"resetExclude\",{uuid:e,exclude:t})}requestCheckUpdate(e){return this.do(\"requestChe"
+  },
+  {
+   "i": 42537,
+   "s": "(e){return this.do(\"pinToTop\",e)}importByUrl(e){return this.doThrow(\"importByUrl\",e)}installByCode(e,t,r=\"user\"){return this.do(\"installByCode\",{uuid:e,code:t,upsertBy:r})}setCheckUpdateUrl(e,t,r){return this.do(\"setCheckUpdateUrl\",{uuid:e,checkUpdate:t,checkUpdateUrl:r})}updateMetadata(e,t,r){return this.do(\"updateMetadata\",{uuid:e,key:t,value:r})}async get"
+  },
+  {
+   "i": 43430,
+   "s": "\"serviceWorker/resource\")}getScriptResources(e){return this.doThrow(\"getScriptResources\",e)}deleteResource(e){return this.do(\"deleteResource\",e)}}class c extends n.Kj{constructor(e){super(e,\"serviceWorker/value\")}getScriptValue(e){return this.doThrow(\"getScriptValue\",e)}setScriptValue({uuid:e,key:t,value:r,ts:n}){let s=[[t,(0,i._8)(r)]];return this.do(\"setSc"
+  },
+  {
+   "i": 43613,
+   "s": "uper(e,\"serviceWorker/value\")}getScriptValue(e){return this.doThrow(\"getScriptValue\",e)}setScriptValue({uuid:e,key:t,value:r,ts:n}){let s=[[t,(0,i._8)(r)]];return this.do(\"setScriptValues\",{uuid:e,keyValuePairs:s,ts:n})}setScriptValues(e){return this.do(\"setScriptValues\",e)}}class l extends n.Kj{constructor(e){super(e,\"serviceWorker/runtime\")}runScript(e){re"
+  },
+  {
+   "i": 44009,
+   "s": "pt(e){return this.do(\"stopScript\",e)}pageLoad(){return this.doThrow(\"pageLoad\")}scriptLoad(e,t){return this.do(\"scriptLoad\",{flag:e,uuid:t})}}class u extends n.Kj{constructor(e){super(e,\"serviceWorker/popup\")}getPopupData(e){return this.doThrow(\"getPopupData\",e)}menuClick(e,t,r){return this.do(\"menuClick\",{uuid:e,menus:t,inputValue:r})}}class d extends n.Kj{"
+  },
+  {
+   "i": 44186,
+   "s": "{super(e,\"serviceWorker/popup\")}getPopupData(e){return this.doThrow(\"getPopupData\",e)}menuClick(e,t,r){return this.do(\"menuClick\",{uuid:e,menus:t,inputValue:r})}}class d extends n.Kj{constructor(e){super(e,\"serviceWorker/runtime/permission\")}confirm(e,t){return this.do(\"confirm\",{uuid:e,userConfirm:t})}getPermissionInfo(e){return this.doThrow(\"getInfo\",e)}de"
+  },
+  {
+   "i": 44463,
+   "s": "m\",{uuid:e,userConfirm:t})}getPermissionInfo(e){return this.doThrow(\"getInfo\",e)}deletePermission(e,t,r){return this.do(\"deletePermission\",{uuid:e,permission:t,permissionValue:r})}getScriptPermissions(e){return this.doThrow(\"getScriptPermissions\",e)}addPermission(e){return this.do(\"addPermission\",e)}updatePermission(e){return this.do(\"updatePermission\",e)}re"
+  },
+  {
+   "i": 44619,
+   "s": "n:t,permissionValue:r})}getScriptPermissions(e){return this.doThrow(\"getScriptPermissions\",e)}addPermission(e){return this.do(\"addPermission\",e)}updatePermission(e){return this.do(\"updatePermission\",e)}resetPermission(e){return this.do(\"resetPermission\",e)}}class h extends n.Kj{constructor(e){super(e,\"serviceWorker/synchronize\")}export(e){return this.do(\"exp"
+  }
+ ],
+ "sw.group-installByCode": [
+  {
+   "i": 571272,
+   "s": "this)),this.group.on(\"pinToTop\",this.pinToTop.bind(this)),this.group.on(\"importByUrl\",this.importByUrl.bind(this)),this.group.on(\"installByCode\",this.installByCode.bind(this)),this.group.on(\"setCheckUpdateUrl\",this.setCheckUpdateUrl.bind(this)),this.group.on(\"updateMetadata\",this.updateMetadata.bind(this)),this.group.on(\"getBatchUpdateRecordLite\",this.getBatchUpdateRecordLite.bind(this)),this.group.on(\"fetchCheckUpdateStatus\",this.fetch"
+  }
+ ],
+ "sw.installScript": [
+  {
+   "i": 554267,
+   "s": "cript:s}=await n4(i,e,n);return s.subscribeUrl=r,await this.installScript({script:s,code:i,upsertBy:t}),s}async installByCode(e){let{code:t,upsertBy:r,uuid:n}=e,{script:i}=await n4(t,\"\",n,!0);return await this.installScript({script:i,code:t,upsertBy:r}),i}async getInstallInfo(e){let t=await new sv().get(e);return t?.value}publishInstallScript(e,t){let{uuid:r,type:n,status:i,name:s,namespace:a,origin:o,checkUpdateUrl:l,downloadUrl:c}=e;return this.mq.publis"
+  },
+  {
+   "i": 554417,
+   "s": ",uuid:n}=e,{script:i}=await n4(t,\"\",n,!0);return await this.installScript({script:i,code:t,upsertBy:r}),i}async getInstallInfo(e){let t=await new sv().get(e);return t?.value}publishInstallScript(e,t){let{uuid:r,type:n,status:i,name:s,namespace:a,origin:o,checkUpdateUrl:l,downloadUrl:c}=e;return this.mq.publish(\"installScript\",{script:{uuid:r,type:n,status:i,name:s,namespace:a,origin:o,checkUpdateUrl:l,downloadUrl:c},...t})}async installScript(e){e.upsertBy"
+  },
+  {
+   "i": 554790,
+   "s": "ace:a,origin:o,checkUpdateUrl:l,downloadUrl:c},...t})}async installScript(e){e.upsertBy=e.upsertBy||\"user\";let{script:t,upsertBy:r,createtime:n,updatetime:i}=e,s=this.compiledResourceDAO.delete(t.uuid),a=this.logger.with({name:t.name,uuid:t.uuid,version:t.metadata.version?.[0]||\"0.0\",upsertBy:r}),o=!1,l=await this.scriptDAO.get(t.uuid);return l&&(o=!0,t.selfMetadata=l.selfMetadata,l.subscribeUrl&&l.origin&&(t.origin=l.origin,t.subscribeUrl=l.subscribeUrl))"
+  },
+  {
+   "i": 561791,
+   "s": "eturn i?.info(\"silence update subscribe script\"),await this.installScript({script:n,code:a,upsertBy:s}),2;if(await this.systemConfig.getSilenceUpdateScript()){if(io(r.metadata,n.metadata))return i?.info(\"silence update script\"),await this.installScript({script:n,code:a,upsertBy:s}),2;i?.info(\"not silence update script, open install page\")}}catch(e){i?.error(\"prepare script failed\",n9.E(e))}let o=n2(a);if(!o)throw Error(\"parse script info failed\");let l=awa"
+  },
+  {
+   "i": 561970,
+   "s": "etadata))return i?.info(\"silence update script\"),await this.installScript({script:n,code:a,upsertBy:s}),2;i?.info(\"not silence update script, open install page\")}}catch(e){i?.error(\"prepare script failed\",n9.E(e))}let o=n2(a);if(!o)throw Error(\"parse script info failed\");let l=await iT(n,e,a,t,s,o,r);return await new sv().save({key:e,value:l,savedAt:Date.now(),type:sb.tempCode}),1}async openUpdatePage(e,t){let{uuid:r,name:n,downloadUrl:i,checkUpdateUrl:s}="
+  },
+  {
+   "i": 564230,
+   "s": "it n4(n,r,i);console.log(\"slienceUpdate\",s.name),await this.installScript({script:s,code:n,upsertBy:\"system\"})}let d=await Promise.all(a.map(async(e,t)=>{let r=l[t];return\"object\"==typeof r&&\"string\"==typeof r.code&&(r=r.code),+(Math.floor(1e3*await ((e,t)=>{if(!e.length||!t.length)return 0;e=e.replace(/[\\s\\xA0\\u2000-\\u200D\\u2028\\u2029\\u202F\\u205F\\u3000\\u180E\\u2060-\\u2064\\u3164\\uFEFF\\uFFA0]+/g,\" \"),t=t.replace(/[\\s\\xA0\\u2000-\\u200D\\u2028\\u2029\\u202F\\u205F\\"
+  },
+  {
+   "i": 1176097,
+   "s": "2):(u.sort=r.sort,u.status=r.enable?1:2)),await this.script.installScript({script:u,code:a,upsertBy:\"sync\"}),i.info(\"pull script success\")}catch(e){i.error(\"pull script error\",n9.E(e))}}cloudSyncConfigChange(e){e.enable?this.buildFileSystem(e).then(async t=>{await this.syncOnce(e,t),chrome.alarms.get(\"cloudSync\",e=>{let t=chrome.runtime.lastError;t&&console.error(\"chrome.runtime.lastError in chrome.alarms.get:\",t),e||chrome.alarms.create(\"cloudSync\",{perio"
+  }
+ ],
+ "sw.n4-parser": [
+  {
+   "i": 521032,
+   "s": "ers.get(\"content-type\"))}async function n4(e,t,r,n=!1,i,s){let a,o;i=i??new ei;let l=function(e,t,r){let n=n2(e);if(!n)throw Error(to(\"error_metadata_invalid\"))"
+  },
+  {
+   "i": 554222,
+   "s": "et n=Y(),i=await n3(e),{script:s}=await n4(i,e,n);return s.subscribeUrl=r,await this.installScript({script:s,code:i,upsertBy:t}),s}async installByCode(e){let{co"
+  },
+  {
+   "i": 554385,
+   "s": "t,upsertBy:r,uuid:n}=e,{script:i}=await n4(t,\"\",n,!0);return await this.installScript({script:i,code:t,upsertBy:r}),i}async getInstallInfo(e){let t=await new sv"
+  },
+  {
+   "i": 561701,
+   "s": "f(n)try{let{oldScript:r,script:n}=await n4(a,t,e);if(r?.subscribeUrl)return i?.info(\"silence update subscribe script\"),await this.installScript({script:n,code:a"
+  },
+  {
+   "i": 564173,
+   "s": "rl||\"\",n=u[e],i=t.uuid,{script:s}=await n4(n,r,i);console.log(\"slienceUpdate\",s.name),await this.installScript({script:s,code:n,upsertBy:\"system\"})}let d=await "
+  },
+  {
+   "i": 1175868,
+   "s": "ring\"),c=JSON.parse(l),{script:u}=await n4(a,n?.downloadUrl||c.downloadUrl||\"\",n?.uuid||c.uuid);u.origin=u.origin||c.origin,r&&(n?(!n.updatetime||r.updatetime>n"
+  }
+ ],
+ "sw.newMsgProxy": [],
+ "chunk.do-impl": [
+  {
+   "i": 41535,
+   "s": "ker\")}preparationOffscreen(){return this.do(\"preparationOffscreen\")}}class o extends n.Kj{constructor(e){super(e,\"serviceWorker/script\")}getAllScripts(){return this.doThrow(\"getAllScripts\")}getInstall"
+  },
+  {
+   "i": 41714,
+   "s": "lScripts\")}getInstallInfo(e){return this.do(\"getInstallInfo\",e)}install(e){return e.upsertBy||(e.upsertBy=\"user\"),this.doThrow(\"install\",{...e})}deletes(e){return this.do(\"deletes\",e)}enable(e,t){retu"
+  },
+  {
+   "i": 41841,
+   "s": "\"install\",{...e})}deletes(e){return this.do(\"deletes\",e)}enable(e,t){return this.do(\"enable\",{uuid:e,enable:t})}enables(e,t){return this.do(\"enables\",{uuids:e,enable:t})}info(e){return this.doThrow(\"f"
+  },
+  {
+   "i": 41881,
+   "s": ".do(\"deletes\",e)}enable(e,t){return this.do(\"enable\",{uuid:e,enable:t})}enables(e,t){return this.do(\"enables\",{uuids:e,enable:t})}info(e){return this.doThrow(\"fetchInfo\",e)}getFilterResult(e){return t"
+  }
+ ]
+}

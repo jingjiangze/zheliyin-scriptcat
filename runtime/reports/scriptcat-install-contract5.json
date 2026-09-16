@@ -1,0 +1,62 @@
+{
+ "def": [
+  {
+   "i": 25735,
+   "s": "502),i=r(23717);async function s(e,t,r){let s=await e.sendMessage({action:t,data:r}),o=n.A.getInstance().logger().with({action:t,data:r,response:s});if(o.trace(\"sendMessage\"),s?.code)throw console.error(s),s.message;try{return s.data}catch(e){o.trace(\"Invalid response data\",i.A.E(e));return}}function o(e,t,r){return e.connect({action:t,da"
+  },
+  {
+   "i": 26455,
+   "s": ">o,fh:()=>a});var n=r(80413),i=r(11104);let s=new n.A;class o{backgroundPrimary;constructor(e=!1){this.backgroundPrimary=e}connect(e){return new Promise(t=>{let r=chrome.runtime.connect();r.postMessage(e),t(new a(r))})}sendMessage(e){return new Promise(t=>{chrome.runtime.sendMessage(e,e=>{let r=chrome.runtime.lastError;r&&console.error(\"c"
+  },
+  {
+   "i": 31714,
+   "s": "session.get:\",r),e(Object.keys(t))})})}}let s=new class extends i{async getOrSet(e,t){let r=await this.get(e);return r||(r=await t(),this.set(e,r)),r}tx(e,t){return(0,n.e)(e,()=>{let r,n={action:0},i=e=>{n.action=1,n.newVal=e},s=()=>{n.action=2,n.newVal=void 0};return this.get(e).then(e=>t(e,{set:i,del:s})).then(t=>(r=t,1===n.action)?this"
+  },
+  {
+   "i": 38143,
+   "s": "cal.get:\",r),e(t)})});let i={},a={};for(let s=0;s<r.length;s++){let o=r[s],c=n[s],l=t[c];l?(Object.assign(l,e[o]),a[c]=l,i[o]=l):i[o]=!1}return Object.keys(a).length>0&&(this.useCache?await o(a):await new Promise(e=>{chrome.storage.local.set(a,()=>{let t=chrome.runtime.lastError;t&&console.error(\"chrome.runtime.lastError in chrome.storage"
+  },
+  {
+   "i": 43685,
+   "s": "criptValue({uuid:e,key:t,value:r,ts:n}){let s=[[t,(0,i._8)(r)]];return this.do(\"setScriptValues\",{uuid:e,keyValuePairs:s,ts:n})}setScriptValues(e){return this.do(\"setScriptValues\",e)}}class l extends n.Kj{constructor(e){super(e,\"serviceWorker/runtime\")}runScript(e){return this.do(\"runScript\",e)}stopScript(e){return this.do(\"stopScript\",e)"
+  }
+ ],
+ "def2": [
+  {
+   "i": 25717,
+   "s": ":()=>s});var n=r(6502),i=r(23717);async function s(e,t,r){let s=await e.sendMessage({action:t,data:r}),o=n.A.getInstance().logger().with({action:t,data:r,response:s});if(o.trace(\"sendMessage\"),s?.code)throw console.error(s),s.message;try{return s.data}catch(e){o.trace(\"Invalid response data\",i.A.E(e));return}}function o(e,t,r){return e.co"
+  },
+  {
+   "i": 34351,
+   "s": "})}}},71189(e,t,r){\"use strict\";let n,i;function s(){return i?Promise.resolve(i):(n||(n=new Promise(e=>{chrome.storage.local.get(t=>{let r=chrome.runtime.lastError;r&&console.error(\"chrome.runtime.lastError in chrome.storage.local.get:\",r),n=void 0,e(i=t||{})})})),n)}function o(e,t){return\"string\"==typeof e?Promise.all([s().then(r=>{r[e]="
+  },
+  {
+   "i": 62433,
+   "s": "e.preventDefault():e.stopPropagation()};function s({children:e,parentNodeSelector:t}){var r;let o;return r=document.querySelector(t),o={capture:!1,passive:!1,once:!1},r?.removeEventListener(\"wheel\",i,o),r?.addEventListener(\"wheel\",i,o),(0,n.jsx)(n.Fragment,{children:e})}},30132(e,t,r){\"use strict\";r.d(t,{ON:()=>f,Q3:()=>b,R7:()=>y,e8:()=>"
+  },
+  {
+   "i": 77175,
+   "s": ",U:()=>s});let i=/YYYY|MM|DD|HH|mm|ss/g;function s(e=new Date,t=\"YYYY-MM-DD HH:mm:ss\"){return t.replace(i,t=>{switch(t){case\"YYYY\":return e.getFullYear().toString();case\"MM\":{let t=e.getMonth()+1;return t<10?\"0\"+t:t.toString()}case\"DD\":{let t=e.getDate();return t<10?\"0\"+t:t.toString()}case\"HH\":{let t=e.getHours();return t<10?\"0\"+t:t.toStr"
+  }
+ ],
+ "def3": [],
+ "keyJoin": [
+  {
+   "i": 363,
+   "s": "mber\" | \"textarea\" | \"time\"; declare interface Config { [key: string]: unknown; title: string; description: string; default?: unknown; type?: ConfigType; bind?: string; values?: unknown[]; password?: boolean; // 文本类型时是字符串长度,数字类型时是最大值 max?:"
+  },
+  {
+   "i": 679,
+   "s": " index: number; // 配置项排序位置 } declare type UserConfig = { [key: string]: { [key: string]: Config } }; declare const GM_info: { version: string; scriptWillUpdate: boolean; scriptHandler: \"ScriptCat\"; scriptUpdateURL?: string; // scriptSource: string"
+  },
+  {
+   "i": 696,
+   "s": "// 配置项排序位置 } declare type UserConfig = { [key: string]: { [key: string]: Config } }; declare const GM_info: { version: string; scriptWillUpdate: boolean; scriptHandler: \"ScriptCat\"; scriptUpdateURL?: string; // scriptSource: string; scriptMetaStr"
+  },
+  {
+   "i": 1982,
+   "s": "oolean; compat_metadata: boolean; compat_uW_gmonkey: boolean; override: { orig_excludes: string[]; orig_includes: string[]; use_includes: string[]; use_excludes: string[]; [key: string]: any; }; "
+  }
+ ],
+ "keyJoin2": []
+}

@@ -1,0 +1,43 @@
+{
+ "chunk.msg-send-envelope": [],
+ "chunk.msg-send-envelope-b": [],
+ "chunk.msgSenderReceiver": [
+  {
+   "i": 26101,
+   "s": "}class a{msgSender;prefix;constructor(e,t){this.msgSender=e,this.prefix=t,this.prefix&&!this.prefix.endsWith(\"/\")?this.prefix+=\"/\":this.prefix=\"\"}do(e,t){return s(this.msgSender,`${this.prefix}${e}`,t)}async doThrow(e,t){let r=await s(this."
+  },
+  {
+   "i": 26115,
+   "s": "nder;prefix;constructor(e,t){this.msgSender=e,this.prefix=t,this.prefix&&!this.prefix.endsWith(\"/\")?this.prefix+=\"/\":this.prefix=\"\"}do(e,t){return s(this.msgSender,`${this.prefix}${e}`,t)}async doThrow(e,t){let r=await s(this.msgSender,`${t"
+  },
+  {
+   "i": 26129,
+   "s": "nstructor(e,t){this.msgSender=e,this.prefix=t,this.prefix&&!this.prefix.endsWith(\"/\")?this.prefix+=\"/\":this.prefix=\"\"}do(e,t){return s(this.msgSender,`${this.prefix}${e}`,t)}async doThrow(e,t){let r=await s(this.msgSender,`${this.prefix}${e"
+  },
+  {
+   "i": 26155,
+   "s": "der=e,this.prefix=t,this.prefix&&!this.prefix.endsWith(\"/\")?this.prefix+=\"/\":this.prefix=\"\"}do(e,t){return s(this.msgSender,`${this.prefix}${e}`,t)}async doThrow(e,t){let r=await s(this.msgSender,`${this.prefix}${e}`,t);if(!r)throw Error(`d"
+  },
+  {
+   "i": 26172,
+   "s": "=t,this.prefix&&!this.prefix.endsWith(\"/\")?this.prefix+=\"/\":this.prefix=\"\"}do(e,t){return s(this.msgSender,`${this.prefix}${e}`,t)}async doThrow(e,t){let r=await s(this.msgSender,`${this.prefix}${e}`,t);if(!r)throw Error(`doThrow: ${this.pr"
+  },
+  {
+   "i": 26222,
+   "s": "efix+=\"/\":this.prefix=\"\"}do(e,t){return s(this.msgSender,`${this.prefix}${e}`,t)}async doThrow(e,t){let r=await s(this.msgSender,`${this.prefix}${e}`,t);if(!r)throw Error(`doThrow: ${this.prefix}${e}`);return r}}},75918(e,t,r){\"use strict\";"
+  }
+ ],
+ "chunk.scriptProxyPrefix": [
+  {
+   "i": 41600,
+   "s": "\")}}class o extends n.Kj{constructor(e){super(e,\"serviceWorker/script\")}getAllScripts(){return this."
+  }
+ ],
+ "options.proxyUsage": [
+  {
+   "i": 256422,
+   "s": "CELED\"))}return s.ignoreVersion&&(s.ignoreVersion=\"\"),ed.fH.install({script:s,code:n}).then(e=>{if(e.update){let t=s.uuid,n=s.name;c(r=>r.map(r=>r.uuid===t?{...r,name:n,updatetime:e.updatetime||r.upda"
+  }
+ ],
+ "options.importScriptProxy": []
+}

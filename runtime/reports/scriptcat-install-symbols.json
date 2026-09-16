@@ -1,0 +1,109 @@
+{
+ "service_worker.onMessage": {
+  "file": "service_worker.js",
+  "symbol": "onMessage",
+  "hitCount": 15,
+  "samples": [
+   "4361);let sW=new sH;class sK{listenerId=`${Y()}`;con;isSelfDisconnected=!1;constructor(e){this.con=e;let t=e=>{sW.emit(`onMessage:${this.listenerId}`,e)},r=()=>{let e=this.con;null!==e&&(this.con=null,sW.removeAllListeners(`cleanup:${this.listenerId}`),e.onMessage.removeListener(t),e.onDisconnect.removeListener(r),sW.emit(`onDisconnect:${",
+   "s.listenerId}`,e)},r=()=>{let e=this.con;null!==e&&(this.con=null,sW.removeAllListeners(`cleanup:${this.listenerId}`),e.onMessage.removeListener(t),e.onDisconnect.removeListener(r),sW.emit(`onDisconnect:${this.listenerId}`,this.isSelfDisconnected),sW.removeAllListeners(`onDisconnect:${this.listenerId}`),sW.removeAllListeners(`onMessage:${",
+   "s.listenerId}`,this.isSelfDisconnected),sW.removeAllListeners(`onDisconnect:${this.listenerId}`),sW.removeAllListeners(`onMessage:${this.listenerId}`))};e.onMessage.addListener(t),e.onDisconnect.addListener(r),sW.once(`cleanup:${this.listenerId}`,r)}sendMessage(e){if(!this.con)throw console.warn(\"Attempted to sendMessage on a disconnected",
+   "ted),sW.removeAllListeners(`onDisconnect:${this.listenerId}`),sW.removeAllListeners(`onMessage:${this.listenerId}`))};e.onMessage.addListener(t),e.onDisconnect.addListener(r),sW.once(`cleanup:${this.listenerId}`,r)}sendMessage(e){if(!this.con)throw console.warn(\"Attempted to sendMessage on a disconnected port.\"),Error(\"Attempted to sendMe"
+  ]
+ },
+ "service_worker.installByCode": {
+  "file": "service_worker.js",
+  "symbol": "installByCode",
+  "hitCount": 7,
+  "samples": [
+   "n3(e),{script:s}=await n4(i,e,n);return s.subscribeUrl=r,await this.installScript({script:s,code:i,upsertBy:t}),s}async installByCode(e){let{code:t,upsertBy:r,uuid:n}=e,{script:i}=await n4(t,\"\",n,!0);return await this.installScript({script:i,code:t,upsertBy:r}),i}async getInstallInfo(e){let t=await new sv().get(e);return t?.value}publishI",
+   "(i.has(e.uuid)){if(!e.newCode)continue;n.set(e.uuid,e)}let s=[],a=new Set;for(let e of i){let t=n.get(e);try{await this.installByCode({uuid:e,code:t?.newCode,upsertBy:\"user\"}),s.push({uuid:e,success:!0}),a.add(e)}catch(t){console.error(t),s.push({uuid:e,success:!1})}}return this.scriptUpdateCheck.cacheFull?.list&&(this.scriptUpdateCheck.c",
+   "s.group.on(\"pinToTop\",this.pinToTop.bind(this)),this.group.on(\"importByUrl\",this.importByUrl.bind(this)),this.group.on(\"installByCode\",this.installByCode.bind(this)),this.group.on(\"setCheckUpdateUrl\",this.setCheckUpdateUrl.bind(this)),this.group.on(\"updateMetadata\",this.updateMetadata.bind(this)),this.group.on(\"getBatchUpdateRecordLite\",t",
+   "\",this.pinToTop.bind(this)),this.group.on(\"importByUrl\",this.importByUrl.bind(this)),this.group.on(\"installByCode\",this.installByCode.bind(this)),this.group.on(\"setCheckUpdateUrl\",this.setCheckUpdateUrl.bind(this)),this.group.on(\"updateMetadata\",this.updateMetadata.bind(this)),this.group.on(\"getBatchUpdateRecordLite\",this.getBatchUpdateRe"
+  ]
+ },
+ "service_worker.userScripts.register": {
+  "file": "service_worker.js",
+  "symbol": "userScripts.register",
+  "hitCount": 5,
+  "samples": [
+   "peof e||\"number\"!=typeof e.length)return!1;if(e[0]?.id)return!0;{let e=`undefined-id-${Date.now()}`;return await chrome.userScripts.register([{id:e,js:[{code:\"void 0;\"}],matches:[\"https://not-found.scriptcat.org/\"],world:\"USER_SCRIPT\"}]),await chrome.userScripts.unregister({ids:[e]}),!0}}catch(e){return console.error(\"checkUserScriptsAvai",
+   "onGuide(),e=setInterval(async()=>{if(!this.isUserScriptsAvailable)try{let e=`undefined-test-${Date.now()}`;await chrome.userScripts.register([{id:e,js:[{code:\"void 0;\"}],matches:[\"https://not-found.scriptcat.org/\"],world:\"USER_SCRIPT\"}]),await chrome.userScripts.unregister({ids:[e]})}catch{return}clearInterval(e),e=0,chrome.runtime.reload",
+   "articularScriptList(e),{inject:r,content:n}=await this.getContentAndInjectScript(e),i=[...t,...r],s=!1;try{await chrome.userScripts.register(i)}catch(e){for(let t of(this.logger.error(\"batch registration error\",n9.E(e)),i))try{await chrome.userScripts.register([t])}catch(e){if(e.message?.includes(\"Duplicate script ID\"))try{await chrome.us",
+   "userScripts.register(i)}catch(e){for(let t of(this.logger.error(\"batch registration error\",n9.E(e)),i))try{await chrome.userScripts.register([t])}catch(e){if(e.message?.includes(\"Duplicate script ID\"))try{await chrome.userScripts.update([t])}catch(e){s=!0,this.logger.error(\"update error\",n9.E(e))}else this.logger.error(\"register error\",n9"
+  ]
+ },
+ "service_worker.temp_install_codes": {
+  "file": "service_worker.js",
+  "symbol": "temp_install_codes",
+  "hitCount": 2,
+  "samples": [
+   "(s);if(o)return o}}return 0},iC=async(e,t)=>{let r=await navigator.storage.getDirectory().then(e=>e.getDirectoryHandle(\"temp_install_codes\",{create:!0})),n=await r.getFileHandle(`${e}.user.js`,{create:!0}),i=await n.createWritable();await i.write(t),await i.close()},iE=async e=>{let t;if(e.length){try{t=await navigator.storage.getDirector",
+   "t i.close()},iE=async e=>{let t;if(e.length){try{t=await navigator.storage.getDirectory().then(e=>e.getDirectoryHandle(\"temp_install_codes\"))}catch{return}await Promise.all(e.map(async e=>{try{await t.removeEntry(`${e}.user.js`)}catch{}}))}},iT=async(e,t,r,n,i,s,a)=>(await iC(t,r),[e,{uuid:t,code:\"\",url:n,source:i,metadata:s,userSubscribe"
+  ]
+ },
+ "service_worker.installByUrl": {
+  "file": "service_worker.js",
+  "symbol": "installByUrl",
+  "hitCount": 2,
+  "samples": [
+   "n await this.openUpdateOrInstallPage(r,e,t,!1),`/src/install.html?uuid=${r}`}catch(e){return console.error(e),\"\"}}async installByUrl(e,t,r){let n=Y(),i=await n3(e),{script:s}=await n4(i,e,n);return s.subscribeUrl=r,await this.installScript({script:s,code:i,upsertBy:t}),s}async installByCode(e){let{code:t,upsertBy:r,uuid:n}=e,{script:i}=aw",
+   ".forEach(e=>{d.push((async()=>{let r=l.get(e);if(r)t.scripts[e]={url:e,uuid:r.uuid};else{let r=await this.scriptService.installByUrl(e,\"subscribe\",t.url),n=am(r);t.scripts[e]={url:e,uuid:r.uuid},c.push(n)}})().catch(e=>{r.error(\"install script failed\",n9.E(e))}))}),i.forEach(e=>{d.push((async()=>{let n=await this.scriptDAO.get(e.uuid),i=e"
+  ]
+ },
+ "chunk.installByCode": {
+  "file": "chunk.js",
+  "symbol": "installByCode",
+  "hitCount": 2,
+  "samples": [
+   "rn this.do(\"sortScript\",e)}pinToTop(e){return this.do(\"pinToTop\",e)}importByUrl(e){return this.doThrow(\"importByUrl\",e)}installByCode(e,t,r=\"user\"){return this.do(\"installByCode\",{uuid:e,code:t,upsertBy:r})}setCheckUpdateUrl(e,t,r){return this.do(\"setCheckUpdateUrl\",{uuid:e,checkUpdate:t,checkUpdateUrl:r})}updateMetadata(e,t,r){return thi",
+   "n this.do(\"pinToTop\",e)}importByUrl(e){return this.doThrow(\"importByUrl\",e)}installByCode(e,t,r=\"user\"){return this.do(\"installByCode\",{uuid:e,code:t,upsertBy:r})}setCheckUpdateUrl(e,t,r){return this.do(\"setCheckUpdateUrl\",{uuid:e,checkUpdate:t,checkUpdateUrl:r})}updateMetadata(e,t,r){return this.do(\"updateMetadata\",{uuid:e,key:t,value:r}"
+  ]
+ },
+ "chunk.installByUrl": {
+  "file": "chunk.js",
+  "symbol": "installByUrl",
+  "hitCount": 0,
+  "samples": []
+ },
+ "chunk.userScripts.register": {
+  "file": "chunk.js",
+  "symbol": "userScripts.register",
+  "hitCount": 1,
+  "samples": [
+   "peof e||\"number\"!=typeof e.length)return!1;if(e[0]?.id)return!0;{let e=`undefined-id-${Date.now()}`;return await chrome.userScripts.register([{id:e,js:[{code:\"void 0;\"}],matches:[\"https://not-found.scriptcat.org/\"],world:\"USER_SCRIPT\"}]),await chrome.userScripts.unregister({ids:[e]}),!0}}catch(e){return console.error(\"checkUserScriptsAvai"
+  ]
+ },
+ "chunk.proxies": {
+  "file": "chunk.js",
+  "symbol": "installByCode",
+  "hitCount": 2,
+  "samples": [
+   "rn this.do(\"sortScript\",e)}pinToTop(e){return this.do(\"pinToTop\",e)}importByUrl(e){return this.doThrow(\"importByUrl\",e)}installByCode(e,t,r=\"user\"){return this.do(\"installByCode\",{uuid:e,code:t,upsertBy:r})}setCheckUpdateUrl(e,t,r){return this.do(\"setCheckUpdateUrl\",{uuid:e,checkUpdate:t,checkUpdateUrl:r})}updateMetadata(e,t,r){return thi",
+   "n this.do(\"pinToTop\",e)}importByUrl(e){return this.doThrow(\"importByUrl\",e)}installByCode(e,t,r=\"user\"){return this.do(\"installByCode\",{uuid:e,code:t,upsertBy:r})}setCheckUpdateUrl(e,t,r){return this.do(\"setCheckUpdateUrl\",{uuid:e,checkUpdate:t,checkUpdateUrl:r})}updateMetadata(e,t,r){return this.do(\"updateMetadata\",{uuid:e,key:t,value:r}"
+  ]
+ },
+ "options.proxies": {
+  "file": "options.js",
+  "symbol": "installByCode",
+  "hitCount": 0,
+  "samples": []
+ },
+ "install.installByCode": {
+  "file": "install.js",
+  "symbol": "installByCode",
+  "hitCount": 0,
+  "samples": []
+ },
+ "inject.installByCode": {
+  "file": "inject.js",
+  "symbol": "installByCode",
+  "hitCount": 0,
+  "samples": []
+ },
+ "import.installByCode": {
+  "file": "import.js",
+  "symbol": "installByCode",
+  "hitCount": 0,
+  "samples": []
+ }
+}
