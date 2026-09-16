@@ -1,0 +1,30 @@
+{
+ "ts": "2026-09-16T01:30:34.613Z",
+ "steps": [
+  {
+   "name": "userScripts-capability",
+   "ok": "PASS",
+   "detail": "{\"userScriptsType\":\"object\",\"registerFn\":true,\"ua\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\"}",
+   "evidence": "API_SUPPORTED_AND_ENABLED"
+  },
+  {
+   "name": "install-min",
+   "ok": "PASS",
+   "detail": "uuid=rt8-min-exec-uuid status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/thirdDiyAdd.do",
+   "evidence": "n/a"
+  },
+  {
+   "name": "min-exec-mark",
+   "ok": "PASS",
+   "detail": "{\"req\":true,\"fab\":true,\"mark\":\"1\"}",
+   "evidence": "REAL_SCRIPT_CAT_USER_SCRIPT_EXECUTION"
+  }
+ ],
+ "errors": []
+}

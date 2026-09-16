@@ -1,0 +1,54 @@
+{
+ "ts": "2026-09-16T01:39:09.199Z",
+ "steps": [
+  {
+   "name": "install",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/thirdDiyAdd.do",
+   "evidence": "n/a"
+  },
+  {
+   "name": "bridge+canvas-ready",
+   "ok": "PASS",
+   "detail": "{\"bridge\":true,\"width\":619.5,\"height\":376.8625,\"objs\":21}",
+   "evidence": "REAL_SCRIPT_CAT_BRIDGE+REAL_CANVAS"
+  },
+  {
+   "name": "snapshot",
+   "ok": "PASS",
+   "detail": "{\"total\":21,\"textTotal\":4,\"sample\":{\"idx\":4,\"original\":\"简小设\"}}",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "apply-response",
+   "ok": "PASS",
+   "detail": "[{\"source\":\"zy-card-assistant-page\",\"type\":\"applyResult\",\"ok\":true,\"applied\":[\"正面 姓名 -> TEST_RUNTIME_VALUE\"]}]",
+   "evidence": "REAL_SCRIPT_CAT_APPLY|src=extension/src/editor/page-bridge.js#sha256:17141f7c67fb4862|marker=true"
+  },
+  {
+   "name": "apply-readback",
+   "ok": "PASS",
+   "detail": "{\"found\":true,\"text\":\"TEST_RUNTIME_VALUE\",\"objCount\":21,\"created\":false}",
+   "evidence": "REAL_SCRIPT_CAT_APPLY"
+  },
+  {
+   "name": "rollback",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"removed\":0,\"restored\":1,\"leaked\":0,\"total\":21,\"preTotal\":21} remaining=21",
+   "evidence": "REAL_SCRIPT_CAT_ROLLBACK"
+  },
+  {
+   "name": "cleanup",
+   "ok": "PASS",
+   "detail": "removed",
+   "evidence": "n/a"
+  }
+ ],
+ "errors": []
+}
