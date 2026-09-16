@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.5.0
-// @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，图片不上传第三方)。持续更新试装版，非正式稳定版。
+// @version      0.3.6.0
+// @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
 // @match        https://diy.zheliyin.com/diyWeb/third/*/*/thirdLoginDiyEdit.do*
@@ -18,6 +18,7 @@
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -29,6 +30,7 @@
 // @connect      raw.githubusercontent.com
 // @connect      github.com
 // @connect      cdn.jsdelivr.net
+// @connect      aip.baidubce.com
 // @connect      *
 // @updateURL    https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
 // @downloadURL  https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
@@ -37,7 +39,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.5.0";
+  const VERSION = "0.3.6.0";
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   // DEFAULT_BASE_URL / DEFAULT_MODEL 已迁移至 config-core（@require 加载，作用域共享，单一来源）
@@ -260,6 +262,12 @@
         line-height: 1.35;
         word-break: break-all;
       }
+      .zy-note {
+        font-size: 11px;
+        color: #98a2b3;
+        line-height: 1.45;
+        word-break: break-all;
+      }
     `);
   }
 
@@ -299,6 +307,33 @@
               <label class="zy-label" for="zy-model">模型</label>
               <input class="zy-input" id="zy-model" value="${escapeHtml(config.model)}">
             </div>
+            <div class="zy-row">
+              <label class="zy-label" for="zy-ocr-mode">图片识别方式</label>
+              <select class="zy-input" id="zy-ocr-mode">
+                <option value="auto" ${getOcrMode() === "auto" ? "selected" : ""}>自动（本地优先，失败时用百度云端）</option>
+                <option value="local" ${getOcrMode() === "local" ? "selected" : ""}>仅本地（不联网）</option>
+                <option value="baidu" ${getOcrMode() === "baidu" ? "selected" : ""}>百度云端</option>
+              </select>
+              <div class="zy-note">自动模式：本地引擎加载失败/识别为空/超时时，会把图片发送到百度识别。</div>
+            </div>
+          </div>
+        </details>
+        <details class="zy-settings">
+          <summary>百度云 OCR（云端备用）</summary>
+          <div class="zy-settings-body">
+            <div class="zy-row">
+              <label class="zy-label" for="zy-baidu-ak">API Key</label>
+              <input class="zy-input" id="zy-baidu-ak" type="password" placeholder="百度智能云应用的 API Key（已配置 ${baiduConfigured() ? maskKey(GM_getValue("zyBaiduAk", "")) : "未配置"}）">
+            </div>
+            <div class="zy-row">
+              <label class="zy-label" for="zy-baidu-sk">Secret Key</label>
+              <input class="zy-input" id="zy-baidu-sk" type="password" placeholder="百度智能云应用的 Secret Key（留空保持原样）">
+            </div>
+            <div class="zy-actions two">
+              <button class="zy-btn" id="zy-baidu-save">保存配置</button>
+              <button class="zy-btn secondary" id="zy-baidu-test">测试连接</button>
+            </div>
+            <div class="zy-note" id="zy-baidu-status">Key 只保存在本机脚本配置中，不写入画布、不上传第三方。</div>
           </div>
         </details>
         <div class="zy-row">
@@ -385,6 +420,40 @@
     if (ocrBtn) ocrBtn.addEventListener("click", handleOcrImage);
     const probeBtn = panel.querySelector("#zy-probe");
     if (probeBtn) probeBtn.addEventListener("click", probeCanvas);
+    // Stage 5.5B P4：百度云 OCR 设置 + 识别方式
+    const modeSel = panel.querySelector("#zy-ocr-mode");
+    if (modeSel) modeSel.addEventListener("change", () => { GM_setValue("zyOcrMode", modeSel.value); setStatus("识别方式已切换为：" + (modeSel.value === "auto" ? "自动（本地优先）" : modeSel.value === "local" ? "仅本地" : "百度云端")); });
+    const akInput = panel.querySelector("#zy-baidu-ak");
+    const skInput = panel.querySelector("#zy-baidu-sk");
+    const bs = panel.querySelector("#zy-baidu-status");
+    const saveBtn = panel.querySelector("#zy-baidu-save");
+    if (saveBtn) saveBtn.addEventListener("click", () => {
+      const ak = akInput ? akInput.value.trim() : "";
+      const sk = skInput ? skInput.value.trim() : "";
+      if (ak) GM_setValue("zyBaiduAk", ak);
+      if (sk) GM_setValue("zyBaiduSk", sk);
+      if (akInput) akInput.value = "";
+      if (skInput) skInput.value = "";
+      setBaiduStatus(bs, baiduConfigured() ? "已保存（Key 不显示完整，仅存本机）。" : "已保存（尚未配置 API Key）");
+      renderPanel(); // 刷新面板占位文本（maskKey）
+    });
+    const testBtn = panel.querySelector("#zy-baidu-test");
+    if (testBtn) testBtn.addEventListener("click", async () => {
+      setBaiduStatus(bs, "正在测试连接…");
+      const provider = makeBaiduProvider();
+      if (!provider) { setBaiduStatus(bs, "百度 OCR 模块未加载"); return; }
+      try {
+        const tok = await provider.getToken();
+        setBaiduStatus(bs, tok.ok ? "连接成功（有效 30 天，已缓存令牌）" : "连接失败：" + (tok.error ? tok.error.errorMessage : "未知错误"));
+      } catch (e) {
+        setBaiduStatus(bs, "连接异常：" + String(e && e.message || e).slice(0, 80));
+      }
+    });
+  }
+
+  function setBaiduStatus(node, text) {
+    const n = node || document.getElementById("zy-baidu-status");
+    if (n) n.textContent = text;
   }
 
   // ---- Stage 5.5B P1：识别图片文字（本地 Tesseract.js，经 page-world executor + DOM attr 桥接） ----
@@ -440,12 +509,100 @@
     return { dataUrl: dataUrl, width: w, height: h };
   }
 
+  // ---- Stage 5.5B P4：百度云 OCR 逻辑（§40-§47，模式 LOCAL-FIRST + 云端 fallback）----
+  const BAIDU_PROVIDER_GLOBAL = (typeof createBaiduProvider === "function") ? createBaiduProvider : null; // @require 注入
+  function baiduStorage() {
+    return { get: (k) => GM_getValue(k, ""), set: (k, v) => GM_setValue(k, v) };
+  }
+  // GM_xmlhttpRequest 封装成 provider 需要的 {request(method,url,opts)}
+  function baiduTransport(method, url, opts) {
+    return new Promise((resolve, reject) => {
+      GM_xmlhttpRequest({
+        method: method, url: url,
+        headers: (opts && opts.headers) || {},
+        data: (opts && opts.body) || undefined,
+        timeout: (opts && opts.timeout) || 30000,
+        onload: (x) => resolve({ status: x.status, responseText: x.responseText }),
+        onerror: () => reject(new Error("network error")),
+        ontimeout: () => reject(new Error("timeout"))
+      });
+    });
+  }
+  // 图片压缩（§P4：>4096px 或 base64 >4M 时等比缩放 + JPEG 降质）
+  function baiduResizeImage(dataUrl, spec) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.naturalWidth || img.width, h = img.naturalHeight || img.height;
+        if (w > spec.maxSide || h > spec.maxSide) { const s = Math.min(spec.maxSide / w, spec.maxSide / h); w = Math.max(1, Math.round(w * s)); h = Math.max(1, Math.round(h * s)); }
+        const cv = document.createElement("canvas");
+        cv.width = w; cv.height = h;
+        const g = cv.getContext("2d");
+        g.drawImage(img, 0, 0, w, h);
+        let out = cv.toDataURL("image/jpeg", 0.85);
+        let q = 0.8;
+        while (out.length > spec.maxBytes && q > 0.2) { out = cv.toDataURL("image/jpeg", q); q -= 0.15; }
+        resolve(out);
+      };
+      img.onerror = () => resolve(dataUrl);
+      img.src = dataUrl;
+    });
+  }
+  function maskKey(v) { return v ? v.slice(0, 4) + "•".repeat(3) + "(" + v.length + "位)" : ""; }
+  function baiduConfigured() {
+    return !!(GM_getValue("zyBaiduAk", "") && GM_getValue("zyBaiduSk", ""));
+  }
+  function getOcrMode() {
+    const m = GM_getValue("zyOcrMode", "auto");
+    return m === "local" || m === "baidu" ? m : "auto";
+  }
+  function makeBaiduProvider() {
+    if (!BAIDU_PROVIDER_GLOBAL) return null;
+    return BAIDU_PROVIDER_GLOBAL({
+      getConfig: () => ({ apiKey: GM_getValue("zyBaiduAk", ""), secretKey: GM_getValue("zyBaiduSk", "") }),
+      http: { request: baiduTransport },
+      storage: baiduStorage(),
+      resizeImage: baiduResizeImage
+    });
+  }
+  // 自动模式 fallback：本地失败分类 → 百度云端；配置缺失 → 明确提示（§47 local-first）
+  function maybeBaiduFallback(img, failCode) {
+    if (getOcrMode() !== "auto") return;
+    if (!baiduConfigured()) {
+      setStatus("本地识别失败（" + failCode + "），百度云端未配置：请在「百度云 OCR」中填写 API Key / Secret Key 后重试");
+      ocrLog("ERROR", "baidu not configured for fallback");
+      return;
+    }
+    ocrRunning = true;
+    setStatus("本地识别失败，正在切换到百度云端…");
+    ocrLog("FALLBACK", "local " + failCode + " → baidu");
+    runBaiduOcr(img)
+      .catch((e) => { ocrRunning = false; setStatus("百度识别异常：" + String(e && e.message || e).slice(0, 80)); ocrLog("ERROR", "baidu unexpected: " + e); });
+    return;
+  }
+  async function runBaiduOcr(img) {
+    const provider = makeBaiduProvider();
+    if (!provider) { setStatus("百度 OCR 模块未加载（@require 失败）"); ocrRunning = false; return; }
+    setStatus("百度云端识别中…");
+    const res = await provider.recognize(img.dataUrl, { imageWidth: img.width, imageHeight: img.height });
+    ocrRunning = false;
+    if (res.error) { setStatus(res.error.errorMessage); ocrLog("ERROR", "baidu " + res.error.errorCode); return; }
+    if (!res.candidates.length) { setStatus("百度识别未检测到文字"); ocrLog("ERROR", "baidu empty"); return; }
+    ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " elapsed=" + res.meta.elapsed + "ms");
+    // baidu bbox{x,y,width,height} → executor 行格式{x0,y0,x1,y1}，复用同一 mapper（§39 解耦）
+    const lines = res.candidates.map((c) => ({
+      text: c.text,
+      bbox: { x0: c.bbox.x, y0: c.bbox.y, x1: c.bbox.x + c.bbox.width, y1: c.bbox.y + c.bbox.height }
+    }));
+    buildItemsFromOcr({ lines: lines }, img);
+  }
+
   function handleOcrImage() {
     if (state.ocrPanelClosed) return;
     if (ocrRunning) { setStatus("OCR 正在运行，请稍候…"); return; }
     const canvas = getCanvasForSide("front");
     if (!canvas) { setStatus("画布未就绪，请等待模板加载完成"); ocrLog("ERROR", "canvas not ready"); return; }
-    // §52 PREPARING：解析目标图片
+    // §52 PREPARING：解析目标图片（active → 背景图 → 首张 image，P1）
     const target = resolveOcrTarget(canvas);
     if (!target) { setStatus(OCR_ERR.IMAGE_UNAVAILABLE); ocrLog("ERROR", OCR_ERR.IMAGE_UNAVAILABLE); return; }
     ocrLog("PREPARING", "target kind=" + target.kind + " type=" + target.obj.type);
@@ -454,6 +611,13 @@
     ocrLog("PREPARING", "image " + img.width + "x" + img.height + " dataUrl=" + img.dataUrl.length + " chars");
     ocrTarget = target; // 同一 OCR 事务内 buildItemsFromOcr 复用该目标
     ocrRunning = true;
+    if (getOcrMode() === "baidu") {
+      setStatus("百度云端识别中…");
+      runBaiduOcr(img)
+        .catch((e) => { ocrRunning = false; setStatus("百度识别异常：" + String(e && e.message || e).slice(0, 80)); ocrLog("ERROR", "baidu unexpected: " + e); });
+      return;
+    }
+    // 本地 Tesseract（auto / local 共用，§54 互斥已由 ocrRunning 保证）
     setStatus("正在加载 OCR（首次约需下载 20MB 中文识别库，请耐心等待）…");
     const run = (engineText) => {
       const executor = "(function(){" +
@@ -482,15 +646,15 @@
           ocrRunning = false;
           try {
             const r = JSON.parse(out);
-            if (!r.ok) { setStatus("OCR 失败：" + r.err); ocrLog("ERROR", "local ocr failed: " + r.err); return; }
+            if (!r.ok) { setStatus("OCR 失败：" + r.err); ocrLog("ERROR", "local ocr failed: " + r.err); maybeBaiduFallback(img, "LOCAL_OCR_FAILED:" + r.err); return; }
             ocrLog("LOCAL_RECOGNIZING", "lines=" + (r.lines || []).length + " image=" + r.w + "x" + r.h);
-            buildItemsFromOcr(r);
-          } catch (e) { setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e); }
-        } else if (tries > OCR_TIMEOUT_TRIES) { clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout"); }
+            buildItemsFromOcr(r, img);
+          } catch (e) { setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e); maybeBaiduFallback(img, "LOCAL_OCR_PARSE_FAIL"); }
+        } else if (tries > OCR_TIMEOUT_TRIES) { clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout"); maybeBaiduFallback(img, "LOCAL_OCR_TIMEOUT"); }
       }, 500);
     };
     if (ocrEngineCache) { run(ocrEngineCache); return; }
-    GM_xmlhttpRequest({ method: "GET", url: OCR_CDN, timeout: 45000, onload: (x) => { if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) { ocrEngineCache = x.responseText; ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars"); run(ocrEngineCache); } else { ocrRunning = false; setStatus("OCR 引擎加载失败（HTTP " + x.status + "）"); } }, onerror: () => { ocrRunning = false; setStatus("OCR 引擎网络错误"); ocrLog("ERROR", "network error"); } });
+    GM_xmlhttpRequest({ method: "GET", url: OCR_CDN, timeout: 45000, onload: (x) => { if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) { ocrEngineCache = x.responseText; ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars"); run(ocrEngineCache); } else { ocrRunning = false; setStatus("OCR 引擎加载失败（HTTP " + x.status + "）"); maybeBaiduFallback(img, "LOCAL_ENGINE_LOAD_FAILED:" + x.status); } }, onerror: () => { ocrRunning = false; setStatus("OCR 引擎网络错误"); ocrLog("ERROR", "network error"); maybeBaiduFallback(img, "LOCAL_ENGINE_NETWORK_ERROR"); } });
   }
   function getCanvasForSide(side) {
     const req = window.requirejs || window.require;
@@ -499,7 +663,7 @@
     const c = vo && vo.totalCanvasArray && vo.totalCanvasArray[0] && ((vo.totalCanvasArray[0].canvas) || vo.totalCanvasArray[0]);
     return c || null;
   }
-  function buildItemsFromOcr(r) {
+  function buildItemsFromOcr(r, img) {
     // OCR lines（image pixel）→ canvas 坐标：复用本次事务已解析的 ocrTarget 显示几何（left/top/width/height/scale/angle）
     const canvas = getCanvasForSide("front");
     const target = ocrTarget && ocrTarget.obj;
@@ -519,7 +683,16 @@
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
       return { text: l.text, left: px - 4, top: py - 4, width: Math.max(60, bw + 8), fontSize: Math.max(10, Math.round(bw > 0 ? (bh * 1.0) : 14)), fontFamily: "思源黑体 Regular" };
     });
-    if (!items.length) { setStatus("未识别到文字（可尝试切换到云端 OCR）"); ocrLog("ERROR", "no lines recognized"); return; }
+    if (!items.length) {
+      setStatus("未识别到文字");
+      ocrLog("ERROR", "no lines recognized");
+      // 本地空结果（LOCAL_OCR_EMPTY）→ 自动模式走百度 fallback（provider 已确保 non-empty 才走到重建）
+      if (getOcrMode() === "auto" && img && !img._baiduDone) {
+        img._baiduDone = true;
+        maybeBaiduFallback(img, "LOCAL_OCR_EMPTY");
+      }
+      return;
+    }
     setStatus("识别到 " + items.length + " 个文字区域，正在生成（BUILDING）…");
     ocrLog("BUILDING", "items=" + items.length);
     const on = (e) => { if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "ocrCreateResult") { window.removeEventListener("message", on); setStatus(e.data.ok ? "已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）" : "生成失败：" + (e.data.message || "")); ocrLog("SUCCESS", "created=" + (e.data.created || []).length); } };
