@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-16T01:41:57.905Z",
+ "ts": "2026-09-16T02:32:37.899Z",
  "stage": "RUNTIME-8.3",
  "steps": [
   {
@@ -59,7 +59,7 @@
   {
    "name": "bridge-marker",
    "ok": "PASS",
-   "detail": "{\"installed\":true,\"ts\":1789522929196}",
+   "detail": "{\"installed\":true,\"ts\":1789525969534}",
    "evidence": "REAL_SCRIPT_CAT_BRIDGE"
   },
   {
@@ -84,7 +84,7 @@
    "name": "apply-response",
    "ok": "PASS",
    "detail": "[{\"source\":\"zy-card-assistant-page\",\"type\":\"applyResult\",\"ok\":true,\"applied\":[\"正面 姓名 -> TEST_RUNTIME_VALUE\"]}]",
-   "evidence": "REAL_SCRIPT_CAT_APPLY|src=page-bridge.js#sha256:17141f7c67fb4862|marker=true"
+   "evidence": "REAL_SCRIPT_CAT_APPLY|src=page-bridge.js#sha256:793ba9e1671f590e|marker=true"
   },
   {
    "name": "apply-readback",
