@@ -88,41 +88,53 @@
 | `extension/src/editor/object-adapter.js` | 只读读取 + 最小 `setText` | 已实现·未挂接 |
 | `extension/src/editor/object-matcher.js` | 确定性对象匹配 | 已实现·未挂接 |
 | `extension/src/ocr/ocr-model.js` | OCR 候选纯数据模型 | 已实现·未挂接 |
+| `extension/src/ocr/ocr-provider.js` | 统一 OCR provider 接口（tesseract LOCAL + fixture） | 已实现·未挂接 |
+| `extension/src/ocr/tesseract-loader.js` | tesseract 引擎懒加载（`GM_addElement` + chi_sim + IndexedDB 缓存） | 已实现·未挂接 |
 | `extension/src/ocr/image-mapper.js` | 图片坐标 → Canvas 坐标 | 已实现·未挂接 |
 
 ### Real OCR
 
-> **尚未实现。** 状态：`BLOCKED`（原生路径）+ `DEFERRED`（自建路径）
+> **已接入，但尚未进入产品路径。** 状态：`REAL_OCR_PROVIDER = PASS`（本地）；原生路径仍 `BLOCKED`。
 
-- 折立印网页**有**原生「文字识别（Alt+Q）」入口，但识别结果**无法程序化读取**（面板绑定"相框"素材交互，无网络请求、无 postMessage、结果值不进 DOM）。经 Stage 5.3 探针 + Stage 5.4 四种深度 hook 实验后确认。
-- 本地 OCR（如 tesseract.js）已评估但**未接入**（依赖体积约 20MB、中文质量与集成成本待评估）→ 推迟至 Stage 5.5。
+- **本地 OCR 已选定并实测通过**：Tesseract.js（WASM，本地运行）—— `chi_sim` 模型，实测 18 words / bbox 18/18 / 平均置信度 **90.4** / 首跑约 3s / **零上传、零 key、全本地**。
+- **原生「文字识别（Alt+Q）」仍不可用**：结果值无法程序化读取（面板绑定"相框"素材交互，无网络请求、无 postMessage、结果值不进 DOM）。
 
-**因此：当前版本的"图片识别"能力不可用，请勿期待。**
+**因此**：仓库里已具备真实 OCR 能力并有真实证据，但**尚未挂接到助手面板**，你正常使用助手时不会触发它。
 
-### Fixture OCR
+### Basic Real OCR Demo（真实 OCR → 可编辑文字）
 
-> Stage 5.3 / 5.4 演示链路的 OCR 来源是 **fixture**，**不是真实 OCR**。
+> 🟡 **已有真实证据，但属实验能力（未挂接产品）。**
 
-含义：`text` 与 `bbox` 由脚本按合成图的**已知绘制坐标**直接给出，再由 `image-mapper` → `object-matcher` → 在真实编辑器里创建真 `textbox`。
-
-链路本身（坐标映射 / 匹配 / 原生文字重建 / 编组 / 回滚）都是**真实的**，已验证：
+Stage 5.5 已验证这条链路成立：
 
 ```text
-REAL_IMAGE(synth 600×400) → mapper → matcher 4/4 NOT_FOUND（模板保护）
-→ 创建 4 个真 textbox（editable / 思源黑体 Regular / markuuid=null）
-→ fabric.Group 编组/解组 → 参考图保留 → rollback 21/4 零残留
-字号校准：fontSize = 0.829 × visualHeight，重建回读平均高度误差 5.03%
+真实 OCR（tesseract chi_sim，6 行候选）
+→ image-mapper（1000×800 natural × 0.45）
+→ matcher（电话行 MATCHED，复用模板已有槽位；其余 NOT_FOUND 保护）
+→ 创建 6 个真 textbox（editable / 思源黑体 Regular / markuuid=null）
+→ 字号误差 3.3% → 参考图保留 → rollback 21/4/3 零残留
+BASIC_REAL_OCR_DEMO = PASS（errors=0）
 ```
 
-> 结论：**重建链路成立，OCR 来源待补。** 不要把它理解为"已支持图片识别"。
+仍待解决：引擎注入方式（`GM_addElement`）需**真机一键验证**；行内词序质量（→ Stage 5.9）。
+
+### Fixture OCR（历史链路验证）
+
+> ⚠️ Stage 5.3 / 5.4 的演示链路 OCR 来源是 **fixture**，**不是真实 OCR**。
+
+含义：`text` 与 `bbox` 由脚本按合成图的**已知绘制坐标**直接给出，再由 `image-mapper` → `object-matcher` → 在真实编辑器里创建真 `textbox`。链路本身（坐标映射 / 匹配 / 原生文字重建 / 编组 / 回滚）都是真实的。
+
+> 之所以保留这一节：防止把 Stage 5.3 的 `Reconstruction PASS` 误读为"已支持图片识别"。**Stage 5.5 才引入了真实 OCR。**
 
 ## 当前限制
 
-- 图片识别（OCR）不可用（见上）。
+- **OCR / 文字重建尚未接入助手面板**：能力已在仓库并具真实证据，但生产路径不调用。
+- 真实用户在网页内粘贴/拖拽图片的行为尚未在产品内验证（harness 自动化受限）。
+- 引擎注入方式（`GM_addElement`）待真机一键验证。
 - 仅验证单一真实模板；`back` 画布在该模板中不存在。
-- 真实旋转**文字**对象无样本，旋转文字重建未验证。
-- 多行文本字号未覆盖（需行数估计）。
-- 无用户可感知的"撤销"入口；回滚目前是审计脚本级能力。
+- 真实旋转**文字**对象无样本，旋转文字重建未验证（→ Stage 5.8）。
+- 多行文本字号未覆盖（→ Stage 5.6 / 5.9）。
+- 无用户可感知的"撤销"入口（→ Stage 5.13）。
 - `parseFields` 为上帝函数（7 种外部依赖耦合），无单测，回归靠集成测试兜底。
 - 扩展版 `all_frames: true` 暂无证据证明必要（保留待证）。
 
@@ -130,7 +142,7 @@ REAL_IMAGE(synth 600×400) → mapper → matcher 4/4 NOT_FOUND（模板保护�
 
 ```bash
 # 单元测试（零依赖，无需浏览器 / 无需网络）
-node tests/editor-object-model/run.js          # 6 套件 110 断言
+node tests/editor-object-model/run.js          # 8 套件 132 断言
 
 # 浏览器套件（headless 打开对应 html，需 ?zydebug=1 的见括号）
 #   tests/run-tests.html            field 43 + config 15
@@ -143,6 +155,9 @@ node tests/editor-object-model/run.js          # 6 套件 110 断言
 npm run runtime:check        # 冒烟：浏览器启动 + 门户可达
 npm run runtime:full         # 全链冒烟（未登录时编辑态项标 BLOCKED 属预期）
 npm run runtime:scriptcat    # 真实 ScriptCat 全链（18 步）
+
+# Stage 5.x 真实取证（逐个直接运行）
+node runtime/stage5-5-real-ocr-demo.js
 ```
 
 开发前请先读：
@@ -154,9 +169,11 @@ npm run runtime:scriptcat    # 真实 ScriptCat 全链（18 步）
 
 ## 阶段状态
 
-当前开发分支：**`stage-4.1-runtime-validation`**，HEAD 为 Stage 5.4（Gate = `CONDITIONAL-GO`）。
+当前开发分支：**`stage-4.1-runtime-validation`**，HEAD 为 Stage 5.5（Gate = `GO`）。
 
 > ⚠️ **GitHub 默认分支 `main` 只到 Stage 4.0**，不包含 Stage 5.x / RUNTIME-8.x / OCR 相关代码与证据。请切换到 `stage-4.1-runtime-validation` 查看全部成果。
+
+已定序路线：5.6 字号精确 → 5.7 颜色/粗细 → 5.8 旋转 → 5.9 多行/段落 → 5.10 复杂布局 → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview。
 
 - 阶段索引（R0 → Stage 5.4 → RUNTIME-8.3）：[`docs/STAGE_INDEX.md`](docs/STAGE_INDEX.md)
 - 证据等级规范：[`docs/EVIDENCE_POLICY.md`](docs/EVIDENCE_POLICY.md)
