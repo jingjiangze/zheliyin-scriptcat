@@ -23,6 +23,8 @@ const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user
   const report = { ts: new Date().toISOString(), stage: "STAGE-5.5B-P1", steps: [], errors: [] };
   const step = (n, ok, d, ev) => { report.steps.push({ name: n, ok: ok ? "PASS" : "FAIL", detail: String(d || "").slice(0, 700), evidence: ev || "n/a" }); if (!ok) report.errors.push(n); };
   const statusLog = [];
+  const cn = [];
+  const pageErrors = [];
   const userScriptSrc = fs.readFileSync(USERSCRIPT_PATH, "utf8");
   step("userscript-loaded", userScriptSrc.length > 5000 && userScriptSrc.indexOf("resolveOcrTarget") >= 0, "chars=" + userScriptSrc.length + " hasResolveOcrTarget=true", "P1_CODE");
 
@@ -45,8 +47,6 @@ const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user
     if (inst.__err) return;
 
     const page = await browser.newPage();
-    const cn = [];
-    const pageErrors = [];
     page.on("console", (msg) => { const t = String(msg.text()); if (t.indexOf("[zy-ocr]") >= 0 || /error|exception/i.test(t)) cn.push(t); });
     page.on("pageerror", (e) => pageErrors.push(String(e && e.message || e).slice(0, 300)));
     await page.goto(EDITOR_URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch((e) => step("nav-editor", false, String(e && message || e)));
