@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         折立印名片套版助手
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.0.0
-// @description  在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时再按原样式补充。
+// @version      0.3.0.1
+// @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时再按原样式补充。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
 // @match        https://diy.zheliyin.com/diyWeb/third/*/*/thirdLoginDiyEdit.do*
@@ -14,10 +14,10 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/extension/src/fields/field-core.js
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/extension/src/core/config-core.js
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/extension/src/ai/ai-client.js
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/extension/src/editor/page-bridge.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -28,19 +28,19 @@
 // @connect      raw.githubusercontent.com
 // @connect      github.com
 // @connect      *
-// @updateURL    https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js
-// @downloadURL  https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js
+// @updateURL    https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
+// @downloadURL  https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
 // ==/UserScript==
 
 (function () {
   "use strict";
 
-  const VERSION = "0.3.0.0";
+  const VERSION = "0.3.0.1";
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   // DEFAULT_BASE_URL / DEFAULT_MODEL 已迁移至 config-core（@require 加载，作用域共享，单一来源）
-  const UPDATE_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js";
-  const DOWNLOAD_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js";
+  const UPDATE_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js";
+  const DOWNLOAD_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js";
 
   // 带边界断言的电话正则：前面不能紧跟数字，避免从 QQ 号/订单号等长数字串里误截 11 位。
   const PHONE_BOUND_RE = /(?<!\d)(?:\+?86[-\s]?)?(1[3-9]\d{9})(?!\d)/;
