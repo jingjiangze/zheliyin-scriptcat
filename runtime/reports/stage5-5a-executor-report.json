@@ -1,0 +1,149 @@
+{
+ "ts": "2026-09-16T06:44:58.746Z",
+ "stage": "Stage 5.5A-R2 editor-executor",
+ "steps": [
+  {
+   "name": "engine-text",
+   "ok": "PASS",
+   "detail": "66695 bytes",
+   "evidence": "n/a"
+  },
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "csp-headers",
+   "ok": "PASS",
+   "detail": "[]",
+   "evidence": "policy-evidence"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "page-stable",
+   "ok": "PASS",
+   "detail": "stable after settle window",
+   "evidence": "n/a"
+  },
+  {
+   "name": "executor-inserted",
+   "ok": "PASS",
+   "detail": "injected=true",
+   "evidence": "ENGINE_LOAD"
+  },
+  {
+   "name": "executor-umd-load",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"errors\":[],\"state\":{\"ok\":true}}",
+   "evidence": "ENGINE_LOAD: UMD CommonJS branch via module-shading"
+  },
+  {
+   "name": "current-image-extracted",
+   "ok": "PASS",
+   "detail": "natural 980x1264",
+   "evidence": "REAL_USER_IMAGE(current canvas image)"
+  },
+  {
+   "name": "ocr-first",
+   "ok": "PASS",
+   "detail": "elapsed=674 lines=3 words=4 err=undefined",
+   "evidence": "WORKER+CORE+WASM+LANG+RECOGNIZE(P0)"
+  },
+  {
+   "name": "ocr-cached",
+   "ok": "PASS",
+   "detail": "first=674ms cached=667ms (both-hit: cross-session indexeddb cache verified)",
+   "evidence": "CACHE(indexeddb)"
+  },
+  {
+   "name": "mapper",
+   "ok": "PASS",
+   "detail": "mapped=3",
+   "evidence": "REAL_MAPPING"
+  },
+  {
+   "name": "matcher",
+   "ok": "PASS",
+   "detail": "[{\"text\":\"个 时\",\"status\":\"NOT_FOUND\"},{\"text\":\"如\",\"status\":\"NOT_FOUND\"},{\"text\":\"NU\",\"status\":\"NOT_FOUND\"}]",
+   "evidence": "REAL_TEXT_RECONSTRUCTION"
+  },
+  {
+   "name": "create-editable",
+   "ok": "PASS",
+   "detail": "created=3 editable/font ok=true",
+   "evidence": "REAL_TEXTBOX+REAL_EDITABLE"
+  },
+  {
+   "name": "reference-preserved",
+   "ok": "PASS",
+   "detail": "images=3 (模板基线 3；未删除任何原图)",
+   "evidence": "ORIGINAL_IMAGE_PRESERVED"
+  },
+  {
+   "name": "rollback",
+   "ok": "PASS",
+   "detail": "count=21 texts=4 images=3",
+   "evidence": "ROLLBACK"
+  }
+ ],
+ "errors": [],
+ "cspHeaders": [
+  ""
+ ],
+ "ocr": {
+  "firstMs": 674,
+  "cachedMs": 667,
+  "lines": 3,
+  "words": 4
+ },
+ "matcher": [
+  {
+   "text": "个 时",
+   "status": "NOT_FOUND"
+  },
+  {
+   "text": "如",
+   "status": "NOT_FOUND"
+  },
+  {
+   "text": "NU",
+   "status": "NOT_FOUND"
+  }
+ ],
+ "execution": {
+  "created": [
+   {
+    "text": "个 时",
+    "fontSize": 71,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "markuuid": null
+   },
+   {
+    "text": "如",
+    "fontSize": 59,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "markuuid": null
+   },
+   {
+    "text": "NU",
+    "fontSize": 19,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "markuuid": null
+   }
+  ],
+  "count": 24
+ }
+}
