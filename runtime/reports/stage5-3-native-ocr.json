@@ -1,0 +1,109 @@
+{
+ "ts": "2026-09-16T03:26:59.268Z",
+ "stage": "Stage 5.3 native-capabilities-audit",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "native-scan",
+   "ok": "PASS",
+   "detail": "scan ok",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "native-ocr-audit",
+   "ok": "PASS",
+   "detail": "{\"domHints\":3,\"windowFn\":0,\"moduleHints\":0,\"conclusion\":\"NATIVE_OCR_ENTRY_EXISTS (further result access TBD)\"} hints=[\"LI::文字识别\",\"DD::OCR识别alt+q\",\"SPAN::文字识别\"]",
+   "evidence": "§七"
+  },
+  {
+   "name": "native-image-audit",
+   "ok": "PASS",
+   "detail": "images={\"count\":3,\"sample\":{\"left\":-0.8784622000000013,\"top\":-8.174314500000008,\"width\":307.53625,\"height\":396.659,\"scaleX\":1,\"scaleY\":1,\"angle\":0,\"mediaImgPath\":\"assets/resource/imgs/normal/printdiy1/M0\",\"naturalWidth\":980,\"naturalHeight\":1264,\"elementTag\":\"IMG\",\"srcPrefix\":\"https://diy.zheliyin.com/diyWeb/assets/resource/imgs/normal/\"}}",
+   "evidence": "§十四 ImageSource"
+  },
+  {
+   "name": "native-font-audit",
+   "ok": "PASS",
+   "detail": "sourceHanFound=true windowHits=[] selectOptions=[\"思源黑体 Medium\",\"思源宋体 Medium\",\"思源黑体 Regular\",\"思源宋体 Regular\"]",
+   "evidence": "§二十六/§六十三"
+  },
+  {
+   "name": "native-group-audit",
+   "ok": "PASS",
+   "detail": "fabricGroup=function domHints=[\"LI::编组\",\"SPAN::编组\",\"LI::图标组合\"]",
+   "evidence": "§三十六/§六十四"
+  }
+ ],
+ "errors": [],
+ "findings": {
+  "ocr": {
+   "domHints": 3,
+   "windowFn": 0,
+   "moduleHints": 0,
+   "conclusion": "NATIVE_OCR_ENTRY_EXISTS (further result access TBD)"
+  }
+ },
+ "scan": {
+  "ocr": {
+   "domHints": [
+    "LI::文字识别",
+    "DD::OCR识别alt+q",
+    "SPAN::文字识别"
+   ],
+   "windowFn": [],
+   "moduleHints": [],
+   "windowHasFabric": true
+  },
+  "image": {
+   "sample": {
+    "left": -0.8784622000000013,
+    "top": -8.174314500000008,
+    "width": 307.53625,
+    "height": 396.659,
+    "scaleX": 1,
+    "scaleY": 1,
+    "angle": 0,
+    "mediaImgPath": "assets/resource/imgs/normal/printdiy1/M0",
+    "naturalWidth": 980,
+    "naturalHeight": 1264,
+    "elementTag": "IMG",
+    "srcPrefix": "https://diy.zheliyin.com/diyWeb/assets/resource/imgs/normal/"
+   },
+   "count": 3
+  },
+  "font": {
+   "windowHits": [],
+   "selectOptions": [
+    "思源黑体 Medium",
+    "思源宋体 Medium",
+    "思源黑体 Regular",
+    "思源宋体 Regular"
+   ],
+   "sourceHanFound": true
+  },
+  "group": {
+   "fabricGroupType": "function",
+   "domHints": [
+    "LI::编组",
+    "SPAN::编组",
+    "LI::图标组合",
+    "DIV::图标组合",
+    "P::图标组合",
+    "LI::组合素材",
+    "DIV::组合素材",
+    "P::组合素材"
+   ]
+  }
+ }
+}

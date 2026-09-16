@@ -1,0 +1,63 @@
+{
+ "ts": "2026-09-16T03:28:47.626Z",
+ "stage": "Stage 5.3 native-ocr-probe",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "native-ocr-triggered",
+   "ok": "PASS",
+   "detail": "clicked=true reason=undefined",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "ocr-network",
+   "ok": "FAIL",
+   "detail": "ocrReqs=[]",
+   "evidence": "REAL_OCR"
+  },
+  {
+   "name": "ocr-dialog",
+   "ok": "PASS",
+   "detail": "dialogs=[\"ctip-modal modal-mini::先选中相框，将图片拖放到选中的相框中即可\\n        知道了\"] bodyReveal=[\"文字\",\"上传\",\"文字识别（支持Alt+Q组合键最小化最大化切换，支持拖拽和右下角缩放）\",\"识别内容 \"]",
+   "evidence": "REAL_OCR"
+  },
+  {
+   "name": "ocr-result-access",
+   "ok": "PASS",
+   "detail": "occlusion: {\"ocrResultAccess\":\"ENTRY_TRIGGERED_NETWORK_OR_DIALOG\",\"note\":\"OCR entry triggered observable side-effect; result-value access still TBD\"}",
+   "evidence": "§七 如实分级"
+  }
+ ],
+ "errors": [
+  "ocr-network"
+ ],
+ "trigger": {
+  "clicked": true,
+  "reqLog": [],
+  "ocrReqs": [],
+  "dialogs": [
+   "ctip-modal modal-mini::先选中相框，将图片拖放到选中的相框中即可\n        知道了"
+  ],
+  "bodyTextReveal": [
+   "文字",
+   "上传",
+   "文字识别（支持Alt+Q组合键最小化最大化切换，支持拖拽和右下角缩放）",
+   "识别内容 "
+  ]
+ },
+ "findings": {
+  "ocrResultAccess": "ENTRY_TRIGGERED_NETWORK_OR_DIALOG",
+  "note": "OCR entry triggered observable side-effect; result-value access still TBD"
+ }
+}

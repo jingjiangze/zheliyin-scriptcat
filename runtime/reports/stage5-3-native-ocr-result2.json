@@ -1,0 +1,80 @@
+{
+ "ts": "2026-09-16T03:29:43.407Z",
+ "stage": "Stage 5.3 native-ocr-probe2",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "image-selected-and-triggered",
+   "ok": "PASS",
+   "detail": "clicked=true err=undefined",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "ocr-network-requests",
+   "ok": "FAIL",
+   "detail": "ocrReqs=[]",
+   "evidence": "REAL_OCR"
+  },
+  {
+   "name": "ocr-panel-visible",
+   "ok": "PASS",
+   "detail": "panelHints=[\"如果特殊字符无法印刷，可以尝试把文字转为图片！\",\"艺术字效果可以设置各种文字效果！\",\"3D文字\",\"文字\",\"文字识别\",\"OCR识别alt+q\",\"横版文字\",\"竖版文字\"]",
+   "evidence": "REAL_OCR"
+  },
+  {
+   "name": "ocr-canvas-state",
+   "ok": "PASS",
+   "detail": "canvasCount=21",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "ocr-result-access-note",
+   "ok": "PASS",
+   "detail": "{\"ocrResultAccess\":\"REAL_OCR_PANEL_OBSERVED\",\"canvasAfterCount\":21}",
+   "evidence": "§七 如实"
+  }
+ ],
+ "errors": [
+  "ocr-network-requests"
+ ],
+ "round1": {
+  "clicked": true,
+  "ocrReqs": [],
+  "dialogs": [
+   "ctip-modal modal-min::先选中相框，将图片拖放到选中的相框中即可\n        知道了",
+   "popup-head::撤销\n\t\t\t\n            \n\t\t\t\t\n\t\t\t\t撤销\n\t\t\t\n        \n        \n            取消\n           "
+  ],
+  "panelHints": [
+   "如果特殊字符无法印刷，可以尝试把文字转为图片！",
+   "艺术字效果可以设置各种文字效果！",
+   "3D文字",
+   "文字",
+   "文字识别",
+   "OCR识别alt+q",
+   "横版文字",
+   "竖版文字",
+   "文字厚度",
+   "表格识别",
+   "保留原图文字",
+   "生成结果",
+   "添加文字\n                            上传SVG",
+   "文字资料："
+  ],
+  "canvasCount": 21
+ },
+ "findings": {
+  "ocrResultAccess": "REAL_OCR_PANEL_OBSERVED",
+  "canvasAfterCount": 21
+ }
+}
