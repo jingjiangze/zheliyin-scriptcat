@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-16T09:35:06.861Z",
+ "ts": "2026-09-16T09:39:42.074Z",
  "stage": "STAGE-5.5B-P2B",
  "steps": [
   {
@@ -71,7 +71,7 @@
   {
    "name": "cleanup-userscript",
    "ok": "PASS",
-   "detail": "removed rt5-5b-p2b-mu3wn5nx",
+   "detail": "removed rt5-5b-p2b-mu3wt20q",
    "evidence": "n/a"
   }
  ],
