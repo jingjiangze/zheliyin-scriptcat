@@ -1,0 +1,319 @@
+{
+ "ts": "2026-09-16T04:36:25.032Z",
+ "stage": "Stage 5.5 real-ocr-demo",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "level-a-real-ocr",
+   "ok": "PASS",
+   "detail": "lines=6 from words=18 text=[\"立 印 测试 折 设计 公司\",\"市\",\"区 深圳 南山\",\"园 路 999 号 科技\",\"13800138000\",\"WecChat: abc12\"]",
+   "evidence": "REAL_OCR_CANDIDATES"
+  },
+  {
+   "name": "demo-image-into-canvas",
+   "ok": "PASS",
+   "detail": "natural 1000x800 scale 0.45 count=22",
+   "evidence": "REAL_IMAGE"
+  },
+  {
+   "name": "real-ocr-lines-bbox",
+   "ok": "PASS",
+   "detail": "usable=6/6",
+   "evidence": "REAL_OCR_CANDIDATES"
+  },
+  {
+   "name": "level-b-mapper",
+   "ok": "PASS",
+   "detail": "mapped=6",
+   "evidence": "REAL_IMAGE_MAPPING"
+  },
+  {
+   "name": "level-b-matcher",
+   "ok": "PASS",
+   "detail": "[{\"text\":\"立 印 测试 折 设\",\"status\":\"NOT_FOUND\"},{\"text\":\"市\",\"status\":\"NOT_FOUND\"},{\"text\":\"区 深圳 南山\",\"status\":\"NOT_FOUND\"},{\"text\":\"园 路 999 号 \",\"status\":\"NOT_FOUND\"},{\"text\":\"1380013800\",\"status\":\"AMBIGUOUS\"},{\"text\":\"WecChat: a\",\"status\":\"NOT_FOUND\"}]",
+   "evidence": "REAL_TEXT_RECONSTRUCTION(protection)"
+  },
+  {
+   "name": "level-b-create",
+   "ok": "PASS",
+   "detail": "created=6",
+   "evidence": "REAL_TEXT_RECONSTRUCTION"
+  },
+  {
+   "name": "editable-and-font",
+   "ok": "PASS",
+   "detail": "editable/font=[\"textbox/true/思源黑体 Regular\",\"textbox/true/思源黑体 Regular\",\"textbox/true/思源黑体 Regular\",\"textbox/true/思源黑体 Regular\",\"textbox/true/思源黑体 Regular\",\"textbox/true/思源黑体 Regular\"]",
+   "evidence": "REAL_EDITABLE_TEXT"
+  },
+  {
+   "name": "identity-clean",
+   "ok": "PASS",
+   "detail": "markuuid=[null,null,null,null,null,null]",
+   "evidence": "CREATION_SAFETY"
+  },
+  {
+   "name": "fontsize-error",
+   "ok": "PASS",
+   "detail": "meanHeightErr=0.033",
+   "evidence": "FONT_SIZE"
+  },
+  {
+   "name": "reference-preserved",
+   "ok": "PASS",
+   "detail": "images=4",
+   "evidence": "REFERENCE_IMAGE"
+  },
+  {
+   "name": "rollback-restored",
+   "ok": "PASS",
+   "detail": "count=21 texts=4 images=3",
+   "evidence": "REAL_ROLLBACK"
+  }
+ ],
+ "errors": [],
+ "ocrSource": "stage5-5-ocr-feasibility.json words->line-merge (same demo image, same tesseract chi_sim engine, persisted evidence)",
+ "ocrLines": [
+  {
+   "text": "立 印 测试 折 设计 公司",
+   "confidence": 97,
+   "bbox": {
+    "x0": 61,
+    "y0": 76,
+    "x1": 839,
+    "y1": 142
+   },
+   "hasBbox": true
+  },
+  {
+   "text": "市",
+   "confidence": 97,
+   "bbox": {
+    "x0": 408,
+    "y0": 329,
+    "x1": 441,
+    "y1": 377
+   },
+   "hasBbox": true
+  },
+  {
+   "text": "区 深圳 南山",
+   "confidence": 96.9,
+   "bbox": {
+    "x0": 331,
+    "y0": 329,
+    "x1": 525,
+    "y1": 377
+   },
+   "hasBbox": true
+  },
+  {
+   "text": "园 路 999 号 科技",
+   "confidence": 95.7,
+   "bbox": {
+    "x0": 331,
+    "y0": 388,
+    "x1": 548,
+    "y1": 437
+   },
+   "hasBbox": true
+  },
+  {
+   "text": "13800138000",
+   "confidence": 91.3,
+   "bbox": {
+    "x0": 63,
+    "y0": 620,
+    "x1": 318,
+    "y1": 651
+   },
+   "hasBbox": true
+  },
+  {
+   "text": "WecChat: abc123",
+   "confidence": 92.7,
+   "bbox": {
+    "x0": 561,
+    "y0": 621,
+    "x1": 841,
+    "y1": 650
+   },
+   "hasBbox": true
+  }
+ ],
+ "candidates": [
+  {
+   "text": "立 印 测试 折 设计 公司",
+   "fontSize": 25,
+   "canvasRect": {
+    "x": 107.4,
+    "y": 74.2,
+    "w": 350.1,
+    "h": 29.7
+   }
+  },
+  {
+   "text": "市",
+   "fontSize": 18,
+   "canvasRect": {
+    "x": 263.6,
+    "y": 188.1,
+    "w": 14.8,
+    "h": 21.6
+   }
+  },
+  {
+   "text": "区 深圳 南山",
+   "fontSize": 18,
+   "canvasRect": {
+    "x": 228.9,
+    "y": 188.1,
+    "w": 87.3,
+    "h": 21.6
+   }
+  },
+  {
+   "text": "园 路 999 号 科技",
+   "fontSize": 18,
+   "canvasRect": {
+    "x": 228.9,
+    "y": 214.6,
+    "w": 97.7,
+    "h": 22.1
+   }
+  },
+  {
+   "text": "13800138000",
+   "fontSize": 12,
+   "canvasRect": {
+    "x": 108.3,
+    "y": 319,
+    "w": 114.8,
+    "h": 13.9
+   }
+  },
+  {
+   "text": "WecChat: abc12",
+   "fontSize": 11,
+   "canvasRect": {
+    "x": 332.4,
+    "y": 319.4,
+    "w": 126,
+    "h": 13.1
+   }
+  }
+ ],
+ "matcherResults": [
+  {
+   "text": "立 印 测试 折 设",
+   "status": "NOT_FOUND"
+  },
+  {
+   "text": "市",
+   "status": "NOT_FOUND"
+  },
+  {
+   "text": "区 深圳 南山",
+   "status": "NOT_FOUND"
+  },
+  {
+   "text": "园 路 999 号 ",
+   "status": "NOT_FOUND"
+  },
+  {
+   "text": "1380013800",
+   "status": "AMBIGUOUS"
+  },
+  {
+   "text": "WecChat: a",
+   "status": "NOT_FOUND"
+  }
+ ],
+ "execution": {
+  "created": [
+   {
+    "text": "立 印 测试 折 设计 ",
+    "fontSize": 25,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 30.2,
+    "targetHeight": 29.7,
+    "heightErr": 0.02,
+    "boxWidth": 350,
+    "markuuid": null
+   },
+   {
+    "text": "市",
+    "fontSize": 18,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 22,
+    "targetHeight": 21.6,
+    "heightErr": 0.02,
+    "boxWidth": 60,
+    "markuuid": null
+   },
+   {
+    "text": "区 深圳 南山",
+    "fontSize": 18,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 22,
+    "targetHeight": 21.6,
+    "heightErr": 0.02,
+    "boxWidth": 120,
+    "markuuid": null
+   },
+   {
+    "text": "园 路 999 号 科技",
+    "fontSize": 18,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 22,
+    "targetHeight": 22.1,
+    "heightErr": 0,
+    "boxWidth": 205,
+    "markuuid": null
+   },
+   {
+    "text": "13800138000",
+    "fontSize": 12,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 15,
+    "targetHeight": 13.9,
+    "heightErr": 0.08,
+    "boxWidth": 125,
+    "markuuid": null
+   },
+   {
+    "text": "WecChat: abc",
+    "fontSize": 11,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 13.9,
+    "targetHeight": 13.1,
+    "heightErr": 0.06,
+    "boxWidth": 157,
+    "markuuid": null
+   }
+  ],
+  "count": 28
+ }
+}
