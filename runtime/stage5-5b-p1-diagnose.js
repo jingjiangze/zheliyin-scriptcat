@@ -41,14 +41,14 @@ const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user
     await optsPage.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch((e) => step("options", false, String(e && e.message || e)));
     await optsPage.waitForTimeout(3000);
 
-    // 清理历史本仓库 userscript（双脚本面板竞争干扰，001-execution）
+    // 清理历史本仓库 userscript（双脚本面板竞争干扰，001-execution）——宽松匹配，尽力而为
     let removedOld = [];
     try {
       const all = (await adapter.getAllScripts(optsPage)) || [];
-      const ours = all.filter((s) => /折立印|zheliyin-card-assistant/.test(String((s && (s.name || (s.metadata && s.metadata.name))) || "")));
+      const ours = all.filter((s) => /折立印|zheliyin/.test(String(JSON.stringify(s) || "")));
       for (const s of ours) { try { await adapter.removeScript(optsPage, s.uuid); removedOld.push(s.uuid); } catch (e) { removedOld.push(s.uuid + ":" + String(e && e.message || e)); } }
-    } catch (e) { /* ignore */ }
-    step("cleanup-old-scripts", removedOld.join(","), "removed=" + removedOld.length, "NO_DUAL_PANEL");
+    } catch (e) { removedOld.push("err:" + String(e && e.message || e)); }
+    step("cleanup-old-scripts", true, "removed=" + removedOld.length + (removedOld.length ? " (" + removedOld.join(",") + ")" : "（无历史脚本）"), "NO_DUAL_PANEL");
 
     const inst = await adapter.installByCode(optsPage, { uuid: P1_UUID, code: userScriptSrc, upsertBy: "user" }).catch((e) => ({ __err: String(e && e.message || e) }));
     step("install-userscript", !inst.__err, inst.__err || "status=" + inst.status, "REAL_SCRIPT_CAT_INSTALL");
@@ -146,7 +146,7 @@ const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user
         await new Promise((r) => setTimeout(r, 700));
         const st = await page.evaluate(() => { const n = document.getElementById("zy-status"); return n ? n.textContent : ""; }).catch(() => "");
         const key = st.replace(/\u2026|…/g, "").slice(0, 60);
-        if (st && !seen.some((s) => s.replace(/\u2026|…/g, "").slice(0, 60) === key)) seen.push({ t: Date.now() - t0, s: st });
+        if (st && !seen.some((x) => x.s.replace(/\u2026|…/g, "").slice(0, 60) === key)) seen.push({ t: Date.now() - t0, s: st });
         if (st && terminalRe.test(st)) { terminal = st; break; }
       }
       return { clicked, seen, terminal, elapsedMs: Date.now() - t0 };
