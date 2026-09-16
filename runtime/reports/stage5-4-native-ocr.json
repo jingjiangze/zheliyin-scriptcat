@@ -1,0 +1,85 @@
+{
+ "ts": "2026-09-16T04:10:18.400Z",
+ "stage": "Stage 5.4 native-ocr-deep-probe",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "deep-probe-exec",
+   "ok": "PASS",
+   "detail": "openOCR=文字识别 panelBtn=[\"识别内容\"]",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "ocr-network-or-result",
+   "ok": "PASS",
+   "detail": "fetch=[] xhr=[] postMessage=[]",
+   "evidence": "REAL_OCR"
+  },
+  {
+   "name": "ocr-canvas-mutation",
+   "ok": "FAIL",
+   "detail": "canvas 21->21 newText=0",
+   "evidence": "REAL_OCR"
+  },
+  {
+   "name": "ocr-result-text",
+   "ok": "FAIL",
+   "detail": "realResult=[] dialogs=[\"先选中相框，将图片拖放到选中的相框中即可\\n        知道了\",\"撤销\\n\\t\\t\\t\\n            \\n\\t\\t\\t\\t\\n\\t\\t\\t\\t撤销\\n\\t\\t\\t\\n        \\n        \\n            取消\\n           \"]",
+   "evidence": "REAL_OCR_RESULT"
+  },
+  {
+   "name": "native-ocr-access",
+   "ok": "PASS",
+   "detail": "NATIVE_OCR_RESULT_ACCESS=BLOCKED {\"realImage\":true,\"realTrigger\":true,\"realResult\":false,\"ocrResultAccess\":\"BLOCKED\",\"detail\":\"新对象=0 结果行=[] 面板要求=\\\"先选中相框，将图片拖放到选中的相框中即可\\\\n        知道了\\\"\"}",
+   "evidence": "§八 如实（不写 PASS）"
+  }
+ ],
+ "errors": [
+  "ocr-canvas-mutation",
+  "ocr-result-text"
+ ],
+ "probe": {
+  "clickA": "文字识别",
+  "clicksB": [
+   "识别内容"
+  ],
+  "log": {
+   "postMessage": [],
+   "ws": [],
+   "xhr": [],
+   "fetch": [],
+   "canvasBefore": 21,
+   "canvasAfter": 21,
+   "newTextCount": 0,
+   "panelTexts": [
+    "生成结果"
+   ],
+   "results": [
+    "生成结果",
+    "生成结果"
+   ],
+   "dialogs": [
+    "先选中相框，将图片拖放到选中的相框中即可\n        知道了",
+    "撤销\n\t\t\t\n            \n\t\t\t\t\n\t\t\t\t撤销\n\t\t\t\n        \n        \n            取消\n           "
+   ]
+  }
+ },
+ "findings": {
+  "realImage": true,
+  "realTrigger": true,
+  "realResult": false,
+  "ocrResultAccess": "BLOCKED",
+  "detail": "新对象=0 结果行=[] 面板要求=\"先选中相框，将图片拖放到选中的相框中即可\\n        知道了\""
+ }
+}
