@@ -1,0 +1,28 @@
+{
+  "stage": "Stage 5.2 Real Usable Editor Pipeline + Object Matcher Foundation",
+  "ts": "2026-09-16",
+  "product_smoke": "PASS",
+  "object_matcher": "PASS",
+  "text_object_matching": "PASS",
+  "ambiguous_protection": "PASS",
+  "not_found_protection": "PASS",
+  "safe_text_mutation": "PASS",
+  "creation_safety": "PASS (carried from 5.1, no new creation path)",
+  "rollback": "PASS",
+  "runtime_8_3": "PASS",
+  "unit": "PASS (5 suites: model/adapter/diff/matcher/ocr-model)",
+  "real_usable_flow": "PASS",
+  "production_changes": "zero behavior change; added object-matcher.js + ocr-model.js (unwired, legacy path preserved)",
+  "important_findings": [
+    "company_cn reuses name slot when no company slot exists (legacy scoreObject C1) - product finding for 5.3",
+    "real-editor matcher self-match 4/4 (score 0.807); +180px offset -> NOT_FOUND",
+    "safe mutation diff only [text,height]; rollback zero residual",
+    "page-own JS errors (closeSocket/addEventListener null) excluded from assistant-error gate"
+  ],
+  "deferred": [
+    "OCR real-image -> candidate not wired (Stage 5.3 OCR Runtime Integration)",
+    "matcher <-> legacy scoreObject unification + company/name slot mapping policy (5.3)",
+    "multi-template evidence still PARTIAL"
+  ],
+  "gate": "GO"
+}
