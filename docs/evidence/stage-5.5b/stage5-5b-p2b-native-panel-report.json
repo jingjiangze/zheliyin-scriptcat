@@ -1,0 +1,87 @@
+{
+ "ts": "2026-09-16T09:35:06.861Z",
+ "stage": "STAGE-5.5B-P2B",
+ "steps": [
+  {
+   "name": "install-userscript",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "native-drawer-mounted",
+   "ok": "PASS",
+   "detail": "{\"ready\":true,\"rightBar\":true,\"drawer\":true,\"toolBtn\":true,\"legacy\":true,\"drawerCount\":1,\"drawerRect\":{\"l\":1004,\"w\":246,\"h\":900,\"display\":\"flex\"}}",
+   "evidence": "P2B_NATIVE_PANEL"
+  },
+  {
+   "name": "drawer-position",
+   "ok": "PASS",
+   "detail": "{\"l\":1004,\"w\":246,\"h\":900,\"display\":\"flex\"}",
+   "evidence": "P2B_ADJACENT_TO_RAIL"
+  },
+  {
+   "name": "drawer-unique",
+   "ok": "PASS",
+   "detail": "drawerCount=1",
+   "evidence": "P2B_NO_DUP"
+  },
+  {
+   "name": "tool-btn-unique",
+   "ok": "PASS",
+   "detail": "{\"toolBtn\":true}",
+   "evidence": "P2B_RAIL_BUTTON"
+  },
+  {
+   "name": "legacy-kept",
+   "ok": "PASS",
+   "detail": "{\"legacy\":true}",
+   "evidence": "P2B_FALLBACK_KEPT"
+  },
+  {
+   "name": "tool-btn-toggle",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"afterHide\":\"none\",\"afterShow\":\"flex\"}",
+   "evidence": "P2B_TOGGLE"
+  },
+  {
+   "name": "bg-set",
+   "ok": "PASS",
+   "detail": "{\"ok\":true}",
+   "evidence": "P2B_BG"
+  },
+  {
+   "name": "native-ocr-flow",
+   "ok": "PASS",
+   "detail": "{\"created\":3}",
+   "evidence": "P2B_NATIVE_LOCAL_OCR_TEXTCREATE"
+  },
+  {
+   "name": "refresh-no-dup",
+   "ok": "PASS",
+   "detail": "{\"drawerCount\":1,\"toolCount\":1,\"drawer\":true}",
+   "evidence": "P2B_SPA_NO_DUP"
+  },
+  {
+   "name": "rollback",
+   "ok": "PASS",
+   "detail": "removed=0",
+   "evidence": "P2B_ROLLBACK"
+  },
+  {
+   "name": "cleanup-userscript",
+   "ok": "PASS",
+   "detail": "removed rt5-5b-p2b-mu3wn5nx",
+   "evidence": "n/a"
+  }
+ ],
+ "errors": [],
+ "console": [
+  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=21 bg=true active=null",
+  "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars",
+  "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3"
+ ]
+}
