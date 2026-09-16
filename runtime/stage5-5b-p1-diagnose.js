@@ -239,7 +239,8 @@ const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user
     const earlyStateSeen = obsC.seen.some((x) => /正在等待编辑器加载/.test(x.s));
     const rejectedC = obsC.seen.some((x) => /画布未就绪|请先选中图片/.test(x.s));
     const progressedC = obsC.seen.some((x) => /正在准备|正在加载|正在识别|识别到|已生成|失败|超时|未识别|无效|异常/.test(x.s));
-    const errC = pageErrors.length - (pageErrorsBeforeC || 0);
+    // 只对「我们注入脚本」相关的 pageError 敏感（executor/appendChild 语法类），忽略编辑器自身噪音
+    const errC = pageErrors.slice(pageErrorsBeforeC || 0).filter((x) => /appendChild|Unexpected token|zy-ocr|executor/i.test(x)).length;
     statusLog.push({ scenario: "C-earlyClick", kind: null, seen: obsC.seen, elapsedMs: obsC.elapsedMs });
     step("scenario-C-early-click", earlyStateSeen && progressedC && !rejectedC && errC <= 0, "earlyState=" + earlyStateSeen + " progressed=" + progressedC + " status=" + JSON.stringify(obsC.seen.slice(0, 5)), "CANVAS_EARLY_CLICK");
 

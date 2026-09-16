@@ -1,0 +1,167 @@
+{
+ "ts": "2026-09-16T08:31:30.108Z",
+ "stage": "STAGE-5.5B-P1-V2",
+ "steps": [
+  {
+   "name": "userscript-loaded",
+   "ok": "PASS",
+   "detail": "chars=56249",
+   "evidence": "P1_V2_CODE"
+  },
+  {
+   "name": "launch+scriptcat",
+   "ok": "PASS",
+   "detail": "Playwright Chromium + 真实 ScriptCat(ndcooeababalnlpkfedmmbbbgkljhpjf)",
+   "evidence": "REAL_SCRIPT_CAT_EXTENSION"
+  },
+  {
+   "name": "cleanup-old-scripts",
+   "ok": "PASS",
+   "detail": "removed=2 (rt5-5b-p1-diag-uuid-mu3ubdio,rt5-5a-ocr-smoke-uuid)",
+   "evidence": "NO_DUAL_PANEL"
+  },
+  {
+   "name": "install-userscript",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "panel-render",
+   "ok": "PASS",
+   "detail": "panel@Ms=1945 canvas@Ms=2966 canvas={\"w\":619.5,\"objs\":21}",
+   "evidence": "TIMELINE"
+  },
+  {
+   "name": "panel+canvas-ready",
+   "ok": "PASS",
+   "detail": "{\"width\":619.5,\"height\":376.8625,\"objs\":21,\"panel\":true}",
+   "evidence": "REAL_CANVAS+ZY_PANEL"
+  },
+  {
+   "name": "ui-ocr-btn-present",
+   "ok": "PASS",
+   "detail": "{\"panels\":1,\"ocrBtn\":true,\"statusNode\":true,\"probeBtn\":true}",
+   "evidence": "P1_UI_SANITY"
+  },
+  {
+   "name": "scenario-A-bg-set",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"bgType\":\"image\",\"left\":0,\"top\":0,\"hasElement\":true,\"elNatW\":900}",
+   "evidence": "BACKGROUND_IMAGE_SET|noActiveObject"
+  },
+  {
+   "name": "scenario-A-reacted",
+   "ok": "PASS",
+   "detail": "firstStatus=[{\"t\":710,\"s\":\"OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…\"}]",
+   "evidence": "P1_V2_BG_IMG_FLOW"
+  },
+  {
+   "name": "scenario-A-e2e",
+   "ok": "FAIL",
+   "detail": "{\"created\":-1,\"txt\":\"本地识别失败（LOCAL_OCR_TIMEOUT），百度云端未配置：请在「百度云 OCR」中填写 API Key / Secret Key 后重试\"} elapsed=121213",
+   "evidence": "BACKGROUND_OCR_TEXTCREATE"
+  },
+  {
+   "name": "scenario-A-readable-textbox",
+   "ok": "FAIL",
+   "detail": "{\"ocrCount\":0,\"samples\":[],\"total\":21}",
+   "evidence": "REAL_EDITABLE_TEXTBOX"
+  },
+  {
+   "name": "scenario-B-select-image",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"activeType\":\"image\"}",
+   "evidence": "ACTIVE_IMAGE"
+  },
+  {
+   "name": "scenario-B-reacted",
+   "ok": "PASS",
+   "detail": "status=[{\"t\":708,\"s\":\"OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…\"}]",
+   "evidence": "P1_V2_ACTIVE_IMAGE"
+  },
+  {
+   "name": "rollback",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"removed\":0,\"totalAfter\":21,\"bgAfter\":false}",
+   "evidence": "P1_ROLLBACK"
+  },
+  {
+   "name": "scenario-C-early-click",
+   "ok": "FAIL",
+   "detail": "earlyState=true progressed=false status=[{\"t\":807,\"s\":\"正在等待编辑器加载…\"},{\"t\":1513,\"s\":\"未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图\"}]",
+   "evidence": "CANVAS_EARLY_CLICK"
+  },
+  {
+   "name": "cleanup-userscript",
+   "ok": "PASS",
+   "detail": "removed rt5-5b-p1-diag-uuid-mu3udcn0",
+   "evidence": "n/a"
+  }
+ ],
+ "errors": [
+  "scenario-A-e2e",
+  "scenario-A-readable-textbox",
+  "scenario-C-early-click"
+ ],
+ "timeline": {
+  "tLoad0": 1789547504422,
+  "tPanelMs": 1945,
+  "tCanvasMs": 2966
+ },
+ "statusLog": [
+  {
+   "scenario": "A-background",
+   "kind": null,
+   "seen": [
+    {
+     "t": 710,
+     "s": "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…"
+    }
+   ],
+   "elapsedMs": 120131
+  },
+  {
+   "scenario": "B-activeImage",
+   "kind": null,
+   "seen": [
+    {
+     "t": 708,
+     "s": "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…"
+    }
+   ],
+   "elapsedMs": 100256
+  },
+  {
+   "scenario": "C-earlyClick",
+   "kind": null,
+   "seen": [
+    {
+     "t": 807,
+     "s": "正在等待编辑器加载…"
+    },
+    {
+     "t": 1513,
+     "s": "未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+    }
+   ],
+   "elapsedMs": 1513
+  }
+ ],
+ "console": [
+  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=21 bg=true active=null",
+  "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=113330 chars",
+  "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+  "[zy-ocr][ERROR] timeout",
+  "[zy-ocr][ERROR] baidu not configured for fallback: LOCAL_OCR_TIMEOUT",
+  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=21 bg=true active=image",
+  "[zy-ocr][PREPARING] kind=active-image 980x1264 dataUrl=583014 chars",
+  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=20 bg=false active=null",
+  "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+ ],
+ "pageErrors": [
+  "window.closeSocket is not a function",
+  "Failed to execute 'appendChild' on 'Node': Unexpected token ')'",
+  "Failed to execute 'appendChild' on 'Node': Unexpected token ')'"
+ ]
+}

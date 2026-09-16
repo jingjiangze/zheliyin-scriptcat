@@ -69,7 +69,7 @@ const EDITOR_URL = "https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/th
         const text = (el.textContent || "").trim().slice(0, 60);
         const looksPanel =
           rect.width > 200 && rect.height > 150 &&
-          (rect.left > W - 700) && rect.bottom <= W && // 靠右
+          (rect.left > W - 700) && rect.bottom <= window.innerHeight && // 靠右且未超出可视高度
           /助手|页面|图层|模板|属性|素材|文本|背景|设置|样式/i.test(text);
         if (looksPanel) {
           out.push({

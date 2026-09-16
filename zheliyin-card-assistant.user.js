@@ -498,7 +498,19 @@
     });
   }
 
-  // waitForCanvasReady：轮询真实 ready 信号（getCanvasInfo），非固定 sleep（§8）
+  // waitForOcrTarget：canvas ready 后等待目标图可用（早期点击时模板图片可能尚未加载完成，§9/§12-§13）
+  // 确定性失败（CROSS_ORIGIN/EXPORT_FAILED/背景缺数据）→ 立即返回；IMAGE_UNAVAILABLE → 轮询直到出现图片。
+  async function waitForOcrTarget(maxMs) {
+    const limit = maxMs || 12000;
+    const t0 = Date.now();
+    for (;;) {
+      const prep = await bridgeCall("ocrPrepare", 2500);
+      if (prep && prep.ok) return prep;
+      if (prep && prep.code && prep.code !== "IMAGE_UNAVAILABLE" && prep.code !== "CANVAS_NOT_READY") return prep;
+      if (Date.now() - t0 >= limit) return prep;
+      await new Promise((r) => setTimeout(r, 600));
+    }
+  }
   function waitForCanvasReady(maxMs) {
     const limit = maxMs || 30000;
     return new Promise((resolve) => {
@@ -624,7 +636,7 @@
       ocrLog("CANVAS_READY", "w=" + info.width + "x" + info.height + " objs=" + info.objs + " bg=" + info.bgImage + " active=" + info.activeType);
       // §52 PREPARING：页面世界解析目标图（active → 背景图 → 首图）并提取 dataUrl + 几何
       setStatus("正在准备图片…");
-      const prep = await bridgeCall("ocrPrepare", 8000);
+      const prep = await waitForOcrTarget(12000);
       if (!prep || !prep.ok) {
         const code = (prep && prep.code) || "CANVAS_NOT_READY";
         const msg = (prep && prep.message) || "图片准备失败";
@@ -646,6 +658,7 @@
       }
       // 本地 Tesseract（auto / local 共用，§54 互斥已由 ocrRunning 保证）
       setStatus("正在加载 OCR（首次约需下载 20MB 中文识别库，请耐心等待）…");
+      // executor 结构严格复刻 5.5A 已验证版本（node 复现：原 userscript 版尾部括号不平衡 → "Unexpected token ')'" → 脚本未执行 → 死等超时）
       const run = (engineText) => {
         const executor = "(function(){" +
           "var module={exports:{}};var exports=module.exports;var define;var require;" +
@@ -657,8 +670,9 @@
           "var lines=(r.data.lines||[]).map(function(l){return {text:l.text.trim(),bbox:l.bbox};});" +
           "w.terminate();" +
           "document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:true,lines:lines,w:r.data.imageWidth,h:r.data.imageHeight}));" +
-          "}).catch(function(e){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));}));" +
-          "})();" +
+          "});" +
+          "}).catch(function(e){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));});" +
+          "});" +
           "})();";
         GM_addElement("script", { textContent: executor });
         document.documentElement.setAttribute("data-zy-ocr-result", "");
