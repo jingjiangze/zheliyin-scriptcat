@@ -1,17 +1,61 @@
+# =====================================================================
+# .gitignore — 折立印名片套版助手
+# ---------------------------------------------------------------------
+# 原则：只做【窄口径】排除。
+#   禁止宽通配：*.png / *.json / *.txt / *.js 会误伤
+#     tests/fixtures/*.txt|*.json|ocr/test-card.png   （必要夹具）
+#     runtime/reports/*.json                          （42 份必要证据）
+#   详细评审与 7 项缺口分析见 docs/SENSITIVE_DATA_AUDIT.md §4
+# 修改本文件后必须执行：
+#     git ls-files | git check-ignore --stdin     # 输出必须为空
+# =====================================================================
+
+# --- 压缩包 / 系统文件 ---
 *.zip
 .DS_Store
 Thumbs.db
 
-# runtime harness —— 敏感/临时产物禁止入库
+# --- 依赖与构建产物 ---
 node_modules/
-runtime/browser/profile*/
+dist/
+build/
+cache/
+*.tmp
+*.bak
+
+# --- 日志（不排除 *.log 之外的证据文件）---
+logs/
+*.log
+
+# --- CI 生成物（.github/workflows/build-exe.yml 会写入工作区）---
+#     注意：不要排除 installer/installer.ps1（那是源文件）
+installer/embedded.generated.ps1
+installer/installer.combined.ps1
+
+# --- 环境变量与本地编辑器设置 ---
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+
+# --- 敏感文件（凭据 / 证书 / 抓包）---
+#     凭据本身应走环境变量，不得落盘（见 docs/DEVELOPMENT_RULES.md §6）
+*.pem
+*.key
+*.har
+cookies/
+tokens/
+
+# --- runtime harness —— 凭据 / 会话 / 临时产物禁止入库 ---
+#     profile 含登录态（RUNTIME_HARNESS_AUDIT.md §3 强制要求排除）
+runtime/browser/
+runtime/vendor/
 runtime/reports/screenshots*
 runtime/reports/dsc.log
 runtime/reports/env-probe.txt
-runtime/vendor/
 storage-state/
 *.session
 .cookies
 [rR]untime[-_]profile/
 playwright-profile/
-.DS_Store
