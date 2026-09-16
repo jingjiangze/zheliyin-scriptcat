@@ -477,37 +477,40 @@
     console.log("[zy-ocr][" + stage + "] " + msg);
   }
 
-  // P1 目标图源优先级（§52/§55）：activeObject(image) → canvas.backgroundImage → 画布第一张 image
-  // 背景图 is not an "active object"（用户选中画布空白区时 getActiveObject() === null），
-  // 旧实现硬性要求 active.type==="image" 导致背景图下“点按钮无反应”。
-  function resolveOcrTarget(canvas) {
-    const objs = canvas && canvas.getObjects ? canvas.getObjects() : [];
-    const active = canvas && canvas.getActiveObject ? canvas.getActiveObject() : null;
-    if (active && String(active.type) === "image") return { obj: active, kind: "active-image" };
-    if (canvas && canvas.backgroundImage && String(canvas.backgroundImage.type) === "image") return { obj: canvas.backgroundImage, kind: "background-image" };
-    const first = objs.find((o) => o && String(o.type) === "image");
-    if (first) return { obj: first, kind: "first-image" };
-    return null;
+  // P1 根因（001-execution）：隔离世界读不到页面 world 的 requirejs 模块注册表（CanvasObjVO），
+  // 因此画布/目标图一律改走 page-bridge（页面世界执行），禁止隔离世界直读画布。
+
+  // 桥接只读调用：postMessage 请求 → 等页面 bridge 回传（Promise，支持超时）
+  // 注：仅用于只读查询（probe/getCanvasInfo/ocrPrepare）；apply/ocrCreate 走既有专用 listener，避免双响应。
+  function bridgeCall(type, timeoutMs) {
+    const replyMap = { probe: "probeResult", getCanvasInfo: "getCanvasInfoResult", ocrPrepare: "ocrPrepareResult" };
+    const replyType = replyMap[type] || (type + "Result");
+    return new Promise((resolve) => {
+      const on = (e) => {
+        if (e.data && e.data.source === PAGE_SOURCE && e.data.type === replyType) {
+          window.removeEventListener("message", on);
+          resolve(e.data);
+        }
+      };
+      window.addEventListener("message", on);
+      window.postMessage({ source: BRIDGE_SOURCE, type: type }, location.origin);
+      if (timeoutMs) setTimeout(() => { window.removeEventListener("message", on); resolve(null); }, timeoutMs);
+    });
   }
 
-  // 图片对象 → {dataUrl, width, height}（宽高 = 图像自然像素，§10/§12 真实读取）
-  function extractImageDataUrl(target) {
-    const el = target.obj._element || (target.obj.getElement && target.obj.getElement());
-    if (!el) return { error: target.kind === "background-image" ? OCR_ERR.BACKGROUND_IMAGE_UNAVAILABLE : OCR_ERR.IMAGE_UNAVAILABLE };
-    const w = el.naturalWidth || el.width || target.obj.width;
-    const h = el.naturalHeight || el.height || target.obj.height;
-    if (!w || !h) return { error: OCR_ERR.IMAGE_UNAVAILABLE };
-    const cv = document.createElement("canvas");
-    cv.width = w; cv.height = h;
-    const c2 = cv.getContext && cv.getContext("2d");
-    if (!c2) return { error: OCR_ERR.IMAGE_EXPORT_FAILED };
-    let dataUrl = null;
-    try {
-      c2.drawImage(el, 0, 0);
-      dataUrl = cv.toDataURL("image/png");
-    } catch (e) { dataUrl = null; }
-    if (!dataUrl) return { error: OCR_ERR.CROSS_ORIGIN_IMAGE };
-    return { dataUrl: dataUrl, width: w, height: h };
+  // waitForCanvasReady：轮询真实 ready 信号（getCanvasInfo），非固定 sleep（§8）
+  function waitForCanvasReady(maxMs) {
+    const limit = maxMs || 30000;
+    return new Promise((resolve) => {
+      const t0 = Date.now();
+      const tick = async () => {
+        const info = await bridgeCall("getCanvasInfo", 2500);
+        if (info && info.ok) { resolve(info); return; }
+        if (Date.now() - t0 >= limit) { resolve(null); return; }
+        setTimeout(tick, 400);
+      };
+      tick();
+    });
   }
 
   // ---- Stage 5.5B P4：百度云 OCR 逻辑（§40-§47，模式 LOCAL-FIRST + 云端 fallback）----
@@ -604,83 +607,95 @@
     buildItemsFromOcr({ lines: lines }, img);
   }
 
-  function handleOcrImage() {
+  async function handleOcrImage() {
     if (state.ocrPanelClosed) return;
     if (ocrRunning) { setStatus("OCR 正在运行，请稍候…"); return; }
-    const canvas = getCanvasForSide("front");
-    if (!canvas) { setStatus("画布未就绪，请等待模板加载完成"); ocrLog("ERROR", "canvas not ready"); return; }
-    // §52 PREPARING：解析目标图片（active → 背景图 → 首张 image，P1）
-    const target = resolveOcrTarget(canvas);
-    if (!target) { setStatus(OCR_ERR.IMAGE_UNAVAILABLE); ocrLog("ERROR", OCR_ERR.IMAGE_UNAVAILABLE); return; }
-    ocrLog("PREPARING", "target kind=" + target.kind + " type=" + target.obj.type);
-    const img = extractImageDataUrl(target);
-    if (img.error) { setStatus(img.error); ocrLog("ERROR", img.error); return; }
-    ocrLog("PREPARING", "image " + img.width + "x" + img.height + " dataUrl=" + img.dataUrl.length + " chars");
-    ocrTarget = target; // 同一 OCR 事务内 buildItemsFromOcr 复用该目标
     ocrRunning = true;
-    if (getOcrMode() === "baidu") {
-      setStatus("百度云端识别中…");
-      runBaiduOcr(img)
-        .catch((e) => { ocrRunning = false; setStatus("百度识别异常：" + String(e && e.message || e).slice(0, 80)); ocrLog("ERROR", "baidu unexpected: " + e); });
-      return;
+    try {
+      // §9 情况 B：用户过早点击 → 明确 UI 状态「正在等待编辑器加载…」→ canvas ready 后自动继续
+      setStatus("正在等待编辑器加载…");
+      const info = await waitForCanvasReady(30000);
+      if (!info) {
+        setStatus("编辑器画布长时间未就绪（30 秒），请刷新页面后重试");
+        ocrLog("ERROR", "canvas not ready after 30s");
+        ocrRunning = false;
+        return;
+      }
+      ocrLog("CANVAS_READY", "w=" + info.width + "x" + info.height + " objs=" + info.objs + " bg=" + info.bgImage + " active=" + info.activeType);
+      // §52 PREPARING：页面世界解析目标图（active → 背景图 → 首图）并提取 dataUrl + 几何
+      setStatus("正在准备图片…");
+      const prep = await bridgeCall("ocrPrepare", 8000);
+      if (!prep || !prep.ok) {
+        const code = (prep && prep.code) || "CANVAS_NOT_READY";
+        const msg = (prep && prep.message) || "图片准备失败";
+        if (code === "IMAGE_UNAVAILABLE") setStatus(OCR_ERR.IMAGE_UNAVAILABLE);
+        else setStatus(msg);
+        ocrLog("ERROR", "ocrPrepare: " + code + " - " + msg);
+        ocrRunning = false;
+        return;
+      }
+      ocrLog("PREPARING", "kind=" + prep.kind + " " + prep.width + "x" + prep.height + " dataUrl=" + prep.dataUrl.length + " chars");
+      ocrTarget = { kind: prep.kind, geo: prep.geometry };
+      const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height };
+      if (getOcrMode() === "baidu") {
+        setStatus("百度云端识别中…");
+        runBaiduOcr(img)
+          .catch((e) => { setStatus("百度识别异常：" + String(e && e.message || e).slice(0, 80)); ocrLog("ERROR", "baidu unexpected: " + e); })
+          .finally(() => { ocrRunning = false; });
+        return;
+      }
+      // 本地 Tesseract（auto / local 共用，§54 互斥已由 ocrRunning 保证）
+      setStatus("正在加载 OCR（首次约需下载 20MB 中文识别库，请耐心等待）…");
+      const run = (engineText) => {
+        const executor = "(function(){" +
+          "var module={exports:{}};var exports=module.exports;var define;var require;" +
+          engineText + "\n" +
+          "var T=module.exports;" +
+          "if(!T||typeof T.createWorker!=='function'){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:'engine'}));return;}" +
+          "window.addEventListener('message',function(ev){if(!ev.data||ev.data.source!=='zy-ocr-req')return;" +
+          "T.createWorker('chi_sim',1,{cacheMethod:'indexeddb'}).then(function(w){return w.recognize(ev.data.dataUrl).then(function(r){" +
+          "var lines=(r.data.lines||[]).map(function(l){return {text:l.text.trim(),bbox:l.bbox};});" +
+          "w.terminate();" +
+          "document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:true,lines:lines,w:r.data.imageWidth,h:r.data.imageHeight}));" +
+          "}).catch(function(e){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));}));" +
+          "})();" +
+          "})();";
+        GM_addElement("script", { textContent: executor });
+        document.documentElement.setAttribute("data-zy-ocr-result", "");
+        window.postMessage({ source: "zy-ocr-req", dataUrl: img.dataUrl }, location.origin);
+        setStatus("OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…");
+        let tries = 0;
+        const timer = setInterval(() => {
+          tries += 1;
+          const out = document.documentElement.getAttribute("data-zy-ocr-result");
+          if (out) {
+            clearInterval(timer);
+            ocrRunning = false;
+            try {
+              const r = JSON.parse(out);
+              if (!r.ok) { setStatus("OCR 失败：" + r.err); ocrLog("ERROR", "local ocr failed: " + r.err); maybeBaiduFallback(img, "LOCAL_OCR_FAILED:" + r.err); return; }
+              ocrLog("LOCAL_RECOGNIZING", "lines=" + (r.lines || []).length + " image=" + r.w + "x" + r.h);
+              buildItemsFromOcr(r, img);
+            } catch (e) { setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e); maybeBaiduFallback(img, "LOCAL_OCR_PARSE_FAIL"); }
+          } else if (tries > OCR_TIMEOUT_TRIES) { clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout"); maybeBaiduFallback(img, "LOCAL_OCR_TIMEOUT"); }
+        }, 500);
+      };
+      if (ocrEngineCache) { run(ocrEngineCache); return; }
+      GM_xmlhttpRequest({ method: "GET", url: OCR_CDN, timeout: 45000, onload: (x) => { if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) { ocrEngineCache = x.responseText; ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars"); run(ocrEngineCache); } else { ocrRunning = false; setStatus("OCR 引擎加载失败（HTTP " + x.status + "）"); maybeBaiduFallback(img, "LOCAL_ENGINE_LOAD_FAILED:" + x.status); } }, onerror: () => { ocrRunning = false; setStatus("OCR 引擎网络错误"); ocrLog("ERROR", "network error"); maybeBaiduFallback(img, "LOCAL_ENGINE_NETWORK_ERROR"); } });
+    } catch (e) {
+      ocrRunning = false;
+      setStatus("识别异常：" + String(e && e.message || e).slice(0, 100));
+      ocrLog("ERROR", "handleOcrImage unexpected: " + e);
     }
-    // 本地 Tesseract（auto / local 共用，§54 互斥已由 ocrRunning 保证）
-    setStatus("正在加载 OCR（首次约需下载 20MB 中文识别库，请耐心等待）…");
-    const run = (engineText) => {
-      const executor = "(function(){" +
-        "var module={exports:{}};var exports=module.exports;var define;var require;" +
-        engineText + "\n" +
-        "var T=module.exports;" +
-        "if(!T||typeof T.createWorker!=='function'){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:'engine'}));return;}" +
-        "window.addEventListener('message',function(ev){if(!ev.data||ev.data.source!=='zy-ocr-req')return;" +
-        "T.createWorker('chi_sim',1,{cacheMethod:'indexeddb'}).then(function(w){return w.recognize(ev.data.dataUrl).then(function(r){" +
-        "var lines=(r.data.lines||[]).map(function(l){return {text:l.text.trim(),bbox:l.bbox};});" +
-        "w.terminate();" +
-        "document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:true,lines:lines,w:r.data.imageWidth,h:r.data.imageHeight}));" +
-        "}).catch(function(e){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));}));" +
-        "})();" +
-        "})();";
-      GM_addElement("script", { textContent: executor });
-      document.documentElement.setAttribute("data-zy-ocr-result", "");
-      window.postMessage({ source: "zy-ocr-req", dataUrl: img.dataUrl }, location.origin);
-      setStatus("OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…");
-      let tries = 0;
-      const timer = setInterval(() => {
-        tries += 1;
-        const out = document.documentElement.getAttribute("data-zy-ocr-result");
-        if (out) {
-          clearInterval(timer);
-          ocrRunning = false;
-          try {
-            const r = JSON.parse(out);
-            if (!r.ok) { setStatus("OCR 失败：" + r.err); ocrLog("ERROR", "local ocr failed: " + r.err); maybeBaiduFallback(img, "LOCAL_OCR_FAILED:" + r.err); return; }
-            ocrLog("LOCAL_RECOGNIZING", "lines=" + (r.lines || []).length + " image=" + r.w + "x" + r.h);
-            buildItemsFromOcr(r, img);
-          } catch (e) { setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e); maybeBaiduFallback(img, "LOCAL_OCR_PARSE_FAIL"); }
-        } else if (tries > OCR_TIMEOUT_TRIES) { clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout"); maybeBaiduFallback(img, "LOCAL_OCR_TIMEOUT"); }
-      }, 500);
-    };
-    if (ocrEngineCache) { run(ocrEngineCache); return; }
-    GM_xmlhttpRequest({ method: "GET", url: OCR_CDN, timeout: 45000, onload: (x) => { if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) { ocrEngineCache = x.responseText; ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars"); run(ocrEngineCache); } else { ocrRunning = false; setStatus("OCR 引擎加载失败（HTTP " + x.status + "）"); maybeBaiduFallback(img, "LOCAL_ENGINE_LOAD_FAILED:" + x.status); } }, onerror: () => { ocrRunning = false; setStatus("OCR 引擎网络错误"); ocrLog("ERROR", "network error"); maybeBaiduFallback(img, "LOCAL_ENGINE_NETWORK_ERROR"); } });
-  }
-  function getCanvasForSide(side) {
-    const req = window.requirejs || window.require;
-    const ctx = req && req.s && req.s.contexts && req.s.contexts._;
-    const vo = (ctx && ctx.defined && ctx.defined.CanvasObjVO) || window.CanvasObjVO;
-    const c = vo && vo.totalCanvasArray && vo.totalCanvasArray[0] && ((vo.totalCanvasArray[0].canvas) || vo.totalCanvasArray[0]);
-    return c || null;
   }
   function buildItemsFromOcr(r, img) {
-    // OCR lines（image pixel）→ canvas 坐标：复用本次事务已解析的 ocrTarget 显示几何（left/top/width/height/scale/angle）
-    const canvas = getCanvasForSide("front");
-    const target = ocrTarget && ocrTarget.obj;
-    if (!target) { setStatus("OCR 目标已失效，请重新识别"); ocrLog("ERROR", "ocrTarget missing"); return; }
-    const w = target.width, h = target.height, sx = target.scaleX || 1, sy = target.scaleY || 1;
-    // 背景图（fabric.backgroundImage）默认不携带 left/top（由渲染器居中），用画布尺寸兜底，保证坐标正确
-    let left = target.left, top = target.top;
-    if (!isFinite(left)) left = (canvas.width - w * sx) / 2;
-    if (!isFinite(top)) top = (canvas.height - h * sy) / 2;
-    const rad = ((target.angle || 0) * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
+    // OCR lines（image pixel）→ canvas 坐标：几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）
+    const geo = ocrTarget && ocrTarget.geo;
+    if (!geo) { setStatus("OCR 目标已失效，请重新识别"); ocrLog("ERROR", "ocrTarget missing"); return; }
+    const w = geo.width, h = geo.height, sx = geo.scaleX || 1, sy = geo.scaleY || 1;
+    // 背景图 left/top 可能缺失：ocrPrepare 已在页面世界用画布居中兜底（§13）
+    const left = geo.left, top = geo.top;
+    const rad = ((geo.angle || 0) * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
     const cx = left + (w * sx) / 2, cy = top + (h * sy) / 2;
     const items = (r.lines || []).filter((l) => l.bbox && typeof l.bbox.x0 === "number").map((l) => {
       const x = Math.min(l.bbox.x0, l.bbox.x1), y = Math.min(l.bbox.y0, l.bbox.y1);

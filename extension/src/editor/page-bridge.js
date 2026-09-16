@@ -66,10 +66,88 @@ function pageBridge() {
         if (canvas.requestRenderAll) canvas.requestRenderAll();
         post("ocrCreateResult", { ok: created.length > 0, created: created });
       }
+      if (event.data.type === "getCanvasInfo") {
+        // Stage 5.5B P1：只读画布自检 —— 隔离世界读不到页面 world 的 requirejs 注册表，
+        // 由页面世界回传画布状态（供 waitForCanvasReady / 诊断）。
+        post("getCanvasInfoResult", buildCanvasInfo());
+        return;
+      }
+      if (event.data.type === "ocrPrepare") {
+        // Stage 5.5B P1：OCR 目标准备 —— 页面世界解析目标图（active→背景图→首图）、
+        // 提取 element→toDataURL、返回显示几何。只读，不修改画布。
+        post("ocrPrepareResult", buildOcrPrepare());
+        return;
+      }
     });
 
     function post(type, payload) {
       window.postMessage(Object.assign({ source: PAGE_SOURCE_IN_PAGE, type: type }, payload), location.origin);
+    }
+
+    // ---- Stage 5.5B P1：只读画布信息 / OCR 目标准备（页面世界执行，隔离世界不可见）----
+    function buildCanvasInfo() {
+      const canvas = findCanvasForSide("front");
+      if (!canvas) return { ok: false, message: "未找到正面画布" };
+      const objs = canvas.getObjects();
+      const texts = objs.filter(isTextObject);
+      const images = objs.filter(function (o) { return o && String(o.type) === "image"; });
+      const active = canvas.getActiveObject ? canvas.getActiveObject() : null;
+      return {
+        ok: true,
+        width: canvas.width,
+        height: canvas.height,
+        objs: objs.length,
+        textTotal: texts.length,
+        imageTotal: images.length,
+        bgImage: !!canvas.backgroundImage,
+        bgImageType: canvas.backgroundImage ? String(canvas.backgroundImage.type || "") : null,
+        activeType: active ? String(active.type || "") : null,
+        activeIsImage: !!(active && String(active.type) === "image")
+      };
+    }
+
+    // 目标图解析（优先级 active→背景图→首图，§11/§12/§52）→ 提取 element→toDataURL → 显示几何
+    function extractImagePayload(target, kind, canvas) {
+      const el = target._element || (target.getElement && target.getElement());
+      if (!el) return { ok: false, code: kind === "background-image" ? "BACKGROUND_IMAGE_UNAVAILABLE" : "IMAGE_UNAVAILABLE", message: "图片对象缺少图像数据，无法识别" };
+      let w = el.naturalWidth || el.width || target.width;
+      let h = el.naturalHeight || el.height || target.height;
+      if (!w || !h) return { ok: false, code: "IMAGE_UNAVAILABLE", message: "图片尺寸无效，无法识别" };
+      const cv = document.createElement("canvas");
+      cv.width = w; cv.height = h;
+      const c2 = cv.getContext && cv.getContext("2d");
+      if (!c2) return { ok: false, code: "IMAGE_EXPORT_FAILED", message: "图片导出失败" };
+      let dataUrl = null;
+      try { c2.drawImage(el, 0, 0); dataUrl = cv.toDataURL("image/png"); } catch (e) { dataUrl = null; }
+      if (!dataUrl) return { ok: false, code: "CROSS_ORIGIN_IMAGE", message: "图片来自跨域，浏览器禁止读取像素；请使用画布内上传的图片" };
+      // 显示几何：背景图（fabric.backgroundImage）可能不携带 left/top，用画布居中兜底（§13 不建复杂定位系统）
+      let left = target.left, top = target.top;
+      if (!isFinite(left)) left = (canvas.width - w * (target.scaleX || 1)) / 2;
+      if (!isFinite(top)) top = (canvas.height - h * (target.scaleY || 1)) / 2;
+      return {
+        ok: true,
+        kind: kind,
+        dataUrl: dataUrl,
+        width: w,
+        height: h,
+        geometry: {
+          left: left, top: top,
+          width: target.width, height: target.height,
+          scaleX: target.scaleX || 1, scaleY: target.scaleY || 1,
+          angle: target.angle || 0
+        }
+      };
+    }
+
+    function buildOcrPrepare() {
+      const canvas = findCanvasForSide("front");
+      if (!canvas) return { ok: false, code: "CANVAS_NOT_READY", message: "画布未就绪，请等待模板加载完成" };
+      const active = canvas.getActiveObject ? canvas.getActiveObject() : null;
+      if (active && String(active.type) === "image") return extractImagePayload(active, "active-image", canvas);
+      if (canvas.backgroundImage && String(canvas.backgroundImage.type) === "image") return extractImagePayload(canvas.backgroundImage, "background-image", canvas);
+      const first = canvas.getObjects().find(function (o) { return o && String(o.type) === "image"; });
+      if (first) return extractImagePayload(first, "first-image", canvas);
+      return { ok: false, code: "IMAGE_UNAVAILABLE", message: "未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图" };
     }
 
     function findCanvasForSide(side) {
