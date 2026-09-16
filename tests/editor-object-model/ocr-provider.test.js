@@ -41,6 +41,18 @@ function t(name, cond, detail) { results.push(name + (cond ? " PASS" : " FAIL"))
   const mockResult = await tessMock.recognize("img", { engine: mockEngine });
   t("tesseract.filter", mockResult.candidates.length === 1 && mockResult.candidates[0].text === "A" && mockResult.meta.rawWordCount === 3, JSON.stringify(mockResult.candidates));
 
+  // ---- lines 优先（§5.5A §十四）：data.lines 存在 → candidates 用行级，word 仅回退 ----
+  const mockWithLines = {
+    data: {
+      words: [{ text: "A", confidence: 90, bbox: { x0: 0, y0: 0, x1: 10, y1: 10 } }, { text: "B", confidence: 80, bbox: { x0: 10, y0: 0, x1: 20, y1: 10 } }],
+      lines: [{ text: "A B", confidence: 90, bbox: { x0: 0, y0: 0, x1: 20, y1: 10 } }],
+      imageWidth: 100, imageHeight: 100
+    }
+  };
+  const mockEngine2 = { createWorker: async function () { return { recognize: async function () { return mockWithLines; }, terminate: async function () {} }; } };
+  const r2 = await provider.createTesseractProvider().recognize("img", { engine: mockEngine2 });
+  t("tesseract.lines-preferred", r2.candidates.length === 1 && r2.candidates[0].text === "A B" && r2.meta.lineCount === 1 && r2.meta.words.length === 2, JSON.stringify(r2.candidates));
+
   console.log(results.join("\n"));
   console.log("ocr-provider: " + (failures.length ? failures.length + " FAILURES" : "ALL PASS"));
   process.exit(failures.length ? 1 : 0);

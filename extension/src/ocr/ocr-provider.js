@@ -54,14 +54,16 @@ function createTesseractProvider(opts) {
       const imageH = (data && data.imageHeight) || (o.imageHeight) || 0;
       const words = data && data.words ? data.words : [];
       const lines = data && data.lines ? data.lines : [];
-      const candidates = words.map((w) => normalizeBBox(w, imageW, imageH)).filter((c) => c && c.text && c.bbox);
-      // 行级归一（§三十五：重建按行 → 每行一个 textbox）
+      const wordCandidates = words.map((w) => normalizeBBox(w, imageW, imageH)).filter((c) => c && c.text && c.bbox);
+      // 行级归一（§5.5A §十四：优先 tesseract 原生 data.lines —— 一次 OCR → 一行一个 textbox）
       const lineCandidates = lines.map((l) => normalizeBBox(l, imageW, imageH)).filter((c) => c && c.text && c.bbox);
+      // candidates 默认 = 行级（引擎原生聚合，杜绝人工 word→line 词序/跨列合并问题）；无行时回退 word
+      const candidates = lineCandidates.length ? lineCandidates : wordCandidates;
       return {
         provider: this.provider,
         providerType: "LOCAL",
         candidates: candidates,
-        meta: { imageWidth: imageW, imageHeight: imageH, elapsed: Date.now() - t0, rawWordCount: words.length, lines: lineCandidates }
+        meta: { imageWidth: imageW, imageHeight: imageH, elapsed: Date.now() - t0, rawWordCount: words.length, lineCount: lineCandidates.length, lines: lineCandidates, words: wordCandidates }
       };
     }
   };
