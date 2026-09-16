@@ -1,0 +1,20 @@
+{
+  "stage": "Stage 5.5A Basic Real OCR Demo - Productization",
+  "ts": "2026-09-16",
+  "real_script_injection_gm_add_element": "PASS (DOM marker data-zy-55a-inj=1, isolated->page injection action verified)",
+  "engine_in_editor": "BLOCKED (PRODUCT env: CSP blocks external CDN [resources=[]]; requirejs AMD absorbs UMD; inline+define-hack no window.Tesseract)",
+  "real_ocr_engine": "PASS (side-page evidence: 18 words, bbox 18/18, conf 90.4)",
+  "real_user_image_input": "PENDING_REAL_USER (PLAYWRIGHT_PASTE=BLOCKED; site upload/paste exists, real-user verification required)",
+  "real_ocr_bbox": "PASS (5.5)",
+  "real_image_mapping": "PASS (5.5)",
+  "real_text_reconstruction": "PASS (6 editable textboxes, 思源黑体 Regular, identity-clean, height err 3.3%)",
+  "real_editable": "PASS (editable 6/6 in 5.5 chain; true-device double-click pending)",
+  "original_image_preserved": "PASS",
+  "rollback": "PASS",
+  "runtime_8_3_regression": "PASS (8 suites)",
+  "fixture_regression": "PASS (8 suites incl fixture provider)",
+  "basic_real_ocr_demo_product": "BLOCKED (engine unreachable in editor page runtime; PRODUCT policy/browser-env boundary, NOT harness automation)",
+  "current_supported": ["local OCR engine capability", "OCR->Candidate->Mapper->Matcher->Textbox chain (real editor)", "line-first candidates", "calibrated fontSize", "GM_addElement injection mechanism (5.1+marker)", "fixture regression"],
+  "deferred": ["engine loading engineering in editor env (5.6 P1 front; candidates: UMD-stripped GM_addElement / blob worker resources / postMessage bridge)", "cached-load measurement in editor", "real-user upload/paste + double-click edit verification"],
+  "commits": ["03f2167 loader", "4cb0819 line-first", "13b348a injection probe", "(this doc)"]
+}
