@@ -1,0 +1,78 @@
+{
+ "ts": "2026-09-16T02:57:51.847Z",
+ "stage": "Stage 5.2 product-smoke",
+ "steps": [
+  {
+   "name": "install-product-script",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "assistant-panel-loaded",
+   "ok": "PASS",
+   "detail": "#zy-raw + #zy-apply-front 存在（产品面板渲染）",
+   "evidence": "REAL_EDITOR+REAL_SCRIPT_CAT"
+  },
+  {
+   "name": "canvas-ready",
+   "ok": "PASS",
+   "detail": "fabric canvas 就绪",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "canvas-snapshot",
+   "ok": "PASS",
+   "detail": "objects=21 texts=4",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "parse-apply-triggered",
+   "ok": "PASS",
+   "detail": "status=识别完成。",
+   "evidence": "REAL_USER_ACTION"
+  },
+  {
+   "name": "text-changed",
+   "ok": "PASS",
+   "detail": "{\"found\":true,\"companyText\":\"公司 华创科技有…\",\"phoneLen\":11,\"phoneHash\":\"8e4257e7\",\"texts\":[\"公司 华创科技有限公…\",\"电话：1380013…\",\"微信：zhang3\",\"地址：深圳市南山区深…\"]}",
+   "evidence": "REAL_APPLY_PRODUCT_PATH"
+  },
+  {
+   "name": "rollback-templaterestore",
+   "ok": "PASS",
+   "detail": "count=21 hasTestFill=false",
+   "evidence": "ROLLBACK:§三十六"
+  },
+  {
+   "name": "no-page-error",
+   "ok": "PASS",
+   "detail": "assistantErrors=[] pageOwnErrors(len)=4",
+   "evidence": "PRODUCT_SMOKE"
+  },
+  {
+   "name": "page-alive",
+   "ok": "PASS",
+   "detail": "reload 后页面可继续编辑（textbox 存在）",
+   "evidence": "PRODUCT_SMOKE"
+  },
+  {
+   "name": "cleanup",
+   "ok": "PASS",
+   "detail": "removed",
+   "evidence": "n/a"
+  }
+ ],
+ "errors": [],
+ "scriptMeta": {
+  "srcs": 4,
+  "bodyChars": 66799,
+  "integrity": "prod @require sources inlined 1:1"
+ }
+}
