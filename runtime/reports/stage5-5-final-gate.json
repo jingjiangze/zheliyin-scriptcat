@@ -1,0 +1,22 @@
+{
+  "stage": "Stage 5.5 Real OCR Provider + Basic Real OCR Demo",
+  "ts": "2026-09-16",
+  "real_ocr_provider": "PASS (tesseract chi_sim: 18 words, bbox 18/18, avg-conf 90.4, first-run ~3s, zero upload/key)",
+  "real_user_image_input": "PARTIAL (harness injection limited; fabric.Image native; real-user paste is site capability)",
+  "real_ocr_candidates": "PASS (6 line candidates, bbox 6/6 usable)",
+  "real_image_mapping": "PASS (1000x800 natural x 0.45 display, canvas bbox correct)",
+  "real_text_reconstruction": "PASS (6 real textboxes created; phone line MATCHED template slot, others NOT_FOUND protected)",
+  "real_editable_text": "PASS (editable 6/6, 思源黑体 Regular 6/6, identity-clean 6/6)",
+  "reference_preserved": "PASS",
+  "rollback": "PASS (21/4 texts/3 images zero residual)",
+  "runtime_8_3": "PASS",
+  "unit": "PASS (7 suites)",
+  "ocr_provider_decision": { "native": "BLOCKED (5.4)", "local": "PASS - tesseract.js chosen (size 66KB script + 20MB cacheable data, WASM local)", "remote": "not used (privacy)" },
+  "production_changes": "zero behavior change; added extension/src/ocr/ocr-provider.js (unwired) + runtime evidence",
+  "deferred": [
+    "GM_addElement engine injection real-device verify (5.6 front)",
+    "line-merge word order quality (5.9 multiline/paragraph)",
+    "real-user paste verification in-product"
+  ],
+  "basic_real_ocr_demo": "PASS"
+}
