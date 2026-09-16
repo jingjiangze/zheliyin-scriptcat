@@ -14,6 +14,7 @@
 
   function report(tag, payload) {
     try { console.log("[zy-runtime8]", tag, JSON.stringify(payload)); } catch (e) { console.log("[zy-runtime8]", tag, String(payload)); }
+    try { document.documentElement.setAttribute("data-zy-rt8-" + tag.replace(/[^a-z0-9-]/gi, "-"), "1"); } catch (e) {}
   }
 
   // 用 production pageBridge 源码（占位符由 harness 替换），包成自执行注入主世界

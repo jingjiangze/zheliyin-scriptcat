@@ -15,14 +15,16 @@
       "cts": "assistant.js:861-878 / userscript.js:861-878（同一实现）"
     },
     "scriptcat-gm-add-element": {
-      "status": "BLOCKED_AUTOMATION（有官方声明，缺真实运行实证）",
+      "status": "INSTALL_PASS / INJECTION_BLOCKED_ENV（userScripts API 缺失）",
       "evidence": [
         "ScriptCat 官方 API 文档: GM_addElement(tag, attrs) 明示「可以绕过 CSP 限制」",
         "ScriptCat 扩展本体实装 GM_addElement（vendor 源码 chunk.js:194 类型声明 + 多处实现）；manifest 含 scripting/userScripts 权限",
-        "Playwright 已能真实加载 vendor ScriptCat（chrome-extension://ndcooeabab… service_worker 运行、options 页渲染）",
-        "自动安装 userscript 受限于：① Monaco 编辑器 UI 自动化不稳定（聚焦成功但模型写入不落地）② install.html?url= 返回无效页面 ③ installByCode 走 service worker 内部消息（不猜 schema，未伪造写入）"
+        "RUNTIME-8.2 已从源码恢复并实测 ScriptCat 原生安装契约：chrome.runtime.sendMessage({action:'serviceWorker/script/installByCode', data:{uuid,code,upsertBy}})，installByCode → 返回完整 script 对象（uuid/name/metadata(grant,match,run-at)/status=1），getAllScripts 可见 → 删除 deletes([uuid]) 亦实测 PASS",
+        "注入受阻根因（源码证据 service_worker.js registerUserscripts）: if(!this.isUserScriptsAvailable || !this.isLoadScripts) return —— userScripts API 不可用时 ScriptCat 完全不注入",
+        "harness 环境限制（决定性）: Playwright Chromium 153 headless chrome.userScripts 不可用（chromeScripting=true 但 userScripts=false）→ isUserScriptsAvailable=false → 无注入；系统 Chrome 152 拒绝加载 unpacked 扩展（ERR_BLOCKED_BY_CLIENT）",
+        "结论: GM_addElement 的存在与 CSP 绕过能力有官方+源码证据；真实运行验证受 harness 环境（userScripts API）限制，如实 BLOCKED，不伪造 PASS"
       ],
-      "note": "GM_addElement 为官方文档声明的 CSP 绕过通道，但依据 §27「只有证据充分才 PASS」——未取得真实运行证据前保持 BLOCKED，不写 PASS"
+      "note": "若需 REAL_SCRIPT_CAT_BRIDGE=PASS：需在支持 chrome.userScripts 的真实浏览器（如用户系统 Chrome 已有 ScriptCat）中验证，或 Playwright 升级支持 userScripts 的通道"
     },
     "extension-main-world": {
       "status": "PASS（MAIN world 通道等价证明）",
@@ -34,12 +36,14 @@
       "note": "这是主世界通道的等价证明（调试通道），非「真实扩展 background executeScript」的二进制证据；production 采用需真实 executeScript 复验（§20/§21 如实区分）"
     },
     "real-scriptcat": {
-      "status": "BLOCKED（dedicated 自动化受限）",
+      "status": "INSTALL_PASS；INJECTION_BLOCKED（harness 环境限制，§三十 如实）",
       "evidence": [
-        "vendored ScriptCat 可加载、可渲染管理页，但自动安装 userscript 的三条候选路径（编辑器 UI / install.html?url / 内部 installByCode）均未稳定打通",
-        "installByCode 走 service worker 内部消息流，不暴露调用面；未伪造 storage 写入（§8/§28）"
+        "真实 ScriptCat 扩展在 Playwright 中加载、SW 运行、options 渲染（REAL_SCRIPT_CAT_EXTENSION）",
+        "脚本自动安装全部真实通过（REAL_SCRIPT_CAT_INSTALL）：installByCode 返回完整 script 对象（status=1/grant/match 解析）→ getAllScripts 可查 → deletes 可删",
+        "页面注入被环境阻断（决定性）：Playwright Chromium 无 chrome.userScripts API → registerUserscripts() 源码级 `if(!isUserScriptsAvailable) return` → 任何 userscript 均不注入",
+        "尝试路径记录：Monaco 编辑器 UI（不稳定）→ install.html?url=（无效页面）→ 原生消息契约 installByCode（成功安装）→ 注入被 userScripts API 缺失阻断"
       ],
-      "note": "当前不构成 REAL_SCRIPT_CAT_BRIDGE=PASS；如需升级需用户真实 ScriptCat 会话或后续可靠安装路径（不在本阶段伪造）"
+      "note": "非产品缺陷：ScriptCat/折立印/用户使用均不受此 harness 限制影响；需 REAL 注入证据应改用支持 userScripts 的真实浏览器载体"
     },
     "real-extension": {
       "status": "MAIN_WORLD_PASS_EQUIV（无 DUP_SIM 污染）",
@@ -56,8 +60,8 @@
     "file": "runtime/full.js bridge-apply rec evidence"
   },
   "final_matrix_table": [
-    { "injection": "DOM inline", "browser": "REAL", "carrier": "Userscript", "page world": "MAIN", "csp": "blocked", "result": "FAIL/BLOCKED" },
-    { "injection": "GM_addElement", "browser": "REAL(ScriptCat vendored)", "carrier": "ScriptCat", "page world": "MAIN", "csp": "bypass(官方声明)", "result": "BLOCKED(未实测 PASS)" },
+    { "injection": "DOM inline", "browser": "REAL", "carrier": "Userscript", "page world": "MAIN", "csp": "blocked", "result": "FAIL/BLOCKED（真实 CSP violation）" },
+    { "injection": "GM_addElement", "browser": "REAL(vendor ScriptCat)", "carrier": "ScriptCat", "page world": "MAIN", "csp": "bypass(官方+源码证据)", "result": "INSTALL PASS；注入 BLOCKED（harness 无 userScripts API）" },
     { "injection": "executeScript MAIN(等价值)", "browser": "REAL", "carrier": "MV3(通道证明)", "page world": "MAIN", "csp": "bypass", "result": "PASS(clean)" }
   ],
   "decisions": {
