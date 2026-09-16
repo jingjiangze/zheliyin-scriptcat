@@ -246,5 +246,5 @@ object-matcher.match() → MATCHED / AMBIGUOUS / NOT_FOUND / ERROR
 | 测绘分支 | `stage-4.1-runtime-validation` |
 | 测绘 commit | `4cb0819`（Stage 5.5） |
 | 默认分支 `main` HEAD | `7446faa`（Stage 4.0） |
-| 两者关系 | `main` 是 `stage-4.1` 的严格祖先（领先 61 commit / 落后 0，可快进） |
+| 两者关系 | `main` 是 `stage-4.1` 的严格祖先（领先 64 commit / 落后 0，可快进） |
 | 跟踪文件数 | 183 |
