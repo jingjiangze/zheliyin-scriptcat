@@ -1,0 +1,27 @@
+{
+  "stage": "Stage 5.3 Real Image -> OCR -> Native Text Reconstruction",
+  "ts": "2026-09-16",
+  "real_ocr": "BLOCKED (native OCR panel exists, result not programmatically accessible; OCRAdapter(fixture)=PASS per §80)",
+  "image_coordinate": "PASS",
+  "image_scale": "PASS",
+  "real_textbox": "PASS",
+  "text_editable": "PASS",
+  "text_position": "PASS",
+  "text_size": "PASS (fontSize APPROX, calibration deferred)",
+  "font": "PASS (思源黑体 Regular verified present in web font panel)",
+  "group": "PASS",
+  "ungroup": "PASS",
+  "rollback": "PASS",
+  "reference_image_safe": "PASS",
+  "creation_safety": "PASS",
+  "basic_reconstruction": "PASS",
+  "production_changes": "zero behavior change; added extension/src/ocr/image-mapper.js (unwired) + fixture",
+  "quality": { "ocrCount": 4, "matched": 0, "created": 4, "ambiguous": 0, "notFound": 4, "defaultFont": 4, "rollback": true },
+  "per_candidate": "stored in reports/stage5-3-reconstruction.json.candidates (all NOT_FOUND -> protected create policy)",
+  "deferred": [
+    "real OCR provider integration (5.4)",
+    "fontSize calibration table (§29)",
+    "rotated-image real reconstruction (no safe template sample)"
+  ],
+  "gate": "GO"
+}
