@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+### 仓库治理（第二轮，2026-09-16）— 并行开发的轨道治理，**零生产代码变更**
+- 建立三轨模型并落文档：`docs/BRANCH_POLICY.md`（四条长期分支、写入规则、版本与 tag 规则、demo 元数据自洽硬要求、单向同步方向、发布标准）、`docs/RELEASE_LINEAGE.md`（四分支血缘表、三级溯源、`@require` 运行期依赖血缘、同步流程与冲突预案）。
+- **新建 `demo` 分支**（从 AI-1 当前实现 `7c412b8` 建立，**不是**从旧 `main` 建立）。固定安装地址：`https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js`（原则上永不变，变的是分支内容）。
+- **修复一个真实缺陷**：AI-1 分支的 userscript 把 `@require`×4 / `@updateURL` / `@downloadURL` 与脚本内 `UPDATE_URL` / `DOWNLOAD_URL` 共 **8 处**全部指向 `main`；而 `extension/src/editor/page-bridge.js` 在两分支不同（`main` sha256 `17141f7c…` vs AI-1 `793ba9e1…`，差异即 Stage 5.1 的 P1 `CREATION_IDENTITY_LEAK` 修复）。后果：① ScriptCat 安装该分支实际加载 `main` 的 page-bridge，P1 修复不生效；② demo 的更新地址指向 `main`，会把 demo 用户更新回稳定版。demo 分支已在 `0fa8303` 全部切到 `demo`，并端到端实测 page-bridge 实为 AI-1 版。
+- demo 版本 `0.3.0.0` → `0.3.0.1`（第 4 段作 demo build 计数；理由：脚本内 `compareVersion` 按 `parseInt` 逐段比较，带后缀会歧义），并同步 4 处版本点（userscript `@version` 与 `VERSION`、`extension/assistant.js` `VERSION`、`manifest.json` `version_name`）。`@name` 保持不变以免被脚本管理器视为第二个脚本导致双面板。
+- 新增文档：`docs/DEMO_INSTALL.md`（安装 + 三级独立验收字段）、`docs/DEMO_RELEASE.md`（发布清单，首条 Demo v0.3.0.1）、`docs/AGENT_SYNC_PROTOCOL.md`（双 AI 协作边界、开工发现流程、变化分类、**反模式：不要让仓库变成文档驱动代码**）、`docs/STAGE_GATE_POLICY.md`、`docs/REAL_MACHINE_EVIDENCE.md`、`docs/OCR_DEPENDENCY_POLICY.md`。
+- `docs/CURRENT_STATUS.md` 新增「分支状态表」（Branch / HEAD / Purpose / Installable / Stable，从 Git 实时取数），并声明为**唯一总状态页**（禁止 `_2` / `_NEW` / `_FINAL` 变体）。
+- `README.md` 安装章节改为三轨（稳定版 / Demo 版 / 手工安装并**保留**旧方式），新增「轨道总览」与「文档导航（按角色）」。
+- 隐私再审计（第二轮，按 §二十九）：新增 `FINDING-SD-04`（OCR 驱动会把编辑器真实图片 base64 写入报告的**潜在**路径 —— 本次因引擎 BLOCKED 未触发，但 Stage 5.6 引擎装载成功即生效）、`FINDING-SD-05`（识别文本片段入库的潜在路径）。
+- 新增轻量 CI（`.github/workflows/test.yml`）：userscript 元数据一致性检查 / Node 单元套件 / 语法与 JSON 校验 / secret scan，全部零依赖（无 npm install、无浏览器）。该 CI 的 secret scan 立刻抓到并修掉了治理文档自身写入明文账号的问题。
+- **未执行**：不合并 `main`、不 rebase AI-1、不 force push、不改写 AI-1 历史、未补打任何 tag。
+
 ### 仓库治理（2026-09-16）— 文档/测试组织/版本治理，**零生产代码变更**
 - 新增 9 份治理文档（`docs/`）：`REPOSITORY_MAP`（真实目录与调用链测绘）、`STAGE_INDEX`（R0→Stage 5.4→RUNTIME-8.3 索引）、`EVIDENCE_POLICY`（REAL/FIXTURE/SYNTHETIC/SMOKE/UNIT/INTEGRATION/BLOCKED/DEFERRED 八级定义）、`CURRENT_STATUS`、`TEST_MATRIX`、`REAL_OCR_DEMO_CONTRACT`（AI-1/AI-2 共享接口契约，含 GAP-1~GAP-7）、`DEVELOPMENT_RULES`、`PARALLEL_DEVELOPMENT`（职责边界与文件所有权）、`SENSITIVE_DATA_AUDIT`。
 - 澄清历史表述：**Stage 5.3 的 Reconstruction PASS = FIXTURE_OCR 链路验证，不等于 Real OCR 已完成**；`NATIVE_OCR_RESULT_ACCESS = BLOCKED` 如实保留。
