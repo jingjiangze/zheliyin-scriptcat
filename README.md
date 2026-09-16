@@ -1,5 +1,15 @@
-# 折立印名片套版助手 v0.2.3.11
+# 折立印名片套版助手 v0.3.0.0
 
+> 版本以主脚本 `@version` 为准（当前 `0.3.0.0`）。历史标题 `v0.2.3.11` 已过时，本次修正。
+> 能力状态与证据等级见 [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)。
+
+## 项目用途
+
+在折立印在线设计器页面上运行的**用户脚本 / 浏览器扩展**：把客户资料（公司、姓名、职位、电话、微信、邮箱、网址、地址、主营范围）解析为结构化字段，并填入设计器画布。
+
+产品契约：**优先复用模板已有文字图层，只改文字；不足时才新建图层。**
+
+## 功能
 
 - 优先填入画布已有文字图层。
 - 已有文字图层只改文字，不强制改字号、位置和样式。
@@ -21,9 +31,140 @@
 - 保留追加信息和 GitHub 更新提示。
 - 不包含“默认布局”“留白布局”“扫描图层”等按钮。
 
-安装方式：
+## 安装
+
+### 方式一：脚本猫（推荐）
 
 1. 打开脚本猫。
 2. 新建脚本。
 3. 粘贴 `zheliyin-card-assistant.user.js` 全部内容并保存。
 4. 打开折立印设计器页面使用。
+
+> 主脚本通过 `@require` 从本仓库加载 4 个模块（`field-core` / `config-core` / `ai-client` / `page-bridge`），需要能访问 `raw.githubusercontent.com`。
+
+### 方式二：浏览器扩展（MV3）
+
+加载 `extension/` 目录为未打包扩展（`chrome://extensions` → 开发者模式 → 加载已解压的扩展程序）。
+
+### 方式三：一键安装器
+
+`installer/installer.ps1`（GitHub Actions 会为 `v*` tag 自动构建 `exe` 并发布 Release）。
+
+## 使用
+
+1. 打开折立印设计器页面（需登录）。
+2. 右侧出现「名片套版助手」面板。
+3. 粘贴客户资料 → 点击「识别并填正反面」。
+4. 若需微调，直接编辑面板里的「正面文本 / 反面文本」，再点「填正面」「填反面」。
+
+无 AI Key 时全程本地规则可运行；填写 AI Key 后 AI 仅做辅助补充。
+
+## Current Status
+
+> 严格区分「正式能力」与「实验能力」。实验能力**不等于**稳定生产能力。
+> 完整表格、证据等级与证据文件路径见 [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)。
+
+### 正式能力（生产路径生效，可日常使用）
+
+| 能力 | 状态 | 证据等级 |
+|---|---|---|
+| 脚本猫 / 扩展注入 + 面板运行 | ✅ PASS | REAL |
+| 页面桥接（probe / apply） | ✅ PASS | REAL |
+| 本地字段规则（分面 / 抽取 / 合并） | ✅ PASS | REAL |
+| AI 辅助 + 失败回退本地 | ✅ PASS | UNIT + INTEGRATION |
+| 填层：已有层只改文字 / 不足才新建 / 清理多余助手层 | ✅ PASS | REAL |
+| 画布自检（probe） | ✅ PASS | REAL |
+
+**当前限制**：仅验证于**单一真实模板**（multi-template 为 `PARTIAL`）；`line` / 生成层标签语义仍有 P2 技术债（见 `ARCHITECTURE_AUDIT.md`）。
+
+### 实验能力（代码在仓库、有测试，但**生产路径不调用**）
+
+> ⚠️ 以下模块**未挂接**主脚本。用户正常使用时**不会触发**它们。
+> 它们目前只在 `runtime/stage5-*.js` 审计脚本里被驱动。
+
+| 模块 | 作用 | 状态 |
+|---|---|---|
+| `extension/src/editor/object-model.js` | 编辑器对象 → 纯数据模型 | 已实现·未挂接 |
+| `extension/src/editor/object-adapter.js` | 只读读取 + 最小 `setText` | 已实现·未挂接 |
+| `extension/src/editor/object-matcher.js` | 确定性对象匹配 | 已实现·未挂接 |
+| `extension/src/ocr/ocr-model.js` | OCR 候选纯数据模型 | 已实现·未挂接 |
+| `extension/src/ocr/image-mapper.js` | 图片坐标 → Canvas 坐标 | 已实现·未挂接 |
+
+### Real OCR
+
+> **尚未实现。** 状态：`BLOCKED`（原生路径）+ `DEFERRED`（自建路径）
+
+- 折立印网页**有**原生「文字识别（Alt+Q）」入口，但识别结果**无法程序化读取**（面板绑定"相框"素材交互，无网络请求、无 postMessage、结果值不进 DOM）。经 Stage 5.3 探针 + Stage 5.4 四种深度 hook 实验后确认。
+- 本地 OCR（如 tesseract.js）已评估但**未接入**（依赖体积约 20MB、中文质量与集成成本待评估）→ 推迟至 Stage 5.5。
+
+**因此：当前版本的"图片识别"能力不可用，请勿期待。**
+
+### Fixture OCR
+
+> Stage 5.3 / 5.4 演示链路的 OCR 来源是 **fixture**，**不是真实 OCR**。
+
+含义：`text` 与 `bbox` 由脚本按合成图的**已知绘制坐标**直接给出，再由 `image-mapper` → `object-matcher` → 在真实编辑器里创建真 `textbox`。
+
+链路本身（坐标映射 / 匹配 / 原生文字重建 / 编组 / 回滚）都是**真实的**，已验证：
+
+```text
+REAL_IMAGE(synth 600×400) → mapper → matcher 4/4 NOT_FOUND（模板保护）
+→ 创建 4 个真 textbox（editable / 思源黑体 Regular / markuuid=null）
+→ fabric.Group 编组/解组 → 参考图保留 → rollback 21/4 零残留
+字号校准：fontSize = 0.829 × visualHeight，重建回读平均高度误差 5.03%
+```
+
+> 结论：**重建链路成立，OCR 来源待补。** 不要把它理解为"已支持图片识别"。
+
+## 当前限制
+
+- 图片识别（OCR）不可用（见上）。
+- 仅验证单一真实模板；`back` 画布在该模板中不存在。
+- 真实旋转**文字**对象无样本，旋转文字重建未验证。
+- 多行文本字号未覆盖（需行数估计）。
+- 无用户可感知的"撤销"入口；回滚目前是审计脚本级能力。
+- `parseFields` 为上帝函数（7 种外部依赖耦合），无单测，回归靠集成测试兜底。
+- 扩展版 `all_frames: true` 暂无证据证明必要（保留待证）。
+
+## 开发
+
+```bash
+# 单元测试（零依赖，无需浏览器 / 无需网络）
+node tests/editor-object-model/run.js          # 6 套件 110 断言
+
+# 浏览器套件（headless 打开对应 html，需 ?zydebug=1 的见括号）
+#   tests/run-tests.html            field 43 + config 15
+#   tests/ai-tests.html?zydebug=1   ai 18
+#   tests/editor-tests.html         editor 18
+#   tests/bridge-lifecycle.html?zydebug=1   bridge lifecycle 6
+#   extension/wiring-check.html     生产入口接线 5
+
+# 真实运行时（需 Node + Playwright + 已登录 profile）
+npm run runtime:check        # 冒烟：浏览器启动 + 门户可达
+npm run runtime:full         # 全链冒烟（未登录时编辑态项标 BLOCKED 属预期）
+npm run runtime:scriptcat    # 真实 ScriptCat 全链（18 步）
+```
+
+开发前请先读：
+
+- [`docs/DEVELOPMENT_RULES.md`](docs/DEVELOPMENT_RULES.md) — 十条红线与提交流程
+- [`docs/PARALLEL_DEVELOPMENT.md`](docs/PARALLEL_DEVELOPMENT.md) — 文件所有权与协作边界
+- [`BEHAVIOR_BASELINE.md`](BEHAVIOR_BASELINE.md) — 不可变业务契约（18 项）
+- [`REFACTOR_PLAN.md`](REFACTOR_PLAN.md) — 渐进式重构计划（**仅设计，未落地**）
+
+## 阶段状态
+
+当前开发分支：**`stage-4.1-runtime-validation`**，HEAD 为 Stage 5.4（Gate = `CONDITIONAL-GO`）。
+
+> ⚠️ **GitHub 默认分支 `main` 只到 Stage 4.0**，不包含 Stage 5.x / RUNTIME-8.x / OCR 相关代码与证据。请切换到 `stage-4.1-runtime-validation` 查看全部成果。
+
+- 阶段索引（R0 → Stage 5.4 → RUNTIME-8.3）：[`docs/STAGE_INDEX.md`](docs/STAGE_INDEX.md)
+- 证据等级规范：[`docs/EVIDENCE_POLICY.md`](docs/EVIDENCE_POLICY.md)
+- 测试矩阵：[`docs/TEST_MATRIX.md`](docs/TEST_MATRIX.md)
+- OCR 接口契约：[`docs/REAL_OCR_DEMO_CONTRACT.md`](docs/REAL_OCR_DEMO_CONTRACT.md)
+
+## GitHub
+
+<https://github.com/jingjiangze/zheliyin-scriptcat>
+
+脚本元数据已指向该仓库，检测到新版本时会在面板内给出更新链接。
