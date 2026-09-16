@@ -2,7 +2,8 @@
 
 > 维护者：AI-2（Repository Governance 线）
 > 审计日期：2026-09-16
-> 审计范围：`stage-4.1-runtime-validation` @ `3becf04`，全部 173 个跟踪文件
+> 审计范围：`stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A），全部 187 个跟踪文件
+> 第二轮（2026-09-16）：针对 OCR / 隐私面再审计（用户指令 §二十九）→ 见 §8
 > 性质：**只读审计**。本次**未修改任何实现文件**（处置建议见 §5，需用户/AI-1 决定）
 > 时点说明：本审计为 **`3becf04`（Stage 5.4，173 跟踪文件）时点的快照**。此后仓库增至 Stage 5.5A（187 文件）；新增文件（`ocr-provider.js`、`tesseract-loader.js`、`runtime/stage5-5*`、`stage5-5a*`）已按 §7 复核方式扫描，**未发现新增敏感信息**。
 
@@ -184,7 +185,62 @@ git status --ignored --porcelain
 
 ---
 
-## 8. 维护规则
+
+## 8. OCR / 隐私专项再审计（2026-09-16 第二轮）
+
+> 范围：用户指令 §二十九 —— `OCR image` / `OCR text` / `Tesseract cache` / `CDN requests` / `browser storage` / `logs`。
+> 审查对象：AI-1 开发分支 `7c412b8` 的 OCR 相关实现与驱动脚本。
+
+### 8.1 扫描结论
+
+| 面 | 结论 | 依据 |
+|---|---|---|
+| **真实用户图片是否入库** | ✅ **当前未入库** | 全仓库跟踪的图片文件只有 1 个：`tests/fixtures/ocr/test-card.png`（程序绘制的合成图） |
+| **真实用户文字是否入库** | ✅ **当前未入库** | 5 份 Stage 5.5/5.5A 报告中 `data:image/` / `dataUrl` / `base64` 命中数均为 **0**；报告中的文本均为合成数据（`13800138000`、`WeChat: abc123`、`测试公司` 等） |
+| **截图是否入库** | ✅ 未入库 | 无跟踪的 screenshots 目录（`.gitignore` 已覆盖 `runtime/reports/screenshots*`） |
+| **实现层是否写日志/存储** | ✅ 干净 | `extension/src/ocr/{ocr-provider,tesseract-loader,ocr-model,image-mapper}.js` 无 `console.*`、无 `localStorage`/`sessionStorage` 写入；唯一对外动作是加载 CDN 脚本（`s.src = url`） |
+| **Tesseract 缓存** | ⚠️ 说明 | 语言数据缓存在**浏览器本地 IndexedDB**（`cacheMethod: "indexeddb"`），属客户端存储，**不入库、不回传**。约 20 MB |
+| **CDN 请求** | ⚠️ 披露 | 首次使用会请求 `cdn.jsdelivr.net`（tesseract.js 66 KB + 语言数据）。**图片不上传**，但该请求会暴露「此 IP 正在使用本工具」；Referrer 可能带出页面 URL。已登记为 `OCR_DEPENDENCY_POLICY.md` 的 `DEP-4` |
+| **模板占位文本残留** | ⚠️ 极低 | 模板自有示例文本（`简小袋`/`简小设`）出现在 10 份报告中 → 见既有 `FINDING-SD-03`，建议保留（有利于证明「确实是同一模板」） |
+
+### 8.2 新发现（**潜在风险，本次未触发**）
+
+#### FINDING-SD-04 【高价值·潜在】OCR 驱动会把编辑器**真实图片**的 base64 写入报告
+
+| 项 | 内容 |
+|---|---|
+| 位置 | `runtime/stage5-5a-scriptcat-ocr-smoke.js`（在 AI-1 开发分支 `7c412b8`，**不在本治理分支**） |
+| 链路 | ① `getFirstCanvasImage()` 取编辑器**第一张真实 image 对象** → `cv.toDataURL("image/png")` 得到 `img.dataUrl`；② `return { …, img: img, … }`（`img` 含 `dataUrl`）；③ `out.ocrRaw = ocr`（整对象进 `out`）；④ `fs.writeFileSync(… "reports/stage5-5a-real-scriptcat-ocr.json", JSON.stringify(out, …))` |
+| 严重度 | **潜在高**（一旦触发即为真实图片入库） |
+| **本次是否泄漏** | ❌ **否**。因引擎注入失败（`window.Tesseract not present after inline+define-hack`），执行在 ② 之前即 `return`；报告仅 2009 字节且无 `dataUrl` |
+| 为什么必须登记 | **Stage 5.6 的 P1 前置目标，正是让引擎能在编辑器页装载。一旦成功，本路径立即生效，届时会把真实图片 base64 提交进公开仓库。** |
+| 建议处置（**不由 AI-2 实施**） | 由 AI-1 在 `out.gm` / `out.ocrRaw` 落盘前剥离 `img.dataUrl`（仅保留 `naturalWidth`/`naturalHeight`/`obj` 几何字段）；或统一经脱敏器处理后再写报告。**独立 commit**。 |
+
+#### FINDING-SD-05 【潜在】OCR 驱动把识别文本片段写入报告
+
+| 项 | 内容 |
+|---|---|
+| 位置 | `runtime/stage5-5-real-ocr-demo.js` 的 `step(…, "text=" + JSON.stringify(lines.map((l) => l.text.slice(0, 14))))` |
+| 严重度 | **潜在中**：当前跑的是**合成图**（`测试公司` / `深圳市南山区` …），无害；但同一 runner 若换为真实用户图片，会把真实文字前 14 字符写进公开报告 |
+| 建议处置 | 同 SD-04：落盘前做 `[REDACTED]` + `textLen` + `textHash8` 处理（`tests/fixtures/ocr/redacted-card-01.json` 已是此格式，可作参考） |
+
+### 8.3 与 `docs/REAL_MACHINE_EVIDENCE.md` 的关系
+
+本节记录**已发生事实**；`docs/REAL_MACHINE_EVIDENCE.md` 是**此后所有真机取证必须遵守的规范**。
+两者共同约束同一件事：**真实图片 / 真实文字 / 凭据 一律不得入库**。
+
+### 8.4 处置优先级
+
+| 优先级 | 项 | 归属 | 时机 |
+|---|---|---|---|
+| **高** | `FINDING-SD-04` 剥离 `img.dataUrl` | AI-1 | **Stage 5.6 引擎装载成功之前**（否则一成功就泄漏） |
+| 中 | `FINDING-SD-05` 文本脱敏 | AI-1 | 用真实图片跑 demo 之前 |
+| 低 | `FINDING-SD-01`（账号占位化） | AI-1 | 任意 |
+| 不做 | `FINDING-SD-02/03` 重写历史 | — | 不建议（需 force push） |
+
+---
+
+## 9. 维护规则
 
 1. 每次新增 `runtime/**` 脚本或证据报告后，执行 §7 的第 1/3/4 条。
 2. 任何**真实**取证数据入库前必须脱敏（方法见 `docs/DEVELOPMENT_RULES.md` §6）。
