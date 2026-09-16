@@ -1,0 +1,301 @@
+{
+ "ts": "2026-09-16T04:27:14.290Z",
+ "stage": "Stage 5.5 ocr-feasibility",
+ "steps": [
+  {
+   "name": "demo-image-drawn",
+   "ok": "PASS",
+   "detail": "1000x800 rows=6",
+   "evidence": "SYNTHETIC_DEMO"
+  },
+  {
+   "name": "tesseract-js-loaded",
+   "ok": "PASS",
+   "detail": "loadMs=581 keys=[\"languages\",\"OEM\",\"PSM\",\"createScheduler\",\"createWorker\",\"setLogging\",\"recognize\",\"detect\"]",
+   "evidence": "LOCAL_OCR"
+  },
+  {
+   "name": "ocr-worker-recognized",
+   "ok": "PASS",
+   "detail": "readyMs=1989 recMs=351 words=18 textHead=\"测试 公司 折 立 印 设计\\n深圳 市 南山 区\\n科技 园 路 999 号\\n\\n13800138000 WecChat: \"",
+   "evidence": "LOCAL_OCR (chi_sim)"
+  },
+  {
+   "name": "ocr-bbox-valid",
+   "ok": "PASS",
+   "detail": "bboxValid=18/18 ratio=1 avgConf=90.4",
+   "evidence": "REAL_OCR_CANDIDATES"
+  },
+  {
+   "name": "page-no-ocr-error",
+   "ok": "PASS",
+   "detail": "pageErrors=[]",
+   "evidence": "LOCAL_OCR"
+  }
+ ],
+ "errors": [],
+ "demo": {
+  "size": {
+   "w": 1000,
+   "h": 800
+  },
+  "rowsCount": 6
+ },
+ "recognition": {
+  "readyMs": 1989,
+  "recMs": 351,
+  "text": "测试 公司 折 立 印 设计\n深圳 市 南山 区\n科技 园 路 999 号\n\n13800138000 WecChat: abc123\n",
+  "words": [
+   {
+    "text": "测试",
+    "confidence": 96.6,
+    "bbox": {
+     "x0": 61,
+     "y0": 79,
+     "x1": 168,
+     "y1": 142
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "公司",
+    "confidence": 96.9,
+    "bbox": {
+     "x0": 167,
+     "y0": 84,
+     "x1": 232,
+     "y1": 124
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "折",
+    "confidence": 89.2,
+    "bbox": {
+     "x0": 621,
+     "y0": 82,
+     "x1": 839,
+     "y1": 124
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "立",
+    "confidence": 91.3,
+    "bbox": {
+     "x0": 676,
+     "y0": 76,
+     "x1": 728,
+     "y1": 139
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "印",
+    "confidence": 88.6,
+    "bbox": {
+     "x0": 727,
+     "y0": 76,
+     "x1": 775,
+     "y1": 139
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "设计",
+    "confidence": 97,
+    "bbox": {
+     "x0": 774,
+     "y0": 82,
+     "x1": 839,
+     "y1": 124
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "深圳",
+    "confidence": 96.4,
+    "bbox": {
+     "x0": 331,
+     "y0": 333,
+     "x1": 521,
+     "y1": 363
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "市",
+    "confidence": 97,
+    "bbox": {
+     "x0": 408,
+     "y0": 329,
+     "x1": 441,
+     "y1": 377
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "南山",
+    "confidence": 96.6,
+    "bbox": {
+     "x0": 441,
+     "y0": 333,
+     "x1": 501,
+     "y1": 363
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "区",
+    "confidence": 96.9,
+    "bbox": {
+     "x0": 501,
+     "y0": 329,
+     "x1": 525,
+     "y1": 377
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "科技",
+    "confidence": 93.2,
+    "bbox": {
+     "x0": 331,
+     "y0": 393,
+     "x1": 545,
+     "y1": 423
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "园",
+    "confidence": 92.8,
+    "bbox": {
+     "x0": 409,
+     "y0": 388,
+     "x1": 444,
+     "y1": 437
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "路",
+    "confidence": 95.7,
+    "bbox": {
+     "x0": 443,
+     "y0": 388,
+     "x1": 471,
+     "y1": 437
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "999",
+    "confidence": 92.4,
+    "bbox": {
+     "x0": 470,
+     "y0": 388,
+     "x1": 523,
+     "y1": 437
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "号",
+    "confidence": 92.6,
+    "bbox": {
+     "x0": 523,
+     "y0": 388,
+     "x1": 548,
+     "y1": 437
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "13800138000",
+    "confidence": 91.3,
+    "bbox": {
+     "x0": 63,
+     "y0": 620,
+     "x1": 318,
+     "y1": 651
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "WecChat:",
+    "confidence": 29.7,
+    "bbox": {
+     "x0": 561,
+     "y0": 621,
+     "x1": 705,
+     "y1": 650
+    },
+    "hasBbox": true
+   },
+   {
+    "text": "abc123",
+    "confidence": 92.7,
+    "bbox": {
+     "x0": 718,
+     "y0": 621,
+     "x1": 841,
+     "y1": 650
+    },
+    "hasBbox": true
+   }
+  ],
+  "lines": [
+   {
+    "text": "测试 公司 折 立 印 设计\n",
+    "confidence": 93.3,
+    "bbox": {
+     "x0": 61,
+     "y0": 79,
+     "x1": 839,
+     "y1": 142
+    }
+   },
+   {
+    "text": "深圳 市 南山 区\n",
+    "confidence": 96.7,
+    "bbox": {
+     "x0": 331,
+     "y0": 333,
+     "x1": 521,
+     "y1": 363
+    }
+   },
+   {
+    "text": "科技 园 路 999 号\n\n",
+    "confidence": 93.3,
+    "bbox": {
+     "x0": 331,
+     "y0": 393,
+     "x1": 545,
+     "y1": 423
+    }
+   },
+   {
+    "text": "13800138000 WecChat: abc123\n",
+    "confidence": 71.2,
+    "bbox": {
+     "x0": 63,
+     "y0": 620,
+     "x1": 841,
+     "y1": 651
+    }
+   }
+  ],
+  "wordCount": 18,
+  "progressMax": 1
+ },
+ "metrics": {
+  "wordCount": 18,
+  "bboxValid": 18,
+  "bboxValidRatio": 1,
+  "minConfidence": 29.7,
+  "avgConfidence": 90.4,
+  "reloadCacheNote": "worker 默认内存缓存；v5 支持 IndexedDB cacheMethod 跨会话缓存 20MB traineddata"
+ }
+}
