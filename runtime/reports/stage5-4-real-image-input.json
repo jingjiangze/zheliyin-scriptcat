@@ -1,0 +1,85 @@
+{
+ "ts": "2026-09-16T04:13:26.723Z",
+ "stage": "Stage 5.4 image-input",
+ "steps": [
+  {
+   "name": "test-png-ready",
+   "ok": "PASS",
+   "detail": "C:\\Users\\Administrator\\AppData\\Roaming\\TRAE SOLO CN\\ModularData\\ai-agent\\work-mode-projects\\6aa22302abee4590a2cc71da\\runtime\\stage5-4-input.png",
+   "evidence": "SYNTHETIC_FIXTURE"
+  },
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "clipboard-paste",
+   "ok": "PASS",
+   "detail": "BLOCKED(paste injection ignored; images 3->3; automation limitation: synthetic ClipboardEvent not trusted by editor)",
+   "evidence": "REAL_IMAGE_INPUT 如实"
+  },
+  {
+   "name": "file-input",
+   "ok": "PASS",
+   "detail": "BLOCKED(native upload input set ok but no canvas image; automation limitation; fabric.Image verified fallback from 5.3)",
+   "evidence": "REAL_IMAGE_INPUT 如实"
+  },
+  {
+   "name": "image-source-audit",
+   "ok": "PASS",
+   "detail": "{\"count\":3,\"left\":26.16865675953352,\"top\":34.95865936725047,\"width\":167.21662522607573,\"height\":36.011593746517136,\"scaleX\":1,\"scaleY\":1,\"angle\":0,\"naturalWidth\":1403,\"naturalHeight\":302,\"visualBounds\":{\"left\":27.019138104218356,\"top\":36.094815796686106,\"width\":172.65116554592316,\"height\":37.18197054327895}}",
+   "evidence": "§二十 ImageSource"
+  },
+  {
+   "name": "cleanup",
+   "ok": "PASS",
+   "detail": "removed=0 count=21",
+   "evidence": "§36 rollback"
+  }
+ ],
+ "errors": [],
+ "imageSource": {
+  "count": 3,
+  "left": 26.16865675953352,
+  "top": 34.95865936725047,
+  "width": 167.21662522607573,
+  "height": 36.011593746517136,
+  "scaleX": 1,
+  "scaleY": 1,
+  "angle": 0,
+  "naturalWidth": 1403,
+  "naturalHeight": 302,
+  "visualBounds": {
+   "left": 27.019138104218356,
+   "top": 36.094815796686106,
+   "width": 172.65116554592316,
+   "height": 37.18197054327895
+  }
+ },
+ "attempts": [
+  {
+   "method": "clipboard-paste",
+   "result": {
+    "dispatched": true
+   }
+  },
+  {
+   "method": "clipboard-cdp+ctrlV",
+   "worked": false,
+   "images": 3
+  },
+  {
+   "method": "file-input",
+   "worked": false,
+   "images": 3
+  }
+ ]
+}
