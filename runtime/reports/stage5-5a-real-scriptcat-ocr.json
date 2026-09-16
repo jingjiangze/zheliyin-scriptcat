@@ -1,0 +1,57 @@
+{
+ "ts": "2026-09-16T05:20:51.750Z",
+ "stage": "Stage 5.5A real-scriptcat-ocr-smoke",
+ "steps": [
+  {
+   "name": "engine-text-downloaded",
+   "ok": "PASS",
+   "detail": "engine text 66695 bytes",
+   "evidence": "n/a"
+  },
+  {
+   "name": "install-probe",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "gm-add-element-injected",
+   "ok": "PASS",
+   "detail": "mark=1",
+   "evidence": "REAL_SCRIPT_INJECTION(GM_addElement)"
+  },
+  {
+   "name": "csp-evidence",
+   "ok": "PASS",
+   "detail": "meta=[\"keywords=智能设计,定制未来,DIY自助设计,个性化定制,在线DIY定制,海量印刷模板,宣传单,折页,画册,卡券,不干胶\",\"description=提供高质量的印刷服务，拥有海量印刷模板供您选择，在线DIY定制设计，使设计变简单，价格公开透明，拥有惠普indigo、海德堡等尖端设备，为您提供高品质的印刷服务。\"] tesseract-resources=[]",
+   "evidence": "policy-evidence"
+  },
+  {
+   "name": "gm-inject-and-ocr",
+   "ok": "FAIL",
+   "detail": "mark=1 engine=undefined data1=undefined rec=undefined lines=undefined words=undefined err=window.Tesseract not present after inline+define-hack",
+   "evidence": "REAL_SCRIPT_INJECTION+REAL_OCR"
+  }
+ ],
+ "errors": [
+  "gm-inject-and-ocr"
+ ],
+ "csp": {
+  "metas": [
+   "keywords=智能设计,定制未来,DIY自助设计,个性化定制,在线DIY定制,海量印刷模板,宣传单,折页,画册,卡券,不干胶",
+   "description=提供高质量的印刷服务，拥有海量印刷模板供您选择，在线DIY定制设计，使设计变简单，价格公开透明，拥有惠普indigo、海德堡等尖端设备，为您提供高品质的印刷服务。"
+  ],
+  "resourcePolicy": []
+ },
+ "ocrRaw": {
+  "err": "window.Tesseract not present after inline+define-hack",
+  "injectMode": "inline-inserted",
+  "amdHint": true
+ }
+}
