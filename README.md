@@ -1,5 +1,46 @@
 # 折立印名片套版助手 v0.2.3.11
 
+## ⚠️ 安装前先看这里：三条轨道
+
+| 轨道 | 分支 | 版本 | 用途 |
+|---|---|---|---|
+| **稳定版（推荐）** | `main`（当前分支） | `0.3.0.0` | 日常使用：套版填层、正反面识别、AI 辅助、画布自检 |
+| Demo（实验性） | `demo` | `0.3.5.0` | 试用最新实现（含「识别图片文字」）。**不稳定，勿用于生产** |
+| 开发中 | `stage-4.1-runtime-validation` | — | 持续开发，不建议直接安装 |
+
+> 下方标题中的 `v0.2.3.11` 是旧版遗留文案；**稳定版实际版本为 `0.3.0.0`**（面板内「版本：」显示该值）。
+> ⚠️ **稳定版不包含** Stage 5.x / RUNTIME-8.x 的实验能力（本地 OCR、图片识别等）—— 那些只存在于 Demo 与开发分支。
+
+### 各轨道安装地址（脚本猫打开即装）
+
+稳定版：
+
+```text
+https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js
+```
+
+Demo（实验性 · 固定地址 · 装一次即可，之后自动更新）：
+
+```text
+https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
+```
+
+> 手工安装方式（脚本猫 → 新建脚本 → 粘贴）**保留未删除**，见下方「安装方式」。
+
+### Demo 当前状态（请勿误认为稳定版）
+
+```text
+Experimental
+DEMO_INSTALLABLE = PASS    用户能装上
+DEMO_UPDATEABLE  = PASS    用户能更新（@updateURL 固定指向 demo）
+DEMO_FUNCTIONAL  = PARTIAL 套版填层可用；图片识别机制已通过，识别质量待改进
+DEMO_SAFE        = PASS    无真实图片/文字/凭据入库
+REAL_USER        = PENDING 真机闭环尚未由真实用户完成
+```
+
+---
+
+
 
 - 优先填入画布已有文字图层。
 - 已有文字图层只改文字，不强制改字号、位置和样式。
