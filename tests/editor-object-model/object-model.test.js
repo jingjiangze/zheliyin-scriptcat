@@ -26,6 +26,14 @@ t("parse.interaction", m.interaction.selectable === true && m.interaction.evente
 t("parse.runtimeFlags", m.runtimeFlags.isDesign === true && m.runtimeFlags.isLineText === true && m.runtimeFlags.isDisplay === false);
 t("parse.pure-data", model.assertPureData(m) === true);
 
+// ---- §5.1 最小修正：identity 分型 + coordinateSpace ----
+t("identity.runtimeId", m.identity.runtimeId === "SESSION-UUID-0000" && m.identity.runtimeId === m.identity.uuid);
+t("identity.persistedId", m.identity.persistedId === fixture.expect.markuuid && m.identity.persistedId === m.identity.markuuid);
+t("identity.identityKind-text", m.identity.identityKind === "persisted-candidate");
+t("geometry.coordinateSpace", m.geometry.coordinateSpace === "canvas");
+t("identityKind.line-none", model.zyIdentityKind("line") === "none");
+t("identityKind.group-shared", model.zyIdentityKind("group") === "group-shared");
+
 // ---- 纯数据约束（§二十六）：模型可 JSON.stringify，不持有 raw 引用 ----
 const json = JSON.parse(JSON.stringify(m));
 t("pure.serializable", json.identity.kind === "text" && json.content.textLen === 15);

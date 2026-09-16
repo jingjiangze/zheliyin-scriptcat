@@ -27,6 +27,13 @@ t("geometry.subset", geo.width === 95.27115 && geo.left === 26.16865675953352 &&
 const sty = adapter.zyGetStyle(fixture.raw);
 t("style.subset", sty.fontSize === 31 && sty.fontFamily === "阿里普惠体Regular");
 
+// ---- zyGetVisualBounds（§5.1：fabric AABB 优先，effective fallback）----
+const withRect = { left: 10, top: 20, width: 100, height: 50, scaleX: 2, scaleY: 1, angle: 45, getBoundingRect: function () { return { left: 5, top: 9, width: 200, height: 300 }; } };
+const vb = adapter.zyGetVisualBounds(withRect);
+t("visualBounds.getBoundingRect", vb.source === "getBoundingRect" && vb.width === 200 && vb.height === 300 && vb.left === 5);
+const fallback = adapter.zyGetVisualBounds({ left: 10, top: 20, width: 100, height: 50, scaleX: 2, scaleY: 0.5 });
+t("visualBounds.fallback", fallback.source === "effective-fallback" && fallback.width === 200 && fallback.height === 25);
+
 // ---- writeText（最小 text mutation，§二十七/§二十八；mock raw 记录调用）----
 const calls = [];
 const mockRaw = {

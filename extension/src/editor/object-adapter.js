@@ -49,6 +49,19 @@ function zyGetStyle(raw) {
   return { fontFamily: zyStr(o.fontFamily), fontSize: zyNum(o.fontSize), fontWeight: zyStr(o.fontWeight), fontStyle: zyStr(o.fontStyle), lineHeight: zyNum(o.lineHeight), charSpacing: zyNum(o.charSpacing), textAlign: zyStr(o.textAlign), fill: zyStr(o.fill) };
 }
 
+// 视觉包围盒（§5.1 geometry audit）：优先 fabric getBoundingRect()（真实引擎 AABB，含 scale/angle/stroke），
+// 缺失时回退 width*scaleX × height*scaleY（无旋转近似）。返回值 = Canvas 逻辑坐标（与 geometry 同坐标系）。
+function zyGetVisualBounds(raw) {
+  if (raw && typeof raw.getBoundingRect === "function") {
+    try {
+      const r = raw.getBoundingRect();
+      if (r && typeof r.width === "number") return { left: r.left, top: r.top, width: r.width, height: r.height, source: "getBoundingRect" };
+    } catch (e) { /* fallthrough */ }
+  }
+  const o = raw || {};
+  return { left: zyNum(o.left), top: zyNum(o.top), width: zyNum((o.width || 0) * (o.scaleX || 1)), height: zyNum((o.height || 0) * (o.scaleY || 1)), source: "effective-fallback" };
+}
+
 // 最小 text mutation（in-memory）：与 page-bridge setObjectText 一致的安全写入。
 // 已知副作用（§三十七/§三十八 实测）：textbox 高度随行数自动换行（width/scale/font 不受影响）。
 function zyWriteText(raw, value) {
@@ -66,5 +79,5 @@ function zyWriteText(raw, value) {
 
 // 导出：node require 与浏览器全局
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { zyIsTextObject, zyReadObject, zyGetIdentity, zyGetGeometry, zyGetStyle, zyWriteText };
+  module.exports = { zyIsTextObject, zyReadObject, zyGetIdentity, zyGetGeometry, zyGetStyle, zyGetVisualBounds, zyWriteText };
 }

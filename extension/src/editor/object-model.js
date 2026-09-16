@@ -34,6 +34,17 @@ function zyObjectKind(raw) {
   return "unknown";
 }
 
+// 模拟别名的 identityKind（§5.1：identity 策略分型，不强行统一）
+//   - text/独立对象：persisted-candidate（markuuid 唯一且稳定）
+//   - svg 组/组内成员：group-shared（markuuid 组内共享，非对象级）
+//   - line 参考线：none（无身份字段）
+function zyIdentityKind(kind) {
+  if (kind === "text" || kind === "image" || kind === "graphic") return "persisted-candidate";
+  if (kind === "group") return "group-shared";
+  if (kind === "line") return "none";
+  return "unknown";
+}
+
 // 模型归一（原始对象 → 纯数据 EditorObject；未知字段置 null，绝不含 raw 引用）
 function parseEditorObject(raw, side, index) {
   const o = raw || {};
@@ -42,15 +53,20 @@ function parseEditorObject(raw, side, index) {
   const subType = zyStr(o.subType) || mediaType || null;
   const isTextKind = zyObjectKind(o) === "text" || typeof o.text === "string";
   const text = isTextKind ? zyStr(o.text) || "" : null;
+  const kind = zyObjectKind(o);
   return {
     identity: {
       side: zyStr(side) || "front",
       index: typeof index === "number" ? index : null,
-      markuuid: zyStr(o.markuuid),
+      // §5.1 分型：runtimeId 会话级实例；persistedId 仅 text/独立对象是 candidate；SVG 组共享；line 无
+      runtimeId: zyStr(o.uuid),
+      persistedId: zyStr(o.markuuid),
+      identityKind: zyIdentityKind(kind),
+      markuuid: zyStr(o.markuuid), // 兼容别名（5.0 字段保留）
       uuid: zyStr(o.uuid),
       type: type,
       subType: subType,
-      kind: zyObjectKind(o),
+      kind: kind,
       isText: isTextKind
     },
     geometry: {
@@ -58,7 +74,8 @@ function parseEditorObject(raw, side, index) {
       width: zyNum(o.width), height: zyNum(o.height),
       scaleX: zyNum(o.scaleX), scaleY: zyNum(o.scaleY),
       angle: zyNum(o.angle), skewX: zyNum(o.skewX), skewY: zyNum(o.skewY),
-      originX: zyStr(o.originX), originY: zyStr(o.originY)
+      originX: zyStr(o.originX), originY: zyStr(o.originY),
+      coordinateSpace: "canvas" // 记录顶层对象坐标系；group child 由上层标记为 "group-local"（§5.1 实测 group child 为组内坐标）
     },
     style: {
       fontFamily: zyStr(o.fontFamily), fontSize: zyNum(o.fontSize),
@@ -99,5 +116,5 @@ function assertPureData(model) {
 
 // 导出：node require 与浏览器全局
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { parseEditorObject, zyObjectKind, zyNum, zyStr, zyBool, assertPureData };
+  module.exports = { parseEditorObject, zyObjectKind, zyIdentityKind, zyNum, zyStr, zyBool, assertPureData };
 }
