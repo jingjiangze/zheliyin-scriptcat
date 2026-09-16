@@ -1,0 +1,54 @@
+{
+ "ts": "2026-09-16T01:31:53.685Z",
+ "steps": [
+  {
+   "name": "install-gm-probe",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/thirdDiyAdd.do",
+   "evidence": "n/a"
+  },
+  {
+   "name": "gm-marks",
+   "ok": "PASS",
+   "detail": "attrs=[\"data-zy-rt8-gm-called\",\"data-zy-rt8-marker-no\"]",
+   "evidence": "REAL_SCRIPT_CAT_GM_ADD_ELEMENT"
+  },
+  {
+   "name": "bridge-marker",
+   "ok": "PASS",
+   "detail": "{\"installed\":true,\"ts\":1789522321271}",
+   "evidence": "REAL_SCRIPT_CAT_BRIDGE"
+  },
+  {
+   "name": "probe-exactly-one",
+   "ok": "PASS",
+   "detail": "responses=1",
+   "evidence": "REAL_SCRIPT_CAT_BRIDGE"
+  },
+  {
+   "name": "probe-5x-5",
+   "ok": "PASS",
+   "detail": "responses=5",
+   "evidence": "REAL_SCRIPT_CAT_BRIDGE"
+  },
+  {
+   "name": "cross-instance-1-response",
+   "ok": "PASS",
+   "detail": "responses=1 (userscript SP每一次都独立执行 GM_addElement，但 pageBridge 的 window marker 保证 list 不重复)",
+   "evidence": "REAL_SCRIPT_CAT_BRIDGE+CROSS_INSTANCE"
+  },
+  {
+   "name": "cleanup",
+   "ok": "PASS",
+   "detail": "removed rt8-gm-bridge-uuid",
+   "evidence": "n/a"
+  }
+ ],
+ "errors": []
+}
