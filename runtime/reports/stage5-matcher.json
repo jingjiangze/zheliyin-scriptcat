@@ -1,0 +1,155 @@
+{
+ "ts": "2026-09-16T03:06:20.772Z",
+ "stage": "Stage 5.2 matcher",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "canvas-ready",
+   "ok": "PASS",
+   "detail": "textbox ready",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "objects-collected",
+   "ok": "PASS",
+   "detail": "text objects=4",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "matcher-self-match",
+   "ok": "PASS",
+   "detail": "self match n=4 → [{\"i\":4,\"sel\":4,\"s\":0.807},{\"i\":5,\"sel\":5,\"s\":0.807},{\"i\":8,\"sel\":8,\"s\":0.807},{\"i\":10,\"sel\":10,\"s\":0.807}]",
+   "evidence": "OBJECT_MATCHER:§二十九"
+  },
+  {
+   "name": "matcher-offset-score-drop",
+   "ok": "PASS",
+   "detail": "self.score=0.807 → shifted={\"status\":\"NOT_FOUND\",\"score\":null}",
+   "evidence": "§二十九 score↓"
+  },
+  {
+   "name": "phase2-mutation",
+   "ok": "PASS",
+   "detail": "snap.textHash 不变（脱敏）",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "phase2-mutation-only-text",
+   "ok": "PASS",
+   "detail": "changed=[\"height\",\"text\"] unexpected=[]",
+   "evidence": "§三十三 EXPECTED_MUTATION"
+  },
+  {
+   "name": "phase2-rollback-zero",
+   "ok": "PASS",
+   "detail": "changed=[]",
+   "evidence": "§三十六 rollback zero residual"
+  }
+ ],
+ "errors": [],
+ "objects": [
+  {
+   "index": 4,
+   "textHash8": "9967074",
+   "textLen": 3,
+   "vb": {
+    "left": 27.019138104218356,
+    "top": 152.16867165710516,
+    "width": 99.399962375,
+    "height": 37.20097500000003
+   },
+   "persistedId": "AD4636D5227B49399987EA16FC0FF3EA"
+  },
+  {
+   "index": 5,
+   "textHash8": "a0c7d994",
+   "textLen": 11,
+   "vb": {
+    "left": 57.14988350421832,
+    "top": 279.10904831326,
+    "width": 100.15249999999999,
+    "height": 18.533374999999978
+   },
+   "persistedId": "9B5E0D266C674E5A8FD0110F3054B80D"
+  },
+  {
+   "index": 8,
+   "textHash8": "81239479",
+   "textLen": 4,
+   "vb": {
+    "left": 27.019138104218356,
+    "top": 199.64279657210517,
+    "width": 102.88105434163414,
+    "height": 19.70010000000002
+   },
+   "persistedId": "82DBF6FD13B14175B652C77D7CE79660"
+  },
+  {
+   "index": 10,
+   "textHash8": "f85ded4d",
+   "textLen": 19,
+   "vb": {
+    "left": 57.14988350421834,
+    "top": 320.12371659699426,
+    "width": 266.385,
+    "height": 18.533374999999978
+   },
+   "persistedId": "1B6A503A48BD4A8D9978905642CE57B0"
+  }
+ ],
+ "selfMatch": [
+  {
+   "index": 4,
+   "status": "MATCHED",
+   "selectedIndex": 4,
+   "score": 0.8075,
+   "reasons": [
+    "bbox-overlap",
+    "center-near",
+    "same-object-type",
+    "identity-available"
+   ]
+  },
+  {
+   "index": 5,
+   "status": "MATCHED",
+   "selectedIndex": 5,
+   "score": 0.8075,
+   "reasons": [
+    "bbox-overlap",
+    "center-near",
+    "same-object-type",
+    "identity-available"
+   ]
+  },
+  {
+   "index": 8,
+   "status": "MATCHED",
+   "selectedIndex": 8,
+   "score": 0.8075,
+   "reasons": [
+    "bbox-overlap",
+    "center-near",
+    "same-object-type",
+    "identity-available"
+   ]
+  },
+  {
+   "index": 10,
+   "status": "MATCHED",
+   "selectedIndex": 10,
+   "score": 0.8075,
+   "reasons": [
+    "bbox-overlap",
+    "center-near",
+    "same-object-type",
+    "identity-available"
+   ]
+  }
+ ]
+}
