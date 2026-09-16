@@ -2,7 +2,8 @@
 
 > 维护者：AI-2（Repository Governance 线）
 > 性质：**接口契约定义**。本文档**不实现**任何模块，只定义两条工作线之间的共享边界。
-> 基线：`stage-4.1-runtime-validation` @ `3becf04`
+> 基线：`stage-4.1-runtime-validation` @ `4cb0819`（Stage 5.5）
+> 修订：@ `3becf04`（Stage 5.4）初版；@ `4cb0819`（Stage 5.5）补 OCR Provider 契约，并关闭 GAP-1 / GAP-2 / GAP-5。
 > 证据等级见 `docs/EVIDENCE_POLICY.md`；协作边界见 `docs/PARALLEL_DEVELOPMENT.md`
 
 ---
@@ -36,6 +37,11 @@
               └─────────────────────────────┬──────────────────────────┘
                                             ▼
                             ┌───────────────────────────────┐
+                            │  OCR Provider.recognize()      │  C2a.（§3.0）
+                            │   （tesseract LOCAL / fixture） │
+                            └───────────────┬───────────────┘
+                                            ▼
+                            ┌───────────────────────────────┐
                             │  OCRCandidate[]（候选文字块）   │
                             └───────────────┬───────────────┘
                                             │  C3. OCRCandidate 契约（§3）
@@ -51,12 +57,12 @@
                                             │
                                             ▼
                             ┌───────────────────────────────┐
-                            │  Textbox / Textbox[]（输出端）  │  C4.（§5）
+                            │  Textbox / Textbox[]（输出端）  │  C5.（§5）
                             └───────────────┬───────────────┘
                                             │
                                             ▼
                             ┌───────────────────────────────┐
-                            │  changeSet（可回滚）            │  C5.（§6）
+                            │  changeSet（可回滚）            │  C6.（§6）
                             └───────────────────────────────┘
 
               不变量（§8）：原图必须保留
@@ -91,49 +97,85 @@
 
 ---
 
-## 3. C2 — OCRCandidate 契约
+## 3. OCR 层契约
+
+### 3.0 C2a — OCR Provider 契约（Stage 5.5 新增）
+
+> 对应真实实现：`extension/src/ocr/ocr-provider.js`
+> `recognize(image, ctx) → Promise<{ provider, providerType, candidates[], meta }>`
+
+**这是 OCR 引擎与重建链之间唯一的接口。** 换 provider 不改重建代码。
+
+| 字段 | 契约 | 真实实现 | 状态 |
+|---|---|---|---|
+| `provider` | string，如 `tesseract-chi_sim` / `fixture` | ✅ | 一致 |
+| `providerType` | `LOCAL` \| `FIXTURE`（`REMOTE` 保留未用） | ✅ | 一致 |
+| `candidates[]` | `OCRCandidate[]`（见 §3.1） | ✅ | 一致 |
+| `meta` | `{ imageWidth, imageHeight, elapsed, rawWordCount, lineCount, lines, words }` | ✅ | 一致（含诊断用原始 words/lines） |
+| 引擎未加载 | 返回 `{ error: { errorCode: "ENGINE_NOT_LOADED", … }, candidates: [] }`，**不 throw** | ✅ | 一致 |
+
+**已实现的 provider**：
+
+| provider | 类型 | 状态 | 说明 |
+|---|---|---|---|
+| `createTesseractProvider()` | `LOCAL` | ✅ **REAL PASS** | 本地 WASM，`chi_sim`，零上传零 key；**候选默认取引擎原生 `data.lines`**（行级），无行时回退 `words` |
+| `createFixtureProvider()` | `FIXTURE` | ✅ | 确定性回归用；**不得冒充 REAL** |
+
+**契约级约束（不得放宽）**：
+
+1. **隐私**：`LOCAL` provider 不得上传用户图片、不得要求任何 key。
+2. **引擎缺少即 ERROR**，不得抛异常、不得静默返回空候选冒充成功。
+3. **候选必须带 `imageSize`**：`image-pixel` 坐标只有在知道原图尺寸时才能换算。
+4. **引擎加载不属于 provider 职责**：`GM_addElement` / CDN 注入由调用层负责（见 `tesseract-loader.js`）。
+   > 这是 Stage 5.5 的关键边界划分，也是当前**待真机验证**的一项（引擎注入方式）。
+
+---
+
+### 3.1 C3 — OCRCandidate 契约
 
 > 对应真实实现：`extension/src/ocr/ocr-model.js` → `createOCRCandidate(input)` / `isUsable(candidate)`
-
-### 3.1 契约要求
+> 以及 `extension/src/ocr/ocr-provider.js` 的 `normalizeBBox()`（provider 侧产出）
 
 ```js
 {
     text,             // string，必填；空白不可用
     bbox,             // { x, y, width, height }，必填；四值均为有限非负数
-    confidence,       // number 0..1
-    rotation,         // number（度）      ← 契约要求
-    coordinateSpace   // string           ← 契约要求
+    confidence,       // number 0..1（tesseract 的 0..100 会被归一化）
+    rotation,         // number（度）或 null
+    coordinateSpace,  // string，见下
+    imageSize         // { width, height }，image-pixel 坐标系下必须携带
 }
 ```
 
-### 3.2 与真实实现的差异（**GAP 清单**）
+**`coordinateSpace` 取值（以真实实现为准）**：
 
-| 契约字段 | 真实实现 `createOCRCandidate` | 判定 |
+| 取值 | 含义 | 谁产出 | 消费方 |
+|---|---|---|---|
+| **`image-pixel`** | 相对图片**原始像素** | `ocr-provider.js`（当前唯一实际使用值） | `image-mapper` → 需要 `imageSize` |
+| `image-normalized` | 0..1 归一化 | （保留） | `imageLocalNormalized()` |
+| `image-logical` | 相对图片逻辑尺寸 | （保留） | `imageLocalRectToCanvas()` |
+| `canvas` | Canvas 全局坐标 | `image-mapper` 输出的结果语义 | **`object-matcher` 只接受这一级** |
+
+> **契约裁定**：`object-matcher.match()` 要求 `candidate.bbox` 与 `object.visualBounds` **同坐标系**（Canvas 像素，origin=left/top）。
+> 因此进入 matcher 之前 `coordinateSpace` **必须**已是 `canvas`；任何非 `canvas` 的候选都必须先经 `image-mapper`。
+
+### 3.2 与真实实现的差异（GAP 清单，Stage 5.5 后）
+
+| 契约字段 | 真实实现 | 判定 |
 |---|---|---|
 | `text` | ✅ `text`（+ 派生 `textLen`、`textHash8`） | 一致 |
 | `bbox` | ✅ `bbox: {x,y,width,height}` | 一致 |
 | `confidence` | ✅ `confidence`，`null` 或**钳制到 [0,1]** | 一致（更严格） |
-| `rotation` | ❌ **不存在** | **GAP-1** |
-| `coordinateSpace` | ❌ **不存在** | **GAP-2** |
-| — | 额外：`source ∈ manual \| ocr \| fixture`（默认 `fixture`） | 契约未要求，**建议纳入契约**（它是区分 FIXTURE / REAL 的关键字段） |
+| `rotation` | ✅ **已存在**（`normalizeBBox` 输出，非数字时为 `null`） | ✅ **GAP-1 已关闭**（Stage 5.5） |
+| `coordinateSpace` | ✅ **已存在**，当前恒为 `"image-pixel"` | ✅ **GAP-2 已关闭**（Stage 5.5）；已按真实取值对齐 |
+| `imageSize` | ✅ 由 provider 附带 | 契约补入（GAP-2 的推论需求） |
+| `source`（manual/ocr/fixture） | ⚠️ `ocr-model.js` 中仍有；provider 侧改由 `providerType` 表达 | **GAP-7 部分转化**：来源信息改由 provider 层承载 |
 
-**GAP-1（rotation）处置建议** —— 二选一，由 AI-1 决定并在实现中固化：
-- **(a) 扩展模型**：`createOCRCandidate` 增加 `rotation`（默认 `0`），并纳入 `isUsable` 的默认值逻辑（旋转不参与可用性判定）。
-- **(b) 保持模型不变**：在契约层规定「`bbox` 恒为**轴对齐**包围盒（AABB），OCR 侧若有旋转文本，必须在产出候选前自行外接为 AABB；旋转信息由 `ImageObject.angle` 承载」。
-  > 当前 Stage 5.3/5.4 的实际行为等价于 (b)：`image-mapper` 输入 local rect 已是 AABB，旋转由 `imgObj.angle` 处理。
+> 说明：`rotation` 目前**允许为 `null`**，且重建链实际依赖的是 `ImageObject.angle`（Stage 5.3/5.4 的 mapper 路径）。
+> 因此 `rotation` 的存在意义是**信息保留**；旋转重建本身仍属 `DEFERRED → Stage 5.8`。
 
-**GAP-2（coordinateSpace）处置建议**：
-当前 `bbox` 的坐标系是**隐式约定**（"相对图片像素或归一化 0..1"）。建议显式化，取值枚举：
-
-| 取值 | 含义 | 消费方 |
-|---|---|---|
-| `source-pixel` | 相对图片**原始像素**（`naturalWidth/Height`） | 需先除以 natural 尺寸归一化 |
-| `image-normalized` | 相对图片的 0..1 归一化 | `imageLocalNormalized()` |
-| `image-logical` | 相对图片**逻辑尺寸**（fabric `width/height`） | `imageLocalRectToCanvas()` |
-| `canvas` | 相对 Canvas 全局坐标 | 直接进 `object-matcher` |
-
-> **契约裁定**：`object-matcher.match()` 要求 `candidate.bbox` 与 `object.visualBounds` **同坐标系**（默认 Canvas 像素，origin=left/top）。因此进入 matcher 之前，`coordinateSpace` **必须**是 `canvas`。任何非 `canvas` 的候选都必须先经 `image-mapper`。
+> ~~**GAP-1 / GAP-2 处置建议**~~ —— **已于 Stage 5.5 由实现线解决**（`ocr-provider.js` 的 `normalizeBBox()` 直接产出 `rotation` 与 `coordinateSpace`，取值 `"image-pixel"`）。
+> 本节保留原始建议文本以记录决策过程，但**当前无需再决策**。
 
 ---
 
@@ -170,7 +212,7 @@
 
 ---
 
-## 5. C3 — 匹配契约（输入边界，不属输出）
+## 5. C4 — 匹配契约（OCR 链的输入边界，不属输出）
 
 > 对应真实实现：`extension/src/editor/object-matcher.js` → `match(candidate, objects, ctx)`
 
@@ -204,7 +246,7 @@ match(
 
 ---
 
-## 6. C4 — Textbox 输出契约
+## 6. C5 — Textbox 输出契约
 
 > 对应真实实现：Stage 5.3/5.4 在真实编辑器内创建，`runtime/stage5-3-real-reconstruction.js` / `stage5-4-real-product-flow.js`
 
@@ -233,9 +275,10 @@ match(
 
 | 场景 | 公式 / 处理 | 状态 |
 |---|---|---|
-| short 单行 | `fontSize = 0.829 × visualHeight`（≈ `0.82`），实测重建回读 **mean height error = 5.03%** | ✅ 可用 |
+| short 单行 | `fontSize = 0.829 × visualHeight`（≈ `0.82`），Stage 5.4 实测重建回读 **mean height error = 5.03%** | ✅ 可用 |
+| 真实 OCR 行（Stage 5.5） | 同公式 + 宽度防溢出换行修复后，实测 **mean height error = 3.3%** | ✅ 已改善 |
 | mid / long 单行 | 同上有偏差（ratioMean 1.206，大字号 6 字换行时 max 2.537） | ⚠️ 需注意 |
-| **多行** | **不做单行反推**（需行数估计） | ❌ `DEFERRED → Stage 5.5` |
+| **多行** | **不做单行反推**（需行数估计） | ⏳ `DEFERRED → Stage 5.6 字号精确 / 5.9 多行段落` |
 
 > 契约要求：字号**必须来自校准表/公式**，禁止"猜一个字号"。若场景落在未覆盖区间（多行、超大字号），必须降级为**标记需人工确认**，而不是静默给出错误值。
 
@@ -247,7 +290,7 @@ match(
 
 ---
 
-## 7. C5 — rollback / changeSet 契约
+## 7. C6 — rollback / changeSet 契约
 
 ### 7.1 changeSet 要求
 
@@ -275,7 +318,9 @@ match(
 | `runId` 贯穿一次事务（便于诊断/撤销） | ❌ 未实现（`REFACTOR_PLAN.md` R4 提出，从未落地；`ARCH-RISK-001` 开放） | **GAP-3** |
 | 「撤销」入口（用户可感知） | ❌ 未实现（当前是 runner 级 cleanup） | **GAP-4** |
 
-> 契约裁定：Stage 5.5 若要把重建能力接入**产品**（而非审计 runner），必须先解决 GAP-3/GAP-4。在此之前，重建能力的回滚只在审计链内成立。
+> 契约裁定：若要把重建能力接入**产品**（而非审计 runner），必须先解决 GAP-3/GAP-4。
+> 在此之前，重建能力的回滚只在审计链内成立。
+> 该产品化路径现已由实现线排入 **Stage 5.13 Undo**；引擎注入真机验证（GAP-8）为 **5.6 前置**。
 
 ---
 
@@ -296,17 +341,21 @@ match(
 
 ## 9. 契约缺口汇总（交 AI-1 决策）
 
-| ID | 缺口 | 影响 | 建议处置 | 阻塞 5.5？ |
+| ID | 缺口 | 影响 | 建议处置 | 状态（Stage 5.5 后） |
 |---|---|---|---|---|
-| **GAP-1** | `OCRCandidate` 无 `rotation` | 旋转文本的候选语义不明 | 扩模型 **或** 明确"bbox 恒为 AABB、旋转由 `angle` 承载" | 否（取 (b) 即可） |
-| **GAP-2** | `OCRCandidate` 无 `coordinateSpace` | OCR 坐标接入靠隐式约定，易错 | 引入枚举（§3.2 表），上层消费、mapper 不改 | 否（但强烈建议） |
-| **GAP-3** | 无 `runId` | 无法诊断/按事务撤销 | 参考 `REFACTOR_PLAN.md` R4 | **是**（若接入产品） |
-| **GAP-4** | 无用户可感知的撤销入口 | 产品化体验缺口 | 事务化 + 撤销 UI | **是**（若接入产品） |
-| **GAP-5** | 真实 OCR provider 未接入 | 整链 OCR 源仍是 fixture | Stage 5.5 决策（Local tesseract.js / Native 相框适配 / 受控 API） | **是** |
-| **GAP-6** | 多行字号未覆盖 | 多行文本字号不准 | 行数估计 | 否（可标人工确认） |
-| **GAP-7** | `source` 字段未纳入契约 | FIXTURE/REAL 区分依赖约定 | 正式纳入契约并要求必填 | 否（但建议） |
+| ~~**GAP-1**~~ | `OCRCandidate` 无 `rotation` | 旋转文本的候选语义不明 | 扩模型 | ✅ **已关闭**（`normalizeBBox` 产出 `rotation`，允许 `null`） |
+| ~~**GAP-2**~~ | `OCRCandidate` 无 `coordinateSpace` | OCR 坐标接入靠隐式约定，易错 | 引入枚举 | ✅ **已关闭**（`coordinateSpace: "image-pixel"` + `imageSize`） |
+| **GAP-3** | 无 `runId` | 无法诊断/按事务撤销 | 参考 `REFACTOR_PLAN.md` R4 或 Stage 5.13 | ⏳ 开放（**阻塞产品化**） |
+| **GAP-4** | 无用户可感知的撤销入口 | 产品化体验缺口 | 事务化 + 撤销 UI | ⏳ 开放 → 已排入 **Stage 5.13 Undo** |
+| ~~**GAP-5**~~ | 真实 OCR provider 未接入 | 整链 OCR 源仍是 fixture | Stage 5.5 决策 | ✅ **已关闭**（本地 tesseract 已接入，`REAL_OCR_PROVIDER = PASS`） |
+| **GAP-6** | 多行字号未覆盖 | 多行文本字号不准 | 行数估计 | ⏳ 开放 → 已排入 **Stage 5.6 字号精确 / 5.9 多行段落** |
+| **GAP-7** | `source` 字段未纳入契约 | FIXTURE/REAL 区分依赖约定 | 正式纳入契约 | 🔄 **已转化**：来源改由 provider 的 `providerType` 承载，语义更明确 |
+| **GAP-8**（新） | OCR 引擎加载/注入方式未在真机验证 | 生产可用性的最后一跳 | `GM_addElement` 真机一键验证 | ⏳ 开放 → **Stage 5.6 前置** |
+| **GAP-9**（新） | provider 与重建链均未挂接生产 | 用户实际无法使用 | 产品化接线 | ⏳ 开放 |
 
-> **GAP 不是缺陷，是待办。** 本清单的作用是让 AI-1 在实现时不必猜测契约意图，也让审计者能明确区分"未做"与"做错"。
+> **GAP 不是缺陷，是待办。** 本清单的作用是让实现线在开发时不必猜测契约意图，也让审计者能明确区分"未做"与"做错"。
+>
+> 本表在每次阶段推进后更新状态；**已关闭项不删除**，保留以记录契约演进过程。
 
 ---
 
@@ -324,8 +373,12 @@ match(
 
 外部治理指令给出的契约草案包含 `rotation` 与 `coordinateSpace` 两个字段。经核对真实代码：
 
-- `extension/src/ocr/ocr-model.js` 的 `createOCRCandidate` **没有**这两个字段（详见 §3.2）。
-- 外部指令描述为「重要共享契约」的前提基本成立——`OCRCandidate`、坐标映射、Textbox 输出、证据定义**确实是**两条线唯一的共享面。
-- 但**不成立**的部分：指令假设 `extension/src/ocr/**`、`mapper/**`、`matcher/**`、`object/**`、`bridge/**` 为独立目录且由 AI-1 正在修改。真实情况是相关模块位于 `extension/src/ocr/`（2 个文件）与 `extension/src/editor/`（4 个文件），且**均未挂接生产**。
+- **初版审计时（Stage 5.4 @ `3becf04`）**：`ocr-model.js` 的 `createOCRCandidate` **没有**这两个字段 → 曾列为 GAP-1 / GAP-2。
+- **Stage 5.5 @ `4cb0819` 之后**：`ocr-provider.js` 的 `normalizeBBox()` **已产出**这两个字段（`coordinateSpace: "image-pixel"`）→ **GAP-1 / GAP-2 已关闭**。
+- 指令描述为「重要共享契约」的前提**成立**——`OCRCandidate`、坐标映射、Textbox 输出、证据定义确实是两条线唯一的共享面。
+- 但**不成立**的部分：指令假设 `extension/src/ocr/**`、`mapper/**`、`matcher/**`、`object/**`、`bridge/**` 为**独立目录**。真实情况是相关模块集中在两个目录：
+  - `extension/src/ocr/`（**4** 个文件：`ocr-model` / `ocr-provider` / `tesseract-loader` / `image-mapper`）
+  - `extension/src/editor/`（**4** 个文件：`page-bridge` / `object-model` / `object-adapter` / `object-matcher`）
+  且截至 Stage 5.5，**全部仍为未挂接生产**。
 
-本契约因此以**真实实现**为基线，把指令草案中尚不存在的部分明确列为 `GAP`，而不是直接写成契约已满足。
+本契约始终以**真实实现**为基线：先如实标注差异（GAP），再随实现推进逐条关闭，**不把未实现的部分写成契约已满足**。
