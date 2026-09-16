@@ -1,0 +1,28 @@
+{
+  "stage": "Stage 5.4 Native OCR Result Access + Real Image Input + Reconstruction Accuracy",
+  "ts": "2026-09-16",
+  "native_ocr_result_access": "BLOCKED",
+  "native_image_input": "PARTIAL",
+  "image_coordinate": "PASS",
+  "image_scale": "PASS",
+  "textbox": "PASS",
+  "text_editable": "PASS",
+  "font": "PASS",
+  "font_size": "PASS",
+  "font_size_accuracy": "PASS (calibrated fontSize=0.829*visualHeight; mean height error 5.03%)",
+  "group": "PASS",
+  "ungroup": "PASS",
+  "reference_image": "PASS",
+  "rollback": "PASS",
+  "runtime_8_3": "PASS",
+  "unit": "PASS (6 suites)",
+  "production_changes": "zero behavior change; runtime audits + redacted reports only",
+  "ocr_source": "FIXTURE_OCR (native blocked; local OCR evaluated-not-wired, tesseract.js size/integration deferred to 5.5)",
+  "deferred": [
+    "local OCR provider decision (5.5: volume/chinese-quality/integration eval)",
+    "native OCR 相框 interaction deep adaptation",
+    "multiline fontSize inversion (line-count estimation)",
+    "native image input automation (real-user verification first)"
+  ],
+  "gate": "CONDITIONAL-GO"
+}
