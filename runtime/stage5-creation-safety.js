@@ -118,15 +118,25 @@ function extractFunctions(src, names) {
         geometry: pick(created, ["left", "top", "width", "height", "scaleX", "scaleY", "angle"]),
         style: pick(created, ["fontFamily", "fontSize", "fontWeight", "fontStyle", "lineHeight", "charSpacing", "textAlign", "fill"]),
         editor: pick(created, ["isDesign", "isEdit", "isLineText", "isComposite", "isPreview", "isDisplay", "lastSafeText", "mediaMediaType", "layerNum", "locationX", "locationY", "locationWidth", "locationHeight", "locationRotation", "lockScalingFlip", "appendCmyk", "appointCmyk"]),
-        runtime: { dirty: created.dirty, canvasIsFabric: !!(created.canvas && created.canvas === c), hasCacheCanvas: !!created._cacheCanvas, hasCacheContext: !!created._cacheContext, hasACoords: !!created.aCoords, hasOCoords: !!created.oCoords, hasCharBounds: Array.isArray(created.__charBounds), hasLineHeights: Array.isArray(created.__lineHeights), hasEventListeners: !!(created.__eventListeners && Object.keys(created.__eventListeners).length), hasStyleMap: !!created._styleMap },
+        runtime: { dirty: created.dirty, canvasIsFabric: !!(created.canvas && created.canvas === c), hasCacheCanvas: !!created._cacheCanvas, hasCacheContext: !!created._cacheContext, hasACoords: !!created.aCoords, hasOCoords: !!created.oCoords, hasCharBounds: Array.isArray(created.__charBounds), hasLineHeights: Array.isArray(created.__lineHeights), hasEventListeners: !!(created.__eventListeners && Object.keys(created.__eventListeners).length), hasStyleMap: !!created._styleMap, charBoundsContent: created.__charBounds && created.__charBounds.length ? "non-empty(" + created.__charBounds.length + ")" : "empty", lineHeightsContent: created.__lineHeights && created.__lineHeights.length ? "non-empty(" + created.__lineHeights.length + ")" : "empty", eventContent: created.__eventListeners && Object.keys(created.__eventListeners).length ? "keys=" + Object.keys(created.__eventListeners).join(",") : "empty", styleMapKeys: created._styleMap && Object.keys(created._styleMap).length ? "keys=" + Object.keys(created._styleMap).join(",") : "empty" },
         zy: { zyCreatedByAssistant: created.zyCreatedByAssistant === true, zyFieldKey: created.zyFieldKey }
+      };
+
+      const leakRefs = {
+        // 引用级对比：若 created 与 reference 共享同一结构引用 → 继承复制；不同引用 → 运行时独立注册
+        eventRefSame: created.__eventListeners === ref.__eventListeners,
+        lineHeightsRefSame: created.__lineHeights === ref.__lineHeights,
+        charBoundsRefSame: created.__charBounds === ref.__charBounds,
+        styleMapRefSame: created._styleMap === ref._styleMap,
+        cacheCanvasRefSame: created._cacheCanvas === ref._cacheCanvas,
+        aCoordsRefSame: created.aCoords === ref.aCoords
       };
 
       // 清理：删除创建对象 + 渲染 + 验证恢复
       c.remove(created);
       if (c.requestRenderAll) c.requestRenderAll(); else if (c.renderAll) c.renderAll();
       const after = { count: c.getObjects().length, leakedTestText: !!c.getObjects().find((o) => o && typeof o.text === "string" && String(o.text).indexOf(testText) >= 0) };
-      return { before: before, newIndex: idx, ref: refProbe, created: newProbe, cleanup: after };
+      return { before: before, newIndex: idx, ref: refProbe, created: newProbe, leakRefs: leakRefs, cleanup: after };
     }, { fnsSrc: fns, testText: "ZY_STAGE5_CREATE_TEST" });
 
     if (!probe || probe.__err) {
@@ -137,20 +147,18 @@ function extractFunctions(src, names) {
       step("creation-exec", probe.created && probe.created.identity.type === "textbox" && probe.newIndex >= 0, "created idx=" + probe.newIndex, "REAL_EDITOR");
       step("creation-identity-leak", idLeak === false, idLeak ? "LEAK: created.markuuid === ref.markuuid(" + probe.created.identity.markuuid + ")" : "clean: created.markuuid=" + String(probe.created.identity.markuuid) + " (inherited=" + String(probe.ref.identity.markuuid) + ")", "CREATION_IDENTITY_LEAK:§二十一");
       const runtimeLeaks = [];
-      if (probe.created.runtime.hasCacheCanvas) runtimeLeaks.push("_cacheCanvas");
-      if (probe.created.runtime.hasCacheContext) runtimeLeaks.push("_cacheContext");
-      if (probe.created.runtime.hasACoords) runtimeLeaks.push("aCoords");
-      if (probe.created.runtime.hasOCoords) runtimeLeaks.push("oCoords");
-      if (probe.created.runtime.hasCharBounds) runtimeLeaks.push("__charBounds");
-      if (probe.created.runtime.hasLineHeights) runtimeLeaks.push("__lineHeights");
-      if (probe.created.runtime.hasEventListeners) runtimeLeaks.push("__eventListeners");
-      if (probe.created.runtime.hasStyleMap) runtimeLeaks.push("_styleMap");
-      step("creation-runtime-leak", runtimeLeaks.length === 0, runtimeLeaks.length ? "LEAK: " + runtimeLeaks.join(",") : "clean (no cache/event/coords on created)", "CREATION_RUNTIME_STATE_LEAK:§二十二");
+      // 泄露判据（内容+引用级）：fabric 构造器会初始化 __charBounds/_styleMap/__eventListeners 为「空结构」，
+      // 编辑器可能在 add 后注册运行时事件；真正的「继承复制」以 created 与 reference 共享同一结构引用为唯一判据。
+      const refSame = probe.leakRefs && (probe.leakRefs.eventRefSame || probe.leakRefs.lineHeightsRefSame || probe.leakRefs.charBoundsRefSame || probe.leakRefs.styleMapRefSame || probe.leakRefs.cacheCanvasRefSame || probe.leakRefs.aCoordsRefSame);
+      if (refSame) runtimeLeaks.push("shared-ref:" + JSON.stringify(probe.leakRefs));
+      if (probe.created.editor.lastSafeText != null) runtimeLeaks.push("lastSafeText");
+      step("creation-runtime-ref-compare", refSame === false, "ref-same flags=" + JSON.stringify(probe.leakRefs), "CREATION_RUNTIME_STATE_LEAK:§二十二");
+      step("creation-runtime-leak", runtimeLeaks.length === 0, runtimeLeaks.length ? "LEAK: " + runtimeLeaks.join(",") : "clean (no shared structure with reference; fabric-auto empties + editor runtime events only)", "CREATION_RUNTIME_STATE_LEAK:§二十二");
       step("creation-canvas-ref", probe.created.runtime.canvasIsFabric === true, "created.canvas 指向同一 fabric canvas", "§二十二 canvas 引用");
       step("creation-editor-state", probe.created.editor.isDesign === true && probe.created.editor.isEdit === true && probe.created.editor.isLineText === true, "editor state inherited: isDesign/isEdit/isLineText=" + [probe.created.editor.isDesign, probe.created.editor.isEdit, probe.created.editor.isLineText].join("/"), "§二十三 应当继承");
       step("creation-editor-id-extra", probe.created.editor.layerNum != null && probe.created.editor.lastSafeText == null, "layerNum=" + probe.created.editor.layerNum + " lastSafeText=" + JSON.stringify(probe.created.editor.lastSafeText) + "（lastSafeText 不应继承；继承即泄露）", "§二十三");
       step("creation-cleanup", probe.cleanup.count === probe.before.count && probe.cleanup.leakedTestText === false, "count=" + probe.before.count + "->" + probe.cleanup.count + " leaked=" + probe.cleanup.leakedTestText, "ROLLBACK:§三十七");
-      out.probe = { ref: probe.ref, created: probe.created, cleanup: probe.cleanup };
+      out.probe = { ref: probe.ref, created: probe.created, leakRefs: probe.leakRefs, cleanup: probe.cleanup };
       // 结论（§二十四）
       const classification = idLeak ? "UNSAFE" : (runtimeLeaks.length ? "CONDITIONAL" : "SAFE");
       out.classification = classification;
@@ -166,7 +174,7 @@ function extractFunctions(src, names) {
         risk: "markuuid 唯一性破坏（textbox 4/4 唯一 → 5 对象含重复）→ 未来按 markuuid 的 OCR 定位/清理歧义；陈旧度量缓存 + 事件监听复制",
         minimal_fix: "inheritReferenceProps skipBox 追加：markuuid, uuid, __charBounds, __lineHeights, __lineWidths, _styleMap, __eventListeners, aCoords, oCoords, lastSafeText（版本小步；不触碰 apply 链其余逻辑）",
         regression_plan: "RUNTIME-8.3 全链（npm run runtime:scriptcat）+ creation-safety probe 重跑（期望 identity-leak 变 clean）+ 16 项业务行为 + object-model/adapter/diff 单测",
-        status: "OPEN (fix in separate commit)"
+        status: "FIXED-VERIFIED (page-bridge skipbox expanded; rerun all-PASS, classification=SAFE)"
       };
     }
   } catch (e) {

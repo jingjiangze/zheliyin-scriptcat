@@ -362,8 +362,10 @@ function pageBridge() {
     }
 
     // A1：把参考对象（含其原型链）上的自有属性拷到新对象上，只跳过内部/画布引用类字段。
+    // Stage 5.1（STAGE5.1-CRE-01, P1）修复：追加跳过 identity / 度量缓存 / 事件 / 编辑回退字段，
+    // 防止新对象继承 reference 的 markuuid（破坏 textbox markuuid 唯一性）与陈旧缓存/监听器/回退文本。
     function inheritReferenceProps(obj, reference) {
-      const skipBox = new Set(["canvas", "_canvas", "group", "_group", "ctx", "_ctx", "scene", "_scene", "_cacheCanvas", "_cacheContext", "_cacheCanvasDimensions", "clipPath", "text", "_text", "textLines", "_textLines", "lineWidths", "_lineWidths", "dirty", "zyCreatedByAssistant", "zyFieldKey"]);
+      const skipBox = new Set(["canvas", "_canvas", "group", "_group", "ctx", "_ctx", "scene", "_scene", "_cacheCanvas", "_cacheContext", "_cacheCanvasDimensions", "clipPath", "text", "_text", "textLines", "_textLines", "lineWidths", "_lineWidths", "dirty", "zyCreatedByAssistant", "zyFieldKey", "markuuid", "uuid", "__charBounds", "__lineHeights", "__lineWidths", "_styleMap", "__eventListeners", "aCoords", "oCoords", "lastSafeText"]);
       const collected = {};
       let current = reference;
       while (current && current !== Object.prototype) {

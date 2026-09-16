@@ -1,11 +1,11 @@
 {
- "ts": "2026-09-16T02:28:03.148Z",
+ "ts": "2026-09-16T02:32:23.924Z",
  "stage": "Stage 5.1 creation-safety",
  "steps": [
   {
    "name": "extract-production-source",
    "ok": "PASS",
-   "detail": "extracted=createTextObject,inheritReferenceProps,getReferenceStyle,placeCreatedObject sha256-lead=19958",
+   "detail": "extracted=createTextObject,inheritReferenceProps,getReferenceStyle,placeCreatedObject sha256-lead=20250",
    "evidence": "REAL_SOURCE_EQUIV"
   },
   {
@@ -28,14 +28,20 @@
   },
   {
    "name": "creation-identity-leak",
-   "ok": "FAIL",
-   "detail": "LEAK: created.markuuid === ref.markuuid(AD4636D5227B49399987EA16FC0FF3EA)",
+   "ok": "PASS",
+   "detail": "clean: created.markuuid=undefined (inherited=AD4636D5227B49399987EA16FC0FF3EA)",
    "evidence": "CREATION_IDENTITY_LEAK:§二十一"
   },
   {
+   "name": "creation-runtime-ref-compare",
+   "ok": "PASS",
+   "detail": "ref-same flags={\"eventRefSame\":false,\"lineHeightsRefSame\":false,\"charBoundsRefSame\":false,\"styleMapRefSame\":false,\"cacheCanvasRefSame\":false,\"aCoordsRefSame\":false}",
+   "evidence": "CREATION_RUNTIME_STATE_LEAK:§二十二"
+  },
+  {
    "name": "creation-runtime-leak",
-   "ok": "FAIL",
-   "detail": "LEAK: aCoords,oCoords,__charBounds,__lineHeights,__eventListeners,_styleMap",
+   "ok": "PASS",
+   "detail": "clean (no shared structure with reference; fabric-auto empties + editor runtime events only)",
    "evidence": "CREATION_RUNTIME_STATE_LEAK:§二十二"
   },
   {
@@ -52,8 +58,8 @@
   },
   {
    "name": "creation-editor-id-extra",
-   "ok": "FAIL",
-   "detail": "layerNum=4 lastSafeText=\"简小设\"（lastSafeText 不应继承；继承即泄露）",
+   "ok": "PASS",
+   "detail": "layerNum=4 lastSafeText=undefined（lastSafeText 不应继承；继承即泄露）",
    "evidence": "§二十三"
   },
   {
@@ -65,20 +71,16 @@
   {
    "name": "creation-safety-classification",
    "ok": "PASS",
-   "detail": "CREATION_SAFETY=UNSAFE",
+   "detail": "CREATION_SAFETY=SAFE",
    "evidence": "§二十四"
   }
  ],
- "errors": [
-  "creation-identity-leak",
-  "creation-runtime-leak",
-  "creation-editor-id-extra"
- ],
+ "errors": [],
  "probe": {
   "ref": {
    "identity": {
     "markuuid": "AD4636D5227B49399987EA16FC0FF3EA",
-    "uuid": "f7dcd593-daae-42bb-a9ca-dd9db3af2eaf",
+    "uuid": "24e2be13-2cfe-4c70-9c2d-d4b4d9b9f432",
     "type": "textbox"
    },
    "geometry": {
@@ -116,8 +118,6 @@
   },
   "created": {
    "identity": {
-    "markuuid": "AD4636D5227B49399987EA16FC0FF3EA",
-    "uuid": "f7dcd593-daae-42bb-a9ca-dd9db3af2eaf",
     "type": "textbox"
    },
    "geometry": {
@@ -146,7 +146,6 @@
     "isComposite": true,
     "isPreview": true,
     "isDisplay": false,
-    "lastSafeText": "简小设",
     "mediaMediaType": "text",
     "layerNum": 4,
     "locationX": 26.16865675953352,
@@ -167,19 +166,31 @@
     "hasCharBounds": true,
     "hasLineHeights": true,
     "hasEventListeners": true,
-    "hasStyleMap": true
+    "hasStyleMap": true,
+    "charBoundsContent": "empty",
+    "lineHeightsContent": "non-empty(1)",
+    "eventContent": "keys=added,removed,mousedown,mousedown:before,mouseup,mousedblclick,tripleclick",
+    "styleMapKeys": "keys=0"
    },
    "zy": {
     "zyCreatedByAssistant": true,
     "zyFieldKey": null
    }
   },
+  "leakRefs": {
+   "eventRefSame": false,
+   "lineHeightsRefSame": false,
+   "charBoundsRefSame": false,
+   "styleMapRefSame": false,
+   "cacheCanvasRefSame": false,
+   "aCoordsRefSame": false
+  },
   "cleanup": {
    "count": 21,
    "leakedTestText": false
   }
  },
- "classification": "UNSAFE",
+ "classification": "SAFE",
  "finding": {
   "id": "STAGE5.1-CRE-01",
   "severity": "P1",
@@ -190,6 +201,6 @@
   "risk": "markuuid 唯一性破坏（textbox 4/4 唯一 → 5 对象含重复）→ 未来按 markuuid 的 OCR 定位/清理歧义；陈旧度量缓存 + 事件监听复制",
   "minimal_fix": "inheritReferenceProps skipBox 追加：markuuid, uuid, __charBounds, __lineHeights, __lineWidths, _styleMap, __eventListeners, aCoords, oCoords, lastSafeText（版本小步；不触碰 apply 链其余逻辑）",
   "regression_plan": "RUNTIME-8.3 全链（npm run runtime:scriptcat）+ creation-safety probe 重跑（期望 identity-leak 变 clean）+ 16 项业务行为 + object-model/adapter/diff 单测",
-  "status": "OPEN (fix in separate commit)"
+  "status": "FIXED-VERIFIED (page-bridge skipbox expanded; rerun all-PASS, classification=SAFE)"
  }
 }
