@@ -1,0 +1,63 @@
+name: test
+
+# 轻量测试：零依赖（无 npm install、无浏览器、无网络）。
+# 设计原则：不重构构建系统，只做"有收益且可复现"的检查。
+#  - 若某分支尚无某套件，则 SKIP 而不是 FAIL（main 上还没有 editor-object-model）
+#  - userscript 元数据检查会捕获 demo/开发分支 URL 指错分支、版本号不同步等真实缺陷
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-and-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Userscript metadata check
+        run: node .github/scripts/check-userscript.js
+
+      - name: Node unit suites (editor-object-model)
+        run: |
+          if [ -f tests/editor-object-model/run.js ]; then
+            node tests/editor-object-model/run.js
+          else
+            echo "SKIP: tests/editor-object-model/run.js 不存在（该分支尚无此套件）"
+          fi
+
+      - name: Syntax check (production scripts)
+        run: |
+          fail=0
+          for f in zheliyin-card-assistant.user.js extension/assistant.js extension/gm-shim.js; do
+            if [ -f "$f" ]; then
+              node --check "$f" && echo "OK  $f" || { echo "ERR $f"; fail=1; }
+            fi
+          done
+          for f in extension/src/*/*.js; do
+            [ -f "$f" ] || continue
+            node --check "$f" && echo "OK  $f" || { echo "ERR $f"; fail=1; }
+          done
+          exit $fail
+
+      - name: JSON validity (manifest / reports / fixtures)
+        run: |
+          fail=0
+          while IFS= read -r f; do
+            node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$f" \
+              && echo "OK  $f" || { echo "ERR $f"; fail=1; }
+          done < <(find . -path ./node_modules -prune -o -name '*.json' -print)
+          exit $fail
+
+      - name: Secret scan (keywords + real phone numbers)
+        run: node .github/scripts/secret-scan.js
