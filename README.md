@@ -30,10 +30,42 @@
 - 会清理助手自己生成但本次不再需要的多余文字图层，不删除模板原有文字。
 - 保留追加信息和 GitHub 更新提示。
 - 不包含“默认布局”“留白布局”“扫描图层”等按钮。
-
+
 ## 安装
 
-### 方式一：脚本猫（推荐）
+**三种安装轨道，按需选择。** 旧的「手工粘贴」方式**保留未删除**（见下方）。
+
+| 轨道 | 版本 | 适合 | 来源 |
+|---|---|---|---|
+| **稳定版** | `0.3.0.0` | 日常使用 | `main` 分支 |
+| **Demo 版** | `0.3.0.1` | 试用最新实现（实验性） | `demo` 分支 |
+| 手工 / 扩展 / 安装器 | — | 离线或特殊环境 | 见下方各节 |
+
+### 稳定版安装（推荐）
+
+安装地址（脚本猫打开即装）：
+
+```text
+https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-card-assistant.user.js
+```
+
+1. 安装 [ScriptCat](https://scriptcat.org/)
+2. 打开上面的地址 → 点「安装」
+3. 打开折立印设计器页面（需登录）
+
+### Demo 版安装（实验性）
+
+固定安装地址（**装一次即可**，以后由 ScriptCat 自动更新，地址不变）：
+
+```text
+https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
+```
+
+> ⚠️ **这是实验版本**，面板会显示 `版本：0.3.0.1`。
+> **已知限制：编辑器内 OCR 引擎装载 `BLOCKED`（CSP + requirejs AMD）→ 图片识别目前不可用**；套版填层等既有功能正常。
+> 详细说明见 [`docs/DEMO_INSTALL.md`](docs/DEMO_INSTALL.md)，发布记录见 [`docs/DEMO_RELEASE.md`](docs/DEMO_RELEASE.md)。
+
+### 手工安装（原有方式，保留）
 
 1. 打开脚本猫。
 2. 新建脚本。
@@ -42,14 +74,13 @@
 
 > 主脚本通过 `@require` 从本仓库加载 4 个模块（`field-core` / `config-core` / `ai-client` / `page-bridge`），需要能访问 `raw.githubusercontent.com`。
 
-### 方式二：浏览器扩展（MV3）
+### 浏览器扩展（MV3）
 
 加载 `extension/` 目录为未打包扩展（`chrome://extensions` → 开发者模式 → 加载已解压的扩展程序）。
 
-### 方式三：一键安装器
+### 一键安装器
 
 `installer/installer.ps1`（GitHub Actions 会为 `v*` tag 自动构建 `exe` 并发布 Release）。
-
 ## 使用
 
 1. 打开折立印设计器页面（需登录）。
@@ -172,19 +203,39 @@ node runtime/stage5-5-real-ocr-demo.js
 - [`docs/PARALLEL_DEVELOPMENT.md`](docs/PARALLEL_DEVELOPMENT.md) — 文件所有权与协作边界
 - [`BEHAVIOR_BASELINE.md`](BEHAVIOR_BASELINE.md) — 不可变业务契约（18 项）
 - [`REFACTOR_PLAN.md`](REFACTOR_PLAN.md) — 渐进式重构计划（**仅设计，未落地**）
-
+
 ## 阶段状态
 
-当前开发分支：**`stage-4.1-runtime-validation`**，HEAD 为 Stage 5.5A（Demo 级 `GO` / 产品级 `BLOCKED`）。
+### 轨道总览
 
-> ⚠️ **GitHub 默认分支 `main` 只到 Stage 4.0**，不包含 Stage 5.x / RUNTIME-8.x / OCR 相关代码与证据。请切换到 `stage-4.1-runtime-validation` 查看全部成果。
+| 轨道 | 分支 | HEAD | 版本 | 说明 |
+|---|---|---|---|---|
+| 稳定版 | `main` | `7446faa` | `0.3.0.0` | Stage 4.0；GitHub 默认分支 |
+| **Demo（实验性）** | `demo` | `ceedbb5` | `0.3.0.1` | 真实用户试用；固定 raw 安装地址 |
+| 开发中 | `stage-4.1-runtime-validation` | `7c412b8` | — | Stage 5.5A；AI-1 持续开发 |
+| 治理 | `ai2-repo-governance` | — | — | 文档 / 规范 / 契约 |
+
+> ⚠️ **GitHub 默认分支 `main` 只到 Stage 4.0**（落后开发线 66 个提交），不包含 Stage 5.x / RUNTIME-8.x / OCR 相关代码与证据。
+> **想试用最新实现 → 装 Demo；想读最新代码 → 切到开发分支。**
+>
+> ⚠️ **不要直接安装开发分支的脚本**：它的 `@require` / `@updateURL` 仍指向 `main`，会加载 `main` 的 `page-bridge.js`（不含 Stage 5.1 的 P1 identity 修复）。Demo 分支已修正并实测验证。
+
+当前结论：**Demo 级 `GO` / 产品级 `BLOCKED`**（OCR 引擎装载受编辑器页运行环境限制）。
 
 已定序路线：5.6 字号精确 → 5.7 颜色/粗细 → 5.8 旋转 → 5.9 多行/段落 → 5.10 复杂布局 → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview。
 
-- 阶段索引（R0 → Stage 5.4 → RUNTIME-8.3）：[`docs/STAGE_INDEX.md`](docs/STAGE_INDEX.md)
-- 证据等级规范：[`docs/EVIDENCE_POLICY.md`](docs/EVIDENCE_POLICY.md)
-- 测试矩阵：[`docs/TEST_MATRIX.md`](docs/TEST_MATRIX.md)
-- OCR 接口契约：[`docs/REAL_OCR_DEMO_CONTRACT.md`](docs/REAL_OCR_DEMO_CONTRACT.md)
+### 文档导航（按角色）
+
+| 我是谁 | 该看什么 |
+|---|---|
+| 普通用户 | [安装](#安装) · [`docs/DEMO_INSTALL.md`](docs/DEMO_INSTALL.md) |
+| 想了解当前能力 | [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) |
+| 开发者 | [`docs/REPOSITORY_MAP.md`](docs/REPOSITORY_MAP.md) · [`docs/STAGE_INDEX.md`](docs/STAGE_INDEX.md) · [`BEHAVIOR_BASELINE.md`](BEHAVIOR_BASELINE.md) |
+| 参与协作的 AI | [`docs/AGENT_SYNC_PROTOCOL.md`](docs/AGENT_SYNC_PROTOCOL.md) · [`docs/STAGE_GATE_POLICY.md`](docs/STAGE_GATE_POLICY.md) · [`docs/EVIDENCE_POLICY.md`](docs/EVIDENCE_POLICY.md) |
+| 负责发布 / 分支 | [`docs/BRANCH_POLICY.md`](docs/BRANCH_POLICY.md) · [`docs/RELEASE_LINEAGE.md`](docs/RELEASE_LINEAGE.md) · [`docs/DEMO_RELEASE.md`](docs/DEMO_RELEASE.md) |
+| 凭据 / 隐私 | [`docs/SENSITIVE_DATA_AUDIT.md`](docs/SENSITIVE_DATA_AUDIT.md) · [`docs/REAL_MACHINE_EVIDENCE.md`](docs/REAL_MACHINE_EVIDENCE.md) |
+| OCR 相关 | [`docs/REAL_OCR_DEMO_CONTRACT.md`](docs/REAL_OCR_DEMO_CONTRACT.md) · [`docs/OCR_DEPENDENCY_POLICY.md`](docs/OCR_DEPENDENCY_POLICY.md) |
+| 测试 | [`docs/TEST_MATRIX.md`](docs/TEST_MATRIX.md) |
 
 ## GitHub
 
