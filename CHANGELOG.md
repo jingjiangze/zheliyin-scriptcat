@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+### 状态转移同步（2026-09-16，Stage 5.5A-R2）— 治理线跟随 AI-1 突破同步，**零生产代码变更**
+- **状态转移：`engine-in-editor` `BLOCKED` → `PASS`。** AI-1 在 `e9235af`（开发）/ `58337a8`（demo）改用 **page-world OCR executor**（UMD `module`/`exports` 遮蔽 + `new Function` + `sourceMappingURL` 换行修复），真实编辑器 15 步全 PASS、`errors: []`；首次 2969ms → 缓存命中 667/674ms（IndexedDB）。
+- `BASIC_REAL_OCR_DEMO_PRODUCT` 由 `BLOCKED` 变为 **Demo 内可用**：新增「识别图片文字」按钮 + `ocrCreate` 桥（`page-bridge.js` +19）。链路产出 3 个真 textbox（editable / 思源黑体 Regular / `markuuid=null`），rollback 21/4/3。
+- **诚实标注质量边界**：真实编辑器样本识别结果仅 3 行且词序乱（`个 时` / `如` / `NU`）→ `识别质量 = PARTIAL`，排入 Stage 5.6 / 5.9。**不得把「机制跑通」当成「识别准确」**。
+- **新增缺陷 `DEFECT-VER-01`（用户可见）**：demo `@version = 0.3.5.0`，但脚本内 `const VERSION` / `extension/assistant.js VERSION` / `manifest version_name` 仍为 `0.3.0.1` → 面板显示 0.3.0.1，且更新检查以 `@version` 比较会**每次提示「发现新版」**。已由新增 CI 的 metadata check 覆盖；按边界只记录不改，交 AI-1 修复。
+- **`FINDING-SD-04` 风险升级为「紧迫」**：原判定为「引擎装载成功后才会触发」的潜在路径，其前置条件**现已达成** —— `runtime/stage5-5a-scriptcat-ocr-smoke.js`（第 163/166/249 行）仍会把编辑器真实图片的 base64 `dataUrl` 写入报告。建议 AI-1 优先剥离。本次核查确认新 executor 路径**未**落盘 dataUrl（3 份新报告 base64 命中 0）。
+- 同步覆盖文档：`CURRENT_STATUS` / `STAGE_INDEX`（新增 5.5A-R2 行与 Gate 链）/ `BRANCH_POLICY` / `RELEASE_LINEAGE` / `OCR_DEPENDENCY_POLICY`（DEP-1 关闭）/ `DEMO_RELEASE`（新增 v0.3.5.0 条目）/ `DEMO_INSTALL` / `README` / `SENSITIVE_DATA_AUDIT`。
+- **未执行**：不合并 `main`、不 rebase AI-1、不 force push；AI-1 亦开始直接向 `demo` 推送，治理线角色转为**校验 + 记录**。
+
 ### 仓库治理（第二轮，2026-09-16）— 并行开发的轨道治理，**零生产代码变更**
 - 建立三轨模型并落文档：`docs/BRANCH_POLICY.md`（四条长期分支、写入规则、版本与 tag 规则、demo 元数据自洽硬要求、单向同步方向、发布标准）、`docs/RELEASE_LINEAGE.md`（四分支血缘表、三级溯源、`@require` 运行期依赖血缘、同步流程与冲突预案）。
 - **新建 `demo` 分支**（从 AI-1 当前实现 `7c412b8` 建立，**不是**从旧 `main` 建立）。固定安装地址：`https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js`（原则上永不变，变的是分支内容）。

@@ -3,6 +3,7 @@
 > 维护者：AI-2（Repository Governance 线）
 > 基线：分支 `stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A，2026-09-16）
 > 修订：@ `3becf04`（5.4）初版；@ `4cb0819`（5.5）同步真实 OCR；@ `7c412b8`（5.5A）同步产品化验收结论；
+> @ `e9235af` / demo `58337a8`（5.5A-R2）**同步引擎装载突破：`engine-in-editor` BLOCKED → PASS**；
 > 本页同时覆盖 **四轨状态**（main / demo / AI-1 开发 / 治理），分支明细见 §4。
 > **本页只陈述已有证据支持的状态。没有证据的一律写 `TODO`，不预判。**
 > 状态取值：`PASS` / `PARTIAL` / `BLOCKED` / `TODO` / `DEFERRED` / `UNVERIFIED`
@@ -23,7 +24,9 @@
 | native OCR access | **BLOCKED** | REAL（探测结论） | `runtime/reports/stage5-3-native-ocr*.json` `stage5-4-native-ocr.json` | 原生「文字识别(Alt+Q)」面板存在，但绑定"相框"素材交互；Stage 5.4 四种深度 hook 实验后：无网络请求、无 postMessage、canvas 无变化、结果值不进 DOM |
 | **real OCR（provider）** | **PASS** | REAL | `runtime/reports/stage5-5-ocr-feasibility.json` `stage5-5-real-ocr-demo.json` | **本地 tesseract.js 已接入并实测**：chi_sim，18 words / bbox 18/18 / avg-conf **90.4** / 首跑 ~3s / **零上传、零 key、全本地 WASM**。原生路径仍 BLOCKED，本地路径为已选定替代 |
 | **real OCR → 重建（demo 级）** | **PASS** | REAL | `runtime/reports/stage5-5-final-gate.json` | `BASIC_REAL_OCR_DEMO = PASS`：真实 OCR 6 行候选 → mapper(1000×800 natural × 0.45) → matcher（**电话行 MATCHED 复用模板槽**，其余 NOT_FOUND 保护）→ 6 个真 textbox → 字号误差 **3.3%** → 参考图保留 → rollback 21/4/3 零残留，`errors=0` |
-| **OCR 引擎在编辑器页可达（产品化关键）** | **BLOCKED** | REAL（探测结论） | `runtime/reports/stage5-5a-final-gate.json` `stage5-5a-real-scriptcat-ocr.json` | **`BASIC_REAL_OCR_DEMO_PRODUCT = BLOCKED`**。`GM_addElement` 注入动作本身 **PASS**（主世界 DOM 标记 `data-zy-55a-inj=1`），但引擎在编辑器页**运行环境**下无法暴露全局：① 外链 CDN 被 CSP `script-src` 拦截（`performance` 资源 `[]`，未发起）；② inline 注入真引擎 30s 无全局；③ inline + 屏蔽 `window.define`（requirejs AMD 吸收 UMD）20s 仍无 `window.Tesseract`。**属 PRODUCT/BROWSER-ENV 边界，非 harness 自动化问题** |
+| **OCR 引擎在编辑器页可达（产品化关键）** | ✅ **PASS（5.5A-R2 突破，原 BLOCKED）** | REAL | `runtime/reports/stage5-5a-executor-report.json` | **原 `BLOCKED` 已被解决**：改用 **page-world OCR executor**（UMD `module`/`exports` 遮蔽 + `new Function` + `sourceMappingURL` 换行修复），15 步全 PASS、`errors: []`。首次 2969ms → 跨会话 **667/674ms**（IndexedDB 缓存生效）。`executor-umd-load` / `ocr-first` / `ocr-cached` 全部 PASS |
+| **Demo 图片识别入口（用户可用）** | ✅ **PASS** | REAL | demo `58337a8` `runtime/reports/stage5-5a-executor-report.json` | Demo 版新增**「识别图片文字」按钮** + page-world executor + `ocrCreate` 桥（`page-bridge.js` +19 行）。链路：选中图片 → 识别 → mapper → matcher（3 候选全 `NOT_FOUND` → 保护性创建）→ **3 个真 textbox**（editable / 思源黑体 Regular / `markuuid=null`）→ 参考图保留 → rollback 21/4/3 |
+| **识别质量（真实编辑器样本）** | ⚠️ **PARTIAL** | REAL | 同上 | 机制 PASS，但样本识别文本为 `个 时` / `如` / `NU`（3 行、词序乱）→ 属**已知质量项**，排入 Stage 5.9 多行/段落。**不要把「机制跑通」当成「识别准确」** |
 | real image input | **PARTIAL** | REAL / SYNTHETIC | `runtime/reports/stage5-3-image-transform.json` `stage5-4-real-image-input.json` | **真机**粘贴/拖拽可用；**harness 自动化**三种注入（ClipboardEvent / CDP+Ctrl+V / setInputFiles）均不被受理 → 记录为 automation limitation；另有 Stage 5.5 注记：编辑器页 CDN script 注入被环境静默拦截 → 生产改走 `GM_addElement`（机制已证，**待真机一键验证**） |
 | real editable textbox | **PASS** | REAL | `stage5-3-reconstruction.json` `stage5-4-product-flow.json` | 真实编辑器内创建 `type=textbox` / `editable=true` / `markuuid=null`（identity clean），4/4 |
 | grouping | **PASS** | REAL | `runtime/reports/stage5-3-grouping.json` | `fabric.Group` 原生编组 → destroy 解组 → 成员独立 |
@@ -117,8 +120,8 @@ BASIC_REAL_OCR_DEMO_PRODUCT                     = BLOCKED
 | Branch | HEAD | Purpose | Installable | Stable |
 |---|---|---|---|---|
 | `main` | `7446faa` | 稳定公开版（默认分支） | ✅ Yes | ✅ **Yes** |
-| `demo` | `ceedbb5` | 真实用户试用（实验性） | ✅ Yes | ❌ No（实验版） |
-| `stage-4.1-runtime-validation` | `7c412b8` | AI-1 持续开发 | ❌ No（未配元数据，`@require` 指 main） | ❌ No |
+| `demo` | `58337a8` | 真实用户试用（实验性） | ✅ Yes | ❌ No（实验版） |
+| `stage-4.1-runtime-validation` | `e9235af` | AI-1 持续开发 | ❌ No（未配元数据，`@require` 指 main） | ❌ No |
 | `ai2-repo-governance` | 见 `git rev-parse origin/ai2-repo-governance` | 文档 / 规范 / 契约 | — （非交付物） | — |
 
 **Demo 固定安装地址**（装一次即可，URL 永不变）：
@@ -132,15 +135,15 @@ https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-c
 | 轨道 | `@version` | 说明 |
 |---|---|---|
 | `main` | `0.3.0.0` | 稳定线 |
-| `demo` | `0.3.0.1` | 同一发布线的 demo build 计数（第 4 段递增） |
+| `demo` | `0.3.5.0` | AI-1 采用 0.3.x 递增（见 BRANCH_POLICY §4）；⚠️ **与脚本内 `VERSION` 不一致 → 见 §3 已知缺陷** |
 
 **四分支血缘与祖先关系**：
 
 ```text
-main 7446faa  ⊂  stage-4.1-runtime-validation 7c412b8  ⊂  demo ceedbb5
-   (85c/44f)              (151c/187f)                      (153c/187f)
+main 7446faa  ⊂  stage-4.1-runtime-validation e9235af  ⊂  demo 58337a8
+   (85c/44f)              (152c/189f)                       (155c/190f)
                                      ↑
-                        ai2-repo-governance（文档线，基线 3becf04，不含 Stage 5.5/5.5A 文件）
+                        ai2-repo-governance e14b48c（文档线，基线 3becf04，不含 Stage 5.5/5.5A/R2 文件）
 ```
 
 > ⚠️ **GitHub 默认展示的是 `main`**，它**不包含**任何 Stage 5.x / RUNTIME-8.x / OCR / object-model 代码（落后 66 commit，可快进）。

@@ -49,8 +49,9 @@ worker 就绪     readyMs = 1989   （含语言数据）
 
 | ID | 风险 | 等级 | 现状 / 处置 |
 |---|---|---|---|
-| **DEP-1** | **引擎在编辑器页无法加载** | 🔴 高 | **已实测 `BLOCKED`**（Stage 5.5A）：① 外链 CDN 被编辑器页 CSP `script-src` 拦截（`performance` 资源为空，未发起）② inline 注入真引擎 30s 无全局 ③ 屏蔽 `window.define` 绕过 requirejs AMD 吸收后 20s 仍无 `window.Tesseract`。装载工程列为 **Stage 5.6 P1 前置** |
-| **DEP-2** | **第三方 CDN 依赖**：`jsdelivr` 不可达 / 被墙 / 变更 | 🟡 中 | 首次使用即失败。建议：评估自托管 / 多 CDN 回退 / 与 `@require` 同源（raw.githubusercontent） |
+| **DEP-1** | （原）引擎在编辑器页无法加载 | ✅ **已解决** | Stage 5.5A 实测 `BLOCKED`（CSP 拦外链 + requirejs AMD 吸收 UMD + inline 亦不可达）→ **Stage 5.5A-R2 突破（`e9235af`）**：改用 **page-world OCR executor**（UMD `module`/`exports` 遮蔽 + `new Function` + `sourceMappingURL` 换行修复），15 步全 PASS、`errors: []`。首次 2969ms → 缓存命中 **667/674ms** |
+| **DEP-2** | **第三方 CDN 依赖**：`jsdelivr` 不可达 / 被墙 / 变更 | 🟡 中 | 注意：5.5A-R2 的 executor 路线是**先把引擎文本取回再注入**，因此 CDN 仍被依赖（取回阶段）。建议：评估自托管 / 多 CDN 回退 |
+| **DEP-8** | 识别质量（真实编辑器样本 3 行、词序乱） | 🟡 中 | 机制 PASS 但质量不足；属已知项，排入 Stage 5.9 多行/段落 |
 | **DEP-3** | **首次 20 MB 下载** | 🟡 中 | 首次体验有明显等待（readyMs ≈ 2s 是在已有缓存/本地条件下的实测，真实首下可能显著更长）。需在 UI 给出进度与说明 |
 | **DEP-4** | **隐私披露**：虽不上传图片，但会请求第三方 CDN | 🟡 中 | 请求本身会暴露「该 IP 在使用本工具」；Referrer 可能带出页面 URL。建议：`referrerpolicy="no-referrer"` + 在文档中明示 |
 | **DEP-5** | **版本未精确锁定**（`@5`） | 🟢 低 | 上游在同一主版本内变更理论上不破坏，但仍建议锁定到 `@5.x.y` 并在升级时回归 |

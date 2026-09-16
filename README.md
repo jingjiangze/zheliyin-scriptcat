@@ -38,7 +38,7 @@
 | 轨道 | 版本 | 适合 | 来源 |
 |---|---|---|---|
 | **稳定版** | `0.3.0.0` | 日常使用 | `main` 分支 |
-| **Demo 版** | `0.3.0.1` | 试用最新实现（实验性） | `demo` 分支 |
+| **Demo 版** | `0.3.5.0` | 试用最新实现（实验性，含图片识别按钮） | `demo` 分支 |
 | 手工 / 扩展 / 安装器 | — | 离线或特殊环境 | 见下方各节 |
 
 ### 稳定版安装（推荐）
@@ -61,8 +61,8 @@ https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/main/zheliyin-c
 https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
 ```
 
-> ⚠️ **这是实验版本**，面板会显示 `版本：0.3.0.1`。
-> **已知限制：编辑器内 OCR 引擎装载 `BLOCKED`（CSP + requirejs AMD）→ 图片识别目前不可用**；套版填层等既有功能正常。
+> ⚠️ **这是实验版本**。真实版本号见 `@version`（当前 `0.3.5.0`）；面板内「版本：」显示脚本内 `VERSION`，**当前两者不一致（`0.3.0.1`）**，属已知缺陷 `DEFECT-VER-01`（见 [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md) §3）。
+> **当前能力**：新增 **「识别图片文字」按钮**（本地 Tesseract，图片不上传）；套版填层等既有功能正常。识别质量仍在改进（Stage 5.9）。
 > 详细说明见 [`docs/DEMO_INSTALL.md`](docs/DEMO_INSTALL.md)，发布记录见 [`docs/DEMO_RELEASE.md`](docs/DEMO_RELEASE.md)。
 
 ### 手工安装（原有方式，保留）
@@ -126,17 +126,19 @@ https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-c
 
 ### Real OCR
 
-> **已接入，但尚未进入产品路径。** 状态：`REAL_OCR_PROVIDER = PASS`（本地）；原生路径仍 `BLOCKED`。
+> **已在 Demo 分支可用（实验性）。** 状态：`REAL_OCR_PROVIDER = PASS`（本地）；`engine-in-editor` **由 `BLOCKED` 转为 `PASS`**（Stage 5.5A-R2 突破）；原生路径仍 `BLOCKED`。
 
 - **本地 OCR 已选定并实测通过**：Tesseract.js（WASM，本地运行）—— `chi_sim` 模型，实测 18 words / bbox 18/18 / 平均置信度 **90.4** / 首跑约 3s / **零上传、零 key、全本地**。
 - **原生「文字识别（Alt+Q）」仍不可用**：结果值无法程序化读取（面板绑定"相框"素材交互，无网络请求、无 postMessage、结果值不进 DOM）。
 
 **因此**：仓库里已具备真实 OCR 能力并有真实证据，但**尚未挂接到助手面板**，你正常使用助手时不会触发它。
 
-> ⚠️ **产品化验收结论（Stage 5.5A）：`BLOCKED`**
-> 真实 ScriptCat 环境下实测：`GM_addElement` 注入动作本身成功，但 OCR 引擎**无法在编辑器页运行环境里暴露全局** ——
-> ① 外链 CDN 被 CSP `script-src` 拦截（资源未发起）；② inline 注入真引擎 30s 无全局；③ 屏蔽 `window.define` 绕过 requirejs AMD 吸收后仍无 `window.Tesseract`。
-> 这是**产品运行环境**的限制（非自动化/权限问题），需专门的引擎装载工程（列为下一阶段 P1 前置）。
+> ✅ **产品化突破（Stage 5.5A-R2）：`engine-in-editor = PASS`**（原 `BLOCKED` 已解决）
+> 改用 **page-world OCR executor**（UMD `module`/`exports` 遮蔽 + `new Function` + `sourceMappingURL` 换行修复）。
+> 真实编辑器实测 **15 步全 PASS、`errors: []`**；首次 2969ms → 缓存命中 **667/674ms**（IndexedDB 生效）；
+> 链路：选中图片 → 识别 → mapper → matcher → **创建 3 个真 textbox**（editable / 思源黑体 Regular / `markuuid=null`）→ 参考图保留 → rollback 21/4/3。
+>
+> ⚠️ **不要把「机制跑通」当成「识别准确」**：真实编辑器样本上识别文本为 `个 时` / `如` / `NU`（3 行、词序乱），识别质量仍属**已知待改进项**（Stage 5.6 / 5.9）。
 
 ### Basic Real OCR Demo（真实 OCR → 可编辑文字）
 
@@ -211,7 +213,7 @@ node runtime/stage5-5-real-ocr-demo.js
 | 轨道 | 分支 | HEAD | 版本 | 说明 |
 |---|---|---|---|---|
 | 稳定版 | `main` | `7446faa` | `0.3.0.0` | Stage 4.0；GitHub 默认分支 |
-| **Demo（实验性）** | `demo` | `ceedbb5` | `0.3.0.1` | 真实用户试用；固定 raw 安装地址 |
+| **Demo（实验性）** | `demo` | `58337a8` | `0.3.5.0` | 真实用户试用；固定 raw 安装地址；**含图片识别按钮** |
 | 开发中 | `stage-4.1-runtime-validation` | `7c412b8` | — | Stage 5.5A；AI-1 持续开发 |
 | 治理 | `ai2-repo-governance` | — | — | 文档 / 规范 / 契约 |
 
@@ -220,7 +222,7 @@ node runtime/stage5-5-real-ocr-demo.js
 >
 > ⚠️ **不要直接安装开发分支的脚本**：它的 `@require` / `@updateURL` 仍指向 `main`，会加载 `main` 的 `page-bridge.js`（不含 Stage 5.1 的 P1 identity 修复）。Demo 分支已修正并实测验证。
 
-当前结论：**Demo 级 `GO` / 产品级 `BLOCKED`**（OCR 引擎装载受编辑器页运行环境限制）。
+当前结论：**引擎装载已突破（`engine-in-editor = PASS`）**，Demo 内可跑通图片识别；识别**质量**待提升（Stage 5.6 / 5.9）。
 
 已定序路线：5.6 字号精确 → 5.7 颜色/粗细 → 5.8 旋转 → 5.9 多行/段落 → 5.10 复杂布局 → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview。
 

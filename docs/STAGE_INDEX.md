@@ -1,8 +1,8 @@
 # STAGE_INDEX — 阶段索引
 
 > 维护者：AI-2（Repository Governance 线）
-> 依据：真实 Git 历史（`git log`，151 commit / 9 tag），**未修改任何历史 commit、未重打 tag、未 squash**
-> 基线：`stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A）；默认分支 `main` @ `7446faa`
+> 依据：真实 Git 历史（`git log`，152 commit / 9 tag），**未修改任何历史 commit、未重打 tag、未 squash**
+> 基线：`stage-4.1-runtime-validation` @ `e9235af`（Stage 5.5A-R2）；默认分支 `main` @ `7446faa`
 > 证据等级术语见 `docs/EVIDENCE_POLICY.md`
 
 ---
@@ -131,7 +131,8 @@ Stage 5.2     GO
 Stage 5.3     GO（含 FIXTURE_OCR 条款）
 Stage 5.4     CONDITIONAL-GO
 Stage 5.5     GO（Demo 级）    ← 真实 OCR 接入，BASIC_REAL_OCR_DEMO = PASS
-Stage 5.5A    BLOCKED          ← 当前 HEAD（产品化验收：引擎在编辑器页运行环境不可达）
+Stage 5.5A    BLOCKED          （产品化验收：引擎在编辑器页运行环境不可达）
+Stage 5.5A-R2 PASS             ← 当前 HEAD（page-world executor 突破：引擎装载成功）
 ```
 
 > 注意 `Stage 5.3 = GO` 与 `Stage 5.4 = CONDITIONAL-GO` 不矛盾：5.4 因为**深探后确认原生 OCR 不可程序读取**，按 `docs/EVIDENCE_POLICY.md` §3 如实降级为 CONDITIONAL-GO —— 这是**诚实结论**，不是退步。
@@ -147,10 +148,10 @@ Stage 5.5A    BLOCKED          ← 当前 HEAD（产品化验收：引擎在编�
 | 项 | 值 |
 |---|---|
 | 分支 | `stage-4.1-runtime-validation` |
-| HEAD | `7c412b8`（Stage 5.5A Basic Real OCR Demo — Productization，gate **BLOCKED**） |
-| 下一步（已定义，未启动） | **Stage 5.6 的 P1 前置**：编辑器页引擎装载工程（候选 A：剥离 UMD/AMD 分配器的 `GM_addElement` 文本注入 / 候选 B：worker 资源经 blob URL 供给 / 候选 C：page-world postMessage 桥） |
+| HEAD | `e9235af`（Stage 5.5A-R2 editor-executor，**engine-in-editor 突破为 PASS**） |
+| 下一步 | **Stage 5.6 的 P1 前置已由 5.5A-R2 完成**（采用「page-world executor + UMD module/exports 遮蔽 + `new Function`」路线）；后续为 5.6 字号精确与识别质量提升 |
 | 后续已定序路线 | 5.6 字号精确 → 5.7 颜色/粗细 → 5.8 旋转 → 5.9 多行/段落（行内词序/列） → 5.10 复杂布局 → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview |
-| 停止点约定 | Stage 5.5A §5：「真实产品可用」未达成 → **如实 BLOCKED 结束**，不进入 5.6 高级功能；装载工程为 5.6 明确 P1 前置 |
+| 停止点约定 | Stage 5.5A-R2：引擎装载突破后**仍在 demo 范围内**（未进入颜色/粗细/旋转/多行/编组/预览）；后续 5.6 起推进字号精确与识别质量 |
 
 ---
 

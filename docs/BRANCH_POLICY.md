@@ -39,9 +39,9 @@
 | 分支 | HEAD | commits | 跟踪文件 | 说明 |
 |---|---|---|---|---|
 | `main` | `7446faa` | 85 | 44 | Stage 4.0；默认分支 |
-| `demo` | `ceedbb5` | 153 | 187 | 由 `7c412b8` 建立 + 2 个 demo 元数据 commit |
-| `stage-4.1-runtime-validation` | `7c412b8` | 151 | 187 | Stage 5.5A；AI-1 开发中 |
-| `ai2-repo-governance` | `5be5f26` | 166 | 182 | 治理文档（基线 `3becf04`） |
+| `demo` | `58337a8` | 155 | 190 | AI-1 HEAD `e9235af` + demo 元数据/UI/文档 |
+| `stage-4.1-runtime-validation` | `e9235af` | 152 | 189 | Stage 5.5A-R2；AI-1 开发中 |
+| `ai2-repo-governance` | `e14b48c` | 175 | 193 | 治理文档（基线 `3becf04`） |
 
 > 祖先关系（实测）：`main` ⊂ `demo`、`7c412b8` ⊂ `demo`、`main` ⊂ `7c412b8`、`3becf04` ⊂ `ai2-repo-governance`。
 > 即：**demo 与 main 之间是快进关系**，无分叉。
@@ -101,11 +101,14 @@ git diff --name-only <base>..HEAD | grep -E '^(extension/|runtime/|installer/|te
 2. tag 只在**发布**时创建（`v0.x.x`），不提前批量打。
 3. 版本号沿用项目既有 4 段数字格式：
 
-| 轨道 | 版本示例 | 含义 |
+| 轨道 | 版本 | 含义 |
 |---|---|---|
 | `main` | `0.3.0.0` | 正式发布线 |
-| `demo` | `0.3.0.1` | 同一发布线的 **demo build 计数**（第 4 段递增） |
-| 未来功能版 | `0.3.1.0` | 第 3 段递增；此时 demo 回到 `0.3.1.1` 起算 |
+| `demo` | `0.3.5.0`（当前） | **AI-1 采用 0.3.x 递增**：每有用户可见 Demo 功能，第 3 段 +1（`0.3.0.0 → 0.3.5.0`）。本政策**改为记录实况**，不再规定必须用第 4 段 |
+
+> ⚠️ **版本号唯一硬约束**：`@version` 必须等于 `const VERSION` 等于 `extension/assistant.js` 的 `VERSION` 等于 `manifest.version_name`。
+> demo `58337a8` **违反了该约束**（`@version 0.3.5.0` vs 其余 `0.3.0.1`）→ 见 `docs/CURRENT_STATUS.md` §3 已知缺陷 `DEFECT-VER-01`。
+> 已由新增 CI 的 metadata check 覆盖（`.github/scripts/check-userscript.js`）。
 
 **为什么不给 demo 另起一套版本号**：`compareVersion()`（脚本内实现）按 `.` 拆分后 `parseInt` 逐段比较，带后缀（如 `-demo`）会被 `parseInt` 截断成 0 产生歧义；4 段数字是唯一无歧义且兼容既有实现的方案。
 

@@ -214,7 +214,9 @@ git status --ignored --porcelain
 | 链路 | ① `getFirstCanvasImage()` 取编辑器**第一张真实 image 对象** → `cv.toDataURL("image/png")` 得到 `img.dataUrl`；② `return { …, img: img, … }`（`img` 含 `dataUrl`）；③ `out.ocrRaw = ocr`（整对象进 `out`）；④ `fs.writeFileSync(… "reports/stage5-5a-real-scriptcat-ocr.json", JSON.stringify(out, …))` |
 | 严重度 | **潜在高**（一旦触发即为真实图片入库） |
 | **本次是否泄漏** | ❌ **否**。因引擎注入失败（`window.Tesseract not present after inline+define-hack`），执行在 ② 之前即 `return`；报告仅 2009 字节且无 `dataUrl` |
-| 为什么必须登记 | **Stage 5.6 的 P1 前置目标，正是让引擎能在编辑器页装载。一旦成功，本路径立即生效，届时会把真实图片 base64 提交进公开仓库。** |
+| 为什么必须登记 | ~~Stage 5.6 的 P1 前置目标，正是让引擎能在编辑器页装载~~ → **该前置已于 Stage 5.5A-R2 完成** |
+| ⚠️ **风险已升级为「紧迫」** | **`engine-in-editor` 已于 `e9235af` 转为 `PASS`** —— 即 ② 之后的代码路径**现已可达**。该 smoke 脚本（`runtime/stage5-5a-scriptcat-ocr-smoke.js` 第 163/166/249 行）仍在树中且未被修改，**再跑一次就可能把真实编辑器图片的 base64 写入报告并提交**。
+> **建议 AI-1 在下次运行该脚本前先剥离 `img.dataUrl`**（优先于任何其他 OCR 工作）。 |
 | 建议处置（**不由 AI-2 实施**） | 由 AI-1 在 `out.gm` / `out.ocrRaw` 落盘前剥离 `img.dataUrl`（仅保留 `naturalWidth`/`naturalHeight`/`obj` 几何字段）；或统一经脱敏器处理后再写报告。**独立 commit**。 |
 
 #### FINDING-SD-05 【潜在】OCR 驱动把识别文本片段写入报告
@@ -234,7 +236,7 @@ git status --ignored --porcelain
 
 | 优先级 | 项 | 归属 | 时机 |
 |---|---|---|---|
-| **高** | `FINDING-SD-04` 剥离 `img.dataUrl` | AI-1 | **Stage 5.6 引擎装载成功之前**（否则一成功就泄漏） |
+| **最高（已升级）** | `FINDING-SD-04` 剥离 `img.dataUrl` | AI-1 | **立即** —— 引擎装载已于 Stage 5.5A-R2 成功，风险窗口已打开（该 smoke 脚本仍在树中且未修） |
 | 中 | `FINDING-SD-05` 文本脱敏 | AI-1 | 用真实图片跑 demo 之前 |
 | 低 | `FINDING-SD-01`（账号占位化） | AI-1 | 任意 |
 | 不做 | `FINDING-SD-02/03` 重写历史 | — | 不建议（需 force push） |

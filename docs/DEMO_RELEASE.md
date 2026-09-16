@@ -36,6 +36,37 @@
 
 ## 记录
 
+### Demo v0.3.5.0 · 2026-09-16（AI-1 发布，治理线补记）
+
+| 项 | 值 |
+|---|---|
+| Version | `@version` = `0.3.5.0`；⚠️ 但 `const VERSION` = `assistant.js VERSION` = `manifest version_name` = `0.3.0.1`（**不一致**，见 `DEFECT-VER-01`） |
+| Demo HEAD | `58337a8f553c350537138208d9320d83b4a64690` |
+| Base | `e9235af`（AI-1 开发分支，**Stage 5.5A-R2**） |
+| 固定安装 URL | `https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js` |
+
+**用户可见变化（首次真正有功能）**：新增 **「识别图片文字」按钮** + page-world OCR executor + `ocrCreate` 桥。
+
+**OCR 状态（状态转移）**：
+
+```text
+engine-in-editor       : BLOCKED  →  PASS   ← 状态转移（Stage 5.5A-R2）
+BASIC_REAL_OCR_DEMO_PRODUCT : BLOCKED → 可用（Demo 内可点按钮跑通）
+识别质量（真实样本）    : PARTIAL（3 行、词序乱 → Stage 5.9）
+```
+
+**真机状态**：AI-1 已在真实编辑器实测（`runtime/reports/stage5-5a-executor-report.json`，15 步全 PASS、`errors: []`）：
+`executor-umd-load` / `ocr-first`(674ms) / `ocr-cached`(667ms) / `mapper` / `matcher` / `create-editable` / `reference-preserved` / `rollback` 全 PASS，创建 3 个真 textbox（editable / 思源黑体 Regular / `markuuid=null`），rollback 21/4/3 零残留。
+
+**已知问题**：
+1. **`DEFECT-VER-01`**：`@version` 与脚本内 `VERSION` 不一致（0.3.5.0 vs 0.3.0.1）→ 面板显示 0.3.0.1；更新检查用 `@version` 比较 → **会每次提示「发现新版」，属用户可见缺陷**。详见 `docs/CURRENT_STATUS.md` §3。
+2. 识别质量在真实编辑器样本上偏弱（3 行、词序乱）；样本是编辑器现有图片而非名片。
+3. `docs/DEMO_INSTALL.md` 在 demo 与治理分支各有一份（内容不同）→ 见 `docs/DEMO_INSTALL.md` §7 的合并口径。
+
+**本次同步的 AI-1 commit**：`0cccfd1`（executor 突破）、`58337a8`（demo 功能 + 元数据）、`e9235af`（开发分支同内容）
+
+---
+
 ### Demo v0.3.0.1 · 2026-09-16
 
 | 项 | 值 |

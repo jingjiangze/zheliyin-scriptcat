@@ -40,9 +40,13 @@
 | 分支 | 角色 | 起点（base） | 当前 HEAD | 与 main 关系 | 说明 |
 |---|---|---|---|---|---|
 | `main` | 稳定 | — | `7446faa` | — | Stage 4.0，85 commit / 44 文件 |
-| `stage-4.1-runtime-validation` | AI-1 开发 | `7446faa`（main） | `7c412b8` | 领先 66 / 落后 0 | Stage 5.5A，151 commit / 187 文件 |
-| `demo` | 真实用户试用 | `7c412b8`（AI-1 HEAD） | `ceedbb5` | 领先 68 / 落后 0 | = AI-1 HEAD + 2 个 demo 元数据 commit |
-| `ai2-repo-governance` | 治理文档 | `3becf04`（Stage 5.4 点） | `5be5f26` | **与 main 无代码差异**（仅文档） | 166 commit / 182 文件；含 10 份治理文档 |
+| `stage-4.1-runtime-validation` | AI-1 开发 | `7446faa`（main） | `e9235af` | 领先 67 / 落后 0 | Stage 5.5A-R2，152 commit / 189 文件 |
+| `demo` | 真实用户试用 | `e9235af`（AI-1 HEAD） | `58337a8` | 领先 68 / 落后 0 | = AI-1 HEAD + demo 元数据/UI/文档 |
+| `ai2-repo-governance` | 治理文档 | `3becf04`（Stage 5.4 点） | `e14b48c` | **与 main 无代码差异**（仅文档） | 175 commit / 193 文件 |
+
+> ⚠️ **demo 的 base 已随 AI-1 推进前移**：从 `7c412b8` 变为 `e9235af`。同步 demo 时不要沿用旧 base。
+> ⚠️ **AI-1 现在也直接向 `demo` 推送**（`58337a8`、`0cccfd1`）。因此 `demo` 分支的实际维护者是 **AI-1 + AI-2 共同**，
+> 治理线的角色转为**校验**（元数据自洽 / 版本一致性 / 发布清单同步），并保留 `docs/DEMO_RELEASE.md` 记录。
 
 > **注意 `demo` 的 base 是 AI-1 HEAD 而不是 `main`** —— 这是硬要求（`docs/BRANCH_POLICY.md` §6）。从旧 `main` 建 demo 会得到一个"缺 66 个 commit 的假 demo"。
 
@@ -54,9 +58,9 @@
 
 | 层级 | 信息 | 当前值 | 怎么查 |
 |---|---|---|---|
-| ① 分支 | `demo` HEAD | `ceedbb55c8f5fb45507d5b2060e099ad081f012e` | `git rev-parse origin/demo` |
-| ② 代码归属 | demo base = AI-1 的哪个 commit | `7c412b8`（Stage 5.5A） | `git merge-base --is-ancestor 7c412b8 demo` + `docs/DEMO_RELEASE.md` |
-| ③ 交付物 | userscript sha256 | `39d79b0e42a2ad85ef77c44834772de705f8fbf656893a20ef16b237ad3b8a94` | `curl -sSk <demo raw url> \| sha256sum` |
+| ① 分支 | `demo` HEAD | `58337a8f553c350537138208d9320d83b4a64690` | `git rev-parse origin/demo` |
+| ② 代码归属 | demo base = AI-1 的哪个 commit | `e9235af`（Stage 5.5A-R2） | `git merge-base --is-ancestor e9235af demo` + `docs/DEMO_RELEASE.md` |
+| ③ 交付物 | userscript sha256 | **以 `docs/DEMO_RELEASE.md` 最新条目为准**（`58337a8` 版本需重新计算，本文档不写死） | `curl -sSk <demo raw url> \| sha256sum` |
 
 **为什么需要第 ③ 层**：demo 与 main 曾在同一版本号（`0.3.0.0`）下内容不同。仅凭「版本号」或「分支名」无法确认用户装到的到底是什么。**sha256 是唯一无争议的标识**，因此每次 demo 更新都必须把它写进 `docs/DEMO_RELEASE.md`。
 
