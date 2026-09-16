@@ -20,6 +20,7 @@
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -745,12 +746,8 @@
     if (res.error) { setStatus(res.error.errorMessage); ocrLog("ERROR", "baidu " + res.error.errorCode); return; }
     if (!res.candidates.length) { setStatus("百度识别未检测到文字"); ocrLog("ERROR", "baidu empty"); return; }
     ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " elapsed=" + res.meta.elapsed + "ms");
-    // baidu bbox{x,y,width,height} → executor 行格式{x0,y0,x1,y1}，复用同一 mapper（§39 解耦）
-    const lines = res.candidates.map((c) => ({
-      text: c.text,
-      bbox: { x0: c.bbox.x, y0: c.bbox.y, x1: c.bbox.x + c.bbox.width, y1: c.bbox.y + c.bbox.height }
-    }));
-    buildItemsFromOcr({ lines: lines }, img);
+    // P3 边界：Baidu Provider 已是统一候选（含 bbox{x,y,width,height}），直接交给统一 Mapper（§39 解耦）
+    buildItemsFromOcr(unifyCandidates(res.candidates, { width: img.width, height: img.height }), img);
   }
 
   async function handleOcrImage() {
@@ -823,7 +820,8 @@
               const r = JSON.parse(out);
               if (!r.ok) { setStatus("OCR 失败：" + r.err); ocrLog("ERROR", "local ocr failed: " + r.err); maybeBaiduFallback(img, "LOCAL_OCR_FAILED:" + r.err); return; }
               ocrLog("LOCAL_RECOGNIZING", "lines=" + (r.lines || []).length + " image=" + r.w + "x" + r.h);
-              buildItemsFromOcr(r, img);
+              // P3 边界：executor 私有 lines → 统一 OCRCandidate → 统一 Mapper
+              buildItemsFromOcr(unifyCandidates((r && r.lines) || [], { width: r.w || img.width, height: r.h || img.height }), img);
             } catch (e) { setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e); maybeBaiduFallback(img, "LOCAL_OCR_PARSE_FAIL"); }
           } else if (tries > OCR_TIMEOUT_TRIES) { clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout"); maybeBaiduFallback(img, "LOCAL_OCR_TIMEOUT"); }
         }, 500);
@@ -836,8 +834,9 @@
       ocrLog("ERROR", "handleOcrImage unexpected: " + e);
     }
   }
-  function buildItemsFromOcr(r, img) {
-    // OCR lines（image pixel）→ canvas 坐标：几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）
+  function buildItemsFromOcr(candidates, img) {
+    // 统一 OCRCandidate（text + bbox{x,y,width,height} + coordinateSpace=image-pixel）→ canvas 坐标。
+    // 几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）。P3：只消费统一候选边界。
     const geo = ocrTarget && ocrTarget.geo;
     if (!geo) { setStatus("OCR 目标已失效，请重新识别"); ocrLog("ERROR", "ocrTarget missing"); return; }
     const w = geo.width, h = geo.height, sx = geo.scaleX || 1, sy = geo.scaleY || 1;
@@ -845,13 +844,12 @@
     const left = geo.left, top = geo.top;
     const rad = ((geo.angle || 0) * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
     const cx = left + (w * sx) / 2, cy = top + (h * sy) / 2;
-    const items = (r.lines || []).filter((l) => l.bbox && typeof l.bbox.x0 === "number").map((l) => {
-      const x = Math.min(l.bbox.x0, l.bbox.x1), y = Math.min(l.bbox.y0, l.bbox.y1);
-      const bw = Math.abs(l.bbox.x1 - l.bbox.x0) * sx, bh = Math.abs(l.bbox.y1 - l.bbox.y0) * sy; // 注：旋转未展开（Demo 常量，5.5 记录）
-      const ux = x / w - 0.5, uy = y / h - 0.5;
+    const items = (candidates || []).filter((c) => c && c.bbox && typeof c.bbox.x === "number" && c.bbox.width > 0).map((c) => {
+      const bw = c.bbox.width * sx, bh = c.bbox.height * sy; // 注：旋转未展开（Demo 常量，5.5 记录）
+      const ux = c.bbox.x / w - 0.5, uy = c.bbox.y / h - 0.5;
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
-      return { text: l.text, left: px - 4, top: py - 4, width: Math.max(60, bw + 8), fontSize: Math.max(10, Math.round(bw > 0 ? (bh * 1.0) : 14)), fontFamily: "思源黑体 Regular" };
+      return { text: c.text, left: px - 4, top: py - 4, width: Math.max(60, bw + 8), fontSize: Math.max(10, Math.round(bw > 0 ? (bh * 1.0) : 14)), fontFamily: "思源黑体 Regular" };
     });
     if (!items.length) {
       setStatus("未识别到文字");
