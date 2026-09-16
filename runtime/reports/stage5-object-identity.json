@@ -1,0 +1,80 @@
+{
+ "ts": "2026-09-16T02:05:17.210Z",
+ "stage": "Stage 5.0 identity",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "canvas-text-ready",
+   "ok": "PASS",
+   "detail": "textbox 就绪",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "identity-matrix",
+   "ok": "PASS",
+   "detail": "{\"uuidAll\":{\"total\":12,\"unique\":12,\"hasDup\":false,\"dupValues\":[]},\"markAll\":{\"total\":13,\"unique\":10,\"hasDup\":true,\"dupValues\":[\"3D84D06A610C4CE9A6DA25254DE056B6\"]},\"idAll\":{\"total\":4,\"unique\":1,\"hasDup\":true,\"dupValues\":[\"图层_1\"]},\"markTextboxOnly\":{\"total\":4,\"unique\":4,\"hasDup\":false,\"dupValues\":[]}}",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "identity-stable-under-mutation",
+   "ok": "PASS",
+   "detail": "{\"found\":true,\"before\":{\"markuuid\":\"AD4636D5227B49399987EA16FC0FF3EA\",\"uuid\":\"a5e71896-8760-41a4-9e4d-121663676f49\",\"index\":4,\"text\":\"简小设\"},\"after\":{\"markuuid\":\"AD4636D5227B49399987EA16FC0FF3EA\",\"uuid\":\"a5e71896-8760-41a4-9e4d-121663676f49\",\"index\":4,\"text\":\"ZY_STAGE5_ID_TEST\"},\"restored\":{\"markuuid\":\"AD4636D5227B49399987EA16FC0FF3EA\",\"uuid\":\"a5e71896-8760-41a4-9e4d-121663676f49\",\"index\":4,\"text\":\"简小设\"}}",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "identity-index-note",
+   "ok": "PASS",
+   "detail": "fabric 数组顺序=渲染 z 序：插入/删除即移位（apply 创建对象追加至尾部 RUNTIME-8 已证）；index 仅在当前数组快照内可取，不作稳定 identity",
+   "evidence": "§十五"
+  }
+ ],
+ "errors": [],
+ "summary": {
+  "identity_matrix": {
+   "uuidAll": {
+    "total": 12,
+    "unique": 12,
+    "hasDup": false,
+    "dupValues": []
+   },
+   "markAll": {
+    "total": 13,
+    "unique": 10,
+    "hasDup": true,
+    "dupValues": [
+     "3D84D06A610C4CE9A6DA25254DE056B6"
+    ]
+   },
+   "idAll": {
+    "total": 4,
+    "unique": 1,
+    "hasDup": true,
+    "dupValues": [
+     "图层_1"
+    ]
+   },
+   "markTextboxOnly": {
+    "total": 4,
+    "unique": 4,
+    "hasDup": false,
+    "dupValues": []
+   }
+  },
+  "identity_stable_under_mutation": {
+   "markuuid": "AD4636D5227B49399987EA16FC0FF3EA",
+   "uuid": "a5e71896-8760-41a4-9e4d-121663676f49",
+   "index": 4,
+   "text": "简小设"
+  },
+  "finding": {
+   "PERSISTED_EDITOR_ID": "markuuid（textbox 唯一、跨 reload 稳定，实测 AD4636D5...）；SVG 组内共享 → 对象级唯一仅对独立文字/图形成立",
+   "LOCAL_RUNTIME_ID": "uuid（每次页面会话重新生成）+ array index（位次），仅会话内可作运行引用，不得跨会话持久",
+   "id 字段": "SVG 图层名（'图层_1'），组内重复，不可作 identity"
+  }
+ }
+}

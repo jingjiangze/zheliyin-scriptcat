@@ -1,0 +1,64 @@
+{
+ "ts": "2026-09-16T02:06:19.031Z",
+ "stage": "Stage 5.0 mutation",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "canvas-text-ready",
+   "ok": "PASS",
+   "detail": "textbox 就绪",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "mutation-flow",
+   "ok": "PASS",
+   "detail": "originalLen=3",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "mutation-only-text",
+   "ok": "PASS",
+   "detail": "changed=[\"height\",\"text\"] width=95.27115→95.27115 height=35.03→563.2823999999998",
+   "evidence": "§三十六/§三十七"
+  },
+  {
+   "name": "textbox-auto-height",
+   "ok": "PASS",
+   "detail": "width stable=true height(auto)=[35.03,563.2823999999998]",
+   "evidence": "§三十八 TEXT_AUTO_RESIZE"
+  },
+  {
+   "name": "rollback-no-residual",
+   "ok": "PASS",
+   "detail": "changed=[] text=简小设",
+   "evidence": "§三十六 rollback"
+  }
+ ],
+ "errors": [],
+ "summary": {
+  "finding": "textbox 高度随文本自动换行（width 固定不变，height 变化）—— OBJECT_MUTATION_SIDE_EFFECT：setText 影响 height 属真实 Fabric Textbox 行为，OCR 原位重建时新文本高度覆盖需重新计算 bbox；短文本→长文本 height 增长实测。",
+  "autoResizeData": {
+   "width": {
+    "before": 95.27115,
+    "afterLong": 95.27115
+   },
+   "height": {
+    "before": 35.03,
+    "afterLong": 563.2823999999998
+   },
+   "deltaH": 528.252
+  },
+  "changedFields": {
+   "onlyTextAndHeight": [
+    "height",
+    "text"
+   ]
+  },
+  "rollbackResidual": []
+ }
+}
