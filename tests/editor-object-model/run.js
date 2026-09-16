@@ -4,7 +4,7 @@
 const path = require("path");
 const { spawnSync } = require("child_process");
 
-const files = ["object-model.test.js", "object-adapter.test.js", "object-diff.test.js", "object-matcher.test.js", "ocr-model.test.js"];
+const files = ["object-model.test.js", "object-adapter.test.js", "object-diff.test.js", "object-matcher.test.js", "ocr-model.test.js", "image-mapper.test.js"];
 let failed = 0;
 for (const f of files) {
   const r = spawnSync(process.execPath, [path.join(__dirname, f)], { encoding: "utf8" });
