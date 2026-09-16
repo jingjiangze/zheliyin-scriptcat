@@ -1,7 +1,7 @@
 # PARALLEL_DEVELOPMENT — 并行开发边界与协作协议
 
 > 维护者：AI-2（Repository Governance 线）
-> 基线：`stage-4.1-runtime-validation` @ `4cb0819`（Stage 5.5，2026-09-16）
+> 基线：`stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A，2026-09-16）
 > 性质：**协作规范 + 事实记录**。本文件描述两条工作线的职责边界、共享面、汇合方式与冲突处置。
 
 ---
@@ -116,10 +116,10 @@ AI-2 沿袭同一约定：**独立 commit + 不 force + 不 squash**。
 
 | | `main`（GitHub 默认分支） | `stage-4.1-runtime-validation` |
 |---|---|---|
-| HEAD | `7446faa` | `4cb0819` |
-| 最后阶段 | Stage 4.0 | **Stage 5.5** |
-| 跟踪文件 | 44 | **183** |
-| 关系 | 严格祖先 | 领先 64 / 落后 0（**可快进**） |
+| HEAD | `7446faa` | `7c412b8` |
+| 最后阶段 | Stage 4.0 | **Stage 5.5A** |
+| 跟踪文件 | 44 | **187** |
+| 关系 | 严格祖先 | 领先 66 / 落后 0（**可快进**） |
 
 ### 5.2 后果
 
@@ -187,7 +187,9 @@ AI-2 沿袭同一约定：**独立 commit + 不 force + 不 squash**。
 
 ### 8.1 治理期间 AI-1 的并行推进（真实发生的协作案例）
 
-治理工作进行中（同日），AI-1 向 `stage-4.1-runtime-validation` 推送了 **Stage 5.5**（3 → 6 个 commit）：
+治理工作进行中（同日），AI-1 向 `stage-4.1-runtime-validation` **连续推送了两个阶段**（`3becf04` → `4cb0819` → `7c412b8`，共 8 个 commit）。
+
+**Stage 5.5**（`4cb0819`，6 个 commit）：
 
 | 提交 | 内容 |
 |---|---|
@@ -198,12 +200,24 @@ AI-2 沿袭同一约定：**独立 commit + 不 force + 不 squash**。
 | `03f2167` | production tesseract 懒加载器 + 单测 |
 | `4cb0819` | 候选改为优先取引擎原生 `data.lines` |
 
+**Stage 5.5A**（`7c412b8`，2 个 commit）—— 产品化验收，结论为 **BLOCKED**：
+
+| 提交 | 内容 |
+|---|---|
+| `13b348a` | 真实 ScriptCat 注入探针：`GM_addElement` DOM 注入 PASS，但编辑器页环境限制引擎可达（CSP 拦 CDN + requirejs AMD 吸收 UMD）→ `engine-in-editor = BLOCKED` |
+| `7c412b8` | Stage 5.5A 产品化审计 + 严格分级 Gate + 5.6 P1 装载工程候选 |
+
 **两个可验证的结论**：
 
 1. **「用独立分支」的决定被证明正确**。若当时直接提交到 `stage-4.1-runtime-validation`，两边会同时推进同一分支；AI-1 的 6 个提交与 AI-2 的文档提交会交错，push 竞争与 rebase 成本都会上升。分开后双方推送均为**普通 fast-forward，零冲突、零 force push**。
 2. **治理文档必须跟随实现更新**。Stage 5.5 使 `docs/CURRENT_STATUS.md` 的「real OCR = TODO」、`docs/STAGE_INDEX.md` 的「当前 HEAD = 5.4」、`docs/TEST_MATRIX.md` 的「6 套件 110 断言」、`docs/REAL_OCR_DEMO_CONTRACT.md` 的 GAP-1/2/5 **立即过时**。治理线随即在 `4cb0819` 基线上做了一轮同步更新（详见对应 `docs: update ... for stage5.5` 系列 commit）。
 
 > 这正是本协议要解决的问题：**实现线可以快速迭代，治理线负责让它可被理解。** 两条线各自独立提交，通过 Git 汇合。
+
+**补充结论（5.5A 后）**：治理文档采用「**基线标注 + 增量同步**」而非「追求永远最新」。每份文档头部写明所描述的 commit；实现线推进后由治理线做一轮同步。
+本轮同步点在 `7c412b8`；若 AI-1 继续推进，按同一流程增量更新，不重写历史。
+
+> 另一个值得记录的教训（工具层）：**同一文件的多个编辑不要并发提交**——并发 read-modify-write 会丢失更新。本轮曾因此丢失 3 份文档的头部基线声明，已修正。
 
 ---
 

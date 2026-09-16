@@ -1,7 +1,8 @@
 # CURRENT_STATUS — 当前状态总览
 
 > 维护者：AI-2（Repository Governance 线）
-> 基线：分支 `stage-4.1-runtime-validation` @ `3becf04`（2026-09-16）
+> 基线：分支 `stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A，2026-09-16）
+> 修订：@ `3becf04`（5.4）初版；@ `4cb0819`（5.5）同步真实 OCR；@ `7c412b8`（5.5A）同步产品化验收结论。
 > **本页只陈述已有证据支持的状态。没有证据的一律写 `TODO`，不预判。**
 > 状态取值：`PASS` / `PARTIAL` / `BLOCKED` / `TODO` / `DEFERRED` / `UNVERIFIED`
 > 等级取值见 `docs/EVIDENCE_POLICY.md`
@@ -21,6 +22,7 @@
 | native OCR access | **BLOCKED** | REAL（探测结论） | `runtime/reports/stage5-3-native-ocr*.json` `stage5-4-native-ocr.json` | 原生「文字识别(Alt+Q)」面板存在，但绑定"相框"素材交互；Stage 5.4 四种深度 hook 实验后：无网络请求、无 postMessage、canvas 无变化、结果值不进 DOM |
 | **real OCR（provider）** | **PASS** | REAL | `runtime/reports/stage5-5-ocr-feasibility.json` `stage5-5-real-ocr-demo.json` | **本地 tesseract.js 已接入并实测**：chi_sim，18 words / bbox 18/18 / avg-conf **90.4** / 首跑 ~3s / **零上传、零 key、全本地 WASM**。原生路径仍 BLOCKED，本地路径为已选定替代 |
 | **real OCR → 重建（demo 级）** | **PASS** | REAL | `runtime/reports/stage5-5-final-gate.json` | `BASIC_REAL_OCR_DEMO = PASS`：真实 OCR 6 行候选 → mapper(1000×800 natural × 0.45) → matcher（**电话行 MATCHED 复用模板槽**，其余 NOT_FOUND 保护）→ 6 个真 textbox → 字号误差 **3.3%** → 参考图保留 → rollback 21/4/3 零残留，`errors=0` |
+| **OCR 引擎在编辑器页可达（产品化关键）** | **BLOCKED** | REAL（探测结论） | `runtime/reports/stage5-5a-final-gate.json` `stage5-5a-real-scriptcat-ocr.json` | **`BASIC_REAL_OCR_DEMO_PRODUCT = BLOCKED`**。`GM_addElement` 注入动作本身 **PASS**（主世界 DOM 标记 `data-zy-55a-inj=1`），但引擎在编辑器页**运行环境**下无法暴露全局：① 外链 CDN 被 CSP `script-src` 拦截（`performance` 资源 `[]`，未发起）；② inline 注入真引擎 30s 无全局；③ inline + 屏蔽 `window.define`（requirejs AMD 吸收 UMD）20s 仍无 `window.Tesseract`。**属 PRODUCT/BROWSER-ENV 边界，非 harness 自动化问题** |
 | real image input | **PARTIAL** | REAL / SYNTHETIC | `runtime/reports/stage5-3-image-transform.json` `stage5-4-real-image-input.json` | **真机**粘贴/拖拽可用；**harness 自动化**三种注入（ClipboardEvent / CDP+Ctrl+V / setInputFiles）均不被受理 → 记录为 automation limitation；另有 Stage 5.5 注记：编辑器页 CDN script 注入被环境静默拦截 → 生产改走 `GM_addElement`（机制已证，**待真机一键验证**） |
 | real editable textbox | **PASS** | REAL | `stage5-3-reconstruction.json` `stage5-4-product-flow.json` | 真实编辑器内创建 `type=textbox` / `editable=true` / `markuuid=null`（identity clean），4/4 |
 | grouping | **PASS** | REAL | `runtime/reports/stage5-3-grouping.json` | `fabric.Group` 原生编组 → destroy 解组 → 成员独立 |
@@ -64,9 +66,10 @@
 ## 3. Gate 现状
 
 ```text
-分支:        stage-4.1-runtime-validation @ 4cb0819
-最后阶段:    Stage 5.5 (Real OCR Provider + Basic Real OCR Demo)
-Gate:        GO
+分支:        stage-4.1-runtime-validation @ 7c412b8
+最后阶段:    Stage 5.5A (Basic Real OCR Demo - Productization)
+Gate:        BLOCKED（产品化未达成：引擎在编辑器页运行环境不可达）
+说明:        Demo 级 GO（5.5）≠ 产品级可用（5.5A）。两者是不同命题，不可互相替代。
 P0:          0
 P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
 下一阶段:    Stage 5.6（字号精确）—— 前置：GM_addElement 引擎注入真机验证
@@ -74,7 +77,20 @@ P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
              → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview
 ```
 
-**Stage 5.5 遗留条件项**（按 `docs/EVIDENCE_POLICY.md` §3 如实登记）：
+**Stage 5.5A 产品化验收结论**（按 `docs/EVIDENCE_POLICY.md` §3 如实登记）：
+
+```text
+REAL_SCRIPT_INJECTION (GM_addElement 注入动作)  = PASS
+REAL_OCR (引擎识别能力, side-page)              = PASS
+engine-in-editor (window.Tesseract 编辑器页可达) = BLOCKED（PRODUCT env）
+REAL_USER_IMAGE_INPUT                           = 待真机（PLAYWRIGHT_PASTE=BLOCKED）
+BASIC_REAL_OCR_DEMO_PRODUCT                     = BLOCKED
+```
+
+> **一句话**：OCR 引擎与重建链都已验证可用，但引擎**无法在编辑器页的运行环境里加载**（CSP + requirejs AMD），因此**用户在浏览器内暂时用不上**。
+> 这是 `PRODUCT/BROWSER-ENV` 边界，**不是** harness 自动化问题。装载工程列为 **Stage 5.6 的 P1 前置**。
+
+**遗留条件项**：
 
 | 条件 | 状态 | 目标 |
 |---|---|---|
@@ -90,10 +106,10 @@ P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
 
 | | `main` | `stage-4.1-runtime-validation` |
 |---|---|---|
-| HEAD | `7446faa` | `4cb0819` |
-| 最后阶段 | Stage 4.0 | **Stage 5.5** |
-| 跟踪文件 | 44 | **183** |
-| 关系 | 是后者的**严格祖先** | 领先 64 commit / 落后 0（**可快进合并**） |
+| HEAD | `7446faa` | `7c412b8` |
+| 最后阶段 | Stage 4.0 | **Stage 5.5A** |
+| 跟踪文件 | 44 | **187** |
+| 关系 | 是后者的**严格祖先** | 领先 66 commit / 落后 0（**可快进合并**） |
 
 > ⚠️ **GitHub 默认展示的是 `main`**，它**不包含**任何 Stage 5.x / RUNTIME-8.x / OCR / object-model / ocr-provider 代码。
 > 任何人从默认分支阅读本仓库，都会得到一个"只有 Stage 4.0"的错误印象。
@@ -110,6 +126,7 @@ P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
 | INTEGRATION | `bridge-lifecycle` 6/6；`wiring-check` 5/5 | PASS（2026-09-16 治理线复跑确认） | headless 浏览器 |
 | REAL | `npm run runtime:scriptcat` 全链 18 步 | PASS，`errors=0`（历史报告，治理线未复跑） | Playwright + 真实 ScriptCat |
 | REAL | Stage 5.5 `BASIC_REAL_OCR_DEMO` | PASS，`errors=0`（历史报告，治理线未复跑） | Playwright + 真实编辑器 + tesseract |
+| REAL | Stage 5.5A `engine-in-editor` | **BLOCKED**（产品环境 CSP + requirejs AMD；历史报告） | Playwright + 真实 ScriptCat |
 
 明细与复现命令见 `docs/TEST_MATRIX.md`。
 

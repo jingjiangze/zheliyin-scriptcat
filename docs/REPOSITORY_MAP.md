@@ -1,7 +1,8 @@
 # REPOSITORY_MAP — 仓库地图
 
 > 维护者：AI-2（Repository Governance 线）
-> 生成依据：真实 Git 仓库 `jingjiangze/zheliyin-scriptcat`，基线 `stage-4.1-runtime-validation` @ `3becf04`（2026-09-16）
+> 生成依据：真实 Git 仓库 `jingjiangze/zheliyin-scriptcat`，基线 `stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A，2026-09-16）
+> 修订记录：初始测绘 @ `3becf04`（5.4）；@ `4cb0819`（5.5）追加 OCR Provider 层；@ `7c412b8`（5.5A）记录引擎装载边界。
 > 性质：**只读测绘 + 文档**。本文件不修改任何实现代码，也不定义新接口。
 > 证据等级术语统一见 `docs/EVIDENCE_POLICY.md`。
 
@@ -117,7 +118,7 @@
 | Canvas / Fabric | `CanvasObjVO.totalCanvasArray[0]` | ✅ 已取证·REAL |
 | Object Adapter | `extension/src/editor/object-adapter.js` | ✅ 已实现·**未挂接生产** |
 | Object Model | `extension/src/editor/object-model.js` | ✅ 已实现·**未挂接生产** |
-| OCR | `extension/src/ocr/ocr-model.js`（候选模型）+ `ocr-provider.js`（统一 provider）+ `tesseract-loader.js`（引擎加载）。原生 OCR 入口**结果不可程序读取** | ✅ 本地 tesseract provider **PASS**（REAL，Stage 5.5）/ 原生 **BLOCKED** / 未挂接生产 |
+| OCR | `extension/src/ocr/ocr-model.js`（候选模型）+ `ocr-provider.js`（统一 provider）+ `tesseract-loader.js`（引擎加载）。原生 OCR 入口**结果不可程序读取** | ✅ 本地 tesseract provider **PASS**（REAL，5.5）/ 原生 **BLOCKED** / 未挂接生产。⚠️ **引擎在编辑器页不可达**（5.5A：CSP + requirejs AMD）→ 产品级 **BLOCKED** |
 | Mapper | `extension/src/ocr/image-mapper.js` | ✅ 已实现·**未挂接生产** |
 | Matcher | `extension/src/editor/object-matcher.js` | ✅ 已实现·**未挂接生产** |
 | Textbox | fabric `textbox` 创建 + `fabric.Group` 编组 | ✅ 已验证·**仅 harness** |
@@ -170,9 +171,9 @@
 | 基础设施 | `browser-launcher.js` `check.js` `full.js` `attach.js` `scriptcat.js` `bridge.js` `canvas.js` `apply.js` |
 | ScriptCat 接入 | `scriptcat-adapter.js` `install-scriptcat*.js` `probe-scriptcat-*.js` `enable-allow-user-scripts*.js` `vendor-sync.js` |
 | RUNTIME-8 全链 | `runtime8-full-chain.js` `verify-gm-*.js` `verify-min-user-script.js` |
-| Stage 5 审计 | `stage5-*.js` `stage5-3-*.js` `stage5-4-*.js` `stage5-5-*.js` `editor-object-diff.js` `editor-object-identity.js` |
+| Stage 5 审计 | `stage5-*.js` `stage5-3-*.js` `stage5-4-*.js` `stage5-5-*.js` `stage5-5a-*.js` `editor-object-diff.js` `editor-object-identity.js` |
 | 凭据入口 | `autologin.js` / `autologin3.js`（**凭据只经环境变量**，不入库——但见 `docs/SENSITIVE_DATA_AUDIT.md`） |
-| 证据归档 | `runtime/reports/*.json`（45 份，全部脱敏） |
+| 证据归档 | `runtime/reports/*.json`（47 份，全部脱敏） |
 
 ### 4.4 文档
 
@@ -244,7 +245,7 @@ object-matcher.match() → MATCHED / AMBIGUOUS / NOT_FOUND / ERROR
 | 项 | 值 |
 |---|---|
 | 测绘分支 | `stage-4.1-runtime-validation` |
-| 测绘 commit | `4cb0819`（Stage 5.5） |
+| 测绘 commit | `7c412b8`（Stage 5.5A） |
 | 默认分支 `main` HEAD | `7446faa`（Stage 4.0） |
-| 两者关系 | `main` 是 `stage-4.1` 的严格祖先（领先 64 commit / 落后 0，可快进） |
-| 跟踪文件数 | 183 |
+| 两者关系 | `main` 是 `stage-4.1` 的严格祖先（领先 66 commit / 落后 0，可快进） |
+| 跟踪文件数 | 187 |

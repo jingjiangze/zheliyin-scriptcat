@@ -62,6 +62,7 @@
 ## Current Status
 
 > 严格区分「正式能力」与「实验能力」。实验能力**不等于**稳定生产能力。
+> ⚠️ **关于图片识别：目前你在浏览器里还用不上它** —— OCR 引擎无法在编辑器页运行环境中加载（详见下方 Real OCR 章节）。
 > 完整表格、证据等级与证据文件路径见 [`docs/CURRENT_STATUS.md`](docs/CURRENT_STATUS.md)。
 
 ### 正式能力（生产路径生效，可日常使用）
@@ -100,6 +101,11 @@
 - **原生「文字识别（Alt+Q）」仍不可用**：结果值无法程序化读取（面板绑定"相框"素材交互，无网络请求、无 postMessage、结果值不进 DOM）。
 
 **因此**：仓库里已具备真实 OCR 能力并有真实证据，但**尚未挂接到助手面板**，你正常使用助手时不会触发它。
+
+> ⚠️ **产品化验收结论（Stage 5.5A）：`BLOCKED`**
+> 真实 ScriptCat 环境下实测：`GM_addElement` 注入动作本身成功，但 OCR 引擎**无法在编辑器页运行环境里暴露全局** ——
+> ① 外链 CDN 被 CSP `script-src` 拦截（资源未发起）；② inline 注入真引擎 30s 无全局；③ 屏蔽 `window.define` 绕过 requirejs AMD 吸收后仍无 `window.Tesseract`。
+> 这是**产品运行环境**的限制（非自动化/权限问题），需专门的引擎装载工程（列为下一阶段 P1 前置）。
 
 ### Basic Real OCR Demo（真实 OCR → 可编辑文字）
 
@@ -169,7 +175,7 @@ node runtime/stage5-5-real-ocr-demo.js
 
 ## 阶段状态
 
-当前开发分支：**`stage-4.1-runtime-validation`**，HEAD 为 Stage 5.5（Gate = `GO`）。
+当前开发分支：**`stage-4.1-runtime-validation`**，HEAD 为 Stage 5.5A（Demo 级 `GO` / 产品级 `BLOCKED`）。
 
 > ⚠️ **GitHub 默认分支 `main` 只到 Stage 4.0**，不包含 Stage 5.x / RUNTIME-8.x / OCR 相关代码与证据。请切换到 `stage-4.1-runtime-validation` 查看全部成果。
 

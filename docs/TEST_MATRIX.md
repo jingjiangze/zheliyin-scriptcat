@@ -1,7 +1,7 @@
 # TEST_MATRIX — 测试矩阵
 
 > 维护者：AI-2（Repository Governance 线）
-> 基线：`stage-4.1-runtime-validation` @ `4cb0819`（Stage 5.5，2026-09-16）
+> 基线：`stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A，2026-09-16；Stage 5.5A 未新增测试，套件与断言数不变）
 > 术语见 `docs/EVIDENCE_POLICY.md`
 > **本次治理未移动任何现有测试文件。** 现有 `tests/` 布局保持原样（见 §6 关于目录结构的说明）。
 

@@ -41,7 +41,7 @@
 - 真实 ScriptCat 或同源 MV3 扩展作为注入载体
 - 若使用「同源扩展」替代 ScriptCat，必须显式标注为 `REAL_EXTENSION_SAME_SOURCE`，**不得写成 REAL_SCRIPT_CAT**
 
-**已知 REAL 项**：`runtime/reports/runtime8-full-chain-report.json` 全链 18 步；Stage 5.0 对象快照（21 对象全量属性）；Stage 5.3/5.4 真实编辑器 textbox 创建与回滚；**Stage 5.5 真实 OCR**（`stage5-5-ocr-feasibility.json` tesseract chi_sim 实测 + `stage5-5-real-ocr-demo.json` 端到端 `errors=0`）。
+**已知 REAL 项**：`runtime/reports/runtime8-full-chain-report.json` 全链 18 步；Stage 5.0 对象快照（21 对象全量属性）；Stage 5.3/5.4 真实编辑器 textbox 创建与回滚；**Stage 5.5 真实 OCR**（`stage5-5-ocr-feasibility.json` tesseract chi_sim 实测 + `stage5-5-real-ocr-demo.json` 端到端 `errors=0`）；**Stage 5.5A 产品环境探测**（`stage5-5a-final-gate.json`：`GM_addElement` 注入 PASS / `engine-in-editor` BLOCKED）。
 
 ### FIXTURE
 
@@ -89,6 +89,16 @@
 ### BLOCKED
 
 **定义**：真实环境中**无法获得**必要信息；不是失败，也不是未做，而是"路径被环境堵死"。
+
+**本仓库的 BLOCKED 分型**（Stage 5.5A §二十七 明确区分，务必沿用）：
+
+| 分型 | 含义 | 例 |
+|---|---|---|
+| `AUTOMATION` | 自动化手段受限，真实用户操作可能可行 | Playwright 粘贴图片注入不被受理（`REAL_USER_IMAGE_INPUT`） |
+| `PRODUCT` / `BROWSER-ENV` | **产品运行环境本身**堵死，与自动化无关 | `engine-in-editor`：CSP `script-src` 拦外链 + requirejs AMD 吸收 UMD → OCR 引擎无法在编辑器页暴露全局 |
+| `PANEL-ONLY` | 能力存在但结果值不对外暴露 | 原生 OCR「文字识别(Alt+Q)」结果不可程序读取 |
+
+> 分型很重要：`AUTOMATION` 型 BLOCKED 常常「真机可解」，`PRODUCT` 型 BLOCKED 必须做工程改造。把两者混为一谈会导致误判工作量。
 
 **使用要求**：必须写明**堵点**与**已尝试的探测次数**，并在同段给出替代方案及其等级。
 

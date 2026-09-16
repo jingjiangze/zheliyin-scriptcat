@@ -2,7 +2,7 @@
 
 > 维护者：AI-2（Repository Governance 线）
 > 性质：**接口契约定义**。本文档**不实现**任何模块，只定义两条工作线之间的共享边界。
-> 基线：`stage-4.1-runtime-validation` @ `4cb0819`（Stage 5.5）
+> 基线：`stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A）
 > 修订：@ `3becf04`（Stage 5.4）初版；@ `4cb0819`（Stage 5.5）补 OCR Provider 契约，并关闭 GAP-1 / GAP-2 / GAP-5。
 > 证据等级见 `docs/EVIDENCE_POLICY.md`；协作边界见 `docs/PARALLEL_DEVELOPMENT.md`
 
@@ -123,6 +123,8 @@
 
 **契约级约束（不得放宽）**：
 
+0. **⚠️ 引擎装载是本契约的当前最大风险**（Stage 5.5A 实测）：provider 契约要求「引擎由调用层提供」，而调用层在**编辑器页运行环境**下**拿不到引擎**（CSP `script-src` 拦截外链、requirejs AMD 环境吸收 UMD、inline 注入亦不可达）。
+   因此 provider 契约本身成立，但**端到端产品可用性仍被阻断**，需 5.6 的装载工程解决。实现方在此问题解决前，不得声称「真实 OCR 产品可用」。
 1. **隐私**：`LOCAL` provider 不得上传用户图片、不得要求任何 key。
 2. **引擎缺少即 ERROR**，不得抛异常、不得静默返回空候选冒充成功。
 3. **候选必须带 `imageSize`**：`image-pixel` 坐标只有在知道原图尺寸时才能换算。
@@ -350,8 +352,8 @@ match(
 | ~~**GAP-5**~~ | 真实 OCR provider 未接入 | 整链 OCR 源仍是 fixture | Stage 5.5 决策 | ✅ **已关闭**（本地 tesseract 已接入，`REAL_OCR_PROVIDER = PASS`） |
 | **GAP-6** | 多行字号未覆盖 | 多行文本字号不准 | 行数估计 | ⏳ 开放 → 已排入 **Stage 5.6 字号精确 / 5.9 多行段落** |
 | **GAP-7** | `source` 字段未纳入契约 | FIXTURE/REAL 区分依赖约定 | 正式纳入契约 | 🔄 **已转化**：来源改由 provider 的 `providerType` 承载，语义更明确 |
-| **GAP-8**（新） | OCR 引擎加载/注入方式未在真机验证 | 生产可用性的最后一跳 | `GM_addElement` 真机一键验证 | ⏳ 开放 → **Stage 5.6 前置** |
-| **GAP-9**（新） | provider 与重建链均未挂接生产 | 用户实际无法使用 | 产品化接线 | ⏳ 开放 |
+| **GAP-8** | OCR 引擎在**编辑器页运行环境**可达性 | 生产可用性的最后一跳 | 装载工程 | ❗ **已探测，结论为 BLOCKED**（Stage 5.5A）：`GM_addElement` 注入动作 PASS，但引擎无法暴露全局（CSP 拦外链 CDN + requirejs AMD 吸收 UMD）→ 装载工程列为 **5.6 P1 前置**（3 候选：剥离 AMD 分配的文本注入 / blob worker 资源 / page-world postMessage 桥） |
+| **GAP-9** | provider 与重建链均未挂接生产 | 用户实际无法使用 | 产品化接线 | ⏳ 开放（且被 GAP-8 前置阻塞：引擎不可达则接线也无意义） |
 
 > **GAP 不是缺陷，是待办。** 本清单的作用是让实现线在开发时不必猜测契约意图，也让审计者能明确区分"未做"与"做错"。
 >

@@ -14,7 +14,8 @@
 - 版本一致性核对：`@version` = `VERSION` = `version_name` = `0.3.0.0` ✅；`package.json` `0.1.0` 属 runtime harness（`private:true`）无关；**未新增/未重打任何 tag**。
 - 敏感信息扫描：无 API Key / Token / Cookie / 真实客户数据入库；1 项中低风险 finding（`runtime/autologin.js` 注释含真实账号）已记录并建议由实现线处置。
 - Stage 4.1 / RUNTIME-0~8.3 / Stage 5.0~5.5 的逐阶段记录**不在本文件重复维护**，见 `docs/STAGE_INDEX.md` 与各阶段审计报告（避免双份记录漂移）。
-- 治理文档已同步至 **Stage 5.5** 基线（`4cb0819`）：`CURRENT_STATUS`（real OCR → PASS）、`STAGE_INDEX`（补 5.5 行）、`TEST_MATRIX`（8 套件 132 断言，合计 237）、`REPOSITORY_MAP`（补 OCR Provider 层）、`REAL_OCR_DEMO_CONTRACT`（补 provider 契约，关闭 GAP-1/2/5）、`README`（Real OCR 章节重写）。
+- 治理文档已同步至 **Stage 5.5A** 基线（`7c412b8`）：`CURRENT_STATUS`（real OCR → PASS）、`STAGE_INDEX`（补 5.5 行）、`TEST_MATRIX`（8 套件 132 断言，合计 237）、`REPOSITORY_MAP`（补 OCR Provider 层）、`REAL_OCR_DEMO_CONTRACT`（补 provider 契约，关闭 GAP-1/2/5，GAP-8 探测为 BLOCKED）、`README`（Real OCR 章节重写并可读性告警）。
+  补充：**区分 Demo 级与产品级** —— Stage 5.5 = `BASIC_REAL_OCR_DEMO` PASS（Demo 级）；Stage 5.5A = `BASIC_REAL_OCR_DEMO_PRODUCT` **BLOCKED**（引擎在编辑器页运行环境不可达）。两者不可互相替代。
 
 ### Stage 4.0（2026-09-15）— Bridge/Runtime 独立审计 + 最小加固（Stage 4 Gate=CONDITIONAL-GO）
 - 修复 **AUDIT-BRIDGE-002（P1，跨 userscript 实例重复注入）**：`pageBridge()` 增加页面主世界稳定 marker（`window.__ZY_CARD_ASSISTANT_BRIDGE__`），同 window 内任何实例/热更新/重复执行只安装一次 listener；listener 注册成功后才落 marker（异常可重试）。

@@ -1,7 +1,7 @@
 # DEVELOPMENT_RULES — 开发规则
 
 > 维护者：AI-2（Repository Governance 线）
-> 基线：`stage-4.1-runtime-validation` @ `3becf04`
+> 基线：`stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A）
 > 性质：**规范**。可由任何一条线（AI-1 / AI-2 / 人类维护者）引用，用于自我约束与互审。
 > 本文件不追溯改写历史 commit。
 
