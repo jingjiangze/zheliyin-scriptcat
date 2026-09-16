@@ -19,6 +19,7 @@
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -566,11 +567,17 @@
     });
   }
   // 自动模式 fallback：本地失败分类 → 百度云端；配置缺失 → 明确提示（§47 local-first）
+  // 决策复用 fallback-policy（@require 注入，与单测同源）
+  const FALLBACK_POLICY = (typeof decideFallback === "function") ? decideFallback : null;
   function maybeBaiduFallback(img, failCode) {
-    if (getOcrMode() !== "auto") return;
-    if (!baiduConfigured()) {
+    const canonical = String(failCode).split(":")[0];
+    const decision = FALLBACK_POLICY
+      ? FALLBACK_POLICY({ mode: getOcrMode(), baiduEnabled: baiduConfigured(), failCode: canonical })
+      : { action: getOcrMode() === "auto" ? (baiduConfigured() ? "baidu" : "notify-config") : "stop" };
+    if (decision.action === "stop") return;
+    if (decision.action === "notify-config") {
       setStatus("本地识别失败（" + failCode + "），百度云端未配置：请在「百度云 OCR」中填写 API Key / Secret Key 后重试");
-      ocrLog("ERROR", "baidu not configured for fallback");
+      ocrLog("ERROR", "baidu not configured for fallback: " + canonical);
       return;
     }
     ocrRunning = true;
@@ -686,8 +693,8 @@
     if (!items.length) {
       setStatus("未识别到文字");
       ocrLog("ERROR", "no lines recognized");
-      // 本地空结果（LOCAL_OCR_EMPTY）→ 自动模式走百度 fallback（provider 已确保 non-empty 才走到重建）
-      if (getOcrMode() === "auto" && img && !img._baiduDone) {
+      // 空结果 → 交给 fallback 策略决定是否切百度（auto+已配置才切，其余 stop）
+      if (img && !img._baiduDone) {
         img._baiduDone = true;
         maybeBaiduFallback(img, "LOCAL_OCR_EMPTY");
       }
