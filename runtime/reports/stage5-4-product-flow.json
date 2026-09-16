@@ -1,0 +1,113 @@
+{
+ "ts": "2026-09-16T04:16:59.644Z",
+ "steps": [
+  {
+   "n": "nav",
+   "ok": "PASS"
+  },
+  {
+   "n": "editor-ready",
+   "ok": "PASS"
+  },
+  {
+   "n": "reference-image-added",
+   "ok": "PASS"
+  },
+  {
+   "n": "calibrated-fontsize-candidates",
+   "ok": "PASS"
+  },
+  {
+   "n": "matcher-per-candidate",
+   "ok": "PASS"
+  },
+  {
+   "n": "reconstruct-created",
+   "ok": "PASS"
+  },
+  {
+   "n": "created-editable-font",
+   "ok": "PASS"
+  },
+  {
+   "n": "created-identity-clean",
+   "ok": "PASS"
+  },
+  {
+   "n": "fontsize-calibrated-accuracy",
+   "ok": "PASS"
+  },
+  {
+   "n": "group-ungroup",
+   "ok": "PASS"
+  },
+  {
+   "n": "reference-kept",
+   "ok": "PASS"
+  },
+  {
+   "n": "rollback-restored",
+   "ok": "PASS"
+  }
+ ],
+ "errors": [],
+ "candidates": [
+  {
+   "text": "测试名片",
+   "status": "NOT_FOUND",
+   "selectedIndex": null,
+   "fontSize": 14
+  },
+  {
+   "text": "行业方案专家",
+   "status": "NOT_FOUND",
+   "selectedIndex": null,
+   "fontSize": 10
+  },
+  {
+   "text": "电话 138001380",
+   "status": "NOT_FOUND",
+   "selectedIndex": null,
+   "fontSize": 10
+  },
+  {
+   "text": "深圳市南山区测试路1号",
+   "status": "NOT_FOUND",
+   "selectedIndex": null,
+   "fontSize": 10
+  }
+ ],
+ "calibrationError": {
+  "per": [
+   {
+    "t": "测试名片",
+    "fs": 14,
+    "target": 16.5,
+    "actual": 17.4,
+    "err": 0.05
+   },
+   {
+    "t": "行业方案专家",
+    "fs": 10,
+    "target": 12.1,
+    "actual": 12.7,
+    "err": 0.05
+   },
+   {
+    "t": "电话 13800",
+    "fs": 10,
+    "target": 12.1,
+    "actual": 12.7,
+    "err": 0.05
+   },
+   {
+    "t": "深圳市南山区测试",
+    "fs": 10,
+    "target": 12.1,
+    "actual": 12.7,
+    "err": 0.05
+   }
+  ],
+  "mean": 0.05030564738291911
+ }
+}

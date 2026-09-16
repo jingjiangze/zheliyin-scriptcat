@@ -1,0 +1,196 @@
+{
+ "ts": "2026-09-16T04:16:59.644Z",
+ "stage": "Stage 5.4 product-flow",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "reference-image-added",
+   "ok": "PASS",
+   "detail": "count 21->22",
+   "evidence": "REAL_IMAGE"
+  },
+  {
+   "name": "calibrated-fontsize-candidates",
+   "ok": "PASS",
+   "detail": "fontSizes=14,10,10,10 (visualH=16.5,12.1,12.1,12.1)",
+   "evidence": "FONT_SIZE:§三十③（真实校准）"
+  },
+  {
+   "name": "matcher-per-candidate",
+   "ok": "PASS",
+   "detail": "[{\"s\":\"NOT_FOUND\"},{\"s\":\"NOT_FOUND\"},{\"s\":\"NOT_FOUND\"},{\"s\":\"NOT_FOUND\"}]",
+   "evidence": "OBJECT_MATCHER"
+  },
+  {
+   "name": "reconstruct-created",
+   "ok": "PASS",
+   "detail": "created=4",
+   "evidence": "REAL_TEXTBOX"
+  },
+  {
+   "name": "created-editable-font",
+   "ok": "PASS",
+   "detail": "types/fonts=[\"textbox/true/思源黑体 Regular\",\"textbox/true/思源黑体 Regular\",\"textbox/true/思源黑体 Regular\",\"textbox/true/思源黑体 Regular\"]",
+   "evidence": "§三十八/§三十七"
+  },
+  {
+   "name": "created-identity-clean",
+   "ok": "PASS",
+   "detail": "markuuid=[null,null,null,null]",
+   "evidence": "CREATION_SAFETY"
+  },
+  {
+   "name": "fontsize-calibrated-accuracy",
+   "ok": "PASS",
+   "detail": "mean height error=0.05030564738291911",
+   "evidence": "FONT_SIZE:§三十③ 校准后创建回读"
+  },
+  {
+   "name": "group-ungroup",
+   "ok": "PASS",
+   "detail": "grouped=true ungrouped=true",
+   "evidence": "REAL_GROUP"
+  },
+  {
+   "name": "reference-kept",
+   "ok": "PASS",
+   "detail": "images=4",
+   "evidence": "REFERENCE_IMAGE"
+  },
+  {
+   "name": "rollback-restored",
+   "ok": "PASS",
+   "detail": "count=21 texts=[\"简小设\",\"18888888\",\"客户经理\",\"山东省济南市简设\"] images=3",
+   "evidence": "REAL_ROLLBACK"
+  }
+ ],
+ "errors": [],
+ "candidates": [
+  {
+   "text": "测试名片",
+   "status": "NOT_FOUND",
+   "selectedIndex": null,
+   "fontSize": 14
+  },
+  {
+   "text": "行业方案专家",
+   "status": "NOT_FOUND",
+   "selectedIndex": null,
+   "fontSize": 10
+  },
+  {
+   "text": "电话 138001380",
+   "status": "NOT_FOUND",
+   "selectedIndex": null,
+   "fontSize": 10
+  },
+  {
+   "text": "深圳市南山区测试路1号",
+   "status": "NOT_FOUND",
+   "selectedIndex": null,
+   "fontSize": 10
+  }
+ ],
+ "execution": {
+  "created": [
+   {
+    "text": "测试名片",
+    "fontSize": 14,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 17.366649999999993,
+    "targetHeight": 16.5,
+    "heightErr": 0.05252424242424199,
+    "markuuid": null
+   },
+   {
+    "text": "行业方案专家",
+    "fontSize": 10,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 12.699749999999995,
+    "targetHeight": 12.1,
+    "heightErr": 0.049566115702478146,
+    "markuuid": null
+   },
+   {
+    "text": "电话 13800",
+    "fontSize": 10,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 12.699749999999995,
+    "targetHeight": 12.1,
+    "heightErr": 0.04956611570247692,
+    "markuuid": null
+   },
+   {
+    "text": "深圳市南山区测试",
+    "fontSize": 10,
+    "type": "textbox",
+    "editable": true,
+    "fontFamily": "思源黑体 Regular",
+    "visualHeight": 12.699749999999995,
+    "targetHeight": 12.1,
+    "heightErr": 0.04956611570247938,
+    "markuuid": null
+   }
+  ],
+  "count": 26
+ },
+ "calibrationError": {
+  "per": [
+   {
+    "t": "测试名片",
+    "fs": 14,
+    "target": 16.5,
+    "actual": 17.4,
+    "err": 0.05
+   },
+   {
+    "t": "行业方案专家",
+    "fs": 10,
+    "target": 12.1,
+    "actual": 12.7,
+    "err": 0.05
+   },
+   {
+    "t": "电话 13800",
+    "fs": 10,
+    "target": 12.1,
+    "actual": 12.7,
+    "err": 0.05
+   },
+   {
+    "t": "深圳市南山区测试",
+    "fs": 10,
+    "target": 12.1,
+    "actual": 12.7,
+    "err": 0.05
+   }
+  ],
+  "mean": 0.05030564738291911
+ },
+ "grouping": {
+  "grouped": true,
+  "ungrouped": true,
+  "members": 4
+ },
+ "reference": {
+  "imageCount": 4,
+  "refKept": true
+ }
+}
