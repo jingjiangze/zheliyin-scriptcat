@@ -1,0 +1,545 @@
+{
+ "ts": "2026-09-16T02:23:46.231Z",
+ "stage": "Stage 5.1 identity-audit",
+ "sessions": {
+  "A": {
+   "texts": [
+    {
+     "markuuid": "1B6A503A48BD4A8D9978905642CE57B0",
+     "uuid": "de2cab49-12e8-48c2-9335-a1c24ebd7332",
+     "textLen": 19,
+     "textHash8": "f85ded4d",
+     "geometry": {
+      "left": 55.350976759533495,
+      "top": 310.0471831447886,
+      "width": 257,
+      "height": 16.95,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 10,
+     "index": 10
+    },
+    {
+     "markuuid": "82DBF6FD13B14175B652C77D7CE79660",
+     "uuid": "e24365d3-8a3a-417f-9ebd-a138a41fc55a",
+     "textLen": 4,
+     "textHash8": "81239479",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 193.35864074780164,
+      "width": 98.64266764322917,
+      "height": 18.08,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 8,
+     "index": 8
+    },
+    {
+     "markuuid": "9B5E0D266C674E5A8FD0110F3054B80D",
+     "uuid": "223852d5-8723-4a75-af37-f0e4f17b1075",
+     "textLen": 11,
+     "textHash8": "a0c7d994",
+     "geometry": {
+      "left": 55.350976759533495,
+      "top": 270.32353347531233,
+      "width": 96,
+      "height": 16.95,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 5,
+     "index": 5
+    },
+    {
+     "markuuid": "AD4636D5227B49399987EA16FC0FF3EA",
+     "uuid": "9638ad48-5957-4a45-827c-ddc37191656a",
+     "textLen": 3,
+     "textHash8": "9967074",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 147.37885874780164,
+      "width": 95.27115,
+      "height": 35.03,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 4,
+     "index": 4
+    }
+   ],
+   "typeRows": {
+    "rect": {
+     "count": 2,
+     "uuidPresent": 1,
+     "markuuidPresent": 2,
+     "idPresent": 1,
+     "others": {}
+    },
+    "image": {
+     "count": 3,
+     "uuidPresent": 3,
+     "markuuidPresent": 3,
+     "idPresent": 0,
+     "others": {}
+    },
+    "path": {
+     "count": 3,
+     "uuidPresent": 3,
+     "markuuidPresent": 3,
+     "idPresent": 3,
+     "others": {}
+    },
+    "group": {
+     "count": 1,
+     "uuidPresent": 1,
+     "markuuidPresent": 1,
+     "idPresent": 0,
+     "others": {}
+    },
+    "textbox": {
+     "count": 4,
+     "uuidPresent": 4,
+     "markuuidPresent": 4,
+     "idPresent": 0,
+     "others": {}
+    },
+    "line": {
+     "count": 8,
+     "uuidPresent": 0,
+     "markuuidPresent": 0,
+     "idPresent": 0,
+     "others": {}
+    }
+   },
+   "canvas": {
+    "width": 619.5,
+    "height": 376.8625,
+    "count": 21
+   }
+  },
+  "B": {
+   "texts": [
+    {
+     "markuuid": "1B6A503A48BD4A8D9978905642CE57B0",
+     "uuid": "e2dc5b2e-70c4-4ab8-a2cb-f07114c93b9f",
+     "textLen": 19,
+     "textHash8": "f85ded4d",
+     "geometry": {
+      "left": 55.350976759533495,
+      "top": 310.0471831447886,
+      "width": 257,
+      "height": 16.95,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 10,
+     "index": 10
+    },
+    {
+     "markuuid": "82DBF6FD13B14175B652C77D7CE79660",
+     "uuid": "c516d89f-cb55-4050-bf82-674f67912554",
+     "textLen": 4,
+     "textHash8": "81239479",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 193.35864074780164,
+      "width": 98.64266764322917,
+      "height": 18.08,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 8,
+     "index": 8
+    },
+    {
+     "markuuid": "9B5E0D266C674E5A8FD0110F3054B80D",
+     "uuid": "f0e05fa2-ddd7-44bd-9463-3ef6bf3ec260",
+     "textLen": 11,
+     "textHash8": "a0c7d994",
+     "geometry": {
+      "left": 55.350976759533495,
+      "top": 270.32353347531233,
+      "width": 96,
+      "height": 16.95,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 5,
+     "index": 5
+    },
+    {
+     "markuuid": "AD4636D5227B49399987EA16FC0FF3EA",
+     "uuid": "51532a58-25e2-4423-92ca-b21d8a336534",
+     "textLen": 3,
+     "textHash8": "9967074",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 147.37885874780164,
+      "width": 95.27115,
+      "height": 35.03,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 4,
+     "index": 4
+    }
+   ],
+   "typeRows": {
+    "rect": {
+     "count": 2,
+     "uuidPresent": 1,
+     "markuuidPresent": 2,
+     "idPresent": 1,
+     "others": {}
+    },
+    "image": {
+     "count": 3,
+     "uuidPresent": 3,
+     "markuuidPresent": 3,
+     "idPresent": 0,
+     "others": {}
+    },
+    "path": {
+     "count": 3,
+     "uuidPresent": 3,
+     "markuuidPresent": 3,
+     "idPresent": 3,
+     "others": {}
+    },
+    "group": {
+     "count": 1,
+     "uuidPresent": 1,
+     "markuuidPresent": 1,
+     "idPresent": 0,
+     "others": {}
+    },
+    "textbox": {
+     "count": 4,
+     "uuidPresent": 4,
+     "markuuidPresent": 4,
+     "idPresent": 0,
+     "others": {}
+    },
+    "line": {
+     "count": 8,
+     "uuidPresent": 0,
+     "markuuidPresent": 0,
+     "idPresent": 0,
+     "others": {}
+    }
+   },
+   "canvas": {
+    "width": 619.5,
+    "height": 376.8625,
+    "count": 21
+   }
+  },
+  "C": {
+   "texts": [
+    {
+     "markuuid": "1B6A503A48BD4A8D9978905642CE57B0",
+     "uuid": "636b3474-a8b5-4d99-810d-10b24087f626",
+     "textLen": 19,
+     "textHash8": "f85ded4d",
+     "geometry": {
+      "left": 55.350976759533495,
+      "top": 310.0471831447886,
+      "width": 257,
+      "height": 16.95,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 10,
+     "index": 10
+    },
+    {
+     "markuuid": "82DBF6FD13B14175B652C77D7CE79660",
+     "uuid": "a0939633-b0ba-468f-8637-07820dd1bb7f",
+     "textLen": 4,
+     "textHash8": "81239479",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 193.35864074780164,
+      "width": 98.64266764322917,
+      "height": 18.08,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 8,
+     "index": 8
+    },
+    {
+     "markuuid": "9B5E0D266C674E5A8FD0110F3054B80D",
+     "uuid": "a2c83442-116e-401b-91c3-a72a74bee0bf",
+     "textLen": 11,
+     "textHash8": "a0c7d994",
+     "geometry": {
+      "left": 55.350976759533495,
+      "top": 270.32353347531233,
+      "width": 96,
+      "height": 16.95,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 5,
+     "index": 5
+    },
+    {
+     "markuuid": "AD4636D5227B49399987EA16FC0FF3EA",
+     "uuid": "d9b6f01a-8175-4599-be22-79a38a57854b",
+     "textLen": 3,
+     "textHash8": "9967074",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 147.37885874780164,
+      "width": 95.27115,
+      "height": 35.03,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0
+     },
+     "layerNum": 4,
+     "index": 4
+    }
+   ],
+   "typeRows": {
+    "rect": {
+     "count": 2,
+     "uuidPresent": 1,
+     "markuuidPresent": 2,
+     "idPresent": 1,
+     "others": {}
+    },
+    "image": {
+     "count": 3,
+     "uuidPresent": 3,
+     "markuuidPresent": 3,
+     "idPresent": 0,
+     "others": {}
+    },
+    "path": {
+     "count": 3,
+     "uuidPresent": 3,
+     "markuuidPresent": 3,
+     "idPresent": 3,
+     "others": {}
+    },
+    "group": {
+     "count": 1,
+     "uuidPresent": 1,
+     "markuuidPresent": 1,
+     "idPresent": 0,
+     "others": {}
+    },
+    "textbox": {
+     "count": 4,
+     "uuidPresent": 4,
+     "markuuidPresent": 4,
+     "idPresent": 0,
+     "others": {}
+    },
+    "line": {
+     "count": 8,
+     "uuidPresent": 0,
+     "markuuidPresent": 0,
+     "idPresent": 0,
+     "others": {}
+    }
+   },
+   "canvas": {
+    "width": 619.5,
+    "height": 376.8625,
+    "count": 21
+   }
+  }
+ },
+ "steps": [
+  {
+   "name": "ready-A",
+   "ok": "PASS",
+   "detail": "session A editor ready (textboxes=4)",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "ready-B",
+   "ok": "PASS",
+   "detail": "session B editor ready (textboxes=4)",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "ready-C",
+   "ok": "PASS",
+   "detail": "session C editor ready (textboxes=4)",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "textbox-count-each-session",
+   "ok": "PASS",
+   "detail": "textbox counts A/B/C=4/4/4",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "identity-experiment1-markuuid",
+   "ok": "PASS",
+   "detail": "markuuid stable across A/B/C: 1B6A503A,82DBF6FD,9B5E0D26,AD4636D5",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "identity-experiment1-uuid",
+   "ok": "PASS",
+   "detail": "uuid changes every session: de2cab>e2dc5b>636b34 | e24365>c516d8>a09396 | 223852>f0e05f>a2c834 | 9638ad>51532a>d9b6f0",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "identity-experiment2-mark-unique",
+   "ok": "PASS",
+   "detail": "textbox markuuid duplicates=[] (unique=4)",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "identity-experiment3-types",
+   "ok": "PASS",
+   "detail": "[{\"objectType\":\"rect\",\"count\":2,\"uuidPresent\":1,\"markuuidPresent\":2,\"idPresent\":1},{\"objectType\":\"image\",\"count\":3,\"uuidPresent\":3,\"markuuidPresent\":3,\"idPresent\":0},{\"objectType\":\"path\",\"count\":3,\"uuidPresent\":3,\"markuuidPresent\":3,\"idPresent\":3},{\"objectType\":\"group\",\"count\":1,\"uuidPresent\":1,\"markuuidPresent\":1,\"idPresent\":0},{\"objectType\":\"textbox\",\"count\":4,\"uuidPresent\":4,\"markuuidPresent\":4,\"idPresent\":0},{\"objectType\":\"line\",\"count\":8,\"uuidPresent\":0,\"markuuidPresent\":0,\"idPresent\":0}]",
+   "evidence": "REAL_EDITOR"
+  }
+ ],
+ "errors": [],
+ "identity": {
+  "aggregatedTextboxes": [
+   {
+    "markuuid": "1B6A503A48BD4A8D9978905642CE57B0",
+    "foundSessions": 3,
+    "markuuidStable": true,
+    "textStable": true,
+    "geometryStable": true,
+    "uuidSet": [
+     "de2cab49-12e8-48c2-9335-a1c24ebd7332",
+     "e2dc5b2e-70c4-4ab8-a2cb-f07114c93b9f",
+     "636b3474-a8b5-4d99-810d-10b24087f626"
+    ],
+    "layerNums": [
+     10,
+     10,
+     10
+    ]
+   },
+   {
+    "markuuid": "82DBF6FD13B14175B652C77D7CE79660",
+    "foundSessions": 3,
+    "markuuidStable": true,
+    "textStable": true,
+    "geometryStable": true,
+    "uuidSet": [
+     "e24365d3-8a3a-417f-9ebd-a138a41fc55a",
+     "c516d89f-cb55-4050-bf82-674f67912554",
+     "a0939633-b0ba-468f-8637-07820dd1bb7f"
+    ],
+    "layerNums": [
+     8,
+     8,
+     8
+    ]
+   },
+   {
+    "markuuid": "9B5E0D266C674E5A8FD0110F3054B80D",
+    "foundSessions": 3,
+    "markuuidStable": true,
+    "textStable": true,
+    "geometryStable": true,
+    "uuidSet": [
+     "223852d5-8723-4a75-af37-f0e4f17b1075",
+     "f0e05fa2-ddd7-44bd-9463-3ef6bf3ec260",
+     "a2c83442-116e-401b-91c3-a72a74bee0bf"
+    ],
+    "layerNums": [
+     5,
+     5,
+     5
+    ]
+   },
+   {
+    "markuuid": "AD4636D5227B49399987EA16FC0FF3EA",
+    "foundSessions": 3,
+    "markuuidStable": true,
+    "textStable": true,
+    "geometryStable": true,
+    "uuidSet": [
+     "9638ad48-5957-4a45-827c-ddc37191656a",
+     "51532a58-25e2-4423-92ca-b21d8a336534",
+     "d9b6f01a-8175-4599-be22-79a38a57854b"
+    ],
+    "layerNums": [
+     4,
+     4,
+     4
+    ]
+   }
+  ],
+  "duplicateCount": {
+   "perUniqueMark": {
+    "1B6A503A48BD4A8D9978905642CE57B0": 1,
+    "82DBF6FD13B14175B652C77D7CE79660": 1,
+    "9B5E0D266C674E5A8FD0110F3054B80D": 1,
+    "AD4636D5227B49399987EA16FC0FF3EA": 1
+   },
+   "duplicates": []
+  },
+  "typeStrategy": [
+   {
+    "objectType": "rect",
+    "count": 2,
+    "uuidPresent": 1,
+    "markuuidPresent": 2,
+    "idPresent": 1
+   },
+   {
+    "objectType": "image",
+    "count": 3,
+    "uuidPresent": 3,
+    "markuuidPresent": 3,
+    "idPresent": 0
+   },
+   {
+    "objectType": "path",
+    "count": 3,
+    "uuidPresent": 3,
+    "markuuidPresent": 3,
+    "idPresent": 3
+   },
+   {
+    "objectType": "group",
+    "count": 1,
+    "uuidPresent": 1,
+    "markuuidPresent": 1,
+    "idPresent": 0
+   },
+   {
+    "objectType": "textbox",
+    "count": 4,
+    "uuidPresent": 4,
+    "markuuidPresent": 4,
+    "idPresent": 0
+   },
+   {
+    "objectType": "line",
+    "count": 8,
+    "uuidPresent": 0,
+    "markuuidPresent": 0,
+    "idPresent": 0
+   }
+  ]
+ }
+}
