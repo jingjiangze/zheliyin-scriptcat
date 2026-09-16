@@ -1,0 +1,28 @@
+{
+  "stage": "RUNTIME-8.3",
+  "ts": "2026-09-16",
+  "chromium": {
+    "playwright": "1.63.0",
+    "chromium_revision": "chromium-1243",
+    "ua": "Mozilla/5.0 ... Chrome/153.0.0.0 Safari/537.36",
+    "chromeVersion": "153"
+  },
+  "capability": {
+    "chromeUserScriptsType": "object",
+    "chromeScriptingType": "object",
+    "userScriptsRegisterFn": true,
+    "userScriptsGetScripts": "ok:2",
+    "classification": "API_SUPPORTED_AND_ENABLED"
+  },
+  "allow_user_scripts": {
+    "root_cause_prev": "上一轮误判为 APINotAvailable；实为 Chrome 138+ 的 Allow User Scripts 开关（enabled after dedicated profile boot with --enable-unsafe-extension-debugging）",
+    "evidence": "chrome://extensions 详情页存在 id=allow-user-scripts 的 toggle-row（首次探测可见）；profile-usc3 上下文 API 可用"
+  },
+  "real_script_cat_evidence": {
+    "extension_loaded": "PASS (options page renders, SW alive)",
+    "capability": "PASS (API_SUPPORTED_AND_ENABLED)",
+    "install_min": "PASS (uuid=rt8-min-exec-uuid status=1, getAllScripts visible)",
+    "min_user_script_executed": "PASS data-zy-runtime8-user-script=1 on real editor (REAL_SCRIPT_CAT_USER_SCRIPT_EXECUTION)"
+  },
+  "next": "GM_addElement(production pageBridge) -> marker -> probe exactly-one -> apply/rollback (无 DUP_SIM)"
+}
