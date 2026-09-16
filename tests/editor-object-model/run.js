@@ -4,12 +4,12 @@
 const path = require("path");
 const { spawnSync } = require("child_process");
 
-const files = ["object-model.test.js", "object-adapter.test.js", "object-diff.test.js"];
+const files = ["object-model.test.js", "object-adapter.test.js", "object-diff.test.js", "object-matcher.test.js"];
 let failed = 0;
 for (const f of files) {
   const r = spawnSync(process.execPath, [path.join(__dirname, f)], { encoding: "utf8" });
   process.stdout.write("== " + f + " ==\n" + r.stdout);
   if (r.status !== 0) { process.stderr.write(r.stderr); failed += 1; }
 }
-console.log(failed ? "editor-object-model: " + failed + " FAILED" : "editor-object-model: ALL 3 SUITES PASS");
+console.log(failed ? "editor-object-model: " + failed + " FAILED" : "editor-object-model: ALL " + files.length + " SUITES PASS");
 process.exit(failed ? 1 : 0);

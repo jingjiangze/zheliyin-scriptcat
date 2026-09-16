@@ -1,0 +1,15 @@
+{
+  "source": "runtime/reports/stage5-object-snapshot.json front (4 textbox) - redacted by length/hash; visualBounds = measured fabric AABB (stage5-geometry-audit)",
+  "redacted": true,
+  "canvas": { "width": 619.5, "height": 376.8625 },
+  "objects": [
+    { "identity": { "index": 4, "side": "front", "kind": "text", "isText": true, "subType": "text", "runtimeId": "sess-uuid-a", "persistedId": "AD4636D5227B49399987EA16FC0FF3EA", "identityKind": "persisted-candidate", "type": "textbox" }, "geometry": { "left": 26.17, "top": 147.38, "width": 95.27, "height": 35.03, "scaleX": 1, "scaleY": 1, "angle": 0 }, "visualBounds": { "left": 27.02, "top": 152.17, "width": 99.4, "height": 37.2 }, "content": { "text": "[REDACTED:len3]", "textLen": 3 } },
+    { "identity": { "index": 5, "side": "front", "kind": "text", "isText": true, "subType": "text", "runtimeId": "sess-uuid-b", "persistedId": "9B5E0D266C674E5A8FD0110F3054B80D", "identityKind": "persisted-candidate", "type": "textbox" }, "geometry": { "left": 55.35, "top": 270.32, "width": 96, "height": 16.95, "scaleX": 1, "scaleY": 1, "angle": 0 }, "visualBounds": { "left": 57.15, "top": 279.11, "width": 100.15, "height": 18.53 }, "content": { "text": "[REDACTED:len11]", "textLen": 11 } },
+    { "identity": { "index": 8, "side": "front", "kind": "text", "isText": true, "subType": "text", "runtimeId": "sess-uuid-c", "persistedId": "82DBF6FD13B14175B652C77D7CE79660", "identityKind": "persisted-candidate", "type": "textbox" }, "geometry": { "left": 26.17, "top": 193.36, "width": 98.64, "height": 18.08, "scaleX": 1, "scaleY": 1, "angle": 0 }, "visualBounds": { "left": 27.02, "top": 199.64, "width": 102.88, "height": 19.7 }, "content": { "text": "[REDACTED:len4]", "textLen": 4 } },
+    { "identity": { "index": 10, "side": "front", "kind": "text", "isText": true, "subType": "text", "runtimeId": "sess-uuid-d", "persistedId": "1B6A503A48BD4A8D9978905642CE57B0", "identityKind": "persisted-candidate", "type": "textbox" }, "geometry": { "left": 55.35, "top": 310.05, "width": 257, "height": 16.95, "scaleX": 1, "scaleY": 1, "angle": 0 }, "visualBounds": { "left": 57.15, "top": 320.12, "width": 266.39, "height": 18.53 }, "content": { "text": "[REDACTED:len19]", "textLen": 19 } }
+  ],
+  "nonTextSamples": [
+    { "identity": { "index": 2, "side": "front", "kind": "graphic", "isText": false, "subType": "svg", "type": "path" }, "geometry": { "left": 498.4, "top": 83.23, "width": 425.2, "height": 157.37, "scaleX": 0.8103, "scaleY": 0.8103, "angle": 105 } },
+    { "identity": { "index": 13, "side": "front", "kind": "line", "isText": false, "subType": null, "type": "line" }, "geometry": { "left": 6.52, "top": 6.52, "width": 585.96, "height": 0, "scaleX": 1, "scaleY": 1, "angle": 0 } }
+  ]
+}
