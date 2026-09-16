@@ -1,0 +1,11 @@
+{
+  "source": "Stage 5.2 脱敏 fixture（对应真实 Canvas 619.5x376.86 上 4 个 textbox 的视觉区域；文本已 REDACTED，仅代表 OCR 输出的坐标/置信度结构）",
+  "redacted": true,
+  "imageSize": { "width": 619.5, "height": 376.86 },
+  "candidates": [
+    { "text": "[REDACTED_NAME]", "bbox": { "x": 27, "y": 152, "width": 99, "height": 37 }, "confidence": 0.98, "source": "fixture" },
+    { "text": "[REDACTED_PHONE]", "bbox": { "x": 57, "y": 279, "width": 100, "height": 19 }, "confidence": 0.94, "source": "fixture" },
+    { "text": "[REDACTED_TITLE]", "bbox": { "x": 27, "y": 200, "width": 103, "height": 20 }, "confidence": 0.9, "source": "fixture" },
+    { "text": "[REDACTED_ADDRESS]", "bbox": { "x": 57, "y": 320, "width": 266, "height": 19 }, "confidence": 0.88, "source": "fixture" }
+  ]
+}
