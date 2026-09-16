@@ -1,0 +1,112 @@
+{
+ "ts": "2026-09-16T03:38:28.487Z",
+ "steps": [
+  {
+   "n": "nav",
+   "ok": "PASS"
+  },
+  {
+   "n": "editor-ready",
+   "ok": "PASS"
+  },
+  {
+   "n": "reference-image-added",
+   "ok": "PASS"
+  },
+  {
+   "n": "mapper-candidates",
+   "ok": "PASS"
+  },
+  {
+   "n": "matcher-per-candidate",
+   "ok": "PASS"
+  },
+  {
+   "n": "reconstruct-exec",
+   "ok": "PASS"
+  },
+  {
+   "n": "reconstruct-created-count",
+   "ok": "PASS"
+  },
+  {
+   "n": "created-identity-clean",
+   "ok": "PASS"
+  },
+  {
+   "n": "created-editable-textbox",
+   "ok": "PASS"
+  },
+  {
+   "n": "created-font-family",
+   "ok": "PASS"
+  },
+  {
+   "n": "group-ungroup",
+   "ok": "PASS"
+  },
+  {
+   "n": "reference-image-kept",
+   "ok": "PASS"
+  },
+  {
+   "n": "rollback-created-removed",
+   "ok": "PASS"
+  },
+  {
+   "n": "rollback-restored",
+   "ok": "PASS"
+  }
+ ],
+ "errors": [],
+ "candidateSummary": [
+  {
+   "text": "测试名片",
+   "status": "NOT_FOUND",
+   "score": 0.3537140969905896,
+   "selectedIndex": null,
+   "canvasBbox": {
+    "x": 180,
+    "y": 63,
+    "w": 60,
+    "h": 16.5
+   }
+  },
+  {
+   "text": "行业方案专家",
+   "status": "NOT_FOUND",
+   "score": 0.3342843682628448,
+   "selectedIndex": null,
+   "canvasBbox": {
+    "x": 177,
+    "y": 106.2,
+    "w": 66,
+    "h": 12.1
+   }
+  },
+  {
+   "text": "电话 13800138000",
+   "status": "NOT_FOUND",
+   "score": 0.37537250443801884,
+   "selectedIndex": null,
+   "canvasBbox": {
+    "x": 161.9,
+    "y": 146.2,
+    "w": 96.2,
+    "h": 12.1
+   }
+  },
+  {
+   "text": "深圳市南山区测试路1号",
+   "status": "NOT_FOUND",
+   "score": 0.3945989778093673,
+   "selectedIndex": null,
+   "canvasBbox": {
+    "x": 151.8,
+    "y": 186.2,
+    "w": 116.5,
+    "h": 12.1
+   }
+  }
+ ]
+}

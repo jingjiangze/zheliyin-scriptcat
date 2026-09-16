@@ -1,0 +1,221 @@
+{
+ "ts": "2026-09-16T03:38:28.487Z",
+ "stage": "Stage 5.3 real-reconstruction",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "reference-image-added",
+   "ok": "PASS",
+   "detail": "count 21->22 natural=600x400",
+   "evidence": "REAL_IMAGE"
+  },
+  {
+   "name": "mapper-candidates",
+   "ok": "PASS",
+   "detail": "candidates=4 widths=60,66,96.2,116.5",
+   "evidence": "IMAGE_COORDINATE:§十五/§十六"
+  },
+  {
+   "name": "matcher-per-candidate",
+   "ok": "PASS",
+   "detail": "[{\"s\":\"NOT_FOUND\",\"i\":null},{\"s\":\"NOT_FOUND\",\"i\":null},{\"s\":\"NOT_FOUND\",\"i\":null},{\"s\":\"NOT_FOUND\",\"i\":null}]",
+   "evidence": "OBJECT_MATCHER:§十九"
+  },
+  {
+   "name": "reconstruct-exec",
+   "ok": "PASS",
+   "detail": "matchedOps=[] created=[{\"t\":\"textbox\",\"f\":\"思源黑体 Regular\",\"fs\":6,\"edit\":true},{\"t\":\"textbox\",\"f\":\"思源黑体 Regular\",\"fs\":5,\"edit\":true},{\"t\":\"textbox\",\"f\":\"思源黑体 Regular\",\"fs\":5,\"edit\":true},{\"t\":\"textbox\",\"f\":\"思源黑体 Regular\",\"fs\":5,\"edit\":true}]",
+   "evidence": "REAL_TEXTBOX:§二十三/§二十六"
+  },
+  {
+   "name": "reconstruct-created-count",
+   "ok": "PASS",
+   "detail": "created=4 planned=4",
+   "evidence": "§二十五"
+  },
+  {
+   "name": "created-identity-clean",
+   "ok": "PASS",
+   "detail": "created markuuid=[null,null,null,null]",
+   "evidence": "CREATION_SAFETY:§5.1"
+  },
+  {
+   "name": "created-editable-textbox",
+   "ok": "PASS",
+   "detail": "types=[\"textbox/edit:true\",\"textbox/edit:true\",\"textbox/edit:true\",\"textbox/edit:true\"]",
+   "evidence": "TEXT_EDITABLE:§八十二"
+  },
+  {
+   "name": "created-font-family",
+   "ok": "PASS",
+   "detail": "fonts=[\"思源黑体 Regular\",\"思源黑体 Regular\",\"思源黑体 Regular\",\"思源黑体 Regular\"]",
+   "evidence": "FONT:§二十六"
+  },
+  {
+   "name": "group-ungroup",
+   "ok": "PASS",
+   "detail": "grouped=true ungrouped=true members=4",
+   "evidence": "REAL_GROUP:§三十六/§三十七"
+  },
+  {
+   "name": "reference-image-kept",
+   "ok": "PASS",
+   "detail": "imageCount=4 refKept=true",
+   "evidence": "REFERENCE_IMAGE_SAFE:§四十一"
+  },
+  {
+   "name": "rollback-created-removed",
+   "ok": "PASS",
+   "detail": "createdRemoved=4 count=23 texts=4",
+   "evidence": "§四十二/§四十三 cleanup"
+  },
+  {
+   "name": "rollback-restored",
+   "ok": "PASS",
+   "detail": "count=21 texts=[\"简小设\",\"18888888\",\"客户经理\",\"山东省济南市简设\"] images=3",
+   "evidence": "REAL_ROLLBACK:§四十三 §三十六 zero residual"
+  }
+ ],
+ "errors": [],
+ "candidates": [
+  {
+   "text": "测试名片",
+   "status": "NOT_FOUND",
+   "score": 0.3537140969905896,
+   "selectedIndex": null,
+   "canvasBbox": {
+    "x": 180,
+    "y": 63,
+    "w": 60,
+    "h": 16.5
+   }
+  },
+  {
+   "text": "行业方案专家",
+   "status": "NOT_FOUND",
+   "score": 0.3342843682628448,
+   "selectedIndex": null,
+   "canvasBbox": {
+    "x": 177,
+    "y": 106.2,
+    "w": 66,
+    "h": 12.1
+   }
+  },
+  {
+   "text": "电话 13800138000",
+   "status": "NOT_FOUND",
+   "score": 0.37537250443801884,
+   "selectedIndex": null,
+   "canvasBbox": {
+    "x": 161.9,
+    "y": 146.2,
+    "w": 96.2,
+    "h": 12.1
+   }
+  },
+  {
+   "text": "深圳市南山区测试路1号",
+   "status": "NOT_FOUND",
+   "score": 0.3945989778093673,
+   "selectedIndex": null,
+   "canvasBbox": {
+    "x": 151.8,
+    "y": 186.2,
+    "w": 116.5,
+    "h": 12.1
+   }
+  }
+ ],
+ "execution": {
+  "matched": [],
+  "createdPhase2": [
+   {
+    "text": "测试名片",
+    "type": "textbox",
+    "fontFamily": "思源黑体 Regular",
+    "fontSize": 6,
+    "editable": true,
+    "visualBounds": {
+     "left": 185.85,
+     "top": 65.0475,
+     "width": 62.982500000000016,
+     "height": 43.874641999999994
+    },
+    "targetHeight": 16.5,
+    "markuuid": null,
+    "uuid": null
+   },
+   {
+    "text": "行业方案专家",
+    "type": "textbox",
+    "fontFamily": "思源黑体 Regular",
+    "fontSize": 5,
+    "editable": true,
+    "visualBounds": {
+     "left": 182.7525,
+     "top": 109.65149999999998,
+     "width": 69.17750000000001,
+     "height": 31.274011999999985
+    },
+    "targetHeight": 12.100000000000009,
+    "markuuid": null,
+    "uuid": null
+   },
+   {
+    "text": "电话 13800",
+    "type": "textbox",
+    "fontFamily": "思源黑体 Regular",
+    "fontSize": 5,
+    "editable": true,
+    "visualBounds": {
+     "left": 167.15534729003906,
+     "top": 150.9515,
+     "width": 100.37180541992188,
+     "height": 31.27401199999997
+    },
+    "targetHeight": 12.100000000000023,
+    "markuuid": null,
+    "uuid": null
+   },
+   {
+    "text": "深圳市南山区测试",
+    "type": "textbox",
+    "fontFamily": "思源黑体 Regular",
+    "fontSize": 5,
+    "editable": true,
+    "visualBounds": {
+     "left": 156.70733459472658,
+     "top": 192.2515,
+     "width": 121.26783081054688,
+     "height": 31.27401199999997
+    },
+    "targetHeight": 12.099999999999994,
+    "markuuid": null,
+    "uuid": null
+   }
+  ],
+  "count": 26
+ },
+ "grouping": {
+  "grouped": true,
+  "ungrouped": true,
+  "memberCount": 4,
+  "afterCount": 27
+ },
+ "referenceImage": {
+  "imageCount": 4,
+  "refKept": true
+ }
+}
