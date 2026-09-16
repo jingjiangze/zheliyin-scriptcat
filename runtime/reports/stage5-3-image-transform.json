@@ -1,0 +1,99 @@
+{
+ "ts": "2026-09-16T03:32:55.070Z",
+ "stage": "Stage 5.3 image-upload",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "test-image-drawn",
+   "ok": "PASS",
+   "detail": "img dataUrl len=31462 rows=4",
+   "evidence": "SYNTHETIC_FIXTURE"
+  },
+  {
+   "name": "tmp-png-written",
+   "ok": "PASS",
+   "detail": "tmp=C:\\Users\\Administrator\\AppData\\Roaming\\TRAE SOLO CN\\ModularData\\ai-agent\\work-mode-projects\\6aa22302abee4590a2cc71da\\runtime\\tmp-test-card.png",
+   "evidence": "n/a"
+  },
+  {
+   "name": "image-added-to-canvas",
+   "ok": "PASS",
+   "detail": "method=FABRIC_IMAGE_NATIVE count=22",
+   "evidence": "REAL_IMAGE"
+  },
+  {
+   "name": "image-source-audit",
+   "ok": "PASS",
+   "detail": "{\"left\":60,\"top\":40,\"width\":600,\"height\":400,\"scaleX\":0.5,\"scaleY\":0.5,\"angle\":0,\"naturalWidth\":600,\"naturalHeight\":400,\"imageCount\":4}",
+   "evidence": "§十四 ImageSource"
+  },
+  {
+   "name": "cleanup-image",
+   "ok": "PASS",
+   "detail": "count=21",
+   "evidence": "§三十六 rollback"
+  }
+ ],
+ "errors": [],
+ "nativeFileInputs": [
+  {
+   "accept": "image/jpeg,image/png",
+   "multiple": false,
+   "visible": false
+  },
+  {
+   "accept": "",
+   "multiple": true,
+   "visible": false
+  },
+  {
+   "accept": "",
+   "multiple": true,
+   "visible": false
+  },
+  {
+   "accept": "",
+   "multiple": true,
+   "visible": false
+  },
+  {
+   "accept": "image/jpeg,image/png,image/gif",
+   "multiple": false,
+   "visible": false
+  },
+  {
+   "accept": "image/jpeg,image/png",
+   "multiple": true,
+   "visible": false
+  }
+ ],
+ "fabricAdd": {
+  "ok": true,
+  "naturalWidth": 600,
+  "naturalHeight": 400,
+  "count": 22
+ },
+ "imageSource": {
+  "left": 60,
+  "top": 40,
+  "width": 600,
+  "height": 400,
+  "scaleX": 0.5,
+  "scaleY": 0.5,
+  "angle": 0,
+  "naturalWidth": 600,
+  "naturalHeight": 400,
+  "imageCount": 4
+ }
+}
