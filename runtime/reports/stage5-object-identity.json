@@ -72,7 +72,7 @@
    "text": "简小设"
   },
   "finding": {
-   "PERSISTED_EDITOR_ID": "markuuid（textbox 唯一、跨 reload 稳定，实测 AD4636D5...）；SVG 组内共享 → 对象级唯一仅对独立文字/图形成立",
+   "STABLE_PERSISTED_CANDIDATE": "markuuid（textbox 唯一、跨 reload 稳定，实测 AD4636D5...）；SVG 组内共享 → 对象级唯一仅对独立文字/图形成立，非 universal",
    "LOCAL_RUNTIME_ID": "uuid（每次页面会话重新生成）+ array index（位次），仅会话内可作运行引用，不得跨会话持久",
    "id 字段": "SVG 图层名（'图层_1'），组内重复，不可作 identity"
   }

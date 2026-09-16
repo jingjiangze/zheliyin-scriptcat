@@ -72,10 +72,10 @@
  "errors": [],
  "summary": {
   "finding": {
-   "uuid": "会话级实例 id（reload 后重新生成，两次独立会话观察也证实不同）；不可作跨会话 PERSISTED id",
-   "markuuid": "reload 后保持，可跨会话定位对象（文字层唯一；SVG 组内共享需注意）——PERSISTED_EDITOR_ID 候选（文字层）",
-   "text": "未保存修改 reload 后恢复模板原值（服务端模板字段；保存时才持久化）",
-   "geometry/style": "reload 后恢复模板值（模板级持久字段）"
+   "uuid": "Session Runtime Identity（reload 后重新生成，两次独立会话观察也证实不同）；不可作跨会话持久 id",
+   "markuuid": "reload 后保持，可跨会话定位对象（文字层唯一；SVG 组内共享需注意）——Stable / Persisted Candidate（文字层）",
+   "text": "未保存修改 reload 后恢复模板原值（reload stability 已证；server-save persistence 未验证）",
+   "geometry/style": "reload 后恢复模板值（模板级字段，reload stability 已证）"
   }
  }
 }

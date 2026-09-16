@@ -50,7 +50,7 @@ Editor Object Audit + Object Model 建设 · 真实折立印在线设计器对�
 以 141 属性实测 + refresh/mutation 实证，四类：A 稳定业务 / B 渲染几何 / C Fabric 运行时 / D 编辑器运行时 / E 自定义未知。
 
 ### A. Stable / Persisted（刷新后仍存在，业务对象）
-`markuuid`(跨 reload 稳定+刷新一致) · `locationX/Y/Width/Height/Rotation`(刷新还原模板值) · `layerNum` · `mediaMediaType` · `isDesign/isEdit/isLineText/isComposite` · `fontFamily/fontSize/fontWeight/fontStyle/lineHeight/charSpacing` · `fill` · 文字内容 `text`（未保存修改 reload 还原，保存时才落库）
+`markuuid`(跨 reload 稳定+刷新一致) · `locationX/Y/Width/Height/Rotation`(刷新还原模板值) · `layerNum` · `mediaMediaType` · `isDesign/isEdit/isLineText/isComposite` · `fontFamily/fontSize/fontWeight/fontStyle/lineHeight/charSpacing` · `fill` · 文字内容 `text`（未保存修改 reload 还原模板值 · reload stability 已证，server-save persistence 未验证）
 > 证据：refresh-persistence（geometry/style/text 全部还原、markuuid 不还原——保持）。
 
 ### B. Render / Geometry（显示位置尺寸变换，刷新按模板还原）
@@ -69,7 +69,7 @@ Editor Object Audit + Object Model 建设 · 真实折立印在线设计器对�
 
 ## 6. Identity（§十四~§十六，实测）
 
-- **PERSISTED_EDITOR_ID = `markuuid`**：跨 reload 稳定（AD4636D5… 两次会话一致）；textbox 4/4 唯一；**SVG 组内共享**（3D84D06A… 出现在 image/path/group/rect 4 对象）→ 对象级唯一仅对独立文字/图形成立。
+- **Stable / Persisted Candidate = `markuuid`**：跨 reload 稳定（AD4636D5… 两次会话一致）；textbox 4/4 唯一；**SVG 组内共享**（3D84D06A… 出现在 image/path/group/rect 4 对象）→ 对象级唯一仅对独立文字/图形成立（非 universal persisted id）。
 - **LOCAL_RUNTIME_ID = `uuid`**：会话级实例 id（三次会话三个值 + reload 重新生成）；全画布 12/12 唯一。仅会话内可作运行引用。
 - `id`("图层_1")：SVG 图层名，组内重复。`array index`：z 序位次，插入/删除移位，均不可作持久 identity。
 - mutation 稳定性：setText 前后 identity 零变化（markuuid/uuid/index 全不变）。
@@ -123,7 +123,7 @@ Mutation:            PASS（setText 仅 text+height）
 Rollback:            PASS（零残留）
 Production Changes:  零行为变更；新增 object-model/adapter（未挂接）+ 测试基建
 Important Findings:
-  - markuuid = 唯一跨会话持久 identity（textbox）；SVG 组内共享需分段处理
+  - markuuid = Stable/Persisted Candidate（textbox 唯一；SVG 组共享，非 universal）
   - uuid = 会话级实例 id，不可持久（三次会话三条 uuid）
   - textbox setText 自动换行（height 自适应，width 固定）→ OCR 需重算高度 bbox
   - back 画布不存在（当前模板单面）→ apply side=back 语义需模板适配

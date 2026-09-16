@@ -20,6 +20,14 @@ t("diff.not-changed", d.changedFields.indexOf("fontSize") < 0 && d.changedFields
 const eps = diff.diff(base, Object.assign({}, base, { left: base.left + 1e-10 }));
 t("diff.num-eps", eps.changedFields.length === 0);
 
+// ---- 类型安全（§六.4）：类型不同必须判 changed，防止 1==="1" / true==="true" ----
+const t1 = diff.diff(base, Object.assign({}, base, { fontSize: "31" }));
+t("diff.type-string-vs-number", t1.changedFields.indexOf("fontSize") >= 0);
+const t2 = diff.diff(base, Object.assign({}, base, { scaleX: true }));
+t("diff.type-bool-vs-number", t2.changedFields.indexOf("scaleX") >= 0);
+const t3 = diff.diff(base, Object.assign({}, base, { fontSize: 31 }));
+t("diff.same-type-stable", t3.changedFields.indexOf("fontSize") < 0);
+
 // ---- rollback 后零残留（§三十六 实测）----
 const restored = diff.diff(base, Object.assign({}, base, { text: "简小设", height: 35.03 }));
 t("diff.rollback-zero", restored.changedFields.length === 0);

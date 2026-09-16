@@ -42,12 +42,12 @@ Stage 5.0 · 折立印真实编辑器对象数据模型规范
 
 | 候选 | 实测 | 用途 |
 |---|---|---|
-| `markuuid` | 跨 reload 稳定；textbox 4/4 唯一；SVG 组内共享 | **PERSISTED_EDITOR_ID（对象定位首选，文字层成立）** |
+| `markuuid` | 跨 reload 稳定；textbox 4/4 唯一；SVG 组内共享 | **Stable / Persisted Candidate（对象定位首选，文字层成立；非 universal persisted id）** |
 | `uuid` | 会话级实例 id（每次 reload/会话重新生成）；全画布 12/12 唯一 | LOCAL_RUNTIME_ID（会话内引用） |
 | `id`（"图层_1"） | SVG 图层名，组内重复 | 不可作 identity |
 | array `index` | fabric 渲染 z 序位次，插入/删除即移位 | 仅当前快照内枚举用 |
 
-规则：跨会话持久定位优先 markuuid；同会话定位可用 uuid 或 index；**不得**将 uuid/index 声明为持久身份（§四十八）。
+规则：跨会话定位优先 markuuid（Stable/Persisted Candidate）；同会话定位可用 uuid 或 index；**不得**将 uuid/index 声明为持久身份（§四十八）。术语（§5.1）：reload stability（已证）≠ server-save persistence（未验证）。
 
 ## 4. Geometry 语义（§二十一~§二十三）
 

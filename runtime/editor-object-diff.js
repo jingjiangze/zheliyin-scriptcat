@@ -16,10 +16,20 @@ const FIELDS = {
 };
 
 const NUM_EPS = 1e-9;
+// 类型安全比较（§六.4）：类型不同 → 直接判 changed（防 1 === "1"、true === "true"）；
+// 数字字段用 epsilon；字符串/布尔严格相等；同基对象深比较（白名单值均为可序列化标量）。
 function same(a, b) {
   if (a == null || b == null) return a === b;
-  if (typeof a === "number" && typeof b === "number") return Math.abs(a - b) < NUM_EPS;
-  return String(a) === String(b);
+  const ta = typeof a;
+  const tb = typeof b;
+  if (ta !== tb) return false;
+  switch (ta) {
+    case "number": return Math.abs(a - b) < NUM_EPS;
+    case "string":
+    case "boolean": return a === b;
+    case "object": return JSON.stringify(a) === JSON.stringify(b);
+    default: return a === b;
+  }
 }
 
 // 从 raw object 抽取白名单快照（浅层）
