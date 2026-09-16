@@ -1,0 +1,25 @@
+{
+ "ts": "2026-09-16T08:51:29.089Z",
+ "stage": "STAGE-5.5B-P2-AUDIT",
+ "steps": [
+  {
+   "name": "launch+scriptcat",
+   "ok": "PASS",
+   "detail": "",
+   "evidence": "REAL_SCRIPT_CAT_EXTENSION"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO defined",
+   "evidence": "EDITOR_READY"
+  },
+  {
+   "name": "panel-audit",
+   "ok": "PASS",
+   "detail": "{\"innerWidth\":1440,\"candidates\":[{\"tag\":\"div\",\"id\":null,\"cls\":\"bg-material\",\"rect\":{\"left\":1550,\"top\":0,\"width\":260,\"height\":900},\"text\":\"常用素材\\n                \\n                    \\n                 \",\"path\":\"html.ovh.wf-medium-n4-active.wf--n4-active > body > section.diyMain > div.rightPageBar.rightBar > div.bg-material\",\"visible\":false}],\"foundProbes\":[{\"sel\":\".rightBar\",\"rect\":{\"left\":1250,\"width\":190,\"height\":849},\"text\":\">\\n        \\n        \\n            \\n       \"}],\"bodyChildren\":242}",
+   "evidence": "NATIVE_PANEL_DOM"
+  }
+ ],
+ "errors": []
+}
