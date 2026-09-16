@@ -19,8 +19,9 @@
 | image mapper | **PASS** | UNIT | `tests/editor-object-model/image-mapper.test.js` | scale 0.5/1/2 + rot45 AABB + 归一化往返 + 非法输入，10 断言 |
 | fixture reconstruction | **PASS** | **FIXTURE** | `runtime/reports/stage5-3-reconstruction.json` `stage5-4-product-flow.json` | **输入为 FIXTURE_OCR**（bbox 来自合成图已知绘制坐标）；链路本身在真实编辑器执行 |
 | native OCR access | **BLOCKED** | REAL（探测结论） | `runtime/reports/stage5-3-native-ocr*.json` `stage5-4-native-ocr.json` | 原生「文字识别(Alt+Q)」面板存在，但绑定"相框"素材交互；Stage 5.4 四种深度 hook 实验后：无网络请求、无 postMessage、canvas 无变化、结果值不进 DOM |
-| real OCR | **TODO** | — | — | 依赖上游；Local OCR（tesseract.js）已评估但**未接入** → `DEFERRED → Stage 5.5` |
-| real image input | **PARTIAL** | REAL / SYNTHETIC | `runtime/reports/stage5-3-image-transform.json` `stage5-4-real-image-input.json` | **真机**粘贴/拖拽可用；**harness 自动化**三种注入（ClipboardEvent / CDP+Ctrl+V / setInputFiles）均不被受理 → 记录为 automation limitation；`fabric.Image` 原创建为已验证回退（SYNTHETIC 600×400 图） |
+| **real OCR（provider）** | **PASS** | REAL | `runtime/reports/stage5-5-ocr-feasibility.json` `stage5-5-real-ocr-demo.json` | **本地 tesseract.js 已接入并实测**：chi_sim，18 words / bbox 18/18 / avg-conf **90.4** / 首跑 ~3s / **零上传、零 key、全本地 WASM**。原生路径仍 BLOCKED，本地路径为已选定替代 |
+| **real OCR → 重建（demo 级）** | **PASS** | REAL | `runtime/reports/stage5-5-final-gate.json` | `BASIC_REAL_OCR_DEMO = PASS`：真实 OCR 6 行候选 → mapper(1000×800 natural × 0.45) → matcher（**电话行 MATCHED 复用模板槽**，其余 NOT_FOUND 保护）→ 6 个真 textbox → 字号误差 **3.3%** → 参考图保留 → rollback 21/4/3 零残留，`errors=0` |
+| real image input | **PARTIAL** | REAL / SYNTHETIC | `runtime/reports/stage5-3-image-transform.json` `stage5-4-real-image-input.json` | **真机**粘贴/拖拽可用；**harness 自动化**三种注入（ClipboardEvent / CDP+Ctrl+V / setInputFiles）均不被受理 → 记录为 automation limitation；另有 Stage 5.5 注记：编辑器页 CDN script 注入被环境静默拦截 → 生产改走 `GM_addElement`（机制已证，**待真机一键验证**） |
 | real editable textbox | **PASS** | REAL | `stage5-3-reconstruction.json` `stage5-4-product-flow.json` | 真实编辑器内创建 `type=textbox` / `editable=true` / `markuuid=null`（identity clean），4/4 |
 | grouping | **PASS** | REAL | `runtime/reports/stage5-3-grouping.json` | `fabric.Group` 原生编组 → destroy 解组 → 成员独立 |
 | rollback | **PASS** | REAL | `stage5-4-product-flow.json` `stage5-object-mutation.json` | 创建后清理 + reload → 21 对象 / 4 原文本 / 3 图，零残留；`setText` mutation diff 仅 `[text,height]`，restore 后 diff `[]` |
@@ -51,6 +52,8 @@
 | `extension/src/editor/object-adapter.js` | ✅ | ✅ | ❌ 否（**未挂接**） |
 | `extension/src/editor/object-matcher.js` | ✅ | ✅ | ❌ 否（**未挂接**） |
 | `extension/src/ocr/ocr-model.js` | ✅ | ✅ | ❌ 否（**未挂接**） |
+| `extension/src/ocr/ocr-provider.js` | ✅ | ✅ | ❌ 否（**未挂接**） |
+| `extension/src/ocr/tesseract-loader.js` | ✅ | ✅ | ❌ 否（**未挂接**） |
 | `extension/src/ocr/image-mapper.js` | ✅ | ✅ | ❌ 否（**未挂接**） |
 
 > **含义**：Stage 5.x 的对象/OCR 能力**目前只存在于审计链（`runtime/stage5-*.js`）中**。用户在浏览器里正常使用助手时，走的是 legacy 产品链，**不会触发** OCR / matcher / mapper。
@@ -61,25 +64,25 @@
 ## 3. Gate 现状
 
 ```text
-分支:        stage-4.1-runtime-validation @ 3becf04
-最后阶段:    Stage 5.4 (Native OCR Result Access + Real Image Input + Reconstruction Accuracy)
-Gate:        CONDITIONAL-GO
+分支:        stage-4.1-runtime-validation @ 4cb0819
+最后阶段:    Stage 5.5 (Real OCR Provider + Basic Real OCR Demo)
+Gate:        GO
 P0:          0
 P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
-下一阶段:    Stage 5.5（Local / Native OCR provider 真实接入 + 真实用户图片验证）
-             —— 已定义，未授权启动
+下一阶段:    Stage 5.6（字号精确）—— 前置：GM_addElement 引擎注入真机验证
+已定序路线:  5.6 字号精确 → 5.7 颜色/粗细 → 5.8 旋转 → 5.9 多行/段落 → 5.10 复杂布局
+             → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview
 ```
 
-**CONDITIONAL-GO 的条件项**（按 `docs/EVIDENCE_POLICY.md` §3，均为已登记项，非缺陷）：
+**Stage 5.5 遗留条件项**（按 `docs/EVIDENCE_POLICY.md` §3 如实登记）：
 
 | 条件 | 状态 | 目标 |
 |---|---|---|
-| Local OCR provider（tesseract.js）接入 | 已评估未接入（体积 ~20MB / 中文质量 / 集成成本） | Stage 5.5 决策点 |
-| Native OCR 结果程序化读取 | BLOCKED（相框交互绑定） | 可行时优先复用 |
-| OCR 来源为 fixture | 已明确标注 `FIXTURE_OCR` | Stage 5.5 换真实 provider |
-| 多行文本字号反推 | DEFERRED（需行数估计） | Stage 5.5 |
-| native 图片输入自动化 | PARTIAL（harness 限制） | 真机验证优先 |
-| multi-template 证据 | PARTIAL（单模板） | 待样本 |
+| 引擎注入为 `GM_addElement` / side-page（非页面内直接注入） | 机制已证，**待真机一键验证** | Stage 5.6 前置 |
+| 行聚合词序质量（tesseract 原生 lines 已优先，词序仍为已知弱项） | 已记录 | Stage 5.9 多行/段落 |
+| 真实用户在网页内粘贴图片 | 待真机验证 | — |
+| `ocr-provider.js` / `tesseract-loader.js` 未挂接生产 | 与 5.0–5.4 同 | 产品化阶段 |
+| multi-template 证据 | `PARTIAL`（单模板） | 待样本 |
 
 ---
 
@@ -87,12 +90,12 @@ P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
 
 | | `main` | `stage-4.1-runtime-validation` |
 |---|---|---|
-| HEAD | `7446faa` | `3becf04` |
-| 最后阶段 | Stage 4.0 | **Stage 5.4** |
-| 跟踪文件 | 44 | **173** |
-| 关系 | 是后者的**严格祖先** | 领先 58 commit / 落后 0（**可快进合并**） |
+| HEAD | `7446faa` | `4cb0819` |
+| 最后阶段 | Stage 4.0 | **Stage 5.5** |
+| 跟踪文件 | 44 | **183** |
+| 关系 | 是后者的**严格祖先** | 领先 64 commit / 落后 0（**可快进合并**） |
 
-> ⚠️ **GitHub 默认展示的是 `main`**，它**不包含**任何 Stage 5.x / RUNTIME-8.x / OCR / object-model 代码。
+> ⚠️ **GitHub 默认展示的是 `main`**，它**不包含**任何 Stage 5.x / RUNTIME-8.x / OCR / object-model / ocr-provider 代码。
 > 任何人从默认分支阅读本仓库，都会得到一个"只有 Stage 4.0"的错误印象。
 > 这是当前仓库**最大的信息结构风险**，处置建议见 `docs/PARALLEL_DEVELOPMENT.md` §5。
 
@@ -102,10 +105,11 @@ P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
 
 | 层 | 套件 | 结果 | 执行方式 |
 |---|---|---|---|
-| UNIT | `tests/editor-object-model/` 6 套件 | **110 断言 ALL PASS**（2026-09-16 由治理线复跑确认） | `node tests/editor-object-model/run.js` |
-| UNIT | `field-core` 43 / `config-core` 15 / `ai` 18 / `editor-bridge` 18 | PASS（历史报告） | headless 浏览器 |
-| INTEGRATION | `bridge-lifecycle` 6/6 ×3 稳定；`wiring-check` 5/5 | PASS（历史报告） | headless 浏览器 |
-| REAL | `npm run runtime:scriptcat` 全链 18 步 | PASS，`errors=0`（历史报告） | Playwright + 真实 ScriptCat |
+| UNIT | `tests/editor-object-model/` 8 套件 | **132 断言 ALL PASS**（2026-09-16 由治理线复跑确认） | `node tests/editor-object-model/run.js` |
+| UNIT | `field-core` 43 / `config-core` 15 / `ai` 18 / `editor-bridge` 18 | PASS（2026-09-16 治理线复跑确认） | headless 浏览器 |
+| INTEGRATION | `bridge-lifecycle` 6/6；`wiring-check` 5/5 | PASS（2026-09-16 治理线复跑确认） | headless 浏览器 |
+| REAL | `npm run runtime:scriptcat` 全链 18 步 | PASS，`errors=0`（历史报告，治理线未复跑） | Playwright + 真实 ScriptCat |
+| REAL | Stage 5.5 `BASIC_REAL_OCR_DEMO` | PASS，`errors=0`（历史报告，治理线未复跑） | Playwright + 真实编辑器 + tesseract |
 
 明细与复现命令见 `docs/TEST_MATRIX.md`。
 
