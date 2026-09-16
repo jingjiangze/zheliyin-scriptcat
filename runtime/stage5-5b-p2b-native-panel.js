@@ -24,6 +24,7 @@ const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user
   const report = { ts: new Date().toISOString(), stage: "STAGE-5.5B-P2B", steps: [], errors: [] };
   const step = (n, ok, d, ev) => { report.steps.push({ name: n, ok: ok ? "PASS" : "FAIL", detail: String(d || "").slice(0, 800), evidence: ev || "n/a" }); if (!ok) report.errors.push(n); };
   const userScriptSrc = fs.readFileSync(USERSCRIPT_PATH, "utf8");
+  const cn = [];
   let browser = null;
   try {
     browser = await chromium.launchPersistentContext(path.join(__dirname, "browser", "profile-usc3"), {
@@ -42,10 +43,9 @@ const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user
     } catch (e) {}
     const inst = await adapter.installByCode(optsPage, { uuid: UUID, code: userScriptSrc, upsertBy: "user" }).catch((e) => ({ __err: String(e && e.message || e) }));
     step("install-userscript", !inst.__err, inst.__err || "status=" + inst.status, "REAL_SCRIPT_CAT_INSTALL");
-    if (inst.__err) { step("fatal", false, "install failed"); process.exit(1); }
+    if (inst.__err) throw new Error("install failed: " + inst.__err); // 走 catch/finally，保证 report 落盘
 
     const page = await browser.newPage();
-    const cn = [];
     page.on("console", (msg) => { const t = String(msg.text()); if (t.indexOf("[zy-ocr]") >= 0) cn.push(t); });
     await page.goto(EDITOR_URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});

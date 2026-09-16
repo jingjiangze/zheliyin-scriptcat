@@ -577,14 +577,17 @@
     return true;
   }
 
-  // SPA 重渲染防护：rightBar 被页面框架重建/移除后重挂工具按钮（抽屉 id 幂等，不重复）
+  // SPA 重渲染防护：rightBar 可能晚于 init 创建或被页面框架重建/移除，
+  // observer 启动时先 ensure 一次，后续 mutation 再补挂（抽屉/按钮均幂等）。
   function observeNativeRemount() {
     if (nativeObs) return;
-    nativeObs = new MutationObserver(() => {
+    const ensure = () => {
       const rightBar = document.querySelector(".rightPageBar.rightBar") || document.querySelector(".rightBar");
-      if (rightBar && !document.getElementById("zy-native-ocr-tool-btn")) mountNativeOcrPanel();
       if (rightBar && !document.getElementById("zy-native-ocr-panel")) renderNativeOcrDrawer();
-    });
+      if (rightBar && !document.getElementById("zy-native-ocr-tool-btn")) mountNativeOcrPanel();
+    };
+    ensure();
+    nativeObs = new MutationObserver(ensure);
     nativeObs.observe(document.body, { childList: true, subtree: true });
   }
 
@@ -1437,8 +1440,9 @@
 
   function initZheliyin() {
     renderPanel(); // 旧浮窗（套版等全部功能，保留为 fallback）
-    // P2-B：原生右栏存在则挂载原生 OCR 抽屉（主 UI）；无右栏时浮窗仍承担 OCR 入口
-    if (mountNativeOcrPanel()) observeNativeRemount();
+    // P2-B：原生右栏存在则优先原生化；rightBar 晚到时由 observer 补挂
+    mountNativeOcrPanel();
+    observeNativeRemount();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initZheliyin);
