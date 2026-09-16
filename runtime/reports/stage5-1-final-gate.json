@@ -1,0 +1,34 @@
+{
+  "stage": "Stage 5.1 Object Identity / Geometry Hardening + Creation Safety Audit",
+  "ts": "2026-09-16",
+  "stage5_closure": "PASS",
+  "identity": "VERIFIED",
+  "persisted_identity": "CANDIDATE",
+  "geometry": "PASS",
+  "rotation": "PASS",
+  "group_geometry": "PASS",
+  "creation_safety": "PASS",
+  "inherit_reference_props": "RESOLVED_CONDITIONAL",
+  "multi_template": "PARTIAL",
+  "unit_tests": "PASS",
+  "real_runtime": "PASS",
+  "rollback": "PASS",
+  "production_changes": [
+    "page-bridge.js inheritReferenceProps skipBox +10 (P1 fix STAGE5.1-CRE-01)",
+    "object-model.js identity runtimeId/persistedId/identityKind + coordinateSpace",
+    "object-adapter.js zyGetVisualBounds (fabric AABB preferred)"
+  ],
+  "important_findings": [
+    "CREATION_IDENTITY_LEAK was real (created.markuuid === reference.markuuid) - P1 - fixed f301ba3, rerun SAFE, full-chain regression PASS",
+    "fabric AABB (getBoundingRect) is the only trustworthy visual bbox for rotated/stroked objects (path 105deg: effective 344x127 vs AABB 220x379)",
+    "line width=|dx| height=|dy|, not bbox; group children are group-local coords (negative offsets measured)",
+    "uuid session-scoped (12 distinct across 3 sessions x 4 textboxes); markuuid stable across 3 sessions (textbox layer)"
+  ],
+  "deferred_risks": [
+    "server-save persistence unverified (reload-stability only)",
+    "multi-template evidence PARTIAL (single reachable template; unknown types listed as UNKNOWN)",
+    "inheritReferenceProps whitelist conversion needs >=2 template samples",
+    "text-inside-group not observed in this template (if present, needs group-transform matcher)"
+  ],
+  "gate": "GO"
+}

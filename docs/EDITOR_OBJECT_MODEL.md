@@ -22,8 +22,8 @@ Stage 5.0 · 折立印真实编辑器对象数据模型规范
 
 ```js
 {
-  identity: { side, index, markuuid, uuid, type, subType, kind, isText },
-  geometry: { left, top, width, height, scaleX, scaleY, angle, skewX, skewY, originX, originY },
+  identity: { side, index, runtimeId, persistedId, identityKind, markuuid, uuid, type, subType, kind, isText },
+  geometry: { left, top, width, height, scaleX, scaleY, angle, skewX, skewY, originX, originY, coordinateSpace },
   style:    { fontFamily, fontSize, fontWeight, fontStyle, lineHeight, charSpacing, textAlign, fill, stroke, strokeWidth },
   content:  { text, textLen },           // 仅 kind=text
   transform:{ visible, opacity, flipX, flipY },
@@ -32,6 +32,8 @@ Stage 5.0 · 折立印真实编辑器对象数据模型规范
   runtimeFlags:{ isDesign, isEdit, isLineText, isComposite, isPreview, isDisplay, lastSafeText }
 }
 ```
+- `identity.identityKind`（§5.1 分型，不强行统一）：text/image/graphic → `persisted-candidate`；group → `group-shared`；line → `none`。
+- `geometry.coordinateSpace`：`canvas`（顶层对象默认，实测）；group child 由上层标记 `group-local`（§5.1 实测 group child 坐标相对组原点为负偏移）。
 
 约束：
 - **纯数据**：不含 raw Fabric 对象引用，JSON.stringify 可序列化（assertPureData 测试保障）。
@@ -42,17 +44,20 @@ Stage 5.0 · 折立印真实编辑器对象数据模型规范
 
 | 候选 | 实测 | 用途 |
 |---|---|---|
-| `markuuid` | 跨 reload 稳定；textbox 4/4 唯一；SVG 组内共享 | **Stable / Persisted Candidate（对象定位首选，文字层成立；非 universal persisted id）** |
-| `uuid` | 会话级实例 id（每次 reload/会话重新生成）；全画布 12/12 唯一 | LOCAL_RUNTIME_ID（会话内引用） |
+| `markuuid`（= persistedId） | 跨 reload 稳定；textbox 4/4 唯一；SVG 组内共享 | **Stable / Persisted Candidate（text/image/graphic 层成立；group 共享；非 universal）** |
+| `uuid`（= runtimeId） | 会话级实例 id（每次 reload/会话重新生成）；全画布 12/12 唯一 | Session Runtime Identity（会话内引用） |
 | `id`（"图层_1"） | SVG 图层名，组内重复 | 不可作 identity |
 | array `index` | fabric 渲染 z 序位次，插入/删除即移位 | 仅当前快照内枚举用 |
 
-规则：跨会话定位优先 markuuid（Stable/Persisted Candidate）；同会话定位可用 uuid 或 index；**不得**将 uuid/index 声明为持久身份（§四十八）。术语（§5.1）：reload stability（已证）≠ server-save persistence（未验证）。
+规则：跨会话定位优先 persistedId（markuuid，仅对 identityKind=persisted-candidate 类型）；同会话定位可用 runtimeId（uuid）或 index；**不得**将 uuid/index 声明为持久身份（§四十八）。术语（§5.1）：reload stability（已证，3 会话）≠ server-save persistence（未验证）。
 
 ## 4. Geometry 语义（§二十一~§二十三）
 
 - 记录的 left/top/width/height/scaleX/scaleY/angle 为 **Canvas 坐标系真实值**（originX/Y=left/top；refresh 后与模板一致，已验证）。
-- **bbox ≠ width**：有效视觉边界 = `width*scaleX × height*scaleY`，旋转对象需按 angle 展开（真实样本：path index2 angle=105, scale=0.81 实测存在）。
+- **bbox ≠ width**：有效视觉边界 = `width*scaleX × height*scaleY`，旋转对象需按 angle 展开（真实样本：path index2 angle=105, scale=0.81；实测其 fabric AABB = 220.29×378.74，而 effective = 344.56×127.49 —— AABB 必须用 `zyGetVisualBounds(raw)`（fabric getBoundingRect，含 angle/stroke））。
+- **stroke 外扩 AABB**：rect 600×365 的 getBoundingRect = 620.5×377.9（含 stroke/边框外扩；textbox 同理）。
+- **line 几何**：width=|x2-x1|、height=|y2-y1|（8/8 实测），非 bbox 语义 —— Model 对 line 不当作 OCR 目标。
+- **group child 坐标为 group-local**（实测 child left=-40.35/-69.35 相对组原点 277.16），渲染世界坐标 = group 变换 + child 本地坐标。
 - **textbox 高度随文本自动换行**：setText 长文本 → width 不变、height 增长（实测 35.03→563.28）；OCR 原位重建需按新文本重算高度 bbox（§三十八）。
 
 ## 5. 未来 OCR 对接（§五十/§五十三）

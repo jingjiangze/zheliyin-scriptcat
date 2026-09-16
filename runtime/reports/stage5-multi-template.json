@@ -1,0 +1,20 @@
+{
+  "stage": "Stage 5.1 multi-template",
+  "ts": "2026-09-16",
+  "result": "PARTIAL",
+  "reason": "当前账号/Runtime harness 仅有一个真实可访问模板样例（thirdDiyAdd.do 1203177-2114747-999），未发现可安全访问的其它第三方模板 URL 入口；不猜测 URL、不制造模板（§二十六 环境前提）。",
+  "single_template_evidence": {
+    "canvas": "front 619.5 x 376.8625 (single-sided; totalCanvasArray length = 1)",
+    "objectCount": 21,
+    "typeDistribution": { "textbox": 4, "image": 3, "path": 3, "group": 1, "rect": 2, "line": 8 },
+    "textCount": 4,
+    "identity": {
+      "textbox": { "markuuid": "present 4/4 unique (stable across 3 sessions)", "uuid": "present 4/4 session-scoped" },
+      "svg-group": { "markuuid": "shared within group (3D84D06A... over image/path/group/rect)", "id": "\u56fe\u5c42_1 shared" },
+      "line": { "identifiers": "none (uuid/markuuid/id all absent)" }
+    },
+    "geometrySummary": "textbox no rotation scale=1; rotated sample path angle=105 scale=0.81; line width=|x2-x1|; group children group-local coords"
+  },
+  "generalization_guard": "Stage 5.0/5.1 结论仅限定于当前单模板样本；未发现的类型（IText/Text/text-in-group/back-side/multi-canvas）统一标记 UNKNOWN，不推广为模板通用行为。",
+  "deferred": "获取 2-3 个其它真实模板（需用户提供可访问模板 URL 或模板市场入口）后重跑 identity-matrix/geometry-audit 扩大证据。"
+}
