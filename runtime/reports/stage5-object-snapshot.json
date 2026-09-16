@@ -1,0 +1,3346 @@
+{
+ "canvases": [
+  {
+   "side": "front",
+   "width": 619.5,
+   "height": 376.8625,
+   "objectCount": 21,
+   "objects": [
+    {
+     "index": 0,
+     "side": "front",
+     "ctor": "b",
+     "type": "rect",
+     "subType": "shape",
+     "geometry": {
+      "left": -0.5,
+      "top": -0.5,
+      "width": 600,
+      "height": 365,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": false,
+      "evented": false
+     },
+     "style": {
+      "fill": "#ffffff",
+      "stroke": null,
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {
+       "markuuid": ""
+      }
+     },
+     "ownKeys": {
+      "count": 77,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "cacheHeight": 379.8950056310743,
+       "cacheTranslationX": 342.26625462332737,
+       "cacheTranslationY": 208.94750281553715,
+       "cacheWidth": 622.5325092466547,
+       "canvas": "obj:b",
+       "deleteState": false,
+       "dirty": false,
+       "evented": false,
+       "fill": "#ffffff",
+       "height": 365,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": false,
+       "isPreview": true,
+       "layerAlpha": 1,
+       "layerNum": 0,
+       "left": -0.5,
+       "locationFactHeight": 10000,
+       "locationFactWidth": 10000,
+       "locationHeight": 365,
+       "locationRotation": 0,
+       "locationWidth": 600,
+       "locationX": -0.5,
+       "locationY": -0.5,
+       "lockMovementX": true,
+       "lockMovementY": true,
+       "lockRotation": true,
+       "lockScalingX": true,
+       "lockScalingY": true,
+       "lowPixelFlag": false,
+       "markuuid": "",
+       "maskEnable": false,
+       "mediaColor": 16777215,
+       "mediaIsBG": true,
+       "mediaIsFill": true,
+       "mediaIsPrimary": true,
+       "mediaMediaType": "shape",
+       "mediaScopeType": "rect",
+       "multiUuid": "fa6c3451-8343-4ba9-a5f6-e890d1020c40",
+       "oCoords": "obj:Object",
+       "objType": "bgShpae",
+       "opacity": 1,
+       "originX": "left",
+       "originY": "top",
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "printLocationHeight": 365.21738,
+       "printLocationRotation": 0,
+       "printLocationWidth": 600,
+       "printLocationX": -0.5,
+       "printLocationY": -0.5,
+       "protoVisible": true,
+       "resourceType": 1,
+       "scaleX": 1,
+       "scaleY": 1,
+       "selectEnabled": true,
+       "selectable": false,
+       "stroke": null,
+       "top": -0.5,
+       "topEnable": false,
+       "translateX": 300,
+       "translateY": 182.5,
+       "visible": true,
+       "visitLevel": 1000,
+       "width": 600,
+       "zoomX": 1.0325000153854489,
+       "zoomY": 1.0325000153854489
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 1,
+     "side": "front",
+     "ctor": "b",
+     "type": "image",
+     "subType": "image",
+     "geometry": {
+      "left": -0.8784622000000013,
+      "top": -8.174314500000008,
+      "width": 307.53625,
+      "height": 396.659,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 0.21,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": null,
+      "strokeWidth": 0,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {
+       "uuid": "dc98640f-7920-4df4-ab37-5414df6aa839",
+       "markuuid": "3D84D06A610C4CE9A6DA25254DE056B6"
+      }
+     },
+     "ownKeys": {
+      "count": 101,
+      "samples": {
+       "_cacheCanvas": null,
+       "_element": "obj:HTMLImageElement",
+       "_filterScalingX": 1,
+       "_filterScalingY": 1,
+       "_filteredEl": null,
+       "_originalElement": "obj:HTMLImageElement",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "bigPicWidth": 980,
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 0,
+       "cacheKey": "texture15",
+       "cacheWidth": 0,
+       "canvas": "obj:b",
+       "cmykSpecial": false,
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "crossOrigin": "anonymous",
+       "deleteState": false,
+       "designableArea": false,
+       "dirty": false,
+       "enhancesize": "normal",
+       "fill": "rgb(0,0,0)",
+       "filters": "array[0]",
+       "flipX": false,
+       "flipY": false,
+       "gildMaterial": "",
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 396.659,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": false,
+       "isPreview": true,
+       "isqrcode": "[REDACTED:len=1:h8=2b595]",
+       "layerAlpha": 0.21,
+       "layerHighestB": false,
+       "layerNum": 1,
+       "left": -0.8784622000000013,
+       "locationFactHeight": 1264,
+       "locationFactWidth": 980,
+       "locationHeight": 396.659,
+       "locationRotation": 0,
+       "locationWidth": 307.53625,
+       "locationX": -0.8784622000000013,
+       "locationY": -8.174314500000008,
+       "lockMovementX": true,
+       "lockMovementY": true,
+       "lockRotation": true,
+       "lockScalingFlip": true,
+       "lockScalingX": true,
+       "lockScalingY": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "3D84D06A610C4CE9A6DA25254DE056B6",
+       "maskEnable": false,
+       "mediaImgPath": "assets/resource/imgs/normal/printdiy1/M00/E1/2D/oYYBAGbRTwKA…(82)",
+       "mediaImgPathBlack": "",
+       "mediaImgPathNoCutOut": "",
+       "mediaIsBG": false,
+       "mediaMediaType": "image",
+       "multiUuid": "873b8708-5937-413c-8227-f0ebd9e18951",
+       "noCutWidth": "307.5362437480502",
+       "oCoords": "obj:Object",
+       "opacity": 0.21,
+       "originX": "left",
+       "originY": "top",
+       "ownMatrixCache": "obj:Object",
+       "personflag": false,
+       "printLocationHeight": 396.659,
+       "printLocationRotation": 0,
+       "printLocationWidth": 307.53625,
+       "printLocationX": -0.8784622000000013,
+       "printLocationY": -8.174314500000008
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 2,
+     "side": "front",
+     "ctor": "b",
+     "type": "path",
+     "subType": "svg",
+     "geometry": {
+      "left": 498.40408,
+      "top": 83.2346649999999,
+      "width": 425.197,
+      "height": 157.37390063794422,
+      "scaleX": 0.8103490370975954,
+      "scaleY": 0.8103490370975953,
+      "angle": 105,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(192,50,50)",
+      "stroke": null,
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {
+       "id": "图层_1",
+       "uuid": "f3568068-8104-4c30-bb7d-b4ff19513b06",
+       "markuuid": "3D84D06A610C4CE9A6DA25254DE056B6"
+      }
+     },
+     "ownKeys": {
+      "count": 111,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "aCoords": "obj:Object",
+       "angle": 105,
+       "appointCmyk": "",
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 256,
+       "cacheTranslationX": 197.29640227792845,
+       "cacheTranslationY": 141.25456466954853,
+       "cacheWidth": 358.5928045558569,
+       "canvas": "obj:b",
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "d": "M 214.762 103.826 c 140.291 0 210.435 -92.292 210.435 -92.29…(174)",
+       "deleteState": false,
+       "designableArea": false,
+       "dirty": false,
+       "fill": "rgb(192,50,50)",
+       "fillRule": "nonzero",
+       "flipX": false,
+       "flipY": false,
+       "fromSVG": true,
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 157.37390063794422,
+       "id": "图层_1",
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isPreview": true,
+       "layerAlpha": 1,
+       "layerNum": 2,
+       "left": 498.40408,
+       "locationFactHeight": 157.375,
+       "locationFactWidth": 425.196,
+       "locationHeight": 128.33813788334834,
+       "locationRotation": 105,
+       "locationWidth": 345.3683285638839,
+       "locationX": 498.40408,
+       "locationY": 83.2346649999999,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "3D84D06A610C4CE9A6DA25254DE056B6",
+       "maskEnable": false,
+       "mediaImgPath": "MXYZ-NEWMONGO971220009922478CB44C8993F4555C1D.xml",
+       "mediaIsBG": false,
+       "mediaMediaType": "svg",
+       "mediaOverprintName": "false",
+       "mediaOverprintSpotColor": "",
+       "mediaOverprintStroke": false,
+       "multiUuid": "4e1650d6-db22-4bef-b48c-60f67ec7d863",
+       "oCoords": "obj:Object",
+       "objType": "svgText",
+       "opacity": 1,
+       "originX": "left",
+       "originY": "top",
+       "overprintName": "false",
+       "overprintSpotColor": "",
+       "overprintStroke": false,
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "path": "array[7]",
+       "pathOffset": "obj:Object",
+       "printLocationHeight": 366.8165424393478,
+       "printLocationRotation": 105,
+       "printLocationWidth": 213.35302288693168,
+       "printLocationX": 285.05105711306834,
+       "printLocationY": 50.018310702796036,
+       "protoVisible": true,
+       "resouceCategoryId": "4495_157",
+       "resourceType": 1,
+       "rightType": "1"
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 3,
+     "side": "front",
+     "ctor": "b",
+     "type": "group",
+     "subType": "svg",
+     "geometry": {
+      "left": 277.16235,
+      "top": -6.919480300000004,
+      "width": 138.70000000000005,
+      "height": 159.80004661733005,
+      "scaleX": 2.909802883922133,
+      "scaleY": 2.326105266352835,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": true,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": null,
+      "strokeWidth": 0,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {
+       "uuid": "43595322-5ce0-4ff5-9c8e-a987252b29ec",
+       "markuuid": "3D84D06A610C4CE9A6DA25254DE056B6"
+      }
+     },
+     "ownKeys": {
+      "count": 99,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_objects": "array[2]",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "_transformDone": false,
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 385.7923669439518,
+       "cacheTranslationX": 230.353165079704,
+       "cacheTranslationY": 212.8961834719759,
+       "cacheWidth": 418.706330159408,
+       "canvas": "obj:b",
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "deleteState": false,
+       "designableArea": false,
+       "dirty": false,
+       "flipX": false,
+       "flipY": true,
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 159.80004661733005,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isPreview": true,
+       "layerAlpha": 1,
+       "layerNum": 3,
+       "left": 277.16235,
+       "locationFactHeight": 158.7,
+       "locationFactWidth": 137.7,
+       "locationHeight": 371.71173,
+       "locationRotation": 0,
+       "locationWidth": 403.58966,
+       "locationX": 277.16235,
+       "locationY": -6.919480300000004,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "3D84D06A610C4CE9A6DA25254DE056B6",
+       "maskEnable": false,
+       "mediaImgPath": "MXYZ-NEWMONGO982A5BE1AA5244B1AE9831C6F9A067A6.xml",
+       "mediaIsBG": false,
+       "mediaMediaType": "svg",
+       "mediaOverprintName": "false",
+       "mediaOverprintSpotColor": "",
+       "mediaOverprintStroke": false,
+       "multiUuid": "1568d155-36e3-4df5-8ca6-ddca3c560d3e",
+       "oCoords": "obj:Object",
+       "objType": "svgText",
+       "opacity": 1,
+       "originX": "left",
+       "originY": "top",
+       "overprintName": "false",
+       "overprintSpotColor": "",
+       "overprintStroke": false,
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "paths": "array[2]",
+       "printLocationHeight": 371.71173,
+       "printLocationRotation": 0,
+       "printLocationWidth": 403.58966,
+       "printLocationX": 277.16235,
+       "printLocationY": -6.919480300000004,
+       "protoVisible": true,
+       "resouceCategoryId": "12746_157",
+       "resourceType": 1,
+       "rightType": "1",
+       "rotatingPointOffset": 15,
+       "scaleX": 2.909802883922133,
+       "scaleY": 2.326105266352835,
+       "selectEnabled": true
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 4,
+     "side": "front",
+     "ctor": "b",
+     "type": "textbox",
+     "subType": "text",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 147.37885874780164,
+      "width": 95.27115,
+      "height": 35.03,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fontFamily": "阿里普惠体Regular",
+      "fontSize": 31,
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "lineHeight": 1.16,
+      "charSpacing": 0,
+      "textAlign": "left",
+      "fill": "#000000",
+      "stroke": null,
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": {
+      "text": "简小设",
+      "textLen": 3,
+      "textHash8": "9967074"
+     },
+     "identity": {
+      "hit": {
+       "uuid": "b720e164-d15e-4183-b560-98b9bf819b41",
+       "markuuid": "AD4636D5227B49399987EA16FC0FF3EA"
+      }
+     },
+     "ownKeys": {
+      "count": 141,
+      "samples": {
+       "__charBounds": "array[1]",
+       "__dimensionAffectingProps": "obj:Object",
+       "__eventListeners": "obj:Object",
+       "__lastClickTime": 1789524077300,
+       "__lastLastClickTime": 1789524077300,
+       "__lastPointer": "obj:Object",
+       "__lineHeights": "array[1]",
+       "__lineWidths": "array[1]",
+       "__skipDimension": false,
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "_styleMap": "obj:Object",
+       "_text": "array[3]",
+       "_textLines": "array[1]",
+       "_unwrappedTextLines": "array[1]",
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 256,
+       "cacheTranslationX": 127.69998192808742,
+       "cacheTranslationY": 127.60048777716887,
+       "cacheWidth": 256,
+       "canvas": "obj:b",
+       "charSpacing": 0,
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "cursorOffsetCache": "obj:Object",
+       "deleteState": false,
+       "dirty": false,
+       "dynamicMinWidth": 30.50400047302246,
+       "fill": "#000000",
+       "flipX": false,
+       "flipY": false,
+       "fontFamily": "阿里普惠体Regular",
+       "fontSize": 31,
+       "fontStyle": "normal",
+       "fontWeight": "normal",
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 35.03,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isLineText": true,
+       "isPreview": true,
+       "isWrapping": false,
+       "lastSafeText": "简小设",
+       "layerAlpha": 1,
+       "layerNum": 4,
+       "left": 26.16865675953352,
+       "lineHeight": 1.16,
+       "lineIdType": "undefined",
+       "linethrough": false,
+       "locationFactHeight": 10000,
+       "locationFactWidth": 10000,
+       "locationHeight": 35.03,
+       "locationRotation": 0,
+       "locationWidth": 95.27115,
+       "locationX": 26.16865675953352,
+       "locationY": 147.37885874780164,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "AD4636D5227B49399987EA16FC0FF3EA",
+       "maskEnable": false,
+       "mediaImgPath": " ",
+       "mediaIsBG": false,
+       "mediaIsBold": false,
+       "mediaIsItalic": false,
+       "mediaLineIdType": "undefined",
+       "mediaLineSpace": 1.16,
+       "mediaLinethrough": "false",
+       "mediaMediaType": "text"
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 5,
+     "side": "front",
+     "ctor": "b",
+     "type": "textbox",
+     "subType": "text",
+     "geometry": {
+      "left": 55.350976759533495,
+      "top": 270.32353347531233,
+      "width": 96,
+      "height": 16.95,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fontFamily": "阿里普惠体Regular",
+      "fontSize": 15,
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "lineHeight": 1.8,
+      "charSpacing": 0,
+      "textAlign": "left",
+      "fill": "#000000",
+      "stroke": null,
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": {
+      "text": "18888888888",
+      "textLen": 11,
+      "textHash8": "a0c7d994"
+     },
+     "identity": {
+      "hit": {
+       "uuid": "c029dbb7-b284-4682-89dc-ef802f8cb29c",
+       "markuuid": "9B5E0D266C674E5A8FD0110F3054B80D"
+      }
+     },
+     "ownKeys": {
+      "count": 141,
+      "samples": {
+       "__charBounds": "array[1]",
+       "__dimensionAffectingProps": "obj:Object",
+       "__eventListeners": "obj:Object",
+       "__lastClickTime": 1789524077306,
+       "__lastLastClickTime": 1789524077306,
+       "__lastPointer": "obj:Object",
+       "__lineHeights": "array[1]",
+       "__lineWidths": "array[1]",
+       "__skipDimension": false,
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "_styleMap": "obj:Object",
+       "_text": "array[11]",
+       "_textLines": "array[1]",
+       "_unwrappedTextLines": "array[1]",
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 256,
+       "cacheTranslationX": 128.07625074619426,
+       "cacheTranslationY": 128.2666876380844,
+       "cacheWidth": 256,
+       "canvas": "obj:b",
+       "charSpacing": 0,
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "cursorOffsetCache": "obj:Object",
+       "deleteState": false,
+       "dirty": false,
+       "dynamicMinWidth": 8.625,
+       "fill": "#000000",
+       "flipX": false,
+       "flipY": false,
+       "fontFamily": "阿里普惠体Regular",
+       "fontSize": 15,
+       "fontStyle": "normal",
+       "fontWeight": "normal",
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 16.95,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isLineText": true,
+       "isPreview": true,
+       "isWrapping": false,
+       "lastSafeText": "18888888888",
+       "layerAlpha": 1,
+       "layerNum": 5,
+       "left": 55.350976759533495,
+       "lineHeight": 1.8,
+       "lineIdType": "undefined",
+       "linethrough": false,
+       "locationFactHeight": 10000,
+       "locationFactWidth": 10000,
+       "locationHeight": 16.95,
+       "locationRotation": 0,
+       "locationWidth": 96,
+       "locationX": 55.350976759533495,
+       "locationY": 270.32353347531233,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "9B5E0D266C674E5A8FD0110F3054B80D",
+       "maskEnable": false,
+       "mediaImgPath": " ",
+       "mediaIsBG": false,
+       "mediaIsBold": false,
+       "mediaIsItalic": false,
+       "mediaLineIdType": "undefined",
+       "mediaLineSpace": 1.8,
+       "mediaLinethrough": "false",
+       "mediaMediaType": "text"
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 6,
+     "side": "front",
+     "ctor": "b",
+     "type": "path",
+     "subType": "svg",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 268.1132652740833,
+      "width": 595.2769653589693,
+      "height": 595.277325011549,
+      "scaleX": 0.037517,
+      "scaleY": 0.037517,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(192,50,50)",
+      "stroke": null,
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {
+       "id": "图层_1",
+       "uuid": "0ffaddc1-582a-4144-97a4-ce7ef6c61d9e",
+       "markuuid": "C9FA74F735C145848FAE2E572E1F7755"
+      }
+     },
+     "ownKeys": {
+      "count": 111,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 256,
+       "cacheTranslationX": 127.5487826240538,
+       "cacheTranslationY": 127.54878958985947,
+       "cacheWidth": 256,
+       "canvas": "obj:b",
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "d": "M 295.963 0.123 C 152.185 -4.408 3.887 116.972 0.271 292.707…(1744)",
+       "deleteState": false,
+       "designableArea": false,
+       "dirty": false,
+       "fill": "rgb(192,50,50)",
+       "fillRule": "nonzero",
+       "flipX": false,
+       "flipY": false,
+       "fromSVG": true,
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 595.277325011549,
+       "id": "图层_1",
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isPreview": true,
+       "layerAlpha": 1,
+       "layerNum": 6,
+       "left": 26.16865675953352,
+       "locationFactHeight": 595.275,
+       "locationFactWidth": 595.275,
+       "locationHeight": 22.370536402458285,
+       "locationRotation": 0,
+       "locationWidth": 22.37052290937245,
+       "locationX": 26.16865675953352,
+       "locationY": 268.1132652740833,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "C9FA74F735C145848FAE2E572E1F7755",
+       "maskEnable": false,
+       "mediaImgPath": "MXYZ-NEWMONGO70EEC99FBE2642CD8F9B50D1C301EEE9.xml",
+       "mediaIsBG": false,
+       "mediaMediaType": "svg",
+       "mediaOverprintName": "false",
+       "mediaOverprintSpotColor": "",
+       "mediaOverprintStroke": false,
+       "multiUuid": "79cd9952-8b56-42f4-8b8e-03e67ff85a3e",
+       "oCoords": "obj:Object",
+       "objType": "svgText",
+       "opacity": 1,
+       "originX": "left",
+       "originY": "top",
+       "overprintName": "false",
+       "overprintSpotColor": "",
+       "overprintStroke": false,
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "path": "array[44]",
+       "pathOffset": "obj:Object",
+       "printLocationHeight": 22.370536402458285,
+       "printLocationRotation": 0,
+       "printLocationWidth": 22.37052290937245,
+       "printLocationX": 26.16865675953352,
+       "printLocationY": 268.1132652740833,
+       "protoVisible": true,
+       "resouceCategoryId": "4715_330",
+       "resourceType": 1,
+       "rightType": "1"
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 7,
+     "side": "front",
+     "ctor": "b",
+     "type": "path",
+     "subType": "svg",
+     "geometry": {
+      "left": 26.168656759533516,
+      "top": 306.85842960620073,
+      "width": 595.2750000225476,
+      "height": 595.275,
+      "scaleX": 0.037571,
+      "scaleY": 0.037571,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(192,50,50)",
+      "stroke": null,
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {
+       "id": "图层_1",
+       "uuid": "1b71cf0c-b3c1-45ec-86f3-0b58c3c42c12",
+       "markuuid": "43A6C8A18BBF4796A5A6349AD1977AEE"
+      }
+     },
+     "ownKeys": {
+      "count": 111,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 256,
+       "cacheTranslationX": 127.56536721568098,
+       "cacheTranslationY": 127.56536721524364,
+       "cacheWidth": 256,
+       "canvas": "obj:b",
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "d": "M 508.288 86.987 C 453.708 33.261 379.511 0 297.638 0 c -82.…(1112)",
+       "deleteState": false,
+       "designableArea": false,
+       "dirty": false,
+       "fill": "rgb(192,50,50)",
+       "fillRule": "nonzero",
+       "flipX": false,
+       "flipY": false,
+       "fromSVG": true,
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 595.275,
+       "id": "图层_1",
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isPreview": true,
+       "layerAlpha": 1,
+       "layerNum": 7,
+       "left": 26.168656759533516,
+       "locationFactHeight": 595.275,
+       "locationFactWidth": 595.276,
+       "locationHeight": 22.402648024999998,
+       "locationRotation": 0,
+       "locationWidth": 22.402648025847135,
+       "locationX": 26.168656759533516,
+       "locationY": 306.85842960620073,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "43A6C8A18BBF4796A5A6349AD1977AEE",
+       "maskEnable": false,
+       "mediaImgPath": "MXYZ-NEWMONGO686433B596C7407684DCDCC74F76124E.xml",
+       "mediaIsBG": false,
+       "mediaMediaType": "svg",
+       "mediaOverprintName": "false",
+       "mediaOverprintSpotColor": "",
+       "mediaOverprintStroke": false,
+       "multiUuid": "5ea0c9d2-88cb-4b1b-901d-456f7ce2261a",
+       "oCoords": "obj:Object",
+       "objType": "svgText",
+       "opacity": 1,
+       "originX": "left",
+       "originY": "top",
+       "overprintName": "false",
+       "overprintSpotColor": "",
+       "overprintStroke": false,
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "path": "array[32]",
+       "pathOffset": "obj:Object",
+       "printLocationHeight": 22.402648024999998,
+       "printLocationRotation": 0,
+       "printLocationWidth": 22.402648025847135,
+       "printLocationX": 26.168656759533516,
+       "printLocationY": 306.85842960620073,
+       "protoVisible": true,
+       "resouceCategoryId": "4713_330",
+       "resourceType": 1,
+       "rightType": "1"
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 8,
+     "side": "front",
+     "ctor": "b",
+     "type": "textbox",
+     "subType": "text",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 193.35864074780164,
+      "width": 98.64266764322917,
+      "height": 18.08,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fontFamily": "阿里普惠体Regular",
+      "fontSize": 16,
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "lineHeight": 1,
+      "charSpacing": 500,
+      "textAlign": "left",
+      "fill": "#000000",
+      "stroke": null,
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": {
+      "text": "客户经理",
+      "textLen": 4,
+      "textHash8": "81239479"
+     },
+     "identity": {
+      "hit": {
+       "uuid": "88ad7e8d-d40d-4f5a-95e6-4188b80dd7cf",
+       "markuuid": "82DBF6FD13B14175B652C77D7CE79660"
+      }
+     },
+     "ownKeys": {
+      "count": 141,
+      "samples": {
+       "__charBounds": "array[1]",
+       "__dimensionAffectingProps": "obj:Object",
+       "__eventListeners": "obj:Object",
+       "__lastClickTime": 1789524077320,
+       "__lastLastClickTime": 1789524077320,
+       "__lastPointer": "obj:Object",
+       "__lineHeights": "array[1]",
+       "__lineWidths": "array[1]",
+       "__skipDimension": false,
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "_styleMap": "obj:Object",
+       "_text": "array[4]",
+       "_textLines": "array[1]",
+       "_unwrappedTextLines": "array[1]",
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 256,
+       "cacheTranslationX": 128.44052793734065,
+       "cacheTranslationY": 127.85005014677718,
+       "cacheWidth": 256,
+       "canvas": "obj:b",
+       "charSpacing": 500,
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "cursorOffsetCache": "obj:Object",
+       "deleteState": false,
+       "dirty": false,
+       "dynamicMinWidth": 23.744000244140626,
+       "fill": "#000000",
+       "flipX": false,
+       "flipY": false,
+       "fontFamily": "阿里普惠体Regular",
+       "fontSize": 16,
+       "fontStyle": "normal",
+       "fontWeight": "normal",
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 18.08,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isLineText": true,
+       "isPreview": true,
+       "isWrapping": false,
+       "lastSafeText": "客户经理",
+       "layerAlpha": 1,
+       "layerNum": 8,
+       "left": 26.16865675953352,
+       "lineHeight": 1,
+       "lineIdType": "undefined",
+       "linethrough": false,
+       "locationFactHeight": 10000,
+       "locationFactWidth": 10000,
+       "locationHeight": 18.08,
+       "locationRotation": 0,
+       "locationWidth": 98.64266764322917,
+       "locationX": 26.16865675953352,
+       "locationY": 193.35864074780164,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "82DBF6FD13B14175B652C77D7CE79660",
+       "maskEnable": false,
+       "mediaImgPath": " ",
+       "mediaIsBG": false,
+       "mediaIsBold": false,
+       "mediaIsItalic": false,
+       "mediaLineIdType": "undefined",
+       "mediaLineSpace": 1,
+       "mediaLinethrough": "false",
+       "mediaMediaType": "text"
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 9,
+     "side": "front",
+     "ctor": "b",
+     "type": "rect",
+     "subType": "svg",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 184.18953474780164,
+      "width": 111.23424981155068,
+      "height": 1.8436797573241148,
+      "scaleX": 0.816388,
+      "scaleY": 0.816388,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": null,
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {
+       "id": "图层_1",
+       "uuid": "78fa73a1-36a7-431a-ba86-c5ec4050c664",
+       "markuuid": "3D84D06A610C4CE9A6DA25254DE056B6"
+      }
+     },
+     "ownKeys": {
+      "count": 112,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 256,
+       "cacheTranslationX": 128.39707155829373,
+       "cacheTranslationY": 128.29328785211564,
+       "cacheWidth": 256,
+       "canvas": "obj:b",
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "deleteState": false,
+       "designableArea": false,
+       "dirty": false,
+       "fill": "rgb(0,0,0)",
+       "fillRule": "nonzero",
+       "flipX": false,
+       "flipY": false,
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 1.8436797573241148,
+       "id": "图层_1",
+       "immutable": true,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isPreview": true,
+       "layerAlpha": 1,
+       "layerNum": 9,
+       "left": 26.16865675953352,
+       "locationFactHeight": 1.8436798,
+       "locationFactWidth": 111.23425,
+       "locationHeight": 2.5051580297223195,
+       "locationRotation": 0,
+       "locationWidth": 91.81030673515224,
+       "locationX": 26.16865675953352,
+       "locationY": 184.18953474780164,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "3D84D06A610C4CE9A6DA25254DE056B6",
+       "maskEnable": false,
+       "mediaImgPath": "MXYZ-NEWMONGO16CC3592BD214D8D9DAF3A8091FDD951.xml",
+       "mediaIsBG": false,
+       "mediaMediaType": "svg",
+       "mediaOverprintName": "false",
+       "mediaOverprintSpotColor": "",
+       "mediaOverprintStroke": false,
+       "multiUuid": "bc223123-4b54-4467-9f5d-1abedfe7425c",
+       "noScaleCache": false,
+       "oCoords": "obj:Object",
+       "objType": "svgText",
+       "opacity": 1,
+       "originX": "left",
+       "originY": "top",
+       "overprintName": "false",
+       "overprintSpotColor": "",
+       "overprintStroke": false,
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "printLocationHeight": 2.5051580297223195,
+       "printLocationRotation": 0,
+       "printLocationWidth": 91.81030673515224,
+       "printLocationX": 26.16865675953352,
+       "printLocationY": 184.18953474780164,
+       "protoVisible": true,
+       "resouceCategoryId": "4094_149",
+       "resourceType": 1,
+       "rightType": "0",
+       "rotatingPointOffset": 15,
+       "rx": 0
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 10,
+     "side": "front",
+     "ctor": "b",
+     "type": "textbox",
+     "subType": "text",
+     "geometry": {
+      "left": 55.350976759533495,
+      "top": 310.0471831447886,
+      "width": 257,
+      "height": 16.95,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fontFamily": "阿里普惠体Regular",
+      "fontSize": 15,
+      "fontWeight": "normal",
+      "fontStyle": "normal",
+      "lineHeight": 1.8,
+      "charSpacing": 0,
+      "textAlign": "left",
+      "fill": "#000000",
+      "stroke": null,
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": {
+      "text": "[REDACTED:len=19:h8=f85ded4d]",
+      "textLen": 19,
+      "textHash8": "f85ded4d"
+     },
+     "identity": {
+      "hit": {
+       "uuid": "53e04da9-7b9a-4795-ad1d-698e7c885085",
+       "markuuid": "1B6A503A48BD4A8D9978905642CE57B0"
+      }
+     },
+     "ownKeys": {
+      "count": 141,
+      "samples": {
+       "__charBounds": "array[1]",
+       "__dimensionAffectingProps": "obj:Object",
+       "__eventListeners": "obj:Object",
+       "__lastClickTime": 1789524077330,
+       "__lastLastClickTime": 1789524077330,
+       "__lastPointer": "obj:Object",
+       "__lineHeights": "array[1]",
+       "__lineWidths": "array[1]",
+       "__skipDimension": false,
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "_styleMap": "obj:Object",
+       "_text": "array[19]",
+       "_textLines": "array[1]",
+       "_unwrappedTextLines": "array[1]",
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 256,
+       "cacheTranslationX": 156.1925019847229,
+       "cacheTranslationY": 141.2666876380844,
+       "cacheWidth": 283.8725042002275,
+       "canvas": "obj:b",
+       "charSpacing": 0,
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "cursorOffsetCache": "obj:Object",
+       "deleteState": false,
+       "dirty": false,
+       "dynamicMinWidth": 14.760000228881836,
+       "fill": "#000000",
+       "flipX": false,
+       "flipY": false,
+       "fontFamily": "阿里普惠体Regular",
+       "fontSize": 15,
+       "fontStyle": "normal",
+       "fontWeight": "normal",
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 16.95,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isLineText": true,
+       "isPreview": true,
+       "isWrapping": false,
+       "lastSafeText": "[REDACTED:len=19:h8=f85ded4d]",
+       "layerAlpha": 1,
+       "layerNum": 10,
+       "left": 55.350976759533495,
+       "lineHeight": 1.8,
+       "lineIdType": "undefined",
+       "linethrough": false,
+       "locationFactHeight": 10000,
+       "locationFactWidth": 10000,
+       "locationHeight": 16.95,
+       "locationRotation": 0,
+       "locationWidth": 257,
+       "locationX": 55.350976759533495,
+       "locationY": 310.0471831447886,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "1B6A503A48BD4A8D9978905642CE57B0",
+       "maskEnable": false,
+       "mediaImgPath": " ",
+       "mediaIsBG": false,
+       "mediaIsBold": false,
+       "mediaIsItalic": false,
+       "mediaLineIdType": "undefined",
+       "mediaLineSpace": 1.8,
+       "mediaLinethrough": "false",
+       "mediaMediaType": "text"
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 11,
+     "side": "front",
+     "ctor": "b",
+     "type": "image",
+     "subType": "image",
+     "geometry": {
+      "left": 376.94285591691965,
+      "top": 214.10877630722257,
+      "width": 109.8272294449184,
+      "height": 109.8272294449184,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": null,
+      "strokeWidth": 0,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {
+       "uuid": "6ab3a8d9-9839-4669-9adc-f6c35a57c0ff",
+       "markuuid": "6EFEFEF83A4D4AC08FACDF7F914CCA43"
+      }
+     },
+     "ownKeys": {
+      "count": 98,
+      "samples": {
+       "_cacheCanvas": null,
+       "_element": "obj:HTMLImageElement",
+       "_filterScalingX": 1,
+       "_filterScalingY": 1,
+       "_filteredEl": null,
+       "_originalElement": "obj:HTMLImageElement",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "bigPicWidth": 532,
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 0,
+       "cacheKey": "texture14",
+       "cacheWidth": 0,
+       "canvas": "obj:b",
+       "cmykSpecial": false,
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "crossOrigin": "anonymous",
+       "deleteState": false,
+       "designableArea": false,
+       "dirty": false,
+       "enhancesize": "normal",
+       "fill": "rgb(0,0,0)",
+       "filters": "array[0]",
+       "flipX": false,
+       "flipY": false,
+       "gildMaterial": "",
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 109.8272294449184,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isPreview": true,
+       "isqrcode": "[REDACTED:len=1:h8=2b595]",
+       "layerAlpha": 1,
+       "layerHighestB": false,
+       "layerNum": 11,
+       "left": 376.94285591691965,
+       "locationFactHeight": 532,
+       "locationFactWidth": 532,
+       "locationHeight": 109.8272294449184,
+       "locationRotation": 0,
+       "locationWidth": 109.8272294449184,
+       "locationX": 376.94285591691965,
+       "locationY": 214.10877630722257,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "6EFEFEF83A4D4AC08FACDF7F914CCA43",
+       "maskEnable": false,
+       "mediaImgPath": "assets/resource/imgs/normal/MXYZ-5A798F974EAE417D99B6EECDE42…(69)",
+       "mediaImgPathBlack": "",
+       "mediaImgPathNoCutOut": "",
+       "mediaIsBG": false,
+       "mediaMediaType": "image",
+       "multiUuid": "ffeac93e-177c-46cb-bda4-facb6b2602f8",
+       "noCutWidth": "109.8272294449184",
+       "oCoords": "obj:Object",
+       "opacity": 1,
+       "originX": "left",
+       "originY": "top",
+       "ownMatrixCache": "obj:Object",
+       "personflag": false,
+       "printLocationHeight": 109.8272294449184,
+       "printLocationRotation": 0,
+       "printLocationWidth": 109.8272294449184,
+       "printLocationX": 376.94285591691965,
+       "printLocationY": 214.10877630722257,
+       "protoVisible": true,
+       "resouceCategoryId": "195799_341",
+       "resourceType": 1,
+       "rightType": "0",
+       "rightsMaterial": true
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 12,
+     "side": "front",
+     "ctor": "b",
+     "type": "image",
+     "subType": "image",
+     "geometry": {
+      "left": 26.16865675953352,
+      "top": 34.95865936725047,
+      "width": 167.21662522607573,
+      "height": 36.011593746517136,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": true,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": null,
+      "strokeWidth": 0,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {
+       "uuid": "d6e14fb8-353f-4272-8d06-5681fef360e0",
+       "markuuid": "E282976ABFEF45C59A3D319AC90AEDF6"
+      }
+     },
+     "ownKeys": {
+      "count": 98,
+      "samples": {
+       "_cacheCanvas": null,
+       "_element": "obj:HTMLImageElement",
+       "_filterScalingX": 1,
+       "_filterScalingY": 1,
+       "_filteredEl": null,
+       "_originalElement": "obj:HTMLImageElement",
+       "_originalOriginX": null,
+       "_originalOriginY": null,
+       "aCoords": "obj:Object",
+       "angle": 0,
+       "appointCmyk": "",
+       "bigPicWidth": 1403,
+       "borderDashArray": "array[2]",
+       "borderScaleFactor": 1,
+       "cacheHeight": 0,
+       "cacheKey": "texture13",
+       "cacheWidth": 0,
+       "canvas": "obj:b",
+       "cmykSpecial": false,
+       "cornerSize": 10,
+       "cornerStyle": "circle",
+       "crossOrigin": "anonymous",
+       "deleteState": false,
+       "designableArea": false,
+       "dirty": false,
+       "enhancesize": "normal",
+       "fill": "rgb(0,0,0)",
+       "filters": "array[0]",
+       "flipX": false,
+       "flipY": false,
+       "gildMaterial": "",
+       "hasBorders": true,
+       "hasRotatingPoint": true,
+       "height": 36.011593746517136,
+       "isComposite": true,
+       "isDesign": true,
+       "isDesignShape": false,
+       "isDisplay": false,
+       "isEdit": true,
+       "isPreview": true,
+       "isqrcode": "[REDACTED:len=1:h8=2b595]",
+       "layerAlpha": 1,
+       "layerHighestB": false,
+       "layerNum": 12,
+       "left": 26.16865675953352,
+       "locationFactHeight": 302,
+       "locationFactWidth": 1403,
+       "locationHeight": 36.011593746517136,
+       "locationRotation": 0,
+       "locationWidth": 167.21662522607573,
+       "locationX": 26.16865675953352,
+       "locationY": 34.95865936725047,
+       "lockScalingFlip": true,
+       "lockUniScaling": false,
+       "lowPixelFlag": false,
+       "markuuid": "E282976ABFEF45C59A3D319AC90AEDF6",
+       "maskEnable": false,
+       "mediaImgPath": "assets/resource/imgs/normal/MXYZ-52C4C7B6050F4643B69E6D796E8…(69)",
+       "mediaImgPathBlack": "",
+       "mediaImgPathNoCutOut": "",
+       "mediaIsBG": false,
+       "mediaMediaType": "image",
+       "multiUuid": "c89aa3ba-c26f-4cd2-a983-99c12eda805c",
+       "noCutWidth": "167.21662522607573",
+       "oCoords": "obj:Object",
+       "opacity": 1,
+       "originX": "left",
+       "originY": "top",
+       "ownMatrixCache": "obj:Object",
+       "personflag": false,
+       "printLocationHeight": 36.011593746517136,
+       "printLocationRotation": 0,
+       "printLocationWidth": 167.21662522607573,
+       "printLocationX": 26.16865675953352,
+       "printLocationY": 34.95865936725047,
+       "protoVisible": true,
+       "resouceCategoryId": "213090_341",
+       "resourceType": 1,
+       "rightType": "0",
+       "rightsMaterial": true
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 13,
+     "side": "front",
+     "ctor": "b",
+     "type": "line",
+     "subType": null,
+     "geometry": {
+      "left": 6.521739130434782,
+      "top": 6.521739130434782,
+      "width": 585.9565217391305,
+      "height": 0,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": false,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": "#9a9a9a",
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {}
+     },
+     "ownKeys": {
+      "count": 32,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "aCoords": "obj:Object",
+       "cacheHeight": 256,
+       "cacheTranslationX": 333.50005885542816,
+       "cacheTranslationY": 140.51625000769272,
+       "cacheWidth": 607.0001177108563,
+       "canvas": "obj:b",
+       "dirty": false,
+       "fill": "rgb(0,0,0)",
+       "height": 0,
+       "left": 6.521739130434782,
+       "oCoords": "obj:Object",
+       "objType": "bleedLine",
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "selectable": false,
+       "stroke": "#9a9a9a",
+       "strokeDashArray": "array[2]",
+       "strokeWidth": 1,
+       "top": 6.521739130434782,
+       "translateX": 299.50000000000006,
+       "translateY": 7.021739130434782,
+       "visible": true,
+       "width": 585.9565217391305,
+       "x1": 6.521739130434782,
+       "x2": 592.4782608695652,
+       "y1": 6.521739130434782,
+       "y2": 6.521739130434782,
+       "zoomX": 1.0325000153854489,
+       "zoomY": 1.0325000153854489
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 14,
+     "side": "front",
+     "ctor": "b",
+     "type": "line",
+     "subType": null,
+     "geometry": {
+      "left": 6.521739130434782,
+      "top": 357.4782608695652,
+      "width": 587.9565217391305,
+      "height": 0,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": false,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": "#9a9a9a",
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {}
+     },
+     "ownKeys": {
+      "count": 32,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "aCoords": "obj:Object",
+       "cacheHeight": 256,
+       "cacheTranslationX": 334.5325588708136,
+       "cacheTranslationY": 140.51625000769272,
+       "cacheWidth": 609.0651177416272,
+       "canvas": "obj:b",
+       "dirty": false,
+       "fill": "rgb(0,0,0)",
+       "height": 0,
+       "left": 6.521739130434782,
+       "oCoords": "obj:Object",
+       "objType": "bleedLine",
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "selectable": false,
+       "stroke": "#9a9a9a",
+       "strokeDashArray": "array[2]",
+       "strokeWidth": 1,
+       "top": 357.4782608695652,
+       "translateX": 300.50000000000006,
+       "translateY": 357.9782608695652,
+       "visible": true,
+       "width": 587.9565217391305,
+       "x1": 6.521739130434782,
+       "x2": 594.4782608695652,
+       "y1": 357.4782608695652,
+       "y2": 357.4782608695652,
+       "zoomX": 1.0325000153854489,
+       "zoomY": 1.0325000153854489
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 15,
+     "side": "front",
+     "ctor": "b",
+     "type": "line",
+     "subType": null,
+     "geometry": {
+      "left": 6.521739130434782,
+      "top": 6.521739130434782,
+      "width": 0,
+      "height": 350.9565217391304,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": false,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": "#9a9a9a",
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {}
+     },
+     "ownKeys": {
+      "count": 32,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "aCoords": "obj:Object",
+       "cacheHeight": 364.3626140952757,
+       "cacheTranslationX": 140.51625000769272,
+       "cacheTranslationY": 200.18130704763786,
+       "cacheWidth": 256,
+       "canvas": "obj:b",
+       "dirty": false,
+       "fill": "rgb(0,0,0)",
+       "height": 350.9565217391304,
+       "left": 6.521739130434782,
+       "oCoords": "obj:Object",
+       "objType": "bleedLine",
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "selectable": false,
+       "stroke": "#9a9a9a",
+       "strokeDashArray": "array[2]",
+       "strokeWidth": 1,
+       "top": 6.521739130434782,
+       "translateX": 7.021739130434782,
+       "translateY": 181.99999999999997,
+       "visible": true,
+       "width": 0,
+       "x1": 6.521739130434782,
+       "x2": 6.521739130434782,
+       "y1": 6.521739130434782,
+       "y2": 357.4782608695652,
+       "zoomX": 1.0325000153854489,
+       "zoomY": 1.0325000153854489
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 16,
+     "side": "front",
+     "ctor": "b",
+     "type": "line",
+     "subType": null,
+     "geometry": {
+      "left": 592.4782608695652,
+      "top": 6.521739130434782,
+      "width": 0,
+      "height": 350.9565217391304,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": true,
+      "opacity": 1,
+      "flipX": false,
+      "flipY": false,
+      "selectable": false,
+      "evented": true
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": "#9a9a9a",
+      "strokeWidth": 1,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {}
+     },
+     "ownKeys": {
+      "count": 32,
+      "samples": {
+       "_cacheCanvas": "obj:HTMLCanvasElement",
+       "_cacheContext": "obj:CanvasRenderingContext2D",
+       "_cacheProperties": "obj:Object",
+       "aCoords": "obj:Object",
+       "cacheHeight": 364.3626140952757,
+       "cacheTranslationX": 140.51625000769272,
+       "cacheTranslationY": 200.18130704763786,
+       "cacheWidth": 256,
+       "canvas": "obj:b",
+       "dirty": false,
+       "fill": "rgb(0,0,0)",
+       "height": 350.9565217391304,
+       "left": 592.4782608695652,
+       "oCoords": "obj:Object",
+       "objType": "bleedLine",
+       "ownCaching": true,
+       "ownMatrixCache": "obj:Object",
+       "selectable": false,
+       "stroke": "#9a9a9a",
+       "strokeDashArray": "array[2]",
+       "strokeWidth": 1,
+       "top": 6.521739130434782,
+       "translateX": 592.9782608695652,
+       "translateY": 181.99999999999997,
+       "visible": true,
+       "width": 0,
+       "x1": 592.4782608695652,
+       "x2": 592.4782608695652,
+       "y1": 6.521739130434782,
+       "y2": 357.4782608695652,
+       "zoomX": 1.0325000153854489,
+       "zoomY": 1.0325000153854489
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 17,
+     "side": "front",
+     "ctor": "b",
+     "type": "line",
+     "subType": null,
+     "geometry": {
+      "left": 0,
+      "top": 0,
+      "width": 0,
+      "height": 365,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": false,
+      "opacity": 0.4,
+      "flipX": false,
+      "flipY": false,
+      "selectable": false,
+      "evented": false
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": "#9a9a9a",
+      "strokeWidth": 26.08695652173913,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {}
+     },
+     "ownKeys": {
+      "count": 19,
+      "samples": {
+       "aCoords": "obj:Object",
+       "canvas": "obj:b",
+       "dirty": true,
+       "evented": false,
+       "height": 365,
+       "left": 0,
+       "oCoords": "obj:Object",
+       "objType": "safeLine",
+       "opacity": 0.4,
+       "selectable": false,
+       "stroke": "#9a9a9a",
+       "strokeWidth": 26.08695652173913,
+       "top": 0,
+       "visible": false,
+       "width": 0,
+       "x1": 0,
+       "x2": 0,
+       "y1": 0,
+       "y2": 365
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 18,
+     "side": "front",
+     "ctor": "b",
+     "type": "line",
+     "subType": null,
+     "geometry": {
+      "left": 573.9130434782609,
+      "top": 0,
+      "width": 0,
+      "height": 365,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": false,
+      "opacity": 0.4,
+      "flipX": false,
+      "flipY": false,
+      "selectable": false,
+      "evented": false
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": "#9a9a9a",
+      "strokeWidth": 26.08695652173913,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {}
+     },
+     "ownKeys": {
+      "count": 19,
+      "samples": {
+       "aCoords": "obj:Object",
+       "canvas": "obj:b",
+       "dirty": true,
+       "evented": false,
+       "height": 365,
+       "left": 573.9130434782609,
+       "oCoords": "obj:Object",
+       "objType": "safeLine",
+       "opacity": 0.4,
+       "selectable": false,
+       "stroke": "#9a9a9a",
+       "strokeWidth": 26.08695652173913,
+       "top": 0,
+       "visible": false,
+       "width": 0,
+       "x1": 573.9130434782609,
+       "x2": 573.9130434782609,
+       "y1": 0,
+       "y2": 365
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 19,
+     "side": "front",
+     "ctor": "b",
+     "type": "line",
+     "subType": null,
+     "geometry": {
+      "left": 26.08695652173913,
+      "top": 0,
+      "width": 547.8260869565217,
+      "height": 0,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": false,
+      "opacity": 0.4,
+      "flipX": false,
+      "flipY": false,
+      "selectable": false,
+      "evented": false
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": "#9a9a9a",
+      "strokeWidth": 26.08695652173913,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {}
+     },
+     "ownKeys": {
+      "count": 19,
+      "samples": {
+       "aCoords": "obj:Object",
+       "canvas": "obj:b",
+       "dirty": true,
+       "evented": false,
+       "height": 0,
+       "left": 26.08695652173913,
+       "oCoords": "obj:Object",
+       "objType": "safeLine",
+       "opacity": 0.4,
+       "selectable": false,
+       "stroke": "#9a9a9a",
+       "strokeWidth": 26.08695652173913,
+       "top": 0,
+       "visible": false,
+       "width": 547.8260869565217,
+       "x1": 26.08695652173913,
+       "x2": 573.9130434782609,
+       "y1": 0,
+       "y2": 0
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    },
+    {
+     "index": 20,
+     "side": "front",
+     "ctor": "b",
+     "type": "line",
+     "subType": null,
+     "geometry": {
+      "left": 26.08695652173913,
+      "top": 338.9130434782608,
+      "width": 547.8260869565217,
+      "height": 0,
+      "scaleX": 1,
+      "scaleY": 1,
+      "angle": 0,
+      "skewX": 0,
+      "skewY": 0,
+      "originX": "left",
+      "originY": "top"
+     },
+     "interact": {
+      "visible": false,
+      "opacity": 0.4,
+      "flipX": false,
+      "flipY": false,
+      "selectable": false,
+      "evented": false
+     },
+     "style": {
+      "fill": "rgb(0,0,0)",
+      "stroke": "#9a9a9a",
+      "strokeWidth": 26.08695652173913,
+      "shadow": false
+     },
+     "content": null,
+     "identity": {
+      "hit": {}
+     },
+     "ownKeys": {
+      "count": 19,
+      "samples": {
+       "aCoords": "obj:Object",
+       "canvas": "obj:b",
+       "dirty": true,
+       "evented": false,
+       "height": 0,
+       "left": 26.08695652173913,
+       "oCoords": "obj:Object",
+       "objType": "safeLine",
+       "opacity": 0.4,
+       "selectable": false,
+       "stroke": "#9a9a9a",
+       "strokeWidth": 26.08695652173913,
+       "top": 338.9130434782608,
+       "visible": false,
+       "width": 547.8260869565217,
+       "x1": 26.08695652173913,
+       "x2": 573.9130434782609,
+       "y1": 338.9130434782608,
+       "y2": 338.9130434782608
+      }
+     },
+     "zy": {
+      "zyCreatedByAssistant": false,
+      "zyFieldKey": null
+     }
+    }
+   ]
+  }
+ ],
+ "propFreq": {
+  "_cacheCanvas": {
+   "count": 17,
+   "types": {
+    "object": 17
+   }
+  },
+  "_cacheContext": {
+   "count": 14,
+   "types": {
+    "object": 14
+   }
+  },
+  "_cacheProperties": {
+   "count": 14,
+   "types": {
+    "object": 14
+   }
+  },
+  "_originalOriginX": {
+   "count": 13,
+   "types": {
+    "object": 13
+   }
+  },
+  "_originalOriginY": {
+   "count": 13,
+   "types": {
+    "object": 13
+   }
+  },
+  "aCoords": {
+   "count": 21,
+   "types": {
+    "object": 21
+   }
+  },
+  "angle": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "appointCmyk": {
+   "count": 13,
+   "types": {
+    "string": 13
+   }
+  },
+  "cacheHeight": {
+   "count": 17,
+   "types": {
+    "number": 17
+   }
+  },
+  "cacheTranslationX": {
+   "count": 14,
+   "types": {
+    "number": 14
+   }
+  },
+  "cacheTranslationY": {
+   "count": 14,
+   "types": {
+    "number": 14
+   }
+  },
+  "cacheWidth": {
+   "count": 17,
+   "types": {
+    "number": 17
+   }
+  },
+  "canvas": {
+   "count": 21,
+   "types": {
+    "object": 21
+   }
+  },
+  "deleteState": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "dirty": {
+   "count": 21,
+   "types": {
+    "boolean": 21
+   }
+  },
+  "evented": {
+   "count": 5,
+   "types": {
+    "boolean": 5
+   }
+  },
+  "fill": {
+   "count": 16,
+   "types": {
+    "string": 16
+   }
+  },
+  "height": {
+   "count": 21,
+   "types": {
+    "number": 21
+   }
+  },
+  "isComposite": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "isDesign": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "isDesignShape": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "isDisplay": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "isEdit": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "isPreview": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "layerAlpha": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "layerNum": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "left": {
+   "count": 21,
+   "types": {
+    "number": 21
+   }
+  },
+  "locationFactHeight": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "locationFactWidth": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "locationHeight": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "locationRotation": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "locationWidth": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "locationX": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "locationY": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "lockMovementX": {
+   "count": 2,
+   "types": {
+    "boolean": 2
+   }
+  },
+  "lockMovementY": {
+   "count": 2,
+   "types": {
+    "boolean": 2
+   }
+  },
+  "lockRotation": {
+   "count": 2,
+   "types": {
+    "boolean": 2
+   }
+  },
+  "lockScalingX": {
+   "count": 2,
+   "types": {
+    "boolean": 2
+   }
+  },
+  "lockScalingY": {
+   "count": 2,
+   "types": {
+    "boolean": 2
+   }
+  },
+  "lowPixelFlag": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "markuuid": {
+   "count": 13,
+   "types": {
+    "string": 13
+   }
+  },
+  "maskEnable": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "mediaColor": {
+   "count": 1,
+   "types": {
+    "number": 1
+   }
+  },
+  "mediaIsBG": {
+   "count": 13,
+   "types": {
+    "boolean": 13
+   }
+  },
+  "mediaIsFill": {
+   "count": 1,
+   "types": {
+    "boolean": 1
+   }
+  },
+  "mediaIsPrimary": {
+   "count": 1,
+   "types": {
+    "boolean": 1
+   }
+  },
+  "mediaMediaType": {
+   "count": 13,
+   "types": {
+    "string": 13
+   }
+  },
+  "mediaScopeType": {
+   "count": 1,
+   "types": {
+    "string": 1
+   }
+  },
+  "multiUuid": {
+   "count": 9,
+   "types": {
+    "string": 9
+   }
+  },
+  "oCoords": {
+   "count": 17,
+   "types": {
+    "object": 17
+   }
+  },
+  "objType": {
+   "count": 14,
+   "types": {
+    "string": 14
+   }
+  },
+  "opacity": {
+   "count": 13,
+   "types": {
+    "number": 13
+   }
+  },
+  "originX": {
+   "count": 9,
+   "types": {
+    "string": 9
+   }
+  },
+  "originY": {
+   "count": 9,
+   "types": {
+    "string": 9
+   }
+  },
+  "ownCaching": {
+   "count": 10,
+   "types": {
+    "boolean": 10
+   }
+  },
+  "ownMatrixCache": {
+   "count": 13,
+   "types": {
+    "object": 13
+   }
+  },
+  "printLocationHeight": {
+   "count": 9,
+   "types": {
+    "number": 9
+   }
+  },
+  "printLocationRotation": {
+   "count": 9,
+   "types": {
+    "number": 9
+   }
+  },
+  "printLocationWidth": {
+   "count": 9,
+   "types": {
+    "number": 9
+   }
+  },
+  "printLocationX": {
+   "count": 9,
+   "types": {
+    "number": 9
+   }
+  },
+  "printLocationY": {
+   "count": 9,
+   "types": {
+    "number": 9
+   }
+  },
+  "protoVisible": {
+   "count": 8,
+   "types": {
+    "boolean": 8
+   }
+  },
+  "resourceType": {
+   "count": 8,
+   "types": {
+    "number": 8
+   }
+  },
+  "scaleX": {
+   "count": 2,
+   "types": {
+    "number": 2
+   }
+  },
+  "scaleY": {
+   "count": 2,
+   "types": {
+    "number": 2
+   }
+  },
+  "selectEnabled": {
+   "count": 2,
+   "types": {
+    "boolean": 2
+   }
+  },
+  "selectable": {
+   "count": 9,
+   "types": {
+    "boolean": 9
+   }
+  },
+  "stroke": {
+   "count": 9,
+   "types": {
+    "object": 1,
+    "string": 8
+   }
+  },
+  "top": {
+   "count": 9,
+   "types": {
+    "number": 9
+   }
+  },
+  "topEnable": {
+   "count": 1,
+   "types": {
+    "boolean": 1
+   }
+  },
+  "translateX": {
+   "count": 5,
+   "types": {
+    "number": 5
+   }
+  },
+  "translateY": {
+   "count": 5,
+   "types": {
+    "number": 5
+   }
+  },
+  "visible": {
+   "count": 9,
+   "types": {
+    "boolean": 9
+   }
+  },
+  "visitLevel": {
+   "count": 1,
+   "types": {
+    "number": 1
+   }
+  },
+  "width": {
+   "count": 9,
+   "types": {
+    "number": 9
+   }
+  },
+  "zoomX": {
+   "count": 5,
+   "types": {
+    "number": 5
+   }
+  },
+  "zoomY": {
+   "count": 5,
+   "types": {
+    "number": 5
+   }
+  },
+  "_element": {
+   "count": 3,
+   "types": {
+    "object": 3
+   }
+  },
+  "_filterScalingX": {
+   "count": 3,
+   "types": {
+    "number": 3
+   }
+  },
+  "_filterScalingY": {
+   "count": 3,
+   "types": {
+    "number": 3
+   }
+  },
+  "_filteredEl": {
+   "count": 3,
+   "types": {
+    "object": 3
+   }
+  },
+  "_originalElement": {
+   "count": 3,
+   "types": {
+    "object": 3
+   }
+  },
+  "bigPicWidth": {
+   "count": 3,
+   "types": {
+    "number": 3
+   }
+  },
+  "borderDashArray": {
+   "count": 12,
+   "types": {
+    "object": 12
+   }
+  },
+  "borderScaleFactor": {
+   "count": 12,
+   "types": {
+    "number": 12
+   }
+  },
+  "cacheKey": {
+   "count": 3,
+   "types": {
+    "string": 3
+   }
+  },
+  "cmykSpecial": {
+   "count": 3,
+   "types": {
+    "boolean": 3
+   }
+  },
+  "cornerSize": {
+   "count": 12,
+   "types": {
+    "number": 12
+   }
+  },
+  "cornerStyle": {
+   "count": 12,
+   "types": {
+    "string": 12
+   }
+  },
+  "crossOrigin": {
+   "count": 8,
+   "types": {
+    "string": 3,
+    "undefined": 5
+   }
+  },
+  "designableArea": {
+   "count": 8,
+   "types": {
+    "boolean": 8
+   }
+  },
+  "enhancesize": {
+   "count": 3,
+   "types": {
+    "string": 3
+   }
+  },
+  "filters": {
+   "count": 3,
+   "types": {
+    "object": 3
+   }
+  },
+  "flipX": {
+   "count": 12,
+   "types": {
+    "boolean": 12
+   }
+  },
+  "flipY": {
+   "count": 12,
+   "types": {
+    "boolean": 12
+   }
+  },
+  "gildMaterial": {
+   "count": 3,
+   "types": {
+    "string": 3
+   }
+  },
+  "hasBorders": {
+   "count": 12,
+   "types": {
+    "boolean": 12
+   }
+  },
+  "hasRotatingPoint": {
+   "count": 12,
+   "types": {
+    "boolean": 12
+   }
+  },
+  "isqrcode": {
+   "count": 3,
+   "types": {
+    "string": 3
+   }
+  },
+  "layerHighestB": {
+   "count": 3,
+   "types": {
+    "boolean": 3
+   }
+  },
+  "lockScalingFlip": {
+   "count": 12,
+   "types": {
+    "boolean": 12
+   }
+  },
+  "lockUniScaling": {
+   "count": 12,
+   "types": {
+    "boolean": 12
+   }
+  },
+  "mediaImgPath": {
+   "count": 12,
+   "types": {
+    "string": 12
+   }
+  },
+  "mediaImgPathBlack": {
+   "count": 3,
+   "types": {
+    "string": 3
+   }
+  },
+  "mediaImgPathNoCutOut": {
+   "count": 3,
+   "types": {
+    "string": 3
+   }
+  },
+  "noCutWidth": {
+   "count": 3,
+   "types": {
+    "string": 3
+   }
+  },
+  "personflag": {
+   "count": 3,
+   "types": {
+    "boolean": 3
+   }
+  },
+  "d": {
+   "count": 3,
+   "types": {
+    "string": 3
+   }
+  },
+  "fillRule": {
+   "count": 4,
+   "types": {
+    "string": 4
+   }
+  },
+  "fromSVG": {
+   "count": 3,
+   "types": {
+    "boolean": 3
+   }
+  },
+  "id": {
+   "count": 4,
+   "types": {
+    "string": 4
+   }
+  },
+  "mediaOverprintName": {
+   "count": 5,
+   "types": {
+    "string": 5
+   }
+  },
+  "mediaOverprintSpotColor": {
+   "count": 5,
+   "types": {
+    "string": 5
+   }
+  },
+  "mediaOverprintStroke": {
+   "count": 5,
+   "types": {
+    "boolean": 5
+   }
+  },
+  "overprintName": {
+   "count": 5,
+   "types": {
+    "string": 5
+   }
+  },
+  "overprintSpotColor": {
+   "count": 5,
+   "types": {
+    "string": 5
+   }
+  },
+  "overprintStroke": {
+   "count": 5,
+   "types": {
+    "boolean": 5
+   }
+  },
+  "path": {
+   "count": 3,
+   "types": {
+    "object": 3
+   }
+  },
+  "pathOffset": {
+   "count": 3,
+   "types": {
+    "object": 3
+   }
+  },
+  "resouceCategoryId": {
+   "count": 7,
+   "types": {
+    "string": 7
+   }
+  },
+  "rightType": {
+   "count": 7,
+   "types": {
+    "string": 7
+   }
+  },
+  "_objects": {
+   "count": 1,
+   "types": {
+    "object": 1
+   }
+  },
+  "_transformDone": {
+   "count": 1,
+   "types": {
+    "boolean": 1
+   }
+  },
+  "paths": {
+   "count": 1,
+   "types": {
+    "object": 1
+   }
+  },
+  "rotatingPointOffset": {
+   "count": 2,
+   "types": {
+    "number": 2
+   }
+  },
+  "__charBounds": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "__dimensionAffectingProps": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "__eventListeners": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "__lastClickTime": {
+   "count": 4,
+   "types": {
+    "number": 4
+   }
+  },
+  "__lastLastClickTime": {
+   "count": 4,
+   "types": {
+    "number": 4
+   }
+  },
+  "__lastPointer": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "__lineHeights": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "__lineWidths": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "__skipDimension": {
+   "count": 4,
+   "types": {
+    "boolean": 4
+   }
+  },
+  "_styleMap": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "_text": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "_textLines": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "_unwrappedTextLines": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "charSpacing": {
+   "count": 4,
+   "types": {
+    "number": 4
+   }
+  },
+  "cursorOffsetCache": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "dynamicMinWidth": {
+   "count": 4,
+   "types": {
+    "number": 4
+   }
+  },
+  "fontFamily": {
+   "count": 4,
+   "types": {
+    "string": 4
+   }
+  },
+  "fontSize": {
+   "count": 4,
+   "types": {
+    "number": 4
+   }
+  },
+  "fontStyle": {
+   "count": 4,
+   "types": {
+    "string": 4
+   }
+  },
+  "fontWeight": {
+   "count": 4,
+   "types": {
+    "string": 4
+   }
+  },
+  "isLineText": {
+   "count": 4,
+   "types": {
+    "boolean": 4
+   }
+  },
+  "isWrapping": {
+   "count": 4,
+   "types": {
+    "boolean": 4
+   }
+  },
+  "lastSafeText": {
+   "count": 4,
+   "types": {
+    "string": 4
+   }
+  },
+  "lineHeight": {
+   "count": 4,
+   "types": {
+    "number": 4
+   }
+  },
+  "lineIdType": {
+   "count": 4,
+   "types": {
+    "string": 4
+   }
+  },
+  "linethrough": {
+   "count": 4,
+   "types": {
+    "boolean": 4
+   }
+  },
+  "mediaIsBold": {
+   "count": 4,
+   "types": {
+    "boolean": 4
+   }
+  },
+  "mediaIsItalic": {
+   "count": 4,
+   "types": {
+    "boolean": 4
+   }
+  },
+  "mediaLineIdType": {
+   "count": 4,
+   "types": {
+    "string": 4
+   }
+  },
+  "mediaLineSpace": {
+   "count": 4,
+   "types": {
+    "number": 4
+   }
+  },
+  "mediaLinethrough": {
+   "count": 4,
+   "types": {
+    "string": 4
+   }
+  },
+  "immutable": {
+   "count": 1,
+   "types": {
+    "boolean": 1
+   }
+  },
+  "noScaleCache": {
+   "count": 1,
+   "types": {
+    "boolean": 1
+   }
+  },
+  "rx": {
+   "count": 1,
+   "types": {
+    "number": 1
+   }
+  },
+  "rightsMaterial": {
+   "count": 2,
+   "types": {
+    "boolean": 2
+   }
+  },
+  "strokeDashArray": {
+   "count": 4,
+   "types": {
+    "object": 4
+   }
+  },
+  "strokeWidth": {
+   "count": 8,
+   "types": {
+    "number": 8
+   }
+  },
+  "x1": {
+   "count": 8,
+   "types": {
+    "number": 8
+   }
+  },
+  "x2": {
+   "count": 8,
+   "types": {
+    "number": 8
+   }
+  },
+  "y1": {
+   "count": 8,
+   "types": {
+    "number": 8
+   }
+  },
+  "y2": {
+   "count": 8,
+   "types": {
+    "number": 8
+   }
+  }
+ },
+ "typeDist": {
+  "rect": 2,
+  "image": 3,
+  "path": 3,
+  "group": 1,
+  "textbox": 4,
+  "line": 8
+ },
+ "ctorDist": {
+  "b": 21
+ },
+ "rotated": [
+  {
+   "side": "front",
+   "index": 2,
+   "angle": 105,
+   "ctor": "b",
+   "type": "path"
+  }
+ ],
+ "identityAgg": {
+  "markuuid": 13,
+  "uuid": 12,
+  "id": 4
+ }
+}

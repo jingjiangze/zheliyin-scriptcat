@@ -1,0 +1,81 @@
+{
+ "ts": "2026-09-16T02:03:32.963Z",
+ "stage": "Stage 5.0 refresh-persistence",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "canvas-text-ready",
+   "ok": "PASS",
+   "detail": "textbox 就绪",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "snapshot-before",
+   "ok": "PASS",
+   "detail": "{\"markuuid\":\"AD4636D5227B49399987EA16FC0FF3EA\",\"uuidPrefix\":\"ecfd02ca\",\"textHash8\":\"9967074\",\"textHead\":\"简小设\",\"geometry\":{\"left\":26.16865675953352,\"top\":147.37885874780164,\"width\":95.27115,\"height\":35.03,\"scaleX\":1,\"scaleY\":1,\"angle\":0}}",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "mutation-effective",
+   "ok": "PASS",
+   "detail": "{\"changed\":true,\"textHead\":\"ZY_STAGE5_REFRESH_TEST\",\"width\":95.27115,\"height\":197.5692}",
+   "evidence": "REAL_MUTATION_TEMPORARY"
+  },
+  {
+   "name": "canvas-text-ready-2",
+   "ok": "PASS",
+   "detail": "reload 后 textbox 就绪",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "post-reload",
+   "ok": "PASS",
+   "detail": "{\"markuuidMatched\":true,\"textRestoredHead\":\"简小设\",\"leakedTestValue\":false,\"uuidNowPrefix\":\"5821c916\"}",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "text-restored-after-refresh",
+   "ok": "PASS",
+   "detail": "before(textHash8=9967074) after(简小设/len=3) leaked=false",
+   "evidence": "REFRESH_PERSISTENCE_A"
+  },
+  {
+   "name": "markuuid-stable-across-reload",
+   "ok": "PASS",
+   "detail": "markuuid=AD4636D5227B4939",
+   "evidence": "REFRESH_PERSISTENCE_B"
+  },
+  {
+   "name": "uuid-rel-load-behavior",
+   "ok": "PASS",
+   "detail": "CHANGED（uuid 重新生成，会话级实例 id） before=ecfd02ca after=5821c916",
+   "evidence": "REFRESH_PERSISTENCE_C"
+  },
+  {
+   "name": "geometry-style-restored",
+   "ok": "PASS",
+   "detail": "{\"before\":{\"left\":26.16865675953352,\"top\":147.37885874780164,\"width\":95.27115,\"height\":35.03,\"scaleX\":1,\"scaleY\":1,\"angle\":0},\"after\":{\"left\":26.16865675953352,\"top\":147.37885874780164,\"width\":95.27115,\"height\":35.03,\"scaleX\":1,\"scaleY\":1,\"angle\":0}}",
+   "evidence": "REFRESH_PERSISTENCE_D"
+  },
+  {
+   "name": "index-stability-observation",
+   "ok": "PASS",
+   "detail": "before index=4 after index=4（同页面重载后结构一致；index 为数组位次，删除/插入会移位，不作 identity）",
+   "evidence": "REFRESH_PERSISTENCE_E"
+  }
+ ],
+ "errors": [],
+ "summary": {
+  "finding": {
+   "uuid": "会话级实例 id（reload 后重新生成，两次独立会话观察也证实不同）；不可作跨会话 PERSISTED id",
+   "markuuid": "reload 后保持，可跨会话定位对象（文字层唯一；SVG 组内共享需注意）——PERSISTED_EDITOR_ID 候选（文字层）",
+   "text": "未保存修改 reload 后恢复模板原值（服务端模板字段；保存时才持久化）",
+   "geometry/style": "reload 后恢复模板值（模板级持久字段）"
+  }
+ }
+}
