@@ -1,0 +1,320 @@
+{
+ "ts": "2026-09-16T04:15:46.902Z",
+ "stage": "Stage 5.4 font-calibration",
+ "steps": [
+  {
+   "name": "nav",
+   "ok": "PASS",
+   "detail": "真实编辑器已打开",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "CanvasObjVO 就绪",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "calibration-short",
+   "ok": "PASS",
+   "detail": "short samples=10",
+   "evidence": "REAL_EDITOR"
+  },
+  {
+   "name": "calibration-mean-ratio",
+   "ok": "PASS",
+   "detail": "mean(single-line)=1.342 min=1.181 max=2.537 invert=fontSize = 0.745 * visualHeight",
+   "evidence": "§三十② 真实测量"
+  },
+  {
+   "name": "cleanup",
+   "ok": "PASS",
+   "detail": "21 vs before 21",
+   "evidence": "§36 rollback"
+  }
+ ],
+ "errors": [],
+ "samples": [
+  {
+   "fontSize": 12,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 13.559999999999997,
+   "visualHeight": 15.033199999999997,
+   "visualWidth": 434.6825,
+   "ratio": 1.253
+  },
+  {
+   "fontSize": 12,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 13.559999999999997,
+   "visualHeight": 15.033199999999994,
+   "visualWidth": 434.6825,
+   "ratio": 1.253
+  },
+  {
+   "fontSize": 12,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 13.559999999999997,
+   "visualHeight": 15.033199999999994,
+   "visualWidth": 434.6825,
+   "ratio": 1.253
+  },
+  {
+   "fontSize": 16,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 18.08,
+   "visualHeight": 19.70010000000002,
+   "visualWidth": 434.6825,
+   "ratio": 1.231
+  },
+  {
+   "fontSize": 16,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 18.08,
+   "visualHeight": 19.70010000000002,
+   "visualWidth": 434.6825,
+   "ratio": 1.231
+  },
+  {
+   "fontSize": 16,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 18.08,
+   "visualHeight": 19.70010000000002,
+   "visualWidth": 434.6825,
+   "ratio": 1.231
+  },
+  {
+   "fontSize": 20,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 22.599999999999998,
+   "visualHeight": 24.36699999999999,
+   "visualWidth": 434.6825,
+   "ratio": 1.218
+  },
+  {
+   "fontSize": 20,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 22.599999999999998,
+   "visualHeight": 24.366999999999962,
+   "visualWidth": 434.6825,
+   "ratio": 1.218
+  },
+  {
+   "fontSize": 20,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 22.599999999999998,
+   "visualHeight": 24.366999999999962,
+   "visualWidth": 434.6825,
+   "ratio": 1.218
+  },
+  {
+   "fontSize": 24,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 27.119999999999994,
+   "visualHeight": 29.033900000000017,
+   "visualWidth": 434.6825,
+   "ratio": 1.21
+  },
+  {
+   "fontSize": 24,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 27.119999999999994,
+   "visualHeight": 29.033900000000017,
+   "visualWidth": 434.6825,
+   "ratio": 1.21
+  },
+  {
+   "fontSize": 24,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 58.579199999999986,
+   "visualHeight": 61.51552400000003,
+   "visualWidth": 434.6825,
+   "ratio": 2.563
+  },
+  {
+   "fontSize": 28,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 31.639999999999993,
+   "visualHeight": 33.700800000000015,
+   "visualWidth": 434.6825,
+   "ratio": 1.204
+  },
+  {
+   "fontSize": 28,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 31.639999999999993,
+   "visualHeight": 33.70080000000007,
+   "visualWidth": 434.6825,
+   "ratio": 1.204
+  },
+  {
+   "fontSize": 28,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 68.34239999999998,
+   "visualHeight": 71.59602799999993,
+   "visualWidth": 434.6825,
+   "ratio": 2.557
+  },
+  {
+   "fontSize": 32,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 36.16,
+   "visualHeight": 38.36770000000001,
+   "visualWidth": 434.6825,
+   "ratio": 1.199
+  },
+  {
+   "fontSize": 32,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 36.16,
+   "visualHeight": 38.36770000000001,
+   "visualWidth": 434.6825,
+   "ratio": 1.199
+  },
+  {
+   "fontSize": 32,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 78.10559999999998,
+   "visualHeight": 81.67653199999995,
+   "visualWidth": 434.6825,
+   "ratio": 2.552
+  },
+  {
+   "fontSize": 36,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 40.68,
+   "visualHeight": 43.034599999999955,
+   "visualWidth": 434.6825,
+   "ratio": 1.195
+  },
+  {
+   "fontSize": 36,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 40.68,
+   "visualHeight": 43.034599999999955,
+   "visualWidth": 434.6825,
+   "ratio": 1.195
+  },
+  {
+   "fontSize": 36,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 87.8688,
+   "visualHeight": 91.75703599999997,
+   "visualWidth": 434.6825,
+   "ratio": 2.549
+  },
+  {
+   "fontSize": 48,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 54.23999999999999,
+   "visualHeight": 57.03530000000001,
+   "visualWidth": 434.6825,
+   "ratio": 1.188
+  },
+  {
+   "fontSize": 48,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 54.23999999999999,
+   "visualHeight": 57.03530000000001,
+   "visualWidth": 434.6825,
+   "ratio": 1.188
+  },
+  {
+   "fontSize": 48,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 180.07679999999996,
+   "visualHeight": 186.96179600000005,
+   "visualWidth": 434.6825,
+   "ratio": 3.895
+  },
+  {
+   "fontSize": 60,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 67.79999999999998,
+   "visualHeight": 71.03600000000006,
+   "visualWidth": 434.6825,
+   "ratio": 1.184
+  },
+  {
+   "fontSize": 60,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 146.44799999999998,
+   "visualHeight": 152.24006000000008,
+   "visualWidth": 434.6825,
+   "ratio": 2.537
+  },
+  {
+   "fontSize": 60,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 303.7439999999999,
+   "visualHeight": 314.64818000000014,
+   "visualWidth": 434.6825,
+   "ratio": 5.244
+  },
+  {
+   "fontSize": 72,
+   "textLenClass": "short",
+   "textLen": 2,
+   "objHeight": 81.36,
+   "visualHeight": 85.03670000000011,
+   "visualWidth": 434.6825,
+   "ratio": 1.181
+  },
+  {
+   "fontSize": 72,
+   "textLenClass": "mid",
+   "textLen": 8,
+   "objHeight": 175.7376,
+   "visualHeight": 182.48157200000014,
+   "visualWidth": 434.6825,
+   "ratio": 2.534
+  },
+  {
+   "fontSize": 72,
+   "textLenClass": "long",
+   "textLen": 24,
+   "objHeight": 364.4928,
+   "visualHeight": 377.37131599999975,
+   "visualWidth": 434.6825,
+   "ratio": 5.241
+  }
+ ],
+ "summary": {
+  "singleLineCount": 20,
+  "multiLineCount": 10,
+  "ratioMin": 1.181,
+  "ratioMax": 2.537,
+  "ratioMean": 1.342,
+  "shortRatioMean": 1.206,
+  "shortInvertFormula": "fontSize = 0.829 * visualHeight",
+  "invertFormula": "fontSize = 0.745 * visualHeight",
+  "multiLineNote": "多行（long）高度随行数增长，不做单行反推；需行数估计（wide-box 检测）"
+ }
+}
