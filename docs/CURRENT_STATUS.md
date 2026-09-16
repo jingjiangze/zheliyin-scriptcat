@@ -2,7 +2,8 @@
 
 > 维护者：AI-2（Repository Governance 线）
 > 基线：分支 `stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A，2026-09-16）
-> 修订：@ `3becf04`（5.4）初版；@ `4cb0819`（5.5）同步真实 OCR；@ `7c412b8`（5.5A）同步产品化验收结论。
+> 修订：@ `3becf04`（5.4）初版；@ `4cb0819`（5.5）同步真实 OCR；@ `7c412b8`（5.5A）同步产品化验收结论；
+> 本页同时覆盖 **四轨状态**（main / demo / AI-1 开发 / 治理），分支明细见 §4。
 > **本页只陈述已有证据支持的状态。没有证据的一律写 `TODO`，不预判。**
 > 状态取值：`PASS` / `PARTIAL` / `BLOCKED` / `TODO` / `DEFERRED` / `UNVERIFIED`
 > 等级取值见 `docs/EVIDENCE_POLICY.md`
@@ -77,6 +78,15 @@ P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
              → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview
 ```
 
+**Demo 现状**（`demo` @ `ceedbb5`，版本 `0.3.0.1`）：
+
+```text
+USER_INSTALLABLE    = PASS（自动可验部分；人工安装动作 PENDING）
+USER_UPDATEABLE     = PASS（8 处 URL 均已指向 demo）
+REAL_FEATURE_USABLE = 部分（套版填层可用；图片识别 BLOCKED）
+```
+> 详见 `docs/DEMO_RELEASE.md`（发布清单）与 `docs/DEMO_INSTALL.md`（安装与验收）。
+
 **Stage 5.5A 产品化验收结论**（按 `docs/EVIDENCE_POLICY.md` §3 如实登记）：
 
 ```text
@@ -102,20 +112,56 @@ BASIC_REAL_OCR_DEMO_PRODUCT                     = BLOCKED
 
 ---
 
-## 4. 两个分支的关系（**必读**）
+## 4. 分支状态表（**实时读取，勿凭记忆**）
 
-| | `main` | `stage-4.1-runtime-validation` |
+| Branch | HEAD | Purpose | Installable | Stable |
+|---|---|---|---|---|
+| `main` | `7446faa` | 稳定公开版（默认分支） | ✅ Yes | ✅ **Yes** |
+| `demo` | `ceedbb5` | 真实用户试用（实验性） | ✅ Yes | ❌ No（实验版） |
+| `stage-4.1-runtime-validation` | `7c412b8` | AI-1 持续开发 | ❌ No（未配元数据，`@require` 指 main） | ❌ No |
+| `ai2-repo-governance` | 见 `git rev-parse origin/ai2-repo-governance` | 文档 / 规范 / 契约 | — （非交付物） | — |
+
+**Demo 固定安装地址**（装一次即可，URL 永不变）：
+
+```text
+https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
+```
+
+**版本对照**：
+
+| 轨道 | `@version` | 说明 |
 |---|---|---|
-| HEAD | `7446faa` | `7c412b8` |
-| 最后阶段 | Stage 4.0 | **Stage 5.5A** |
-| 跟踪文件 | 44 | **187** |
-| 关系 | 是后者的**严格祖先** | 领先 66 commit / 落后 0（**可快进合并**） |
+| `main` | `0.3.0.0` | 稳定线 |
+| `demo` | `0.3.0.1` | 同一发布线的 demo build 计数（第 4 段递增） |
 
-> ⚠️ **GitHub 默认展示的是 `main`**，它**不包含**任何 Stage 5.x / RUNTIME-8.x / OCR / object-model / ocr-provider 代码。
-> 任何人从默认分支阅读本仓库，都会得到一个"只有 Stage 4.0"的错误印象。
-> 这是当前仓库**最大的信息结构风险**，处置建议见 `docs/PARALLEL_DEVELOPMENT.md` §5。
+**四分支血缘与祖先关系**：
 
----
+```text
+main 7446faa  ⊂  stage-4.1-runtime-validation 7c412b8  ⊂  demo ceedbb5
+   (85c/44f)              (151c/187f)                      (153c/187f)
+                                     ↑
+                        ai2-repo-governance（文档线，基线 3becf04，不含 Stage 5.5/5.5A 文件）
+```
+
+> ⚠️ **GitHub 默认展示的是 `main`**，它**不包含**任何 Stage 5.x / RUNTIME-8.x / OCR / object-model 代码（落后 66 commit，可快进）。
+> 只从默认分支阅读本仓库会得到「只有 Stage 4.0」的错误印象 —— 这是当前最大的信息结构风险。
+> 处置方案见 `docs/PARALLEL_DEVELOPMENT.md` §5（**AI-2 不擅自执行合并**）。
+
+> ⚠️ **AI-1 开发分支不是可直接安装的交付物**：其 userscript 的 8 处 URL 仍指向 `main`，
+> 直接安装会加载 `main` 的 `page-bridge.js`（**不含 Stage 5.1 P1 identity 修复**）。
+> 需要试用最新实现请装 `demo`（已在 `0fa8303` 修正全部 URL 并实测验证）。
+
+**复现命令**：
+
+```bash
+git fetch --all --prune
+for b in main demo stage-4.1-runtime-validation ai2-repo-governance; do
+  printf "%-32s %s  commits=%-4s files=%s\n" "$b" \
+    "$(git rev-parse --short origin/$b)" "$(git rev-list --count origin/$b)" \
+    "$(git ls-tree -r --name-only origin/$b | wc -l)"
+done
+```
+
 
 ## 5. 测试现状速览
 
@@ -139,3 +185,5 @@ BASIC_REAL_OCR_DEMO_PRODUCT                     = BLOCKED
 3. 不得为让本表好看而改写 `BLOCKED` / `PARTIAL`。
 4. 生产挂接状态变化时（§2 表），必须同步更新本页与 `README.md` 的 Current Status。
 5. 更新本页不修改任何实现代码。
+6. **§4 分支状态表必须从 Git 实时读取**：`git fetch --all --prune` 后按该节复现命令取数，禁止凭记忆填写。
+7. `docs/CURRENT_STATUS.md` 是本仓库**唯一**的总状态页。禁止创建 `CURRENT_STATUS_2.md` / `_NEW` / `_FINAL` 等变体。
