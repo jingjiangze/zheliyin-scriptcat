@@ -27,7 +27,10 @@ FIXTURE OCR（人为构造 OCRCandidate，bbox 来自合成图的已知绘制坐
 
 **它没有验证**：真实 OCR provider 能否从真实客户图片里产出候选。真实 OCR 在 Stage 5.3 与 5.4 两次深探后结论为 `NATIVE_OCR_RESULT_ACCESS = BLOCKED`，真实 provider 接入记为 `DEFERRED → Stage 5.5`。
 
-> 因此：本索引中所有 Stage 5.x 的 `PASS`，凡涉及 OCR 来源的，一律按 `FIXTURE_OCR` 理解。历史报告原样保留，本索引负责补充这层说明。
+> 因此：本索引中所有 Stage 5.3 / 5.4 的 `PASS`，凡涉及 OCR 来源的，一律按 `FIXTURE_OCR` 理解。历史报告原样保留，本索引负责补充这层说明。
+>
+> **Stage 5.5 更新（2026-09-16）**：真实 OCR 已接入 —— `REAL_OCR_PROVIDER = PASS`（本地 tesseract.js，chi_sim，零上传零 key），`BASIC_REAL_OCR_DEMO = PASS`。
+> 即：**5.3/5.4 = fixture 链路验证；5.5 = 真实 OCR 链路验证**。两者都成立，含义不同，不要互相覆盖。
 
 ---
 
@@ -62,6 +65,7 @@ FIXTURE OCR（人为构造 OCRCandidate，bbox 来自合成图的已知绘制坐
 | **Stage 5.2** | 真实可用编辑流水线 + Object Matcher | 2026-09-16 | `1f24e28` `bc554eb` `28cc691` `e962012` `84ba493` `3339995` | **GO** | REAL：PRODUCT_SMOKE 11 步 PASS；matcher 自匹配 4/4（score 0.807）；偏移 → NOT_FOUND；safe mutation 仅 `[text,height]` | OCR 真实图像→候选未接入；matcher↔legacy 统一待定 |
 | **Stage 5.3** | Real Image → OCR → Native Text Reconstruction | 2026-09-16 | `4ad71a0` `94e6336` `0360f29` `0776d2d` `1cafd55` | **GO** | REAL + **FIXTURE_OCR**：synth 600×400 图 → mapper → matcher 4/4 NOT_FOUND（模板保护）→ 创建 4 真 textbox → group/ungroup → 参考图保留 → rollback 21/4 零残留 | **真实 OCR provider 未接入（BLOCKED）**；字号校准 deferred；旋转图无样本 |
 | **Stage 5.4** | Native OCR 边界 + 真实图片输入 + 重建精度 | 2026-09-16 | `438effb` `2e51280` `1f3e6d8` `96649cc` `3becf04` | **CONDITIONAL-GO** | REAL + **FIXTURE_OCR**：4 实验深探 → `NATIVE_OCR_RESULT_ACCESS = BLOCKED`；字号校准 `fontSize = 0.829 × visualHeight`，**重建后回读 mean height error 5.03%**；group/rollback 全 PASS | Local OCR 评估未接入 → 5.5；原生图片输入自动化 `PARTIAL`；多行字号反推 deferred |
+| **Stage 5.5** | **真实 OCR Provider 接入 + Basic Real OCR Demo** | 2026-09-16 | `1ea948b` `131658e` `0707035` `7ef1aed` `03f2167` `4cb0819` | **GO** | **REAL**（当前 HEAD）：tesseract.js 本地 provider 实测（chi_sim：18 words / bbox 18/18 / avg-conf 90.4 / 首跑 ~3s / **零上传零 key**）；`BASIC_REAL_OCR_DEMO = PASS` —— 真实 OCR 6 行候选 → mapper(1000×800 natural × 0.45) → matcher（**电话行 MATCHED 复用模板槽**，其余 NOT_FOUND 保护）→ 6 个真 textbox（editable / 思源黑体 Regular / markuuid=null）→ 字号误差 **3.3%** → 参考图保留 → rollback 21/4/3 零残留 | 引擎注入为 `GM_addElement`/side-page（**待真机一键验证**，5.6 前置）；行聚合词序质量 → 5.9；真实用户粘贴 → 待真机；`ocr-provider.js`/`tesseract-loader.js` **未挂接生产** |
 
 ---
 
@@ -84,7 +88,7 @@ FIXTURE OCR（人为构造 OCRCandidate，bbox 来自合成图的已知绘制坐
 | R2（core/config/fields/ai 拆模块） | **Stage 1 + Stage 2** | `field-core` / `config-core` / `ai-client` 落地；`src/core/utils.js` **未做** |
 | R3（bridgeClient / adapter / coordinate） | 部分并入 **Stage 3**，其余进入 **Stage 5** | `page-bridge.js` 提取完成；`bridgeClient`（requestId）**未做**；`adapter` 以 `object-adapter.js` 落地（Stage 5.0）；`coordinate` 以 `image-mapper.js` 落地（Stage 5.3） |
 | R4（runId / TextObject / 标签增强） | **未执行** | `ARCH-RISK-001` 仍开放 |
-| R5（图片 OCR） | 演化为 **Stage 5.0–5.4** | 范围更聚焦：先对象模型/identity/geometry，再 matcher，再重建 |
+| R5（图片 OCR） | 演化为 **Stage 5.0–5.5** | 范围更聚焦：先对象模型/identity/geometry，再 matcher，再重建，最后接入真实 OCR provider（5.5） |
 
 > 治理结论：**不重命名历史**。R1–R5 保留为"计划文档"，实际执行以 Stage 编号为准；两者映射关系记在本节，避免后人误以为 R1–R5 是已完成阶段。
 
@@ -136,9 +140,10 @@ Stage 5.4     CONDITIONAL-GO   ← 当前 HEAD
 | 项 | 值 |
 |---|---|
 | 分支 | `stage-4.1-runtime-validation` |
-| HEAD | `3becf04`（Stage 5.4 OCR Adapter Audit，gate CONDITIONAL-GO） |
-| 下一步（已定义，未启动） | **Stage 5.5**：Local / Native OCR provider 真实接入 + 真实用户图片验证 |
-| 停止点约定 | Stage 5.4 §9 明确「不进入完整设计稿重建 / SVG 矢量化 / 复杂艺术字」，等授权 |
+| HEAD | `4cb0819`（Stage 5.5 Real OCR Provider + Basic Real OCR Demo，gate GO） |
+| 下一步（已定义，未启动） | **Stage 5.6**：字号精确（前置：`GM_addElement` 引擎注入真机验证） |
+| 后续已定序路线 | 5.6 字号精确 → 5.7 颜色/粗细 → 5.8 旋转 → 5.9 多行/段落（行内词序/列） → 5.10 复杂布局 → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview |
+| 停止点约定 | Stage 5.5 §9 明确「按 §三十六 立即停止，不进入颜色/粗细/旋转/多行/编组/预览等后续阶段」 |
 
 ---
 
