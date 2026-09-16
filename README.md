@@ -1,5 +1,32 @@
 # 折立印名片套版助手 v0.2.3.11
 
+## ⚠️ 你正在看 Demo（实验性）分支
+
+| 轨道 | 分支 | 版本 | 用途 |
+|---|---|---|---|
+| 稳定版 | `main` | `0.3.0.0` | 日常使用（推荐） |
+| **Demo（当前分支）** | `demo` | **`0.3.0.1`** | 真实用户试用 AI-1 最新实现 |
+| 开发中 | `stage-4.1-runtime-validation` | — | AI-1 持续开发，不建议直接使用 |
+
+> 下方标题里的 `v0.2.3.11` 是旧版遗留文案；**本 Demo 的实际版本以上表 `0.3.0.1` 为准**（面板内「版本：」亦显示该值）。
+
+**Demo 已知情况（截至 Stage 5.5A）**：编辑器内 OCR 引擎装载 **`BLOCKED`**（CSP 拦外链 + requirejs AMD 吸收 UMD）→ **图片识别目前不可用**；套版填层等既有功能正常。
+
+### Demo 安装（固定地址，装一次即可）
+
+1. 安装 [ScriptCat](https://scriptcat.org/)（已安装可跳过）
+2. 打开固定安装地址：
+   <https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js>
+3. ScriptCat 弹出安装页 → 点击「安装」
+4. 打开折立印设计器页面（需登录）
+5. 右侧出现「名片套版助手」面板即安装成功
+6. **以后无需重新安装**：脚本 `@updateURL` 已固定指向本 demo 分支，ScriptCat 会自动提示更新
+
+> 本分支仅供试用与真机反馈。**生产使用请安装稳定版**（见 `main` 分支 README）。
+> 完整说明见 `docs/DEMO_INSTALL.md`（位于治理分支 `ai2-repo-governance`）。
+
+---
+
 
 - 优先填入画布已有文字图层。
 - 已有文字图层只改文字，不强制改字号、位置和样式。
