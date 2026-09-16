@@ -269,6 +269,43 @@
         line-height: 1.45;
         word-break: break-all;
       }
+      /* Stage 5.5B P2-B：原生右栏邻接抽屉（复用 zy-* 样式体系） */
+      #zy-native-ocr-panel {
+        position: fixed;
+        top: 0;
+        right: 190px; /* 紧贴 .rightPageBar.rightBar 左缘 */
+        width: 245px;
+        height: 100vh;
+        z-index: 2147483000;
+        background: #ffffff;
+        color: #172033;
+        border-left: 1px solid #d7dce5;
+        box-shadow: -8px 0 24px rgba(16, 24, 40, .12);
+        font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      #zy-native-ocr-panel .zy-body {
+        flex: 1;
+        display: grid;
+        gap: 10px;
+        padding: 12px;
+        overflow: auto;
+      }
+      #zy-native-ocr-panel .zy-head { flex: none; }
+      #zy-native-ocr-tool-btn {
+        display: block;
+        width: 100%;
+        height: 52px;
+        border: 0;
+        background: #2e7ff0;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      #zy-native-ocr-tool-btn:hover { background: #1f6feb; }
     `);
   }
 
@@ -421,13 +458,20 @@
     if (ocrBtn) ocrBtn.addEventListener("click", handleOcrImage);
     const probeBtn = panel.querySelector("#zy-probe");
     if (probeBtn) probeBtn.addEventListener("click", probeCanvas);
-    // Stage 5.5B P4：百度云 OCR 设置 + 识别方式
-    const modeSel = panel.querySelector("#zy-ocr-mode");
+    // Stage 5.5B P4 / P2-B：识别方式 + 百度设置共用绑定（suffix 区分浮窗面板与原生抽屉，单一来源）
+    bindOcrControls(panel, "", () => { renderPanel(); });
+  }
+
+  // 识别方式下拉 + 百度云 OCR（AK/SK 脱敏存取 + 保存 + 测试连接）统一绑定。
+  // suffix: 浮窗 "" / 原生抽屉 "-native"；onSaved: 保存后回调（浮窗需重渲染刷新占位，原生抽屉不需要）。
+  function bindOcrControls(scope, suffix, onSaved) {
+    const q = (id) => scope.querySelector("#" + id + suffix);
+    const modeSel = q("zy-ocr-mode");
     if (modeSel) modeSel.addEventListener("change", () => { GM_setValue("zyOcrMode", modeSel.value); setStatus("识别方式已切换为：" + (modeSel.value === "auto" ? "自动（本地优先）" : modeSel.value === "local" ? "仅本地" : "百度云端")); });
-    const akInput = panel.querySelector("#zy-baidu-ak");
-    const skInput = panel.querySelector("#zy-baidu-sk");
-    const bs = panel.querySelector("#zy-baidu-status");
-    const saveBtn = panel.querySelector("#zy-baidu-save");
+    const akInput = q("zy-baidu-ak");
+    const skInput = q("zy-baidu-sk");
+    const bs = q("zy-baidu-status");
+    const saveBtn = q("zy-baidu-save");
     if (saveBtn) saveBtn.addEventListener("click", () => {
       const ak = akInput ? akInput.value.trim() : "";
       const sk = skInput ? skInput.value.trim() : "";
@@ -436,9 +480,9 @@
       if (akInput) akInput.value = "";
       if (skInput) skInput.value = "";
       setBaiduStatus(bs, baiduConfigured() ? "已保存（Key 不显示完整，仅存本机）。" : "已保存（尚未配置 API Key）");
-      renderPanel(); // 刷新面板占位文本（maskKey）
+      if (typeof onSaved === "function") onSaved();
     });
-    const testBtn = panel.querySelector("#zy-baidu-test");
+    const testBtn = q("zy-baidu-test");
     if (testBtn) testBtn.addEventListener("click", async () => {
       setBaiduStatus(bs, "正在测试连接…");
       const provider = makeBaiduProvider();
@@ -455,6 +499,93 @@
   function setBaiduStatus(node, text) {
     const n = node || document.getElementById("zy-baidu-status");
     if (n) n.textContent = text;
+  }
+
+  // ---- Stage 5.5B P2-B：原生右栏 OCR 面板（§14-§17，P2-A 审计结论：.rightPageBar.rightBar 稳定）----
+  // 主 UI = 原生右栏邻接抽屉 + 右栏工具按钮；旧浮窗保留为 fallback（§16）。
+  let nativeOcrMounted = false;
+  let nativeObs = null;
+  function renderNativeOcrDrawer() {
+    const existing = document.getElementById("zy-native-ocr-panel");
+    if (existing) return existing;
+    const drawer = document.createElement("aside");
+    drawer.id = "zy-native-ocr-panel";
+    const akPlaceholder = baiduConfigured() ? "已配置 " + maskKey(GM_getValue("zyBaiduAk", "")) : "未配置";
+    drawer.innerHTML = `
+      <div class="zy-head">
+        <div class="zy-title">图片文字识别</div>
+        <div class="zy-head-actions">
+          <button class="zy-icon-btn" id="zy-native-close" title="收起">−</button>
+        </div>
+      </div>
+      <div class="zy-body">
+        <div class="zy-row">
+          <label class="zy-label" for="zy-native-ocr-mode">识别方式</label>
+          <select class="zy-input" id="zy-native-ocr-mode">
+            <option value="auto" ${getOcrMode() === "auto" ? "selected" : ""}>自动（本地优先，失败时用百度云端）</option>
+            <option value="local" ${getOcrMode() === "local" ? "selected" : ""}>仅本地（不联网）</option>
+            <option value="baidu" ${getOcrMode() === "baidu" ? "selected" : ""}>百度云端</option>
+          </select>
+          <div class="zy-note">本地 OCR：图片不上传第三方。<br>百度 OCR：图片会发送到百度 OCR 服务识别。</div>
+        </div>
+        <button class="zy-btn" id="zy-native-ocr-btn">识别当前图片</button>
+        <div class="zy-status" id="zy-native-status">就绪</div>
+        <div class="zy-divider"></div>
+        <details class="zy-settings">
+          <summary>百度 OCR（云端备用）</summary>
+          <div class="zy-settings-body">
+            <div class="zy-row">
+              <label class="zy-label" for="zy-native-baidu-ak">API Key</label>
+              <input class="zy-input" id="zy-native-baidu-ak" type="password" placeholder="百度智能云 API Key（${akPlaceholder}）">
+            </div>
+            <div class="zy-row">
+              <label class="zy-label" for="zy-native-baidu-sk">Secret Key</label>
+              <input class="zy-input" id="zy-native-baidu-sk" type="password" placeholder="留空保持原样">
+            </div>
+            <div class="zy-actions two">
+              <button class="zy-btn" id="zy-native-baidu-save">保存</button>
+              <button class="zy-btn secondary" id="zy-native-baidu-test">测试连接</button>
+            </div>
+            <div class="zy-note" id="zy-native-baidu-status">凭据为客户端可访问凭据，仅存本机脚本配置；请勿使用高权限/长期/不可撤销的 Key。</div>
+          </div>
+        </details>
+      </div>`;
+    document.body.appendChild(drawer);
+    // 绑定（suffix=-native，与浮窗共用 bindOcrControls 单一来源）
+    const closeBtn = drawer.querySelector("#zy-native-close");
+    if (closeBtn) closeBtn.addEventListener("click", () => { drawer.style.display = "none"; });
+    const ocrBtn = drawer.querySelector("#zy-native-ocr-btn");
+    if (ocrBtn) ocrBtn.addEventListener("click", handleOcrImage);
+    bindOcrControls(drawer, "-native", null);
+    return drawer;
+  }
+
+  function mountNativeOcrPanel() {
+    const rightBar = document.querySelector(".rightPageBar.rightBar") || document.querySelector(".rightBar");
+    // 无原生右栏（页面变体）→ 返回 false，由旧浮窗承担主 UI
+    if (!rightBar) return false;
+    const drawer = renderNativeOcrDrawer();
+    if (!document.getElementById("zy-native-ocr-tool-btn")) {
+      const tool = document.createElement("button");
+      tool.id = "zy-native-ocr-tool-btn";
+      tool.title = "图片文字识别";
+      tool.textContent = "识";
+      rightBar.appendChild(tool);
+      tool.addEventListener("click", () => { drawer.style.display = drawer.style.display === "none" ? "flex" : "none"; });
+    }
+    nativeOcrMounted = true;
+    return true;
+  }
+
+  // SPA 重渲染防护：rightBar 被页面框架重建/移除后重挂工具按钮（抽屉 id 幂等，不重复）
+  function observeNativeRemount() {
+    if (nativeObs) return;
+    nativeObs = new MutationObserver(() => {
+      const rightBar = document.querySelector(".rightPageBar.rightBar") || document.querySelector(".rightBar");
+      if (rightBar && !document.getElementById("zy-native-ocr-tool-btn")) mountNativeOcrPanel();
+      if (rightBar && !document.getElementById("zy-native-ocr-panel")) renderNativeOcrDrawer();
+    });
+    nativeObs.observe(document.body, { childList: true, subtree: true });
   }
 
   // ---- Stage 5.5B P1：识别图片文字（本地 Tesseract.js，经 page-world executor + DOM attr 桥接） ----
@@ -865,8 +996,9 @@
 
   function setStatus(text) {
     state.logs = String(text || "").split("\n").filter(Boolean).slice(-8);
-    const node = document.getElementById("zy-status");
-    if (node) node.textContent = state.logs.join("\n");
+    const value = state.logs.join("\n");
+    // 双显示目标：浮窗 #zy-status 与原生抽屉 #zy-native-status（均带 .zy-status 类）
+    document.querySelectorAll(".zy-status").forEach((node) => { node.textContent = value; });
   }
 
   function readFieldsFromPanel() {
@@ -1303,10 +1435,15 @@
     return 0;
   }
 
+  function initZheliyin() {
+    renderPanel(); // 旧浮窗（套版等全部功能，保留为 fallback）
+    // P2-B：原生右栏存在则挂载原生 OCR 抽屉（主 UI）；无右栏时浮窗仍承担 OCR 入口
+    if (mountNativeOcrPanel()) observeNativeRemount();
+  }
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", renderPanel);
+    document.addEventListener("DOMContentLoaded", initZheliyin);
   } else {
-    renderPanel();
+    initZheliyin();
   }
 
   // 测试/诊断出口（默认不启用）：URL 带 zydebug（hash 或 query）时暴露内部引用，便于无头/浏览器回归
