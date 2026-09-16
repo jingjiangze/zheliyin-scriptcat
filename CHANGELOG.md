@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+### Stage 5.5B（2026-09-16）— OCR 产品化（云端备用 + 面板工具化，进行中）
+- 修复「识别图片文字点按钮无反应」双重根因：① `bindPanel` 绑定已移除的 `#zy-probe` → 提前 TypeError → OCR 按钮未绑定（恢复诊断按钮 + 防御性绑定）；② 隔离世界读不到 requirejs `CanvasObjVO` → 直读画布返回 null。② 按既有桥机制根治：`page-bridge.js` 新增只读消息 `getCanvasInfo` / `ocrPrepare`（页面世界解析目标图 active→背景图→首图 + element→toDataURL + 显示几何），userscript 改 `waitForCanvasReady`（Promise 轮询真实 ready 信号，非固定 sleep）+ 过早点击显式「正在等待编辑器加载…」状态。
+- 新增百度云 OCR（用户已确认选型：百度通用文字识别 + 保留本地）：`extension/src/ocr/baidu-provider.js`（2026-06 官方文档核对：`/rest/2.0/ocr/v1/general` 标准含位置版；token 30 天缓存 + 110/111 自动刷新；≤4M/≤4096px 压缩保护；错误码人话映射）+ 面板「识别方式」（自动/仅本地/百度云端）+「百度云 OCR」AK/SK 脱敏存储/测试连接；`fallback-policy.js` local-first 决策矩阵。
+- 版本统一 0.3.6.0（userscript @version / const VERSION / manifest / assistant / README）。
+- 测试：单测 10 套件全 PASS（新增 baidu-provider 18 项、fallback-policy 14 项）；真机 ScriptCat 诊断：TIMELINE panel@2207ms canvas@3274ms；CANVAS_READY（桥）+ ocrPrepare `background-image 900×1200` 打通；LOCAL_LOADING 引擎已加载（场景 A/B/C 全量回归执行中）。
+- 归档：用户指令 `docs/ai-instructions/stage-5.5b/001-p1-p8-closeout.md`（全文）、执行记录 `docs/execution-records/stage-5.5b/001/002`、证据 `docs/evidence/stage-5.5b/`。
+- 待办：P2 原生面板 DOM 审计 → P3 Native Panel→Local→Textbox → P6 背景图三态验收 → P7 真机人工验收 → P8 报告与 GATE 逐项。
+
 ### Stage 4.0（2026-09-15）— Bridge/Runtime 独立审计 + 最小加固（Stage 4 Gate=CONDITIONAL-GO）
 - 修复 **AUDIT-BRIDGE-002（P1，跨 userscript 实例重复注入）**：`pageBridge()` 增加页面主世界稳定 marker（`window.__ZY_CARD_ASSISTANT_BRIDGE__`），同 window 内任何实例/热更新/重复执行只安装一次 listener；listener 注册成功后才落 marker（异常可重试）。
 - 回归：bridge-lifecycle 6/6（新增 t6 跨实例用例，修复前 FAIL=2 个 listener；修复后 PASS）×3 稳定；Mutation（移除 marker）→ FAIL 2/6，还原后 ALL-PASS；wiring 5/5、field 43/43、config 15/15、AI 18/18、editor 18/18 全绿。
