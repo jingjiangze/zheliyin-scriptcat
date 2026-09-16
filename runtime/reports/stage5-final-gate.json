@@ -1,0 +1,35 @@
+{
+  "stage": "Stage 5.0 Editor Object Audit + Object Model",
+  "ts": "2026-09-16",
+  "real_editor": "PASS",
+  "real_canvas": "PASS",
+  "object_inventory": "PASS",
+  "object_identity": "VERIFIED",
+  "text_object_model": "PASS",
+  "geometry_model": "PASS",
+  "object_diff": "PASS",
+  "mutation": "PASS",
+  "rollback": "PASS",
+  "production_changes": "zero behavior change; added extension/src/editor/object-model.js + object-adapter.js (ready, not wired); tests/editor-object-model (3 suites, 47 asserts PASS)",
+  "important_findings": [
+    "markuuid = cross-session persisted identity candidate (textbox unique, SVG-group shared)",
+    "uuid = session-level instance id (regenerated per reload/session, 3-of-3 distinct)",
+    "textbox setText auto-wraps height (width fixed; 35.03 -> 563.28 measured) - OCR must recompute height bbox",
+    "back canvas absent in current template (single-sided sample)",
+    "real rotated sample exists (path index2 angle=105); no rotated text sample",
+    "inheritReferenceProps copies markuuid + fabric caches + events -> FINDING-A~D (kept, deferred to 5.1 whitelist)"
+  ],
+  "deferred_risks": [
+    "SVG grouped objects share markuuid -> object-level uniqueness PARTIAL",
+    "inheritReferenceProps broad copy may pollute markuuid on created objects (5.1)",
+    "single real template sample; widen audit across templates in 5.1"
+  ],
+  "gate": "GO",
+  "rules_respected": [
+    "no changes to page-bridge.js / assistant.js / field-core / config-core / ai-client / apply chain",
+    "in-memory mutations only; no save/submit",
+    "snapshots redacted ([REDACTED] + hash/len)",
+    "no DUP_SIM; evidence grades REAL_EDITOR/REAL_CANVAS only",
+    "every step committed + pushed (stage-4.1-runtime-validation)"
+  ]
+}
