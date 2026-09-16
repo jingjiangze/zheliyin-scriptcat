@@ -1,7 +1,7 @@
 # PARALLEL_DEVELOPMENT — 并行开发边界与协作协议
 
 > 维护者：AI-2（Repository Governance 线）
-> 基线：`stage-4.1-runtime-validation` @ `3becf04`（2026-09-16）
+> 基线：`stage-4.1-runtime-validation` @ `4cb0819`（Stage 5.5，2026-09-16）
 > 性质：**协作规范 + 事实记录**。本文件描述两条工作线的职责边界、共享面、汇合方式与冲突处置。
 
 ---
@@ -116,16 +116,16 @@ AI-2 沿袭同一约定：**独立 commit + 不 force + 不 squash**。
 
 | | `main`（GitHub 默认分支） | `stage-4.1-runtime-validation` |
 |---|---|---|
-| HEAD | `7446faa` | `3becf04` |
-| 最后阶段 | Stage 4.0 | **Stage 5.4** |
-| 跟踪文件 | 44 | **173** |
-| 关系 | 严格祖先 | 领先 58 / 落后 0（**可快进**） |
+| HEAD | `7446faa` | `4cb0819` |
+| 最后阶段 | Stage 4.0 | **Stage 5.5** |
+| 跟踪文件 | 44 | **183** |
+| 关系 | 严格祖先 | 领先 64 / 落后 0（**可快进**） |
 
 ### 5.2 后果
 
-1. **任何从 GitHub 默认页阅读仓库的人（包括未来的 AI、协作者、评审者）都看不到 Stage 5.x 的全部成果**——看不到 `extension/src/ocr/`、`object-matcher.js`、`runtime/` 的 42 份证据报告。
+1. **任何从 GitHub 默认页阅读仓库的人（包括未来的 AI、协作者、评审者）都看不到 Stage 5.x 的全部成果**——看不到 `extension/src/ocr/`（4 个文件）、`object-matcher.js`、`runtime/` 的 45 份证据报告。
 2. 会得出「这个仓库只有 Stage 4.0」的错误结论，进而**重复劳动或误判进度**。
-3. 本次治理的文档（`docs/` 下的治理文件）描述的是 Stage 5.4 状态，若只存在于分支上，同样会被默认分支的读者忽略。
+3. 本次治理的文档（`docs/` 下的治理文件）描述的是 Stage 5.5 状态，若只存在于分支上，同样会被默认分支的读者忽略。
 
 ### 5.3 可选处置（**需用户决策，AI-2 不擅自执行**）
 
@@ -184,6 +184,26 @@ AI-2 沿袭同一约定：**独立 commit + 不 force + 不 squash**。
 | 是否存在指令假设的 `bridge/` `object/` `mapper/` `matcher/` 目录 | **不存在** |
 
 > 这些事实与外部治理指令的假设有出入。指令本身要求「以仓库真实目录为准，不要机械创建不存在的结构」，本次治理即按此执行。
+
+### 8.1 治理期间 AI-1 的并行推进（真实发生的协作案例）
+
+治理工作进行中（同日），AI-1 向 `stage-4.1-runtime-validation` 推送了 **Stage 5.5**（3 → 6 个 commit）：
+
+| 提交 | 内容 |
+|---|---|
+| `1ea948b` | 本地 OCR 可行性实测 PASS（tesseract.js，`LOCAL_OCR DECIDED`） |
+| `131658e` | 真实 OCR provider adapter + 单测 |
+| `0707035` | `BASIC_REAL_OCR_DEMO PASS` 真实链路验证 |
+| `7ef1aed` | Stage 5.5 审计报告 + 严格分级 Gate |
+| `03f2167` | production tesseract 懒加载器 + 单测 |
+| `4cb0819` | 候选改为优先取引擎原生 `data.lines` |
+
+**两个可验证的结论**：
+
+1. **「用独立分支」的决定被证明正确**。若当时直接提交到 `stage-4.1-runtime-validation`，两边会同时推进同一分支；AI-1 的 6 个提交与 AI-2 的文档提交会交错，push 竞争与 rebase 成本都会上升。分开后双方推送均为**普通 fast-forward，零冲突、零 force push**。
+2. **治理文档必须跟随实现更新**。Stage 5.5 使 `docs/CURRENT_STATUS.md` 的「real OCR = TODO」、`docs/STAGE_INDEX.md` 的「当前 HEAD = 5.4」、`docs/TEST_MATRIX.md` 的「6 套件 110 断言」、`docs/REAL_OCR_DEMO_CONTRACT.md` 的 GAP-1/2/5 **立即过时**。治理线随即在 `4cb0819` 基线上做了一轮同步更新（详见对应 `docs: update ... for stage5.5` 系列 commit）。
+
+> 这正是本协议要解决的问题：**实现线可以快速迭代，治理线负责让它可被理解。** 两条线各自独立提交，通过 Git 汇合。
 
 ---
 
