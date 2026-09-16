@@ -6,7 +6,8 @@
   "scripts": {
     "runtime:check": "node runtime/check.js",
     "runtime:full": "node runtime/full.js",
-    "runtime:attach": "node runtime/attach.js"
+    "runtime:attach": "node runtime/attach.js",
+    "runtime:scriptcat": "node runtime/runtime8-full-chain.js"
   },
   "devDependencies": {
     "playwright": "^1.63.0"

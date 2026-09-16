@@ -1,9 +1,9 @@
 {
   "stage": "RUNTIME-8",
   "ts_init": "2026-09-15",
-  "ts_final": "2026-09-15",
+  "ts_final": "2026-09-16",
   "scope": "Bridge Injection Compatibility Audit（只研究 isolated→page world 注入路径；不禁改 Bridge protocol 与生产代码）",
-  "status": "COMPLETE_CONDITIONAL",
+  "status": "COMPLETE_REAL_SCRIPT_CAT_FULL_PASS",
   "matrix": {
     "dom-inline-script": {
       "status": "FAIL_CSP_BLOCKED",
@@ -15,16 +15,15 @@
       "cts": "assistant.js:861-878 / userscript.js:861-878（同一实现）"
     },
     "scriptcat-gm-add-element": {
-      "status": "INSTALL_PASS / INJECTION_BLOCKED_ENV（userScripts API 缺失）",
+      "status": "REAL_PASS（真实 ScriptCat userscript 内 GM_addElement 注入 production pageBridge 全链闭环）",
       "evidence": [
-        "ScriptCat 官方 API 文档: GM_addElement(tag, attrs) 明示「可以绕过 CSP 限制」",
-        "ScriptCat 扩展本体实装 GM_addElement（vendor 源码 chunk.js:194 类型声明 + 多处实现）；manifest 含 scripting/userScripts 权限",
-        "RUNTIME-8.2 已从源码恢复并实测 ScriptCat 原生安装契约：chrome.runtime.sendMessage({action:'serviceWorker/script/installByCode', data:{uuid,code,upsertBy}})，installByCode → 返回完整 script 对象（uuid/name/metadata(grant,match,run-at)/status=1），getAllScripts 可见 → 删除 deletes([uuid]) 亦实测 PASS",
-        "注入受阻根因（源码证据 service_worker.js registerUserscripts）: if(!this.isUserScriptsAvailable || !this.isLoadScripts) return —— userScripts API 不可用时 ScriptCat 完全不注入",
-        "harness 环境限制（决定性）: Playwright Chromium 153 headless chrome.userScripts 不可用（chromeScripting=true 但 userScripts=false）→ isUserScriptsAvailable=false → 无注入；系统 Chrome 152 拒绝加载 unpacked 扩展（ERR_BLOCKED_BY_CLIENT）",
-        "结论: GM_addElement 的存在与 CSP 绕过能力有官方+源码证据；真实运行验证受 harness 环境（userScripts API）限制，如实 BLOCKED，不伪造 PASS"
+        "RUNTIME-8.3 解锁 chrome.userScripts（根因：Chrome 138+ 需扩展详情页 Allow User Scripts 开关 → 自动开启 + reload 后 API 可用，分类 A:API_SUPPORTED_AND_ENABLED；RUNTIME-8.2 的『Chromium 不支持』结论撤回）",
+        "真实 ScriptCat 注册两个 userscript（installByCode status=1 → getAllScripts 可见）：min-exec（DOM 落 data-zy-runtime8-user-script=1，REAL_USER_SCRIPT_EXECUTION）+ GM probe（@grant GM_addElement）",
+        "GM_addElement('script',{textContent: production pageBridge 源码}) → window.__ZY_CARD_ASSISTANT_BRIDGE__.installed=true（marker，ts 与注入时序一致）；probe 1 请求→1 响应、5 请求→5 响应；跨实例重复安装 ×3 仍恰 1 响应（verify-gm-bridge）",
+        "Apply：postMessage apply side=front name=TEST_RUNTIME_VALUE → applyResult ok:true『正面 姓名 -> TEST_RUNTIME_VALUE』→ 画布 readback 命中 → snapshot-diff rollback restored=1 leaked=0 total 21=21（verify-gm-apply / runtime8-full-chain-report）",
+        "响应来源核验：source=zy-card-assistant-page 唯一 listener；注入源码 sha256:17141f7c67fb4862（page-bridge.js）；全程无 DUP_SIM（§九 禁止 page.evaluate(pageBridge)/crossInstanceDuplicate）"
       ],
-      "note": "若需 REAL_SCRIPT_CAT_BRIDGE=PASS：需在支持 chrome.userScripts 的真实浏览器（如用户系统 Chrome 已有 ScriptCat）中验证，或 Playwright 升级支持 userScripts 的通道"
+      "note": "环境前提记录：需支持 chrome.userScripts 的载体（Chrome 120+/Playwright Chromium 153 + userScripts 权限 + Allow User Scripts 开关），关闭该开关时 API 表现为 undefined 需区分 UNSUPPORTED/DISABLED/POLICY（§十六）"
     },
     "extension-main-world": {
       "status": "PASS（MAIN world 通道等价证明）",
@@ -36,14 +35,15 @@
       "note": "这是主世界通道的等价证明（调试通道），非「真实扩展 background executeScript」的二进制证据；production 采用需真实 executeScript 复验（§20/§21 如实区分）"
     },
     "real-scriptcat": {
-      "status": "INSTALL_PASS；INJECTION_BLOCKED（harness 环境限制，§三十 如实）",
+      "status": "REAL_FULL_CHAIN_PASS（npm run runtime:scriptcat 18 步 errors=0）",
       "evidence": [
         "真实 ScriptCat 扩展在 Playwright 中加载、SW 运行、options 渲染（REAL_SCRIPT_CAT_EXTENSION）",
         "脚本自动安装全部真实通过（REAL_SCRIPT_CAT_INSTALL）：installByCode 返回完整 script 对象（status=1/grant/match 解析）→ getAllScripts 可查 → deletes 可删",
-        "页面注入被环境阻断（决定性）：Playwright Chromium 无 chrome.userScripts API → registerUserscripts() 源码级 `if(!isUserScriptsAvailable) return` → 任何 userscript 均不注入",
-        "尝试路径记录：Monaco 编辑器 UI（不稳定）→ install.html?url=（无效页面）→ 原生消息契约 installByCode（成功安装）→ 注入被 userScripts API 缺失阻断"
+        "RUNTIME-8.3 解锁注入：Allow User Scripts 自动开启（chrome://extensions toggle row allow-user-scripts）+ 扩展 reload 后 chrome.userScripts 可用 → registerUserscripts() isUserScriptsAvailable=true → min-exec userScript 真实执行（DOM mark）",
+        "全链闭环（runtime8-full-chain-report.json, errors=0）：install min-exec+GM → 真实执行 → GM_addElement(production pageBridge) → marker → probe exactly-one/5x-5 → Canvas 619.5×376.86/21 对象 → apply ok:true → readback 命中 → rollback 21=21 → cleanup",
+        "RUNTIME-8.2 曾因 harness 无 userScripts API 判定 INJECTION_BLOCKED —— 根因实为 Allow User Scripts 开关（Chrome 138+ 新增要求），非 Chromium 构建缺陷，已撤回原结论"
       ],
-      "note": "非产品缺陷：ScriptCat/折立印/用户使用均不受此 harness 限制影响；需 REAL 注入证据应改用支持 userScripts 的真实浏览器载体"
+      "note": "结论由 BLOCKED 修正为 PASS（§一 用户纠正验证价值：undefined 需与 getScripts() throw / policy 区分，见 §十六 A/B/C/D）"
     },
     "real-extension": {
       "status": "MAIN_WORLD_PASS_EQUIV（无 DUP_SIM 污染）",
@@ -61,13 +61,13 @@
   },
   "final_matrix_table": [
     { "injection": "DOM inline", "browser": "REAL", "carrier": "Userscript", "page world": "MAIN", "csp": "blocked", "result": "FAIL/BLOCKED（真实 CSP violation）" },
-    { "injection": "GM_addElement", "browser": "REAL(vendor ScriptCat)", "carrier": "ScriptCat", "page world": "MAIN", "csp": "bypass(官方+源码证据)", "result": "INSTALL PASS；注入 BLOCKED（harness 无 userScripts API）" },
+    { "injection": "GM_addElement", "browser": "REAL(vendor ScriptCat v1.4.0)", "carrier": "ScriptCat real userscript", "page world": "MAIN", "csp": "bypass", "result": "REAL PASS（marker/probe/apply/rollback 全链闭环，Allow User Scripts 解锁后）" },
     { "injection": "executeScript MAIN(等价值)", "browser": "REAL", "carrier": "MV3(通道证明)", "page world": "MAIN", "csp": "bypass", "result": "PASS(clean)" }
   ],
   "decisions": {
     "rewrite_bridge": "NO",
     "change_protocol": "NO",
-    "production_change": "PENDING — MAIN world 通道已证可行；但 production 采用 executeScript/GM_addElement 需真实载体验证后再定（§39-41）。当前表现状（DOM inline）在折立印页面 CSP 下 Bridge 不可安装，属真实发现项，需在后续阶段按证据最小修复"
+    "production_change": "CONFIRMED — GM_addElement 真实可绕过折立印 CSP 注入 production pageBridge（RUNTIME-8.3 全链 REAL PASS）；RUNTIME-8.2 的『Chromium 不支持 userScripts』结论撤销（根因 Allow User Scripts 开关，Chrome 138+ 要求）。production 注入迁移（ScriptCat GM_addElement / MV3 executeScript MAIN）进入后续阶段按证据落地"
   },
-  "gate": "CONDITIONAL-GO"
+  "gate": "REAL_SCRIPT_CAT_FULL = PASS"
 }

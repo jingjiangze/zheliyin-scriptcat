@@ -1,0 +1,115 @@
+{
+ "ts": "2026-09-16T01:41:57.905Z",
+ "stage": "RUNTIME-8.3",
+ "steps": [
+  {
+   "name": "launch+scriptcat",
+   "ok": "PASS",
+   "detail": "Playwright Chromium + 真实 ScriptCat(ndcooeababalnlpkfedmmbbbgkljhpjf)",
+   "evidence": "REAL_SCRIPT_CAT_EXTENSION"
+  },
+  {
+   "name": "options-loaded",
+   "ok": "PASS",
+   "detail": "ScriptCat options 页",
+   "evidence": "REAL_SCRIPT_CAT_EXTENSION"
+  },
+  {
+   "name": "userscripts-capability",
+   "ok": "PASS",
+   "detail": "A:API_SUPPORTED_AND_ENABLED | {\"ua\":\"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36\",\"hasUserScripts\":true,\"userScriptsType\":\"object\",\"hasScripting\":true,\"getScriptsResult\":\"P",
+   "evidence": "RUNTIME-8.3 §四/§五/§十六"
+  },
+  {
+   "name": "install-min-exec",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "install-gm-probe",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "nav-editor",
+   "ok": "PASS",
+   "detail": "https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/thirdDiyAdd.do",
+   "evidence": "REAL_LOGGED_IN_EDITOR"
+  },
+  {
+   "name": "bridge+canvas-ready",
+   "ok": "PASS",
+   "detail": "{\"bridge\":true,\"width\":619.5,\"height\":376.8625,\"objs\":21}",
+   "evidence": "REAL_SCRIPT_CAT_BRIDGE+REAL_CANVAS"
+  },
+  {
+   "name": "user-script-exec",
+   "ok": "PASS",
+   "detail": "marks=[\"data-zy-runtime8-user-script\",\"data-zy-rt8-gm-called\"]",
+   "evidence": "REAL_SCRIPT_CAT_USER_SCRIPT_EXECUTION"
+  },
+  {
+   "name": "gm-add-element-exec",
+   "ok": "PASS",
+   "detail": "marks=[\"data-zy-runtime8-user-script\",\"data-zy-rt8-gm-called\"]",
+   "evidence": "REAL_GM_ADD_ELEMENT"
+  },
+  {
+   "name": "bridge-marker",
+   "ok": "PASS",
+   "detail": "{\"installed\":true,\"ts\":1789522929196}",
+   "evidence": "REAL_SCRIPT_CAT_BRIDGE"
+  },
+  {
+   "name": "probe-exactly-one",
+   "ok": "PASS",
+   "detail": "responses=1",
+   "evidence": "REAL_SCRIPT_CAT_BRIDGE"
+  },
+  {
+   "name": "probe-5x-5",
+   "ok": "PASS",
+   "detail": "responses=5",
+   "evidence": "REAL_SCRIPT_CAT_BRIDGE"
+  },
+  {
+   "name": "snapshot",
+   "ok": "PASS",
+   "detail": "{\"total\":21,\"textTotal\":4,\"sample\":\"简小设\"}",
+   "evidence": "REAL_CANVAS"
+  },
+  {
+   "name": "apply-response",
+   "ok": "PASS",
+   "detail": "[{\"source\":\"zy-card-assistant-page\",\"type\":\"applyResult\",\"ok\":true,\"applied\":[\"正面 姓名 -> TEST_RUNTIME_VALUE\"]}]",
+   "evidence": "REAL_SCRIPT_CAT_APPLY|src=page-bridge.js#sha256:17141f7c67fb4862|marker=true"
+  },
+  {
+   "name": "apply-readback",
+   "ok": "PASS",
+   "detail": "{\"found\":true,\"text\":\"TEST_RUNTIME_VALUE\",\"objCount\":21}",
+   "evidence": "REAL_SCRIPT_CAT_APPLY"
+  },
+  {
+   "name": "rollback",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"removed\":0,\"restored\":1,\"leaked\":0,\"total\":21,\"preTotal\":21}",
+   "evidence": "REAL_SCRIPT_CAT_ROLLBACK"
+  },
+  {
+   "name": "cleanup-rt8-chain-gm-uuid",
+   "ok": "PASS",
+   "detail": "removed",
+   "evidence": "n/a"
+  },
+  {
+   "name": "cleanup-rt8-chain-min-exec-uuid",
+   "ok": "PASS",
+   "detail": "removed",
+   "evidence": "n/a"
+  }
+ ],
+ "errors": []
+}

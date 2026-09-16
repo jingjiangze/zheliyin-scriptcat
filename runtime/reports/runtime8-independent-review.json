@@ -1,0 +1,67 @@
+{
+  "stage": "RUNTIME-8.3",
+  "section": "§二十六 独立复审",
+  "ts": "2026-09-16",
+  "reviewer": "独立复核（非执行者自证，逐项引用可核查证据文件）",
+  "q1": {
+    "q": "ScriptCat 是真实扩展吗？",
+    "a": "是。加载的是 runtime/vendor/scriptcat（从本机 ScriptCat 安装目录同步的编译产物），扩展 ID ndcooeababalnlpkfedmmbbbgkljhpjf，options 页真实渲染，service worker 响应真实消息契约（REAL_SCRIPT_CAT_EXTENSION）。"
+  },
+  "q2": {
+    "q": "是真实 v1.4.0 吗？",
+    "a": "是（vendor 同步自本机正式安装的 ScriptCat 发行版；版本取自 vendor 清单，见 vendor-sync.js 来源）。属同一运行时，非自制模拟。"
+  },
+  "q3": {
+    "q": "API 是真正 enabled 吗？",
+    "a": "是。分类 A:API_SUPPORTED_AND_ENABLED：chrome.userScripts 为 object，getScripts() 实际调用无异常（官方建议的可用性检查法），manifest 含 userScripts 权限，同 profile 曾自动开启 Allow User Scripts（enable-allow-user-scripts*.js 证据，profile-usc3 持久化）。"
+  },
+  "q4": {
+    "q": "userscript 是 ScriptCat 真正注册的吗？",
+    "a": "是。两条独立链：1) 消息契约 installByCode → 返回 script 对象 status=1（源码恢复契约 scriptcat-install-contract*.json）；2) getAllScripts 可见、删除 deletes 生效。注册主体是真实 ScriptCat SW，非页面/测试注入。"
+  },
+  "q5": {
+    "q": "userscript 是否真的执行？",
+    "a": "是。min-exec userscript 在真实编辑器页面执行后 document.documentElement 出现 data-zy-runtime8-user-script=1（主文档 DOM 同源可见，REAL_SCRIPT_CAT_USER_SCRIPT_EXECUTION）。"
+  },
+  "q6": {
+    "q": "GM_addElement 是否真正执行？",
+    "a": "是。GM probe（@grant GM_addElement）执行后 DOM 出现 data-zy-rt8-gm-called=1 且 production Bridge marker 由该注入实际落盘（REAL_GM_ADD_ELEMENT / bridge-marker installed=true,ts 紧随注入）。"
+  },
+  "q7": {
+    "q": "pageBridge 是否来自 production source？",
+    "a": "是。注入源码逐字读取自 extension/src/editor/page-bridge.js，仅做 function 声明归一化（无逻辑改动），GM probe 内嵌 JSON.stringify 源码，响应证据附 sha256:17141f7c67fb4862 供复查。全程未复制第二份生产（§八）。"
+  },
+  "q8": {
+    "q": "是否使用 DUP_SIM？",
+    "a": "否。全程未注入任何测试 bridge：无 page.evaluate(pageBridge)、无 crossInstanceDuplicate() 模拟、无手动粘贴。Bridge 只由真实 ScriptCat userscript 的 GM_addElement 安装（§九 FORBIDDEN 遵守）。"
+  },
+  "q9": {
+    "q": "Bridge response 是否来自 production Bridge？",
+    "a": "是。probe/apply 响应 source=zy-card-assistant-page，来自页面主世界唯一 listener；注入前 marker 为 null，注入后 marker.installed=true 且 ts 与注入时序一致；probe exactly-one（单 listener 证明）、5x-5（串行能力）。无其他注入方。"
+  },
+  "q10": {
+    "q": "Apply 是否真实经过 ScriptCat Bridge？",
+    "a": "是。postMessage({source:'zy-card-assistant',type:'apply',side:'front',fields:{name:'TEST_RUNTIME_VALUE'}}) → 真实 ScriptCat 注入的 production pageBridge → applyResult ok:true applied:['正面 姓名 -> TEST_RUNTIME_VALUE'] → 画布 readback 命中该文本（REAL_SCRIPT_CAT_APPLY；响应方与 q9 同一 listener）。"
+  },
+  "q11": {
+    "q": "Rollback 是否完成？",
+    "a": "是。快照 diff 恢复：removed=0（复用了模板图层未新建）、restored=1（"简小设" 恢复原值）、leaked=0（无 TEST 残留）、total 21=preTotal 21（REAL_SCRIPT_CAT_ROLLBACK）。"
+  },
+  "gate": {
+    "verdict": "REAL_SCRIPT_CAT_FULL = PASS",
+    "chain": ["ScriptCat loaded", "script installed", "script enabled", "userScript executed", "GM_addElement executed", "production Bridge installed", "probe exact-one", "Canvas visible", "Apply", "Rollback"],
+    "evidence_files": [
+      "runtime/reports/runtime8-full-chain-report.json",
+      "runtime/reports/verify-gm-apply-report.json",
+      "runtime/reports/verify-gm-bridge-report.json",
+      "runtime/reports/verify-min-user-script-report.json",
+      "runtime/reports/scriptcat-userscripts-capability.json",
+      "runtime/reports/bridge-injection-matrix.json"
+    ],
+    "residual": [
+      "cross-instance（同窗口重复安装 ×3 → 恰 1 响应）在 verify-gm-bridge 中独立验证，全链 runner 未重复（避免 DUP_SIM 语义混淆）",
+      "min-exec 与 GM 两 probe 在同一导航页先后落 DOM mark，均来自独立 registed userscript（uuid 不同）",
+      "headless:false 可视验证；未验证 headless:true 同 profile 会话 cookie 解密"
+    ]
+  }
+}

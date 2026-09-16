@@ -184,6 +184,20 @@ exit: 各套断言 0 FAIL（bridge 需 ?zydebug=1；ai 需 ?zydebug=1；wiring �
 
 > 环境补遗：本会话已安装 git（winget）并将 `stage-4.1-runtime-validation` 推送 GitHub；headless 回归以真实 Chrome 完成并全部 PASS（§9/§11）。
 
+## 20. RUNTIME-8.3 收尾：真实 ScriptCat 注入闭环（2026-09-16）
+
+**里程碑：`npm run runtime:scriptcat`（runtime/runtime8-full-chain.js）全链 18 步 errors=0，REAL_SCRIPT_CAT_FULL = PASS。**
+
+- **userScripts API 根因复核（§一~§五/§十六）**：RUNTIME-8.2「Playwright Chromium 153 不支持 userScripts」结论**撤回**。真实根因：Chrome 138+ 要求扩展详情页 **Allow User Scripts** 开关开启，否则 `chrome.userScripts` 表现为 `undefined`。解锁路径：自动打开 `chrome://extensions` toggle row `allow-user-scripts`（enable-allow-user-scripts*.js，profile-usc3 持久化）→ 启动参数 `--enable-unsafe-extension-debugging` → 扩展 reload → API 分类 **A:API_SUPPORTED_AND_ENABLED**（`typeof === "object"` 且 `getScripts()` 实际调用不抛错）。
+- **真实执行证据（§六/§七）**：min-exec userscript 经真实 ScriptCat 注册（installByCode status=1）后，在真实编辑器页面 `document.documentElement` 落 `data-zy-runtime8-user-script=1`（REAL_SCRIPT_CAT_USER_SCRIPT_EXECUTION）。
+- **GM_addElement 闭环（§八~§十二，禁 DUP_SIM）**：GM probe（@grant GM_addElement）以 production `extension/src/editor/page-bridge.js` 源码（sha256:17141f7c67fb4862，未复制第二份）注入 → `window.__ZY_CARD_ASSISTANT_BRIDGE__.installed=true` → probe 1↔1、5↔5 → 跨实例重复安装 ×3 仍恰 1 响应（verify-gm-bridge）。
+- **Apply→Rollback（§十三/§十四）**：postMessage `apply side=front name=TEST_RUNTIME_VALUE` → 真实 Bridge `applyResult ok:true ["正面 姓名 -> TEST_RUNTIME_VALUE"]` → 画布 readback 命中 → snapshot-diff rollback restored=1、leaked=0、total 21=21（模板「简小设」恢复原值）。响应来源核验：唯一生产 listener + marker + 源码 hash。
+- **残留清理**：全部 probe（rt8-min-exec-uuid / rt8-gm-apply-uuid / rt8-chain-*）已删除，getAllScripts 为空。
+- **独立复审（§二十六 11 问）**：runtime/reports/runtime8-independent-review.json 逐项 PASS。
+- 本次修复的 bridge-apply 字段 bug 根因：front 侧 `buildItems` 不解析 `business`（仅 back 侧）→ 改用 front+`name` 最小单值字段走真实协议路径。
+
+> 环境补遗：本轮命令需在本机执行（git/node/Playwright，见下）。全链 runner 复用 profile-usc3（Allow User Scripts 已开启 + 已登录）。
+
 ## Stop
 
 按指令 §二十五：完成即**停止**，不自行进入下一阶段，等待证据回传与外部评审。
