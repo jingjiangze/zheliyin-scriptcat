@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         折立印名片套版助手
+// @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.0.1
-// @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时再按原样式补充。
+// @version      0.3.5.0
+// @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，图片不上传第三方)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
 // @match        https://diy.zheliyin.com/diyWeb/third/*/*/thirdLoginDiyEdit.do*
@@ -24,9 +24,11 @@
 // @grant        GM_getValue
 // @grant        GM_addStyle
 // @grant        GM_setClipboard
+// @grant        GM_addElement
 // @connect      ark.cn-beijing.volces.com
 // @connect      raw.githubusercontent.com
 // @connect      github.com
+// @connect      cdn.jsdelivr.net
 // @connect      *
 // @updateURL    https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
 // @downloadURL  https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
@@ -313,6 +315,9 @@
           <button class="zy-btn" id="zy-apply-front">填正面</button>
           <button class="zy-btn secondary" id="zy-apply-back">填反面</button>
         </div>
+        <div class="zy-actions">
+          <button class="zy-btn zy-ocr" id="zy-ocr-btn">识别图片文字</button>
+        </div>
         <div class="zy-divider"></div>
         <div class="zy-update" id="zy-update"></div>
         <div class="zy-status" id="zy-status">${escapeHtml(state.logs.join("\n"))}</div>
@@ -374,6 +379,98 @@
       applyFieldsToPage(state.fields, "back");
     });
     panel.querySelector("#zy-probe").addEventListener("click", probeCanvas);
+    panel.querySelector("#zy-ocr-btn").addEventListener("click", handleOcrImage);
+  }
+
+  // ---- Stage 5.5A-R2 Demo：识别图片文字（本地 Tesseract.js，经 page-world executor + DOM attr 桥接） ----
+  const OCR_CDN = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+  let ocrRunning = false;
+  let ocrEngineCache = null;
+  function handleOcrImage() {
+    if (state.ocrPanelClosed) return;
+    if (ocrRunning) { setStatus("OCR 正在运行，请稍候…"); return; }
+    // P0: 检测当前选中是否为 Image（§9：不默认识别第一张）
+    const canvas = getCanvasForSide("front");
+    const objs = canvas && canvas.getObjects ? canvas.getObjects() : [];
+    const active = canvas && canvas.getActiveObject ? canvas.getActiveObject() : null;
+    const target = active && String(active.type) === "image" ? active : null;
+    if (!target) { setStatus("请先选中图片，再点击「识别图片文字」"); return; }
+    const el = target._element || (target.getElement && target.getElement());
+    if (!el) { setStatus("图片对象缺少 element，无法读取"); return; }
+    // 图片 → dataUrl（真实用户当前图片，§10）
+    const cv = document.createElement("canvas");
+    cv.width = el.naturalWidth || target.width; cv.height = el.naturalHeight || target.height;
+    const c2 = cv.getContext && cv.getContext("2d");
+    let dataUrl = null;
+    if (c2 && el.naturalWidth > 0) { c2.drawImage(el, 0, 0); try { dataUrl = cv.toDataURL("image/png"); } catch (e) {} }
+    if (!dataUrl) { setStatus("图片转换失败"); return; }
+    ocrRunning = true;
+    setStatus("正在加载 OCR…");
+    const run = (engineText) => {
+      const executor = "(function(){" +
+        "var module={exports:{}};var exports=module.exports;var define;var require;" +
+        engineText + "\n" +
+        "var T=module.exports;" +
+        "if(!T||typeof T.createWorker!=='function'){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:'engine'}));return;}" +
+        "window.addEventListener('message',function(ev){if(!ev.data||ev.data.source!=='zy-ocr-req')return;" +
+        "T.createWorker('chi_sim',1,{cacheMethod:'indexeddb'}).then(function(w){return w.recognize(ev.data.dataUrl).then(function(r){" +
+        "var lines=(r.data.lines||[]).map(function(l){return {text:l.text.trim(),bbox:l.bbox};});" +
+        "w.terminate();" +
+        "document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:true,lines:lines,w:r.data.imageWidth,h:r.data.imageHeight}));" +
+        "}).catch(function(e){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));}));" +
+        "})();" +
+        "})();";
+      GM_addElement("script", { textContent: executor });
+      document.documentElement.setAttribute("data-zy-ocr-result", "");
+      window.postMessage({ source: "zy-ocr-req", dataUrl: dataUrl }, location.origin);
+      setStatus("OCR 加载完成，正在识别…");
+      let tries = 0;
+      const timer = setInterval(() => {
+        tries += 1;
+        const out = document.documentElement.getAttribute("data-zy-ocr-result");
+        if (out) {
+          clearInterval(timer);
+          ocrRunning = false;
+          try {
+            const r = JSON.parse(out);
+            if (!r.ok) { setStatus("OCR 失败：" + r.err); return; }
+            buildItemsFromOcr(r);
+          } catch (e) { setStatus("OCR 结果解析失败"); }
+        } else if (tries > 400) { clearInterval(timer); ocrRunning = false; setStatus("OCR 超时"); }
+      }, 500);
+    };
+    if (ocrEngineCache) { run(ocrEngineCache); return; }
+    GM_xmlhttpRequest({ method: "GET", url: OCR_CDN, timeout: 45000, onload: (x) => { if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) { ocrEngineCache = x.responseText; run(ocrEngineCache); } else { ocrRunning = false; setStatus("OCR 引擎加载失败"); } }, onerror: () => { ocrRunning = false; setStatus("OCR 引擎网络错误"); } });
+  }
+  function getCanvasForSide(side) {
+    const req = window.requirejs || window.require;
+    const ctx = req && req.s && req.s.contexts && req.s.contexts._;
+    const vo = (ctx && ctx.defined && ctx.defined.CanvasObjVO) || window.CanvasObjVO;
+    const c = vo && vo.totalCanvasArray && vo.totalCanvasArray[0] && ((vo.totalCanvasArray[0].canvas) || vo.totalCanvasArray[0]);
+    return c || null;
+  }
+  function buildItemsFromOcr(r) {
+    // OCR lines（image pixel）→ canvas 坐标：读取当前选中 image 的显示几何（left/top/width/height/scale/angle）
+    const canvas = getCanvasForSide("front");
+    const active = canvas && canvas.getActiveObject ? canvas.getActiveObject() : null;
+    const target = active && String(active.type) === "image" ? active : null;
+    if (!target) { setStatus("请先选中图片"); return; }
+    const w = target.width, h = target.height, sx = target.scaleX || 1, sy = target.scaleY || 1;
+    const rad = ((target.angle || 0) * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
+    const cx = target.left + (w * sx) / 2, cy = target.top + (h * sy) / 2;
+    const items = (r.lines || []).filter((l) => l.bbox && typeof l.bbox.x0 === "number").map((l) => {
+      const x = Math.min(l.bbox.x0, l.bbox.x1), y = Math.min(l.bbox.y0, l.bbox.y1);
+      const bw = Math.abs(l.bbox.x1 - l.bbox.x0) * sx, bh = Math.abs(l.bbox.y1 - l.bbox.y0) * sy; // 注：旋转未展开（Demo 常量，5.5 记录）
+      const ux = x / w - 0.5, uy = y / h - 0.5;
+      const dx = ux * w * sx, dy = uy * h * sy;
+      const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
+      return { text: l.text, left: px - 4, top: py - 4, width: Math.max(60, bw + 8), fontSize: Math.max(10, Math.round(bw > 0 ? (bh * 1.0) : 14)), fontFamily: "思源黑体 Regular" };
+    });
+    if (!items.length) { setStatus("未识别到文字"); return; }
+    setStatus("识别到 " + items.length + " 个文字区域，正在生成…");
+    const on = (e) => { if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "ocrCreateResult") { window.removeEventListener("message", on); setStatus(e.data.ok ? "已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）" : "生成失败：" + (e.data.message || "")); } };
+    window.addEventListener("message", on);
+    window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", items: items }, location.origin);
   }
 
   function readSideTextFromPanel() {
