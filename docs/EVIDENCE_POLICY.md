@@ -41,7 +41,7 @@
 - 真实 ScriptCat 或同源 MV3 扩展作为注入载体
 - 若使用「同源扩展」替代 ScriptCat，必须显式标注为 `REAL_EXTENSION_SAME_SOURCE`，**不得写成 REAL_SCRIPT_CAT**
 
-**已知 REAL 项**：`runtime/reports/runtime8-full-chain-report.json` 全链 18 步；Stage 5.0 对象快照（21 对象全量属性）；Stage 5.3/5.4 真实编辑器 textbox 创建与回滚。
+**已知 REAL 项**：`runtime/reports/runtime8-full-chain-report.json` 全链 18 步；Stage 5.0 对象快照（21 对象全量属性）；Stage 5.3/5.4 真实编辑器 textbox 创建与回滚；**Stage 5.5 真实 OCR**（`stage5-5-ocr-feasibility.json` tesseract chi_sim 实测 + `stage5-5-real-ocr-demo.json` 端到端 `errors=0`）。
 
 ### FIXTURE
 
@@ -104,8 +104,9 @@
 **使用要求**：每条 DEFERRED 必须写 `原因 + 目标阶段`，否则视为未处理的遗漏。
 
 **本仓库当前 DEFERRED 项**（Example）：
-- Local OCR provider（tesseract.js）接入 → 体积/中文质量/集成评估 → Stage 5.5
-- 多行文本字号反推（需行数估计）→ 5.5
+- ~~Local OCR provider（tesseract.js）接入~~ → ✅ **已于 Stage 5.5 完成**（本地 tesseract `chi_sim`，`REAL_OCR_PROVIDER = PASS`）
+- 多行文本字号反推（需行数估计）→ Stage 5.6 字号精确 / 5.9 多行段落
+- 颜色/粗细（5.7）、旋转（5.8）、复杂布局（5.10）、智能匹配（5.11）、编组（5.12）、Undo（5.13）、Preview（5.14）
 - 原生 OCR 相框交互深度适配 → 可行时复用
 - 真实旋转图片重建（模板内无安全样本）→ 待样本
 - multi-template 证据（当前仅 1 个可达模板）→ 待样本
