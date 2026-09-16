@@ -1,11 +1,11 @@
 {
- "ts": "2026-09-16T08:31:30.108Z",
+ "ts": "2026-09-16T08:49:03.411Z",
  "stage": "STAGE-5.5B-P1-V2",
  "steps": [
   {
    "name": "userscript-loaded",
    "ok": "PASS",
-   "detail": "chars=56249",
+   "detail": "chars=56896",
    "evidence": "P1_V2_CODE"
   },
   {
@@ -17,7 +17,7 @@
   {
    "name": "cleanup-old-scripts",
    "ok": "PASS",
-   "detail": "removed=2 (rt5-5b-p1-diag-uuid-mu3ubdio,rt5-5a-ocr-smoke-uuid)",
+   "detail": "removed=0（无历史脚本）",
    "evidence": "NO_DUAL_PANEL"
   },
   {
@@ -29,13 +29,13 @@
   {
    "name": "panel-render",
    "ok": "PASS",
-   "detail": "panel@Ms=1945 canvas@Ms=2966 canvas={\"w\":619.5,\"objs\":21}",
+   "detail": "panel@Ms=1967 canvas@Ms=3053 canvas={\"w\":619.5,\"objs\":17}",
    "evidence": "TIMELINE"
   },
   {
    "name": "panel+canvas-ready",
    "ok": "PASS",
-   "detail": "{\"width\":619.5,\"height\":376.8625,\"objs\":21,\"panel\":true}",
+   "detail": "{\"width\":619.5,\"height\":376.8625,\"objs\":17,\"panel\":true}",
    "evidence": "REAL_CANVAS+ZY_PANEL"
   },
   {
@@ -53,19 +53,19 @@
   {
    "name": "scenario-A-reacted",
    "ok": "PASS",
-   "detail": "firstStatus=[{\"t\":710,\"s\":\"OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…\"}]",
+   "detail": "firstStatus=[{\"t\":713,\"s\":\"OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…\"},{\"t\":1424,\"s\":\"已生成 5 个文字（可双击编辑）\"}]",
    "evidence": "P1_V2_BG_IMG_FLOW"
   },
   {
    "name": "scenario-A-e2e",
-   "ok": "FAIL",
-   "detail": "{\"created\":-1,\"txt\":\"本地识别失败（LOCAL_OCR_TIMEOUT），百度云端未配置：请在「百度云 OCR」中填写 API Key / Secret Key 后重试\"} elapsed=121213",
+   "ok": "PASS",
+   "detail": "{\"created\":5} elapsed=2624",
    "evidence": "BACKGROUND_OCR_TEXTCREATE"
   },
   {
    "name": "scenario-A-readable-textbox",
-   "ok": "FAIL",
-   "detail": "{\"ocrCount\":0,\"samples\":[],\"total\":21}",
+   "ok": "PASS",
+   "detail": "{\"ocrCount\":5,\"samples\":[{\"text\":\"测试 公司\",\"type\":\"textbox\",\"editable\":true},{\"text\":\"折 立 印 设计\",\"type\":\"textbox\",\"editable\":true},{\"text\":\"13800138000\",\"type\":\"textbox\",\"editable\":true},{\"text\":\"WecChat: abc123\",\"type\":\"textbox\",\"editable\":true},{\"text\":\"深圳 市 南山 区 科技 园 路 999 呈\",\"type\":\"textbox\",\"editable\":true}],\"total\":26}",
    "evidence": "REAL_EDITABLE_TEXTBOX"
   },
   {
@@ -77,37 +77,33 @@
   {
    "name": "scenario-B-reacted",
    "ok": "PASS",
-   "detail": "status=[{\"t\":708,\"s\":\"OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…\"}]",
+   "detail": "status=[{\"t\":706,\"s\":\"OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…\"},{\"t\":1411,\"s\":\"已生成 3 个文字（可双击编辑）\"}]",
    "evidence": "P1_V2_ACTIVE_IMAGE"
   },
   {
    "name": "rollback",
    "ok": "PASS",
-   "detail": "{\"ok\":true,\"removed\":0,\"totalAfter\":21,\"bgAfter\":false}",
+   "detail": "{\"ok\":true,\"removed\":8,\"totalAfter\":21,\"bgAfter\":false}",
    "evidence": "P1_ROLLBACK"
   },
   {
    "name": "scenario-C-early-click",
-   "ok": "FAIL",
-   "detail": "earlyState=true progressed=false status=[{\"t\":807,\"s\":\"正在等待编辑器加载…\"},{\"t\":1513,\"s\":\"未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图\"}]",
+   "ok": "PASS",
+   "detail": "earlyState=true progressed=true status=[{\"t\":759,\"s\":\"正在等待编辑器加载…\"},{\"t\":1469,\"s\":\"正在准备图片…\"},{\"t\":2180,\"s\":\"OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…\"},{\"t\":2884,\"s\":\"已生成 3 个文字（可双击编辑）\"}]",
    "evidence": "CANVAS_EARLY_CLICK"
   },
   {
    "name": "cleanup-userscript",
    "ok": "PASS",
-   "detail": "removed rt5-5b-p1-diag-uuid-mu3udcn0",
+   "detail": "removed rt5-5b-p1-diag-uuid-mu3uzxdf",
    "evidence": "n/a"
   }
  ],
- "errors": [
-  "scenario-A-e2e",
-  "scenario-A-readable-textbox",
-  "scenario-C-early-click"
- ],
+ "errors": [],
  "timeline": {
-  "tLoad0": 1789547504422,
-  "tPanelMs": 1945,
-  "tCanvasMs": 2966
+  "tLoad0": 1789548553809,
+  "tPanelMs": 1967,
+  "tCanvasMs": 3053
  },
  "statusLog": [
   {
@@ -115,53 +111,75 @@
    "kind": null,
    "seen": [
     {
-     "t": 710,
+     "t": 713,
      "s": "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…"
+    },
+    {
+     "t": 1424,
+     "s": "已生成 5 个文字（可双击编辑）"
     }
    ],
-   "elapsedMs": 120131
+   "elapsedMs": 1424
   },
   {
    "scenario": "B-activeImage",
    "kind": null,
    "seen": [
     {
-     "t": 708,
+     "t": 706,
      "s": "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…"
+    },
+    {
+     "t": 1411,
+     "s": "已生成 3 个文字（可双击编辑）"
     }
    ],
-   "elapsedMs": 100256
+   "elapsedMs": 1411
   },
   {
    "scenario": "C-earlyClick",
    "kind": null,
    "seen": [
     {
-     "t": 807,
+     "t": 759,
      "s": "正在等待编辑器加载…"
     },
     {
-     "t": 1513,
-     "s": "未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+     "t": 1469,
+     "s": "正在准备图片…"
+    },
+    {
+     "t": 2180,
+     "s": "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…"
+    },
+    {
+     "t": 2884,
+     "s": "已生成 3 个文字（可双击编辑）"
     }
    ],
-   "elapsedMs": 1513
+   "elapsedMs": 2884
   }
  ],
  "console": [
-  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=21 bg=true active=null",
+  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=8 bg=true active=null",
   "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=113330 chars",
   "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
-  "[zy-ocr][ERROR] timeout",
-  "[zy-ocr][ERROR] baidu not configured for fallback: LOCAL_OCR_TIMEOUT",
-  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=21 bg=true active=image",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=5 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=5",
+  "[zy-ocr][SUCCESS] created=5",
+  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=26 bg=true active=image",
   "[zy-ocr][PREPARING] kind=active-image 980x1264 dataUrl=583014 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
   "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=20 bg=false active=null",
-  "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+  "[zy-ocr][PREPARING] kind=first-image 980x1264 dataUrl=583014 chars",
+  "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3"
  ],
  "pageErrors": [
-  "window.closeSocket is not a function",
-  "Failed to execute 'appendChild' on 'Node': Unexpected token ')'",
-  "Failed to execute 'appendChild' on 'Node': Unexpected token ')'"
+  "window.closeSocket is not a function"
  ]
 }
