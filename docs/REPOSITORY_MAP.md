@@ -166,7 +166,7 @@
 | RUNTIME-8 全链 | `runtime8-full-chain.js` `verify-gm-*.js` `verify-min-user-script.js` |
 | Stage 5 审计 | `stage5-*.js` `stage5-3-*.js` `stage5-4-*.js` `editor-object-diff.js` `editor-object-identity.js` |
 | 凭据入口 | `autologin.js` / `autologin3.js`（**凭据只经环境变量**，不入库——但见 `docs/SENSITIVE_DATA_AUDIT.md`） |
-| 证据归档 | `runtime/reports/*.json`（31 份，全部脱敏） |
+| 证据归档 | `runtime/reports/*.json`（42 份，全部脱敏） |
 
 ### 4.4 文档
 
