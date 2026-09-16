@@ -92,9 +92,13 @@
 │   pickObject / scoreObject   │          │        ↓                               │
 │   → setObjectText（只改文本） │          │ object-model.js    （纯数据模型/白名单）│
 │   → createTextObject（克隆）  │          │        ↓                               │
-│   → removeAssistantExtras    │          │ ocr-model.js       （OCRCandidate 纯数据）│
-│   → placeCreatedObject       │          │        ↓                               │
-└──────────────────────────────┘          │ image-mapper.js    （图片局部→Canvas AABB）│
+│   → removeAssistantExtras    │          │ ocr-provider.js    （统一 provider 接口）│
+│   → placeCreatedObject       │          │   ├ tesseract LOCAL（真实，chi_sim）    │
+└──────────────────────────────┘          │   └ fixture（确定性回归）               │
+                                           │        ↓  candidates[]（image-pixel）   │
+                                           │ ocr-model.js       （OCRCandidate 纯数据）│
+                                           │        ↓                               │
+                                           │ image-mapper.js    （图片局部→Canvas AABB）│
                                            │        ↓                               │
                                            │ object-matcher.js  （确定性匹配，无 AI）│
                                            │        ↓                               │
@@ -113,7 +117,7 @@
 | Canvas / Fabric | `CanvasObjVO.totalCanvasArray[0]` | ✅ 已取证·REAL |
 | Object Adapter | `extension/src/editor/object-adapter.js` | ✅ 已实现·**未挂接生产** |
 | Object Model | `extension/src/editor/object-model.js` | ✅ 已实现·**未挂接生产** |
-| OCR | `extension/src/ocr/ocr-model.js`（候选模型）+ 原生 OCR 入口（**结果不可程序读取**） | ⚠️ 模型有 / provider **BLOCKED** |
+| OCR | `extension/src/ocr/ocr-model.js`（候选模型）+ `ocr-provider.js`（统一 provider）+ `tesseract-loader.js`（引擎加载）。原生 OCR 入口**结果不可程序读取** | ✅ 本地 tesseract provider **PASS**（REAL，Stage 5.5）/ 原生 **BLOCKED** / 未挂接生产 |
 | Mapper | `extension/src/ocr/image-mapper.js` | ✅ 已实现·**未挂接生产** |
 | Matcher | `extension/src/editor/object-matcher.js` | ✅ 已实现·**未挂接生产** |
 | Textbox | fabric `textbox` 创建 + `fabric.Group` 编组 | ✅ 已验证·**仅 harness** |
@@ -136,6 +140,8 @@
 | `extension/src/editor/object-adapter.js` | 适配器 | 只读读取 + 最小 `setText`；`zyGetVisualBounds` 优先 fabric AABB | Node + 浏览器 | ⛔ 未挂接（就绪） |
 | `extension/src/editor/object-matcher.js` | 决策 | 确定性匹配 MATCHED/AMBIGUOUS/NOT_FOUND/ERROR（O(n)，无 AI） | Node + 浏览器 | ⛔ 未挂接（就绪） |
 | `extension/src/ocr/ocr-model.js` | 数据模型 | `OCRCandidate` 纯数据 + `isUsable` 校验；provider 无关 | Node + 浏览器 | ⛔ 未挂接（就绪） |
+| `extension/src/ocr/ocr-provider.js` | 集成（Stage 5.5 新增） | 统一 provider 接口 `recognize(image, ctx) → {provider, providerType, candidates[], meta}`；实现 tesseract（LOCAL）+ fixture | Node + 浏览器 | ⛔ 未挂接（就绪） |
+| `extension/src/ocr/tesseract-loader.js` | 集成（Stage 5.5 新增） | tesseract 引擎懒加载（`GM_addElement` 注入 page world、worker + chi_sim、IndexedDB 缓存、状态回调） | 浏览器 | ⛔ 未挂接（就绪） |
 | `extension/src/ocr/image-mapper.js` | 数学 | 图片局部坐标 → Canvas 全局 AABB（scale pre-multiply + 中心旋转） | Node + 浏览器 | ⛔ 未挂接（就绪） |
 | `extension/gm-shim.js` | 宿主兼容 | GM_* → localStorage/fetch 兼容层 | 扩展 | ✅ 已挂接 |
 | `extension/assistant.js` | 组装 | 主脚本主体（由 userscript 同步生成） | 扩展 | ✅ 已挂接 |
@@ -164,9 +170,9 @@
 | 基础设施 | `browser-launcher.js` `check.js` `full.js` `attach.js` `scriptcat.js` `bridge.js` `canvas.js` `apply.js` |
 | ScriptCat 接入 | `scriptcat-adapter.js` `install-scriptcat*.js` `probe-scriptcat-*.js` `enable-allow-user-scripts*.js` `vendor-sync.js` |
 | RUNTIME-8 全链 | `runtime8-full-chain.js` `verify-gm-*.js` `verify-min-user-script.js` |
-| Stage 5 审计 | `stage5-*.js` `stage5-3-*.js` `stage5-4-*.js` `editor-object-diff.js` `editor-object-identity.js` |
+| Stage 5 审计 | `stage5-*.js` `stage5-3-*.js` `stage5-4-*.js` `stage5-5-*.js` `editor-object-diff.js` `editor-object-identity.js` |
 | 凭据入口 | `autologin.js` / `autologin3.js`（**凭据只经环境变量**，不入库——但见 `docs/SENSITIVE_DATA_AUDIT.md`） |
-| 证据归档 | `runtime/reports/*.json`（42 份，全部脱敏） |
+| 证据归档 | `runtime/reports/*.json`（45 份，全部脱敏） |
 
 ### 4.4 文档
 
@@ -238,7 +244,7 @@ object-matcher.match() → MATCHED / AMBIGUOUS / NOT_FOUND / ERROR
 | 项 | 值 |
 |---|---|
 | 测绘分支 | `stage-4.1-runtime-validation` |
-| 测绘 commit | `3becf04` |
+| 测绘 commit | `4cb0819`（Stage 5.5） |
 | 默认分支 `main` HEAD | `7446faa`（Stage 4.0） |
-| 两者关系 | `main` 是 `stage-4.1` 的严格祖先（领先 58 commit / 落后 0，可快进） |
-| 跟踪文件数 | 173 |
+| 两者关系 | `main` 是 `stage-4.1` 的严格祖先（领先 61 commit / 落后 0，可快进） |
+| 跟踪文件数 | 183 |
