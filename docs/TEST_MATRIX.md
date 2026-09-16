@@ -1,7 +1,7 @@
 # TEST_MATRIX — 测试矩阵
 
 > 维护者：AI-2（Repository Governance 线）
-> 基线：`stage-4.1-runtime-validation` @ `3becf04`（2026-09-16）
+> 基线：`stage-4.1-runtime-validation` @ `4cb0819`（Stage 5.5，2026-09-16）
 > 术语见 `docs/EVIDENCE_POLICY.md`
 > **本次治理未移动任何现有测试文件。** 现有 `tests/` 布局保持原样（见 §6 关于目录结构的说明）。
 
@@ -9,18 +9,33 @@
 
 ## 1. 复跑结论（治理线独立复现，2026-09-16）
 
-以下 7 个套件由治理线在本机**独立复跑**，用于确认 `stage-4.1` HEAD 的测试基线仍然成立：
+以下 8 个套件由治理线在本机**独立复跑**，用于确认 `stage-4.1` HEAD 的测试基线仍然成立：
 
 | 套件 | 层 | 断言/用例 | 结果 | 复现命令 |
 |---|---|---|---|---|
-| `tests/editor-object-model/`（6 文件） | UNIT | **110** | **ALL PASS** | `node tests/editor-object-model/run.js` |
+| `tests/editor-object-model/`（8 文件） | UNIT | **132** | **ALL PASS** | `node tests/editor-object-model/run.js` |
 | `tests/field-core.test.js` | UNIT | **43** | **ALL PASS** | headless 打开 `tests/run-tests.html` |
 | `tests/config-core.test.js` | UNIT | **15** | **ALL PASS** | 同上 |
 | `tests/ai.test.js` | UNIT+INTEGRATION | **18** | **ALL PASS** | headless 打开 `tests/ai-tests.html?zydebug=1` |
 | `tests/editor-bridge.test.js` | INTEGRATION | **18** | **ALL PASS** | headless 打开 `tests/editor-tests.html` |
 | `tests/bridge-lifecycle.test.js` | INTEGRATION | **6** | **ALL PASS** | headless 打开 `tests/bridge-lifecycle.html?zydebug=1` |
 | `extension/wiring-check.html` | INTEGRATION | **5** | **wired-ok** | headless 打开该页 |
-| **合计** | | **215** | **全部通过** | |
+| **合计** | | **237** | **全部通过** | |
+
+`tests/editor-object-model/` 8 套件明细（Stage 5.5 后）：
+
+| 套件 | 断言 | 对应模块 |
+|---|---|---|
+| `object-model.test.js` | 35 | `object-model.js` |
+| `object-matcher.test.js` | 22 | `object-matcher.js` |
+| `object-adapter.test.js` | 18 | `object-adapter.js` |
+| `ocr-model.test.js` | 13 | `ocr-model.js` |
+| `ocr-provider.test.js` | 13 | `ocr-provider.js`（Stage 5.5 新增） |
+| `object-diff.test.js` | 12 | `runtime/editor-object-diff.js` |
+| `tesseract-loader.test.js` | 10 | `tesseract-loader.js`（Stage 5.5 新增） |
+| `image-mapper.test.js` | 9 | `image-mapper.js` |
+
+> 注：Stage 5.5 门禁报告写的是「7 套件」，而 `run.js` 实际列出 **8** 个文件、实测 132 断言。此处以**实测**为准，差异仅记录不改动他人文档。
 
 复跑环境：Windows / Git Bash / Node v22.22.2 / Google Chrome `--headless=new --dump-dom --allow-file-access-from-files`。
 
@@ -40,8 +55,10 @@
 | **Object diff / rollback 基建** | ✅ 12 断言 | — | — | — | ✅ 真实 mutation diff | 白名单 + 数值容差 + 类型安全 |
 | **Object adapter** | ✅ 18 断言 | ✅ | — | — | ✅ `zyGetVisualBounds` 真实取 AABB | `line`/`group-child` 语义已测 |
 | **Image mapper** | ✅ 10 断言 | — | — | — | ⚠️ 仅在 Stage 5.3 链中被调用 | scale 0.5/1/2 + rot45 AABB + 归一化往返 |
-| **OCR candidate** | ✅ 13 断言 | ✅ `ocr/redacted-card-01.json` | ✅ `ocr/test-card.png` | — | ❌ **BLOCKED**（原生 OCR 不可程序读取） | `isUsable` 过滤空白/非法 bbox |
-| **Textbox creation** | — | ✅ | ✅ | — | ✅ **真实编辑器 4/4** | `type=textbox` / `editable` / `markuuid=null` |
+| **OCR candidate（模型）** | ✅ 13 断言 | ✅ `ocr/redacted-card-01.json` | ✅ `ocr/test-card.png` | — | — | `isUsable` 过滤空白/非法 bbox；纯数据、provider 无关 |
+| **OCR provider（引擎）** | ✅ 13 断言 | ✅ fixture provider | ✅ 真实 Demo 图 | — | ✅ **REAL**：tesseract chi_sim 18 words / bbox 18/18 / avg-conf 90.4 | 统一 `recognize()` 接口；引擎缺失返回 ERROR 不 throw；`ocr-provider.js` + `tesseract-loader.js`（10 断言），**均未挂接生产** |
+| **原生 OCR 结果读取** | — | — | — | — | ❌ **BLOCKED** | 面板绑定相框交互；5.3 探针 + 5.4 四实验深度 hook 均无法取结果值 |
+| **Textbox creation** | — | ✅ | ✅ | — | ✅ **真实编辑器**：Stage 5.3/5.4 = 4/4；Stage 5.5 = **6/6** | `type=textbox` / `editable` / `markuuid=null`；5.5 中 1 行 MATCHED 模板槽（走 setText 复用） |
 | **Font / fontSize** | — | — | — | — | ✅ 真实测量 12–72 + 重建回读 5.03% 误差 | 校准公式 `0.829 × visualHeight`（short 单行） |
 | **Group / ungroup** | — | ✅ | — | — | ✅ `fabric.Group` 原生编组/解组 | — |
 | **Reference image 保留** | — | — | ✅ | — | ✅ `images=4` | — |
@@ -93,7 +110,7 @@
 | **TGAP-1** | 无自动化 REAL 测试入口 | 真实站点回归需人工/需 profile，无法进 CI | 已知（`RUNTIME_HARNESS_AUDIT.md`） |
 | **TGAP-2** | 真实旋转**文字**对象无样本 | 旋转文字重建未验证 | `DEFERRED` |
 | **TGAP-3** | 多行文本字号未覆盖 | 多行字号不准 | `DEFERRED` |
-| **TGAP-4** | 真实 OCR 无任何自动化用例 | OCR 源仍为 fixture | 待 Stage 5.5 |
+| **TGAP-4** | 真实 OCR 无**产品内**自动化用例（Stage 5.5 已有 provider 级与 demo 级真实证据） | 产品集成后回归仍靠 harness | 部分缓解（Stage 5.5） |
 | **TGAP-5** | 真实「粘贴/拖拽图片」无法在 harness 复现 | native image input 只得 `PARTIAL` | 已知；真机优先 |
 | **TGAP-6** | 单纯例模板 → 模板差异未覆盖 | identity 策略可能不通用 | `PARTIAL` |
 | **TGAP-7** | legacy `parseFields` 上帝函数无单测（7 种外部依赖耦合） | 回归靠 INTEGRATION 兜 | 已知（`ARCHITECTURE_AUDIT.md` §4.1） |
