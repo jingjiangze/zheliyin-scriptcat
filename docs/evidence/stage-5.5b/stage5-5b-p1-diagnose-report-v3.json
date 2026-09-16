@@ -1,0 +1,115 @@
+{
+ "ts": "2026-09-16T07:55:28.201Z",
+ "stage": "STAGE-5.5B-P1",
+ "steps": [
+  {
+   "name": "userscript-loaded",
+   "ok": "PASS",
+   "detail": "chars=55790 hasResolveOcrTarget=true",
+   "evidence": "P1_CODE"
+  },
+  {
+   "name": "launch+scriptcat",
+   "ok": "PASS",
+   "detail": "Playwright Chromium + 真实 ScriptCat(ndcooeababalnlpkfedmmbbbgkljhpjf)",
+   "evidence": "REAL_SCRIPT_CAT_EXTENSION"
+  },
+  {
+   "name": "install-userscript",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "panel+canvas-ready",
+   "ok": "PASS",
+   "detail": "{\"width\":619.5,\"height\":376.8625,\"objs\":21,\"panel\":true,\"bgImage\":false,\"images\":3}",
+   "evidence": "REAL_CANVAS+ZY_PANEL"
+  },
+  {
+   "name": "ui-ocr-btn-present",
+   "ok": "PASS",
+   "detail": "{\"panels\":1,\"ocrBtn\":true,\"ocrBtnText\":\"识别图片文字\",\"statusNode\":true,\"probeBtn\":true}",
+   "evidence": "P1_UI_SANITY"
+  },
+  {
+   "name": "scenario-A-bg-set",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"bgType\":\"image\",\"hasElement\":true,\"elTag\":\"IMG\",\"elNatW\":900,\"left\":0,\"top\":0,\"imagesOnCanvas\":3}",
+   "evidence": "BACKGROUND_IMAGE_SET"
+  },
+  {
+   "name": "scenario-A-reacted",
+   "ok": "FAIL",
+   "detail": "status=[\"画布未就绪，请等待模板加载完成\"]",
+   "evidence": "P1_NO_SILENT_ACTION|bg={\"ok\":true,\"bgType\":\"image\",\"hasElement\":true,\"elTag\":\"IMG\",\"elNatW\":900,\"left\":0,\"top\":0,\"imagesOnCanvas\":3}"
+  },
+  {
+   "name": "scenario-A-e2e",
+   "ok": "FAIL",
+   "detail": "null",
+   "evidence": "BACKGROUND_OCR_TEXTCREATE"
+  },
+  {
+   "name": "scenario-A-readable-textbox",
+   "ok": "FAIL",
+   "detail": "{\"ocrCount\":0,\"samples\":[],\"total\":21}",
+   "evidence": "REAL_EDITABLE_TEXTBOX"
+  },
+  {
+   "name": "scenario-B-select-image",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"activeType\":\"image\",\"hasElement\":true}",
+   "evidence": "ACTIVE_IMAGE"
+  },
+  {
+   "name": "scenario-B-reacted",
+   "ok": "FAIL",
+   "detail": "status=[\"画布未就绪，请等待模板加载完成\"]",
+   "evidence": "P1_ACTIVE_IMAGE_NO_REGRESSION"
+  },
+  {
+   "name": "rollback",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"removed\":0,\"totalAfter\":21,\"bgAfter\":false} preTotal=21",
+   "evidence": "P1_ROLLBACK"
+  },
+  {
+   "name": "cleanup-userscript",
+   "ok": "PASS",
+   "detail": "removed rt5-5b-p1-diag-uuid",
+   "evidence": "n/a"
+  }
+ ],
+ "errors": [
+  "scenario-A-reacted",
+  "scenario-A-e2e",
+  "scenario-A-readable-textbox",
+  "scenario-B-reacted"
+ ],
+ "statusLog": [
+  {
+   "scenario": "A-background",
+   "seen": [
+    "画布未就绪，请等待模板加载完成"
+   ],
+   "elapsedMs": 150293
+  },
+  {
+   "scenario": "B-activeImage",
+   "seen": [
+    "画布未就绪，请等待模板加载完成"
+   ],
+   "elapsedMs": 120112
+  }
+ ],
+ "console": [
+  "[zy-ocr][ERROR] canvas not ready",
+  "[zy-ocr][ERROR] canvas not ready",
+  "[zy-ocr][ERROR] canvas not ready"
+ ],
+ "pageErrors": [
+  "window.closeSocket is not a function",
+  "Mismatched anonymous define() module: ()=>(()=>{var t={670:t=>{function r(t){return r=\"function\"==typeof Symbol&&\"symbol\"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&\"function\"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?\"symbol\":typeof t},r(t)}t.expor"
+ ]
+}
