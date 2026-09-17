@@ -185,6 +185,7 @@ UI 专项的每一轮都必须走完 `调查/修改 → 验证 → 证据 → �
 |---|---|---|---|---|---|
 | **UI-1** | `2660763` | `2660763` | — | 直连 ls-remote | 已同步 |
 | **UI-2** | `c1ff5ce`（+9437 / −10，47 files） | `3dd60a05` | `7a55375e` | `TREE_MATCH=true`（本地 tree 同值） | **PUSHED** |
+| **UI-2 收尾** | `5508079`（docs/STAGE_INDEX.md，+47） | `d8b767d3` | `645e0446` | `TREE_MATCH=true` | **PUSHED** |
 
 **UI-2 推送闭环证据**（`ui-audit/ui2-env/push-ui2.log`）：
 ```text
@@ -194,15 +195,26 @@ UI 专项的每一轮都必须走完 `调查/修改 → 验证 → 证据 → �
 [VERIFY] TREE_MATCH=true
 [RESULT] PUSHED remote_tip=3dd60a054ff2ec8d4aee6840fdaac56c008c938a tree_match=true
 ```
-独立复核（`git ls-remote`，非脚本自述）：`refs/heads/ai2-repo-governance = 3dd60a05…` ✅
+**收尾推送证据**（`ui-audit/ui2-env/push-ui2b.log`）：
+```text
+[VERIFY] remote_sha=d8b767d3768d84f3fa0b498832284d836c32ea95
+[VERIFY] remote_tree=645e04468918e2a7262f1ec88570c700d01c4e49
+[VERIFY] local_tree =645e04468918e2a7262f1ec88570c700d01c4e49
+[VERIFY] TREE_MATCH=true
+[RESULT] PUSHED remote_tip=d8b767d3768d84f3fa0b498832284d836c32ea95 tree_match=true
+```
+独立复核（`git ls-remote`，非脚本自述）：`refs/heads/ai2-repo-governance = d8b767d3…` ✅
 
 **本地历史重挂**（按专项 skill「Step 4」，避免本地与远端分叉成两条链）：
-1. 备份旧链：`git branch ai2-local-backup-c1ff5ce c1ff5ce`
-2. 取回 API 产物：`git fetch <url> ai2-repo-governance`
-3. 软重置：`git reset --soft 3dd60a05…` → 工作树与索引不动，仅把本地 HEAD 挂到远端链上
-4. 复核：`rev-list --left-right --count HEAD...origin/ai2-repo-governance` = `0 0`
 
-> 环境备注：本仓 `git update-ref` 对 `refs/remotes/origin/*` 的写入在该沙箱下会静默丢失（`.git/refs/remotes/origin/` 为空）。本轮改为**直接写 ref 文件**恢复追踪引用，`[gone]` 标记即消除。此为环境问题，不是仓库问题。
+1. 备份旧链：`git branch ai2-local-backup-<shortsha> <localHead>`
+2. 取回 API 产物：`git fetch <url> <branch>`（API 产物原本**不在本地对象库**，必须先 fetch）
+3. 软重置：`git reset --soft <remoteTip>` → 工作树与索引不动，仅把本地 HEAD 挂到远端链上
+4. 复核：`rev-list --left-right --count HEAD...origin/<branch>` = `0 0`
+
+> 环境备注 1：本仓 `git update-ref` 对 `refs/remotes/origin/*` 的写入在该沙箱下会静默丢失（`.git/refs/remotes/origin/` 为空）。改为**直接写 ref 文件**后追踪引用恢复，`[gone]` 标记消除。此为环境问题，不是仓库问题。
+>
+> 环境备注 2：本沙箱 bash shim **缺 `cat` / `dirname` / `ls`**，无法用 `TOKEN=$(cat …)` 传参。推送脚本须由 Node 启动器（`ui-audit/ui2-env/run-push.js`）解析凭据后以 `spawnSync` 传入环境变量。
 
 ---
 
