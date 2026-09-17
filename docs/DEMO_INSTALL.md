@@ -13,7 +13,7 @@
 | | 版本 | 说明 |
 |---|---|---|
 | 稳定版（`main`） | `0.3.0.0` | 日常使用请安装这个 |
-| **Demo（`demo`）** | **`@version 0.3.5.0`**（面板可能显示 `0.3.0.1`，见下） | 试用 AI-1 最新实现；含**图片识别**按钮 |
+| **Demo（`demo`）** | **`0.3.5.0`**（四处版本已统一，见 `docs/DEMO_RELEASE.md`） | 试用 AI-1 最新实现；含**图片识别**按钮 |
 
 **当前 Demo 的能力与限制**：
 
@@ -24,8 +24,8 @@
 套版填层等既有功能       = 正常可用
 ```
 
-> ⚠️ **已知缺陷 `DEFECT-VER-01`**：demo 的 `@version`（`0.3.5.0`）与脚本内 `const VERSION`（`0.3.0.1`）不一致。
-> → 面板显示「版本：0.3.0.1」；更新检查用 `@version` 比较 → **可能每次提示「发现新版」**。属已知项，见 `docs/CURRENT_STATUS.md` §3。
+> ✅ **`DEFECT-VER-01` 已修复**（commit `f3ae3cb`）：`@version` / `const VERSION` / `extension/assistant.js VERSION` / `manifest version_name` 四处已统一为 `0.3.5.0`。
+> 修复前表现为「面板显示 0.3.0.1 + 每次提示发现新版」；现已一致，CI 的 metadata check 会持续守护该不变量（`docs/BRANCH_POLICY.md` §4.1）。
 
 ---
 
@@ -53,7 +53,7 @@
 
 | 面板显示 | 含义 |
 |---|---|
-| `版本：0.3.0.1` | ✅ Demo（因 `DEFECT-VER-01`，面板值落后于 `@version 0.3.5.0`） |
+| `版本：0.3.5.0` | ✅ Demo（与 `@version` 一致） |
 | `版本：0.3.0.0` | ❌ 这是稳定版，说明装到了 `main` |
 
 > 更可靠的确认方式：用 sha256 核对（见下），或检查是否存在 **「识别图片文字」按钮**（稳定版没有该按钮）。
@@ -148,7 +148,7 @@ curl -sSk https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/
 ## 6. 反馈时请提供
 
 ```text
-1. 面板显示的版本号（0.3.0.1？）
+1. 面板显示的版本号（应为 `0.3.5.0`）
 2. 浏览器 + ScriptCat 版本
 3. 现象截图（注意：请勿发送真实客户名片 / 手机号 / 微信 / 二维码）
 4. 控制台错误（如有）

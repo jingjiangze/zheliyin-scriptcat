@@ -117,6 +117,86 @@ git diff --name-only <base>..HEAD | grep -E '^(extension/|runtime/|installer/|te
 ---
 
 ## 5. Demo 分支的元数据自洽要求
+## 4.1 版本号：权威源与强制镜像（Single Source of Truth）
+
+**本项目没有构建步骤**（userscript 手工维护、`extension/assistant.js` 由 userscript 派生），
+因此不存在"编译期注入版本"的位置。等价做法是：**一个权威源 + 若干强制镜像，由 CI 强制相等**。
+
+| 位置 | 角色 | 说明 |
+|---|---|---|
+| `zheliyin-card-assistant.user.js` 的 `// @version` | **权威源** | 用户安装与更新判断的**唯一输入**（ScriptCat 读它） |
+| `zheliyin-card-assistant.user.js` 的 `const VERSION` | 强制镜像 | 面板显示、更新比较用 |
+| `extension/assistant.js` 的 `const VERSION` | 强制镜像 | 扩展载体同源 |
+| `extension/manifest.json` 的 `version_name` | 强制镜像 | MV3 显示名 |
+| `extension/manifest.json` 的 `version` | **派生** | 必须等于 `@version` 的**前三段**（如 `0.3.5.0` → `0.3.5`） |
+
+**唯一硬约束**：`@version` === `const VERSION` === `assistant.js VERSION` === `manifest.version_name`。
+由 `.github/scripts/check-userscript.js` 在 CI 强制；违反直接 FAIL。
+
+**为什么权威源是 `@version` 而不是别的**：它决定用户能不能收到更新、以及会不会被误报"有新版本"。
+把它改成"最低的那个"会让已有用户永远收不到更新；因此**收敛方向永远是向 `@version` 看齐**。
+
+### 非权威位置（不要为了"一致"去改）
+
+| 位置 | 性质 |
+|---|---|
+| `docs/*.md`（`ARCHITECTURE_AUDIT` / `BEHAVIOR_BASELINE` / `CHANGELOG` / `STAGE_*`）中的版本号 | **历史记录**，写的是当时的版本，改了就是篡改历史 |
+| `extension/gm-shim.js` 顶部注释里的版本 | 历史注释 |
+| `.github/workflows/build-exe.yml` 的 exe 版本参数 | 发布工装参数，按发布时填写 |
+| `package.json` 的 `version` | runtime harness 私有包版本，与产品版本无关 |
+
+### ⚠️ 已知脆弱点（版本升级会影响测试断言）
+
+`runtime/install-scriptcat.js` / `runtime/install-scriptcat-url.js` 把版本号**硬编码为断言字符串**：
+
+```js
+return { hasName: ..., hasVersion: tx.indexOf("0.3.0.0") >= 0 };
+```
+
+**含义**：一旦产品版本不再是 `0.3.0.0`（例如 demo 的 `0.3.5.0`），这两个运行时断言会**假失败**。
+
+> 处置建议（交 AI-1）：把断言改为**不依赖具体版本号**（例如只断言 `@version` 字段存在且非空，
+> 或从 userscript 中解析后比对，而不是写死字符串）。在此之前，运行这两个脚本出现 `hasVersion: false` **不代表脚本坏了**。
+## 4.1 版本号：权威源与强制镜像（Single Source of Truth）
+
+**本项目没有构建步骤**（userscript 手工维护、`extension/assistant.js` 由 userscript 派生），
+因此不存在"编译期注入版本"的位置。等价做法是：**一个权威源 + 若干强制镜像，由 CI 强制相等**。
+
+| 位置 | 角色 | 说明 |
+|---|---|---|
+| `zheliyin-card-assistant.user.js` 的 `// @version` | **权威源** | 用户安装与更新判断的**唯一输入**（ScriptCat 读它） |
+| `zheliyin-card-assistant.user.js` 的 `const VERSION` | 强制镜像 | 面板显示、更新比较用 |
+| `extension/assistant.js` 的 `const VERSION` | 强制镜像 | 扩展载体同源 |
+| `extension/manifest.json` 的 `version_name` | 强制镜像 | MV3 显示名 |
+| `extension/manifest.json` 的 `version` | **派生** | 必须等于 `@version` 的**前三段**（如 `0.3.5.0` → `0.3.5`） |
+
+**唯一硬约束**：`@version` === `const VERSION` === `assistant.js VERSION` === `manifest.version_name`。
+由 `.github/scripts/check-userscript.js` 在 CI 强制；违反直接 FAIL。
+
+**为什么权威源是 `@version` 而不是别的**：它决定用户能不能收到更新、以及会不会被误报"有新版本"。
+把它改成"最低的那个"会让已有用户永远收不到更新；因此**收敛方向永远是向 `@version` 看齐**。
+
+### 非权威位置（不要为了"一致"去改）
+
+| 位置 | 性质 |
+|---|---|
+| `docs/*.md`（`ARCHITECTURE_AUDIT` / `BEHAVIOR_BASELINE` / `CHANGELOG` / `STAGE_*`）中的版本号 | **历史记录**，写的是当时的版本，改了就是篡改历史 |
+| `extension/gm-shim.js` 顶部注释里的版本 | 历史注释 |
+| `.github/workflows/build-exe.yml` 的 exe 版本参数 | 发布工装参数，按发布时填写 |
+| `package.json` 的 `version` | runtime harness 私有包版本，与产品版本无关 |
+
+### ⚠️ 已知脆弱点（版本升级会影响测试断言）
+
+`runtime/install-scriptcat.js` / `runtime/install-scriptcat-url.js` 把版本号**硬编码为断言字符串**：
+
+```js
+return { hasName: ..., hasVersion: tx.indexOf("0.3.0.0") >= 0 };
+```
+
+**含义**：一旦产品版本不再是 `0.3.0.0`（例如 demo 的 `0.3.5.0`），这两个运行时断言会**假失败**。
+
+> 处置建议（交 AI-1）：把断言改为**不依赖具体版本号**（例如只断言 `@version` 字段存在且非空，
+> 或从 userscript 中解析后比对，而不是写死字符串）。在此之前，运行这两个脚本出现 `hasVersion: false` **不代表脚本坏了**。
 
 `demo` 分支的 userscript **必须**满足：
 
