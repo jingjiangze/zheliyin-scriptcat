@@ -21,6 +21,7 @@
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -362,7 +363,7 @@
           <div class="zy-settings-body">
             <div class="zy-row">
               <label class="zy-label" for="zy-baidu-ak">API Key</label>
-              <input class="zy-input" id="zy-baidu-ak" type="password" placeholder="百度智能云应用的 API Key（已配置 ${baiduConfigured() ? maskKey(GM_getValue("zyBaiduAk", "")) : "未配置"}）">
+              <input class="zy-input" id="zy-baidu-ak" type="password" placeholder="百度智能云应用的 API Key（已配置 ${baiduConfigured() ? baiduAkMasked() : "未配置"}）">
             </div>
             <div class="zy-row">
               <label class="zy-label" for="zy-baidu-sk">Secret Key</label>
@@ -473,14 +474,15 @@
     const skInput = q("zy-baidu-sk");
     const bs = q("zy-baidu-status");
     const saveBtn = q("zy-baidu-save");
-    if (saveBtn) saveBtn.addEventListener("click", () => {
+    if (saveBtn) saveBtn.addEventListener("click", async () => {
       const ak = akInput ? akInput.value.trim() : "";
       const sk = skInput ? skInput.value.trim() : "";
-      if (ak) GM_setValue("zyBaiduAk", ak);
-      if (sk) GM_setValue("zyBaiduSk", sk);
+      if (!ak && !sk) { setBaiduStatus(bs, "未输入新 Key，保持原样。"); return; }
+      const res = await saveBaiduConfigPlain(ak, sk);
+      if (!res.ok) { setBaiduStatus(bs, res.message); return; }
       if (akInput) akInput.value = "";
       if (skInput) skInput.value = "";
-      setBaiduStatus(bs, baiduConfigured() ? "已保存（Key 不显示完整，仅存本机）。" : "已保存（尚未配置 API Key）");
+      setBaiduStatus(bs, "已保存（AES-256-GCM 加密存储，仅本机；Key 不显示完整）。");
       if (typeof onSaved === "function") onSaved();
     });
     const testBtn = q("zy-baidu-test");
@@ -502,6 +504,49 @@
     if (n) n.textContent = text;
   }
 
+  // ---- P4+（用户要求「百度 api 需要加密」）：凭据 AES-GCM 加密落库，明文不进 GM/日志/DOM/Git ----
+  const CRED_CRYPTO = (typeof encryptSecret === "function") ? { encryptSecret: encryptSecret, decryptSecret: decryptSecret, isCiphertext: isCiphertext } : null;
+  let baiduCfgCache = null; // 解密后的内存缓存 {ak, sk}
+  const cryptoAvailable = () => typeof window !== "undefined" && window.crypto && window.crypto.subtle && CRED_CRYPTO;
+  function credStorage() { return { get: (k) => GM_getValue(k, ""), set: (k, v) => GM_setValue(k, v) }; }
+  async function loadBaiduConfig() {
+    if (!cryptoAvailable()) { baiduCfgCache = null; return null; }
+    const cryptoObj = window.crypto;
+    const storage = credStorage();
+    let ak = null, sk = null;
+    const akC = GM_getValue("zyBaiduAkEnc", "");
+    const skC = GM_getValue("zyBaiduSkEnc", "");
+    if (CRED_CRYPTO.isCiphertext(akC)) ak = await CRED_CRYPTO.decryptSecret(cryptoObj, storage, akC);
+    if (CRED_CRYPTO.isCiphertext(skC)) sk = await CRED_CRYPTO.decryptSecret(cryptoObj, storage, skC);
+    // 旧明文兼容迁移：zyBaiduAk/zyBaiduSk → 加密后清明文
+    if (!ak && GM_getValue("zyBaiduAk", "")) {
+      ak = GM_getValue("zyBaiduAk", "");
+      GM_setValue("zyBaiduAkEnc", await CRED_CRYPTO.encryptSecret(cryptoObj, storage, ak));
+      GM_setValue("zyBaiduAk", "");
+    }
+    if (!sk && GM_getValue("zyBaiduSk", "")) {
+      sk = GM_getValue("zyBaiduSk", "");
+      GM_setValue("zyBaiduSkEnc", await CRED_CRYPTO.encryptSecret(cryptoObj, storage, sk));
+      GM_setValue("zyBaiduSk", "");
+    }
+    baiduCfgCache = { ak: ak || "", sk: sk || "" };
+    // 刷新输入框占位（掩码），保持同步
+    const akLabel = "百度智能云 API Key（" + (baiduCfgCache.ak ? "已配置 " + maskKey(baiduCfgCache.ak) : "未配置") + "）";
+    document.querySelectorAll("#zy-baidu-ak-native, #zy-baidu-ak").forEach((n) => { n.placeholder = akLabel; });
+    return baiduCfgCache;
+  }
+  async function saveBaiduConfigPlain(ak, sk) {
+    if (!cryptoAvailable()) return { ok: false, message: "当前环境不支持加密存储（WebCrypto 不可用），为保护凭据未保存" };
+    const cryptoObj = window.crypto;
+    const storage = credStorage();
+    if (ak) GM_setValue("zyBaiduAkEnc", await CRED_CRYPTO.encryptSecret(cryptoObj, storage, ak));
+    if (sk) GM_setValue("zyBaiduSkEnc", await CRED_CRYPTO.encryptSecret(cryptoObj, storage, sk));
+    if (ak) GM_setValue("zyBaiduAk", "");
+    if (sk) GM_setValue("zyBaiduSk", "");
+    await loadBaiduConfig();
+    return { ok: true, message: "" };
+  }
+
   // ---- Stage 5.5B P2-B：原生右栏 OCR 面板（§14-§17，P2-A 审计结论：.rightPageBar.rightBar 稳定）----
   // 主 UI = 原生右栏邻接抽屉 + 右栏工具按钮；旧浮窗保留为 fallback（§16）。
   let nativeOcrMounted = false;
@@ -511,7 +556,7 @@
     if (existing) return existing;
     const drawer = document.createElement("aside");
     drawer.id = "zy-native-ocr-panel";
-    const akPlaceholder = baiduConfigured() ? "已配置 " + maskKey(GM_getValue("zyBaiduAk", "")) : "未配置";
+    const akPlaceholder = "百度智能云 API Key（" + (baiduConfigured() ? "已配置 " + baiduAkMasked() : "未配置") + "）";
     drawer.innerHTML = `
       <div class="zy-head">
         <div class="zy-title">图片文字识别</div>
@@ -700,8 +745,9 @@
     });
   }
   function maskKey(v) { return v ? v.slice(0, 4) + "•".repeat(3) + "(" + v.length + "位)" : ""; }
+  function baiduAkMasked() { return (baiduCfgCache && baiduCfgCache.ak) ? maskKey(baiduCfgCache.ak) : ""; }
   function baiduConfigured() {
-    return !!(GM_getValue("zyBaiduAk", "") && GM_getValue("zyBaiduSk", ""));
+    return !!((baiduCfgCache && baiduCfgCache.ak) && (baiduCfgCache && baiduCfgCache.sk));
   }
   function getOcrMode() {
     const m = GM_getValue("zyOcrMode", "auto");
@@ -710,7 +756,7 @@
   function makeBaiduProvider() {
     if (!BAIDU_PROVIDER_GLOBAL) return null;
     return BAIDU_PROVIDER_GLOBAL({
-      getConfig: () => ({ apiKey: GM_getValue("zyBaiduAk", ""), secretKey: GM_getValue("zyBaiduSk", "") }),
+      getConfig: () => ({ apiKey: (baiduCfgCache && baiduCfgCache.ak) || "", secretKey: (baiduCfgCache && baiduCfgCache.sk) || "" }),
       http: { request: baiduTransport },
       storage: baiduStorage(),
       resizeImage: baiduResizeImage
@@ -1441,6 +1487,8 @@
     // P2-B：原生右栏存在则优先原生化；rightBar 晚到时由 observer 补挂
     mountNativeOcrPanel();
     observeNativeRemount();
+    // P4+：凭据加密配置预载（README 不落明文；解密后缓存）
+    loadBaiduConfig().catch((e) => ocrLog && ocrLog("ERROR", "credential load: " + String(e && e.message || e)));
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initZheliyin);
