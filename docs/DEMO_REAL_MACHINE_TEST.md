@@ -1,4 +1,4 @@
-# Demo 真机测试表（Stage 5.6 OCR-only v0.3.8.0）
+# Demo 真机测试表（Stage 5.6 OCR-only v0.3.8.1）
 
 > 由真实用户（ScriptCat 安装 demo 分支脚本）在真实浏览器中填写。敏感数据一律脱敏。
 
@@ -9,7 +9,7 @@
 | 浏览器 | Chrome / Edge 版本 |
 | OS | Windows / macOS |
 | ScriptCat 版本 | 1.4.x |
-| 脚本版本（@version，面板「版本：」应显示一致） | 0.3.8.0 |
+| 脚本版本（@version，面板「版本：」应显示一致） | 0.3.8.1 |
 | 安装地址（固定） | `https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js` |
 
 ## 二、核心闭环（用户原话场景）

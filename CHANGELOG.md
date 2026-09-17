@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Stage 5.6 P0 hotfix（2026-09-17）— v0.3.8.1：BRIDGE_NO_REPLY 分级二段（真机第 2 轮反馈）
+- 真机确认失败分支为 `BRIDGE_NO_REPLY`（抽屉已出现、非早点击、同 thirdDiyAdd.do 入口）：失败时重试注入桥一次，并区分根因——`pageBridge` 模块缺失（@require 下载失败 → 提示重装/换扩展版）vs 桥注入但无响应（画布在 iframe → 提示刷新/重新安装/检查脚本启用）。
+- init 增加 `[zy-ocr][INIT]` 依赖加载状态日志（无敏感信息），便于远程定位。
+- 版本统一 0.3.8.1（userscript/manifest/assistant/README/DEMO_REAL_MACHINE_TEST）。
+
 ### Stage 5.6 P5（2026-09-17）— v0.3.8.0：几何矩阵验证 + 旋转最小修复（P5-D）
 - P5-2 真机几何矩阵（runtime/stage5-6-p5-geometry.js，10 格）：A 基础 / B 缩放 0.5/2 / C 位置 / E 多尺寸 500/2000 / F 背景图全部 PASS（角点误差 ≤22px）；旋转 D(15/45/90°) FAIL（textbox 未携带角度 + 轴对齐盒与旋转文字区不重合，误差随 θ 增至 222px）。
 - P5-3 最小修复（仅两处，不重写 Mapper）：`buildItemsFromOcr` 对 θ≠0 输出旋转中心+角度+center 原点；page-bridge `ocrCreate` 应用 angle/originX/Y=center。θ=0 路径零改动。修复后矩阵复跑验证。

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.8.0
+// @version      0.3.8.1
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -42,7 +42,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.8.0";
+  const VERSION = "0.3.8.1";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -818,13 +818,20 @@
       setStatus("正在等待编辑器加载…");
       const info = await waitForCanvasReady(60000);
       if (!info || !info.ok) {
-        // P0（真机反馈）：分级错误提示，让用户可以自查而不是干等
-        if (info && info.code === "BRIDGE_NO_REPLY") {
-          setStatus("页面桥接无响应：脚本可能未完成注入，或设计画布在独立 iframe 中（当前扩展版本暂不支持跨框架定位）。请刷新页面重试；仍不行请在浏览器扩展管理页确认已「允许用户脚本」并重装本脚本。");
+        // P0（真机反馈）：失败时再尝试注入一次桥，并区分「依赖模块未加载」vs「桥无响应/跨框架」
+        if (!info || info.code === "BRIDGE_NO_REPLY") {
+          installPageBridge(); // 幂等：注入失败场景下重试一次（editor 可能随后才可用）
+          if (typeof pageBridge !== "function") {
+            setStatus("脚本依赖加载失败：核心模块 page-bridge.js 未加载（@require 下载失败，常见于网络代理/拦截）。请在脚本管理器中删除本脚本后，重新从固定安装地址安装；仍失败请改用 Chrome 扩展版。");
+            ocrLog("ERROR", "bridge module missing (pageBridge typeof=" + typeof pageBridge + ")");
+          } else {
+            setStatus("页面桥接无响应：脚本已注入但消息未返回（画布可能在独立 iframe 中，当前版本暂不支持跨框架定位）。请刷新页面重试；仍不行请确认脚本管理器中脚本处于启用状态并重新安装一次。");
+            ocrLog("ERROR", "bridge no reply marker=" + String(!!(window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed)));
+          }
         } else {
           setStatus("设计编辑器尚未加载出画布（等待 60 秒超时）。请确认当前是设计编辑页（不是模板/列表页）且页面已加载完，再点一次「识别当前图片」；仍不行请刷新页面。");
+          ocrLog("ERROR", "canvas not found after 60s");
         }
-        ocrLog("ERROR", "canvas not ready after 60s code=" + (info && info.code || "NULL"));
         ocrRunning = false;
         return;
       }
@@ -1517,6 +1524,8 @@
     // addStyles/installPageBridge/checkForUpdateSoon 三者均幂等（renderPanel 内保留原调用，双保险）。
     addStyles();
     installPageBridge();
+    // P0 诊断：init 时打印 @require 依赖加载状态（无敏感信息），故障时便于远程定位
+    console.info("[zy-ocr][INIT] pageBridge=" + (typeof pageBridge) + " unifyCandidates=" + (typeof unifyCandidates) + " baiduProvider=" + (typeof createBaiduProvider) + " credCrypto=" + (typeof encryptSecret));
     // P2-B：原生右栏存在则优先原生化（Demo 主 UI）；rightBar 晚到时由 observer 补挂
     const nativeOk = mountNativeOcrPanel();
     observeNativeRemount();
