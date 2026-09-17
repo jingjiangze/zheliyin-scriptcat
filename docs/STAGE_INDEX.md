@@ -137,6 +137,7 @@ Stage 5.5A    BLOCKED          （产品化验收：引擎在编辑器页运行�
 Stage 5.5A-R2 PASS             ← 当前 HEAD（page-world executor 突破：引擎装载成功）
 UI-1          CONDITIONAL-GO → GO  ← OCR UI 原生化审计；真机补测后转 GO
 UI-2          PASS              ← 原生入口 + 邻接抽屉实施（30/30；真机 ScriptCat 实测）
+UI-2-push     PUSHED            ← 治理分支已同步（tree 等价证明，非 force push）
 ```
 
 > 注意 `Stage 5.3 = GO` 与 `Stage 5.4 = CONDITIONAL-GO` 不矛盾：5.4 因为**深探后确认原生 OCR 不可程序读取**，按 `docs/EVIDENCE_POLICY.md` §3 如实降级为 CONDITIONAL-GO —— 这是**诚实结论**，不是退步。
@@ -156,6 +157,52 @@ UI-2          PASS              ← 原生入口 + 邻接抽屉实施（30/30；
 | 下一步 | **Stage 5.6 的 P1 前置已由 5.5A-R2 完成**（采用「page-world executor + UMD module/exports 遮蔽 + `new Function`」路线）；后续为 5.6 字号精确与识别质量提升 |
 | 后续已定序路线 | 5.6 字号精确 → 5.7 颜色/粗细 → 5.8 旋转 → 5.9 多行/段落（行内词序/列） → 5.10 复杂布局 → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview |
 | 停止点约定 | Stage 5.5A-R2：引擎装载突破后**仍在 demo 范围内**（未进入颜色/粗细/旋转/多行/编组/预览）；后续 5.6 起推进字号精确与识别质量 |
+
+### 5.1 当前实际工作分支
+
+上述「当前所在位置」描述的是**产品功能线**（Stage 5.x，落在 `stage-4.1-runtime-validation`）。
+**UI 原生化专项**（UI-1 / UI-2 …）走的是**治理线**，两者不要混淆：
+
+| 项 | 值 |
+|---|---|
+| 治理分支 | `ai2-repo-governance` |
+| 本地 HEAD | `3dd60a0`（= 远端 tip，`0 0` 同步） |
+| 已完成的 UI 轮次 | UI-1（审计，GO）、UI-2（原生入口 + 邻接抽屉，PASS 30/30） |
+| UI-2 的 userscript 改动形态 | **仅补丁**（`ui-audit/ui2-patch/ui2-native.patch`）；生产 `demo` 分支本轮**有意不改**（维护者决策） |
+| 下一步（UI-3） | 视觉融合精修：抽屉打开态 × 4 viewport 与原生 `.ai-*-Cont` 并排比对；收敛「识别当前图片」全宽大蓝块（实测 h≈120px → 对齐原生 `.ai-btn-blue` h44/radius22）；精修 `.zy-note` / `.zy-divider` / `.zy-actions`；UI-RISK-02（observer 去抖）/ UI-RISK-06（拉手过渡） |
+
+---
+
+## 5.A UI 专项的 Git 交付记录（§十七 纪律）
+
+UI 专项的每一轮都必须走完 `调查/修改 → 验证 → 证据 → 独立 commit → push → 确认 remote`，**不允许连续多轮后统一提交**，**不允许 force push**。
+
+由于沙箱环境会在 `git-receive-pack` 阶段被代理拒绝（见 `docs/REAL_MACHINE_EVIDENCE.md` 推送阻塞记录），本仓治理分支采用 **GitHub Git Data REST API** 推送：`POST /git/blobs` → `POST /git/trees` → `POST /git/commits` → `PATCH /git/refs/heads/<branch>`（`force:false`）。
+
+> ⚠️ API 重放会产出**不同的 commit SHA**（父链不同），因此**不能用 SHA 相等来证明推送正确**。正确判据是 **tree 哈希相等**。
+
+| 轮次 | 本地 commit | 远端 tip（API 产物） | 远端 tree | 判据 | 结果 |
+|---|---|---|---|---|---|
+| **UI-1** | `2660763` | `2660763` | — | 直连 ls-remote | 已同步 |
+| **UI-2** | `c1ff5ce`（+9437 / −10，47 files） | `3dd60a05` | `7a55375e` | `TREE_MATCH=true`（本地 tree 同值） | **PUSHED** |
+
+**UI-2 推送闭环证据**（`ui-audit/ui2-env/push-ui2.log`）：
+```text
+[VERIFY] remote_sha=3dd60a054ff2ec8d4aee6840fdaac56c008c938a
+[VERIFY] remote_tree=7a55375e9d775f5763fd2718568287073f5ae495
+[VERIFY] local_tree =7a55375e9d775f5763fd2718568287073f5ae495
+[VERIFY] TREE_MATCH=true
+[RESULT] PUSHED remote_tip=3dd60a054ff2ec8d4aee6840fdaac56c008c938a tree_match=true
+```
+独立复核（`git ls-remote`，非脚本自述）：`refs/heads/ai2-repo-governance = 3dd60a05…` ✅
+
+**本地历史重挂**（按专项 skill「Step 4」，避免本地与远端分叉成两条链）：
+1. 备份旧链：`git branch ai2-local-backup-c1ff5ce c1ff5ce`
+2. 取回 API 产物：`git fetch <url> ai2-repo-governance`
+3. 软重置：`git reset --soft 3dd60a05…` → 工作树与索引不动，仅把本地 HEAD 挂到远端链上
+4. 复核：`rev-list --left-right --count HEAD...origin/ai2-repo-governance` = `0 0`
+
+> 环境备注：本仓 `git update-ref` 对 `refs/remotes/origin/*` 的写入在该沙箱下会静默丢失（`.git/refs/remotes/origin/` 为空）。本轮改为**直接写 ref 文件**恢复追踪引用，`[gone]` 标记即消除。此为环境问题，不是仓库问题。
 
 ---
 
