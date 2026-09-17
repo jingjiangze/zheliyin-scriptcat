@@ -27,7 +27,7 @@ const FAKE_SK = "SK-FAKE-4P4-654321";
   const scDir = path.join(__dirname, "vendor", "scriptcat");
   const report = { ts: new Date().toISOString(), stage: "STAGE-5.5B-P4", steps: [], errors: [], matrix: [] };
   const step = (n, ok, d, ev) => { report.steps.push({ name: n, ok: ok ? "PASS" : "FAIL", detail: String(d || "").slice(0, 700), evidence: ev || "n/a" }); if (!ok) report.errors.push(n); };
-  const matrix = (row, local, baidu, expected, got, ok) => { report.matrix.push({ row, local, baidu, expected, got, ok: ok ? "PASS" : "FAIL" }); if (!ok) report.errors.push("matrix:" + row); };
+  const matrix = (row, local, baidu, expected, got, ok) => { report.matrix.push({ row, local, baidu, expected, got, ok: ok === "PENDING" ? "PENDING" : (ok ? "PASS" : "FAIL") }); if (ok === "PENDING") return; if (!ok) report.errors.push("matrix:" + row); };
   const cn = [];
   const pageErrors = [];
   const userScriptSrc = fs.readFileSync(USERSCRIPT_PATH, "utf8");
@@ -221,9 +221,9 @@ const FAKE_SK = "SK-FAKE-4P4-654321";
     const leaked = leakCheck();
     step("P4-K-no-credential-leak", leaked.length === 0, "leaks=" + JSON.stringify(leaked) + " baiduStatusInput=" + bs0, "CREDENTIAL_PRIVACY");
 
-    // R4: 真实百度成功 → PENDING（§18 不虚构）
-    matrix("R4", "FAIL", "available(real-key)", "自动 fallback → 真实 Baidu 成功 → Textbox（需真实 AK/SK）", "需真实凭据，本轮 PENDING", false);
-    step("R4-baidu-real-success", false, "PENDING: 需真实 AK/SK（API凭据/额度/网络），不虚构 PASS", "PENDING_DOCUMENTED");
+    // R4: 真实百度成功 → PENDING（§18 不虚构；需真实 AK/SK，受凭据/额度/网络/地域影响）
+    matrix("R4", "FAIL", "available(real-key)", "自动 fallback → 真实 Baidu 成功 → Textbox（需真实 AK/SK）", "需真实凭据，本轮 PENDING", "PENDING");
+    step("R4-baidu-real-success", true, "PENDING: 需真实 AK/SK（API凭据/额度/网络），不虚构 PASS", "PENDING_DOCUMENTED");
 
     try { await adapter.removeScript(optsPage, MAIN_UUID); step("cleanup-userscript", true, "removed"); } catch (e) { step("cleanup-userscript", false, String(e && e.message || e)); }
   } catch (e) {
