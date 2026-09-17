@@ -48,39 +48,66 @@ function pageBridge() {
         post("applyResult", applyFields(canvas, event.data.fields || {}, side));
       }
       if (event.data.type === "ocrCreate") {
-        // Stage 5.5A-R2（Demo）：OCR 重建入口 —— 按 OCR 行级结果在正面画布创建真实 textbox。
-        // 仅创建（NOT_FOUND 路径等价物）；identity 清洁（skipBox 已隔离 markuuid，5.1）。
+        // Stage 5.5A-R2（Demo）：OCR 重建入口 —— 按 OCR TextBlock 在正面画布创建真实 textbox。
         // Stage 5.6 P0（真机 BUILDING 卡死）：任何创建异常都必须兜底回复，禁止让调用方死等。
+        // Stage 6.1 §16/§17：事务语义 —— 1 TextBlock = 1 textbox（§8 硬规则）；
+        //   任一 block 创建失败 → 全量回滚本批已建对象 → 恢复创建前状态 → created=0，
+        //   回复 {ok, detectedBlocks, createdCount, created[], failedBlockIndex, error}。
         const canvas = findCanvasForSide("front");
-        if (!canvas) { post("ocrCreateResult", { ok: false, message: "未找到正面画布。" }); return; }
+        if (!canvas) { post("ocrCreateResult", { ok: false, message: "未找到正面画布。", detectedBlocks: 0, createdCount: 0, created: [], failedBlockIndex: null, error: "no canvas" }); return; }
         const items = Array.isArray(event.data.items) ? event.data.items : [];
-        const created = [];
+        let created = [];
+        const batch = [];
+        let failedBlockIndex = null;
         let failMsg = "";
         try {
           const ref = getTextObjects(canvas)[0] || canvas.getObjects().find(function (o) { return typeof o.text === "string"; }) || null;
-          items.forEach(function (it, idx) {
+          for (let idx = 0; idx < items.length; idx += 1) {
+            const it = items[idx];
+            let obj = null;
             try {
-              const obj = createTextObject(canvas, String(it.text || ""), ref, idx, null);
-              if (!obj) return;
+              obj = createTextObject(canvas, String(it.text || ""), ref, idx, null);
+              if (!obj) throw new Error("createTextObject returned null");
               const conf = { left: it.left != null ? it.left : 20, top: it.top != null ? it.top : 20 + idx * 24, width: Math.max(60, it.width || 120), fontSize: it.fontSize || 14, fontFamily: it.fontFamily || "思源黑体 Regular", textAlign: "left", fill: "#000000" };
               // Stage 5.6 P5-D：旋转场景（Mapper 输出 angle + origin:"center"）——中心即 left/top，绕中心旋转
               if (it.angle) { conf.angle = it.angle; conf.originX = "center"; conf.originY = "center"; }
+              // Stage 6.1 §13：多行 textbox 高度须容纳 lineCount×lineHeight（Mapper 已按行数计算）
+              if (it.height != null && isFinite(it.height) && it.height > 0) conf.height = it.height;
               obj.set(conf);
               setObjectText(obj, String(it.text || ""));
               obj.zyFieldKey = "ocr_demo_" + String(it.text || "").slice(0, 4);
-              created.push({ index: canvas.getObjects().indexOf(obj), type: obj.type, text: String(it.text || "").slice(0, 16) });
+              // §18：换行诊断挂载到对象（用于真实渲染行数校验）
+              if (it.diagnostics) { obj.zyOcrDiagnostics = it.diagnostics; }
+              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16) });
+              batch.push(obj);
             } catch (e2) {
-              // 单条失败不拖垮整批；带完整堆栈便于定位
+              // §16 事务：第一个失败即终止，全量回滚本批已建对象，恢复创建前状态（created=0）
               failMsg = "item" + idx + ": " + String(e2 && e2.message || e2).slice(0, 120);
               console.warn("[zy-ocr][ocrCreate] item error stack=" + String(e2 && e2.stack || e2).slice(0, 500));
+              failedBlockIndex = idx;
+              batch.forEach(function (o) { try { if (o && canvas.remove) canvas.remove(o); } catch (_e) {} });
+              created = [];
+              break;
             }
-          });
+          }
         } catch (e) {
           failMsg = "ocrCreate: " + String(e && e.message || e).slice(0, 160);
           console.warn("[zy-ocr][ocrCreate] batch error stack=" + String(e && e.stack || e).slice(0, 500));
+          failedBlockIndex = failedBlockIndex != null ? failedBlockIndex : (items.length - 1);
+          batch.forEach(function (o) { try { if (o && canvas.remove) canvas.remove(o); } catch (_e) {} });
+          created = [];
         }
         if (canvas.requestRenderAll) canvas.requestRenderAll();
-        post("ocrCreateResult", { ok: created.length > 0, created: created, message: failMsg || undefined });
+        const detectedBlocks = items.length;
+        const createdCount = created.length;
+        post("ocrCreateResult", {
+          ok: createdCount === detectedBlocks && detectedBlocks > 0,
+          detectedBlocks: detectedBlocks,
+          createdCount: createdCount,
+          created: created,
+          failedBlockIndex: failedBlockIndex,
+          error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined)
+        });
         return;
       }
       if (event.data.type === "getCanvasInfo") {

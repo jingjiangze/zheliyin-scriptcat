@@ -1,8 +1,15 @@
 // tests/editor-object-model/candidate-normalizer.test.js — Stage 5.5B P3：OCR 候选统一边界单测
 //                                             + Stage 6 P6.0：行聚类 / wordBoxes / lineBBox
+//                                             + Stage 6.1：TextBlock 层（§3~§9）、智能拼接（§7）、
+//                                               文本宽度与换行诊断（§10~§13、§18）、回归用例 §19 A–J
 "use strict";
 const path = require("path");
-const { unifyCandidates, groupWordsToLines, aggregateLineCandidates } = require(path.join(__dirname, "..", "..", "extension", "src", "ocr", "candidate-normalizer.js"));
+const {
+  unifyCandidates, groupWordsToLines, aggregateLineCandidates, normBox,
+  joinWordsSmart, applyTessLineText,
+  groupLinesToBlocks, buildTextBlocks,
+  estimateTextWidth, estimateTextLayout
+} = require(path.join(__dirname, "..", "..", "extension", "src", "ocr", "candidate-normalizer.js"));
 
 const results = [];
 const failures = [];
@@ -44,8 +51,8 @@ const u3 = unifyCandidates(v2, img);
 t("v2-words-carried", u3.length === 1 && u3[0].wordBoxes.length === 2 && u3[0].lineBBox.x === 40, JSON.stringify(u3[0]));
 t("v2-bbox-compat", u3[0].bbox.width === 180 && u3[0].coordinateSpace === "image-pixel", "bbox stays line box by default");
 
-// ---- Stage 6 P6.0：轻量行聚类（Case A：水平中文两行；Case B：中英混合；Case D：邮箱）----
-// Case A：两行中文，每行 3 个 word；行间距大 → 应聚类为 2 行
+// ---- Stage 6 P6.0：轻量行聚类（Case A：水平中文两行；Case B：中英混合；Case C：手机号）----
+// Stage 6.1 §7：中文+中文 / 数字+数字 无空格（修复「中文之间被错误加入空格」）
 const wordsA = [
   { text: "张", bbox: { x: 10, y: 20, width: 40, height: 40 } }, { text: "三", bbox: { x: 55, y: 20, width: 40, height: 40 } },
   { text: "经理", bbox: { x: 100, y: 20, width: 80, height: 40 } },
@@ -53,28 +60,28 @@ const wordsA = [
 ];
 const linesA = groupWordsToLines(wordsA);
 t("group-A-2lines", linesA.length === 2, JSON.stringify(linesA.map((l) => l.text)));
-t("group-A-text", linesA[0].text === "张 三 经理" && linesA[1].text === "测试 公司", JSON.stringify(linesA.map((l) => l.text)));
+t("group-A-text-no-spaces", linesA[0].text === "张三经理" && linesA[1].text === "测试公司", JSON.stringify(linesA.map((l) => l.text)));
 t("group-A-tight-bbox", linesA[0].bbox.x === 10 && linesA[0].bbox.width === 170 && linesA[0].bbox.y === 20 && linesA[0].bbox.height === 40, JSON.stringify(linesA[0].bbox));
 t("group-A-wordBoxes", linesA[0].wordBoxes.length === 3, "wb=" + linesA[0].wordBoxes.length);
 
-// Case B：中英混合单行（y 相近、字高相近 → 1 行）
+// Case B：中英混合单行（y 相近、字高相近 → 1 行；§7 中英贴近无空格）
 const wordsB = [
   { text: "北京", bbox: { x: 30, y: 200, width: 80, height: 34 } },
   { text: "BeiJing", bbox: { x: 120, y: 203, width: 110, height: 32 } },
   { text: "科技", bbox: { x: 240, y: 200, width: 80, height: 34 } }
 ];
 const linesB = groupWordsToLines(wordsB);
-t("group-B-1line", linesB.length === 1 && linesB[0].text === "北京 BeiJing 科技", JSON.stringify(linesB));
+t("group-B-1line", linesB.length === 1 && linesB[0].text === "北京BeiJing科技", JSON.stringify(linesB));
 t("group-B-bbox", linesB[0].bbox.x === 30 && linesB[0].bbox.width === 290, JSON.stringify(linesB[0].bbox));
 
-// Case C：数字/手机号 单行
+// Case C：数字/手机号 单行（§19-D 手机号不得插入空格）
 const wordsC = [
   { text: "138", bbox: { x: 50, y: 400, width: 90, height: 36 } },
   { text: "0013", bbox: { x: 145, y: 400, width: 120, height: 36 } },
   { text: "8000", bbox: { x: 270, y: 400, width: 120, height: 36 } }
 ];
 const linesC = groupWordsToLines(wordsC);
-t("group-C-1line", linesC.length === 1 && linesC[0].text === "138 0013 8000", JSON.stringify(linesC));
+t("group-C-1line", linesC.length === 1 && linesC[0].text === "13800138000", JSON.stringify(linesC));
 
 // 字高差异大 → 不合并（同一 row 内大小混排视为两行，供混合字号识别）
 const wordsMixed = [
@@ -89,6 +96,83 @@ const agg = aggregateLineCandidates(wordsA, img);
 t("aggregate-shape", agg.length === 2 && agg[0].bbox.width === 170 && agg[0].wordBoxes.length === 3 && agg[0].imageSize.width === 900 && agg[0].coordinateSpace === "image-pixel", JSON.stringify(agg[0]));
 t("aggregate-confidence-mean", Math.abs(agg[0].confidence - null) < 0.001 || typeof agg[0].confidence === "number", "conf=" + agg[0].confidence);
 t("aggregate-empty", aggregateLineCandidates([], img).length === 0);
+
+// ---- Stage 6.1 §7：line.text 优先（tessLines 传入 → 聚合行文本被原始行文本替换；word bbox 仅作几何）----
+const tessLines = [
+  { text: "张三经理", bbox: { x0: 10, y0: 20, x1: 180, y1: 60 } },
+  { text: "测试公司", bbox: { x0: 10, y0: 120, x1: 170, y1: 160 } }
+];
+const aggTess = aggregateLineCandidates(wordsA, img, tessLines);
+t("aggregate-tess-text-priority", aggTess[0].text === "张三经理" && aggTess[1].text === "测试公司", JSON.stringify(aggTess.map((l) => l.text)));
+t("aggregate-tess-keeps-geometry", aggTess[0].wordBoxes.length === 3 && aggTess[0].bbox.width === 170, "geometry from words, text from tess line");
+
+// ---- Stage 6.1 joinWordsSmart（§7）----
+t("join-cjk-no-space", joinWordsSmart([{ text: "张" }, { text: "三" }, { text: "经理" }]) === "张三经理", joinWordsSmart([{ text: "张" }, { text: "三" }, { text: "经理" }]));
+t("join-phone-continuous", joinWordsSmart([{ text: "138" }, { text: "0013" }, { text: "8000" }]) === "13800138000", joinWordsSmart([{ text: "138" }, { text: "0013" }, { text: "8000" }]));
+t("join-cjk-plus-digits", joinWordsSmart([{ text: "电话" }, { text: "13800138000" }]) === "电话13800138000", joinWordsSmart([{ text: "电话" }, { text: "13800138000" }]));
+t("join-email-structure", joinWordsSmart([{ text: "john.doe" }, { text: "@" }, { text: "gmail.com" }]) === "john.doe@gmail.com", joinWordsSmart([{ text: "john.doe" }, { text: "@" }, { text: "gmail.com" }]));
+t("join-english-space-kept", joinWordsSmart([{ text: "Beijing" }, { text: "Office" }]) === "Beijing Office", joinWordsSmart([{ text: "Beijing" }, { text: "Office" }]));
+t("join-empty", joinWordsSmart([]) === "" && joinWordsSmart(null) === "");
+t("join-single", joinWordsSmart([{ text: "张三" }]) === "张三");
+
+// ---- Stage 6.1 §3/§19：TextBlock 聚类（groupLinesToBlocks）----
+// A：单行中文 → 1 block / 1 line
+const blkA = groupLinesToBlocks([{ text: "张三", bbox: { x: 50, y: 20, width: 120, height: 40 } }]);
+t("block-A-single", blkA.length === 1 && blkA[0].lineCount === 1 && blkA[0].text === "张三", JSON.stringify(blkA));
+// B：多行中文（张三/销售经理 相邻同行）→ 1 block / 2 lines / text 含 \n（§8 同一 textbox）
+const blkB = groupLinesToBlocks([
+  { text: "张三", bbox: { x: 50, y: 20, width: 120, height: 40 } },
+  { text: "销售经理", bbox: { x: 50, y: 65, width: 130, height: 36 } }
+]);
+t("block-B-merged", blkB.length === 1 && blkB[0].lineCount === 2 && blkB[0].text === "张三\n销售经理", JSON.stringify(blkB));
+t("block-B-bbox", blkB[0].bbox.y === 20 && blkB[0].bbox.height === 81 && blkB[0].center.x > 100, JSON.stringify(blkB[0]));
+// I：三行同一块 → 1 block / 3 lines / 1 textbox 语义
+const blkI = groupLinesToBlocks([
+  { text: "张三", bbox: { x: 50, y: 20, width: 120, height: 40 } },
+  { text: "销售经理", bbox: { x: 50, y: 66, width: 130, height: 36 } },
+  { text: "电话：13800138000", bbox: { x: 50, y: 108, width: 240, height: 36 } }
+]);
+t("block-I-three-lines", blkI.length === 1 && blkI[0].lineCount === 3 && blkI[0].text.split("\n").length === 3, JSON.stringify(blkI));
+// G：左右两列 → 2 独立 blocks（§5 禁止错误合并）
+const blkG = groupLinesToBlocks([
+  { text: "张", bbox: { x: 20, y: 20, width: 80, height: 36 } },
+  { text: "Man", bbox: { x: 220, y: 24, width: 80, height: 36 } },
+  { text: "三", bbox: { x: 20, y: 60, width: 80, height: 36 } },
+  { text: "ager", bbox: { x: 220, y: 64, width: 80, height: 36 } }
+]);
+t("block-G-two-columns", blkG.length === 2, JSON.stringify(blkG.map((b) => b.text)));
+// H：上下两独立区（垂直距离过大）→ 2 独立 blocks
+const blkH = groupLinesToBlocks([
+  { text: "张三", bbox: { x: 50, y: 20, width: 120, height: 40 } },
+  { text: "总经理", bbox: { x: 50, y: 240, width: 120, height: 40 } }
+]);
+t("block-H-far-gap", blkH.length === 2 && blkH[1].text === "总经理", JSON.stringify(blkH.map((b) => b.text)));
+// 字高悬殊 → 不合并（小注脚独立 block）
+const blkBigSmall = groupLinesToBlocks([
+  { text: "大标题", bbox: { x: 30, y: 20, width: 120, height: 80 } },
+  { text: "小注脚", bbox: { x: 30, y: 110, width: 90, height: 22 } }
+]);
+t("block-height-ratio-split", blkBigSmall.length === 2, JSON.stringify(blkBigSmall.map((b) => b.text)));
+
+// ---- Stage 6.1 buildTextBlocks：行级统一候选（任意 Provider）→ TextBlock ----
+const bt = buildTextBlocks([
+  { text: "张三", bbox: { x: 50, y: 20, width: 120, height: 40 }, confidence: 0.97, coordinateSpace: "image-pixel", imageSize: { width: 800, height: 600 } },
+  { text: "销售经理", bbox: { x: 50, y: 65, width: 130, height: 36 }, confidence: 0.95 }
+]);
+t("buildTextBlocks-merge", bt.length === 1 && bt[0].lineCount === 2 && bt[0].text === "张三\n销售经理", JSON.stringify(bt));
+t("buildTextBlocks-coordinateSpace", bt[0].coordinateSpace === "image-pixel" && bt[0].imageSize.width === 800, JSON.stringify(bt[0]));
+t("buildTextBlocks-empty", buildTextBlocks([]).length === 0 && buildTextBlocks(null).length === 0);
+
+// ---- Stage 6.1 §11/§12/§18：文本宽度估算 + 换行诊断 ----
+// C：长中文单行 → 宽度足够 → 不换行（forced wrap=false，estimatedFinalLineCount=1）
+const layoutLong = estimateTextLayout(["这是一个非常长的中文公司名称用于测试排版稳定性"], 40, { minWidth: 60, maxWidth: 4000, margin: 14 });
+t("layout-long-no-wrap", !layoutLong.forcedWrapDetected && layoutLong.estimatedFinalLineCount === 1 && layoutLong.layoutWidth > 400, JSON.stringify(layoutLong));
+// §18：源单行在过窄空间下放不下 → forcedWrapDetected=true（测试必须暴露问题）
+const layoutNarrow = estimateTextLayout(["ABCDEFGHIJK"], 28, { minWidth: 60, maxWidth: 90, margin: 10 });
+t("layout-narrow-forced-wrap", layoutNarrow.forcedWrapDetected === true && layoutNarrow.estimatedFinalLineCount > 1, JSON.stringify(layoutNarrow));
+// 多行 3 行 → 正常不换行时 estimatedFinalLineCount = 3
+const layout3 = estimateTextLayout(["张三", "销售经理", "电话：13800138000"], 32, { minWidth: 60, maxWidth: 4000, margin: 12 });
+t("layout-3-lines", layout3.estimatedFinalLineCount === 3 && !layout3.forcedWrapDetected, JSON.stringify(layout3));
 
 console.log("== candidate-normalizer ==");
 console.log(results.join("\n"));

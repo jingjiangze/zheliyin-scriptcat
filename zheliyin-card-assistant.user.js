@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.8.6
+// @version      0.3.8.7
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,14 +14,14 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.8.6
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.8.6
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.8.6
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.8.6
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.8.6
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.8.6
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.8.6
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.8.6
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.8.7
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.8.7
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.8.7
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.8.7
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.8.7
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.8.7
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.8.7
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.8.7
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -42,7 +42,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.8.6";
+  const VERSION = "0.3.8.7";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -806,8 +806,11 @@
     if (!res.candidates.length) { ocrRunning = false; setStatus("百度识别未检测到文字"); ocrLog("ERROR", "baidu empty"); return; }
     ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " elapsed=" + res.meta.elapsed + "ms");
     // P3 边界：Baidu Provider 已是统一候选（含 bbox{x,y,width,height}），直接交给统一 Mapper（§39 解耦）
+    // Stage 6.1：行级候选 → TextBlock（1 block = 1 textbox，§8）→ 统一 Mapper
     // 锁不在此释放：由 buildItemsFromOcr（ocrCreate 回复/超时/空结果）决定事务终态
-    buildItemsFromOcr(unifyCandidates(res.candidates, { width: img.width, height: img.height }), img);
+    const lineCandidates = unifyCandidates(res.candidates, { width: img.width, height: img.height });
+    const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(lineCandidates) : (lineCandidates || []).map(oneLineBlock);
+    buildItemsFromOcr(blocks, img);
   }
 
   async function handleOcrImage() {
@@ -905,11 +908,12 @@
               ocrLog("LOCAL_RECOGNIZING", "lines=" + (r.lines || []).length + " words=" + (r.words || []).length + " image=" + r.w + "x" + r.h);
               // P3 边界：executor 私有 lines/words → 统一 OCRCandidate → 统一 Mapper
               // Stage 6 P6.0：executor 提供 words 时优先做轻量行聚类（紧致 bbox+wordBoxes）；否则回落行级统一
+              // Stage 6.1 §7：line.text 优先作最终文本（tessLines 传入 aggregate，word bbox 只作几何）
               const size = { width: r.w || img.width, height: r.h || img.height };
               let unified = null;
               if (r.words && r.words.length && typeof aggregateLineCandidates === "function") {
                 try {
-                  unified = aggregateLineCandidates(r.words, size);
+                  unified = aggregateLineCandidates(r.words, size, r.lines);
                   if (!unified.length) {
                     // 诊断：聚合全空（word bbox 形状不符）→ 记录样本后回退行级
                     ocrLog("GROUP", "empty aggregated words=" + r.words.length + " sampleKeys=" + JSON.stringify(Object.keys(r.words[0] || {})) + " bboxKeys=" + JSON.stringify(Object.keys((r.words[0] || {}).bbox || {})));
@@ -921,7 +925,11 @@
                 }
               }
               if (!unified) unified = unifyCandidates((r && r.lines) || [], size);
-              buildItemsFromOcr(unified, img);
+              // Stage 6.1 §3/§8：统一候选(行) → TextBlock（1 TextBlock = 1 textbox）；容错：模块缺失时逐行独立 block
+              const blocks = (typeof buildTextBlocks === "function")
+                ? buildTextBlocks(unified)
+                : (unified || []).map(oneLineBlock);
+              buildItemsFromOcr(blocks, img);
             } catch (e) { setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e); maybeBaiduFallback(img, "LOCAL_OCR_PARSE_FAIL"); }
           } else if (tries > OCR_TIMEOUT_TRIES) { clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout"); maybeBaiduFallback(img, "LOCAL_OCR_TIMEOUT"); }
         }, 500);
@@ -934,8 +942,31 @@
       ocrLog("ERROR", "handleOcrImage unexpected: " + e);
     }
   }
-  function buildItemsFromOcr(candidates, img) {
-    // 统一 OCRCandidate（text + bbox{x,y,width,height} + coordinateSpace=image-pixel）→ canvas 坐标。
+  // Stage 6.1：行级候选 → 单行 TextBlock 的兜底包装（buildTextBlocks 模块缺失/异常时使用，行为等同旧版逐行）
+  function oneLineBlock(c) {
+    return {
+      lines: [{ text: c.text, bbox: c.bbox, confidence: c.confidence, wordBoxes: c.wordBoxes || [] }],
+      text: c.text,
+      bbox: c.bbox,
+      center: { x: c.bbox.x + c.bbox.width / 2, y: c.bbox.y + c.bbox.height / 2 },
+      confidence: c.confidence,
+      wordBoxes: c.wordBoxes || [],
+      lineBoxes: [c.bbox],
+      lineCount: 1,
+      coordinateSpace: "image-pixel",
+      imageSize: c.imageSize || null
+    };
+  }
+
+  // Stage 6.1 §10：fontSize 标定 —— 真机标定（stage-5-6-font-calibration）：视觉字高 / fontSize ≈ 0.937~0.99（mean 0.969）
+  // → fontSize = 视觉字高 ÷ 0.969（禁止直接 fontSize = bbox.height 作为最终公式）
+  const FONT_HEIGHT_RATIO = 0.969;
+  // Stage 6.1 §13：多行 textbox 高度须容纳 lineCount×lineHeight（无参考样式的默认行高系数）
+  const FONT_LINE_HEIGHT = 1.3;
+
+  function buildItemsFromOcr(blocks, img) {
+    // Stage 6.1：消费 TextBlock（1 TextBlock = 1 textbox，§8 硬规则）。
+    // block 结构：{text(含\n), bbox, center, confidence, wordBoxes, lineBoxes, lineCount, coordinateSpace}
     // 几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）。P3：只消费统一候选边界。
     const geo = ocrTarget && ocrTarget.geo;
     if (!geo) { setStatus("OCR 目标已失效，请重新识别"); ocrLog("ERROR", "ocrTarget missing"); ocrRunning = false; return; }
@@ -945,23 +976,46 @@
     const angle = geo.angle || 0;
     const rad = (angle * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
     const cx = left + (w * sx) / 2, cy = top + (h * sy) / 2;
-    const items = (candidates || []).filter((c) => c && c.bbox && typeof c.bbox.x === "number" && c.bbox.width > 0).map((c) => {
-      const bw = c.bbox.width * sx, bh = c.bbox.height * sy;
-      // θ=0：既有角点路径（AABB 左上角，-4px 视觉留白）——行为零变化
-      const ux = c.bbox.x / w - 0.5, uy = c.bbox.y / h - 0.5;
+    // 输出指标（§22）：forced wrapped 逻辑行数、多行 block 数
+    let forcedWrapTotal = 0, multiLineTotal = 0;
+    const items = (blocks || []).filter((b) => b && b.bbox && typeof b.bbox.x === "number" && b.bbox.width > 0).map((b, bi) => {
+      const bw = b.bbox.width * sx, bh = b.bbox.height * sy;
+      // §10：视觉字高 → fontSize 标定（取 block 内行高均值；多行 block 以行高为基准而非整块高度）
+      let lineHSum = 0;
+      (b.lines || []).forEach((l) => { if (l && l.bbox && l.bbox.height > 0) lineHSum += l.bbox.height; });
+      const avgLineH = (b.lines && b.lines.length && lineHSum > 0) ? lineHSum / b.lines.length : bh;
+      const fs = Math.max(10, Math.min(160, Math.round((avgLineH * sy) / FONT_HEIGHT_RATIO)));
+      // §11/§12：textbox layoutWidth —— 优先真实文本测量（字号标定+字符宽度估计+安全余量），
+      // 宽度 = clamp(max(60, 视觉宽, 最长行估计宽+margin), ≤4000)，OCR 原始单行不得因宽度不足再换行
+      const textLines = String(b.text || "").split("\n").filter((t) => t !== "");
+      const layout = (typeof estimateTextLayout === "function")
+        ? estimateTextLayout(textLines, fs, { minWidth: Math.max(60, bw + 8), maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)) })
+        : { layoutWidth: Math.max(60, bw + 8), perLine: textLines.map((t) => ({ text: t, estimatedWidth: 0, needsWrap: false })), forcedWrapDetected: false, estimatedFinalLineCount: textLines.length };
+      if (layout.forcedWrapDetected) forcedWrapTotal += 1;
+      if (textLines.length > 1) multiLineTotal += 1;
+      // §18：换行诊断字段（sourceLineCount = OCR 原始逻辑行；forcedWrapDetected = 存在源单行放不下）
+      const diagnostics = {
+        sourceLineCount: textLines.length,
+        estimatedFinalLineCount: layout.estimatedFinalLineCount,
+        forcedWrapDetected: layout.forcedWrapDetected,
+        layoutWidth: layout.layoutWidth,
+        perLineWidth: layout.perLine.map((p) => ({ text: String(p.text).slice(0, 12), width: p.estimatedWidth, needsWrap: !!(p.needsWrap) }))
+      };
+      // §14：几何模型 —— 水平文本 left/top；θ≠0 旋转文本 center/angle（保留 P5 rotation 行为，零变化）
+      const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
+      const base = { text: b.text, blockIndex: bi, fontFamily: "思源黑体 Regular", diagnostics: diagnostics };
+      // §13：textbox height 须容纳 lineCount×lineHeight（禁止只用单行 OCR bbox.height）
+      const boxHeight = Math.round(textLines.length * fs * FONT_LINE_HEIGHT + 8);
       if (!angle) {
-        return { text: c.text, left: px - 4, top: py - 4, width: Math.max(60, bw + 8), fontSize: Math.max(10, Math.round(bw > 0 ? (bh * 1.0) : 14)), fontFamily: "思源黑体 Regular" };
+        return Object.assign({}, base, { left: px - 4, top: py - 4, width: layout.layoutWidth, fontSize: fs, height: boxHeight });
       }
-      // P5-D（最小修复，Stage 5.6）：θ≠0 → 输出旋转中心 + 角度 + center 原点。
-      // 图像像素空间即旋转后的局部空间，bw/bh 天然是沿行/法向尺寸；fabric 绕对象中心旋转，
-      // 因此把 textbox 中心定在「旋转后的 bbox 中心」并设置 angle，即与图中文字重合。
-      const ucx = (c.bbox.x + c.bbox.width / 2) / w - 0.5;
-      const ucy = (c.bbox.y + c.bbox.height / 2) / h - 0.5;
+      const ucx = (b.bbox.x + b.bbox.width / 2) / w - 0.5;
+      const ucy = (b.bbox.y + b.bbox.height / 2) / h - 0.5;
       const dcx = ucx * w * sx, dcy = ucy * h * sy;
       const pcx = cx + dcx * cos - dcy * sin, pcy = cy + dcx * sin + dcy * cos;
-      return { text: c.text, left: pcx, top: pcy, angle: angle, origin: "center", width: Math.max(60, bw + 8), fontSize: Math.max(10, Math.round(bw > 0 ? (bh * 1.0) : 14)), fontFamily: "思源黑体 Regular" };
+      return Object.assign({}, base, { left: pcx, top: pcy, angle: angle, origin: "center", width: layout.layoutWidth, fontSize: fs, height: boxHeight });
     });
     if (!items.length) {
       setStatus("未识别到文字");
@@ -975,10 +1029,15 @@
       return;
     }
     setStatus("识别到 " + items.length + " 个文字区域，正在生成（BUILDING）…");
-    ocrLog("BUILDING", "items=" + items.length);
+    ocrLog("BUILDING", "blocks=" + items.length + " forcedWrap=" + forcedWrapTotal + " multiLine=" + multiLineTotal);
     // P0（真机 BUILDING 卡死）：页面桥异常时兜底，10 秒内未收到 ocrCreateResult 即走出死等状态
-    const on = (e) => { if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "ocrCreateResult") { clearTimeout(fallbackTimer); window.removeEventListener("message", on); ocrRunning = false; // 事务终态 DONE/生成失败
-setStatus(e.data.ok ? "已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）" : "生成失败：" + (e.data.message || "未创建文字")); ocrLog("SUCCESS", "created=" + (e.data.created || []).length); } };
+    const on = (e) => {
+      if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "ocrCreateResult") {
+        clearTimeout(fallbackTimer); window.removeEventListener("message", on); ocrRunning = false; // 事务终态 DONE/生成失败（含回滚）
+        if (e.data.ok) { setStatus("已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）"); ocrLog("SUCCESS", "created=" + (e.data.created || []).length + "/" + (e.data.detectedBlocks || 0)); }
+        else { setStatus("生成失败：" + (e.data.message || "未创建文字") + (e.data.failedBlockIndex != null ? "（第 " + e.data.failedBlockIndex + " 个失败，已回滚）" : "")); ocrLog("ERROR", "ocrCreate failed created=" + (e.data.created || []).length + " detected=" + (e.data.detectedBlocks || 0) + " failedIdx=" + (e.data.failedBlockIndex != null ? e.data.failedBlockIndex : "n/a") + " msg=" + String(e.data.message || "").slice(0, 120)); }
+      }
+    };
     const fallbackTimer = setTimeout(() => { window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
     window.addEventListener("message", on);
     window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", items: items }, location.origin);

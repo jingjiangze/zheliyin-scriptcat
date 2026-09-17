@@ -71,8 +71,76 @@ function unifyCandidates(raw, imageSize) {
   return out;
 }
 
+// ---- Stage 6.1 §7：智能拼接（禁止无条件 words.join(" ")）----
+// 规则：中文+中文 无空格；数字+数字 无空格；中文标点/结构字符（@ . : / # - 等）边界无空格；
+//       中英混合贴近无空格；其余才用空格。手机号/邮箱/网址天然保持原结构。
+// 重要原则：Tesseract 的 line.text 优先作为最终文本（见 applyTessLineText）；
+//           words 的 bbox 才是几何，本函数仅作为无 line.text 时的兜底拼接。
+const RE_CJK = /[\u4e00-\u9fff\u3400-\u4dbf\uf900-\ufaff]/;
+const RE_CJK_PUNC = /[\u3000-\u303f\uff00-\uffef\u2014\u2018\u2019\u201c\u201d\u2026\u00b7]/;
+// 邮箱/网址/结构字符集（用 indexOf 而非字符类正则，避免 `\-` 之类意外构造范围）
+const STRUCT_BOUND_CHARS = "@._:/#\\-|,;+~=&%^$!?'\"()[]{}<>*";
+function isStructBoundaryChar(ch) { return STRUCT_BOUND_CHARS.indexOf(ch) >= 0; }
+function joinWordsSmart(words) {
+  const parts = (Array.isArray(words) ? words : [])
+    .map(function (w) {
+      if (typeof w === "string") return w.trim();
+      return String((w && w.text) != null ? w.text : "").trim();
+    })
+    .filter(Boolean);
+  if (!parts.length) return "";
+  if (parts.length === 1) return parts[0];
+  let out = parts[0];
+  for (let i = 1; i < parts.length; i += 1) {
+    const prev = out[out.length - 1];
+    const next = parts[i][0];
+    let needSpace = true;
+    if (RE_CJK.test(prev) && RE_CJK.test(next)) needSpace = false;                 // 中文+中文
+    else if (/\d/.test(prev) && /\d/.test(next)) needSpace = false;                 // 数字+数字（手机号连续）
+    else if (RE_CJK_PUNC.test(prev) || RE_CJK_PUNC.test(next)) needSpace = false;   // 中文标点边界
+    else if (isStructBoundaryChar(next) || isStructBoundaryChar(prev)) needSpace = false; // 邮箱/网址/结构字符
+    else if ((RE_CJK.test(prev) && /\w/.test(next)) || (RE_CJK.test(next) && /\w/.test(prev))) needSpace = false; // 中英混合贴近
+    out += (needSpace ? " " : "") + parts[i];
+  }
+  return out;
+}
+
+// 矩形交集面积（用于行 ↔ Tesseract line 文本匹配）
+function rectOverlapArea(a, b) {
+  if (!a || !b) return 0;
+  const x0 = Math.max(a.x, b.x), y0 = Math.max(a.y, b.y);
+  const x1 = Math.min(a.x + a.width, b.x + b.width), y1 = Math.min(a.y + a.height, b.y + b.height);
+  const w = x1 - x0, h = y1 - y0;
+  return (w > 0 && h > 0) ? w * h : 0;
+}
+
+// 文本优先：用交集面积把各个聚合行的文本替换为 Tesseract 原始 line.text（§7 核心原则）。
+// words 的 bbox 继续作为几何（行聚类/紧致包围盒），不猜测完整文本。
+function applyTessLineText(lineList, tessLines) {
+  if (!lineList || !lineList.length || !Array.isArray(tessLines) || !tessLines.length) return lineList;
+  const tl = tessLines
+    .map(function (l) {
+      const b = normBox(l && l.bbox);
+      const t = l && String(l.text || "").trim();
+      return (t && b) ? { text: t, bbox: b } : null;
+    })
+    .filter(Boolean);
+  if (!tl.length) return lineList;
+  lineList.forEach(function (L) {
+    if (!L || !L.bbox) return;
+    let best = null, bestScore = -1;
+    tl.forEach(function (t) {
+      const ov = rectOverlapArea(L.bbox, t.bbox);
+      if (ov > bestScore) { bestScore = ov; best = t; }
+    });
+    if (best) L.text = best.text;
+  });
+  return lineList;
+}
+
 // ---- Stage 6 P6.0：轻量业务级行聚类（words → logical lines → tight bbox）----
 // 纯函数；合并依据：中心 y 距离 ≤ max(4, h*0.35)、字高差 ≤ max(3, h*0.30)；行内按 x 阅读顺序。
+// Stage 6.1 §7：文本拼接改用 joinWordsSmart；opts.tessLines 提供 Tesseract 原 line.text 时优先采用。
 function groupWordsToLines(words, opts) {
   const list = (Array.isArray(words) ? words : [])
     .filter(function (w) { return w && w.text && w.bbox && typeof w.bbox.x === "number" && w.bbox.width > 0; })
@@ -112,20 +180,22 @@ function groupWordsToLines(words, opts) {
     }
     if (typeof w.confidence === "number") { placed.sumC += w.confidence; placed.nC += 1; }
   });
-  return lines.map(function (L) {
+  const out = lines.map(function (L) {
     const words = L.words.slice().sort(function (a, b) { return a.bbox.x - b.bbox.x; });
     return {
-      text: words.map(function (w) { return w.text; }).join(" "),
+      text: joinWordsSmart(words.map(function (w) { return w.text; })),
       bbox: L.bbox,
       confidence: L.nC ? L.sumC / L.nC : null,
       wordBoxes: words.map(function (w) { return w.bbox; })
     };
   });
+  return applyTessLineText(out, o.tessLines);
 }
 
 // words → 统一 OCRCandidate 列表（bbox=行紧致包围盒，lineBBox 同 bbox，wordBoxes 全量）
-function aggregateLineCandidates(words, imageSize) {
-  return groupWordsToLines(words).map(function (line) {
+// tessLines：executor 的原始 Tesseract 行（含 line.text），有则优先作最终文本（§7）。
+function aggregateLineCandidates(words, imageSize, tessLines) {
+  return groupWordsToLines(words, { tessLines: tessLines || null }).map(function (line) {
     return {
       text: line.text,
       bbox: line.bbox,
@@ -139,4 +209,184 @@ function aggregateLineCandidates(words, imageSize) {
   });
 }
 
-if (typeof module !== "undefined" && module.exports) module.exports = { unifyCandidates, groupWordsToLines, aggregateLineCandidates, normBox };
+// ---- Stage 6.1 §3/§4/§5：TextBlock 层（logical lines → logical text blocks）----
+// 一个 TextBlock 最终对应一个 textbox（§8 硬规则：1 TextBlock = 1 textbox）。
+// 确定性规则（第一版不上 AI），至少计算 xStart/xEnd/centerX/yStart/yEnd/height/verticalGap/heightRatio：
+//   合并条件：
+//     1) 左边界相近：abs(line.x - block.xStart) ≤ leftAlignTolRatio × avgLineHeight
+//     2) 行距合理：verticalGap / avgLineHeight ≤ gapRatioMax（且绝对值 ≤ maxGapPx）
+//     3) 字高相近：max(h) / min(h) ≤ heightRatioMax
+//     4) 阅读方向一致：默认 horizontal；旋转行（θ≠0）保留现有角度逻辑 → 独立 block
+//   禁止过度合并（§5）：左右两列/多列（x 范围重叠不足）、上下两列（独立电话区/公司名与远处地址、
+//     垂直距离明显过大）→ 必须为空间独立 TextBlock。
+// text 保留原始逻辑换行（§9）：lines.map(text).join("\n")，禁止重新猜测/重新分行。
+function groupLinesToBlocks(lines, opts) {
+  const o = opts || {};
+  const gapRatioMax = o.gapRatioMax != null ? o.gapRatioMax : 1.6;
+  const heightRatioMax = o.heightRatioMax != null ? o.heightRatioMax : 2.4;
+  const overlapRatioMin = o.overlapRatioMin != null ? o.overlapRatioMin : 0.25;
+  const leftAlignTolRatio = o.leftAlignTolRatio != null ? o.leftAlignTolRatio : 0.9;
+  const maxGapPx = o.maxGapPx != null ? o.maxGapPx : 240;
+  const isHorizontal = function (l) {
+    const a = typeof l.angle === "number" ? ((l.angle % 360) + 360) % 360 : 0;
+    return Math.min(a, Math.abs(a - 360)) < 1e-6;
+  };
+  const list = (Array.isArray(lines) ? lines : [])
+    .map(function (l) {
+      if (!l || !l.text) return null;
+      const b = normBox(l.bbox);
+      let t = String(l.text || "").replace(/\r\n/g, "\n");
+      if (!b || !t.trim()) return null;
+      return {
+        text: t,
+        bbox: b,
+        confidence: typeof l.confidence === "number" ? l.confidence : null,
+        wordBoxes: Array.isArray(l.wordBoxes) ? l.wordBoxes : [],
+        angle: typeof l.angle === "number" ? l.angle : (typeof l.rotation === "number" ? l.rotation : null)
+      };
+    })
+    .filter(Boolean);
+  if (!list.length) return [];
+  list.sort(function (a, b) { return (a.bbox.y - b.bbox.y) || (a.bbox.x - b.bbox.x); });
+
+  const blocks = [];
+  function updateGeometry(blk) {
+    let x1 = Infinity, x2 = -Infinity, y1 = Infinity, y2 = -Infinity, sumH = 0;
+    blk.lines.forEach(function (l) {
+      x1 = Math.min(x1, l.bbox.x); x2 = Math.max(x2, l.bbox.x + l.bbox.width);
+      y1 = Math.min(y1, l.bbox.y); y2 = Math.max(y2, l.bbox.y + l.bbox.height);
+      sumH += l.bbox.height;
+    });
+    blk.xStart = x1; blk.xEnd = x2; blk.yStart = y1; blk.yEnd = y2;
+    blk.bbox = { x: x1, y: y1, width: x2 - x1, height: y2 - y1 };
+    blk.avgH = sumH / blk.lines.length;
+    blk.rotated = blk.lines.some(function (l) { return !isHorizontal(l); });
+  }
+  function lineCanMerge(blk, L) {
+    if (!blk.lines.length) return true;
+    if (blk.rotated) return false;
+    if (blk.avgH <= 0) return true;
+    // 3) 字高相近
+    const hRatio = Math.max(blk.avgH, L.bbox.height) / Math.min(blk.avgH, L.bbox.height);
+    if (hRatio > heightRatioMax) return false;
+    // 1) 左边界相近 + 5) 多列防护：x 范围须有重叠（左右两列不得合并）
+    const leftAlignOk = Math.abs(L.bbox.x - blk.xStart) <= leftAlignTolRatio * blk.avgH;
+    const overlap = Math.min(blk.xEnd, L.bbox.x + L.bbox.width) - Math.max(blk.xStart, L.bbox.x);
+    const overlapOk = overlap >= overlapRatioMin * Math.min(blk.bbox.width, L.bbox.width);
+    if (!leftAlignOk && !overlapOk) return false;
+    // 2) 行距合理 + 5) 垂直距离明显过大（y 已按升序处理，L 在 blk 下方或同带）
+    const gap = L.bbox.y - blk.yEnd;
+    if (gap > 0) {
+      if (gap > maxGapPx) return false;
+      if (blk.avgH > 0 && gap / blk.avgH > gapRatioMax) return false;
+    }
+    return true;
+  }
+
+  list.forEach(function (L) {
+    let placed = null;
+    if (!isHorizontal(L)) { placed = null; } // 旋转行 → 独立 block（§4 保留现有角度逻辑）
+    else {
+      for (let i = 0; i < blocks.length; i += 1) {
+        if (lineCanMerge(blocks[i], L)) { placed = blocks[i]; break; }
+      }
+    }
+    if (!placed) { placed = { lines: [] }; blocks.push(placed); }
+    placed.lines.push(L);
+    updateGeometry(placed);
+  });
+
+  return blocks.map(function (blk) {
+    blk.lines.sort(function (a, b) { return (a.bbox.y - b.bbox.y) || (a.bbox.x - b.bbox.x); });
+    const textLines = blk.lines.map(function (l) { return l.text; });
+    let sumC = 0, nC = 0;
+    const wordBoxes = [];
+    blk.lines.forEach(function (l) {
+      if (typeof l.confidence === "number") { sumC += l.confidence; nC += 1; }
+      (l.wordBoxes || []).forEach(function (w) { wordBoxes.push(w); });
+    });
+    return {
+      lines: blk.lines,
+      text: textLines.join("\n"),                             // §6/§9：保留原始逻辑换行
+      bbox: blk.bbox,
+      center: { x: blk.xStart + (blk.xEnd - blk.xStart) / 2, y: blk.yStart + (blk.yEnd - blk.yStart) / 2 },
+      confidence: nC ? sumC / nC : null,
+      wordBoxes: wordBoxes,
+      lineBoxes: blk.lines.map(function (l) { return l.bbox; }),
+      lineCount: blk.lines.length,
+      coordinateSpace: "image-pixel"
+    };
+  });
+}
+
+// 行级统一候选（任意 Provider）→ TextBlock 列表（§3 统一入口；行聚类后的候选无需再聚合 words）
+function buildTextBlocks(candidates, opts) {
+  const list = (Array.isArray(candidates) ? candidates : []).filter(function (c) {
+    return c && c.text && c.bbox && c.bbox.width > 0;
+  });
+  if (!list.length) return [];
+  const imageSize = list[0] && list[0].imageSize ? list[0].imageSize : null;
+  return groupLinesToBlocks(list, opts).map(function (b) {
+    b.imageSize = imageSize;
+    return b;
+  });
+}
+
+// ---- Stage 6.1 §10/§11/§12：文本宽度估算（editor font calibration + 文本测量 + 安全余量）----
+// 禁止「OCR bbox width = textbox width」作为唯一依据；优先让单行宽度容纳完整文本，防止提前换行。
+function estimateCharWidth(ch, fs) {
+  if (RE_CJK.test(ch) || RE_CJK_PUNC.test(ch)) return fs;      // 方块字/全角 ≈ 1 字宽
+  if (/\s/.test(ch)) return fs * 0.32;                          // 空格
+  if (/[A-Z]/.test(ch)) return fs * 0.72;                       // 大写
+  if (/[0-9a-z]/.test(ch)) return fs * 0.55;                    // 小写/数字
+  return fs * 0.6;
+}
+function estimateTextWidth(text, fontSize, opts) {
+  const o = opts || {};
+  const fs = fontSize > 0 ? fontSize : 16;
+  const str = String(text || "");
+  let w = 0;
+  for (let i = 0; i < str.length; i += 1) w += estimateCharWidth(str[i], fs);
+  return Math.ceil(w * (o.safetyRatio != null ? o.safetyRatio : 1.0));
+}
+
+// 多行 text → textbox 布局宽度 + 换行诊断（§11 硬约束：OCR 原始单行不得因宽度不足再换行；§18 诊断字段）。
+// 返回：
+//   { layoutWidth, perLine:[{text, estimatedWidth, needsWrap}], forcedWrapDetected, estimatedFinalLineCount }
+// layoutWidth = clamp(max(60, 最长行估计宽 + margin, minWidth), 60, maxWidth)
+// forcedWrapDetected：存在 needsWrap=true 的逻辑行（即单行在给定 maxWidth 下仍放不下）。
+function estimateTextLayout(textLines, fontSize, opts) {
+  const o = opts || {};
+  const fs = fontSize > 0 ? fontSize : 16;
+  const margin = o.margin != null ? o.margin : Math.max(12, fs * 0.4);
+  const minWidth = o.minWidth != null ? o.minWidth : 60;
+  const maxWidth = o.maxWidth != null ? o.maxWidth : 4000;
+  const lines = (Array.isArray(textLines) ? textLines : []).map(function (l) { return String(l || ""); });
+  const perLine = lines.map(function (text) {
+    return { text: text, estimatedWidth: estimateTextWidth(text, fs) };
+  }).filter(function (p) {
+    return p.text !== "";
+  });
+  const wMax = perLine.reduce(function (m, p) { return Math.max(m, p.estimatedWidth); }, 0);
+  let layoutWidth = Math.min(Math.max(minWidth, wMax + margin, 60), maxWidth);
+  let forcedWrapDetected = false;
+  perLine.forEach(function (p) {
+    p.needsWrap = p.estimatedWidth + margin > layoutWidth;
+    if (p.needsWrap) forcedWrapDetected = true;
+  });
+  return {
+    layoutWidth: layoutWidth,
+    perLine: perLine,
+    forcedWrapDetected: forcedWrapDetected,
+    estimatedFinalLineCount: perLine.length + perLine.reduce(function (n, p) {
+      return n + (p.needsWrap ? Math.ceil((p.estimatedWidth + margin) / layoutWidth) - 1 : 0);
+    }, 0)
+  };
+}
+
+if (typeof module !== "undefined" && module.exports) module.exports = {
+  unifyCandidates, groupWordsToLines, aggregateLineCandidates, normBox,
+  joinWordsSmart, applyTessLineText, rectOverlapArea,
+  groupLinesToBlocks, buildTextBlocks,
+  estimateCharWidth, estimateTextWidth, estimateTextLayout
+};
