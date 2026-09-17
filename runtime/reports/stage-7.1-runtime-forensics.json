@@ -1,0 +1,37 @@
+{
+  "stage": "7.1",
+  "scope": "真机运行时调查（Current Page Resolver 前置证据，Stage 7.1）",
+  "date": "2026-09-17",
+  "environment": {
+    "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+    "urlTokenMasked": true,
+    "engine": "真实登录商品 252438 编辑器页面（真机浏览器）"
+  },
+  "method": "浏览器控制台注入只读 IIFE（docs/stage-7.1-forensics.js 同源逻辑）；不修改页面、不模拟点击",
+  "findings": {
+    "definedModules": 136,
+    "CanvasObjVO_topFields": ["currentCanvasNum", "canvasPagesNum", "frontImgPathStr", "backImgPathStr", "CanvasObjInfo", "totalCanvasArray"],
+    "currentCanvasNum": 1,
+    "canvasPagesNum": 0,
+    "totalCanvasArray_length": 1,
+    "singleSideTemplate": true,
+    "noAddPageUi": true,
+    "bodyHasBack": 1,
+    "backImgDomFound": true,
+    "entry0": { "idName": "c0", "objects": 9, "drawTextOnProtoChain": true, "canvasObjInfoReadableOnProtoChain": true },
+    "currentCanvasIdentity": "CurrentCanvas.getCurrentCanvas() === totalCanvasArray[0].canvas（isSameAsCurrent=true）",
+    "undoInstance": "Undo.getInstance() → {undo, redo, undoLength, save, ...}",
+    "sideSemantics": "front/back 为真实业务字段（frontImgPathStr/backImgPathStr）；未观测到第三页/模板版本字段 → resolver 的 version 如实 null"
+  },
+  "answers": {
+    "q1_currentPage": "totalCanvasArray[0]（currentCanvasNum=1）",
+    "q2_pageId": "entry.idName='c0'（无独立 pageId 字段）",
+    "q3_frontBackBizField": true,
+    "q4_canvasBinding": "entry.canvas；CurrentCanvas.getCurrentCanvas() 为撤销快照唯一取画布入口，与当前画布同一实例",
+    "q5_switchBehavior": "单面模板无切换入口，未取证切换后实例差异（如实空缺）",
+    "q6_totalCanvasArray": "currentCanvasNum（1 基）表示当前页序号",
+    "q7_thirdPageVersion": "无第三页/模板版本结构（canvasPagesNum=0）；version 无业务字段暴露"
+  },
+  "conclusion": "resolver 判定次序（运行时证据，不猜索引）：CurrentCanvas 身份匹配 > currentCanvasNum 序号 > 单条目+frontImgPathStr 兜底；无证据 → CURRENT_PAGE_UNKNOWN（OCR 创建 STOP）",
+  "collector": "Stage 7.1 真机取证会话（2026-09-17）"
+}

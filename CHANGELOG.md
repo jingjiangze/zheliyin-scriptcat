@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Stage 7.1（2026-09-17）— v0.3.8.9：Current Page Resolver —— OCR 创建入口不再硬编码 front
+- **入口改造**：page-bridge `ocrCreate`/`buildOcrPrepare` 由 `findCanvasForSide("front")` 改为 `resolveCurrentEditorPage()` 判定「当前实际编辑页面」；无法识别 → `CURRENT_PAGE_UNKNOWN` → 创建 STOP（含诊断 reason），严禁静默写入 front。
+- **resolver 判定次序**（真机运行时证据，不猜索引、不依赖 front=0/back=1/UI 文案/OCR）：① `CurrentCanvas.getCurrentCanvas()` 与 `totalCanvasArray` 条目 `.canvas` 同一实例（真机 isSameAsCurrent=true，confidence=3）；② `CanvasObjVO.currentCanvasNum`（1 基）指向条目（confidence=2）；③ 单条目 + `frontImgPathStr` 业务字段 → 唯一正面页（confidence=1）；side/version 仅在业务字段可见时输出，否则 null。
+- **单测扩展**（editor-bridge.test.js 新增 v1~v6，26 项 ALL-PASS）：UNKNOWN→STOP、身份匹配命中当前编辑页（非 front）、currentCanvasNum 序号、单条兜底、多页无证据不猜索引、ocrPrepare 已解析但无目标图→IMAGE_UNAVAILABLE。
+- 版本 0.3.8.8 → 0.3.8.9 同步（userscript @version/@require ×8/VERSION、manifest version_name、README、CHANGELOG）。
+
 ### Stage 6.2（2026-09-17）— v0.3.8.8：TextBlock 拆分收紧 + OCR 走原生编辑管线（Native-first）
 - **问题 A（TextBlock 单块过大）**：`groupLinesToBlocks` 合并规则改为严格 AND 强关系——左边界高度一致（leftAlignTolRatio=0.5）、行距 ≤1.25×medianLineHeight（gapRatioMax=1.25、maxGapPx=1.5×medianLineHeight）、字高相近（heightRatioMax=2.0）、横向重叠明显（overlapRatioMin=0.5）；左右两列文字绝对禁止合并；block 输出带 `mergeReasons` 诊断（旧宽松条件 maxGapPx=240 等禁用）。
 - **问题 B（OCR 对象未进原生管线）**：真机逆向 252438 定位原生新增文字真实调用链 `Undo.save → CanvasDiy.drawText(text, fontSize, left, top, mediaJson, layerNum) → createObjProductJsonDetail → canvas.add → checkObjsInProductJson(图层注册) → Undo.save`；`ocrCreate` 改为 Native-first——OCR 只提供 text/position/size/style（media JSON），身份字段（uuid/multiUuid/layerNum/location*）由原生流程生成，禁止手工伪造（§十七）；原生路径不可用时回退镜像路径，回复 `editorIntegration.mode` 标明。

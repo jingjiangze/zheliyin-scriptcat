@@ -57,8 +57,16 @@ function pageBridge() {
         //   —— 用编辑器原生生成器（sundry.guid）赋 multiUuid，镜像 location*/printLocation*/
         //   mediaMediaType/layerNum 等编辑器业务字段（§七/§八），并在创建前后尝试调用
         //   原生 Undo.getInstance().save()（仅使用编辑器自身 API，不伪造历史，§十三）。
-        const canvas = findCanvasForSide("front");
-        if (!canvas) { post("ocrCreateResult", { ok: false, message: "未找到正面画布。", detectedBlocks: 0, createdCount: 0, created: [], failedBlockIndex: null, error: "no canvas" }); return; }
+        // Stage 7.1：OCR 创建入口 —— 由 Current Page Resolver 判定「当前实际编辑页面」。
+        // CURRENT_PAGE_UNKNOWN → 停止创建；严禁静默写入 front。
+        const resolution = resolveCurrentEditorPage();
+        if (!resolution || resolution.status !== "ok") {
+          const reason = (resolution && resolution.reason) || "resolver failed";
+          post("ocrCreateResult", { ok: false, code: "CURRENT_PAGE_UNKNOWN", message: "无法识别当前编辑页面（" + reason + "），已停止创建。", detectedBlocks: 0, createdCount: 0, created: [], failedBlockIndex: null, error: "CURRENT_PAGE_UNKNOWN", editorIntegration: resolution || { mode: "stopped-unknown-page" } });
+          return;
+        }
+        const canvas = resolution.canvas;
+        if (!canvas) { post("ocrCreateResult", { ok: false, code: "CURRENT_PAGE_UNKNOWN", message: "当前编辑页画布不可用，已停止创建。", detectedBlocks: 0, createdCount: 0, created: [], failedBlockIndex: null, error: "CURRENT_PAGE_UNKNOWN" }); return; }
         const items = Array.isArray(event.data.items) ? event.data.items : [];
         // =====================================================================
         // Stage 6.2 §十二~§十七：Native-first —— OCR 创建改走编辑器原生新增文字入口。
@@ -68,7 +76,7 @@ function pageBridge() {
         // OCR 只提供 text/position/size/style（media JSON），身份字段由原生流程负责（§十七）。
         // 原生路径不可用时回退到下方既有镜像路径（Level 1-2），并在 editorIntegration.mode 标明。
         // =====================================================================
-        const diy = getCanvasDiyForSide("front");
+        const diy = resolution.canvasDiy;
         if (diy) {
           const editorInteg2 = { mode: "native", nativeUndoFound: false, undoSavePre: false, undoSavePost: false, drawTextBatch: 0, failedBlockIndex: -1, layerNumBase: diy.canvasObjInfo.canvasToProductObjArr.length, identityApplied: 0, uv4Total: 0, layerMax: -1 };
           try {
@@ -223,6 +231,72 @@ function pageBridge() {
       window.postMessage(Object.assign({ source: PAGE_SOURCE_IN_PAGE, type: type }, payload), location.origin);
     }
 
+// ---- Stage 7.1（2026-09-17）：Current Page Resolver —— OCR 编辑页判定入口 ----
+    // 真机证据（252438 单面模板，2026-09-17）：
+    //   - CanvasObjVO.totalCanvasArray = 页面世界画布数组（CanvasDiy 实例，drawText 在原型链，
+    //     with canvas / canvasObjInfo / idName）
+    //   - CurrentCanvas.getCurrentCanvas() 返回当前编辑画布；真机比对确认与
+    //     totalCanvasArray 内某条目的 .canvas 同一实例（isSameAsCurrent=true）→ 身份匹配即当前页
+    //   - CanvasObjVO.currentCanvasNum（1 基）/ canvasPagesNum / frontImgPathStr / backImgPathStr
+    //     是真实业务字段（正/背底图路径 ∈ 业务模型，非序号惯例）
+    // 判定次序（均为运行时证据，不猜索引、不依赖 front=0/back=1）：
+    //   1) 身份匹配：CurrentCanvas.getCurrentCanvas() === 某条目 .canvas → 该条即当前页
+    //   2) 序号匹配：CanvasObjVO.currentCanvasNum（1 基）指向 totalCanvasArray 条目
+    //   3) 单条兜底：totalCanvasArray.length===1 且 frontImgPathStr 业务字段存在 → 唯一正面页
+    // 任何判定无证据 → {status:"UNKNOWN", code:"CURRENT_PAGE_UNKNOWN"} —— OCR 创建必须 STOP，
+    //   严禁静默 fallback 到 front（本页桥 callers 必须检查 status 后才允许创建）。
+    // 输出 {pageId, side, version, canvas, canvasDiy, canvasInfo, source, confidence}；
+    // side/version 仅在业务字段可见时给出，否则 null（如实，不作推断）。
+    function resolveCurrentEditorPage() {
+      const req = window.requirejs || window.require;
+      const ctx = req && req.s && req.s.contexts && req.s.contexts._;
+      const defs = ctx && ctx.defined ? ctx.defined : {};
+      const CV = defs.CanvasObjVO || window.CanvasObjVO || null;
+      if (!CV) return { status: "UNKNOWN", code: "CURRENT_PAGE_UNKNOWN", reason: "no CanvasObjVO", source: null, confidence: 0, pageId: null, side: null, version: null, canvas: null, canvasDiy: null, canvasInfo: null };
+      const total = CV.totalCanvasArray;
+      if (!Array.isArray(total) || !total.length) return { status: "UNKNOWN", code: "CURRENT_PAGE_UNKNOWN", reason: "no totalCanvasArray", source: null, confidence: 0, pageId: null, side: null, version: null, canvas: null, canvasDiy: null, canvasInfo: null };
+      const unwrap = function (v) { if (!v) return null; if (typeof v.getObjects === "function" && (typeof v.renderAll === "function" || typeof v.requestRenderAll === "function")) return v; return (v && v.canvas) || null; };
+      let matchedIndex = -1;
+      let matchedSource = null;
+      // 1) 身份匹配（最可信）
+      const CC = defs.CurrentCanvas || window.CurrentCanvas || null;
+      if (CC && typeof CC.getCurrentCanvas === "function") {
+        let cur = null;
+        try { cur = CC.getCurrentCanvas(); } catch (eCC) { cur = null; }
+        const curC = unwrap(cur) || cur;
+        if (curC && typeof curC.getObjects === "function") {
+          for (let i = 0; i < total.length; i += 1) {
+            const c = unwrap(total[i]) || (total[i] && total[i].canvas) || null;
+            if (c === curC) { matchedIndex = i; matchedSource = "currentCanvas-identity"; break; }
+          }
+        }
+      }
+      // 2) 序号匹配（CurrentCanvas 不可用/未命中时）
+      if (matchedIndex < 0 && typeof CV.currentCanvasNum === "number" && CV.currentCanvasNum >= 1 && CV.currentCanvasNum <= total.length) {
+        matchedIndex = CV.currentCanvasNum - 1;
+        matchedSource = "canvasObjVO.currentCanvasNum";
+      }
+      // 3) 单条正面兜底（仅当业务字段可证明唯一正面页；多页歧义不得猜测）
+      if (matchedIndex < 0 && total.length === 1 && CV.frontImgPathStr) {
+        matchedIndex = 0;
+        matchedSource = "sole-entry-frontImgPathStr";
+      }
+      if (matchedIndex < 0) return { status: "UNKNOWN", code: "CURRENT_PAGE_UNKNOWN", reason: "no matched current canvas", source: "identity+currentCanvasNum failed", confidence: 0, pageId: null, side: null, version: null, canvas: null, canvasDiy: null, canvasInfo: null };
+      const entry = total[matchedIndex];
+      const canvas = unwrap(entry) || null;
+      if (!canvas) return { status: "UNKNOWN", code: "CURRENT_PAGE_UNKNOWN", reason: "matched entry has no canvas", source: matchedSource, confidence: 0, pageId: null, side: null, version: null, canvas: null, canvasDiy: null, canvasInfo: null };
+      // 侧别：仅在业务字段给出方向时填（matchedIndex===0 且存在正面底图字段 → front；否则 null 不猜）
+      let side = null;
+      let sideSource = "no biz side field";
+      if (matchedIndex === 0 && CV.frontImgPathStr) { side = "front"; sideSource = "frontImgPathStr"; }
+      else if (matchedIndex === total.length - 1 && CV.backImgPathStr && !CV.frontImgPathStr) { side = "back"; sideSource = "backImgPathStr"; }
+      const canvasDiy = (entry && typeof entry.drawText === "function") ? entry : null;
+      const canvasInfo = (entry && entry.canvasObjInfo) || null;
+      const pageId = (entry && entry.idName) || ("page-" + (matchedIndex + 1));
+      // 无业务 version 字段暴露（真机未观测到）→ 如实 null
+      const version = (entry && entry.version) || CV.version || null;
+      return { status: "ok", pageId: pageId, side: side, sideSource: sideSource, version: version, canvas: canvas, canvasDiy: canvasDiy, canvasInfo: canvasInfo, pageIndex: matchedIndex, source: matchedSource, confidence: matchedSource === "currentCanvas-identity" ? 3 : matchedSource === "canvasObjVO.currentCanvasNum" ? 2 : 1 };
+    }
     // ---- Stage 6 P0：原生编辑器接入辅助（252438 真机审计所得字段 schema；仅用编辑器自身 API）----
     function getNativeUndoInstance() {
       const req = window.requirejs || window.require;
@@ -385,7 +459,10 @@ function pageBridge() {
     }
 
     function buildOcrPrepare() {
-      const canvas = findCanvasForSide("front");
+      // Stage 7.1：OCR 目标准备 —— 使用当前编辑页画布（resolver 判定），不再默认 front。
+      const resolution = resolveCurrentEditorPage();
+      if (!resolution || resolution.status !== "ok" || !resolution.canvas) return { ok: false, code: "CURRENT_PAGE_UNKNOWN", currentPage: resolution || null, message: "当前编辑页面无法识别，无法准备 OCR 目标图（CURRENT_PAGE_UNKNOWN）" };
+      const canvas = resolution.canvas;
       if (!canvas) return { ok: false, code: "CANVAS_NOT_READY", message: "画布未就绪，请等待模板加载完成" };
       const active = canvas.getActiveObject ? canvas.getActiveObject() : null;
       if (active && String(active.type) === "image") return extractImagePayload(active, "active-image", canvas);
@@ -394,7 +471,6 @@ function pageBridge() {
       if (first) return extractImagePayload(first, "first-image", canvas);
       return { ok: false, code: "IMAGE_UNAVAILABLE", message: "未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图" };
     }
-
     function findCanvasForSide(side) {
       const CanvasObjVO = getLoadedModule("CanvasObjVO") || window.CanvasObjVO;
       const total = CanvasObjVO && CanvasObjVO.totalCanvasArray;
