@@ -216,24 +216,27 @@ function aggregateLineCandidates(words, imageSize, tessLines) {
   });
 }
 
-// ---- Stage 6.1 §3/§4/§5：TextBlock 层（logical lines → logical text blocks）----
+// ---- Stage 6.1 §3/§4/§5 + Stage 6.2 §四~§九：TextBlock 层（logical lines → logical text blocks）----
 // 一个 TextBlock 最终对应一个 textbox（§8 硬规则：1 TextBlock = 1 textbox）。
-// 确定性规则（第一版不上 AI），至少计算 xStart/xEnd/centerX/yStart/yEnd/height/verticalGap/heightRatio：
-//   合并条件：
-//     1) 左边界相近：abs(line.x - block.xStart) ≤ leftAlignTolRatio × avgLineHeight
-//     2) 行距合理：verticalGap / avgLineHeight ≤ gapRatioMax（且绝对值 ≤ maxGapPx）
-//     3) 字高相近：max(h) / min(h) ≤ heightRatioMax
-//     4) 阅读方向一致：默认 horizontal；旋转行（θ≠0）保留现有角度逻辑 → 独立 block
-//   禁止过度合并（§5）：左右两列/多列（x 范围重叠不足）、上下两列（独立电话区/公司名与远处地址、
-//     垂直距离明显过大）→ 必须为空间独立 TextBlock。
+// Stage 6.2 强制纠偏（拆分优先于合并，§五）：默认「每个 logical line 是独立区域」，
+//   只有同时满足以下五个条件（§六 强关系，AND 语义）才允许合并：
+//     1) 左边界一致：abs(L.x - block.xStart) ≤ leftAlignTolRatio × medianLineHeight（默认 0.5）
+//     2) 行距合理：verticalGap / medianLineHeight ≤ gapRatioMax（默认 1.25），且 ≤ maxGapPx
+//        （默认 1.5 × medianLineHeight，§八；废除固定 240px）
+//     3) 横向重叠较强：overlap ≥ overlapRatioMin × min(blockW, L.w)（默认 0.5；§七 左右两列绝对禁止合并）
+//     4) 尺寸关系合理：maxH/minH ≤ heightRatioMax（默认 2.0；标题大字+正文小字允许，仅距离近不允许）
+//     5) 不跨越明显空白：由条件 2 的行距上限天然约束（姓名 空行 电话 → 分离）
+//   旋转行（θ≠0）保留现有角度逻辑 → 独立 block。
 // text 保留原始逻辑换行（§9）：lines.map(text).join("\n")，禁止重新猜测/重新分行。
+// §九 诊断：每个 Block 输出 lines[{text,x,y,width,height}]、mergeReasons（为何多行合为一块）。
 function groupLinesToBlocks(lines, opts) {
   const o = opts || {};
-  const gapRatioMax = o.gapRatioMax != null ? o.gapRatioMax : 1.6;
-  const heightRatioMax = o.heightRatioMax != null ? o.heightRatioMax : 2.4;
-  const overlapRatioMin = o.overlapRatioMin != null ? o.overlapRatioMin : 0.25;
-  const leftAlignTolRatio = o.leftAlignTolRatio != null ? o.leftAlignTolRatio : 0.9;
-  const maxGapPx = o.maxGapPx != null ? o.maxGapPx : 240;
+  // §八 初始参数（保守、拆分优先）；真机样本对比后按数据微调
+  const gapRatioMax = o.gapRatioMax != null ? o.gapRatioMax : 1.25;
+  const heightRatioMax = o.heightRatioMax != null ? o.heightRatioMax : 2.0;
+  const overlapRatioMin = o.overlapRatioMin != null ? o.overlapRatioMin : 0.5;
+  const leftAlignTolRatio = o.leftAlignTolRatio != null ? o.leftAlignTolRatio : 0.5;
+  const maxGapPxOverride = o.maxGapPx != null ? o.maxGapPx : null; // null → 1.5 × medianLineHeight
   const isHorizontal = function (l) {
     const a = typeof l.angle === "number" ? ((l.angle % 360) + 360) % 360 : 0;
     return Math.min(a, Math.abs(a - 360)) < 1e-6;
@@ -257,53 +260,67 @@ function groupLinesToBlocks(lines, opts) {
   list.sort(function (a, b) { return (a.bbox.y - b.bbox.y) || (a.bbox.x - b.bbox.x); });
 
   const blocks = [];
+  // 行高中位数（比均值稳健：同行内大小混排时不受极值拖累）
+  function medianH(blk) {
+    const hs = blk.lines.map(function (l) { return l.bbox.height; }).sort(function (a, b) { return a - b; });
+    const n = hs.length;
+    if (!n) return 0;
+    return n % 2 ? hs[(n - 1) / 2] : (hs[n / 2 - 1] + hs[n / 2]) / 2;
+  }
   function updateGeometry(blk) {
-    let x1 = Infinity, x2 = -Infinity, y1 = Infinity, y2 = -Infinity, sumH = 0;
+    let x1 = Infinity, x2 = -Infinity, y1 = Infinity, y2 = -Infinity;
     blk.lines.forEach(function (l) {
       x1 = Math.min(x1, l.bbox.x); x2 = Math.max(x2, l.bbox.x + l.bbox.width);
       y1 = Math.min(y1, l.bbox.y); y2 = Math.max(y2, l.bbox.y + l.bbox.height);
-      sumH += l.bbox.height;
     });
     blk.xStart = x1; blk.xEnd = x2; blk.yStart = y1; blk.yEnd = y2;
     blk.bbox = { x: x1, y: y1, width: x2 - x1, height: y2 - y1 };
-    blk.avgH = sumH / blk.lines.length;
+    blk.mH = medianH(blk);
     blk.rotated = blk.lines.some(function (l) { return !isHorizontal(l); });
   }
-  function lineCanMerge(blk, L) {
-    if (!blk.lines.length) return true;
-    if (blk.rotated) return false;
-    if (blk.avgH <= 0) return true;
-    // 3) 字高相近
-    const hRatio = Math.max(blk.avgH, L.bbox.height) / Math.min(blk.avgH, L.bbox.height);
-    if (hRatio > heightRatioMax) return false;
-    // 1) 左边界相近 + 5) 多列防护：x 范围须有重叠（左右两列不得合并）
-    const leftAlignOk = Math.abs(L.bbox.x - blk.xStart) <= leftAlignTolRatio * blk.avgH;
+  // 五个条件全部通过才允许合并（§六 AND 语义）；任一条不满足 → 保持两个独立 Block
+  function mergeCheck(blk, L) {
+    const reasons = [];
+    if (blk.rotated || blk.mH <= 0) return { ok: false, reasons: [] };
+    // 4) 尺寸关系合理（标题大字 + 正文小字 允许；仅距离近不允许）
+    if (Math.max(blk.mH, L.bbox.height) / Math.min(blk.mH, L.bbox.height) > heightRatioMax) return { ok: false, reasons: [] };
+    reasons.push("height-ratio");
+    // 1) 左边界一致（§六-1）
+    if (Math.abs(L.bbox.x - blk.xStart) > leftAlignTolRatio * blk.mH) return { ok: false, reasons: [] };
+    reasons.push("left-alignment");
+    // 3) 横向重叠较强（§六-3 / §七 左右两列防护）
     const overlap = Math.min(blk.xEnd, L.bbox.x + L.bbox.width) - Math.max(blk.xStart, L.bbox.x);
-    const overlapOk = overlap >= overlapRatioMin * Math.min(blk.bbox.width, L.bbox.width);
-    if (!leftAlignOk && !overlapOk) return false;
-    // 2) 行距合理 + 5) 垂直距离明显过大（y 已按升序处理，L 在 blk 下方或同带）
+    if (overlap < overlapRatioMin * Math.min(blk.bbox.width, L.bbox.width)) return { ok: false, reasons: [] };
+    reasons.push("horizontal-overlap");
+    // 2)+5) 行距合理且不跨越空白区（§六-2/5；最大绝对值 = 1.5 × 中位行高，§八）
     const gap = L.bbox.y - blk.yEnd;
+    const maxGapPx = maxGapPxOverride != null ? maxGapPxOverride : 1.5 * blk.mH;
     if (gap > 0) {
-      if (gap > maxGapPx) return false;
-      if (blk.avgH > 0 && gap / blk.avgH > gapRatioMax) return false;
+      if (gap > maxGapPx) return { ok: false, reasons: [] };
+      if (gap / blk.mH > gapRatioMax) return { ok: false, reasons: [] };
     }
-    return true;
+    reasons.push("vertical-gap");
+    return { ok: true, reasons: reasons };
   }
 
   list.forEach(function (L) {
     let placed = null;
-    if (!isHorizontal(L)) { placed = null; } // 旋转行 → 独立 block（§4 保留现有角度逻辑）
-    else {
+    let reasons = [];
+    if (isHorizontal(L)) {
       for (let i = 0; i < blocks.length; i += 1) {
-        if (lineCanMerge(blocks[i], L)) { placed = blocks[i]; break; }
+        const chk = mergeCheck(blocks[i], L);
+        if (chk.ok) { placed = blocks[i]; reasons = chk.reasons; break; }
       }
     }
-    if (!placed) { placed = { lines: [] }; blocks.push(placed); }
+    if (!placed) { placed = { lines: [], mergeReasons: [] }; blocks.push(placed); }
     placed.lines.push(L);
+    // §九：合并依据记录（union，供「为什么 N 行合为一块」诊断）
+    placed.mergeReasons = placed.mergeReasons || [];
+    reasons.forEach(function (r) { if (placed.mergeReasons.indexOf(r) < 0) placed.mergeReasons.push(r); });
     updateGeometry(placed);
   });
 
-  return blocks.map(function (blk) {
+  return blocks.map(function (blk, bi) {
     blk.lines.sort(function (a, b) { return (a.bbox.y - b.bbox.y) || (a.bbox.x - b.bbox.x); });
     const textLines = blk.lines.map(function (l) { return l.text; });
     let sumC = 0, nC = 0;
@@ -312,15 +329,22 @@ function groupLinesToBlocks(lines, opts) {
       if (typeof l.confidence === "number") { sumC += l.confidence; nC += 1; }
       (l.wordBoxes || []).forEach(function (w) { wordBoxes.push(w); });
     });
+    const lineGeo = blk.lines.map(function (l) {
+      return { text: l.text, x: l.bbox.x, y: l.bbox.y, width: l.bbox.width, height: l.bbox.height };
+    });
     return {
+      blockIndex: bi,                                     // §九 / §24 Geometry
       lines: blk.lines,
-      text: textLines.join("\n"),                             // §6/§9：保留原始逻辑换行
+      lineCount: blk.lines.length,
+      lineGeometry: lineGeo,                              // §九：lines[{text,x,y,width,height}]
+      mergeReasons: blk.mergeReasons || [],               // §九：合并依据（单行 block = []）
+      text: textLines.join("\n"),                         // §6/§9：保留原始逻辑换行
       bbox: blk.bbox,
       center: { x: blk.xStart + (blk.xEnd - blk.xStart) / 2, y: blk.yStart + (blk.yEnd - blk.yStart) / 2 },
       confidence: nC ? sumC / nC : null,
       wordBoxes: wordBoxes,
       lineBoxes: blk.lines.map(function (l) { return l.bbox; }),
-      lineCount: blk.lines.length,
+      lineHeightMedian: blk.mH,
       coordinateSpace: "image-pixel"
     };
   });
