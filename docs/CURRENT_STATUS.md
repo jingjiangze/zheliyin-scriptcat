@@ -209,6 +209,24 @@ done
 > 中的 SHA 为准（该文件每行形如 `<sha>\t\tbranch '<name>' of <url>`），或直接对 SHA 操作。
 > 已确认 `git-remote-http` helper 在 `PortableGit` 构建中缺失，**须使用系统 Git** `C:\Program Files\Git\cmd\git.exe`。
 
+> ⚠️ **`ai2-repo-governance` 推送受阻（环境问题，非仓库问题）**
+>
+> 本机出网经沙箱代理 `127.0.0.1:50918`。实测：
+>
+> | 操作 | 结果 |
+> |---|---|
+> | `git ls-remote origin main` | ✅ 成功（返回 `6840170`） |
+> | `git fetch origin` | ✅ 成功（对象到达，报告 new branch） |
+> | `git push origin <sha>:refs/heads/ai2-repo-governance` | ❌ `schannel: failed to receive handshake` / `TLS connect error: unexpected eof while reading` |
+>
+> **读操作可用、写操作（`git-receive-pack` POST）被代理中断**。已尝试：`http.sslVerify=false`、`http.sslBackend=openssl`、
+> `http.version=HTTP/1.1`、`http.postBuffer=524288000`、按 SHA 推送、3 次重试 —— **全部失败**。
+>
+> **待推送**：`340fef3..a621bcf` 共 **8 个 commit**（远端仍为 `340fef3`）。
+> 本机 `ai2-repo-governance` @ `a621bcf` 内容完整、工作树干净、`git status` 无未提交改动。
+> **处置**：属环境出口限制，需在可直连（或代理允许 `receive-pack`）的环境执行 `git push origin ai2-repo-governance`。
+> **本机副本已就绪，无数据丢失风险。**
+
 
 ## 5. 测试现状速览
 
