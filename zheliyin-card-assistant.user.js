@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.7.0
+// @version      0.3.7.1
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -42,7 +42,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.7.0";
+  const VERSION = "0.3.7.1";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -697,13 +697,21 @@
     }
   }
   function waitForCanvasReady(maxMs) {
-    const limit = maxMs || 30000;
+    // P0（真机反馈 2026-09-17）：30s 超时对慢加载的编辑器/多标签页不够，且无法区分
+    // 「桥未注入/跨框架」与「画布对象确实未就绪」。改为 60s + 分级失败码，便于用户自救与日志诊断。
+    const limit = maxMs || 60000;
+    let sawNoReply = false; // 桥一次都没回 → 大概率未注入或画布在别的 frame
     return new Promise((resolve) => {
       const t0 = Date.now();
       const tick = async () => {
         const info = await bridgeCall("getCanvasInfo", 2500);
         if (info && info.ok) { resolve(info); return; }
-        if (Date.now() - t0 >= limit) { resolve(null); return; }
+        if (!info) sawNoReply = true; // 无任何响应（bridgeCall 超时返回 null）
+        if (Date.now() - t0 >= limit) {
+          // 分级失败码：无响应 → BRIDGE_NO_REPLY；有响应但非就绪 → CANVAS_NOT_FOUND
+          resolve({ ok: false, code: sawNoReply ? "BRIDGE_NO_REPLY" : "CANVAS_NOT_FOUND" });
+          return;
+        }
         setTimeout(tick, 400);
       };
       tick();
@@ -808,10 +816,15 @@
     try {
       // §9 情况 B：用户过早点击 → 明确 UI 状态「正在等待编辑器加载…」→ canvas ready 后自动继续
       setStatus("正在等待编辑器加载…");
-      const info = await waitForCanvasReady(30000);
-      if (!info) {
-        setStatus("编辑器画布长时间未就绪（30 秒），请刷新页面后重试");
-        ocrLog("ERROR", "canvas not ready after 30s");
+      const info = await waitForCanvasReady(60000);
+      if (!info || !info.ok) {
+        // P0（真机反馈）：分级错误提示，让用户可以自查而不是干等
+        if (info && info.code === "BRIDGE_NO_REPLY") {
+          setStatus("页面桥接无响应：脚本可能未完成注入，或设计画布在独立 iframe 中（当前扩展版本暂不支持跨框架定位）。请刷新页面重试；仍不行请在浏览器扩展管理页确认已「允许用户脚本」并重装本脚本。");
+        } else {
+          setStatus("设计编辑器尚未加载出画布（等待 60 秒超时）。请确认当前是设计编辑页（不是模板/列表页）且页面已加载完，再点一次「识别当前图片」；仍不行请刷新页面。");
+        }
+        ocrLog("ERROR", "canvas not ready after 60s code=" + (info && info.code || "NULL"));
         ocrRunning = false;
         return;
       }

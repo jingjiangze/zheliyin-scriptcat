@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Stage 5.6 hotfix（2026-09-17）— v0.3.7.1：画布就绪提示分级 + 超时加长（P0 真机反馈）
+- 真机反馈「编辑器画布长时间未就绪（30 秒）」：`waitForCanvasReady` 从 30s→60s，并将失败原因分级（BRIDGE_NO_REPLY=桥未注入/画布在 iframe vs CANVAS_NOT_FOUND=编辑器还没加载出画布），给出可操作自查提示（刷新页/确认在设计编辑页/扩展「允许用户脚本」）。
+- 版本统一 0.3.7.1（userscript/manifest/assistant/README/DEMO_REAL_MACHINE_TEST）。
+
 ### Stage 5.6（2026-09-17）— OCR-only Demo：最小停用套版助手 UI（交付B）
 - Demo 主 UI 切换为原生右栏「图片文字识别」抽屉：默认不再挂载旧套版浮窗 `#zy-card-assistant`（renderPanel/套版字段/正反面/诊断等代码完整保留，仅停用挂载入口）。
 - 初始化调整（最小改动）：`addStyles`/`installPageBridge`/`checkForUpdateSoon` 前置到 `initZheliyin`（三者均幂等，renderPanel 内保留原调用），`OCR_ONLY_MODE = GM_getValue("zyShowTemplatePanel","0") !== "1"` 决定是否挂载浮窗；原生右栏缺失的页面变体自动回退浮窗兜底。
