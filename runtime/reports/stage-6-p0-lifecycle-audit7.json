@@ -1,0 +1,47 @@
+{
+ "ts": "2026-09-17T07:38:48.788Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R7",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"objs\":9}"
+  },
+  {
+   "name": "undo-method-types",
+   "ok": "PASS",
+   "detail": "{\"undo\":\"object\",\"redo\":\"object\",\"undoLength\":\"number\",\"save\":\"function\",\"save_src\":\"function(g){if(1==d(\\\"#aiCup\\\").val()){if(c.isNoOneKey&&!this._redoBtn)return}else if(c.isNoOneKey)return;this.redo=[];this._redoBtn.addClass(\\\"disabled\\\");requirejs([\\\"CurrentCanvas\\\",\\\"sundry\\\"],function(b,k){var e=c.currentCanvasNum-1;-1>=e&&(e=\",\"replay\":\"function\",\"replay_src\":\"function(g,b,k,e){if(1==d(\\\"#aiCup\\\").val()){if(c.isNoOneKey&&!d(\\\".rightEditor\\\").is(\\\":visible\\\"))return}else if(c.isNoOneKey)return;k.addClass(\\\"disabled\\\");e.addClass(\\\"disabled\\\");requirejs([\\\"CurrentCanvas\\\",\\\"sundry\\\"],function(e,h){var f=c.curren\",\"buttonControl\":\"function\",\"buttonControl_src\":\"function(d,b){c.isNoOneKey||(1<d?a._undoBtn.removeClass(\\\"disabled\\\"):a._undoBtn.addClass(\\\"disabled\\\"),0<b?a._redoBtn.removeClass(\\\"disabled\\\"):a._redoBtn.addClass(\\\"disabled\\\"))}\",\"state\":\"string\"}"
+  },
+  {
+   "name": "base",
+   "ok": "PASS",
+   "detail": "{\"step\":\"base\",\"objs\":9,\"undoLen\":50,\"stateLen\":7464,\"afterUndoLen\":50,\"objsInfo\":[{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}],\"stateHead\":\"{\\\"objects\\\":[{\\\"type\\\":\\\"rect\\\",\\\"version\\\":\\\"3.5.0\\\",\\\"originX\\\":\\\"left\\\",\\\"originY\\\":\\\"top\\\",\\\"left\\\":-0.5,\\\"top\\\":-0.5,\\\"width\\\":600,\\\"height\\\":365,\\\"fill\\\":\\\"#ffffff\\\",\\\"stroke\\\":null,\\\"strokeWidth\\\":1,\\\"strokeDashArray\\\":null,\\\"str\"}"
+  },
+  {
+   "name": "after-save",
+   "ok": "PASS",
+   "detail": "{\"step\":\"save\",\"objs\":9,\"undoLen\":50,\"stateLen\":7464,\"saved\":true,\"afterUndoLen\":50,\"objsInfo\":[{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}],\"stateHead\":\"{\\\"objects\\\":[{\\\"type\\\":\\\"rect\\\",\\\"version\\\":\\\"3.5.0\\\",\\\"originX\\\":\\\"left\\\",\\\"originY\\\":\\\"top\\\",\\\"left\\\":-0.5,\\\"top\\\":-0.5,\\\"width\\\":600,\\\"height\\\":365,\\\"fill\\\":\\\"#ffffff\\\",\\\"stroke\\\":null,\\\"strokeWidth\\\":1,\\\"strokeDashArray\\\":null,\\\"str\"}"
+  },
+  {
+   "name": "raw-add",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"count\":10,\"ctor\":\"b\"}"
+  },
+  {
+   "name": "after-add",
+   "ok": "PASS",
+   "detail": "{\"step\":\"after-add\",\"objs\":10,\"undoLen\":50,\"stateLen\":7464,\"afterUndoLen\":50,\"objsInfo\":[{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}},{\"i\":9,\"p\":{\"type\":\"textbox\",\"text\":\"批量快照测试A\\n第二行\",\"fontSize\":18,\"fontFamily\":\"思源黑体 Regular\"}}],\"stateHead\":\"{\\\"objects\\\":[{\\\"type\\\":\\\"rect\\\",\\\"version\\\":\\\"3.5.0\\\",\\\"originX\\\":\\\"left\\\",\\\"originY\\\":\\\"top\\\",\\\"left\\\":-0.5,\\\"top\\\":-0.5,\\\"width\\\":600,\\\"height\\\":365,\\\"fill\\\":\\\"#ffffff\\\",\\\"stroke\\\":null,\\\"strokeWidth\\\":1,\\\"strokeDashArray\\\":null,\\\"str\"}"
+  },
+  {
+   "name": "undo-after-save-add",
+   "ok": "PASS",
+   "detail": "{\"step\":\"undo\",\"objs\":10,\"undoLen\":50,\"stateLen\":7464,\"afterUndoLen\":50,\"objsInfo\":[{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}},{\"i\":9,\"p\":{\"type\":\"textbox\",\"text\":\"批量快照测试A\\n第二行\",\"fontSize\":18,\"fontFamily\":\"思源黑体 Regular\"}}],\"stateHead\":\"{\\\"objects\\\":[{\\\"type\\\":\\\"rect\\\",\\\"version\\\":\\\"3.5.0\\\",\\\"originX\\\":\\\"left\\\",\\\"originY\\\":\\\"top\\\",\\\"left\\\":-0.5,\\\"top\\\":-0.5,\\\"width\\\":600,\\\"height\\\":365,\\\"fill\\\":\\\"#ffffff\\\",\\\"stroke\\\":null,\\\"strokeWidth\\\":1,\\\"strokeDashArray\\\":null,\\\"str\"}"
+  },
+  {
+   "name": "redo-after-undo",
+   "ok": "PASS",
+   "detail": "{\"step\":\"redo\",\"objs\":10,\"undoLen\":50,\"stateLen\":7464,\"afterUndoLen\":50,\"objsInfo\":[{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}},{\"i\":9,\"p\":{\"type\":\"textbox\",\"text\":\"批量快照测试A\\n第二行\",\"fontSize\":18,\"fontFamily\":\"思源黑体 Regular\"}}],\"stateHead\":\"{\\\"objects\\\":[{\\\"type\\\":\\\"rect\\\",\\\"version\\\":\\\"3.5.0\\\",\\\"originX\\\":\\\"left\\\",\\\"originY\\\":\\\"top\\\",\\\"left\\\":-0.5,\\\"top\\\":-0.5,\\\"width\\\":600,\\\"height\\\":365,\\\"fill\\\":\\\"#ffffff\\\",\\\"stroke\\\":null,\\\"strokeWidth\\\":1,\\\"strokeDashArray\\\":null,\\\"str\"}"
+  }
+ ],
+ "errors": []
+}

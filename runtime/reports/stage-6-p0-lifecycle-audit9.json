@@ -1,0 +1,85 @@
+{
+ "ts": "2026-09-17T07:41:46.468Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R9",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"objs\":9}"
+  },
+  {
+   "name": "module-ref",
+   "ok": "PASS",
+   "detail": "{\"sundryKeys\":[\"drafting\",\"varlidateAddPage\",\"guid\",\"fallsShow\",\"isEmpty\",\"download\",\"setShowLayerImg\",\"validatePhoneNum\",\"getCookieUserId\",\"copyUrl2\",\"colorArray\",\"colorBGJbArray\",\"colorBGArray\",\"xnColorBGArray\",\"xnColorArray\",\"xnHabityArray\",\"PICNUM\",\"isEmptyObject\",\"historyUtil\",\"isEmptyArray\",\"pxToMM\",\"mmToPX\",\"historyColor\",\"historyBgJbColor\",\"xnCPHistoryColor\",\"selectFoldType\",\"stopBubble\",\"stopDefault\",\"deleteBlank\",\"deleteDesignBlank\",\"isString\",\"checkInputStr\",\"isNoExistImgForRq\",\"eachImgisExitArray\",\"isCardMarking\",\"isMarkverification\",\"isTextGroup\",\"getBgIndexByProduct\",\"testAndAddArray\",\"autoSaveParaments\",\"updateImgForItem\",\"isProductVoisNull\",\"isMaskImgEmpty\",\"initAfterProcess\",\"initAntProcess\",\"initGuaguaSilver\",\"initCardProcess\",\"initHandBagProcess\",\"setCanvasContinuRender\",\"initRedPacketProcess\",\"initCalendarProcess\",\"initSilkScreenProcess\",\"getAllMaskImg\",\"stopRenderNum\",\"updateCalendarBanAndHuan\"],\"sundryUndoLike\":[\"colorArray\",\"colorBGJbArray\",\"colorBGArray\",\"xnColorBGArray\",\"xnColorArray\",\"xnHabityArray\",\"historyUtil\",\"isEmptyArray\",\"historyColor\",\"historyBgJbColor\",\"xnCPHistoryColor\",\"eachImgisExitArray\",\"testAndAddArray\"],\"sundryFn\":{\"drafting\":\"function(b,c){var d,e,g,u,q;a(document).mousemove(function(a){u=a.pageX;q=a.pageY});f=z.getCurrentCanvas();if(!f){return;throw Error(\\\"canvasObj不是有效对象，无法获取canvas属性\\\"); }a(c).draggabl\",\"varlidateAddPage\":\"function(a){return/^\\\\-?([1-9]\\\\d*(\\\\.\\\\d{1,2})?|0\\\\.\\\\d{1,2})$|^0$/.test(a)?!0:!1}\",\"guid\":\"function(){return x()+x()+\\\"-\\\"+x()+\\\"-\\\"+x()+\\\"-\\\"+x()+\\\"-\\\"+x()+x()+x()}\",\"fallsShow\":\"function(b){b=new ba(b);b.reset({selector:\\\".item\\\", animate:!1,delay:0,cellW:function(a){return a/3},cellH:\\\"auto\\\",gutterX:5,gutterY:5});b.fitWidth();a(window).trigger(\\\"resize\\\");retu\",\"isEmpty\":\"function(a){return\\\"\\\"==a||null==a||void 0==a||\\\"undefined\\\"==a||\\\"null\\\"==a?!0:!1}\",\"download\":\"function(a,c){var b=window.URL||window.webkitURL||window,e=new Blob([c]);c=document.createElementNS(\\\"http://www.w3.org/1999/xhtml\\\",\\\"a\\\");c.href=b.createObjectURL(e);c.download=a;a=d\",\"setShowLayerImg\":\"function(b){0==a(\\\".layerOrder .showOnlyLayer\\\").length?a(\\\".layerOrder\\\").append('\\\\x3ctr class\\\\x3d\\\"showOnlyLayer\\\"\\\\x3e\\\\x3ctd class\\\\x3d\\\"type tr f14 g6\\\"\\\\x3e\\\\x3c/td\\\\x3e\\\\x3ctd class\\\\x3d\\\"op\",\"validatePhoneNum\":\"function(a){return/^1[2|3|4|5|6|7|8|9][0-9]\\\\d{8}$/.test(a)?!0:!1}\",\"getCookieUserId\":\"function(){if(-1==document.URL.indexOf(\\\"DiyEdit\\\")){var b=document.cookie;if(b)for(var b=b.split(\\\";\\\"),c=0;c<b.length;c++){var d=b[c].split(\\\"\\\\x3d\\\");if(\\\"thirdMember\\\"==a.trim(d[0])&&2<\",\"copyUrl2\":\"function(a){document.getElementById(a).select();document.execCommand(\\\"Copy\\\");F.msg(\\\"复制成功！\\\",{time:1500})}\",\"isEmptyObject\":\"function(a){for(var b in a)return!1;return!0}\",\"historyUtil\":\"function(b,c,d){var e=document.title;-1!=d.indexOf(\\\"Login\\\")?c=c+\\\"/\\\"+b.designId+\\\"/\\\"+b.canEdit+\\\"/\\\"+d:(a.each(b,function(a){\\\".do\\\"!=c.substr(c.length-3,3)&&(c+=\\\"/\\\");c+=b[a]}),c+=\\\"/\\\"+d)\",\"isEmptyArray\":\"function(b){var c=!1;a.each(b,function(a){Y(b[a])&&(c=!0)});return c}\",\"pxToMM\":\"function(a,c){return(a/c*25.4).toFixed(2)}\",\"mmToPX\":\"function(a,c){return(a/25.4*c).toFixed(2)}\",\"historyColor\":\"function(b,c,d){b=N.colorHex(b);var e=!1; a.each(d,function(a){b==d[a]&&(e=!0)});e||(8<=d.length&&a.each(d,function(a){6>=a&&(d[a]=d[a+1]);7==a&&d.pop()}),d.push(b),c.nextAll().rem\",\"historyBgJbColor\":\"function(b,c,d){b=N.colorHex(b);var e=!1;a.each(d,function(a){b==d[a]&&(e=!0)});if(!e&&(8<=d.length&&a.each(d,function(a){6>=a&&(d[a]=d[a+1]);7==a&&d.pop()}),d.push(b),c.empty(),\\\"1\",\"xnCPHistoryColor\":\"function(b,c,d"
+  },
+  {
+   "name": "hooks",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"patched\":true}"
+  },
+  {
+   "name": "base",
+   "ok": "PASS",
+   "detail": "{\"objs\":9,\"typeCount\":{\"rect\":1,\"line\":8}}"
+  },
+  {
+   "name": "click:普通文本",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"普通文本\",\"cls\":\"text-item cancelEffect\",\"score\":100}"
+  },
+  {
+   "name": "click:普通文字",
+   "ok": "INFO",
+   "detail": "{\"clicked\":false}"
+  },
+  {
+   "name": "click:文本",
+   "ok": "INFO",
+   "detail": "{\"clicked\":false}"
+  },
+  {
+   "name": "after-native-material",
+   "ok": "PASS",
+   "detail": "{\"objs\":9,\"typeCount\":{\"rect\":1,\"line\":8}}"
+  },
+  {
+   "name": "native-textbox-identity",
+   "ok": "PASS",
+   "detail": "{\"objs\":9,\"list\":[{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "log-create-cross-section",
+   "ok": "PASS",
+   "detail": "call.CurrentCanvas.getCurrentCanvas | args=[]\ncall.CurrentCanvas.getCurrentCanvas | args=[]\ncall.CurrentCanvas.getCurrentCanvas | args=[]"
+  },
+  {
+   "name": "native-undo-click",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"撤销\",\"cls\":\"\",\"score\":100}"
+  },
+  {
+   "name": "after-undo",
+   "ok": "PASS",
+   "detail": "objs=9 {\"objs\":9,\"list\":[{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "native-redo-click",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"\",\"cls\":\"redo disabled\",\"score\":30}"
+  },
+  {
+   "name": "after-redo",
+   "ok": "PASS",
+   "detail": "objs=9 {\"objs\":9,\"list\":[{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "log-undo-redo",
+   "ok": "PASS",
+   "detail": "call.CurrentCanvas.getCurrentCanvas | args=[]\ncall.CurrentCanvas.getCurrentCanvas | args=[]\ncall.CurrentCanvas.getCurrentCanvas | args=[]\ncall.CurrentCanvas.getCurrentCanvas | args=[]\ncall.CurrentCanvas.getCurrentCanvas | args=[]\ncall.CurrentCanvas.getCurrentCanvas | args=[]\ncall.CurrentCanvas.getCurrentCanvas | args=[]"
+  }
+ ],
+ "errors": [
+  "click:普通文字",
+  "click:文本"
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "ts": "2026-09-17T07:31:04.150Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R3",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"objs\":9,\"hasCtx\":true,\"voKeys\":50,\"totalKeys\":1}"
+  },
+  {
+   "name": "module-exports",
+   "ok": "PASS",
+   "detail": "{\"Undo\":{\"typeof_\":\"object\",\"keys\":[],\"kv\":{}},\"SimpleCommandManager\":{\"typeof_\":\"object\",\"keys\":[],\"kv\":{}},\"ICommand\":{\"typeof_\":\"object\",\"keys\":[],\"kv\":{}},\"CurrentCanvas\":{\"typeof_\":\"object\",\"keys\":[],\"kv\":{}},\"layer\":{\"typeof_\":\"object\",\"keys\":[],\"kv\":{}},\"CanvasObjVO\":{\"typeof_\":\"object\",\"keys\":[\"undoAndRedo\",\"copyAndRedoCanvas\"],\"kv\":{\"undoAndRedo\":\"[obj]\",\"copyAndRedoCanvas\":\"[obj]\"}},\"CanvasDiy\":{\"typeof_\":\"object\",\"keys\":[],\"kv\":{}},\"MultiCanvasDiy\":{\"typeof_\":\"object\",\"keys\":[],\"kv\":{}},\"TextPropBar\":{\"typeof_\":\"object\",\"keys\":[],\"kv\":{}}}"
+  },
+  {
+   "name": "base-count",
+   "ok": "PASS",
+   "detail": "{\"objCount\":9,\"typeCount\":{\"rect\":1,\"line\":8}}"
+  },
+  {
+   "name": "hooks",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"patched\":true,\"chainDepth\":4}"
+  },
+  {
+   "name": "click-text-tab",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"文字\",\"cls\":\"active\",\"score\":100}"
+  },
+  {
+   "name": "click-addText",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"添加文字\",\"cls\":\"addText\",\"score\":100}"
+  },
+  {
+   "name": "canvas-center-click",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"x\":923,\"y\":508}"
+  },
+  {
+   "name": "after-native-add",
+   "ok": "INFO",
+   "detail": "before=9 after=9 typeCount={\"rect\":1,\"line\":8}"
+  },
+  {
+   "name": "native-text-identity",
+   "ok": "PASS",
+   "detail": "{\"objCount\":9,\"list\":[{\"i\":0,\"p\":{\"type\":\"rect\",\"multiUuid\":\"bdb8e121-0c44-42bb-8e97-0387f30eaf64\",\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"locationRotation\":0,\"printLocationX\":-0.5,\"printLocationY\":-0.5,\"printLocationWidth\":600,\"printLocationHeight\":365.21739130434787,\"printLocationRotation\":0,\"isDesign\":true,\"isEdit\":false,\"deleteState\":false}},{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "click-undo",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"撤销\",\"cls\":\"\",\"score\":100}"
+  },
+  {
+   "name": "after-undo",
+   "ok": "PASS",
+   "detail": "before=9 after=9 typeCount={\"rect\":1,\"line\":8}"
+  },
+  {
+   "name": "undo-identity",
+   "ok": "PASS",
+   "detail": "{\"objCount\":9,\"list\":[{\"i\":0,\"p\":{\"type\":\"rect\",\"multiUuid\":\"bdb8e121-0c44-42bb-8e97-0387f30eaf64\",\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"locationRotation\":0,\"printLocationX\":-0.5,\"printLocationY\":-0.5,\"printLocationWidth\":600,\"printLocationHeight\":365.21739130434787,\"printLocationRotation\":0,\"isDesign\":true,\"isEdit\":false,\"deleteState\":false}},{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "click-redo",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"\",\"cls\":\"redo disabled\",\"score\":30}"
+  },
+  {
+   "name": "after-redo",
+   "ok": "PASS",
+   "detail": "after=9 (expect 9)"
+  },
+  {
+   "name": "redo-identity",
+   "ok": "PASS",
+   "detail": "{\"objCount\":9,\"list\":[{\"i\":0,\"p\":{\"type\":\"rect\",\"multiUuid\":\"bdb8e121-0c44-42bb-8e97-0387f30eaf64\",\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"locationRotation\":0,\"printLocationX\":-0.5,\"printLocationY\":-0.5,\"printLocationWidth\":600,\"printLocationHeight\":365.21739130434787,\"printLocationRotation\":0,\"isDesign\":true,\"isEdit\":false,\"deleteState\":false}},{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "layer-tab",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"图层\",\"cls\":\"move\",\"score\":100}"
+  },
+  {
+   "name": "layer-panel-items",
+   "ok": "PASS",
+   "detail": "[\"名片-新横版常规（92*56）\",\"ID：252438\",\"出血线\\n                        出血\",\"参考线\\n                        参考\",\"缩略图\\n                    缩略图\",\"改尺寸\",\"图标组合\",\"标题素材\",\"组合素材\",\"普通文本\",\"汉仪综艺体\",\"思源黑体 Regular\",\"汉仪行楷简\",\"汉仪楷体简体\",\"站酷快乐体\",\"形状\",\"线条\",\"图标和素材\",\"标志\",\"花纹\",\"免抠素材\",\"标题\",\"电商\",\"相框\",\"版权照片\",\"版权素材\",\"节日素材\",\"印刷大面积黑(C30 M0 Y0 K100)\",\"横版名片\",\"×\",\"正面版式\",\"背面版式\",\"文字识别\",\"中英互译\",\"汉语转拼音\",\"创建表格\",\"色值检查\",\"后道设置\",\"信息录入\",\"表格识别\",\"宣传语\",\"烫金工艺\",\"UV工艺\",\"正面\",\"背面\",\"LOGO\",\"文字\",\"纹理\",\"线条\",\"有色\",\"无色\",\"金\",\"银\",\"红金\",\"绿金\",\"蓝金\",\"黑金\",\"哑金3\",\"哑金5\",\"亚银\"]"
+  },
+  {
+   "name": "audit-log",
+   "ok": "PASS",
+   "detail": "mod.SimpleCommandManager.getInstance | "
+  }
+ ],
+ "errors": [
+  "after-native-add"
+ ],
+ "finalCount": 9
+}

@@ -1,0 +1,92 @@
+{
+ "ts": "2026-09-17T07:23:22.325Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R2",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "objs=0"
+  },
+  {
+   "name": "module-exports",
+   "ok": "PASS",
+   "detail": "{\"Undo\":\"UNDEFINED\",\"SimpleCommandManager\":\"UNDEFINED\",\"ICommand\":\"UNDEFINED\",\"CurrentCanvas\":\"UNDEFINED\",\"layer\":\"UNDEFINED\",\"DesignVO\":\"UNDEFINED\",\"CanvasToolBar\":\"UNDEFINED\",\"TextPropPanel\":\"UNDEFINED\",\"CanvasObjVO\":\"UNDEFINED\",\"CanvasDiy\":\"UNDEFINED\"}"
+  },
+  {
+   "name": "hooks",
+   "ok": "INFO",
+   "detail": "{\"ok\":false,\"err\":\"no canvas\"}"
+  },
+  {
+   "name": "click-text-tab",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"文字\",\"cls\":\"\",\"score\":100}"
+  },
+  {
+   "name": "text-pane-items",
+   "ok": "PASS",
+   "detail": "[{\"tag\":\"LI\",\"text\":\"汉仪行楷简\",\"cls\":\"fontFamily\",\"visible\":false},{\"tag\":\"LI\",\"text\":\"背景填充\",\"cls\":\"textBg textbackground\",\"visible\":false},{\"tag\":\"LI\",\"text\":\"字效\",\"cls\":\"fontStyle\",\"visible\":false},{\"tag\":\"LI\",\"text\":\"艺术字\",\"cls\":\"textArt\",\"visible\":false},{\"tag\":\"LI\",\"text\":\"列表\",\"cls\":\"textUl showTip\",\"visible\":false},{\"tag\":\"LI\",\"text\":\"3D文字\",\"cls\":\"text3D\",\"visible\":false},{\"tag\":\"SPAN\",\"text\":\"3D文字\",\"cls\":\"tip\",\"visible\":false},{\"tag\":\"LI\",\"text\":\"文字\",\"cls\":\"\",\"visible\":true},{\"tag\":\"LI\",\"text\":\"文字识别\",\"cls\":\"\",\"visible\":false},{\"tag\":\"SPAN\",\"text\":\"空格+鼠标拖拽\",\"cls\":\"\",\"visible\":true},{\"tag\":\"A\",\"text\":\"添加标题(36号)\",\"cls\":\"f26\",\"visible\":false},{\"tag\":\"SPAN\",\"text\":\"横版文字\",\"cls\":\"hb on\",\"visible\":false},{\"tag\":\"SPAN\",\"text\":\"竖版文字\",\"cls\":\"sb\",\"visible\":false},{\"tag\":\"A\",\"text\":\"拖动添加副标题(30号)\",\"cls\":\"f20\",\"visible\":false},{\"tag\":\"A\",\"text\":\"拖动添加正文(24号)\",\"cls\":\"f16\",\"visible\":false},{\"tag\":\"A\",\"text\":\"拖动添加正文(18号)\",\"cls\":\"f12\",\"visible\":false},{\"tag\":\"LI\",\"text\":\"标题素材\",\"cls\":\"titleTextBg\",\"visible\":false},{\"tag\":\"LI\",\"text\":\"组合素材\",\"cls\":\"composeTextBg\",\"visible\":false},{\"tag\":\"DIV\",\"text\":\"开始位置\",\"cls\":\"textGradientposition rel\",\"visible\":false},{\"tag\":\"DIV\",\"text\":\"结束位置\",\"cls\":\"textGradientposition rel\",\"visible\":false},{\"tag\":\"DIV\",\"text\":\"转为普通文本\",\"cls\":\"btnGroup mb10\",\"visible\":false},{\"tag\":\"A\",\"text\":\"转为普通文本\",\"cls\":\"btn \",\"visible\":false},{\"tag\":\"DIV\",\"text\":\"— 我是有底线的 —\",\"cls\":\"uploadList arttextList\",\"visible\":false},{\"tag\":\"LI\",\"text\":\"普通文本\",\"cls\":\"text-item cancelEffect\",\"visible\":false},{\"tag\":\"DIV\",\"text\":\"文字厚度\",\"cls\":\"sliderItem\",\"visible\":false},{\"tag\":\"DIV\",\"text\":\"双击或拖动添"
+  },
+  {
+   "name": "try-create:添加文字",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"添加文字\",\"cls\":\"addText\",\"score\":100}"
+  },
+  {
+   "name": "create-by-entry:添加文字",
+   "ok": "INFO",
+   "detail": "objCount unchanged {\"objCount\":9,\"typeCount\":{\"rect\":1,\"line\":8}}"
+  },
+  {
+   "name": "native-text-created",
+   "ok": "INFO",
+   "detail": "created=false"
+  },
+  {
+   "name": "native-text-identity",
+   "ok": "PASS",
+   "detail": "{\"objCount\":9,\"list\":[{\"i\":0,\"p\":{\"type\":\"rect\",\"multiUuid\":\"774f542b-bc4b-4138-a86f-d871dde9fd21\",\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"locationRotation\":0,\"printLocationX\":-0.5,\"printLocationY\":-0.5,\"printLocationWidth\":600,\"printLocationHeight\":365.21739130434787,\"printLocationRotation\":0,\"isDesign\":true,\"isEdit\":false}},{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "click-undo-native",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"撤销\",\"cls\":\"\",\"score\":100}"
+  },
+  {
+   "name": "after-undo-native",
+   "ok": "PASS",
+   "detail": "count=9 (base=9) {\"objCount\":9,\"list\":[{\"i\":0,\"p\":{\"type\":\"rect\",\"multiUuid\":\"774f542b-bc4b-4138-a86f-d871dde9fd21\",\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"locationRotation\":0,\"printLocationX\":-0.5,\"printLocationY\":-0.5,\"printLocationWidth\":600,\"printLocationHeight\":365.21739130434787,\"printLocationRotation\":0,\"isDesign\":true,\"isEdit\":false}},{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "click-redo-native",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"\",\"cls\":\"redo disabled\",\"score\":30}"
+  },
+  {
+   "name": "after-redo-native",
+   "ok": "PASS",
+   "detail": "count=9 (base=9) {\"objCount\":9,\"list\":[{\"i\":0,\"p\":{\"type\":\"rect\",\"multiUuid\":\"774f542b-bc4b-4138-a86f-d871dde9fd21\",\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"locationRotation\":0,\"printLocationX\":-0.5,\"printLocationY\":-0.5,\"printLocationWidth\":600,\"printLocationHeight\":365.21739130434787,\"printLocationRotation\":0,\"isDesign\":true,\"isEdit\":false}},{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "layer-panel-click",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true}"
+  },
+  {
+   "name": "layer-panel-items",
+   "ok": "PASS",
+   "detail": "[\"名片-新横版常规（92*56）\",\"ID：252438\",\"出血线\\n                        出血\",\"参考线\\n                        参考\",\"缩略图\\n                    缩略图\",\"改尺寸\",\"图标组合\",\"标题素材\",\"组合素材\",\"普通文本\",\"汉仪综艺体\",\"思源黑体 Regular\",\"汉仪行楷简\",\"汉仪楷体简体\",\"站酷快乐体\",\"形状\",\"线条\",\"图标和素材\",\"标志\",\"花纹\",\"免抠素材\",\"标题\",\"电商\",\"相框\",\"版权照片\",\"版权素材\",\"节日素材\",\"印刷大面积黑(C30 M0 Y0 K100)\",\"横版名片\",\"×\",\"正面版式\",\"背面版式\",\"文字识别\",\"中英互译\",\"汉语转拼音\",\"创建表格\",\"色值检查\",\"后道设置\",\"信息录入\",\"表格识别\",\"宣传语\",\"烫金工艺\",\"UV工艺\",\"正面\",\"背面\",\"LOGO\",\"文字\",\"纹理\",\"线条\",\"有色\"]"
+  },
+  {
+   "name": "audit-log",
+   "ok": "PASS",
+   "detail": ""
+  }
+ ],
+ "errors": [
+  "hooks",
+  "create-by-entry:添加文字",
+  "native-text-created"
+ ],
+ "finalObjCount": 9
+}

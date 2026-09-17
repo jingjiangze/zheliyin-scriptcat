@@ -1,0 +1,125 @@
+{
+ "ts": "2026-09-17T07:32:43.351Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R4",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"objs\":9}"
+  },
+  {
+   "name": "api-full",
+   "ok": "PASS",
+   "detail": "{\"simpleCommandManager\":{\"keys\":[\"getInstance\"],\"fns\":{\"getInstance\":\"function(e){void 0===a&&(a=new b,c.ensureImplements(a,d));return a}\"}},\"undo\":{\"keys\":[\"getInstance\"],\"fns\":{\"getInstance\":\"function(){void 0===h&&(h=new l);return h}\"}},\"iCommand\":{\"keys\":[\"name\",\"methods\"],\"fns\":{}},\"canvasObjVOkeys\":[\"currentCanvasNum\",\"canvasPagesNum\",\"canvasToProductObjArr\",\"bleedLinesArr\",\"frontImgPathStr\",\"backImgPathStr\",\"svgPathStr\",\"totalCanvasArray\",\"CanvasObjInfo\",\"multiCanvas\",\"canvasPagesBase64Arr\",\"canvasPagesPureBase64Arr\",\"toProductJsonErrorArray\",\"canvasPackingBoxArray\",\"canvasPagesSVGArr\",\"groupObjBaseArr\",\"initialPagesBgArr\",\"undoAndRedo\",\"copyAndRedoCanvas\",\"angsi9\",\"angsi7\",\"angsi14\",\"angsi22\",\"angsi32\",\"angsi46\",\"angsi550\",\"angsi8zhongkong\",\"angsi12zhongkong\",\"angsi14zhongkong\",\"angsi16zhongkong\",\"angsi3\",\"angsi8\",\"angsi12\",\"angsi16\",\"walengbeitao90\",\"baikabeitao90\",\"walengbeitao98\",\"baikabeitao98\",\"angsiKaKou\",\"angsiW90\",\"isCardMark\",\"isMarkArray\",\"diyCanvasW\",\"canvasPagesJsonArr\",\"canvasPagesArr\",\"canvasObjPagesArr\",\"maskAllSrcArr\",\"resouceStr\",\"splitImgPath\",\"markStart\"],\"canvasObjVOfns\":{\"CanvasObjInfo\":\"function(){this.bleedLinesArr= [];this.canvasToProductObjArr=[];this.copyAndRedoCanvas=c;this.svgColorButtonIndex;this.canvasPackingBoxArray\",\"resouceStr\":\"function(a){var b=$(\\\"#resourcePath\\\").val();-1<a.indexOf(\\\"MXYZ-\\\")?b=-1<a.indexOf(\\\"MXYZ-NEWMONGO\\\")?$(\\\"#resourcePath\\\").val()+\\\"mongo_print01/\\\":$\",\"splitImgPath\":\"function(a){var b;if(null==a||\\\"\\\"==a)return\\\"\\\";0<=a.indexOf(\\\"assets\\\")?0<=a.indexOf(\\\"AwsS3_\\\")?b=a.split(\\\"/\\\").splice(a.split(\\\"/\\\").length-3,a.len\"},\"totalIndex0Keys\":[\"idName\",\"canvas\",\"replaceTemplatFal\",\"bgShapeObj\",\"_scaleMode\",\"initTrue\",\"tWidthMM\",\"tHeightMM\",\"initRatio\",\"currentSize\",\"inchMM\",\"bleedLineWidth\",\"bleedLineColor\",\"thumbnailWidth\",\"imgScaleB\",\"minMediaSideDistance\",\"maxMediaSidePecent\",\"fontNameArr\",\"svgTextNameArr\",\"canvasDrawComplete\",\"cutImgNum\",\"drawCutImgCompleteNum\",\"cutImgsLayerArr\",\"cutImgsArr\",\"objWidth\",\"objHeight\",\"drawSvgCount\",\"firstSvgColor\",\"mSelectCurvedImgOldArr\",\"mSelectCurvedImgNewArr\",\"isChangeSize\",\"itemEdition\",\"bleedStroke\",\"markedId\",\"init\",\"initDrawingPen\",\"rTrim\",\"reLine\",\"getCurrentSize\",\"getCanvasId\",\"getCurrentFactWidth\",\"getCurrentFactHeight\",\"canvasObjInfo\",\"currCanvasObjInfo\",\"defaulFontName\",\"defaultFontId\",\"bleedWidth\",\"bleedHeight\",\"safeWidth\",\"safeHeight\",\"dpi\",\"tWidth\",\"tHeight\",\"mm2pixUnit\",\"randomMoveForPicOfRq\",\"showControlForPicOfRq\",\"dragContainerFlag\",\"resetImg\",\"oldMaskContainer\",\"_canvas\",\"_canvasWrap\",\"rWidth\",\"rHeight\",\"currentFactWidth\",\"currentFactHeight\",\"warnPixImg\"],\"canvasInstanceFns\":{\"_onContextMenu\":\"function () { [native code] }\"},\"windowGlobals\":{\"History\":\"function History() { [native code] }\",\"CommandEvent\":\"function CommandEvent() { [native code] }\"},\"layerLikeModules\":[\"Undo\",\"ICommand\",\"UpdateCanvasThumbnailCommand\",\"SimpleCommandManager\",\"layer\",\"DeleteCommand\",\"LoadFromProductJsonCommand\",\"CreateLayerThumbnailCommand\",\"CloseLoadingCommand\"]}"
+  },
+  {
+   "name": "click-addText",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"添加文字\",\"cls\":\"addText\",\"score\":100}"
+  },
+  {
+   "name": "after-addText-modals",
+   "ok": "PASS",
+   "detail": "[{\"tag\":\"INPUT\",\"cls\":\"input\",\"ph\":\"\",\"val\":\"92\"},{\"tag\":\"INPUT\",\"cls\":\"input\",\"ph\":\"\",\"val\":\"56\"},{\"tag\":\"INPUT\",\"cls\":\"input\",\"ph\":\"\",\"val\":\"1\"},{\"tag\":\"LI\",\"cls\":\"color backColor notdisabled\",\"ph\":\"\",\"val\":\"\"},{\"tag\":\"INPUT\",\"cls\":\"\",\"ph\":\"\",\"val\":\"on\"},{\"tag\":\"INPUT\",\"cls\":\"\",\"ph\":\"请输入订单号\",\"val\":\"\"},{\"tag\":\"DIV\",\"cls\":\"menuContItem textItem\",\"ph\":\"\",\"val\":\"\"},{\"tag\":\"INPUT\",\"cls\":\"\",\"ph\":\"\",\"val\":\"1\"},{\"tag\":\"INPUT\",\"cls\":\"\",\"ph\":\"\",\"val\":\"2\"},{\"tag\":\"INPUT\",\"cls\":\"\",\"ph\":\"\",\"val\":\"\"},{\"tag\":\"DIV\",\"cls\":\"layui-layer-content\",\"ph\":\"\",\"val\":\"\"},{\"tag\":\"TEXTAREA\",\"cls\":\"addContent\",\"ph\":\"请输入内容\",\"val\":\"\"},{\"tag\":\"SPAN\",\"cls\":\"layui-layer-setwin\",\"ph\":\"\",\"val\":\"\"},{\"tag\":\"DIV\",\"cls\":\"layui-layer-btn layui-layer-btn-c\",\"ph\":\"\",\"val\":\"\"},{\"tag\":\"A\",\"cls\":\"layui-layer-btn0\",\"ph\":\"\",\"val\":\"\"},{\"tag\":\"A\",\"cls\":\"layui-layer-btn1\",\"ph\":\"\",\"val\":\"\"}]"
+  }
+ ],
+ "errors": [],
+ "modalsAfter": [
+  {
+   "tag": "INPUT",
+   "cls": "input",
+   "ph": "",
+   "val": "92"
+  },
+  {
+   "tag": "INPUT",
+   "cls": "input",
+   "ph": "",
+   "val": "56"
+  },
+  {
+   "tag": "INPUT",
+   "cls": "input",
+   "ph": "",
+   "val": "1"
+  },
+  {
+   "tag": "LI",
+   "cls": "color backColor notdisabled",
+   "ph": "",
+   "val": ""
+  },
+  {
+   "tag": "INPUT",
+   "cls": "",
+   "ph": "",
+   "val": "on"
+  },
+  {
+   "tag": "INPUT",
+   "cls": "",
+   "ph": "请输入订单号",
+   "val": ""
+  },
+  {
+   "tag": "DIV",
+   "cls": "menuContItem textItem",
+   "ph": "",
+   "val": ""
+  },
+  {
+   "tag": "INPUT",
+   "cls": "",
+   "ph": "",
+   "val": "1"
+  },
+  {
+   "tag": "INPUT",
+   "cls": "",
+   "ph": "",
+   "val": "2"
+  },
+  {
+   "tag": "INPUT",
+   "cls": "",
+   "ph": "",
+   "val": ""
+  },
+  {
+   "tag": "DIV",
+   "cls": "layui-layer-content",
+   "ph": "",
+   "val": ""
+  },
+  {
+   "tag": "TEXTAREA",
+   "cls": "addContent",
+   "ph": "请输入内容",
+   "val": ""
+  },
+  {
+   "tag": "SPAN",
+   "cls": "layui-layer-setwin",
+   "ph": "",
+   "val": ""
+  },
+  {
+   "tag": "DIV",
+   "cls": "layui-layer-btn layui-layer-btn-c",
+   "ph": "",
+   "val": ""
+  },
+  {
+   "tag": "A",
+   "cls": "layui-layer-btn0",
+   "ph": "",
+   "val": ""
+  },
+  {
+   "tag": "A",
+   "cls": "layui-layer-btn1",
+   "ph": "",
+   "val": ""
+  }
+ ]
+}

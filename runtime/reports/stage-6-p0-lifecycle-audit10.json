@@ -1,0 +1,80 @@
+{
+ "ts": "2026-09-17T07:43:28.269Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R10",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"objs\":9}"
+  },
+  {
+   "name": "historyUtil",
+   "ok": "PASS",
+   "detail": "{\"keys\":[],\"fns\":{},\"prop.length\":\"number\"}"
+  },
+  {
+   "name": "hooks",
+   "ok": "INFO",
+   "detail": "{\"ok\":false,\"err\":\"Error: page.evaluate: ReferenceError: report is not defined\\n    at eval (eval at evaluate (:311:30), <anonymous>:28:41)\\n    at UtilityScript.evaluate (<anonymous>:313:16)\\n    at "
+  },
+  {
+   "name": "base",
+   "ok": "PASS",
+   "detail": "{\"objs\":9,\"typeCount\":{\"rect\":1,\"line\":8}}"
+  },
+  {
+   "name": "click-normal-text",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"普通文本\",\"cls\":\"text-item cancelEffect\",\"score\":100}"
+  },
+  {
+   "name": "canvas-pos",
+   "ok": "PASS",
+   "detail": "{\"x\":923,\"y\":535,\"w\":872,\"h\":530}"
+  },
+  {
+   "name": "after-place",
+   "ok": "INFO",
+   "detail": "before=9 after=9 type={\"rect\":1,\"line\":8}"
+  },
+  {
+   "name": "placed-identity",
+   "ok": "PASS",
+   "detail": "{\"objs\":9,\"list\":[{\"i\":1,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":2,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":3,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":4,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":5,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":6,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":7,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":8,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "log-placement",
+   "ok": "PASS",
+   "detail": ""
+  },
+  {
+   "name": "native-undo",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"撤销\",\"cls\":\"\",\"score\":100}"
+  },
+  {
+   "name": "after-undo",
+   "ok": "PASS",
+   "detail": "objs=9 {\"objs\":9,\"list\":[{\"i\":1,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":2,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":3,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":4,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":5,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":6,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":7,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":8,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "native-redo",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"\",\"cls\":\"redo disabled\",\"score\":30}"
+  },
+  {
+   "name": "after-redo",
+   "ok": "PASS",
+   "detail": "objs=9 {\"objs\":9,\"list\":[{\"i\":1,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":2,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":3,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":4,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":5,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":6,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":7,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}},{\"i\":8,\"t\":\"line\",\"tx\":\"\",\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "log-undoredo",
+   "ok": "PASS",
+   "detail": ""
+  }
+ ],
+ "errors": [
+  "hooks",
+  "after-place"
+ ]
+}

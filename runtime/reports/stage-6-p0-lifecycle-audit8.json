@@ -1,0 +1,62 @@
+{
+ "ts": "2026-09-17T07:40:05.955Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R8",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"objs\":9}"
+  },
+  {
+   "name": "undo-deep",
+   "ok": "PASS",
+   "detail": "{\"hasUndo\":true,\"hasSundry\":true,\"save\":\"function(g){if(1==d(\\\"#aiCup\\\").val()){if(c.isNoOneKey&&!this._redoBtn)return}else if(c.isNoOneKey)return;this.redo=[];this._redoBtn.addClass(\\\"disabled\\\");requirejs([\\\"CurrentCanvas\\\",\\\"sundry\\\"],function(b,k){var e=c.currentCanvasNum-1;-1>=e&&(e=0);a._canvas=b.getCurrentCanvas().canvas; a.state=b.getCurrentCanvas().createCustomJson();a.undo=c.undoAndRedo.undo[e];a.redo=c.undoAndRedo.redo[e];a.redo||(a.redo=[]);a.undo||(a.undo=[]);b=a.undo;b=0>=b.length?!1:a.state==b[b.length-1]?!0:!1;50<=a.undo.length&&a.undo.shift();0==b&&a.undo.push(a.state);c.undoAndRedo.undo[e]=a.undo;d(\\\".diyCanvas\\\").not(\\\".upper-canvas\\\").eq(e).parent().is(\\\":visible\\\")&&(1<a.undo.length?a._undoBtn.removeClass(\\\"disabled\\\"):a._undoBtn.addClass(\\\"disabled\\\"),0<a.redo.length?a._redoBtn.removeClass(\\\"disabled\\\"):a._redoBtn.addClass(\\\"disabled\\\")); g&&1<g.length&&(a._canvas.getActiveGroup()&&(a._canvas.getActiveGroup().addWithUpdate(null\",\"undoType\":\"object\",\"undoKeys\":[\"0\"],\"undoBtnEl\":{\"cls\":\"\"},\"redoBtnEl\":{\"cls\":\"\"},\"buttonControl\":\"function(d,b){c.isNoOneKey||(1<d?a._undoBtn.removeClass(\\\"disabled\\\"):a._undoBtn.addClass(\\\"disabled\\\"),0<b?a._redoBtn.removeClass(\\\"disabled\\\"):a._redoBtn.addClass(\\\"disabled\\\"))}\",\"replay\":\"function(g,b,k,e){if(1==d(\\\"#aiCup\\\").val()){if(c.isNoOneKey&&!d(\\\".rightEditor\\\").is(\\\":visible\\\"))return}else if(c.isNoOneKey)return;k.addClass(\\\"disabled\\\");e.addClass(\\\"disabled\\\");requirejs([\\\"CurrentCanvas\\\",\\\"sundry\\\"],function(e,h){var f=c.currentCanvasNum-1;-1>=f&&(f=0);b||(b=[]); a.state=g.pop();b.push(a.state);d(k).hasClass(\\\"redo\\\")?(c.undoAndRedo.redo[f]=b,e.getCurrentCanvas().drawCanvasJson(g[g.length-1])):(c.undoAndRedo.undo[f]=b,e.getCurrentCanvas().drawCanvasJson(a.state));a.undo=c.undoAndRedo.\",\"sundryKeys\":[\"drafting\",\"varlidateAddPage\",\"guid\",\"fallsShow\",\"isEmpty\",\"download\",\"setShowLayerImg\",\"validatePhoneNum\",\"getCookieUserId\",\"copyUrl2\",\"colorArray\",\"colorBGJbArray\",\"colorBGArray\",\"xnColorBGArray\",\"xnColorArray\",\"xnHabityArray\",\"PICNUM\",\"isEmptyObject\",\"historyUtil\",\"isEmptyArray\",\"pxToMM\",\"mmToPX\",\"historyColor\",\"historyBgJbColor\",\"xnCPHistoryColor\",\"selectFoldType\",\"stopBubble\",\"stopDefault\",\"deleteBlank\",\"deleteDesignBlank\",\"isString\",\"checkInputStr\",\"isNoExistImgForRq\",\"eachImgisExitArray\",\"isCardMarking\",\"isMarkverification\",\"isTextGroup\",\"getBgIndexByProduct\",\"testAndAddArray\",\"autoSaveParaments\",\"updateImgForItem\",\"isProductVoisNull\",\"isMaskImgEmpty\",\"initAfterProcess\",\"initAntProcess\",\"initGuaguaSilver\",\"initCardProcess\",\"initHandBagProcess\",\"setCanvasContinuRender\",\"initRedPacketProcess\",\"initCalendarProcess\",\"initSilkScreenProcess\",\"getAllMaskImg\",\"stopRenderNum\",\"updateCalendarBanAndHuan\"],\"sundryFns\":{\"drafting\":\"function(b,c){var d,e,g,u,q;a(document).mousemove(function(a){u=a.pageX;q=a.pageY});f=z.getCurrentCanvas();if(!f){return;throw Error(\\\"canvasObj不是有效对象，无法获取canvas属性\\\"); }a(c).draggable({appendTo:\\\"body\\\",d\",\"varlidateAddPage\":\"function(a){return/^\\\\-?([1-9]\\\\d*(\\\\.\\\\d{1,2})?|0\\\\.\\\\d{1,2})$|^0$/.test(a)?!0:!1}\",\"guid\":\"function(){return x()+x()+\\\"-\\\"+x()+\\\"-\\\"+x()+\\\"-\\\"+x()+\\\"-\\\"+x()+x()+x()}\",\"fallsShow\":\"function(b){b=new ba(b);b.reset({selector:\\\".item\\\", animate:!1,delay:0,cellW:function(a){return a/3},cellH:\\\"auto\\\",gutterX:5,gutterY:5});b.fitWidth();a(window).trigger(\\\"resize\\\");return b}\",\"isEmpty\":\"function(a){return\\\"\\\"==a||null==a||void 0==a||\\\"undefined\\\"==a||\\\"null\\\"==a?!0:!1}\",\"download\":\"function(a,c){var b=window.URL||window.webkitURL||window,e=new Blob([c]);c=document.createElementNS(\\\"http://www.w3.org/1999/xhtml\\\",\\\"a\\\");c.href=b.createObjectURL(e);c.download=a;a=document.createEvent(\",\"setShowLayerImg\":\"function(b){0==a(\\\".layerOrder .showOnlyLayer\\\").length?a(\\\".layerOrder\\\").append('\\\\x3ctr class\\\\x3d\\\"showOnlyLayer\\\"\\\\x3e\\\\x3ctd class\\"
+  },
+  {
+   "name": "state-n0",
+   "ok": "PASS",
+   "detail": "{\"objs\":9,\"undoLen\":50,\"stateLen\":7464}"
+  },
+  {
+   "name": "save-and-add",
+   "ok": "PASS",
+   "detail": "{\"saved\":true,\"added\":2,\"objs\":11}"
+  },
+  {
+   "name": "state-n1-after-save-add",
+   "ok": "PASS",
+   "detail": "{\"objs\":11,\"undoLen\":50,\"stateLen\":7464}"
+  },
+  {
+   "name": "native-undo-btn",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"cls\":\"\"}"
+  },
+  {
+   "name": "after-native-undo",
+   "ok": "PASS",
+   "detail": "{\"objs\":11,\"list\":[{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}},{\"i\":9,\"p\":{\"type\":\"textbox\",\"text\":\"OCR批次0\",\"fontSize\":16,\"fontFamily\":\"思源黑体 Regular\"}},{\"i\":10,\"p\":{\"type\":\"textbox\",\"text\":\"OCR批次1\",\"fontSize\":16,\"fontFamily\":\"思源黑体 Regular\"}}]}"
+  },
+  {
+   "name": "state-after-undo",
+   "ok": "PASS",
+   "detail": "{\"objs\":11,\"undoLen\":50,\"stateLen\":7464}"
+  },
+  {
+   "name": "native-redo-btn",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"cls\":\"\"}"
+  },
+  {
+   "name": "after-native-redo",
+   "ok": "PASS",
+   "detail": "{\"objs\":11,\"list\":[{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}},{\"i\":9,\"p\":{\"type\":\"textbox\",\"text\":\"OCR批次0\",\"fontSize\":16,\"fontFamily\":\"思源黑体 Regular\"}},{\"i\":10,\"p\":{\"type\":\"textbox\",\"text\":\"OCR批次1\",\"fontSize\":16,\"fontFamily\":\"思源黑体 Regular\"}}]}"
+  },
+  {
+   "name": "state-after-redo",
+   "ok": "PASS",
+   "detail": "{\"objs\":11,\"undoLen\":50,\"stateLen\":7464}"
+  }
+ ],
+ "errors": []
+}

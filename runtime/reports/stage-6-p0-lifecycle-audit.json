@@ -1,0 +1,104 @@
+{
+ "ts": "2026-09-17T07:19:51.577Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "modules=136 objs=9"
+  },
+  {
+   "name": "modules-by-keyword",
+   "ok": "PASS",
+   "detail": "AllCanvas, CalculationDesignAreaPixel, CanvasDiy, CanvasObjVO, CanvasToolBar, CheckTextBox, CloseLoadingCommand, CreateLayerThumbnailCommand, CurrentCanvas, CurrentCanvasInfo, CurvedText, DeleteCommand, DesignPageVO, DesignVO, FabricTable, GetChildRelativeCanvasXY, ICommand, LoadFromProductJsonCommand, MultiCanvasDiy, OneKeyCanvasDiy, SetTextColor, SetTextDecoration, SimpleCommandManager, TextPropBar, TextPropPanel, Undo, UpdateCanvasThumbnailCommand, fabric, html2canvas, js/mulitCanvas/v2/design/business/config.js, layer"
+  },
+  {
+   "name": "canvasobjvo-structure",
+   "ok": "PASS",
+   "detail": "voKeys=undefined index0Keys=undefined fabricVersion=undefined"
+  },
+  {
+   "name": "initial-objects",
+   "ok": "PASS",
+   "detail": "[{\"type\":\"rect\",\"text\":\"\",\"identityKeys\":28,\"picked\":{\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"isDesign\":true,\"isEdit\":false,\"type\":\"rect\"},\"ownKeys\":77},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":32},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":32},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":32},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":32},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":19},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":19},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":19},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":19}]"
+  },
+  {
+   "name": "native-buttons-candidates",
+   "ok": "PASS",
+   "detail": "[{\"tag\":\"LI\",\"text\":\"名片-新横版常规（9\",\"title\":\"名片-新横版常规（92*56\",\"aria\":\"\",\"cls\":\"\",\"id\":\"templateNames\"},{\"tag\":\"SPAN\",\"text\":\"印刷尺寸:\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"*\",\"title\":\"\",\"aria\":\"\",\"cls\":\"unit\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"mm\",\"title\":\"\",\"aria\":\"\",\"cls\":\"unit\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"出血尺寸:\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"mm\",\"title\":\"\",\"aria\":\"\",\"cls\":\"unit\",\"id\":\"\"},{\"tag\":\"I\",\"text\":\"出血线\",\"title\":\"\",\"aria\":\"\",\"cls\":\"icon-blood\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"出血线\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"I\",\"text\":\"出血线\",\"title\":\"\",\"aria\":\"\",\"cls\":\"icon-blood-hidden\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"出血线\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"I\",\"text\":\"参考线\",\"title\":\"\",\"aria\":\"\",\"cls\":\"icon-guide\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"参考线\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"I\",\"text\":\"参考线\",\"title\":\"\",\"aria\":\"\",\"cls\":\"icon-guide-hidden\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"参考线\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"I\",\"text\":\"缩略图\",\"title\":\"\",\"aria\":\"\",\"cls\":\"icon-thum\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"缩略图\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"I\",\"text\":\"缩略图\",\"title\":\"\",\"aria\":\"\",\"cls\":\"icon-thum-hidden\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"缩略图\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"LI\",\"text\":\"改尺寸\",\"title\":\"\",\"aria\":\"\",\"cls\":\"select adjust-size\",\"id\":\"\"},{\"tag\":\"I\",\"text\":\"改尺寸\",\"title\":\"\",\"aria\":\"\",\"cls\":\"icon-chicun f14\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"改尺寸\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"背景色\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"重置\",\"title\":\"\",\"aria\":\"\",\"cls\":\"resetBack\",\"id\":\"\"},{\"tag\":\"LI\",\"text\":\"清空画布\",\"title\":\"\",\"aria\":\"\",\"cls\":\"clearPage notdisabled\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"清空画布\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"自由绘制\",\"title\":\"\",\"aria\":\"\",\"cls\":\"\",\"id\":\"\"},{\"tag\":\"LI\",\"text\":\"颜色\",\"title\":\"\",\"aria\":\"\",\"cls\":\"color colorWz\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"颜色\",\"title\":\"\",\"aria\":\"\",\"cls\":\"tip\",\"id\":\"\"},{\"tag\":\"LI\",\"text\":\"汉仪行楷简\",\"title\":\"\",\"aria\":\"\",\"cls\":\"fontFamily\",\"id\":\"\"},{\"tag\":\"LI\",\"text\":\"对齐\",\"title\":\"\",\"aria\":\"\",\"cls\":\"align\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"对齐\",\"title\":\"\",\"aria\":\"\",\"cls\":\"tip\",\"id\":\"\"},{\"tag\":\"LI\",\"text\":\"间距\",\"title\":\"\",\"aria\":\"\",\"cls\":\"wordSpace\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"间距\",\"title\":\"\",\"aria\":\"\",\"cls\":\"tip\",\"id\":\"\"},{\"tag\":\"LI\",\"text\":\"对齐\",\"title\":\"\",\"aria\":\"\",\"cls\":\"groupAlign\",\"id\":\"\"},{\"tag\":\"SPAN\",\"text\":\"对齐\",\"title\":\"\",\"aria\":\"\",\"cls"
+  },
+  {
+   "name": "hooks-mounted",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"patched\":true}"
+  },
+  {
+   "name": "click-native-add-text",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"tag\":\"LI\",\"text\":\"文字\",\"title\":\"\",\"cls\":\"active\",\"score\":100}"
+  },
+  {
+   "name": "after-native-add-objects",
+   "ok": "INFO",
+   "detail": "before=9 after=9 typeCount={\"rect\":1,\"line\":8} [{\"type\":\"rect\",\"text\":\"\",\"identityKeys\":28,\"picked\":{\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"isDesign\":true,\"isEdit\":false,\"type\":\"rect\"},\"ownKeys\":77},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":32},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":32},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":32},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":32},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":19},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":19},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":19},{\"type\":\"line\",\"text\":\"\",\"identityKeys\":1,\"picked\":{\"type\":\"line\"},\"ownKeys\":19}]"
+  },
+  {
+   "name": "after-native-add-identity",
+   "ok": "PASS",
+   "detail": "{\"objCount\":9,\"list\":[{\"i\":0,\"type\":\"rect\",\"text\":\"\",\"dump\":\"{\\\"mediaIsBG\\\":true,\\\"mediaColor\\\":16777215,\\\"mediaScopeType\\\":\\\"rect\\\",\\\"mediaIsFill\\\":true,\\\"mediaIsPrimary\\\":true,\\\"mediaMediaType\\\":\\\"shape\\\",\\\"markuuid\\\":\\\"\\\",\\\"multiUuid\\\":\\\"65439d85-8a84-47c7-b1b1-6cfc06a2ed01\\\",\\\"layerAlpha\\\":1,\\\"isEdit\\\":false,\\\"printLocationX\\\":-0.5,\\\"printLocationY\\\":-0.5,\\\"printLocationWidth\\\":600,\\\"printLocationHeight\\\":365.21739130434787,\\\"printLocationRotation\\\":0,\\\"deleteState\\\":false,\\\"locationX\\\":-0.5,\\\"locationY\\\":-0.5,\\\"locationWidth\\\":600,\\\"locationHeight\\\":365,\\\"locationFactWidth\\\":10000,\\\"locationFactHeight\\\":10000,\\\"locationRotation\\\":0,\\\"isDesign\\\":true,\\\"isDesignShape\\\":false,\\\"layerNum\\\":0}\"},{\"i\":1,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":2,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":3,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":4,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":5,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":6,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":7,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":8,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"}]}"
+  },
+  {
+   "name": "click-native-undo",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"tag\":\"SPAN\",\"text\":\"撤销\",\"title\":\"\",\"cls\":\"\",\"score\":100}"
+  },
+  {
+   "name": "after-native-undo",
+   "ok": "PASS",
+   "detail": "before-undo=9 after-undo=9 expected=9 typeCount={\"rect\":1,\"line\":8}"
+  },
+  {
+   "name": "click-native-redo",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"tag\":\"LI\",\"text\":\"\",\"title\":\"\",\"cls\":\"redo disabled\",\"score\":30}"
+  },
+  {
+   "name": "after-native-redo",
+   "ok": "INFO",
+   "detail": "after-redo=9 expect=9 typeCount={\"rect\":1,\"line\":8}"
+  },
+  {
+   "name": "repro-ocr-create",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"via\":\"fabric.Textbox\",\"objType\":\"textbox\",\"ctorChain\":[\"b\",\"b\",\"b\",\"b\",\"b\",\"Object\"]}"
+  },
+  {
+   "name": "repro-ocr-identity",
+   "ok": "PASS",
+   "detail": "{\"objCount\":10,\"list\":[{\"i\":0,\"type\":\"rect\",\"text\":\"\",\"dump\":\"{\\\"mediaIsBG\\\":true,\\\"mediaColor\\\":16777215,\\\"mediaScopeType\\\":\\\"rect\\\",\\\"mediaIsFill\\\":true,\\\"mediaIsPrimary\\\":true,\\\"mediaMediaType\\\":\\\"shape\\\",\\\"markuuid\\\":\\\"\\\",\\\"multiUuid\\\":\\\"65439d85-8a84-47c7-b1b1-6cfc06a2ed01\\\",\\\"layerAlpha\\\":1,\\\"isEdit\\\":false,\\\"printLocationX\\\":-0.5,\\\"printLocationY\\\":-0.5,\\\"printLocationWidth\\\":600,\\\"printLocationHeight\\\":365.21739130434787,\\\"printLocationRotation\\\":0,\\\"deleteState\\\":false,\\\"locationX\\\":-0.5,\\\"locationY\\\":-0.5,\\\"locationWidth\\\":600,\\\"locationHeight\\\":365,\\\"locationFactWidth\\\":10000,\\\"locationFactHeight\\\":10000,\\\"locationRotation\\\":0,\\\"isDesign\\\":true,\\\"isDesignShape\\\":false,\\\"layerNum\\\":0}\"},{\"i\":1,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":2,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":3,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":4,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":5,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":6,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":7,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":8,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":9,\"type\":\"textbox\",\"text\":\"OCR回归测试文字\",\"dump\":\"{\\\"fontSize\\\":20}\"}]}"
+  },
+  {
+   "name": "repro-ocr-then-undo",
+   "ok": "PASS",
+   "detail": "before=9 after=10 {\"objCount\":10,\"list\":[{\"i\":0,\"type\":\"rect\",\"text\":\"\",\"dump\":\"{\\\"mediaIsBG\\\":true,\\\"mediaColor\\\":16777215,\\\"mediaScopeType\\\":\\\"rect\\\",\\\"mediaIsFill\\\":true,\\\"mediaIsPrimary\\\":true,\\\"mediaMediaType\\\":\\\"shape\\\",\\\"markuuid\\\":\\\"\\\",\\\"multiUuid\\\":\\\"65439d85-8a84-47c7-b1b1-6cfc06a2ed01\\\",\\\"layerAlpha\\\":1,\\\"isEdit\\\":false,\\\"printLocationX\\\":-0.5,\\\"printLocationY\\\":-0.5,\\\"printLocationWidth\\\":600,\\\"printLocationHeight\\\":365.21739130434787,\\\"printLocationRotation\\\":0,\\\"deleteState\\\":false,\\\"locationX\\\":-0.5,\\\"locationY\\\":-0.5,\\\"locationWidth\\\":600,\\\"locationHeight\\\":365,\\\"locationFactWidth\\\":10000,\\\"locationFactHeight\\\":10000,\\\"locationRotation\\\":0,\\\"isDesign\\\":true,\\\"isDesignShape\\\":false,\\\"layerNum\\\":0}\"},{\"i\":1,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":2,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":3,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":4,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":5,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":6,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":7,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":8,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":9,\"type\":\"textbox\",\"text\":\"OCR回归测试文字\",\"dump\":\"{\\\"fontSize\\\":20}\"}]}"
+  },
+  {
+   "name": "repro-ocr-undo-again",
+   "ok": "PASS",
+   "detail": "after2=10 {\"objCount\":10,\"list\":[{\"i\":0,\"type\":\"rect\",\"text\":\"\",\"dump\":\"{\\\"mediaIsBG\\\":true,\\\"mediaColor\\\":16777215,\\\"mediaScopeType\\\":\\\"rect\\\",\\\"mediaIsFill\\\":true,\\\"mediaIsPrimary\\\":true,\\\"mediaMediaType\\\":\\\"shape\\\",\\\"markuuid\\\":\\\"\\\",\\\"multiUuid\\\":\\\"65439d85-8a84-47c7-b1b1-6cfc06a2ed01\\\",\\\"layerAlpha\\\":1,\\\"isEdit\\\":false,\\\"printLocationX\\\":-0.5,\\\"printLocationY\\\":-0.5,\\\"printLocationWidth\\\":600,\\\"printLocationHeight\\\":365.21739130434787,\\\"printLocationRotation\\\":0,\\\"deleteState\\\":false,\\\"locationX\\\":-0.5,\\\"locationY\\\":-0.5,\\\"locationWidth\\\":600,\\\"locationHeight\\\":365,\\\"locationFactWidth\\\":10000,\\\"locationFactHeight\\\":10000,\\\"locationRotation\\\":0,\\\"isDesign\\\":true,\\\"isDesignShape\\\":false,\\\"layerNum\\\":0}\"},{\"i\":1,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":2,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":3,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":4,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":5,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":6,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":7,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":8,\"type\":\"line\",\"text\":\"\",\"dump\":\"{}\"},{\"i\":9,\"type\":\"textbox\",\"text\":\"OCR回归测试文字\",\"dump\":\"{\\\"fontSize\\\":20}\"}]}"
+  },
+  {
+   "name": "audit-log",
+   "ok": "PASS",
+   "detail": "[instance-fns] []"
+  }
+ ],
+ "errors": [
+  "after-native-add-objects",
+  "after-native-redo"
+ ],
+ "baseline": {
+  "objCount": 9
+ },
+ "finalObjCount": 10
+}
