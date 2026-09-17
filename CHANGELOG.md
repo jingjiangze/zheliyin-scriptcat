@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Stage 5.6 P0 hotfix（2026-09-17）— v0.3.8.2：BRIDGE_NO_REPLY 探针自分类（真机第 3 轮）
+- 真机确认模块在、多画布均无 getCanvasInfo 回复：失败分支先发 `probe`（旧桥也回）分类根因——probe 有回复 = 桥活着但缺画布能力（@require 缓存旧 page-bridge → 提示删除重装，勿仅点更新）；probe 无回复 = 本窗口无桥监听（画布在 iframe / 未注入 → 跨框架提示 + 补一次注入）。分类在重试注入之前执行，避免误判。
+- `[zy-ocr]` 日志带 `probe= true/false + marker` 状态；版本统一 0.3.8.2。
+
 ### Stage 5.6 P0 hotfix（2026-09-17）— v0.3.8.1：BRIDGE_NO_REPLY 分级二段（真机第 2 轮反馈）
 - 真机确认失败分支为 `BRIDGE_NO_REPLY`（抽屉已出现、非早点击、同 thirdDiyAdd.do 入口）：失败时重试注入桥一次，并区分根因——`pageBridge` 模块缺失（@require 下载失败 → 提示重装/换扩展版）vs 桥注入但无响应（画布在 iframe → 提示刷新/重新安装/检查脚本启用）。
 - init 增加 `[zy-ocr][INIT]` 依赖加载状态日志（无敏感信息），便于远程定位。
