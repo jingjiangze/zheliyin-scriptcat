@@ -40,7 +40,7 @@
 ```
 
 > ✅ **`DEFECT-VER-01` 保持已修复**：`@version` / `const VERSION` / `extension/assistant.js VERSION` / `manifest version_name` 四处一致 = `0.3.7.0`（`manifest.version` = `0.3.7`，为 `@version` 前三段）。
-> 修复前表现为「面板显示 0.3.0.1 + 每次提示发现新版」；现由 AI-2 在 `e0abcf0` 与 `604f552` 连续复验 PASS，CI 的 metadata check 会持续守护该不变量（`docs/BRANCH_POLICY.md` §4.1）。
+> 修复前表现为「面板显示 0.3.0.1 + 每次提示发现新版」；现由 AI-2 在 `e0abcf0`、`604f552`、`7c1df21` 连续复验 PASS，CI 的 metadata check 会持续守护该不变量（`docs/BRANCH_POLICY.md` §4.1）。
 
 ---
 
@@ -82,7 +82,7 @@ curl -sSk https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/
 # b37018fece8c9ddfa3602b35a47e78da013726d3f9343c0c15bbca238d0033b2
 ```
 
-> 该 sha256 对应 `demo` @ `604f552`，并已实测**与 raw 响应完全一致**（即 CDN 无滞后）。
+> 该 sha256 对应 `demo` @ `604f552` = `7c1df21`（两者 userscript 字节相同），并已实测**与 raw 响应完全一致**（即 CDN 无滞后）。
 > 版本升级后该值会变 —— 那时以 `node runtime/check-demo-update.js` 的实测输出为准，不要照抄本文档。
 
 ---

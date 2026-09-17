@@ -59,11 +59,15 @@ Version | Commit | Date | Branch | Raw URL
 | 项 | 值 |
 |---|---|
 | **Version** | `@version` = `0.3.7.0` |
-| **Commit** | `604f552795ef2bad9a6876705a5cd76e64376e36` |
+| **Commit** | `7c1df21f85604899f88bf3862367754d7c5107d2`（tip；内容基线 `604f552795ef2bad9a6876705a5cd76e64376e36`） |
 | **Date** | 2026-09-17 |
 | **Branch** | `demo` |
 | **Raw URL** | `https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js` |
 | **userscript sha256（git = raw 实测）** | `b37018fece8c9ddfa3602b35a47e78da013726d3f9343c0c15bbca238d0033b2`（72705 bytes） |
+
+> **`7c1df21` 为证据型提交**：新增 `docs/evidence/stage-5.6/` 与 `runtime/probe-gm-*.js` 共 16 文件（+966 −50），
+> **userscript 字节未变**（sha256 与 `604f552` 完全相同）→ 发布交付物无变化，安装 URL 与用户侧行为均不变。
+> 含 AI-1 执行记录 001：**OCR-only Demo 真机回归 22/22 PASS**（bg / active / early-click → 可编辑文本框；旧套版浮窗默认隐藏；`zyShowTemplatePanel=1` 恢复校验证明套版代码保留）。
 
 **主功能（相对 v0.3.6.0 的增量）—— ⚠️ 这是一次产品范围变更**：
 
@@ -75,7 +79,7 @@ Version | Commit | Date | Branch | Raw URL
 | **初始化幂等提升** | `addStyles` / `installPageBridge` / `checkForUpdateSoon` 上提到 `init`，使 OCR 抽屉可独立工作（不依赖套版浮窗；`renderPanel` 内保留原调用作双保险） |
 | **兜底** | `if (!OCR_ONLY_MODE || !nativeOk) renderPanel()` —— 原生右栏缺失（页面变体）时**仍挂载旧浮窗** |
 
-**技术实现（AI-1）**：`45eb057`（OCR-only 模式 + 幂等提升 + 版本 0.3.7.0 同步）→ `604f552`（P5 OCR-only 真机 harness：bg/active/early-click 三场景 + OCR-only 默认断言 + refresh 不重复 + `zyShowTemplatePanel=1` 恢复校验 + rollback）。
+**技术实现（AI-1）**：`45eb057`（OCR-only 模式 + 幂等提升 + 版本 0.3.7.0 同步）→ `604f552`（P5 OCR-only 真机 harness：bg/active/early-click 三场景 + OCR-only 默认断言 + refresh 不重复 + `zyShowTemplatePanel=1` 恢复校验 + rollback）→ `3481306`（P5 harness v2：改用官方 ScriptCat `serviceWorker/value/setScriptValues` 写值 API）→ `7c1df21`（证据归档 + 真机回归 22/22 PASS）。
 
 **⚠️ 治理线判定的重要影响**：
 
@@ -102,10 +106,10 @@ v0.3.7.0 起    ：Demo 默认能力 = 仅图片识别（套版填层需手动�
 
 | 层级 | 状态 | 证据 |
 |---|---|---|
-| `ENGINE_TEST` | ✅ `PASS` | `tests/editor-object-model/run.js` —— **12 套件全 PASS**（AI-2 于 `604f552` 复跑，`exit=0`） |
-| `REAL_USER` | ⏳ `PENDING` | 尚未由真实用户完成「上传图片 → 点按钮 → 双击编辑 → 二次识别 → 更新」闭环 |
+| `ENGINE_TEST` | ✅ `PASS` | `tests/editor-object-model/run.js` —— **12 套件全 PASS**（AI-2 于 `604f552` 与 `7c1df21` 各复跑一次，`exit=0`） |
+| `REAL_USER` | ⏳ `PENDING` | 尚未由真实用户完成「上传图片 → 点按钮 → 双击编辑 → 二次识别 → 更新」闭环。**注**：AI-1 的 22/22 属 ScriptCat 真实引擎自动化回归（`REAL_ENGINE`），**不等于**真实用户手工闭环（`REAL_USER`），二者不得互相替代 |
 
-**四字段 Gate（AI-2 于 2026-09-17 对 `604f552` 实测复核）**：
+**四字段 Gate（AI-2 于 2026-09-17 对 `604f552` / `7c1df21` 实测复核）**：
 
 ```text
 DEMO_INSTALLABLE = PASS   （raw 200；10 条依赖全部 200；@require 闭包全部指向 demo；元数据 PASS）
@@ -118,11 +122,13 @@ DEMO_SAFE        = PASS   （secret scan 通过；凭据 AES-GCM 加密落库；
 
 | 检查 | 命令 | 结果 |
 |---|---|---|
-| 依赖闭包（结构） | `node runtime/check-demo-closure.js --ref 604f552 --expect-branch demo` | ✅ `PASS`（10 条全 `branch-consistent`） |
-| 更新链 | `node runtime/check-demo-update.js --ref 604f552` | ✅ `PASS`（0.3.7.0 ≥ 已记录 0.3.6.0） |
+| 依赖闭包（结构） | `node runtime/check-demo-closure.js --ref 7c1df21 --expect-branch demo` | ✅ `PASS`（10 条全 `branch-consistent`） |
+| 依赖闭包（联网） | 追加 `--net` | ✅ `PASS`（10 条全 HTTP `200`，`violations: []`） |
+| 更新链 | `node runtime/check-demo-update.js --ref 7c1df21` | ✅ `PASS`（raw 200 / 72705 bytes / 0.3.7.0 ≥ 已记录 0.3.6.0） |
 | 版本四处 | `manifest` / `assistant.js` / userscript | ✅ `0.3.7.0`（`manifest.version` = `0.3.7`） |
 | 单元测试 | `node tests/editor-object-model/run.js` | ✅ **12/12 套件 `ALL PASS`，exit=0** |
-| raw 与 git 一致性 | sha256 比对 | ✅ raw = git = `b37018fe…`（72705 bytes） |
+| 密钥扫描 | `node .github/scripts/secret-scan.js` | ✅ `PASS`（0 error，1 项预存 warning） |
+| raw 与 git 一致性 | sha256 比对 | ✅ raw = git(`604f552`) = git(`7c1df21`) = `b37018fe…`（72705 bytes） |
 
 ---
 
@@ -187,8 +193,8 @@ DEMO_SAFE        = PASS   （secret scan 通过；凭据 AES-GCM 加密落库；
 AI-1 在 1680c81 引入 v0.3.6.0 时自行保持四处一致：
   @version 0.3.6.0 / const VERSION 0.3.6.0 / assistant.js 0.3.6.0 / manifest.version_name 0.3.6.0
   manifest.version = 0.3.6（@version 前三段，符合约定）
-v0.3.7.0（604f552）继续保持四处一致，manifest.version = 0.3.7
-状态：  RESOLVED → 保持 RESOLVED（AI-2 于 e0abcf0 与 604f552 两次复验 PASS）
+v0.3.7.0（604f552 → 7c1df21）继续保持四处一致，manifest.version = 0.3.7
+状态：  RESOLVED → 保持 RESOLVED（AI-2 于 e0abcf0 / 604f552 / 7c1df21 三次复验 PASS）
 ```
 
 **AI-2 审计发现（本版本）**：
