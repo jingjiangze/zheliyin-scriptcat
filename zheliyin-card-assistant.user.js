@@ -925,6 +925,10 @@
                 }
               }
               if (!unified) unified = unifyCandidates((r && r.lines) || [], size);
+              // 诊断（仅数字，无文本内容）：聚合行几何（行数/中心y/高），用于行聚类容差真机调参
+              if (unified && unified.length && typeof aggregateLineCandidates === "function") {
+                ocrLog("GROUP", "lines=" + unified.length + " y=" + unified.map((l) => Math.round(l.bbox.y || 0)).join(",") + " h=" + unified.map((l) => Math.round(l.bbox.height || 0)).join(","));
+              }
               // Stage 6.1 §3/§8：统一候选(行) → TextBlock（1 TextBlock = 1 textbox）；容错：模块缺失时逐行独立 block
               const blocks = (typeof buildTextBlocks === "function")
                 ? buildTextBlocks(unified)
