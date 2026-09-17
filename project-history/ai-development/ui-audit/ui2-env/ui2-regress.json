@@ -1,0 +1,60 @@
+{
+  "R1": {
+    "panels": 1,
+    "tools": 1,
+    "ocrBtns": 1,
+    "legacy": 0
+  },
+  "R2": {
+    "before": 1,
+    "after": 1,
+    "afterWait": 1
+  },
+  "R3": {
+    "drawerStatus": 1,
+    "drawerStatusText": "就绪",
+    "allStatusNodes": 1
+  },
+  "R4": {
+    "statusAfterClick": "正在准备图片…",
+    "btnDisabled": false,
+    "newErrors": []
+  },
+  "R5": {
+    "ak": true,
+    "sk": true,
+    "save": true,
+    "test": true,
+    "details": true
+  },
+  "R6": {
+    "afterOpen": "flex",
+    "afterClose": "none",
+    "afterReopen": "flex"
+  },
+  "R7": {
+    "legacy": false,
+    "legacyButtons": 0
+  },
+  "R8": {
+    "panel": {
+      "x": 1299,
+      "w": 311,
+      "right": 1610
+    },
+    "rightBar": {
+      "x": 1610,
+      "w": 190
+    },
+    "overlap": false,
+    "toolBtnInsideRightBar": {
+      "toolX": 1610,
+      "toolW": 190,
+      "rbX": 1610,
+      "rbW": 190,
+      "contained": true
+    },
+    "hScroll": false
+  },
+  "pageErrors": []
+}

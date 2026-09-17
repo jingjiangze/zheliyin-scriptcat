@@ -1,0 +1,318 @@
+diff --git a/zheliyin-card-assistant.user.js
+index 3f26f66..4fea975 100644
+--- a/zheliyin-card-assistant.user.js
++++ b/zheliyin-card-assistant.user.js
+@@ -290,32 +290,223 @@
+         box-shadow: -8px 0 24px rgba(16, 24, 40, .12);
+         font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+         display: flex;
+         flex-direction: column;
+         overflow: hidden;
+       }
++      /* =====================================================================
++         UI-2：折立印原生设计语言对齐（Native-adjacent）
++         ---------------------------------------------------------------------
++         目标（任务书 §十五）：普通用户视觉上不容易看出这是 userscript 注入的 UI。
++         依据（docs/UI_NATIVE_AUDIT.md §3 实测 + §0.A 真机实测）：
++           font-family : "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif
++           font-size   : 12px | 13.3333px | 14px      font-weight: 400
++           栅格         : 4 / 5 / 8 / 10 / 20
++           主品牌蓝     : #278fcf        AI 功能蓝 : #3b82f6
++           次要文字     : #6a6a6a        一般文字  : #424242
++           分隔线       : #eaeaea        边框      : #dbdbdb / #e6e6e6
++           原生 AI 面板 : .design-ai-panel width:310px; bg:#fdfdfd; radius:8px;
++                          shadow:rgba(0,0,0,.1) 0 4px 20px; z-index:100
++           .ai-panel-header : padding:10px 20px; border-bottom:1px solid #eaeaea; background:#fff
++           .ai-panel-title  : font-size:16px; font-weight:bold
++           .ai-panel-body   : padding:10px 15px 10px 5px; flex-grow:1; overflow-y:auto
++           原生 input       : height:18px; radius:3px; border:1px solid #dbdbdb; color:#545454; font-size:13.3333px
++         ---------------------------------------------------------------------
++         namespace 约束（§十一）：所有新增规则一律以 #zy-native-ocr-panel 作用域限定，
++         且类名统一 zyo-* 前缀，禁止污染 .button/.panel/.input/.header 等全局选择器。
++         同时不修改 legacy 浮窗 #zy-card-assistant 的既有 .zy-* 规则（§十二：旧浮窗保留）。
++         ===================================================================== */
++      #zy-native-ocr-panel {
++        width: 310px;                     /* 对齐 .design-ai-panel（原 245px） */
++        right: 190px;
++        background: #fdfdfd;              /* 对齐 .design-ai-panel（原 #ffffff） */
++        color: #424242;                   /* 原生一般文字（原 #172033） */
++        border-left: 1px solid #eaeaea;   /* 原生分隔线（原 #d7dce5） */
++        box-shadow: rgba(0, 0, 0, .1) 0 4px 20px;   /* 对齐 .design-ai-panel（原 -8px 0 24px） */
++        z-index: 100;                     /* 原生 AI 面板量级（原 2147483000 → UI-RISK-01） */
++        font-family: "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif;
++      }
++      /* UI-RISK-10：面板头由 legacy 拖拽头（蓝底白字 + cursor:move）改为原生 .ai-panel-header 体例 */
++      #zy-native-ocr-panel .zy-head {
++        padding: 10px 20px;
++        background: #fff;
++        color: #424242;
++        border-bottom: 1px solid #eaeaea;
++        cursor: default;                  /* 抽屉不可拖拽（原 cursor:move） */
++        gap: 6px;                         /* UI-3-FIX-02：对齐原生 6px 节奏（原 8px） */
++      }
++      #zy-native-ocr-panel .zy-title {
++        font-size: 16px;                  /* 对齐 .ai-panel-title（原 14px/700） */
++        font-weight: 700;
++        color: #424242;
++        line-height: 22.4px;              /* UI-3-FIX-01：原生 16×1.4（原 19.2px）→ header 自然高度 42.4px */
++      }
++      #zy-native-ocr-panel .zy-icon-btn {
++        background: #fff;                 /* 取消 rgba(255,255,255,.18) 白底透传 */
++        color: #6a6a6a;
++        border: 1px solid #dbdbdb;
++        border-radius: 3px;               /* 原生 input 圆角（原 5px） */
++        height: 24px;
++        min-width: 24px;
++        font-size: 12px;
++      }
++      #zy-native-ocr-panel .zy-icon-btn:hover { background: #f1f1f1; color: #424242; }
++      /* 面板体对齐 .ai-panel-body（并保留原布局属性） */
+       #zy-native-ocr-panel .zy-body {
+         flex: 1;
+         display: grid;
++        padding: 10px 15px 10px 15px;
+         gap: 10px;
+-        padding: 12px;
+         overflow: auto;
++        color: #424242;
++        font-size: 12px;
++        line-height: 16.8px;
++      }
++      #zy-native-ocr-panel .zy-label {
++        font-size: 12px;
++        color: #6a6a6a;                   /* 原生次要文字（原 #475467/700） */
++        font-weight: 400;
++        line-height: 16.8px;
++      }
++      #zy-native-ocr-panel .zy-input {
++        border: 1px solid #dbdbdb;        /* 原生边框（原 #d7dce5） */
++        border-radius: 3px;               /* 原生圆角（原 6px） */
++        height: 26px;
++        padding: 0 5px;                   /* 原生 select 内边距体例 */
++        color: #545454;
++        background: #fff;
++        font-size: 13.3333px;
++        font-family: inherit;
++      }
++      #zy-native-ocr-panel .zy-input:focus { border-color: #278fcf; outline: none; }
++      #zy-native-ocr-panel .zy-note {
++        font-size: 12px;
++        color: #6a6a6a;                   /* UI-3-FIX-09：原生次要文字（原 #999/#98a2b3） */
++        line-height: 16.8px;
++      }
++      /* ---------------------------------------------------------------------
++         UI-3：按钮族对齐原生 .ai-btn-blue / .ai-btn-outline（§五 实测）
++         原生实测（div#aiShejiGenDesignBtn.ai-btn-blue）：
++           height:44px; border-radius:22px; font-size:15px; font-weight:700;
++           line-height:21px; box-shadow:rgba(59,130,246,.3) 0 4px 12px;
++           display:flex; align-items:center; justify-content:center;
++         原生 .ai-btn-outline：height:44px; radius:22px; font:14/400;
++           border:1px solid #eaeaea; background:#fff; color:#333; padding:0 24px;
++         原生 .ai-btn-blue.disabled：background:#e0e0e0; color:#999;
++         --------------------------------------------------------------------- */
++      #zy-native-ocr-panel .zy-btn {
++        display: flex;
++        align-items: center;
++        justify-content: center;
++        background: #3b82f6;              /* 原生 AI 功能蓝 */
++        border: 0;
++        border-radius: 22px;              /* UI-3-FIX-04：原生胶囊（原 4px） */
++        height: 44px;                     /* UI-3-FIX-04：原生 44px（原 min-height:32px） */
++        min-height: 44px;
++        padding: 0 24px;
++        font-size: 15px;                  /* UI-3-FIX-04：原生 15px（原 14px） */
++        font-weight: 700;                 /* UI-3-FIX-04：原生 700（原 400） */
++        line-height: 21px;                /* UI-3-FIX-04：原生 15×1.4（原 normal） */
++        color: #fff;
++        box-shadow: rgba(59, 130, 246, .3) 0 4px 12px;   /* UI-3-FIX-04：原生投影（原 none） */
++        cursor: pointer;
++        font-family: inherit;
++      }
++      #zy-native-ocr-panel .zy-btn:hover { background: #2f74e0; }
++      #zy-native-ocr-panel .zy-btn:disabled {
++        background: #e0e0e0;              /* 原生 .ai-btn-blue.disabled */
++        color: #999;
++        box-shadow: none;
++        cursor: not-allowed;
++      }
++      /* 次要按钮对齐原生 .ai-btn-outline（同高同圆角；不做胶囊描边例外） */
++      #zy-native-ocr-panel .zy-btn.secondary {
++        background: #fff;
++        color: #333333;                   /* 原生 outline 文字（原 #424242） */
++        border: 1px solid #eaeaea;        /* UI-3-FIX-06：原生 #eaeaea（原 #dbdbdb） */
++        box-shadow: none;
++        font-size: 14px;                  /* 原生 outline 为 14px */
++        font-weight: 400;                 /* 原生 outline 为 400 */
++        line-height: 19.6px;              /* 原生 14×1.4 */
++      }
++      #zy-native-ocr-panel .zy-btn.secondary:hover { background: #f1f1f1; }
++      /* 异常按钮：主按钮完全铺满（原 280×138 巨型蓝块 → UI-3-FIX-04） */
++      #zy-native-ocr-panel #zy-native-ocr-btn {
++        width: 100%;
++        align-self: center;
++      }
++      #zy-native-ocr-panel .zy-settings {
++        border: 1px solid #eaeaea;        /* 原生分隔线（原 #e4e7ec） */
++        border-radius: 4px;
++        background: #fff;                 /* 原 #fbfcfe */
++        padding: 10px;
++      }
++      #zy-native-ocr-panel .zy-settings summary {
++        color: #6a6a6a;
++        font-size: 12px;
++        font-weight: 400;
++        line-height: 16.8px;
++      }
++      #zy-native-ocr-panel .zy-settings-body { gap: 10px; margin-top: 8px; }
++      #zy-native-ocr-panel .zy-status {
++        font-size: 12px;
++        color: #6a6a6a;
++        line-height: 16.8px;
+       }
+-      #zy-native-ocr-panel .zy-head { flex: none; }
++      #zy-native-ocr-panel .zy-divider { background: #eaeaea; }
++      #zy-native-ocr-panel .zy-actions { gap: 8px; }
++      /* ---------------------------------------------------------------------
++         右栏原生体例入口（§5.3 施工图）
++         原生基准：右栏 li 体例 → font-size:12px; padding:0 7px; color:#424242;
++                   无实色大按钮；一律带 diyicon 图标；行高约 26–33px。
++         消除旧形态：background:#2e7ff0 蓝底 + height:52px + font 18px/700 + Arial + 单字「识」。
++         --------------------------------------------------------------------- */
+       #zy-native-ocr-tool-btn {
+-        display: block;
++        display: flex;
++        align-items: center;
++        justify-content: flex-start;
++        gap: 5px;
++        box-sizing: border-box;           /* 关键：li 默认 content-box，会导致 190+padding 撑破右栏 */
+         width: 100%;
+-        height: 52px;
++        height: 33px;                     /* 对齐 .tabPageLayer 高度体例（原 52px） */
++        padding: 0 14px;                  /* UI-3-FIX-08：对齐原生 li 的 20px 节奏但留窄栏余量（原 0 10px） */
+         border: 0;
+-        background: #2e7ff0;
+-        color: #fff;
+-        font-size: 18px;
+-        font-weight: 700;
++        border-bottom: 1px solid #eaeaea;
++        background: #fff;                 /* 原 #2e7ff0 蓝底 → 原生白底 */
++        color: #424242;                   /* 原生一般文字（原 #fff） */
++        font-family: "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif;
++        font-size: 12px;                  /* 原生正文（原 18px） */
++        font-weight: 400;                 /* 原生字重（原 700） */
++        line-height: 16.8px;
++        text-align: left;
++        list-style: none;                 /* li 默认圆点 */
+         cursor: pointer;
+       }
+-      #zy-native-ocr-tool-btn:hover { background: #1f6feb; }
++      #zy-native-ocr-tool-btn:hover { background: #f1f1f1; color: #278fcf; }
++      #zy-native-ocr-tool-btn:active { background: #eaeaea; }
++      #zy-native-ocr-tool-btn.zyo-active {
++        background: #f1f1f1;
++        color: #278fcf;
++      }
++      #zy-native-ocr-tool-btn .zyo-entry-icon {
++        font-size: 14px;
++        line-height: 1;
++        color: #6a6a6a;
++        flex: none;
++        font-family: inherit;
++      }
++      #zy-native-ocr-tool-btn:hover .zyo-entry-icon { color: #278fcf; }
++      /* 抽屉内 button/input/select 一律继承原生字体链（消除 Arial 回退） */
++      #zy-native-ocr-panel button,
++      #zy-native-ocr-panel input,
++      #zy-native-ocr-panel select,
++      #zy-native-ocr-panel textarea,
++      #zy-native-ocr-panel summary {
++        font-family: "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif;
++      }
++      /* ================= UI-2 native styles end ================= */
+     `);
+   }
+ 
+   function renderPanel() {
+     addStyles();
+     installPageBridge();
+@@ -553,12 +744,27 @@
+   }
+ 
+   // ---- Stage 5.5B P2-B：原生右栏 OCR 面板（§14-§17，P2-A 审计结论：.rightPageBar.rightBar 稳定）----
+   // 主 UI = 原生右栏邻接抽屉 + 右栏工具按钮；旧浮窗保留为 fallback（§16）。
+   let nativeOcrMounted = false;
+   let nativeObs = null;
++  // UI-2：抽屉显隐统一入口（避免多处直接写 style.display 造成状态不一致）
++  function setNativeDrawerOpen(open) {
++    const d = document.getElementById("zy-native-ocr-panel");
++    if (!d) return;
++    d.style.display = open ? "flex" : "none";
++    const tool = document.getElementById("zy-native-ocr-tool-btn");
++    if (tool) tool.classList.toggle("zyo-active", !!open);
++  }
++  function isNativeDrawerOpen() {
++    const d = document.getElementById("zy-native-ocr-panel");
++    return !!d && d.style.display !== "none";
++  }
++  function toggleNativeDrawer() {
++    setNativeDrawerOpen(!isNativeDrawerOpen());
++  }
+   function renderNativeOcrDrawer() {
+     const existing = document.getElementById("zy-native-ocr-panel");
+     if (existing) return existing;
+     const drawer = document.createElement("aside");
+     drawer.id = "zy-native-ocr-panel";
+     const akPlaceholder = "百度智能云 API Key（" + (baiduConfigured() ? "已配置 " + baiduAkMasked() : "未配置") + "）";
+@@ -599,33 +805,48 @@
+             </div>
+             <div class="zy-note" id="zy-baidu-status-native">凭据为客户端可访问凭据，仅存本机脚本配置；请勿使用高权限/长期/不可撤销的 Key。</div>
+           </div>
+         </details>
+       </div>`;
+     document.body.appendChild(drawer);
++    // 默认收起（与原生 AI 面板一致：按需展开，不主动遮挡右栏内容）
++    drawer.style.display = "none";
+     // 绑定（suffix=-native，与浮窗共用 bindOcrControls 单一来源）
+     const closeBtn = drawer.querySelector("#zy-native-close");
+-    if (closeBtn) closeBtn.addEventListener("click", () => { drawer.style.display = "none"; });
++    if (closeBtn) closeBtn.addEventListener("click", () => { setNativeDrawerOpen(false); });
+     const ocrBtn = drawer.querySelector("#zy-native-ocr-btn");
+     if (ocrBtn) ocrBtn.addEventListener("click", handleOcrImage);
+     bindOcrControls(drawer, "-native", null);
+     return drawer;
+   }
+ 
+   function mountNativeOcrPanel() {
+     const rightBar = document.querySelector(".rightPageBar.rightBar") || document.querySelector(".rightBar");
+     // 无原生右栏（页面变体）→ 返回 false，由旧浮窗承担主 UI
+     if (!rightBar) return false;
+     const drawer = renderNativeOcrDrawer();
+     if (!document.getElementById("zy-native-ocr-tool-btn")) {
+-      const tool = document.createElement("button");
++      // UI-2：原生右栏 li 体例入口（图标 + 完整文案），替代原蓝底 52px 单字「识」按钮。
++      // 用 <li> 而非 <button>：与原生 .tabPageLayer 内 li 体例一致，弱化"外挂按钮"观感。
++      const tool = document.createElement("li");
+       tool.id = "zy-native-ocr-tool-btn";
+       tool.title = "图片文字识别";
+-      tool.textContent = "识";
++      tool.setAttribute("role", "button");
++      tool.setAttribute("tabindex", "0");
++      const icon = document.createElement("i");
++      icon.className = "diyicon icon-discern zyo-entry-icon";   // 复用原生"文字识别"图标类名（§2.2）
++      const txt = document.createElement("span");
++      txt.textContent = "图片文字识别";                          // 完整文案（原为单字「识」）
++      tool.appendChild(icon);
++      tool.appendChild(txt);
+       rightBar.appendChild(tool);
+-      tool.addEventListener("click", () => { drawer.style.display = drawer.style.display === "none" ? "flex" : "none"; });
++      const toggle = () => toggleNativeDrawer();
++      tool.addEventListener("click", toggle);
++      tool.addEventListener("keydown", (ev) => {
++        if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(); }
++      });
+     }
+     nativeOcrMounted = true;
+     return true;
+   }
+ 
+   // SPA 重渲染防护：rightBar 可能晚于 init 创建或被页面框架重建/移除，

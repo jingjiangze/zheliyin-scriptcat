@@ -1,0 +1,77 @@
+orig lines = 1555
+mod  lines = 1741
+first diff line (0-based) = 295  => 1-based 296
+last diff (orig) = 624  => 1-based 625
+last diff (mod)  = 810  => 1-based 811
+
+=== 改动区间外的前后文（orig） ===
+--- before first diff (orig lines 292-295) ---
+293:         flex-direction: column;
+294:         overflow: hidden;
+295:       }
+--- after last diff (orig lines 626-629) ---
+626:     }
+627:     nativeOcrMounted = true;
+628:     return true;
+629:   }
+
+prefix identical lines = 295
+suffix identical lines = 930
+
+=== 被改动区间是否触及 OCR 技术链关键字 ===
+!! HIT handleOcrImage
+   ok  ocrCreate
+   ok  ocrPrepare
+   ok  getCanvasInfo
+   ok  unifyCandidates
+   ok  buildItemsFromOcr
+   ok  Tesseract
+   ok  OCRCandidate
+   ok  candidate-normalizer
+   ok  fallback-policy
+   ok  credential-crypto
+   ok  function runLocalOcr
+   ok  baiduOcr
+   ok  createBaiduProvider
+
+=== 改动区间（mod）前 40 行 ===
+296:       /* =====================================================================
+297:          UI-2：折立印原生设计语言对齐（Native-adjacent）
+298:          ---------------------------------------------------------------------
+299:          目标（任务书 §十五）：普通用户视觉上不容易看出这是 userscript 注入的 UI。
+300:          依据（docs/UI_NATIVE_AUDIT.md §3 实测 + §0.A 真机实测）：
+301:            font-family : "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif
+302:            font-size   : 12px | 13.3333px | 14px      font-weight: 400
+303:            栅格         : 4 / 5 / 8 / 10 / 20
+304:            主品牌蓝     : #278fcf        AI 功能蓝 : #3b82f6
+305:            次要文字     : #6a6a6a        一般文字  : #424242
+306:            分隔线       : #eaeaea        边框      : #dbdbdb / #e6e6e6
+307:            原生 AI 面板 : .design-ai-panel width:310px; bg:#fdfdfd; radius:8px;
+308:                           shadow:rgba(0,0,0,.1) 0 4px 20px; z-index:100
+309:            .ai-panel-header : padding:10px 20px; border-bottom:1px solid #eaeaea; background:#fff
+310:            .ai-panel-title  : font-size:16px; font-weight:bold
+311:            .ai-panel-body   : padding:10px 15px 10px 5px; flex-grow:1; overflow-y:auto
+312:            原生 input       : height:18px; radius:3px; border:1px solid #dbdbdb; color:#545454; font-size:13.3333px
+313:          ---------------------------------------------------------------------
+314:          namespace 约束（§十一）：所有新增规则一律以 #zy-native-ocr-panel 作用域限定，
+315:          且类名统一 zyo-* 前缀，禁止污染 .button/.panel/.input/.header 等全局选择器。
+316:          同时不修改 legacy 浮窗 #zy-card-assistant 的既有 .zy-* 规则（§十二：旧浮窗保留）。
+317:          ===================================================================== */
+318:       #zy-native-ocr-panel {
+319:         width: 310px;                     /* 对齐 .design-ai-panel（原 245px） */
+320:         right: 190px;
+321:         background: #fdfdfd;              /* 对齐 .design-ai-panel（原 #ffffff） */
+322:         color: #424242;                   /* 原生一般文字（原 #172033） */
+323:         border-left: 1px solid #eaeaea;   /* 原生分隔线（原 #d7dce5） */
+324:         box-shadow: rgba(0, 0, 0, .1) 0 4px 20px;   /* 对齐 .design-ai-panel（原 -8px 0 24px） */
+325:         z-index: 100;                     /* 原生 AI 面板量级（原 2147483000 → UI-RISK-01） */
+326:         font-family: "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif;
+327:       }
+328:       /* UI-RISK-10：面板头由 legacy 拖拽头（蓝底白字 + cursor:move）改为原生 .ai-panel-header 体例 */
+329:       #zy-native-ocr-panel .zy-head {
+330:         padding: 10px 20px;
+331:         background: #fff;
+332:         color: #424242;
+333:         border-bottom: 1px solid #eaeaea;
+334:         cursor: default;                  /* 抽屉不可拖拽（原 cursor:move） */
+335:         gap: 8px;

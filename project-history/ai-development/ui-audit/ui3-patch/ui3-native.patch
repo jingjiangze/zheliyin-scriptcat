@@ -1,0 +1,117 @@
+diff --git a/zheliyin-card-assistant.user.js b/zheliyin-card-assistant.user.js
+index 092fb2f..4fea975 100644
+--- a/zheliyin-card-assistant.user.js
++++ b/zheliyin-card-assistant.user.js
+@@ -329,19 +329,19 @@
+       #zy-native-ocr-panel .zy-head {
+         padding: 10px 20px;
+         background: #fff;
+         color: #424242;
+         border-bottom: 1px solid #eaeaea;
+         cursor: default;                  /* 抽屉不可拖拽（原 cursor:move） */
+-        gap: 8px;
++        gap: 6px;                         /* UI-3-FIX-02：对齐原生 6px 节奏（原 8px） */
+       }
+       #zy-native-ocr-panel .zy-title {
+         font-size: 16px;                  /* 对齐 .ai-panel-title（原 14px/700） */
+         font-weight: 700;
+         color: #424242;
+-        line-height: 19.2px;
++        line-height: 22.4px;              /* UI-3-FIX-01：原生 16×1.4（原 19.2px）→ header 自然高度 42.4px */
+       }
+       #zy-native-ocr-panel .zy-icon-btn {
+         background: #fff;                 /* 取消 rgba(255,255,255,.18) 白底透传 */
+         color: #6a6a6a;
+         border: 1px solid #dbdbdb;
+         border-radius: 3px;               /* 原生 input 圆角（原 5px） */
+@@ -377,31 +377,66 @@
+         font-size: 13.3333px;
+         font-family: inherit;
+       }
+       #zy-native-ocr-panel .zy-input:focus { border-color: #278fcf; outline: none; }
+       #zy-native-ocr-panel .zy-note {
+         font-size: 12px;
+-        color: #999;                      /* 原生弱文字（原 #98a2b3） */
++        color: #6a6a6a;                   /* UI-3-FIX-09：原生次要文字（原 #999/#98a2b3） */
+         line-height: 16.8px;
+       }
+-      /* 主按钮对齐 .ai-btn-blue（原生 AI 功能蓝 #3b82f6），圆角收进原生体例 */
++      /* ---------------------------------------------------------------------
++         UI-3：按钮族对齐原生 .ai-btn-blue / .ai-btn-outline（§五 实测）
++         原生实测（div#aiShejiGenDesignBtn.ai-btn-blue）：
++           height:44px; border-radius:22px; font-size:15px; font-weight:700;
++           line-height:21px; box-shadow:rgba(59,130,246,.3) 0 4px 12px;
++           display:flex; align-items:center; justify-content:center;
++         原生 .ai-btn-outline：height:44px; radius:22px; font:14/400;
++           border:1px solid #eaeaea; background:#fff; color:#333; padding:0 24px;
++         原生 .ai-btn-blue.disabled：background:#e0e0e0; color:#999;
++         --------------------------------------------------------------------- */
+       #zy-native-ocr-panel .zy-btn {
+-        background: #3b82f6;
+-        border-radius: 4px;
+-        min-height: 32px;
+-        font-size: 14px;
+-        font-weight: 400;
++        display: flex;
++        align-items: center;
++        justify-content: center;
++        background: #3b82f6;              /* 原生 AI 功能蓝 */
++        border: 0;
++        border-radius: 22px;              /* UI-3-FIX-04：原生胶囊（原 4px） */
++        height: 44px;                     /* UI-3-FIX-04：原生 44px（原 min-height:32px） */
++        min-height: 44px;
++        padding: 0 24px;
++        font-size: 15px;                  /* UI-3-FIX-04：原生 15px（原 14px） */
++        font-weight: 700;                 /* UI-3-FIX-04：原生 700（原 400） */
++        line-height: 21px;                /* UI-3-FIX-04：原生 15×1.4（原 normal） */
+         color: #fff;
++        box-shadow: rgba(59, 130, 246, .3) 0 4px 12px;   /* UI-3-FIX-04：原生投影（原 none） */
++        cursor: pointer;
++        font-family: inherit;
+       }
+       #zy-native-ocr-panel .zy-btn:hover { background: #2f74e0; }
++      #zy-native-ocr-panel .zy-btn:disabled {
++        background: #e0e0e0;              /* 原生 .ai-btn-blue.disabled */
++        color: #999;
++        box-shadow: none;
++        cursor: not-allowed;
++      }
++      /* 次要按钮对齐原生 .ai-btn-outline（同高同圆角；不做胶囊描边例外） */
+       #zy-native-ocr-panel .zy-btn.secondary {
+         background: #fff;
+-        color: #424242;
+-        border: 1px solid #dbdbdb;
++        color: #333333;                   /* 原生 outline 文字（原 #424242） */
++        border: 1px solid #eaeaea;        /* UI-3-FIX-06：原生 #eaeaea（原 #dbdbdb） */
++        box-shadow: none;
++        font-size: 14px;                  /* 原生 outline 为 14px */
++        font-weight: 400;                 /* 原生 outline 为 400 */
++        line-height: 19.6px;              /* 原生 14×1.4 */
+       }
+       #zy-native-ocr-panel .zy-btn.secondary:hover { background: #f1f1f1; }
++      /* 异常按钮：主按钮完全铺满（原 280×138 巨型蓝块 → UI-3-FIX-04） */
++      #zy-native-ocr-panel #zy-native-ocr-btn {
++        width: 100%;
++        align-self: center;
++      }
+       #zy-native-ocr-panel .zy-settings {
+         border: 1px solid #eaeaea;        /* 原生分隔线（原 #e4e7ec） */
+         border-radius: 4px;
+         background: #fff;                 /* 原 #fbfcfe */
+         padding: 10px;
+       }
+@@ -430,13 +465,13 @@
+         align-items: center;
+         justify-content: flex-start;
+         gap: 5px;
+         box-sizing: border-box;           /* 关键：li 默认 content-box，会导致 190+padding 撑破右栏 */
+         width: 100%;
+         height: 33px;                     /* 对齐 .tabPageLayer 高度体例（原 52px） */
+-        padding: 0 10px;
++        padding: 0 14px;                  /* UI-3-FIX-08：对齐原生 li 的 20px 节奏但留窄栏余量（原 0 10px） */
+         border: 0;
+         border-bottom: 1px solid #eaeaea;
+         background: #fff;                 /* 原 #2e7ff0 蓝底 → 原生白底 */
+         color: #424242;                   /* 原生一般文字（原 #fff） */
+         font-family: "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif;
+         font-size: 12px;                  /* 原生正文（原 18px） */
