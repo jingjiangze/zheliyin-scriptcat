@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+### Stage 5.6（2026-09-17）— OCR-only Demo：最小停用套版助手 UI（交付B）
+- Demo 主 UI 切换为原生右栏「图片文字识别」抽屉：默认不再挂载旧套版浮窗 `#zy-card-assistant`（renderPanel/套版字段/正反面/诊断等代码完整保留，仅停用挂载入口）。
+- 初始化调整（最小改动）：`addStyles`/`installPageBridge`/`checkForUpdateSoon` 前置到 `initZheliyin`（三者均幂等，renderPanel 内保留原调用），`OCR_ONLY_MODE = GM_getValue("zyShowTemplatePanel","0") !== "1"` 决定是否挂载浮窗；原生右栏缺失的页面变体自动回退浮窗兜底。
+- 恢复开关：脚本存储 `zyShowTemplatePanel="1"` 可恢复套版浮窗（含豆包 AI 设置/字段网格/正反面套版/诊断/更新提示）。
+- 版本统一 0.3.7.0（userscript @version / const VERSION / manifest / assistant / README / DEMO_REAL_MACHINE_TEST）。
+- 审计：`docs/STAGE_5_6_OCR_ONLY_DEMO_AUDIT.md`（UI 结构/依赖矩阵/停用方案/风险/最小修改）；指令归档 `docs/ai-instructions/stage-5.6/001-ocr-demo.md`。
+- 回归：单测保绿 + 真机 ScriptCat 三场景（背景图/选中图/早点击）Native OCR 主链 → 可编辑 Textbox；套版代码保留（静态 + 开关恢复动态验证）。
+- 未改动：field-core/config-core/ai-client/page-bridge/baidu-provider/fallback-policy/candidate-normalizer/credential-crypto/OCR 主链。
+
 ### Stage 5.5B（2026-09-16）— OCR 产品化（云端备用 + 面板工具化，进行中）
 - 修复「识别图片文字点按钮无反应」双重根因：① `bindPanel` 绑定已移除的 `#zy-probe` → 提前 TypeError → OCR 按钮未绑定（恢复诊断按钮 + 防御性绑定）；② 隔离世界读不到 requirejs `CanvasObjVO` → 直读画布返回 null。② 按既有桥机制根治：`page-bridge.js` 新增只读消息 `getCanvasInfo` / `ocrPrepare`（页面世界解析目标图 active→背景图→首图 + element→toDataURL + 显示几何），userscript 改 `waitForCanvasReady`（Promise 轮询真实 ready 信号，非固定 sleep）+ 过早点击显式「正在等待编辑器加载…」状态。
 - 新增百度云 OCR（用户已确认选型：百度通用文字识别 + 保留本地）：`extension/src/ocr/baidu-provider.js`（2026-06 官方文档核对：`/rest/2.0/ocr/v1/general` 标准含位置版；token 30 天缓存 + 110/111 自动刷新；≤4M/≤4096px 压缩保护；错误码人话映射）+ 面板「识别方式」（自动/仅本地/百度云端）+「百度云 OCR」AK/SK 脱敏存储/测试连接；`fallback-policy.js` local-first 决策矩阵。

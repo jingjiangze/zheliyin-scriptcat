@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.6.0
+// @version      0.3.7.0
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -42,7 +42,12 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.6.0";
+  const VERSION = "0.3.7.0";
+
+  // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
+  // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
+  // GM 开关 zyShowTemplatePanel="1" 可恢复旧套版浮窗（豆包 AI 设置/字段/正反面/诊断/更新提示）。
+  const OCR_ONLY_MODE = GM_getValue("zyShowTemplatePanel", "0") !== "1";
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   // DEFAULT_BASE_URL / DEFAULT_MODEL 已迁移至 config-core（@require 加载，作用域共享，单一来源）
@@ -1483,12 +1488,18 @@
   }
 
   function initZheliyin() {
-    renderPanel(); // 旧浮窗（套版等全部功能，保留为 fallback）
-    // P2-B：原生右栏存在则优先原生化；rightBar 晚到时由 observer 补挂
-    mountNativeOcrPanel();
+    // Stage 5.6（OCR-only Demo）：样式/页桥/更新检查前置到 init，OCR 抽屉不再依赖套版浮窗。
+    // addStyles/installPageBridge/checkForUpdateSoon 三者均幂等（renderPanel 内保留原调用，双保险）。
+    addStyles();
+    installPageBridge();
+    // P2-B：原生右栏存在则优先原生化（Demo 主 UI）；rightBar 晚到时由 observer 补挂
+    const nativeOk = mountNativeOcrPanel();
     observeNativeRemount();
     // P4+：凭据加密配置预载（README 不落明文；解密后缓存）
     loadBaiduConfig().catch((e) => ocrLog && ocrLog("ERROR", "credential load: " + String(e && e.message || e)));
+    // 旧浮窗（套版等全部功能，代码保留）：非 OCR-only 模式，或原生右栏缺失（页面变体）时挂载
+    if (!OCR_ONLY_MODE || !nativeOk) renderPanel();
+    checkForUpdateSoon();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initZheliyin);
