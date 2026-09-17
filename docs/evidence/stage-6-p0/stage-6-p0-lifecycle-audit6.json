@@ -1,0 +1,57 @@
+{
+ "ts": "2026-09-17T07:37:35.315Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R6",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"objs\":9}"
+  },
+  {
+   "name": "undo-state",
+   "ok": "PASS",
+   "detail": "{\"keys\":[\"undo\",\"redo\",\"undoLength\",\"init\",\"save\",\"replay\",\"buttonControl\",\"_undoBtn\",\"_redoBtn\",\"_canvas\",\"state\"],\"undoLength\":50,\"stateType\":\"string\",\"canvasType\":\"fabric-canvas\"}"
+  },
+  {
+   "name": "undo-redo-btn-handlers",
+   "ok": "PASS",
+   "detail": "{\"撤销\":{\"evs\":[],\"srcs\":[]},\"重做\":\"not-found\"}"
+  },
+  {
+   "name": "before-add",
+   "ok": "PASS",
+   "detail": "{\"tag\":\"t\",\"objs\":9,\"undoLen\":50,\"stateLen\":7464}"
+  },
+  {
+   "name": "raw-add-3",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"added\":3,\"count\":12}"
+  },
+  {
+   "name": "after-add-undolen",
+   "ok": "PASS",
+   "detail": "{\"tag\":\"t\",\"objs\":12,\"undoLen\":50,\"stateLen\":7464}"
+  },
+  {
+   "name": "direct-undo-after-raw",
+   "ok": "PASS",
+   "detail": "{\"err\":\"no fn\"}"
+  },
+  {
+   "name": "after-direct-undo",
+   "ok": "PASS",
+   "detail": "{\"tag\":\"t\",\"objs\":12,\"undoLen\":50,\"stateLen\":7464}"
+  },
+  {
+   "name": "direct-redo",
+   "ok": "PASS",
+   "detail": "{\"err\":\"no fn\"}"
+  },
+  {
+   "name": "after-direct-redo",
+   "ok": "PASS",
+   "detail": "{\"tag\":\"t\",\"objs\":12,\"undoLen\":50,\"stateLen\":7464}"
+  }
+ ],
+ "errors": []
+}

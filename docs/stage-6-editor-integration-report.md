@@ -91,15 +91,18 @@ U.save()→add→U.save:   undoLength 仍=50（守卫/异步取样未记录）
 
 ## 四、真机回归（P0 harness，252438 合成名片背景）
 
-- 场景：注入白底黑字 4 文字块（张三/销售经理/电话：13800138000 同块 + 独立区）→ 本地 OCR → 读回。
-- 本轮测量点（`runtime/stage-6-p0-editor-integration.js`）：
-  - detectedBlocks / createdTextboxes 对齐
-  - textbox 可双击编辑
-  - identity 镜像：multiUuid(v4) / mediaMediaType=text / layerNum>0 / location* 数值
-  - TextBlock 多行合并（sourceLineCount≥2）
-  - forcedWrap 诊断字段
-  - 原生「撤销」点击行为（如实记录）
-- 结果：见 `runtime/reports/stage-6-p0-editor-integration.json`（第一次运行时 @require 命中 GitHub raw CDN 旧缓存，已重推后复测；最终值以复测报告为准）。
+- 场景：注入白底黑字 4 文字块（张三/销售经理/电话：13800138000 同块 + 独立区「北京折立印科技」）→ 本地 OCR → 读回。
+- 最终结果（`runtime/reports/stage-6-p0-editor-integration.json`，@require 刷新 + 两处真机缺陷修复后）：
+  - `GROUP lines=4 y=72,132,192,449 h=56,59,53,47`：4 个视觉行正确聚类（逐字 bbox 字高差异 1.5~1.8×，行聚类容差已按 y 主/高 0.5 调参）；
+  - **TextBlock → 2 个 textbox**：块1 = `张三\n销售经理\n电话:13800138000`（3 源行、`\n` 保留、无中文空格、手机号连续）；块2 = 独立区不合并（§5/§8/§9 达标）；
+  - 全部可双击编辑；`multiUuid` v4（原生 `sundry.guid()`）、`mediaMediaType=text`、`layerNum>0`、`location*` 数值（identity 镜像 PASS）；
+  - `forcedWrap=0`；`createdCount==detectedBlocks==2`；`editorInteg={undo:true,savePre:true,savePost:true,ident:2,uv4:2}`。
+- 原生「撤销」点击行为如实记录（before=2 after=2）：raw-add 未被原生历史跟踪 → undo 闭环 PENDING（见 §五 U-1）。
+- 过程性真机缺陷（已修，各成一 commit）：
+  1. `@require` 模块命中 GitHub raw CDN 旧缓存（重推 + 等待刷新后复测）；
+  2. executor word bbox 为 `{x0,y0,x1,y1}` → 行聚类空聚合回退行级（`groupWordsToLines` 先 normBox 再过滤）；
+  3. chi_sim 逐字 bbox 同行字高差异大 → 行聚类按 y 主、字高容差 0.5；
+  4. 纯中文行不得采用带空格的中文 Tesseract `line.text`（§5 空格回潮）。
 
 ## 五、未解决问题清单（honest inventory）
 

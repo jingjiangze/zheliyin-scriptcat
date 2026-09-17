@@ -1,0 +1,56 @@
+{
+ "ts": "2026-09-17T07:45:24.428Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R11",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"objs\":9}"
+  },
+  {
+   "name": "info",
+   "ok": "PASS",
+   "detail": "{\"objs\":9,\"typeCount\":{\"rect\":1,\"line\":8},\"guid0\":\"d80380e9-d35a-222b-f3ae-82c914536013\",\"guid1\":\"8cafba8c-b187-dac0-733d-c875a03693e8\",\"guidIsV4\":true}"
+  },
+  {
+   "name": "click-normal-text",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"普通文本\",\"cls\":\"text-item cancelEffect\",\"score\":100}"
+  },
+  {
+   "name": "upper-canvas-rect",
+   "ok": "PASS",
+   "detail": "{\"x\":993,\"y\":588,\"w\":872,\"h\":530}"
+  },
+  {
+   "name": "after-approach-A",
+   "ok": "INFO",
+   "detail": "before=9 after=9 type={\"rect\":1,\"line\":8}"
+  },
+  {
+   "name": "dblclick-normal-text",
+   "ok": "PASS",
+   "detail": ""
+  },
+  {
+   "name": "after-approach-B",
+   "ok": "INFO",
+   "detail": "before=9 after=9 type={\"rect\":1,\"line\":8}"
+  },
+  {
+   "name": "after-approach-C",
+   "ok": "INFO",
+   "detail": "before=9 after=9 type={\"rect\":1,\"line\":8}"
+  },
+  {
+   "name": "final",
+   "ok": "PASS",
+   "detail": "{\"objs\":9,\"typeCount\":{\"rect\":1,\"line\":8},\"guid0\":\"73bd570c-4520-eec1-8661-bef0988f2bcc\",\"guid1\":\"38bc3efa-bc15-7f23-63cb-d8785bd33bdd\",\"guidIsV4\":true}"
+  }
+ ],
+ "errors": [
+  "after-approach-A",
+  "after-approach-B",
+  "after-approach-C"
+ ]
+}

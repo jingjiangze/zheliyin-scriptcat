@@ -1,0 +1,74 @@
+{
+ "ts": "2026-09-17T07:34:31.209Z",
+ "stage": "STAGE-6-P0-EDITOR-LIFECYCLE-AUDIT-R5",
+ "steps": [
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"objs\":9}"
+  },
+  {
+   "name": "base-state",
+   "ok": "PASS",
+   "detail": "{\"objCount\":9,\"typeCount\":{\"rect\":1,\"line\":8},\"undoAndRedoType\":\"object\",\"undoAndRedoSample\":null,\"canvasObjInfoKeys\":[\"bleedLinesArr\",\"canvasToProductObjArr\",\"copyAndRedoCanvas\",\"canvasPackingBoxArray\",\"diyCanvasW\"],\"cutImgsLayerLen\":0}"
+  },
+  {
+   "name": "hooks",
+   "ok": "PASS",
+   "detail": "{\"ok\":true}"
+  },
+  {
+   "name": "click-addText",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"添加文字\",\"cls\":\"addText\",\"score\":100}"
+  },
+  {
+   "name": "canvas-pos",
+   "ok": "PASS",
+   "detail": "{\"x\":949,\"y\":524,\"w\":872,\"h\":530}"
+  },
+  {
+   "name": "after-native-add",
+   "ok": "INFO",
+   "detail": "before=9 after=9 type={\"rect\":1,\"line\":8}"
+  },
+  {
+   "name": "native-text-identity",
+   "ok": "PASS",
+   "detail": "{\"objCount\":9,\"list\":[{\"i\":0,\"p\":{\"type\":\"rect\",\"multiUuid\":\"140560f4-a64a-4065-8c59-32757c886033\",\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"locationRotation\":0,\"printLocationX\":-0.5,\"printLocationY\":-0.5,\"isDesign\":true,\"isEdit\":false,\"deleteState\":false}},{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "click-undo",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"撤销\",\"cls\":\"\",\"score\":100}"
+  },
+  {
+   "name": "after-undo",
+   "ok": "PASS",
+   "detail": "count=9 {\"objCount\":9,\"list\":[{\"i\":0,\"p\":{\"type\":\"rect\",\"multiUuid\":\"140560f4-a64a-4065-8c59-32757c886033\",\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"locationRotation\":0,\"printLocationX\":-0.5,\"printLocationY\":-0.5,\"isDesign\":true,\"isEdit\":false,\"deleteState\":false}},{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "click-redo",
+   "ok": "PASS",
+   "detail": "{\"clicked\":true,\"text\":\"\",\"cls\":\"redo disabled\",\"score\":30}"
+  },
+  {
+   "name": "after-redo",
+   "ok": "PASS",
+   "detail": "count=9 {\"objCount\":9,\"list\":[{\"i\":0,\"p\":{\"type\":\"rect\",\"multiUuid\":\"140560f4-a64a-4065-8c59-32757c886033\",\"markuuid\":\"\",\"layerNum\":0,\"mediaMediaType\":\"shape\",\"locationX\":-0.5,\"locationY\":-0.5,\"locationWidth\":600,\"locationHeight\":365,\"locationRotation\":0,\"printLocationX\":-0.5,\"printLocationY\":-0.5,\"isDesign\":true,\"isEdit\":false,\"deleteState\":false}},{\"i\":1,\"p\":{\"type\":\"line\"}},{\"i\":2,\"p\":{\"type\":\"line\"}},{\"i\":3,\"p\":{\"type\":\"line\"}},{\"i\":4,\"p\":{\"type\":\"line\"}},{\"i\":5,\"p\":{\"type\":\"line\"}},{\"i\":6,\"p\":{\"type\":\"line\"}},{\"i\":7,\"p\":{\"type\":\"line\"}},{\"i\":8,\"p\":{\"type\":\"line\"}}]}"
+  },
+  {
+   "name": "end-state",
+   "ok": "PASS",
+   "detail": "{\"objCount\":9,\"typeCount\":{\"rect\":1,\"line\":8},\"undoAndRedoType\":\"object\",\"undoAndRedoSample\":null,\"canvasObjInfoKeys\":[\"bleedLinesArr\",\"canvasToProductObjArr\",\"copyAndRedoCanvas\",\"canvasPackingBoxArray\",\"diyCanvasW\"],\"cutImgsLayerLen\":0}"
+  },
+  {
+   "name": "audit-log",
+   "ok": "PASS",
+   "detail": "undo-instance-keys | [\"undo\",\"redo\",\"undoLength\",\"init\",\"save\",\"replay\",\"buttonControl\",\"_undoBtn\",\"_redoBtn\",\"_canvas\",\"state\"]\nundo-proto-keys | []\nscm-instance-keys | []"
+  }
+ ],
+ "errors": [
+  "after-native-add"
+ ]
+}
