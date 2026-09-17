@@ -33,6 +33,10 @@ const path = require("path");
 const DEFAULT_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js";
 const DEMO_RELEASE_DOC = "docs/DEMO_RELEASE.md";
 
+// 仓库根：本脚本位于 <root>/runtime/，据此定位仓库根并用 `git -C` 执行，
+// 这样无论从哪个 cwd 调用（本地 / CI）都能正确解析引用。
+const REPO_ROOT = path.resolve(__dirname, "..");
+
 function parseArgs(argv) {
   const o = { json: false, ref: null, url: DEFAULT_URL, strictNet: false, timeout: 20000, out: null };
   for (let i = 2; i < argv.length; i++) {
@@ -49,7 +53,7 @@ function parseArgs(argv) {
 }
 
 function gitOrNull(args) {
-  try { return execFileSync("git", args, { encoding: "utf8", maxBuffer: 1 << 26 }).trim(); }
+  try { return execFileSync("git", ["-C", REPO_ROOT, ...args], { encoding: "utf8", maxBuffer: 1 << 26 }).trim(); }
   catch (_) { return null; }
 }
 
@@ -110,7 +114,7 @@ async function fetchRaw(url, timeout) {
 
 (async () => {
   const opt = parseArgs(process.argv);
-  const root = process.cwd();
+  const root = REPO_ROOT;
   const violations = [];
   const warnings = [];
 

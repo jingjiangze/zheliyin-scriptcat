@@ -243,9 +243,95 @@ git status --ignored --porcelain
 
 ---
 
-## 9. 维护规则
+## 10. 第三轮审计 —— 百度云 OCR / 凭据 / 隐私（2026-09-17，对象：demo `e0abcf0` v0.3.6.0）
+
+> 范围：用户指令 §十八（百度 AK/SK）、§十九（OCR 图片隐私）、§二十（云 OCR 请求边界）。
+> 审查对象：`demo` @ `e0abcf0`（v0.3.6.0）。方法：全树正则扫描 + 逐文件读源码 + 结构可达性分析。
+
+### 10.1 §十八 —— 百度 AK/SK 审计
+
+| 检查项 | 结论 | 依据 |
+|---|---|---|
+| 仓库中是否存在硬编码真实密钥 | ✅ **无** | 全树扫描 `(api[_-]?key|secret|token|ak|sk)["']?\s*[:=]\s*["'][A-Za-z0-9_\-]{16,}["']` 仅 2 处命中，且均为**假值**：`runtime/stage5-5b-p4.js:23-24` 的 `FAKE_AK = "AK-FAKE-4P4-123456"` / `FAKE_SK = "SK-FAKE-4P4-654321"` |
+| 凭据读取方式 | ✅ 运行时注入 | `baidu-provider.js` 的 `getConfig: () => ({ apiKey, secretKey })`，provider 自身**不接触任何存储 API**（依赖注入） |
+| 凭据落盘形态 | ✅ **加密** | `credential-crypto.js`：AES-256-GCM（WebCrypto）；格式 `v1:<iv(base64)>.<ct(base64)>`；IV 每次加密随机；KEK 32B 随机存 `zyBaiduCryptoKek` |
+| 明文是否被清除 | ✅ 是 | 旧键 `zyBaiduAk`/`zyBaiduSk` 在迁移后立即 `GM_setValue(..., "")` 清零（userscript L521-531、L544-545） |
+| 无 `crypto.subtle` 时 | ✅ **拒存** | `saveBaiduConfigPlain` 首行返回 `{ok:false, message:"当前环境不支持加密存储（WebCrypto 不可用），为保护凭据未保存"}` |
+| 是否可能被误解密 | ✅ 安全降级 | `decryptSecret` 对损坏/KEK 不匹配一律 `catch → null`，**不抛错、不带密文进日志** |
+| UI 是否掩码 | ✅ 是 | `maskKey(v) = v.slice(0,4) + "•••" + "(" + v.length + "位)"`；输入框 `type="password"`；placeholder 用掩码 |
+| token 缓存 | ⚠️ 披露 | `zyBaiduToken` + `zyBaiduTokenExpiryAt`（30 天）明文存 GM；**access_token 是短期凭据**，泄漏面小于 AK/SK；不写日志 |
+| 诚实边界（AI-1 已自述） | ✅ 已登记 | `credential-crypto.js` 头注释明确：KEK 与密文**同存本机** → 属"客户端可访问凭据"，**不声称绝对安全**；口令派生 KEK 列为后续项。**该自述诚实，认可** |
+
+**§十八结论：`PASS`**（无硬编码密钥；凭据 AES-GCM 加密落库；无 WebCrypto 拒存；UI 掩码；诚实声明边界）。
+
+### 10.2 §十九 —— OCR 图片隐私审计
+
+| 数据面 | 是否出网/落盘 | 结论 |
+|---|---|---|
+| `canvas.toDataURL` | 仅内存 | 命中 26 处：15 处在 `runtime/stage5-*.js`（诊断）；生产路径 3 处（`page-bridge.js:121`、`tesseract-loader.js:87/92`、userscript `:738/740`）。**均只在内存流转，不写 GM、不写日志** |
+| `GM_setValue` 含图片 | ✅ **无** | 全树 `GM_setValue` 仅用于：配置、`zyBaiduAkEnc`/`zyBaiduSkEnc`（密文）、`zyBaiduCryptoKek`、`zyBaiduToken`、UI 状态。**无任何图片键** |
+| `console.*` 含图片/文字 | ✅ **无** | `ocrLog(stage,msg)` 是唯一 OCR 日志出口（userscript `:656`），调用点全部只传**阶段名 + 计数 + 耗时 + 错误码**。例：`"lines=" + n + " elapsed=" + ms + "ms"`。**无 dataUrl、无识别文本、无凭据** |
+| 识别文本是否入库 | ✅ 未入库 | 报告中的文本为合成/已脱敏（`stage5-5a-...` 把重建对象文本硬编码为 `"[R]"`，L193） |
+| 真实图片是否入库 | ✅ 未入库 | 见 §10.3 对 `FINDING-SD-04` 的**实测复核** |
+| IndexedDB 语言缓存 | ⚠️ 说明 | `chi_sim` 训练数据（约 20MB）存浏览器 IndexedDB，**不良性出网、不入库** |
+| 百度请求体 | ⚠️ 披露 | 图片 base64 经 `encodeURIComponent` 作为 `image=` 表单域 POST 到 `aip.baidubce.com`（仅 `auto` 模式的兜底路径） |
+
+**§十九结论：`PASS`**（生产路径无图片写入存储/日志；识别文本未入库）。
+
+### 10.3 §二十 —— 云 OCR 请求边界审计
+
+| 检查项 | 结论 | 依据 |
+|---|---|---|
+| 上传内容是否为**所选单张图片** | ✅ **是** | `page-bridge.js:extractImagePayload(target,...)` 对**单个** `target` 元素 `drawImage` → `toDataURL`；上游 `waitForOcrTarget` 按优先级 `active → background → first image` 选**一个**目标。**不截整画布、不截网页** |
+| 是否上传编辑器状态 / 画布全量 | ✅ **否** | 请求体只有 `image=<base64>`；无对象列表、无几何、无 UUID、无模板信息 |
+| 是否上传识别结果或用户输入 | ✅ **否** | 响应侧只取 `words_result[]`；请求侧无回传 |
+| 允许的云端主机 | ✅ 收敛 | `@connect aip.baidubce.com`（OCR）+ 既有 `ark.cn-beijing.volces.com`（AI 文本）+ `raw.githubusercontent.com`/`github.com`/`cdn.jsdelivr.net`（依赖）。`@connect *` 仍存在（**建议后续收敛**，见 §11） |
+| 触发时机是否 local-first | ✅ **是（结构验证）** | `decideFallback` 仅在 `maybeBaiduFallback` 内被调用；`maybeBaiduFallback` 仅在 **4 处失败分支**被调用（userscript `:867` `LOCAL_OCR_FAILED` / `:871` `LOCAL_OCR_PARSE_FAIL` / `:872` `LOCAL_OCR_TIMEOUT` / `:906` `LOCAL_OCR_EMPTY`）。**本地成功路径没有任何调用点** → `LOCAL_FIRST` 成立 |
+| 非 auto 模式是否可能外传 | ✅ **否** | `decideFallback` 第 28 行：`if (mode !== "auto") return { action: "stop" }` —— `local`/`baidu` 显式模式下永不触发兜底 |
+| 未配置凭据时 | ✅ **不发网络请求** | `baiduEnabled=false` → `{action:"notify-config"}`（只提示，不发请求） |
+| 输入类错误是否会外传 | ✅ **否** | `IMAGE_UNAVAILABLE` / `CROSS_ORIGIN_IMAGE` 等 **不在** `FALLBACK_ABLE` 白名单 → `action:"stop"` |
+| 压缩护栏 | ✅ 有 | >4M 或 >4096px → 先等比压缩；仍超限 → `BAIDU_IMAGE_TOO_LARGE`，**不发送** |
+
+**§二十结论：`PASS`**（仅上传所选单张图片；local-first 结构成立；非 auto 模式不外传；未配置不发请求）。
+
+### 10.4 `FINDING-SD-04` 实测复核（**结论修正**）
+
+对 `demo` @ `e0abcf0` 实际取 `runtime/reports/stage5-5a-real-scriptcat-ocr.json` 并解析：
+
+```text
+文件字节 : 2009
+base64 图像 dataUrl 命中 : 0 处
+顶层 keys : ts, stage, steps, errors, csp, ocrRaw
+ocrRaw    : { err, injectMode, amdHint }      ← 引擎装载失败，未走到 getFirstCanvasImage()
+gm        : 不存在
+```
+
+| 项 | 原判定（§8.2） | **本次复核** |
+|---|---|---|
+| 是否已泄漏 | 否（引擎失败） | ✅ **否，确认** |
+| 风险等级 | 高（潜在） | 🟠 **中（潜在）** —— 降一级，理由：AI-1 已把 OCR 路径整体迁到 `runtime/stage5-5b-p1-diagnose.js` 等**新驱动**，该 smoke 脚本是 **5.5A 时代产物**，是否再被运行取决于 AI-1 流程；但**脚本仍在树中、仍未脱敏、报告仍未被 `.gitignore` 覆盖** |
+| 处置 | 建议剥离 `img.dataUrl` | ⏳ **仍建议**（未实施）。附：`runtime/reports/stage5-5a-real-scriptcat-ocr.json` 应加入 `.gitignore` 兜底 |
+
+> **保留 OPEN 的理由**：只要该脚本可执行且报告路径不被忽略，"引擎装载成功 → 真实图片入库"这条链路就是**可达**的。
+> 治理线的职责是**登记 + 移交**，不是替 AI-1 改实现（用户指令明确 AI-2 只审不改）。
+
+---
+
+## 11. 待收敛项（本机与仓库级，非阻断）
+
+| 编号 | 内容 | 建议 |
+|---|---|---|
+| `RISK-CONNECT-01` | userscript 仍保留 `@connect *`（在 `aip.baidubce.com` 等具名项之后） | 收敛为具名主机白名单，去掉 `*`。避免"任何主机都能被 GM_xmlhttpRequest 访问"的默认面 |
+| `RISK-TOKEN-01` | `zyBaiduToken`（access_token）明文存 GM | 可与 AK/SK 走同一套 AES-GCM；优先级低（30 天短期凭据，且不写日志） |
+| `RISK-KEK-01` | KEK 与密文同存本机 | AI-1 已自述为已知边界；若要提升，需口令派生（PBKDF2/scrypt）KEK。**不作为阻断** |
+
+---
+
+## 12. 维护规则
 
 1. 每次新增 `runtime/**` 脚本或证据报告后，执行 §7 的第 1/3/4 条。
 2. 任何**真实**取证数据入库前必须脱敏（方法见 `docs/DEVELOPMENT_RULES.md` §6）。
 3. 本文件只记录发现与建议；**不代替用户/AI-1 做处置决定**。
 4. 发现**新**泄漏时：立即上报（不必等用户询问），但**不自行** rewrite history。
+5. 审计须**分层给结论**：`§十八 AK/SK` / `§十九 图片隐私` / `§二十 请求边界` 各自独立判 `PASS/FAIL`，不合并成一句「安全」。
+6. 判定"未泄漏"必须给出**实测依据**（如报告字节数 + 命中数），不得仅凭"设计上应该不会"。

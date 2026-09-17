@@ -54,7 +54,87 @@ Version | Commit | Date | Branch | Raw URL
 
 ## 三、记录
 
-### Demo v0.3.5.0 · 2026-09-16
+### Demo v0.3.6.0 · 2026-09-17（当前）
+
+| 项 | 值 |
+|---|---|
+| **Version** | `@version` = `0.3.6.0` |
+| **Commit** | `e0abcf0211f331fe589513cc60fbc5f02c4bca39` |
+| **Date** | 2026-09-17 |
+| **Branch** | `demo` |
+| **Raw URL** | `https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js` |
+| **userscript sha256（git = raw 实测）** | `d6ff947c9796c3fc66061abd52159f464ce5d5d615e2a80a048968d83729ef3b`（71859 bytes） |
+
+**主功能（相对 v0.3.5.0 的增量）**：
+
+| 能力 | 说明 |
+|---|---|
+| **本地优先 + 百度云端兜底** | OCR 模式 `auto/local/baidu`；`auto` 下本地失败才切云端（§47 local-first） |
+| **百度云 OCR provider** | `extension/src/ocr/baidu-provider.js`（新建）—— token 缓存 30 天 + 110/111 失效重试；`/rest/2.0/ocr/v1/general` 标准含位置版；4M/4096px 等比压缩护栏；官方错误码 → 中文人话 |
+| **凭据加密落库** | `extension/src/ocr/credential-crypto.js`（新建）—— AES-256-GCM（WebCrypto），密文格式 `v1:<iv>.<ct>`；旧明文自动迁移并清零；无 WebCrypto → 拒存 |
+| **统一候选边界** | `extension/src/ocr/candidate-normalizer.js`（新建）—— 本地 executor 私有 `lines{x0,x1}` 与 provider 候选统一为 `OCRCandidate{bbox{x,y,w,h},coordinateSpace,imageSize}`（P3 审计解耦） |
+| **网页原生右栏面板** | OCR 抽屉邻接 `.rightPageBar.rightBar` + 右栏工具按钮；`MutationObserver` 处理 SPA 重挂载；旧浮窗保留为 fallback（P2-B） |
+| **画布访问改走 page-bridge** | 隔离世界读不到页面 world 的 requirejs `CanvasObjVO` → 新增只读桥 `getCanvasInfo`/`ocrPrepare`；早期点击进入「正在等待编辑器加载…」并 Promise 轮询（无固定 sleep） |
+
+**技术实现（AI-1）**：`799e96d`（P1 静默失败修复 + PREPARING 状态机 + 120s 超时）→ `eedc243`（双 provider）→ `1680c81`（接入百度 + `@connect aip.baidubce.com`）→ `52e2c7a`（local-first 策略）→ `455d823`（凭据加密）→ `3a9c369`（候选边界统一）→ `8bc428a`（原生面板）→ `936dce4`（画布走桥）。
+
+**已知阻塞**：
+
+| 项 | 状态 |
+|---|---|
+| 识别质量（真实编辑器样本） | ⚠️ `PARTIAL` —— 词序/断行仍待改进，排入 Stage 5.9 |
+| 真实用户上传/粘贴 + 双击编辑 | ⏳ `PENDING`（需人工真机，见 `docs/REAL_MACHINE_EVIDENCE.md`） |
+| 百度真实链路（真 AK/SK） | ✅ `PASS`（AI-1 执行记录 008：真实百度 425ms → 3 个可编辑 textbox） |
+| 旋转坐标映射 | ⏳ `PENDING`（`0ff2c69` 记录） |
+
+**真机状态**：
+
+| 层级 | 状态 | 证据 |
+|---|---|---|
+| `ENGINE_TEST` | ✅ `PASS` | `tests/editor-object-model/run.js` —— **12 套件全 PASS**；`runtime/reports/stage5-5b-p4-report.json`（含真实百度链路） |
+| `REAL_USER` | ⏳ `PENDING` | 尚未由真实用户完成「上传图片 → 点按钮 → 双击编辑 → 二次识别 → 更新」闭环 |
+
+**四字段 Gate（AI-2 于 2026-09-17 实测复核）**：
+
+```text
+DEMO_INSTALLABLE = PASS   （raw 200；10 条依赖全部 200；@require 闭包全部指向 demo；元数据 PASS）
+DEMO_UPDATEABLE  = PASS   （@updateURL/@downloadURL 指向 demo 且一致；@version 0.3.6.0 单调递增；raw 可达）
+DEMO_FUNCTIONAL  = PARTIAL（套版填层可用；本地 OCR + 百度兜底机制 PASS；识别质量与旋转映射待改进）
+DEMO_SAFE        = PASS   （secret scan 通过；凭据 AES-GCM 加密落库；日志零图片/零凭据；真实图片未入库）
+```
+
+**本版本交付物校验（AI-2 实测）**：
+
+| 检查 | 结果 |
+|---|---|
+| `runtime/check-demo-closure.js --ref e0abcf0 --expect-branch demo` | ✅ `PASS`（结构闭包，10 条全 `branch-consistent`） |
+| `runtime/check-demo-closure.js --net` | ✅ `PASS`（10 条全 HTTP 200，`networkUnknown: []`，`violations: []`） |
+| `runtime/check-demo-update.js --ref e0abcf0` | ✅ `PASS`（0.3.6.0 ≥ 已记录 0.3.5.0，单调性成立） |
+| `.github/scripts/check-userscript.js`（demo 树，`GITHUB_REF_NAME=demo`） | ✅ `PASS`（四镜像一致；URL 分支集合 = `{demo}`） |
+| `tests/editor-object-model/run.js` | ✅ 12/12 套件 `ALL PASS` |
+
+**raw 与 git 一致性（关键）**：`@updateURL` 与 `@downloadURL` 的 raw 响应 sha256 **均为** `d6ff947c…`，与 git `e0abcf0` 中的 userscript **完全一致**（71859 bytes）→ **CDN 无滞后、无缓存错版**。
+
+**`DEFECT-VER-01` 复现状态**：
+
+```text
+修复前（v0.3.5.0 f3ae3cb）：已由 AI-2 统一四处为 0.3.5.0
+AI-1 在 1680c81 引入 v0.3.6.0 时自行保持四处一致：
+  @version 0.3.6.0 / const VERSION 0.3.6.0 / assistant.js 0.3.6.0 / manifest.version_name 0.3.6.0
+  manifest.version = 0.3.6（@version 前三段，符合约定）
+状态：  RESOLVED → 保持 RESOLVED（AI-2 于 e0abcf0 复验 PASS）
+```
+
+**AI-2 审计发现（本版本）**：
+
+| 编号 | 级别 | 内容 | 状态 |
+|---|---|---|---|
+| `FINDING-SD-04` | 🟠 中（潜在） | `runtime/stage5-5a-scriptcat-ocr-smoke.js:249` 把 `out` 整体写盘，其中 `out.gm.img.dataUrl` 为**真实名片图片 base64**；报告路径 `runtime/reports/stage5-5a-real-scriptcat-ocr.json` **未被 `.gitignore` 覆盖**。<br>**实测现状**：`e0abcf0` 中该报告仅 2009 bytes，`ocrRaw={err,injectMode,amdHint}`（引擎装载失败，未走到取图），**当前无真实像素入库**。<br>**风险**：一旦引擎装载成功（Stage 5.5A-R2 已达成前置条件），下一次运行即会提交真实图片。 | ⏳ `OPEN`（已提交 AI-1 处置建议：写入前 redaction + `.gitignore` 增加该报告路径） |
+| `FINDING-ROBUST-01` | 🟢 低 | `runtime/check-demo-closure.js` / `check-demo-update.js` 原以 `process.cwd()` 定位仓库，非仓库根调用时误报「找不到 demo 引用」 | ✅ 已修（AI-2，改用 `path.resolve(__dirname,"..")` + `git -C`） |
+
+---
+
+### （历史）Demo v0.3.5.0 · 2026-09-16
 
 | 项 | 值 |
 |---|---|

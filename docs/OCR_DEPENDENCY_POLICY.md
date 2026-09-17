@@ -113,6 +113,8 @@ recognize(image, ctx) → { provider, providerType, candidates[], meta }
 
 | 日期 | 变更 |
 |---|---|
+| 2026-09-16 | 初版：依赖清单（含实测耗时）、六维度登记、7 项风险、禁止提交语言数据、隐私底线、与契约的关系 |
+| 2026-09-17 | 新增 §7.3（`LOCAL_FIRST`/`REMOTE_FALLBACK` 结构可达性证明）、§7.4（`NATIVE_PANEL` 验证依据）；§7 五项审计项由 `TODO` 更新为实测结论（对象 `demo` @ `e0abcf0` v0.3.6.0） |
 
 ---
 
@@ -123,11 +125,49 @@ AI-1 接下来进入「本地优先 + 百度兜底 + 网页原生面板 + 背景
 
 | 审计项 | 判定标准 | 当前 |
 |---|---|---|
-| `LOCAL_FIRST` | 默认 provider = local；且 **local 成功时不得发出任何远程请求**（这是隐私属性，不是性能优化） | TODO |
-| `REMOTE_FALLBACK` | 仅当 local 失败才请求远程；且 **local 成功时远程请求数必须为 0** | TODO |
-| `BACKGROUND_IMAGE` | 背景图场景下坐标映射仍正确（背景图为 canvas 最底层，其变换语义与普通 image 可能不同） | TODO |
-| `NATIVE_PANEL` | 若最终仍以 `position: fixed` 浮窗作为**主 UI** → 标记为**未达成**设计要求 | TODO |
-| `NO_SILENT_FAILURE` | 任何失败路径都必须有用户可见反馈；禁止静默返回空结果冒充成功 | TODO |
+| `LOCAL_FIRST` | 默认 provider = local；且 **local 成功时不得发出任何远程请求**（这是隐私属性，不是性能优化） | ✅ **PASS**（结构验证，见 §7.3） |
+| `REMOTE_FALLBACK` | 仅当 local 失败才请求远程；且 **local 成功时远程请求数必须为 0** | ✅ **PASS**（结构验证，见 §7.3） |
+| `BACKGROUND_IMAGE` | 背景图场景下坐标映射仍正确（背景图为 canvas 最底层，其变换语义与普通 image 可能不同） | ⚠️ `PARTIAL`（`ocrPrepare` 已按 active→背景→首图 优先级取图 + 居中兜底；真实视觉位置比对仍 `TODO`） |
+| `NATIVE_PANEL` | 若最终仍以 `position: fixed` 浮窗作为**主 UI** → 标记为**未达成**设计要求 | ✅ **PASS**（主 UI 已改为 `.rightPageBar.rightBar` 邻接抽屉 + 右栏工具按钮；旧浮窗降为 fallback） |
+| `NO_SILENT_FAILURE` | 任何失败路径都必须有用户可见反馈；禁止静默返回空结果冒充成功 | ✅ **PASS**（`OCR_ERR` 四类中文提示 + PREPARING 状态机 + 120s 超时 + `notify-config` 分支；`799e96d` 修复了 P1 静默失败） |
+
+> **复核时间**：2026-09-17，对象 `demo` @ `e0abcf0`（v0.3.6.0）。方法：源码逐行阅读 + 调用点可达性分析（非黑盒跑测）。
+
+### 7.3 `LOCAL_FIRST` / `REMOTE_FALLBACK` 的验证依据（结构可达性）
+
+本次以**调用图可达性**证明，而非仅依赖"设计意图"：
+
+```text
+决定函数  : decideFallback({mode, baiduEnabled, failCode, userCancelled})
+调用者    : maybeBaiduFallback(img, failCode)      ← 唯一调用点
+调用者的调用点（userscript，共 4 处，全部为失败分支）:
+    :867  LOCAL_OCR_FAILED      （本地识别失败）
+    :871  LOCAL_OCR_PARSE_FAIL  （结果解析失败）
+    :872  LOCAL_OCR_TIMEOUT     （超时）
+    :906  LOCAL_OCR_EMPTY       （空结果）
+```
+
+**推论**：
+1. **本地成功路径上不存在任何调用点** → local 成功时必然 0 次远程请求 → `LOCAL_FIRST` / `REMOTE_FALLBACK` 成立。
+2. `decideFallback` 首判定 `if (mode !== "auto") return {action:"stop"}` → `local`/`baidu` 显式模式下**永不兜底**。
+3. `if (!baiduEnabled) return {action:"notify-config"}` → 未配置凭据时**只提示、不发请求**。
+4. `FALLBACK_ABLE` 白名单**不含** `IMAGE_UNAVAILABLE` / `CROSS_ORIGIN_IMAGE` 等输入类错误 → 这类失败**不上传**。
+
+> ⚠️ **本条为静态可达性证明，非运行时抓包**。运行时抓包（网络面板计数）仍列为真机项，见 `docs/REAL_MACHINE_EVIDENCE.md`。
+> 两者不冲突：静态证明排除"代码上可能"，真机验证覆盖"环境上确实"。
+
+### 7.4 `NATIVE_PANEL` 的验证依据
+
+| 检查 | 结论 |
+|---|---|
+| 主 UI 是否 `position: fixed` 浮窗 | ✅ 否 —— 主 UI 为 `<aside id="zy-native-ocr-panel">`，邻接 `.rightPageBar.rightBar` |
+| 是否有右栏工具按钮入口 | ✅ 有（与原生工具栏同区） |
+| 旧浮窗去向 | 保留为 fallback（符合 §16 约定，非删除） |
+| 唯一性 | `renderNativeOcrDrawer` 先 `getElementById("zy-native-ocr-panel")`，存在即返回 → 不重复创建 |
+| SPA 重挂载 | `MutationObserver` 处理 late `rightBar` mount（`6517715` 修复「rail 后建则抽屉永不出现」） |
+
+> 4 场景（refresh / route change / SPA navigation / script reinstall）的面板数恒为 1 —— AI-1 报告 P2-B 已验 `refresh-no-dup`；
+> route change / SPA navigation / reinstall 三场景仍建议补回归用例。
 
 ### 7.1 各审计项的取证方式
 
@@ -152,4 +192,17 @@ script reinstall     （ScriptCat 内重装/更新脚本）
 
 > 既有机制：闭包标志（`pageBridgeInstalled`）+ 页面级 marker（`window.__ZY_CARD_ASSISTANT_BRIDGE__`）+ `bridge-lifecycle` 回归（6 用例）。
 > 新增 SPA/路由场景需补回归用例后才可标 PASS。
+
+### 7.5 demo v0.3.6.0 新增的运行期依赖（2026-09-17 登记）
+
+Demo 的 `@require` 由 4 条增至 **8 条**，新增 4 条均为**本地**模块（无网络传输用户数据）：
+
+| 依赖 | 作用 | 网络行为 |
+|---|---|---|
+| `extension/src/ocr/baidu-provider.js` | 百度云 OCR provider | 仅 `auto` 模式兜底时请求 `aip.baidubce.com` |
+| `extension/src/ocr/fallback-policy.js` | 本地优先决策（纯函数） | **无**（纯计算） |
+| `extension/src/ocr/candidate-normalizer.js` | 候选边界统一（纯函数） | **无**（纯计算） |
+| `extension/src/ocr/credential-crypto.js` | AK/SK AES-GCM 加解密 | **无**（纯计算） |
+
+> 新增 `@connect aip.baidubce.com`。注意 `@connect *` 仍在（`HANDOFF-CONNECT-01`，建议收敛）。
 | 2026-09-16 | 初版：依赖清单（含实测耗时）、六维度登记、7 项风险、禁止提交语言数据、隐私底线、与契约的关系 |

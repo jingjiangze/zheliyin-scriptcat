@@ -41,6 +41,10 @@ const path = require("path");
 const SKIP_DIRS = new Set(["node_modules", ".git"]);
 const RAW_RE = /https:\/\/raw\.githubusercontent\.com\/([^/\s]+)\/([^/\s]+)\/([^/\s]+)\//g;
 
+// 仓库根：本脚本位于 <root>/runtime/，据此定位仓库根并用 `git -C` 执行，
+// 这样无论从哪个 cwd 调用（本地 / CI / 其他脚本）都能正确解析引用。
+const REPO_ROOT = path.resolve(__dirname, "..");
+
 function parseArgs(argv) {
   const o = { net: false, json: false, out: null, refs: [], expectBranch: null, timeout: 20000 };
   for (let i = 2; i < argv.length; i++) {
@@ -57,7 +61,7 @@ function parseArgs(argv) {
 }
 
 function git(args) {
-  return execFileSync("git", args, { encoding: "utf8", maxBuffer: 1 << 26 }).trim();
+  return execFileSync("git", ["-C", REPO_ROOT, ...args], { encoding: "utf8", maxBuffer: 1 << 26 }).trim();
 }
 
 function resolveRef(explicit) {
@@ -114,7 +118,7 @@ function branchOf(url) {
 
   const US = "zheliyin-card-assistant.user.js";
   let src;
-  try { src = execFileSync("git", ["show", `${ref}:${US}`], { encoding: "utf8", maxBuffer: 1 << 26 }); }
+  try { src = execFileSync("git", ["-C", REPO_ROOT, "show", `${ref}:${US}`], { encoding: "utf8", maxBuffer: 1 << 26 }); }
   catch (e) { console.error("无法读取 " + ref + ":" + US + " —— " + String(e.message).slice(0, 120)); process.exit(2); }
 
   const meta = extractMeta(src);
