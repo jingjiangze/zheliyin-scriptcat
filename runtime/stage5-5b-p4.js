@@ -136,7 +136,7 @@ const FAKE_SK = "SK-FAKE-4P4-654321";
         }, 100);
       }));
     }
-    async function saveFakeKeys() {
+    async function saveKeys(ak, sk) {
       return page.evaluate(({ ak, sk }) => {
         const akEl = document.getElementById("zy-baidu-ak-native");
         const skEl = document.getElementById("zy-baidu-sk-native");
@@ -144,8 +144,9 @@ const FAKE_SK = "SK-FAKE-4P4-654321";
         if (!akEl || !skEl || !saveEl) return false;
         akEl.value = ak; skEl.value = sk; saveEl.click();
         return true;
-      }, { ak: FAKE_AK, sk: FAKE_SK });
+      }, { ak: ak, sk: sk });
     }
+    const saveFakeKeys = () => saveKeys(FAKE_AK, FAKE_SK);
     function readBaiduStatus() { return page.evaluate(() => { const n = document.getElementById("zy-baidu-status-native"); return n ? n.textContent : ""; }).catch(() => ""); }
     const cnSlice = (from) => cn.slice(from).join("\n");
     // 主脚本 GM 存储清理（扩展上下文直接删 chrome.storage.local 中本脚本的键；仅供测试工具使用）
@@ -221,9 +222,47 @@ const FAKE_SK = "SK-FAKE-4P4-654321";
     const leaked = leakCheck();
     step("P4-K-no-credential-leak", leaked.length === 0, "leaks=" + JSON.stringify(leaked) + " baiduStatusInput=" + bs0, "CREDENTIAL_PRIVACY");
 
-    // R4: 真实百度成功 → PENDING（§18 不虚构；需真实 AK/SK，受凭据/额度/网络/地域影响）
-    matrix("R4", "FAIL", "available(real-key)", "自动 fallback → 真实 Baidu 成功 → Textbox（需真实 AK/SK）", "需真实凭据，本轮 PENDING", "PENDING");
-    step("R4-baidu-real-success", true, "PENDING: 需真实 AK/SK（API凭据/额度/网络），不虚构 PASS", "PENDING_DOCUMENTED");
+    // R4: Local FAIL + Baidu 可用（真实 Key 由环境变量注入，绝不写入仓库/日志/报告）
+    const REAL_AK = process.env.ZY_BAIDU_AK || "";
+    const REAL_SK = process.env.ZY_BAIDU_SK || "";
+    if (REAL_AK && REAL_SK) {
+      const savedReal = await saveKeys(REAL_AK, REAL_SK).catch(() => false);
+      // 测试连接 → 真实 token 获取成功
+      const t0r = cn.length;
+      await clickTestConnection();
+      let tstatR = await readBaiduStatus();
+      const tr = Date.now();
+      while (Date.now() - tr < 20000 && (!tstatR || /正在测试/.test(tstatR))) { await new Promise((r) => setTimeout(r, 500)); tstatR = await readBaiduStatus(); }
+      const connOk = savedReal && /连接成功/.test(tstatR);
+      step("R4-real-test-connection", connOk, "savedReal=" + savedReal + " tstat=" + tstatR, "REAL_TOKEN_OK");
+      // 注入 Local 失败 → auto fallback → 真实 Baidu → OCRCandidate → Mapper → Textbox
+      await statusReset();
+      const injR = await clickWithLocalFailure();
+      const termR = await waitTerminal(90000, /已生成|百度 OCR|失败|异常/);
+      const r4cn = cnSlice(t0r);
+      const baiduSucceeded = /BAIDU_RECOGNIZING|BAIDU_REMOTE|baidu/.test(r4cn) || /已生成/.test(termR);
+      const createdOk = /已生成 \d+ 个文字/.test(termR);
+      let editableInfo = null;
+      if (createdOk) {
+        editableInfo = await page.evaluate(() => {
+          const req = window.requirejs || window.require;
+          const ctx = req && req.s && req.s.contexts && req.s.contexts._;
+          const vo = (ctx && ctx.defined && ctx.defined.CanvasObjVO) || window.CanvasObjVO;
+          const total = vo && vo.totalCanvasArray;
+          const c = (Array.isArray(total) && total[0] && ((total[0].canvas) || total[0])) || null;
+          if (!c) return null;
+          const ocr = c.getObjects().filter((o) => o && String(o.zyFieldKey || "").indexOf("ocr_demo_") === 0);
+          return { count: ocr.length, allEditable: ocr.length > 0 && ocr.every((o) => typeof o.enterEditing === "function") };
+        });
+      }
+      const r4ok = connOk && createdOk && editableInfo && editableInfo.allEditable && baiduSucceeded;
+      matrix("R4", "FAIL", "configured(real)", "fallback → 真实 Baidu → OCRCandidate → Textbox(可编辑)", termR + " | console=" + r4cn.replace(/\n/g, ";") + " | editable=" + JSON.stringify(editableInfo), r4ok ? true : "PENDING");
+      step("R4-real-fallback-textbox", r4ok, "termR=" + termR + " connOk=" + connOk + " editable=" + JSON.stringify(editableInfo), "REAL_BAIDU_FALLBACK_CREATE");
+    } else {
+      // 无真实凭据 → PENDING（§18 不虚构）
+      matrix("R4", "FAIL", "available(real-key)", "自动 fallback → 真实 Baidu 成功 → Textbox（需真实 AK/SK）", "需真实凭据，本轮 PENDING（env: ZY_BAIDU_AK/SK）", "PENDING");
+      step("R4-baidu-real-success", true, "PENDING: 需真实 AK/SK（API凭据/额度/网络），不虚构 PASS", "PENDING_DOCUMENTED");
+    }
 
     try { await adapter.removeScript(optsPage, MAIN_UUID); step("cleanup-userscript", true, "removed"); } catch (e) { step("cleanup-userscript", false, String(e && e.message || e)); }
   } catch (e) {
