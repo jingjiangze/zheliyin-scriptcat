@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+### Stage 6.1 + Stage 6 P0（2026-09-17）— v0.3.8.7：TextBlock 排版稳定 + 编辑器对象模型接入
+- **Stage 6.1（TextBlock 层）**：`candidate-normalizer` 新增 `joinWordsSmart`（中文+中文/数字+数字无空格、邮箱/网址结构保留；修复「折 立 印」这类中文间空格）、`applyTessLineText`（Tesseract line.text 优先作最终文本，word bbox 仅作几何）、`groupLinesToBlocks`/`buildTextBlocks`（确定性聚类：左边界/行距/字高/水平方向；禁止左右两列/上下独立区过度合并；1 TextBlock=1 textbox，text 保留 `\n`）、`estimateTextWidth/Layout`（layoutWidth 容纳最长行防提前换行，`forcedWrapDetected` 换行诊断 §18）。
+- `buildItemsFromOcr` 消费 TextBlock：fontSize=视觉字高÷0.969（真机标定）、textbox height=lineCount×lineHeight、每 block 挂 `diagnostics{sourceLineCount, estimatedFinalLineCount, forcedWrapDetected}`。
+- `page-bridge ocrCreate` 事务语义：任一 block 失败→全量回滚→created=0；回复含 `detectedBlocks/createdCount/created/failedBlockIndex/error`。
+- **Stage 6 P0（原生图层/撤销）**：ocrCreate 对象模型镜像——`multiUuid` 用编辑器原生 `sundry.guid()`（v4）、`markuuid=""`、`mediaMediaType="text"`、`location*/printLocation*` 镜像、`layerNum` 递增；创建前后尝试原生 `Undo.getInstance().save()`（仅编辑器自身 API）；回复带 `editorIntegration` 接入诊断。
+- 12 号真机审计（252438）定位：编辑器撤销=JSON 快照式（`Undo`/`sundry`/`CurrentCanvas`），RAW `canvas.add` 不被原生历史跟踪（undoLength/state 不变）→「OCR 后撤回异常」根因。原生 undo 对 OCR 批次闭环=PENDING（待原生注册入口接入后复测，见 docs/stage-6-editor-integration-report.md）。
+- 单测 12 套件全 PASS（含 A–I 块聚类、智能拼接、宽度/换行诊断）；版本 0.3.8.7 六处同步。
+
 ### Stage 6 P6.0（2026-09-17）— v0.3.8.6：OCR words+lines 双输出 + 轻量行聚类
 - executor 输出 `words`（word bbox+confidence）与 `lines` 并存；`candidate-normalizer` 扩展统一候选：新增 `wordBoxes`/`lineBBox`（向后兼容，缺省时行为不变），新增纯函数 `groupWordsToLines`（y 重叠/中心 y 距/字高相似/阅读顺序）与 `aggregateLineCandidates`（words→逻辑行→紧致 bbox+wordBoxes）。
 - 本地路径 words 存在时优先行聚类（紧致 bbox，Clumping 冗余行/混合字号自动分行）；Baidu 路径不变。

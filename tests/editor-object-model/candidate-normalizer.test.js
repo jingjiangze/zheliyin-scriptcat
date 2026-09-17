@@ -105,6 +105,15 @@ const tessLines = [
 const aggTess = aggregateLineCandidates(wordsA, img, tessLines);
 t("aggregate-tess-text-priority", aggTess[0].text === "张三经理" && aggTess[1].text === "测试公司", JSON.stringify(aggTess.map((l) => l.text)));
 t("aggregate-tess-keeps-geometry", aggTess[0].wordBoxes.length === 3 && aggTess[0].bbox.width === 170, "geometry from words, text from tess line");
+// §5 修正：Tesseract 中文行带空格（"张 三"）不得覆盖智能拼接（避免中文间空格回潮）
+const tessCJKSpaced = [{ text: "张 三 经理", bbox: { x0: 10, y0: 20, x1: 180, y1: 60 } }];
+const aggCJKNospace = aggregateLineCandidates(wordsA.slice(0, 3), img, tessCJKSpaced);
+t("tess-cjk-space-not-applied", aggCJKNospace.length === 1 && aggCJKNospace[0].text === "张三经理", JSON.stringify(aggCJKNospace.map((l) => l.text)));
+// 含英文行仍采用 tess 原文本（保留英文结构）
+const wordsEn = [{ text: "BeiJing", bbox: { x: 30, y: 200, width: 110, height: 32 } }, { text: "Office", bbox: { x: 150, y: 200, width: 100, height: 32 } }];
+const tessEn = [{ text: "Beijing Office", bbox: { x0: 30, y0: 200, x1: 250, y1: 232 } }];
+const aggEn = aggregateLineCandidates(wordsEn, img, tessEn);
+t("tess-en-text-applied", aggEn.length === 1 && aggEn[0].text === "Beijing Office", JSON.stringify(aggEn.map((l) => l.text)));
 
 // ---- Stage 6.1 joinWordsSmart（§7）----
 t("join-cjk-no-space", joinWordsSmart([{ text: "张" }, { text: "三" }, { text: "经理" }]) === "张三经理", joinWordsSmart([{ text: "张" }, { text: "三" }, { text: "经理" }]));

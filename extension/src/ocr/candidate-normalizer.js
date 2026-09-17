@@ -116,6 +116,9 @@ function rectOverlapArea(a, b) {
 
 // 文本优先：用交集面积把各个聚合行的文本替换为 Tesseract 原始 line.text（§7 核心原则）。
 // words 的 bbox 继续作为几何（行聚类/紧致包围盒），不猜测完整文本。
+// §5 修正（2026-09-17 真机）：Tesseract chi_sim 的 line.text 会给中文词间加空格（「张 三」/「销售 经 理」），
+//   与「中文之间被错误加入空格」问题冲突 → 仅当智能拼接结果含有 ASCII 字母（英文/邮箱/网址结构）时才采用
+//   line.text（保留英文空格与结构），纯中文/数字行保留 joinWordsSmart 的无空格结果。
 function applyTessLineText(lineList, tessLines) {
   if (!lineList || !lineList.length || !Array.isArray(tessLines) || !tessLines.length) return lineList;
   const tl = tessLines
@@ -128,6 +131,7 @@ function applyTessLineText(lineList, tessLines) {
   if (!tl.length) return lineList;
   lineList.forEach(function (L) {
     if (!L || !L.bbox) return;
+    if (!/[A-Za-z]/.test(L.text || "")) return; // 纯中文/数字行：保留智能拼接（无中文间空格）
     let best = null, bestScore = -1;
     tl.forEach(function (t) {
       const ov = rectOverlapArea(L.bbox, t.bbox);
