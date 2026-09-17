@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-17T02:45:58.104Z",
+ "ts": "2026-09-17T03:11:56.532Z",
  "stage": "STAGE-5.5B-P4",
  "steps": [
   {
@@ -41,20 +41,26 @@
   {
    "name": "R5-fallback-baidu-fail-terminal",
    "ok": "PASS",
-   "detail": "term5=百度 OCR 配置无效：unknown client id console=[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=27 bg=true active=null;[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars;[zy-ocr][ERROR] local ocr failed: engine;[zy-ocr][FALLBACK] local LOCAL_OCR_FAILED:engine → baidu;[zy-ocr][ERROR] baidu BAIDU_TOKEN_FAILED",
+   "detail": "term5=百度 OCR 配置无效：unknown client id console=[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=27 bg=true active=null;[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars;[zy-ocr][ERROR] local ocr failed: engine;[zy-ocr][FALLBACK] local LOCAL_OCR_FAILED:engine → baidu;[zy-ocr][ERROR] baidu BAIDU_TOKEN_FAILED",
    "evidence": "FALLBACK_TERMINAL"
   },
   {
    "name": "P4-K-no-credential-leak",
    "ok": "PASS",
-   "detail": "leaks=[] baiduStatusInput=已保存（Key 不显示完整，仅存本机）。",
+   "detail": "leaks=[] baiduStatusInput=已保存（AES-256-GCM 加密存储，仅本机；Key 不显示完整）。",
    "evidence": "CREDENTIAL_PRIVACY"
   },
   {
-   "name": "R4-baidu-real-success",
-   "ok": "FAIL",
-   "detail": "PENDING: 需真实 AK/SK（API凭据/额度/网络），不虚构 PASS",
-   "evidence": "PENDING_DOCUMENTED"
+   "name": "R4-real-test-connection",
+   "ok": "PASS",
+   "detail": "savedReal=true tstat=连接成功（有效 30 天，已缓存令牌）",
+   "evidence": "REAL_TOKEN_OK"
+  },
+  {
+   "name": "R4-real-fallback-textbox",
+   "ok": "PASS",
+   "detail": "termR=已生成 3 个文字（可双击编辑） connOk=true editable={\"count\":9,\"allEditable\":true}",
+   "evidence": "REAL_BAIDU_FALLBACK_CREATE"
   },
   {
    "name": "cleanup-userscript",
@@ -63,10 +69,7 @@
    "evidence": "n/a"
   }
  ],
- "errors": [
-  "matrix:R4",
-  "R4-baidu-real-success"
- ],
+ "errors": [],
  "matrix": [
   {
    "row": "R1",
@@ -97,39 +100,46 @@
    "local": "FAIL",
    "baidu": "configured(fake,will-fail)",
    "expected": "fallback 发起(fallbackReason) → Baidu 明确失败 → 终态不死锁",
-   "got": "百度 OCR 配置无效：unknown client id | console=[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=27 bg=true active=null;[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars;[zy-ocr][ERROR] local ocr failed: engine;[zy-ocr][FALLBACK] local LOCAL_OCR_FAILED:engine → baidu;[zy-ocr][ERROR] baidu BAIDU_TOKEN_FAILED",
+   "got": "百度 OCR 配置无效：unknown client id | console=[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=27 bg=true active=null;[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars;[zy-ocr][ERROR] local ocr failed: engine;[zy-ocr][FALLBACK] local LOCAL_OCR_FAILED:engine → baidu;[zy-ocr][ERROR] baidu BAIDU_TOKEN_FAILED",
    "ok": "PASS"
   },
   {
    "row": "R4",
    "local": "FAIL",
-   "baidu": "available(real-key)",
-   "expected": "自动 fallback → 真实 Baidu 成功 → Textbox（需真实 AK/SK）",
-   "got": "需真实凭据，本轮 PENDING",
-   "ok": "FAIL"
+   "baidu": "configured(real)",
+   "expected": "fallback → 真实 Baidu → OCRCandidate → Textbox(可编辑)",
+   "got": "已生成 3 个文字（可双击编辑） | console=[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=27 bg=true active=null;[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars;[zy-ocr][ERROR] local ocr failed: engine;[zy-ocr][FALLBACK] local LOCAL_OCR_FAILED:engine → baidu;[zy-ocr][BAIDU_RECOGNIZING] lines=3 elapsed=425ms;[zy-ocr][BUILDING] items=3;[zy-ocr][SUCCESS] created=3 | editable={\"count\":9,\"allEditable\":true}",
+   "ok": "PASS"
   }
  ],
  "console": [
-  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=21 bg=true active=null",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=21 bg=true active=null",
   "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars",
   "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
   "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
   "[zy-ocr][BUILDING] items=3",
   "[zy-ocr][SUCCESS] created=3",
-  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=24 bg=true active=null",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=24 bg=true active=null",
   "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars",
   "[zy-ocr][ERROR] local ocr failed: engine",
   "[zy-ocr][ERROR] baidu not configured for fallback: LOCAL_OCR_FAILED",
-  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=24 bg=true active=null",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=24 bg=true active=null",
   "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars",
   "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
   "[zy-ocr][BUILDING] items=3",
   "[zy-ocr][SUCCESS] created=3",
-  "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=27 bg=true active=null",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=27 bg=true active=null",
   "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars",
   "[zy-ocr][ERROR] local ocr failed: engine",
   "[zy-ocr][FALLBACK] local LOCAL_OCR_FAILED:engine → baidu",
-  "[zy-ocr][ERROR] baidu BAIDU_TOKEN_FAILED"
+  "[zy-ocr][ERROR] baidu BAIDU_TOKEN_FAILED",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=27 bg=true active=null",
+  "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars",
+  "[zy-ocr][ERROR] local ocr failed: engine",
+  "[zy-ocr][FALLBACK] local LOCAL_OCR_FAILED:engine → baidu",
+  "[zy-ocr][BAIDU_RECOGNIZING] lines=3 elapsed=425ms",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3"
  ],
  "pageErrors": [
   "window.closeSocket is not a function"
