@@ -1,0 +1,25 @@
+{
+ "ts": "2026-09-17T03:47:16.113Z",
+ "steps": [
+  {
+   "name": "read-value",
+   "ok": true,
+   "detail": "{\"has\":true,\"v\":{\"createtime\":1789616843683,\"data\":{\"zyOcrMode\":\"baidu\",\"zyUpdateCheckedDate\":\"2026-09-17\"},\"storageName\":\"rt-val-mu4znr2v\",\"updatetime\":1789616843683,\"uuid\":\"rt-val-mu4znr2v\"},\"isObj\":true,\"keys\":[\"createtime\",\"data\",\"storageName\",\"updatetime\",\"uuid\"]}"
+  },
+  {
+   "name": "api-write-setScriptValue",
+   "ok": true,
+   "detail": "{\"code\":0}"
+  },
+  {
+   "name": "legacy-appears-after-write",
+   "ok": true,
+   "detail": "{\"legacy\":true,\"drawer\":true}"
+  },
+  {
+   "name": "ocr-only-back-after-clear",
+   "ok": true,
+   "detail": "{\"legacy\":false,\"drawer\":true}"
+  }
+ ]
+}

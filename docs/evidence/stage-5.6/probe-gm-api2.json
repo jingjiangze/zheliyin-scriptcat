@@ -1,0 +1,25 @@
+{
+ "ts": "2026-09-17T03:46:49.860Z",
+ "steps": [
+  {
+   "name": "getScriptValue",
+   "ok": true,
+   "detail": "{\"code\":0,\"data\":{}}"
+  },
+  {
+   "name": "setScriptValue-plural",
+   "ok": false,
+   "detail": "{\"code\":-1,\"message\":\"script not found\"}"
+  },
+  {
+   "name": "getAllScriptValues",
+   "ok": false,
+   "detail": "{\"code\":-1,\"message\":\"no such api value/getAllScriptValues\"}"
+  },
+  {
+   "name": "script/values",
+   "ok": false,
+   "detail": "{\"code\":-1,\"message\":\"no such api script/getScriptValue\"}"
+  }
+ ]
+}
