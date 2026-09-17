@@ -61,6 +61,14 @@ const wordsA = [
 const linesA = groupWordsToLines(wordsA);
 t("group-A-2lines", linesA.length === 2, JSON.stringify(linesA.map((l) => l.text)));
 t("group-A-text-no-spaces", linesA[0].text === "张三经理" && linesA[1].text === "测试公司", JSON.stringify(linesA.map((l) => l.text)));
+// executor 形状 {x0,y0,x1,y1} 的 word bbox 也必须能聚合（P6.0 空聚合根因回归）
+const wordsX01 = [
+  { text: "张", bbox: { x0: 10, y0: 20, x1: 50, y1: 60 } },
+  { text: "三", bbox: { x0: 55, y0: 20, x1: 95, y1: 60 } },
+  { text: "经理", bbox: { x0: 100, y0: 20, x1: 180, y1: 60 } }
+];
+const linesX01 = groupWordsToLines(wordsX01);
+t("group-executor-x01-words", linesX01.length === 1 && linesX01[0].text === "张三经理" && linesX01[0].bbox.width === 170, JSON.stringify(linesX01));
 t("group-A-tight-bbox", linesA[0].bbox.x === 10 && linesA[0].bbox.width === 170 && linesA[0].bbox.y === 20 && linesA[0].bbox.height === 40, JSON.stringify(linesA[0].bbox));
 t("group-A-wordBoxes", linesA[0].wordBoxes.length === 3, "wb=" + linesA[0].wordBoxes.length);
 

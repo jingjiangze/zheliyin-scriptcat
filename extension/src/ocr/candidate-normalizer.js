@@ -146,9 +146,10 @@ function applyTessLineText(lineList, tessLines) {
 // 纯函数；合并依据：中心 y 距离 ≤ max(4, h*0.35)、字高差 ≤ max(3, h*0.30)；行内按 x 阅读顺序。
 // Stage 6.1 §7：文本拼接改用 joinWordsSmart；opts.tessLines 提供 Tesseract 原 line.text 时优先采用。
 function groupWordsToLines(words, opts) {
+  // 先归一化再过滤：executor 的 word bbox 是 {x0,y0,x1,y1}，必须经 normBox 转 {x,y,width,height}（否则空聚合→回退行级）
   const list = (Array.isArray(words) ? words : [])
-    .filter(function (w) { return w && w.text && w.bbox && typeof w.bbox.x === "number" && w.bbox.width > 0; })
     .map(function (w) {
+      if (!w || !w.text) return null;
       const b = normBox(w.bbox);
       return b ? { text: String(w.text).trim(), bbox: b, confidence: typeof w.confidence === "number" ? w.confidence : null } : null;
     })
