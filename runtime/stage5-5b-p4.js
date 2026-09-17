@@ -147,6 +147,7 @@ const FAKE_SK = "SK-FAKE-4P4-654321";
       }, { ak: ak, sk: sk });
     }
     const saveFakeKeys = () => saveKeys(FAKE_AK, FAKE_SK);
+    function clickTestConnection() { return page.evaluate(() => { const b = document.getElementById("zy-baidu-test-native"); if (b) b.click(); return !!b; }).catch(() => false); }
     function readBaiduStatus() { return page.evaluate(() => { const n = document.getElementById("zy-baidu-status-native"); return n ? n.textContent : ""; }).catch(() => ""); }
     const cnSlice = (from) => cn.slice(from).join("\n");
     // 主脚本 GM 存储清理（扩展上下文直接删 chrome.storage.local 中本脚本的键；仅供测试工具使用）
