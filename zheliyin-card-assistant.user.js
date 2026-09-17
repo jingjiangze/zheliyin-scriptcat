@@ -521,8 +521,8 @@
       </div>
       <div class="zy-body">
         <div class="zy-row">
-          <label class="zy-label" for="zy-native-ocr-mode">识别方式</label>
-          <select class="zy-input" id="zy-native-ocr-mode">
+          <label class="zy-label" for="zy-ocr-mode-native">识别方式</label>
+          <select class="zy-input" id="zy-ocr-mode-native">
             <option value="auto" ${getOcrMode() === "auto" ? "selected" : ""}>自动（本地优先，失败时用百度云端）</option>
             <option value="local" ${getOcrMode() === "local" ? "selected" : ""}>仅本地（不联网）</option>
             <option value="baidu" ${getOcrMode() === "baidu" ? "selected" : ""}>百度云端</option>
@@ -536,18 +536,18 @@
           <summary>百度 OCR（云端备用）</summary>
           <div class="zy-settings-body">
             <div class="zy-row">
-              <label class="zy-label" for="zy-native-baidu-ak">API Key</label>
-              <input class="zy-input" id="zy-native-baidu-ak" type="password" placeholder="百度智能云 API Key（${akPlaceholder}）">
+              <label class="zy-label" for="zy-baidu-ak-native">API Key</label>
+              <input class="zy-input" id="zy-baidu-ak-native" type="password" placeholder="百度智能云 API Key（${akPlaceholder}）">
             </div>
             <div class="zy-row">
-              <label class="zy-label" for="zy-native-baidu-sk">Secret Key</label>
-              <input class="zy-input" id="zy-native-baidu-sk" type="password" placeholder="留空保持原样">
+              <label class="zy-label" for="zy-baidu-sk-native">Secret Key</label>
+              <input class="zy-input" id="zy-baidu-sk-native" type="password" placeholder="留空保持原样">
             </div>
             <div class="zy-actions two">
-              <button class="zy-btn" id="zy-native-baidu-save">保存</button>
-              <button class="zy-btn secondary" id="zy-native-baidu-test">测试连接</button>
+              <button class="zy-btn" id="zy-baidu-save-native">保存</button>
+              <button class="zy-btn secondary" id="zy-baidu-test-native">测试连接</button>
             </div>
-            <div class="zy-note" id="zy-native-baidu-status">凭据为客户端可访问凭据，仅存本机脚本配置；请勿使用高权限/长期/不可撤销的 Key。</div>
+            <div class="zy-note" id="zy-baidu-status-native">凭据为客户端可访问凭据，仅存本机脚本配置；请勿使用高权限/长期/不可撤销的 Key。</div>
           </div>
         </details>
       </div>`;
