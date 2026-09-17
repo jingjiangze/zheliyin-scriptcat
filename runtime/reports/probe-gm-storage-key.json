@@ -1,0 +1,24 @@
+{
+ "ts": "2026-09-17T03:35:47.203Z",
+ "steps": [
+  {
+   "name": "install",
+   "ok": true,
+   "detail": "status=1"
+  },
+  {
+   "name": "drawer-ready",
+   "ok": true
+  },
+  {
+   "name": "options-page-keys",
+   "ok": true,
+   "detail": "{\"total\":18,\"zy\":[\"localStorage:firstShowDeveloperMode\"],\"sample\":[\"checkupdate_script_lasttime\",\"compiled_resource:57d79c56-231a-42d3-b6e3-d2004ba0866f:rt-probe-mu4z8wsj\",\"localStorage:firstShowDeveloperMode\",\"localStorage:migrations\",\"localStorage:sites\",\"resource:03fb93fe-8502-5289-af11-b4691d7788d9\",\"resource:13726ca1-bc73-58db-a585-d770779ef3b1\",\"resource:174c1575-66ab-5ba6-8c4d-c0cfc762f94f\",\"resource:45389506-dd75-5fe3-a6b4-5012c1ba7dd9\",\"resource:7b43317d-bfc3-5085-9ce0-5ed984f77830\",\"resource:c050d45f-4a12-5725-8f1e-1dcee874d045\",\"resource:c79e022b-19a1-5721-9633-e1fe9abad6cc\"]}"
+  },
+  {
+   "name": "editor-page-gm",
+   "ok": true,
+   "detail": "{\"hasChrome\":false,\"hasGMOnWindow\":false,\"keys\":[]}"
+  }
+ ]
+}

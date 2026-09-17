@@ -1,0 +1,159 @@
+{
+ "ts": "2026-09-17T03:48:16.046Z",
+ "stage": "STAGE-5.6-P5-OCR-DEMO",
+ "steps": [
+  {
+   "name": "install-userscript",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "ocr-drawer-mounted",
+   "ok": "PASS",
+   "detail": "{\"ready\":true,\"drawer\":true,\"toolBtn\":true,\"legacy\":false,\"drawerCount\":1,\"toolCount\":1,\"legacyCount\":0,\"statusNodes\":1,\"statusText\":\"就绪\"}",
+   "evidence": "P5_NATIVE_DRAWER"
+  },
+  {
+   "name": "drawer-unique",
+   "ok": "PASS",
+   "detail": "drawerCount=1",
+   "evidence": "P5_NO_DUP"
+  },
+  {
+   "name": "tool-btn-unique",
+   "ok": "PASS",
+   "detail": "toolCount=1",
+   "evidence": "P5_RAIL_BUTTON"
+  },
+  {
+   "name": "legacy-panel-hidden",
+   "ok": "PASS",
+   "detail": "{\"legacy\":false,\"legacyCount\":0}",
+   "evidence": "P5_OCR_ONLY_DEFAULT"
+  },
+  {
+   "name": "status-node-single",
+   "ok": "PASS",
+   "detail": "statusNodes=1",
+   "evidence": "P5_NATIVE_STATUS_ONLY"
+  },
+  {
+   "name": "scenario-A-bg-set",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"bgType\":\"image\"}",
+   "evidence": "P5_BG_NO_ACTIVE"
+  },
+  {
+   "name": "scenario-A-ocr-flow",
+   "ok": "PASS",
+   "detail": "clicked=true status=已生成 3 个文字（可双击编辑）",
+   "evidence": "P5_BG_LOCAL_OCR_TEXTCREATE"
+  },
+  {
+   "name": "scenario-A-readable-textbox",
+   "ok": "PASS",
+   "detail": "{\"ocrCount\":3,\"samples\":[{\"text\":\"测试 公司\",\"type\":\"textbox\",\"editable\":true},{\"text\":\"折 立 印 设计\",\"type\":\"textbox\",\"editable\":true},{\"text\":\"13800138000\",\"type\":\"textbox\",\"editable\":true}],\"total\":24}",
+   "evidence": "P5_REAL_EDITABLE_TEXTBOX"
+  },
+  {
+   "name": "scenario-A-rollback",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"removed\":3,\"totalAfter\":21,\"bgAfter\":false}",
+   "evidence": "P5_ROLLBACK_CLEAN"
+  },
+  {
+   "name": "scenario-B-active-set",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"activeType\":\"image\",\"hasElement\":true}",
+   "evidence": "P5_ACTIVE_IMAGE"
+  },
+  {
+   "name": "scenario-B-ocr-flow",
+   "ok": "PASS",
+   "detail": "clicked=true status=已生成 2 个文字（可双击编辑）",
+   "evidence": "P5_ACTIVE_IMAGE_OCR_TEXTCREATE"
+  },
+  {
+   "name": "scenario-B-rollback",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"removed\":2,\"totalAfter\":22,\"bgAfter\":false}",
+   "evidence": "P5_ROLLBACK_B"
+  },
+  {
+   "name": "scenario-C-drawer-then-click",
+   "ok": "PASS",
+   "detail": "drawer=true",
+   "evidence": "P5_EARLY_CLICK_START"
+  },
+  {
+   "name": "scenario-C-early-click",
+   "ok": "PASS",
+   "detail": "clicked=true terminal=已生成 3 个文字（可双击编辑） early=true",
+   "evidence": "P5_CANVAS_EARLY_CLICK"
+  },
+  {
+   "name": "scenario-C-rollback",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"removed\":3,\"totalAfter\":21,\"bgAfter\":false}",
+   "evidence": "P5_ROLLBACK_C"
+  },
+  {
+   "name": "refresh-no-dup-ocr-only",
+   "ok": "PASS",
+   "detail": "{\"drawerCount\":1,\"toolCount\":1,\"legacy\":false}",
+   "evidence": "P5_SPA_NO_DUP"
+  },
+  {
+   "name": "restore-api-write",
+   "ok": "PASS",
+   "detail": "{\"code\":0}",
+   "evidence": "P5_SERVICE_WORKER_VALUE_API"
+  },
+  {
+   "name": "restore-panel-appears",
+   "ok": "PASS",
+   "detail": "{\"legacy\":true,\"legacyCount\":1}",
+   "evidence": "P5_RESTORE_TEMPLATE_PANEL"
+  },
+  {
+   "name": "template-buttons-present",
+   "ok": "PASS",
+   "detail": "{\"parse\":true,\"append\":true,\"front\":true,\"back\":true,\"fields\":true,\"raw\":true,\"ocrInPanel\":true,\"probe\":true}",
+   "evidence": "P5_TEMPLATE_CODE_RETAINED"
+  },
+  {
+   "name": "restore-cleared-ocr-only-back",
+   "ok": "PASS",
+   "detail": "{\"drawer\":true,\"legacy\":false}",
+   "evidence": "P5_RESTORE_CLEARED"
+  },
+  {
+   "name": "cleanup-userscript",
+   "ok": "PASS",
+   "detail": "removed rt5-6-p5-mu4zoylq",
+   "evidence": "n/a"
+  }
+ ],
+ "errors": [],
+ "console": [
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=21 bg=true active=null",
+  "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars",
+  "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 700x500 dataUrl=25886 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=2",
+  "[zy-ocr][SUCCESS] created=2",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=20 bg=false active=null",
+  "[zy-ocr][PREPARING] kind=first-image 980x1264 dataUrl=583014 chars",
+  "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3"
+ ],
+ "pending": []
+}

@@ -9,8 +9,10 @@
 //   [ ] 场景 B：active image 对象 → OCR 正常推进（无错误终态）
 //   [ ] 场景 C：早点击 —— 刷新后抽屉一出现立即点击 → 「正在等待编辑器加载…」→ 自动继续
 //   [ ] 刷新防重：抽屉/按钮仍唯一；浮窗仍不存在
-//   [ ] 恢复开关：zyShowTemplatePanel="1" 写入 → 刷新 → #zy-card-assistant 出现且套版按钮齐全（套版代码保留证明）；移除后恢复 OCR-only
+//   [ ] 恢复开关：serviceWorker/value/setScriptValues 写 zyShowTemplatePanel=[0,"1"] → 刷新 → #zy-card-assistant 出现且套版按钮齐全（套版代码保留证明）；写 [1] 清除后恢复 OCR-only
 //   [ ] 回滚清理：ocr_demo_* 对象删除
+// 备注：ScriptCat GM 值经扩展官方通道 serviceWorker/value/setScriptValues（扩展源码模块 45868 确认），
+//       值编码 [0,v]=有值 / [1]=undefined(删除)；直接改 chrome.storage.local 的 value:<uuid> 会被引擎缓存覆盖，不可用。
 // 证据：runtime/reports/stage5-5b-p5-ocr-demo-report.json + docs/evidence/stage-5.6/
 "use strict";
 const path = require("path");
@@ -254,56 +256,45 @@ const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user
     }
     step("refresh-no-dup-ocr-only", !!(st2 && st2.drawerCount === 1 && st2.toolCount === 1 && !st2.legacy), JSON.stringify(st2 && { drawerCount: st2.drawerCount, toolCount: st2.toolCount, legacy: st2.legacy }), "P5_SPA_NO_DUP");
 
-    // ---- 恢复开关：写入 zyShowTemplatePanel=1 → 浮窗恢复（套版代码保留证明）；清除后恢复 OCR-only ----
-    // 先触发一次模式切换让 GM 存储出现可发现键（zyOcrMode），据此推断存储前缀
-    await page.evaluate(() => { const sel = document.getElementById("zy-ocr-mode-native"); if (sel) { sel.value = "local"; sel.dispatchEvent(new Event("change")); } }).catch(() => {});
-    await new Promise((r) => setTimeout(r, 1200));
-    const storageKey = await optsPage.evaluate(async () => {
-      const all = await chrome.storage.local.get(null);
-      const hit = Object.keys(all).find((k) => /zyOcrMode/.test(k));
-      if (!hit) return { found: false };
-      const prefix = hit.replace(/zyOcrMode.*$/, "");
-      return { found: true, prefix: prefix, modeKey: hit };
-    });
-    step("storage-key-discovered", !!(storageKey && storageKey.found), JSON.stringify(storageKey), "P5_GM_STORAGE_DISCOVERY");
-    if (storageKey && storageKey.found) {
-      const restoreKey = storageKey.prefix + "zyShowTemplatePanel";
-      await optsPage.evaluate(async ({ k, v }) => { await chrome.storage.local.set({ [k]: v }); }, { k: restoreKey, v: "1" });
-      await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
-      const d3 = Date.now() + 90000;
-      let st3 = null;
-      while (Date.now() < d3) {
-        st3 = await snap(page);
-        if (st3 && st3.ready && st3.legacy) break;
-        await new Promise((r) => setTimeout(r, 1500));
-      }
-      const tmplButtons = st3 && st3.legacy ? await page.evaluate(() => ({
-        parse: !!document.getElementById("zy-parse-apply"),
-        append: !!document.getElementById("zy-append"),
-        front: !!document.getElementById("zy-apply-front"),
-        back: !!document.getElementById("zy-apply-back"),
-        fields: !!document.getElementById("zy-fields"),
-        raw: !!document.getElementById("zy-raw"),
-        ocrInPanel: !!document.getElementById("zy-ocr-btn"),
-        probe: !!document.getElementById("zy-probe")
-      })).catch(() => null) : null;
-      step("restore-panel-appears", !!(st3 && st3.legacy && st3.legacyCount === 1), JSON.stringify(st3 && { legacy: st3.legacy, legacyCount: st3.legacyCount }), "P5_RESTORE_TEMPLATE_PANEL");
-      step("template-buttons-present", !!(tmplButtons && tmplButtons.parse && tmplButtons.append && tmplButtons.front && tmplButtons.back && tmplButtons.fields && tmplButtons.raw && tmplButtons.ocrInPanel && tmplButtons.probe), JSON.stringify(tmplButtons), "P5_TEMPLATE_CODE_RETAINED");
-      await optsPage.evaluate(async ({ k }) => { await chrome.storage.local.remove(k); }, { k: restoreKey });
-      await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
-      const d4 = Date.now() + 90000;
-      let st4 = null;
-      while (Date.now() < d4) {
-        st4 = await snap(page);
-        if (st4 && st4.ready && st4.drawer) break;
-        await new Promise((r) => setTimeout(r, 1500));
-      }
-      step("restore-cleared-ocr-only-back", !!(st4 && st4.drawer && !st4.legacy), JSON.stringify(st4 && { drawer: st4.drawer, legacy: st4.legacy }), "P5_RESTORE_CLEARED");
-    } else {
-      step("restore-panel-appears", false, "GM 存储前缀未发现（ScriptCat 存储 key 格式未命中），restore 动态验证无法完成", "P5_RESTORE_PENDING");
-      report.errors = report.errors.filter((e) => e !== "restore-panel-appears");
-      report.errors.push("restore-panel-appears(PENDING)");
+    // ---- 恢复开关：官方脚本值 API（serviceWorker/value/setScriptValues）写 zyShowTemplatePanel=1 → 浮窗恢复（套版代码保留证明）；[1] 清除后恢复 OCR-only ----
+    // ScriptCat GM 值读写规范通道（扩展源码模块 45868 确认）：值编码 [0,v]=有值 / [1]=undefined(删除)。
+    const setGmValue = (optsPage, uuid, key, encoded) => optsPage.evaluate(async ({ uid, k, e, ts }) => {
+      const res = await chrome.runtime.sendMessage({ action: "serviceWorker/value/setScriptValues", data: { uuid: uid, keyValuePairs: [[k, e]], ts: ts } });
+      return res;
+    }, { uid: uuid, k: key, e: encoded, ts: Date.now() });
+    const setRestore = (on) => setGmValue(optsPage, UUID, "zyShowTemplatePanel", on ? [0, "1"] : [1]);
+    const apiRes = await setRestore(true);
+    step("restore-api-write", !!(apiRes && apiRes.code === 0), JSON.stringify(apiRes), "P5_SERVICE_WORKER_VALUE_API");
+    await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+    const d3 = Date.now() + 90000;
+    let st3 = null;
+    while (Date.now() < d3) {
+      st3 = await snap(page);
+      if (st3 && st3.ready && st3.legacy) break;
+      await new Promise((r) => setTimeout(r, 1500));
     }
+    const tmplButtons = st3 && st3.legacy ? await page.evaluate(() => ({
+      parse: !!document.getElementById("zy-parse-apply"),
+      append: !!document.getElementById("zy-append"),
+      front: !!document.getElementById("zy-apply-front"),
+      back: !!document.getElementById("zy-apply-back"),
+      fields: !!document.getElementById("zy-fields"),
+      raw: !!document.getElementById("zy-raw"),
+      ocrInPanel: !!document.getElementById("zy-ocr-btn"),
+      probe: !!document.getElementById("zy-probe")
+    })).catch(() => null) : null;
+    step("restore-panel-appears", !!(st3 && st3.legacy && st3.legacyCount === 1), JSON.stringify(st3 && { legacy: st3.legacy, legacyCount: st3.legacyCount }), "P5_RESTORE_TEMPLATE_PANEL");
+    step("template-buttons-present", !!(tmplButtons && tmplButtons.parse && tmplButtons.append && tmplButtons.front && tmplButtons.back && tmplButtons.fields && tmplButtons.raw && tmplButtons.ocrInPanel && tmplButtons.probe), JSON.stringify(tmplButtons), "P5_TEMPLATE_CODE_RETAINED");
+    await setRestore(false);
+    await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+    const d4 = Date.now() + 90000;
+    let st4 = null;
+    while (Date.now() < d4) {
+      st4 = await snap(page);
+      if (st4 && st4.ready && st4.drawer && !st4.legacy) break;
+      await new Promise((r) => setTimeout(r, 1500));
+    }
+    step("restore-cleared-ocr-only-back", !!(st4 && st4.drawer && !st4.legacy), JSON.stringify(st4 && { drawer: st4.drawer, legacy: st4.legacy }), "P5_RESTORE_CLEARED");
 
     try { await adapter.removeScript(optsPage, UUID); step("cleanup-userscript", true, "removed " + UUID); } catch (e) { step("cleanup-userscript", false, String(e && e.message || e)); }
   } catch (e) {
