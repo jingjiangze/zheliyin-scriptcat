@@ -1,0 +1,449 @@
+{
+ "ts": "2026-09-17T08:54:59.613Z",
+ "stage": "STAGE-6-2-NATIVE-PROBE-R2",
+ "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+ "phases": {
+  "ready": {
+   "ok": true,
+   "objs": 9
+  },
+  "p0_baseline": {
+   "canvasObjs": 9,
+   "layerArrLen": 1,
+   "undoLen": 1,
+   "redoLen": 0,
+   "pageIdx": 0,
+   "currentCanvasNum": 1,
+   "hasUndoModule": true,
+   "fontId": "248",
+   "fontName": "方正黑体简体",
+   "itemListLen": 1,
+   "hasProductVO": true,
+   "templateTextMedia": null,
+   "isBlankTemplate": false,
+   "canvasJsonSample": "{\"workAreaWidth\":92,\"workAreaHeight\":56}"
+  },
+  "p1_hook": {
+   "hooked": true,
+   "snapBefore": {
+    "canvas": 9,
+    "layer": 1,
+    "undo": 1,
+    "redo": 0
+   },
+   "log": []
+  },
+  "p2_t1_create": {
+   "before": {
+    "canvas": 9,
+    "layer": 1
+   },
+   "after": {
+    "canvas": 10,
+    "layer": 2
+   },
+   "found": true,
+   "layerRegisteredIndex": 1,
+   "uuid": "a67454f2-63b2-486c-b36f-52007ebdce63",
+   "text": "对拍文字123",
+   "fontSize": 16,
+   "left": 120,
+   "top": 130,
+   "isEdit": true,
+   "mediaMediaType": "text",
+   "multiUuid": "dd0d49ca-3966-4215-8a05-8a4332207cc2"
+  },
+  "p2_t1_fields": {
+   "found": true,
+   "layerIdx": 1,
+   "ownKeyCount": 72,
+   "vals": {
+    "type": "\"textbox\"",
+    "text": "\"对拍文字123\"",
+    "multiUuid": "\"dd0d49ca-3966-4215-8a05-8a4332207cc2\"",
+    "uuid": "\"a67454f2-63b2-486c-b36f-52007ebdce63\"",
+    "markuuid": "<absent>",
+    "layerNum": "<absent>",
+    "mediaMediaType": "\"text\"",
+    "isDesign": "true",
+    "isEdit": "true",
+    "isLineText": "true",
+    "deleteState": "false",
+    "locationX": "\"\"",
+    "locationY": "\"\"",
+    "locationWidth": "\"\"",
+    "locationHeight": "\"\"",
+    "locationRotation": "\"\"",
+    "printLocationX": "\"\"",
+    "printLocationY": "\"\"",
+    "printLocationWidth": "\"\"",
+    "printLocationHeight": "\"\"",
+    "printLocationRotation": "\"\"",
+    "fontFamily": "\"方正黑体简体\"",
+    "fontSize": "16",
+    "fontWeight": "\"normal\"",
+    "fontStyle": "\"normal\"",
+    "lineHeight": "1.16",
+    "charSpacing": "0",
+    "isPreview": "true",
+    "isDisplay": "false",
+    "left": "120",
+    "top": "130",
+    "width": "91.625",
+    "height": "18.08",
+    "angle": "0",
+    "scaleX": "1",
+    "scaleY": "1",
+    "mediaText": "\"\"",
+    "mediafontPointSize": "\"\"",
+    "mediafontColor": "\"\"",
+    "mediafontId": "\"248\"",
+    "mediafontIsHorizontal": "false",
+    "mediafontGravity": "\"\"",
+    "mediaIsItalic": "false",
+    "mediaIsBold": "false",
+    "mediaWordSpace": "\"\"",
+    "mediaLineSpace": "\"\"",
+    "layerAlpha": "\"1.00\"",
+    "visible": "true",
+    "protoVisible": "true",
+    "visitLevel": "1000",
+    "fill": "\"rgb(0,0,0)\"",
+    "originX": "\"left\"",
+    "originY": "\"top\""
+   }
+  },
+  "p3_undo_redo": [
+   {
+    "tag": "afterPostSave",
+    "canvas": 10,
+    "t1OnCanvas": true,
+    "layer": 2,
+    "t1InLayer": true,
+    "undoLen": 2,
+    "redoLen": 0
+   },
+   {
+    "tag": "undoClick",
+    "action": "clicked"
+   },
+   {
+    "tag": "afterUndoClick",
+    "canvas": 9,
+    "t1OnCanvas": false,
+    "layer": 1,
+    "t1InLayer": false,
+    "undoLen": 1,
+    "redoLen": 1
+   },
+   {
+    "tag": "afterUndo2",
+    "canvas": 9,
+    "t1OnCanvas": false,
+    "layer": 1,
+    "t1InLayer": false,
+    "undoLen": 1,
+    "redoLen": 1
+   },
+   {
+    "tag": "redoClick",
+    "action": "clicked"
+   },
+   {
+    "tag": "afterRedoClick",
+    "canvas": 10,
+    "t1OnCanvas": true,
+    "layer": 2,
+    "t1InLayer": true,
+    "undoLen": 2,
+    "redoLen": 0
+   }
+  ],
+  "p4_t2_media": {
+   "found": true,
+   "before": {
+    "canvas": 10,
+    "layer": 2,
+    "itemList": 1
+   },
+   "after": {
+    "canvas": 11,
+    "layer": 3,
+    "itemList": 1
+   },
+   "layerRegisteredIndex": 2,
+   "uuid": "852e3cca-1594-4660-808a-0a9422ef8e33",
+   "multiUuid": "zyprobe-1a0ae93bfbd-7a0f91",
+   "left": 200,
+   "top": 220,
+   "width": 220,
+   "height": 32,
+   "layerNum": 2,
+   "isEdit": 1,
+   "workArea": {
+    "wa": 92,
+    "ha": 56
+   },
+   "vals": {
+    "type": "\"textbox\"",
+    "text": "\"对拍media路径\"",
+    "multiUuid": "\"zyprobe-1a0ae93bfbd-7a0f91\"",
+    "uuid": "\"852e3cca-1594-4660-808a-0a9422ef8e33\"",
+    "markuuid": "<absent>",
+    "layerNum": "2",
+    "mediaMediaType": "\"text\"",
+    "isDesign": "<absent>",
+    "isEdit": "1",
+    "isLineText": "true",
+    "deleteState": "0",
+    "locationX": "200",
+    "locationY": "220",
+    "locationWidth": "220",
+    "locationHeight": "32",
+    "locationRotation": "0",
+    "printLocationX": "200",
+    "printLocationY": "220",
+    "printLocationWidth": "220",
+    "printLocationHeight": "32",
+    "printLocationRotation": "0",
+    "fontFamily": "\"方正黑体简体\"",
+    "fontSize": "18",
+    "fontWeight": "\"normal\"",
+    "fontStyle": "\"normal\"",
+    "lineHeight": "1.2",
+    "charSpacing": "0",
+    "isPreview": "<absent>",
+    "isDisplay": "1",
+    "left": "200",
+    "top": "220",
+    "width": "220",
+    "height": "32",
+    "angle": "0",
+    "scaleX": "1",
+    "scaleY": "1",
+    "mediaText": "\"对拍media路径\"",
+    "mediafontPointSize": "18",
+    "mediafontColor": "\"#000000\"",
+    "mediafontId": "\"248\"",
+    "mediafontIsHorizontal": "1",
+    "mediafontGravity": "\"center\"",
+    "mediaIsItalic": "0",
+    "mediaIsBold": "0",
+    "mediaWordSpace": "0",
+    "mediaLineSpace": "1.2",
+    "layerAlpha": "1",
+    "visible": "true",
+    "protoVisible": "true",
+    "visitLevel": "1",
+    "fill": "\"#000000\"",
+    "originX": "\"left\"",
+    "originY": "\"top\""
+   }
+  },
+  "p4_t2_undo": [
+   {
+    "tag": "afterT2Undo",
+    "canvas": 9,
+    "t2Canvas": false,
+    "layer": 1,
+    "t2Layer": false,
+    "undoLen": 1,
+    "redoLen": 1
+   }
+  ],
+  "p5_diff": {
+   "found": false,
+   "note": "no native test obj on canvas now (expected after undo)"
+  },
+  "p6_hookLog": [
+   {
+    "fn": "Undo.save",
+    "t": 3,
+    "before": {
+     "undo": 1,
+     "redo": 0
+    },
+    "after": {
+     "undo": 1,
+     "redo": 0
+    },
+    "extra": "ok"
+   },
+   {
+    "fn": "drawText",
+    "t": 3,
+    "before": {
+     "canvas": 9,
+     "layer": 1,
+     "undo": 1,
+     "redo": 0
+    },
+    "after": null,
+    "extra": "args=对拍文字123|16|120|130"
+   },
+   {
+    "fn": "canvas.add",
+    "t": 16,
+    "before": {
+     "canvas": 9,
+     "layer": 1
+    },
+    "after": {
+     "canvas": 10,
+     "layer": 1
+    },
+    "extra": "obj=对拍文字123"
+   },
+   {
+    "fn": "checkObjsInProductJson",
+    "t": 19,
+    "before": {
+     "layer": 2
+    },
+    "after": {
+     "layer": 2
+    },
+    "extra": "mediaType=?"
+   },
+   {
+    "fn": "Undo.save",
+    "t": 19,
+    "before": {
+     "undo": 1,
+     "redo": 0
+    },
+    "after": {
+     "undo": 1,
+     "redo": 0
+    },
+    "extra": "ok"
+   },
+   {
+    "fn": "drawText",
+    "t": 19,
+    "before": {
+     "canvas": 9,
+     "layer": 1,
+     "undo": 1,
+     "redo": 0
+    },
+    "after": {
+     "canvas": 10,
+     "layer": 2,
+     "undo": 1,
+     "redo": 0
+    },
+    "extra": "ok"
+   },
+   {
+    "fn": "Undo.save",
+    "t": 1839,
+    "before": {
+     "undo": 2,
+     "redo": 0
+    },
+    "after": {
+     "undo": 2,
+     "redo": 0
+    },
+    "extra": "ok"
+   },
+   {
+    "fn": "drawText",
+    "t": 5476,
+    "before": {
+     "canvas": 10,
+     "layer": 2,
+     "undo": 2,
+     "redo": 0
+    },
+    "after": null,
+    "extra": "args=对拍media路径|null|null|null|{keys:media,location,printLocation,layer,layerNum,isEdit,text:}|2"
+   },
+   {
+    "fn": "createObjProductJsonDetail",
+    "t": 5480,
+    "before": {
+     "canvas": 10
+    },
+    "after": {
+     "canvas": 10
+    },
+    "extra": "mediaType=text"
+   },
+   {
+    "fn": "canvas.add",
+    "t": 5480,
+    "before": {
+     "canvas": 10,
+     "layer": 2
+    },
+    "after": {
+     "canvas": 11,
+     "layer": 2
+    },
+    "extra": "obj=对拍media路径"
+   },
+   {
+    "fn": "checkObjsInProductJson",
+    "t": 5482,
+    "before": {
+     "layer": 3
+    },
+    "after": {
+     "layer": 3
+    },
+    "extra": "mediaType=text"
+   },
+   {
+    "fn": "drawText",
+    "t": 5482,
+    "before": {
+     "canvas": 10,
+     "layer": 2,
+     "undo": 2,
+     "redo": 0
+    },
+    "after": {
+     "canvas": 11,
+     "layer": 3,
+     "undo": 2,
+     "redo": 0
+    },
+    "extra": "ok"
+   }
+  ],
+  "p7_cleanup": {
+   "restoreHooks": true,
+   "removedObjects": 0,
+   "finalCanvas": 9,
+   "finalLayer": 1,
+   "undoRestored": {
+    "undoLen": 1,
+    "redoLen": 0,
+    "preUndo": 1,
+    "preRedo": 0
+   },
+   "itemList": {
+    "before": 1,
+    "after": 1,
+    "removedIdx": -1
+   }
+  }
+ },
+ "errors": [],
+ "metrics": {
+  "phaseSequence": [
+   "afterPostSave",
+   "undoClick",
+   "afterUndoClick",
+   "afterUndo2",
+   "redoClick",
+   "afterRedoClick"
+  ],
+  "undoRemovedT1": true,
+  "redoRestoredT1": true,
+  "t2_undoRemoved": true,
+  "templateStateRestored": true
+ }
+}
