@@ -1,0 +1,626 @@
+### url https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do
+### title 智能设计定制未来
+### viewport {"w":1440,"h":900} dpr=1
+
+## 1. ID KEYWORDS (62 of 714 total ids)
+  mMaterial
+  mFormat
+  jsjMaterial
+  sczMaterial
+  textMaterialList
+  materialPre
+  materialTop
+  offiMaterial
+  offiMatFolders
+  materialList
+  userMaterial
+  uploadMaterial
+  canvasFileColor
+  offformatFolders
+  offFormat
+  formatList
+  createTable
+  cardInformation
+  orcTable
+  logincallOcrCount
+  hdgyMenu
+  createTableCont
+  tableBorderSize
+  addNewTable
+  editTableCont
+  ocrTableCont
+  ocrLianDan
+  cardInformationCont
+  informationItem
+  applyCV2Information
+  barcodeItem
+  createBarCode
+  canvasRuler
+  rectCanvas
+  canvasBground
+  borderTableValue
+  createDiyName
+  dropperCanvas
+  adjustCanvas
+  contextMenu
+  insert-column-right
+  materPreviewBox
+  refOcrcrop1Img
+  refOcrcrop2Img
+  diyTable
+  rightsPreview
+  matting-box
+  mattingContent
+  ocrBgColor
+  ocrUid
+  hasrightsTmpl
+  isPageNumRight
+  materFolderDefaultId
+  diyId
+  diyTypeNumCup
+  ocrDesign
+  editFormat
+  designerGoodsMaterialCode
+  imageLayeredId
+  imagePasteCanvas
+  barCodeFolderId
+  stickerCanvas
+
+## 2. CLASS KEYWORDS (top by frequency)
+  btn ×76
+  cell-item ×64
+  ui-widget-header ×38
+  item ×28
+  label-checkbox ×25
+  btnGroup ×23
+  subItem ×23
+  list ×17
+  table-handel ×17
+  item-name ×14
+  input ×12
+  menuItem ×12
+  toolGroup ×11
+  btn-go-top ×11
+  list-loading ×11
+  list-foot ×11
+  menuGroup ×11
+  handle-title ×11
+  ai-setting-header ×10
+  input-item ×10
+  menu ×10
+  menuContItem ×9
+  subItemScroll ×8
+  text-item ×8
+  ai-setting-title ×8
+  module-title ×8
+  cus-table-row ×8
+  color-item ×7
+  selectbtn ×7
+  uploadify-button ×7
+  addBtn ×7
+  menu-btn ×7
+  ui-select-datalist-li ×7
+  table-btn ×7
+  item_check_title ×7
+  error-lists ×7
+  ai-param-label ×6
+  ranksItem ×6
+  tableDropper ×6
+  sliderTitle ×6
+  btn-mini ×6
+  searchInput ×5
+  item_title ×5
+  batchBtn ×5
+  select ×4
+  shape-item ×4
+  icon-compose-text ×4
+  new-table-btn ×4
+  uploadList ×4
+  titleColor ×4
+  file-item ×4
+  btnGroup-three ×4
+  calendar-item ×4
+  title ×4
+  ranksItemBox ×4
+  ranksTitle ×4
+  colorInput ×4
+  swiper-button ×4
+  selectedHandPage ×4
+  table ×3
+  selected ×3
+  sliderItem ×3
+  btn-close ×3
+  uploadbtn ×3
+  ai-generate-btn ×3
+  btn-text ×3
+  uv-item ×3
+  cus-form-item ×3
+  close ×3
+  form-item ×3
+  spanTitle ×3
+  adjustItem ×3
+  text-wrapper ×3
+  btn-group ×3
+  rightSiderItem ×3
+  layerInput ×3
+  close-btn ×3
+  icon-close1 ×3
+  btns-box ×3
+  ui-color-input ×3
+  dateBarColor ×3
+  progress-bar ×3
+  temp-info-list ×2
+  editBar ×2
+  icon-text-around-t ×2
+  text3D ×2
+  icon-table-opacity ×2
+  generalTool ×2
+  materialList ×2
+  selectcolor ×2
+  textGradientposition ×2
+  materialTab ×2
+  upload-operate-btn ×2
+  colorSelectL ×2
+  codeItem ×2
+  holdAllItem ×2
+  holdAllItemUl ×2
+  createTablesColor ×2
+  icon-create-tables ×2
+  btnGroup-one ×2
+  translateBtn ×2
+  design-ai-panel ×2
+  ai-panel-header ×2
+  ai-panel-title ×2
+  ai-panel-body ×2
+  ai-prompt-textarea ×2
+  ai-result-title ×2
+  ai-result-use-btn ×2
+  ai-btn-blue ×2
+  ai-btn-outline ×2
+  text-center ×2
+  num-title ×2
+  btn-area ×2
+  adjustInput ×2
+  input-items ×2
+  collectinfo-item-box ×2
+  ui-range-input ×2
+  mbtn ×2
+  editBarR ×2
+  size-tool ×2
+  minicolors-input ×2
+  minicolors-panel ×2
+  swiper-button-prev ×2
+  swiper-button-next ×2
+  countInput ×2
+  login-tab ×2
+  tab-con ×2
+  btn-register ×2
+  new-btn ×2
+  btn-collapse ×2
+  table-footer-edit ×2
+  tabitem ×2
+  cancel-btn ×2
+  design_check_title ×2
+  title_name ×2
+  check-items ×2
+  button-area ×2
+  progress-type-title ×2
+  tableLoading ×1
+  cardgilding-progress-bar ×1
+  rightPageBarFoot ×1
+  toolBar ×1
+  leftBtn ×1
+  shape-items ×1
+  text ×1
+  textBg ×1
+  textbackground ×1
+  icon-text-bg ×1
+  textArt ×1
+  icon-text-art ×1
+  textUl ×1
+  tableOperat ×1
+  table-bt ×1
+  icon-table-head ×1
+  table-bs ×1
+  icon-table-body ×1
+  table-xk ×1
+  icon-table-border ×1
+  table-tr ×1
+  table-border ×1
+  table-out-color ×1
+  table-out-border ×1
+  table-bk-color ×1
+  table-background-cell ×1
+  table-col-w ×1
+  table-row-h ×1
+  editBar-guides ×1
+  cupOneKeyTool ×1
+  rightBtn ×1
+  searchOrderInput ×1
+  inputorderno ×1
+  orderinfo-list ×1
+  copyrightHeader ×1
+  copyright-imgList ×1
+  leftMenu ×1
+  menuBar ×1
+  icon-text1 ×1
+  extraBar ×1
+  hotkeys-list ×1
+  help-list ×1
+  menuCont ×1
+  fixed-menu-btn ×1
+  fixed-menu-tips ×1
+  close-tips ×1
+  menuContBox ×1
+  searchItem ×1
+  inputxz ×1
+  searchTab ×1
+  btnGs ×1
+  tempItem ×1
+  tempItemCard ×1
+  tempSeachInput ×1
+  list-empty ×1
+  textItem ×1
+  literalPanelBox ×1
+  literalPanel ×1
+  icon-text ×1
+  icon-text-vertical ×1
+  materialText ×1
+  titleTextBg ×1
+  icon-title-text ×1
+  composeTextBg ×1
+  artTextItem ×1
+  arttextList ×1
+  listTop ×1
+  artTextUl ×1
+  tuList ×1
+  text-3D ×1
+  text-items ×1
+  thisText ×1
+  selectBox3D ×1
+  selectDrop ×1
+  sliderItems ×1
+  previewBtn ×1
+  pageColorSelect ×1
+  materialItem ×1
+  inputsc ×1
+  icon-title ×1
+  filterItem ×1
+  backItem ×1
+
+## 3. RIGHT BAR
+  .rightPageBar -> {"tag":"div","id":null,"cls":"rightPageBar rightBar","rect":{"x":1250,"y":51,"w":190,"h":849},"display":"block","position":"absolute","zIndex":"20","fontFamily":"\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif","fontSize":"12px","fontWeight":"400","lineHeight":"16.8px","color":"rgb(106, 106, 106)","background":"rgb(255, 255, 255)","border":"0px none rgb(106, 106, 106)","borderRadius":"0px","padding":"0px","margin":"0px","boxShadow":null,"overflow":"visible","transition":"0.2s","text":"> < 常用素材 页面 烫金 图层 批量删除 删除 上移一层 下移一层 置于顶层 置于底层 置于底层 复制还原多版设计删"} children=8
+  .rightBar -> {"tag":"div","id":null,"cls":"rightPageBar rightBar","rect":{"x":1250,"y":51,"w":190,"h":849},"display":"block","position":"absolute","zIndex":"20","fontFamily":"\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif","fontSize":"12px","fontWeight":"400","lineHeight":"16.8px","color":"rgb(106, 106, 106)","background":"rgb(255, 255, 255)","border":"0px none rgb(106, 106, 106)","borderRadius":"0px","padding":"0px","margin":"0px","boxShadow":null,"overflow":"visible","transition":"0.2s","text":"> < 常用素材 页面 烫金 图层 批量删除 删除 上移一层 下移一层 置于顶层 置于底层 置于底层 复制还原多版设计删"} children=8
+  .right-bar -> null children=0
+  .rightbar -> null children=0
+
+### 3b. rightBar CHILDREN
+  [0] div#-.btn-switch
+      rect={"x":1238,"y":436,"w":12,"h":80} pos=absolute z=auto
+      text=">"
+  [1] div#-.switch-content
+      rect={"x":1210,"y":51,"w":41,"h":849} pos=absolute z=auto
+      text="< 常用素材"
+  [2] div#-.tabPageLayer
+      rect={"x":1250,"y":51,"w":190,"h":33} pos=static z=auto
+      text="页面 烫金 图层"
+  [3] div#-.batch-del
+      rect={"x":0,"y":0,"w":0,"h":0} pos=static z=auto
+      text="批量删除"
+  [4] div#-.layerWrap
+      rect={"x":1250,"y":86,"w":190,"h":814} pos=fixed z=auto
+      text=null
+  [5] div#-.moveHover
+      rect={"x":0,"y":0,"w":0,"h":0} pos=relative z=20
+      text="删除 上移一层 下移一层 置于顶层 置于底层 置于底层"
+  [6] ul#-.pageWrapMulti
+      rect={"x":1250,"y":94,"w":190,"h":769} pos=static z=auto
+      text="复制还原多版设计删除正面背面"
+  [7] div#-.bg-material
+      rect={"x":1550,"y":0,"w":260,"h":900} pos=fixed z=auto
+      text="常用素材 相框素材 矢量素材"
+
+### 3c. rightBar BUTTONS
+  [0] div#-.btn-switch  {"x":1238,"y":436,"w":12,"h":80}
+      text=">"  onclick=null  data=
+      bg=rgb(255, 255, 255) border=0px none rgb(74, 137, 220) radius=40px 0px 0px 40px font=20px/400
+  [1] a#-.page-suolve on  {"x":1250,"y":51,"w":95,"h":32}
+      text="页面"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(39, 143, 207) radius=0px font=14px/400
+  [2] a#-.gilding-tab  {"x":0,"y":0,"w":0,"h":0}
+      text="烫金"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(153, 153, 153) radius=0px font=14px/400
+  [3] a#-.img-level  {"x":1345,"y":51,"w":95,"h":32}
+      text="图层"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(153, 153, 153) radius=0px font=14px/400
+  [4] li#-.-  {"x":0,"y":0,"w":0,"h":0}
+      text="删除"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(102, 102, 102) radius=0px font=14px/400
+  [5] li#-.-  {"x":0,"y":0,"w":0,"h":0}
+      text="上移一层"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(102, 102, 102) radius=0px font=14px/400
+  [6] li#-.-  {"x":0,"y":0,"w":0,"h":0}
+      text="下移一层"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(102, 102, 102) radius=0px font=14px/400
+  [7] li#-.-  {"x":0,"y":0,"w":0,"h":0}
+      text="置于顶层"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(102, 102, 102) radius=0px font=14px/400
+  [8] li#-.-  {"x":0,"y":0,"w":0,"h":0}
+      text="置于底层"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(102, 102, 102) radius=0px font=14px/400
+  [9] li#-.moveDrag  {"x":0,"y":0,"w":0,"h":0}
+      text="置于底层"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(102, 102, 102) radius=0px font=14px/400
+  [10] li#88c97b01-a735-3f1a-0343-a20f98967139.currentLi  {"x":1264,"y":99,"w":172,"h":217}
+      text="复制还原多版设计删除正面背面"  onclick=null  data=
+      bg=rgb(255, 255, 255) border=0px none rgb(106, 106, 106) radius=0px font=12px/400
+  [11] a#-.copy-bg  {"x":1330,"y":135,"w":90,"h":24}
+      text="复制"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(130, 130, 130) radius=0px font=14px/400
+  [12] a#-.return-reset  {"x":1330,"y":161,"w":90,"h":24}
+      text="还原"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(130, 130, 130) radius=0px font=14px/400
+  [13] a#-.copy-template  {"x":1330,"y":187,"w":90,"h":24}
+      text="多版设计"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(130, 130, 130) radius=0px font=14px/400
+  [14] a#-.del-first  {"x":1330,"y":213,"w":90,"h":24}
+      text="删除"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(130, 130, 130) radius=0px font=14px/400
+  [15] div#-.mbtnGroup  {"x":1550,"y":40,"w":260,"h":27}
+      text="相框素材 矢量素材"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border= radius=0px font=14px/400
+  [16] a#-.mbtn on  {"x":1550,"y":40,"w":130,"h":26}
+      text="相框素材"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(51, 51, 51) radius=0px font=14px/400
+  [17] a#-.mbtn  {"x":1680,"y":40,"w":130,"h":26}
+      text="矢量素材"  onclick=null  data=
+      bg=rgba(0, 0, 0, 0) border=0px none rgb(153, 153, 153) radius=0px font=14px/400
+
+## 4. BUTTONS (design tokens)
+  [0] input#select_btn_1.selectbtn {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=13.3333px/400 pad=0px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(66, 66, 66) border=1px solid rgb(162, 162, 162)
+      shadow=null text=null
+  [1] li#-.table-bk-color new-table-btn {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=12px/400 pad=0px 7px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(66, 66, 66) border=0px none rgb(66, 66, 66)
+      shadow=null text="边框色"
+  [2] li#-.table-background-cell new-table-btn {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=12px/400 pad=0px 7px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(66, 66, 66) border=0px none rgb(66, 66, 66)
+      shadow=null text="背景色"
+  [3] li#-.table-col-w new-table-btn {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=12px/400 pad=0px 7px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(66, 66, 66) border=0px none rgb(66, 66, 66)
+      shadow=null text="列宽:mm"
+  [4] li#-.table-row-h new-table-btn {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=12px/400 pad=0px 7px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(66, 66, 66) border=0px none rgb(66, 66, 66)
+      shadow=null text="行高:mm"
+  [5] li#submitProduct.btn print {"x":1338,"y":0,"w":102,"h":50}
+      h=50 font=14px/400 pad=0px 20px radius=0px
+      bg=rgb(255, 255, 255) color=rgb(39, 143, 207) border=0px none rgb(39, 143, 207)
+      shadow=null text="印刷"
+  [6] div#-.fixed-menu-btn on {"x":365,"y":50,"w":50,"h":50}
+      h=50 font=12px/400 pad=0px radius=0px 0px 50px
+      bg=rgba(0, 0, 0, 0.3) color=rgb(66, 66, 66) border=0px none rgb(66, 66, 66)
+      shadow=null text=null
+  [7] div#-.btnGroup searchTab {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=14px/400 pad=0px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(66, 66, 66) border=
+      shadow=null text="简设计素材 素材站素材"
+  [8] div#-.btnGroup searchClas {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=14px/400 pad=0px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(66, 66, 66) border=
+      shadow=null text="素材 背景 文案"
+  [9] a#-.btn on {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=14px/400 pad=0px radius=0px
+      bg=rgb(255, 255, 255) color=rgb(39, 143, 207) border=0px none rgb(39, 143, 207)
+      shadow=null text="素材"
+  [10] a#-.btn {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=14px/400 pad=0px radius=0px
+      bg=rgb(255, 255, 255) color=rgb(92, 92, 92) border=0px none rgb(92, 92, 92)
+      shadow=null text="背景"
+  [11] a#-.btn {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=14px/400 pad=0px radius=0px
+      bg=rgb(255, 255, 255) color=rgb(92, 92, 92) border=0px none rgb(92, 92, 92)
+      shadow=null text="文案"
+
+## 5. INPUTS
+  [0] input#pageWidth.input {"x":132,"y":150,"w":40,"h":18}
+      h=18 font=13.3333px pad=0px radius=3px
+      bg=rgb(255, 255, 255) color=rgb(84, 84, 84) border=1px solid rgb(219, 219, 219)
+  [1] input#pageHeight.input {"x":185,"y":150,"w":40,"h":18}
+      h=18 font=13.3333px pad=0px radius=3px
+      bg=rgb(255, 255, 255) color=rgb(84, 84, 84) border=1px solid rgb(219, 219, 219)
+  [2] input#bleedLine.input {"x":132,"y":208,"w":40,"h":18}
+      h=18 font=13.3333px pad=0px radius=3px
+      bg=rgb(255, 255, 255) color=rgb(84, 84, 84) border=1px solid rgb(219, 219, 219)
+  [3] input#-.- {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=13.3333px pad=0px 0px 0px 5px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(0, 0, 0) border=0px none rgb(0, 0, 0)
+  [4] input#-.- {"x":773,"y":9,"w":175,"h":32}
+      h=32 font=12px pad=0px radius=20px
+      bg=rgb(241, 241, 241) color=rgb(0, 0, 0) border=0px none rgb(0, 0, 0)
+  [5] input#-.- {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=13.3333px pad=0px radius=16px
+      bg=rgb(241, 241, 241) color=rgb(0, 0, 0) border=0px none rgb(0, 0, 0)
+  [6] input#-.tempSeachInput {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=13.3333px pad=0px radius=16px
+      bg=rgb(241, 241, 241) color=rgb(0, 0, 0) border=0px none rgb(0, 0, 0)
+  [7] input#textGradientValueStart.sliderValue l dn {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=13.3333px pad=0px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(153, 153, 153) border=1px solid rgb(204, 204, 204)
+  [8] input#textGradientValueEnd.sliderValue l dn {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=13.3333px pad=0px radius=0px
+      bg=rgba(0, 0, 0, 0) color=rgb(153, 153, 153) border=1px solid rgb(204, 204, 204)
+  [9] input#fontFamily3D.selected fontFamily {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=13.3333px pad=0px 15px 0px 5px radius=2px
+      bg=rgb(255, 255, 255) color=rgb(52, 52, 52) border=1px solid rgb(230, 230, 230)
+  [10] input#xAngelValue.sliderValue r tc {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=12px pad=0px radius=2px
+      bg=rgba(0, 0, 0, 0) color=rgb(52, 52, 52) border=1px solid rgb(236, 237, 241)
+  [11] input#yAngelValue.sliderValue r tc {"x":0,"y":0,"w":0,"h":0}
+      h=0 font=12px pad=0px radius=2px
+      bg=rgba(0, 0, 0, 0) color=rgb(52, 52, 52) border=1px solid rgb(236, 237, 241)
+
+## 6. PANELS / DRAWERS / DIALOGS
+  [0] div#ai-fangzhiCont.subItem design-ai-panel {"x":0,"y":0,"w":0,"h":0} children=3
+      pos=absolute z=100 bg=rgb(253, 253, 253) radius=8px
+      shadow=rgba(0, 0, 0, 0.1) 0px 4px 20px 0px border=0px none rgb(66, 66, 66) transition=0.3s
+      text="返回 AI 仿制展开图 点击选中此区域后，按 Ctrl+V 粘贴上传 支持 JPG / PNG，建议大小 ≤ 10MB "
+  [1] div#-.ai-panel-header {"x":0,"y":0,"w":0,"h":0} children=1
+      pos=static z=auto bg=rgb(255, 255, 255) radius=0px
+      shadow=null border= transition=all
+      text="AI 仿制展开图"
+  [2] span#-.ai-panel-title {"x":0,"y":0,"w":0,"h":0} children=2
+      pos=static z=auto bg=rgba(0, 0, 0, 0) radius=0px
+      shadow=null border=0px none rgb(66, 66, 66) transition=all
+      text="AI 仿制展开图"
+  [3] div#-.ai-panel-body {"x":0,"y":0,"w":0,"h":0} children=11
+      pos=static z=auto bg=rgba(0, 0, 0, 0) radius=0px
+      shadow=null border=0px none rgb(66, 66, 66) transition=all
+      text="点击选中此区域后，按 Ctrl+V 粘贴上传 支持 JPG / PNG，建议大小 ≤ 10MB 正在上传... AI 提"
+  [4] div#ai-shejiCont.subItem design-ai-panel {"x":0,"y":0,"w":0,"h":0} children=3
+      pos=absolute z=100 bg=rgb(253, 253, 253) radius=8px
+      shadow=rgba(0, 0, 0, 0.1) 0px 4px 20px 0px border=0px none rgb(66, 66, 66) transition=0.3s
+      text="返回 AI 设计 参考素材 * 已上传 0/9 张 Ctrl+V 粘贴 点击选中此区域后，按 Ctrl+V 粘贴图片，单"
+  [5] div#-.ai-panel-header {"x":0,"y":0,"w":0,"h":0} children=1
+      pos=static z=auto bg=rgb(255, 255, 255) radius=0px
+      shadow=null border= transition=all
+      text="AI 设计"
+  [6] span#-.ai-panel-title {"x":0,"y":0,"w":0,"h":0} children=2
+      pos=static z=auto bg=rgba(0, 0, 0, 0) radius=0px
+      shadow=null border=0px none rgb(66, 66, 66) transition=all
+      text="AI 设计"
+  [7] div#-.ai-panel-body {"x":0,"y":0,"w":0,"h":0} children=3
+      pos=static z=auto bg=rgba(0, 0, 0, 0) radius=0px
+      shadow=null border=0px none rgb(66, 66, 66) transition=all
+      text="参考素材 * 已上传 0/9 张 Ctrl+V 粘贴 点击选中此区域后，按 Ctrl+V 粘贴图片，单张 ≤10MB，最"
+  [8] div#-.table-custom-panel {"x":0,"y":0,"w":0,"h":0} children=2
+      pos=absolute z=auto bg=rgb(255, 255, 255) radius=4px
+      shadow=null border=0px none rgb(66, 66, 66) transition=all
+      text="8行x8列 表格 移动鼠标改变行列数，点击绘制"
+  [9] div#-.layerWrap {"x":1250,"y":86,"w":190,"h":814} children=1
+      pos=fixed z=auto bg=rgba(0, 0, 0, 0) radius=0px
+      shadow=null border=0px none rgb(106, 106, 106) transition=all
+      text=null
+  [10] div#-.ctip-modal modal-mini {"x":0,"y":0,"w":0,"h":0} children=4
+      pos=absolute z=10000 bg=rgb(255, 255, 255) radius=5px
+      shadow=rgba(0, 0, 0, 0.2) 0px 2px 3px 0px border=0px none rgb(137, 137, 137) transition=all
+      text="先选中相框，将图片拖放到选中的相框中即可 知道了"
+  [11] div#-.minicolors-panel minicolors-slider-hue {"x":0,"y":0,"w":0,"h":0} children=3
+      pos=relative z=auto bg=rgb(255, 255, 255) radius=0px
+      shadow=null border=0px none rgb(66, 66, 66) transition=all
+      text=null
+
+## 7. TYPOGRAPHY (body + common)
+  fontFamily tokens: "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif
+  fontSize tokens:   12px | 13.3333px | 14px
+  fontWeight tokens: 400
+
+## 8. SPACING TOKENS (observed margin/padding/gap frequency)
+  10px ×630
+  4px ×278
+  5px ×260
+  20px ×120
+  8px ×103
+  7px ×94
+  6px ×87
+  2px ×84
+  14px ×61
+  12px ×54
+  9px ×47
+  15px ×42
+  16px ×39
+  3px ×29
+  22px ×25
+  30px ×17
+  50px ×17
+  24px ×14
+  18px ×12
+  1px ×10
+  25px ×6
+  36px ×6
+  -15px ×5
+  -65px ×4
+  40px ×4
+  -2px ×4
+  -20px ×3
+  260px ×2
+  -50px ×2
+  12.8px ×2
+  -10px ×2
+  -6px ×2
+  -25px ×2
+  -22px ×2
+  -230px ×2
+  100px ×1
+  96px ×1
+  80px ×1
+  -5px ×1
+  21px ×1
+
+## 9. CSS VARIABLES (root)
+  count=1
+  --swiper-navigation-size = 18px
+
+## 10. STYLESHEETS
+  187	https://diy.zheliyin.com/diyWeb/skins/css/diyBase.css?v=20260707017
+  56	https://diy.zheliyin.com/diyWeb/skins/css/jquery.minicolors.css?v=20260707017
+  375	https://diy.zheliyin.com/diyWeb/skins/css/jquery-ui.css?v=20260707017
+  41	https://diy.zheliyin.com/diyWeb/skins/css/cropper.min.css?v=20260707017
+  9	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/colourdiyicon.css?v=20260707017
+  3327	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/diyThird.css?v=20260707017
+  4	https://diy.zheliyin.com/diyWeb/skins/css/webuploader.css?v=20260707017
+  127	https://diy.zheliyin.com/diyWeb/skins/css/layer.css?v=20260707017
+  16	https://diy.zheliyin.com/diyWeb/skins/css/basic.css?v=20260707017
+  18	https://diy.zheliyin.com/diyWeb/skins/css/ocr.css?v=20260707017
+  228	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/diyicon.css?v=20260707017
+  273	https://diy.zheliyin.com/diyWeb/skins/fonts/diyicon/iconfont.css?v=20260707017
+  97	https://diy.zheliyin.com/diyWeb/skins/css/swiper.min.css?v=20260707017
+  9	https://diy.zheliyin.com/diyWeb/skins/css/ui/Tab.css
+  330	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/handsontable.full.css?v=20260707017
+  34	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/Select.css?v=20260707017
+  38	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/Color.css?v=20260707017
+  12	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/Range.css?v=20260707017
+  26	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/Tips.css?v=20260707017
+  128	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/xncolorpicker.css?v=20260707017
+  134	https://diy.zheliyin.com/diyWeb/skins/css/diy3V/design-ai.css?v=20260707017
+  261	https://diy.zheliyin.com/diyWeb/diy/getFontCss.do
+  261	https://diy.zheliyin.com/diyWeb/diy/getFontCss.do
+  47	https://diy.zheliyin.com/diyWeb/skins/css/abnormal.css?v=20260707017
+  35	https://diy.zheliyin.com/diyWeb/skins/css/jsj/verify.css?v=20260707017
+
+## 11. INJECTED LEGACY UI
+  {
+    "zyNativeOcrPanel": false,
+    "zyAny": [],
+    "scriptcat": false
+  }
+
+## 12. CONSOLE (last 60)
+  [error] Failed to load resource: net::ERR_CONNECTION_CLOSED
+  [verbose] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+  [verbose] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o
+  [verbose] [DOM] Input elements should have autocomplete attributes (suggested: "new-password"): (More info: https://goo.gl/9p2vKq) %o
+  [verbose] [DOM] Input elements should have autocomplete attributes (suggested: "new-password"): (More info: https://goo.gl/9p2vKq) %o
+  [log] window在require之前完成
+  [log] 开始加载
+  [log] 思源黑体 Medium字体下载成功
+  [log] 指定字体预加载
+  [log] 指定字体预加载
+  [log] 指定字体预加载
+  [log] 指定字体预加载
+  [log] 指定字体预加载
+  [log] 指定字体已渲染
+  [log] 指定字体已渲染
+  [log] 指定字体已渲染
+  [log] 指定字体已渲染
+  [log] 指定字体已渲染==思源黑体 Medium
+  [log] 指定字体预加载失败
+  [log] 所有字体已渲染
+  [log] 汉仪楷体简字体下载成功
+
+## 13. 1920 viewport rightBar
+  {"rect":{"x":1730,"y":51,"w":190,"h":1029},"position":"absolute","zIndex":"20","background":"rgb(255, 255, 255)","borderLeft":"0px none rgb(106, 106, 106)"}

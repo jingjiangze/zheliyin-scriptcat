@@ -1,0 +1,384 @@
+## A. NATIVE DESIGN-SYSTEM CSS (design-ai.css + ocr.css) = 152 rules
+  ocr.css?v=20260707017 :: width: 65px; height: 65px; border-radius: 50%; background: rgb(255, 255, 255); cursor: pointer; transition: 0.5s; position: relative;
+  ocr.css?v=20260707017 :: width: 26px; height: 26px; background: url("../imgs/ocrDesign/add.png") no-repeat; content: ""; display: inline-block; position: absolute; left: 50%; top: 50%; margin-left: -13px; margin-top: -13px; transition: 0.5s;
+  ocr.css?v=20260707017 :: background: rgb(40, 124, 252);
+  ocr.css?v=20260707017 :: background: url("../imgs/ocrDesign/add-1.png");
+  ocr.css?v=20260707017 :: width: 65px; height: 65px; border-radius: 50%; position: absolute; left: 0px; top: 0px; opacity: 0; font-size: 0px; cursor: pointer;
+  ocr.css?v=20260707017 :: color: rgb(133, 133, 133); margin-top: 20px; font-size: 14px;
+  ocr.css?v=20260707017 :: max-width: 100%; max-height: 100%;
+  ocr.css?v=20260707017 :: width: 530px; height: 470px; float: right; padding: 15px; border: 1px solid rgb(208, 208, 208); overflow-y: scroll;
+  ocr.css?v=20260707017 :: color: rgb(181, 181, 181); font-size: 14px;
+  ocr.css?v=20260707017 :: display: flex; justify-content: center; align-items: center; flex-direction: column; float: left; width: 100px; height: 470px;
+  ocr.css?v=20260707017 :: width: 80px; height: 30px; line-height: 30px; border-radius: 3px; text-align: center; color: rgb(255, 255, 255); margin: 10px 0px; transition: 0.3s;
+  ocr.css?v=20260707017 :: background: rgb(252, 110, 81);
+  ocr.css?v=20260707017 :: background: rgb(93, 156, 236);
+  ocr.css?v=20260707017 :: background: rgb(255, 255, 255); color: rgb(114, 114, 114); border: 1px solid rgb(224, 224, 224);
+  ocr.css?v=20260707017 :: background: rgb(243, 80, 47);
+  ocr.css?v=20260707017 :: background: rgb(58, 127, 216);
+  ocr.css?v=20260707017 :: color: rgb(51, 51, 51); border: 1px solid rgb(209, 209, 209);
+  ocr.css?v=20260707017 :: position: absolute; left: 0px; width: 65px; height: 65px;
+  design-ai.css?v=20260707017 :: position: relative; overflow: visible; border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: rgba(74, 110, 255, 0.28) 0px 10px 24px, rgba(255, 255, 255, 0.24) 0px 1px 0px inset;
+  design-ai.css?v=20260707017 :: content: ""; position: absolute; inset: 0px; background: linear-gradient(145deg, rgba(255, 255, 255, 0.18) 0px, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.12) 100%); pointer-events: none;
+  design-ai.css?v=20260707017 :: position: relative; z-index: 1; color: rgb(255, 255, 255);
+  design-ai.css?v=20260707017 :: text-shadow: rgba(22, 32, 72, 0.28) 0px 2px 8px;
+  design-ai.css?v=20260707017 :: text-shadow: rgba(22, 32, 72, 0.3) 0px 4px 12px;
+  design-ai.css?v=20260707017 :: position: absolute; top: -6px; right: -6px; z-index: 2; display: inline-block; min-width: 28px; height: 16px; line-height: 16px; padding: 0px 6px; border-radius: 10px; background: linear-gradient(135deg, rgb(255, 247, 178) 0px, rgb(255, 159, 90) 100%); color: rgb(122, 47, 0); font-size: 10px; font-w
+  design-ai.css?v=20260707017 :: background: linear-gradient(135deg, rgb(111, 69, 255) 0px, rgb(47, 123, 255) 52%, rgb(46, 230, 214) 100%); box-shadow: rgba(74, 110, 255, 0.28) 0px 10px 24px, rgba(255, 255, 255, 0.24) 0px 1px 0px inset;
+  design-ai.css?v=20260707017 :: background: linear-gradient(135deg, rgb(255, 79, 216) 0px, rgb(122, 92, 255) 48%, rgb(0, 212, 255) 100%); box-shadow: rgba(122, 92, 255, 0.26) 0px 10px 24px, rgba(255, 255, 255, 0.24) 0px 1px 0px inset;
+  design-ai.css?v=20260707017 :: text-shadow: rgba(40, 20, 80, 0.28) 0px 2px 8px;
+  design-ai.css?v=20260707017 :: text-shadow: rgba(40, 20, 80, 0.3) 0px 4px 12px;
+  design-ai.css?v=20260707017 :: background: rgb(253, 253, 253); border-radius: 8px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;
+  design-ai.css?v=20260707017 :: display: flex; justify-content: center; align-items: center; padding: 10px 20px; border-bottom: 1px solid rgb(234, 234, 234); background: rgb(255, 255, 255);
+  design-ai.css?v=20260707017 :: font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 6px;
+  design-ai.css?v=20260707017 :: font-size: 18px; background: linear-gradient(135deg, rgb(122, 92, 255) 0px, rgb(0, 210, 255) 100%) text; -webkit-text-fill-color: transparent; filter: drop-shadow(rgba(122, 92, 255, 0.3) 0px 2px 4px);
+  design-ai.css?v=20260707017 :: background: linear-gradient(135deg, rgb(122, 92, 255) 0px, rgb(59, 130, 246) 100%) text; -webkit-text-fill-color: transparent; font-weight: 800; letter-spacing: 0.5px;
+  design-ai.css?v=20260707017 :: font-size: 18px; background: linear-gradient(135deg, rgb(59, 130, 246) 0px, rgb(0, 210, 255) 100%) text; -webkit-text-fill-color: transparent; filter: drop-shadow(rgba(59, 130, 246, 0.3) 0px 2px 4px);
+  design-ai.css?v=20260707017 :: background: linear-gradient(135deg, rgb(59, 130, 246) 0px, rgb(122, 92, 255) 100%) text; -webkit-text-fill-color: transparent; font-weight: 800; letter-spacing: 0.5px;
+  design-ai.css?v=20260707017 :: color: rgb(204, 204, 204); font-size: 14px; cursor: pointer;
+  design-ai.css?v=20260707017 :: color: rgb(153, 153, 153);
+  design-ai.css?v=20260707017 :: padding: 10px 15px 10px 5px; flex-shrink: 1; flex-basis: 0%; overflow-y: auto; flex-grow: 1 !important;
+  design-ai.css?v=20260707017 :: border: 1px dashed rgb(193, 193, 193); border-radius: 8px; background: rgb(255, 255, 255); text-align: center; padding: 30px 10px; cursor: pointer; position: relative; transition: 0.3s; margin-bottom: 24px;
+  design-ai.css?v=20260707017 :: border-color: rgb(122, 92, 255); background: rgb(247, 245, 255);
+  design-ai.css?v=20260707017 :: font-size: 32px; color: rgb(181, 165, 255); margin-bottom: 12px; display: block;
+  design-ai.css?v=20260707017 :: color: rgb(122, 92, 255);
+  design-ai.css?v=20260707017 :: font-size: 14px; color: rgb(51, 51, 51); margin-bottom: 6px; font-weight: 500;
+  design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(153, 153, 153);
+  design-ai.css?v=20260707017 :: max-width: 100%; max-height: 180px; border-radius: 6px;
+  design-ai.css?v=20260707017 :: position: absolute; top: -10px; right: -10px; background: rgb(85, 85, 85); border-radius: 50%; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px; width: 26px; height: 26px; line-height: 26px; text-align: center; color: rgb(255, 255, 255); z-index: 2; transition: 0.2s;
+  design-ai.css?v=20260707017 :: background: rgb(255, 77, 79); transform: scale(1.1);
+  design-ai.css?v=20260707017 :: font-size: 12px;
+  design-ai.css?v=20260707017 :: position: absolute; inset: 0px; background: rgba(255, 255, 255, 0.9); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px;
+  design-ai.css?v=20260707017 :: width: 36px; margin-bottom: 10px;
+  design-ai.css?v=20260707017 :: font-size: 13px; color: rgb(102, 102, 102);
+  design-ai.css?v=20260707017 :: height: 1px; background: rgb(234, 234, 234); margin: 10px 0px;
+  design-ai.css?v=20260707017 :: margin-bottom: 24px;
+  design-ai.css?v=20260707017 :: margin-bottom: 0px;
+  design-ai.css?v=20260707017 :: display: flex; justify-content: space-between; align-items: center; margin-bottom: 0px;
+  design-ai.css?v=20260707017 :: display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgb(240, 236, 255); color: rgb(122, 92, 255); border-radius: 4px; margin-right: 8px;
+  design-ai.css?v=20260707017 :: font-size: 14px;
+  design-ai.css?v=20260707017 :: font-size: 11px; color: rgb(153, 153, 153); background: rgb(245, 245, 245); padding: 2px 8px; border-radius: 12px; margin-left: 8px; font-weight: normal;
+  design-ai.css?v=20260707017 :: font-size: 14px; color: rgb(51, 51, 51); font-weight: 500; margin-bottom: 6px; display: flex; align-items: center;
+  design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(153, 153, 153);
+  design-ai.css?v=20260707017 :: position: relative; display: inline-block; width: 40px; height: 22px;
+  design-ai.css?v=20260707017 :: opacity: 0; width: 0px; height: 0px;
+  design-ai.css?v=20260707017 :: position: absolute; cursor: pointer; inset: 0px; background-color: rgb(204, 204, 204); transition: 0.4s; border-radius: 22px;
+  design-ai.css?v=20260707017 :: position: absolute; content: ""; height: 18px; width: 18px; left: 2px; bottom: 2px; background-color: white; transition: 0.4s; border-radius: 50%;
+  design-ai.css?v=20260707017 :: background-color: rgb(122, 92, 255);
+  design-ai.css?v=20260707017 :: transform: translateX(18px);
+  design-ai.css?v=20260707017 :: display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
+  design-ai.css?v=20260707017 :: display: flex; gap: 12px;
+  design-ai.css?v=20260707017 :: flex: 1 1 0%; border: 1px solid rgb(234, 234, 234); border-radius: 6px; padding: 10px 0px; text-align: center; cursor: pointer; transition: 0.3s; background: rgb(255, 255, 255); position: relative; display: flex; align-items: center; justify-content: center;
+  design-ai.css?v=20260707017 :: border-color: rgb(122, 92, 255);
+  design-ai.css?v=20260707017 :: border-color: rgb(122, 92, 255); color: rgb(122, 92, 255);
+  design-ai.css?v=20260707017 :: font-size: 13px; color: rgb(51, 51, 51); font-weight: 500;
+  design-ai.css?v=20260707017 :: color: rgb(122, 92, 255);
+  design-ai.css?v=20260707017 :: position: absolute; top: -8px; right: 10px; background: linear-gradient(135deg, rgb(255, 159, 67) 0px, rgb(255, 123, 0) 100%); color: rgb(255, 255, 255); font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; line-height: 14px; box-shadow: rgba(255, 123, 0, 0.3) 0px 2px 4px;
+  design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(122, 92, 255); text-decoration: none;
+  design-ai.css?v=20260707017 :: text-decoration: underline;
+  design-ai.css?v=20260707017 :: position: relative;
+  design-ai.css?v=20260707017 :: width: 100%; height: 120px; border: 1px solid rgb(234, 234, 234); border-radius: 8px; padding: 12px 12px 28px; font-size: 13px; color: rgb(102, 102, 102); line-height: 1.6; resize: none; box-sizing: border-box; background: rgb(255, 255, 255); transition: border-color 0.3s;
+  design-ai.css?v=20260707017 :: outline: 0px; border-color: rgb(122, 92, 255);
+  design-ai.css?v=20260707017 :: position: absolute; bottom: 10px; right: 12px; font-size: 12px; color: rgb(204, 204, 204);
+  design-ai.css?v=20260707017 :: margin-top: 30px; text-align: center;
+  design-ai.css?v=20260707017 :: display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, rgb(139, 106, 255) 0px, rgb(99, 64, 255) 100%); font-size: 15px; font-weight: bold; height: 44px; border-radius: 22px; text-decoration: none; transition: 0.3s; box-shadow: rgba(122, 92, 255, 0.25) 0px 6p
+  design-ai.css?v=20260707017 :: box-shadow: rgba(122, 92, 255, 0.35) 0px 8px 20px; transform: translateY(-2px); color: rgb(255, 255, 255) !important;
+  design-ai.css?v=20260707017 :: background: rgb(224, 224, 224); box-shadow: none; cursor: not-allowed; pointer-events: none; color: rgb(153, 153, 153) !important;
+  design-ai.css?v=20260707017 :: display: flex; align-items: center; gap: 8px;
+  design-ai.css?v=20260707017 :: height: 18px;
+  design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(153, 153, 153); margin-top: 12px;
+  design-ai.css?v=20260707017 :: display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding: 0px 10px;
+  design-ai.css?v=20260707017 :: display: flex; align-items: center; gap: 6px; color: rgb(153, 153, 153);
+  design-ai.css?v=20260707017 :: color: rgb(59, 130, 246);
+  design-ai.css?v=20260707017 :: color: rgb(51, 51, 51);
+  design-ai.css?v=20260707017 :: display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: rgb(234, 234, 234); color: rgb(153, 153, 153); font-size: 12px; font-weight: bold;
+  design-ai.css?v=20260707017 :: background: rgb(59, 130, 246); color: rgb(255, 255, 255);
+  design-ai.css?v=20260707017 :: background: rgb(16, 185, 129); color: rgb(255, 255, 255);
+  design-ai.css?v=20260707017 :: font-size: 13px; font-weight: 500;
+  design-ai.css?v=20260707017 :: flex: 1 1 0%; height: 1px; background: rgb(234, 234, 234); margin: 0px 12px;
+  design-ai.css?v=20260707017 :: background: rgb(59, 130, 246); box-shadow: rgba(59, 130, 246, 0.3) 0px 4px 12px; color: rgb(255, 255, 255) !important;
+  design-ai.css?v=20260707017 :: background: rgb(37, 99, 235); box-shadow: rgba(59, 130, 246, 0.4) 0px 6px 16px;
+  design-ai.css?v=20260707017 :: display: flex; align-items: center; justify-content: center; gap: 6px; height: 44px; border-radius: 22px; border: 1px solid rgb(234, 234, 234); background: rgb(255, 255, 255); color: rgb(51, 51, 51); font-size: 14px; padding: 0px 24px; transition: 0.3s; text-decoration: none; cursor: pointer;
+  design-ai.css?v=20260707017 :: border-color: rgb(59, 130, 246); color: rgb(59, 130, 246); background: rgb(248, 250, 252);
+  design-ai.css?v=20260707017 :: color: rgb(239, 68, 68); margin-left: 4px;
+  design-ai.css?v=20260707017 :: border: 1px dashed rgb(193, 193, 193); border-radius: 8px; background: rgb(250, 250, 250); padding: 10px; min-height: 100px;
+  design-ai.css?v=20260707017 :: display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px;
+  design-ai.css?v=20260707017 :: position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 6px; overflow: hidden; background: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 8px; cursor: move;
+  design-ai.css?v=20260707017 :: width: 100%; height: 100%; object-fit: cover;
+  design-ai.css?v=20260707017 :: position: absolute; bottom: 4px; left: 4px; width: 18px; height: 18px; background: rgb(59, 130, 246); color: rgb(255, 255, 255); border-radius: 4px; font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: bold;
+  design-ai.css?v=20260707017 :: position: absolute; top: 4px; right: 4px; width: 18px; height: 18px; background: rgba(0, 0, 0, 0.5); color: rgb(255, 255, 255); border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
+  design-ai.css?v=20260707017 :: background: rgb(239, 68, 68);
+  design-ai.css?v=20260707017 :: width: 100%; aspect-ratio: 1 / 1; border: 1px dashed rgb(204, 204, 204); border-radius: 6px; background: rgb(255, 255, 255); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; color: rgb(153, 153, 153);
+  design-ai.css?v=20260707017 :: border-color: rgb(59, 130, 246); color: rgb(59, 130, 246); background: rgb(239, 246, 255);
+  design-ai.css?v=20260707017 :: font-size: 14px; margin-bottom: 6px; color: rgb(153, 153, 153);
+  design-ai.css?v=20260707017 :: font-size: 12px;
+  design-ai.css?v=20260707017 :: font-size: 11px; color: rgb(153, 153, 153); text-align: center;
+  design-ai.css?v=20260707017 :: position: relative;
+  design-ai.css?v=20260707017 :: height: 140px; padding-bottom: 36px;
+  design-ai.css?v=20260707017 :: color: rgb(193, 193, 193);
+  design-ai.css?v=20260707017 :: position: absolute; bottom: 12px; right: 12px; font-size: 20px; color: rgb(153, 153, 153); cursor: pointer; transition: 0.3s;
+  design-ai.css?v=20260707017 :: color: rgb(59, 130, 246);
+  design-ai.css?v=20260707017 :: font-size: 13px; color: rgb(51, 51, 51); font-weight: 500; margin-bottom: 8px;
+  design-ai.css?v=20260707017 :: display: flex; flex-wrap: wrap; gap: 8px;
+  design-ai.css?v=20260707017 :: padding: 6px 12px; border: 1px solid rgb(234, 234, 234); border-radius: 4px; font-size: 13px; color: rgb(102, 102, 102); cursor: pointer; transition: 0.3s; background: rgb(255, 255, 255);
+  design-ai.css?v=20260707017 :: border-color: rgb(59, 130, 246);
+  design-ai.css?v=20260707017 :: border-color: rgb(59, 130, 246); color: rgb(59, 130, 246);
+  design-ai.css?v=20260707017 :: display: flex; align-items: center; padding: 12px; border: 1px solid rgb(234, 234, 234); border-radius: 8px; background: rgb(255, 255, 255); margin-bottom: 24px;
+  design-ai.css?v=20260707017 :: display: flex; gap: 4px; margin-right: 12px;
+  design-ai.css?v=20260707017 :: width: 36px; height: 36px; border-radius: 4px; object-fit: cover;
+  design-ai.css?v=20260707017 :: flex: 1 1 0%; font-size: 13px; color: rgb(51, 51, 51);
+  design-ai.css?v=20260707017 :: font-size: 13px; color: rgb(59, 130, 246); text-decoration: none; display: flex; align-items: center; gap: 4px;
+  design-ai.css?v=20260707017 :: text-decoration: underline;
+  design-ai.css?v=20260707017 :: border: 1px solid rgb(234, 234, 234); border-radius: 8px; background: rgb(250, 250, 250); overflow: hidden;
+  design-ai.css?v=20260707017 :: display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid rgb(234, 234, 234); background: rgb(255, 255, 255);
+  design-ai.css?v=20260707017 :: font-size: 13px; font-weight: bold; color: rgb(51, 51, 51); display: flex; align-items: center; gap: 6px;
+  design-ai.css?v=20260707017 :: background: rgb(99, 102, 241); color: rgb(255, 255, 255); font-size: 10px; padding: 2px 6px; border-radius: 4px;
+  design-ai.css?v=20260707017 :: display: flex; gap: 12px;
+  design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(59, 130, 246); text-decoration: none; display: flex; align-items: center; gap: 4px;
+  design-ai.css?v=20260707017 :: text-decoration: underline;
+  design-ai.css?v=20260707017 :: width: 100%; height: 200px; border: 0px; padding: 16px; font-size: 13px; line-height: 1.6; color: rgb(51, 51, 51); background: rgb(250, 250, 250); resize: vertical; box-sizing: border-box;
+  design-ai.css?v=20260707017 :: outline: 0px; background: rgb(255, 255, 255);
+  design-ai.css?v=20260707017 :: display: flex; gap: 12px; margin-top: 30px;
+  design-ai.css?v=20260707017 :: flex: 1 1 0%;
+  design-ai.css?v=20260707017 :: text-align: center;
+  design-ai.css?v=20260707017 :: margin-top: 30px; border-top: 1px dashed rgb(234, 234, 234); padding-top: 24px;
+  design-ai.css?v=20260707017 :: font-size: 15px; color: rgb(51, 51, 51); font-weight: bold; margin-bottom: 16px;
+  design-ai.css?v=20260707017 :: position: relative; border-radius: 8px; overflow: hidden; border: 1px solid rgb(234, 234, 234); background: rgb(250, 250, 250); text-align: center;
+  design-ai.css?v=20260707017 :: max-width: 100%; max-height: 220px; display: block; margin: 0px auto;
+  design-ai.css?v=20260707017 :: position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; line-height: 32px; text-align: center; background: rgba(255, 255, 255, 0.95); color: rgb(51, 51, 51); border-radius: 50%; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px; transition: 0.3s;
+  design-ai.css?v=20260707017 :: font-size: 16px;
+  design-ai.css?v=20260707017 :: background: rgb(122, 92, 255); color: rgb(255, 255, 255);
+  design-ai.css?v=20260707017 :: display: flex; justify-content: space-between; gap: 12px; margin-top: 16px;
+  design-ai.css?v=20260707017 :: flex: 1 1 0%; height: 40px; border-radius: 20px; margin: 0px;
+  design-ai.css?v=20260707017 :: flex: 1 1 0%; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 20px; background: rgb(59, 130, 246); font-size: 14px; text-decoration: none; transition: 0.3s; box-shadow: rgba(59, 130, 246, 0.3) 0px 4px 12px; color: rgb(255, 255, 255) !important;
+  design-ai.css?v=20260707017 :: background: rgb(37, 99, 235); box-shadow: rgba(59, 130, 246, 0.4) 0px 6px 16px;
+
+## B. AI PANEL INSTANCES (live)
+[0] div#ai-fangzhiCont.subItem design-ai-panel 0x0@0,0 pos=absolute z=100 w=310px
+    bg=rgb(253, 253, 253) radius=8px shadow=rgba(0, 0, 0, 0.1) 0px 4px 20px 0px border=0px none rgb(66, 66, 66)
+    font=12px/400 "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif
+    transition=0.3s text="返回 AI 仿制展开图 点击选中此区域后，按 Ctrl+V 粘贴上传 支持 JPG / PNG，建议"
+      · div#-.ai-panel-header 0x0@0,0 fs=12px fw=400 color=rgb(66, 66, 66) bg=rgb(255, 255, 255) pad=10px 20px border= text="AI 仿制展开图"
+      · span#-.ai-panel-title 0x0@0,0 fs=16px fw=700 color=rgb(66, 66, 66) bg=rgba(0, 0, 0, 0) pad=0px border=0px none rgb(66, 66, 66) text="AI 仿制展开图"
+      · div#-.ai-panel-body 0x0@0,0 fs=12px fw=400 color=rgb(66, 66, 66) bg=rgba(0, 0, 0, 0) pad=10px 15px 10px 5px border=0px none rgb(66, 66, 66) text="点击选中此区域后，按 Ctrl+V 粘贴上传 支持 JPG / PNG，建议大小 ≤ 10MB 正在"
+      ▸ a#aiFangzhiGenerateBtn.ai-generate-btn disabled 0x0@0,0 h=0 fs=15px pad=0px radius=22px bg=rgb(224, 224, 224) color=rgb(153, 153, 153) border=0px none rgb(153, 153, 153) text="一键生成展开图"
+      ▸ span#-.btn-text 0x0@0,0 h=0 fs=15px pad=0px radius=0px bg=rgba(0, 0, 0, 0) color=rgb(153, 153, 153) border=0px none rgb(153, 153, 153) text="一键生成展开图"
+      ▸ a#aiFangzhiResultUseBtn.ai-result-use-btn 0x0@0,0 h=0 fs=14px pad=0px radius=20px bg=rgb(59, 130, 246) color=rgb(255, 255, 255) border=0px none rgb(255, 255, 255) text="应用到画布"
+[1] div#ai-shejiCont.subItem design-ai-panel 0x0@0,0 pos=absolute z=100 w=310px
+    bg=rgb(253, 253, 253) radius=8px shadow=rgba(0, 0, 0, 0.1) 0px 4px 20px 0px border=0px none rgb(66, 66, 66)
+    font=12px/400 "Microsoft YaHei", tahoma, arial, "Hiragino Sans GB", 宋体, sans-serif
+    transition=0.3s text="返回 AI 设计 参考素材 * 已上传 0/9 张 Ctrl+V 粘贴 点击选中此区域后，按 Ctr"
+      · div#-.ai-panel-header 0x0@0,0 fs=12px fw=400 color=rgb(66, 66, 66) bg=rgb(255, 255, 255) pad=10px 20px border= text="AI 设计"
+      · span#-.ai-panel-title 0x0@0,0 fs=16px fw=700 color=rgb(66, 66, 66) bg=rgba(0, 0, 0, 0) pad=0px border=0px none rgb(66, 66, 66) text="AI 设计"
+      · div#-.ai-panel-body 0x0@0,0 fs=12px fw=400 color=rgb(66, 66, 66) bg=rgba(0, 0, 0, 0) pad=10px 15px 10px 5px border=0px none rgb(66, 66, 66) text="参考素材 * 已上传 0/9 张 Ctrl+V 粘贴 点击选中此区域后，按 Ctrl+V 粘贴图片，"
+      ▸ div#aiShejiUploadBtn.ai-multi-upload-btn 0x0@0,0 h=0 fs=12px pad=0px radius=6px bg=rgb(255, 255, 255) color=rgb(153, 153, 153) border=1px dashed rgb(204, 204, 204) text="Ctrl+V 粘贴"
+      ▸ a#aiShejiGenPromptBtn.ai-generate-btn ai-btn-blue disabled 0x0@0,0 h=0 fs=15px pad=0px radius=22px bg=rgb(224, 224, 224) color=rgb(153, 153, 153) border=0px none rgb(153, 153, 153) text="AI 智能生成提示词"
+      ▸ span#-.btn-text 0x0@0,0 h=0 fs=15px pad=0px radius=0px bg=rgba(0, 0, 0, 0) color=rgb(153, 153, 153) border=0px none rgb(153, 153, 153) text="AI 智能生成提示词"
+      ▸ a#aiShejiPrevStepBtn.ai-btn-outline 0x0@0,0 h=0 fs=14px pad=0px 24px radius=22px bg=rgb(255, 255, 255) color=rgb(51, 51, 51) border=1px solid rgb(234, 234, 234) text="上一步"
+      ▸ a#aiShejiGenDesignBtn.ai-generate-btn ai-btn-blue flex-1 0x0@0,0 h=0 fs=15px pad=0px radius=22px bg=rgb(59, 130, 246) color=rgb(255, 255, 255) border=0px none rgb(255, 255, 255) text="生成设计稿"
+      ▸ span#-.btn-text 0x0@0,0 h=0 fs=15px pad=0px radius=0px bg=rgba(0, 0, 0, 0) color=rgb(255, 255, 255) border=0px none rgb(255, 255, 255) text="生成设计稿"
+      ▸ a#aiShejiBackToStep2.ai-btn-outline 0x0@0,0 h=0 fs=14px pad=0px 24px radius=20px bg=rgb(255, 255, 255) color=rgb(51, 51, 51) border=1px solid rgb(234, 234, 234) text="重新生成"
+      ▸ a#aiShejiResultUseBtn.ai-result-use-btn 0x0@0,0 h=0 fs=14px pad=0px radius=20px bg=rgb(59, 130, 246) color=rgb(255, 255, 255) border=0px none rgb(255, 255, 255) text="应用到画布"
+
+### B2. AI PANELS CURRENTLY VISIBLE
+
+## C. NATIVE OCR DOM NODES (13)
+  [0] dd#-.clk-ocr 260x28@65,690 display=block text="OCR识别alt+q"
+  [1] span#logincallOcrCount.null 0x0@0,0 display=block text="0/100"
+  [2] i#-.diyicon icon-ocr ai-ocr-icon 0x0@0,0 display=block text=null
+  [3] div#ocrTableCont.subItem 0x0@0,0 display=flex text="返回 上传表格图片"
+  [4] a#ocrLianDan.btn-liandan pc 0x0@0,0 display=block text="上传表格图片"
+  [5] div#-.refOcrcrop1 0x0@0,0 display=none text="取消 确定"
+  [6] img#refOcrcrop1Img.null 0x0@0,0 display=inline text=null
+  [7] div#-.refOcrcrop2 0x0@0,0 display=none text="取消 确定"
+  [8] img#refOcrcrop2Img.null 0x0@0,0 display=inline text=null
+  [9] div#-.ocrcrop 0x0@0,0 display=none text="取消 确定"
+  [10] input#ocrBgColor.null 0x0@0,0 display=none text=null
+  [11] input#ocrUid.null 0x0@0,0 display=none text=null
+  [12] input#ocrDesign.null 0x0@0,0 display=none text=null
+
+### C2. NAMED OCR ELEMENTS
+  [0] span#logincallOcrCount.null 0x0@0,0 display=block text="0/100"
+  [1] div#ocrTableCont.subItem 0x0@0,0 display=flex text="返回 上传表格图片"
+  [2] a#ocrLianDan.btn-liandan pc 0x0@0,0 display=block text="上传表格图片"
+  [3] input#ocrBgColor.null 0x0@0,0 display=none text=null
+  [4] input#ocrUid.null 0x0@0,0 display=none text=null
+  [5] input#ocrDesign.null 0x0@0,0 display=none text=null
+
+## D. NATIVE OCR ENTRY CANDIDATES (2)
+  [0] li#textDisNav.recognitionColor 0x0@0,0 fs=12px color=rgb(255, 255, 255)
+      html=<li class="recognitionColor" id="textDisNav">
+                        <span>文字识别</span>
+                        <i class="icon-discern"></i>
+                    </li>
+      parent=ul#-.materialType clearfix holdAllItemUl official-material 0x0@0,0
+  [1] span#-.null 0x0@0,0 fs=14px color=rgb(255, 255, 255)
+      html=<span>文字识别</span>
+      parent=li#textDisNav.recognitionColor 0x0@0,0
+
+## E. TOOLBAR STRUCTURE
+  toolBar  = {"cls":"toolBar","rect":{"x":248,"y":0,"w":442,"h":49},"bg":"rgba(0, 0, 0, 0)","border":"0px none rgb(66, 66, 66)"}
+  editBar  = {"cls":"editBar","rect":{"x":0,"y":50,"w":1440,"h":0},"bg":"rgba(0, 0, 0, 0)","h":0}
+  editBarR = {"cls":"generalTool editBarR r","rect":{"x":0,"y":0,"w":0,"h":0}}
+  extraBar = {"cls":"extraBar","rect":{"x":0,"y":755,"w":55,"h":135}}
+
+### E2. toolGroups (11)
+  [0] leftBtn toolGroup 442x50@248,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.undo disabled "" {"x":248,"y":0,"w":42,"h":50} text=null
+      · li#-.redo disabled "" {"x":290,"y":0,"w":42,"h":50} text=null
+      · li#-.color backColor notdisabled "" {"x":332,"y":0,"w":136,"h":50} text="背景色 重置"
+      · li#-.clearPage notdisabled "" {"x":468,"y":0,"w":88,"h":50} text="清空画布"
+      · li#-.drawShape notdisabled rel "" {"x":556,"y":0,"w":88,"h":50} text="自由绘制 连续绘制(按shift提示角度"
+      · div#-.shape-items "" {"x":505,"y":51,"w":189,"h":81} text="连续绘制(按shift提示角度)"
+      · div#-.shape-wrapper "" {"x":510,"y":56,"w":179,"h":41} text=null
+      · div#-.shape-item "" {"x":510,"y":56,"w":41,"h":41} text=null
+      · div#-.shape-item "" {"x":556,"y":56,"w":41,"h":41} text=null
+      · div#-.shape-item "" {"x":602,"y":56,"w":41,"h":41} text=null
+      · div#-.shape-item "" {"x":648,"y":56,"w":41,"h":41} text=null
+      · div#-.drawSvgType "" {"x":565,"y":97,"w":68,"h":30} text="连续绘制(按shift提示角度)"
+  [1] editFontStyle text toolGroup showTip 0x0@0,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.color colorWz "" {"x":0,"y":0,"w":0,"h":0} text="颜色"
+      · li#-.fontFamily "" {"x":0,"y":0,"w":0,"h":0} text="汉仪行楷简"
+      · li#-.fontSize "" {"x":0,"y":0,"w":0,"h":0} text=null
+      · li#-.align "" {"x":0,"y":0,"w":0,"h":0} text="对齐"
+      · li#-.wordSpace "" {"x":0,"y":0,"w":0,"h":0} text="间距"
+      · li#-.groupAlign "" {"x":0,"y":0,"w":0,"h":0} text="对齐"
+      · li#-.around "" {"x":0,"y":0,"w":0,"h":0} text="环绕"
+      · li#-.textBg textbackground "" {"x":0,"y":0,"w":0,"h":0} text="背景填充"
+      · li#-.fontStyle "" {"x":0,"y":0,"w":0,"h":0} text="字效"
+      · li#-.stroke "" {"x":0,"y":0,"w":0,"h":0} text="描边"
+      · li#-.textArt "" {"x":0,"y":0,"w":0,"h":0} text="艺术字"
+      · li#-.textUl showTip "" {"x":0,"y":0,"w":0,"h":0} text="列表"
+      · li#-.lowerToUpperCase "" {"x":0,"y":0,"w":0,"h":0} text="大小写"
+  [2] imgmask toolGroup showTip 0x0@0,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.imgmaskStroke "" {"x":0,"y":0,"w":0,"h":0} text="描边"
+  [3] bitmap toolGroup showTip 0x0@0,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.cutOut "" {"x":0,"y":0,"w":0,"h":0} text="智能抠图"
+      · li#-.crop "" {"x":0,"y":0,"w":0,"h":0} text="裁切"
+      · li#-.dysmorphismCrop "" {"x":0,"y":0,"w":0,"h":0} text="异形裁切"
+      · li#-.autoCutImage "" {"x":0,"y":0,"w":0,"h":0} text="自动裁切"
+      · li#-.imgFilter "" {"x":0,"y":0,"w":0,"h":0} text="美化"
+      · li#-.imgSize "" {"x":0,"y":0,"w":0,"h":0} text="尺寸"
+      · li#-.imgCorner "" {"x":0,"y":0,"w":0,"h":0} text="圆角"
+      · li#-.changeImg "" {"x":0,"y":0,"w":0,"h":0} text="换图"
+      · a#file_upload_1-button.uploadify-button "" {"x":0,"y":0,"w":0,"h":0} text=null
+      · div#file_upload_1-queue.uploadify-queue "" {"x":0,"y":0,"w":0,"h":0} text=null
+      · li#-.changeToBackImg "" {"x":0,"y":0,"w":0,"h":0} text="设为背景"
+      · li#-.imgStroke "" {"x":0,"y":0,"w":0,"h":0} text="描边"
+      · li#-.text3D "" {"x":0,"y":0,"w":0,"h":0} text="3D文字"
+      · li#-.color colorImage "" {"x":0,"y":0,"w":0,"h":0} text="改色"
+  [4] svg toolGroup showTip 0x0@0,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.color "" {"x":0,"y":0,"w":0,"h":0} text="颜色"
+      · li#-.colorChangeOneKey "" {"x":0,"y":0,"w":0,"h":0} text="一键改色"
+      · li#-.fillColorChangeOneKey "" {"x":0,"y":0,"w":0,"h":0} text="填充色"
+      · li#-.strokeColorChangeOneKey "" {"x":0,"y":0,"w":0,"h":0} text="边框色"
+      · li#-.colorStroke "" {"x":0,"y":0,"w":0,"h":0} text="描边"
+      · li#-.svgSize "" {"x":0,"y":0,"w":0,"h":0} text="尺寸"
+      · li#-.svgStrokeWidth "" {"x":0,"y":0,"w":0,"h":0} text="边框粗细"
+      · li#-.svgRectyuanjiao "" {"x":0,"y":0,"w":0,"h":0} text="边框角度"
+  [5] table toolGroup showTip tableOperat 0x0@0,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.table-bt "" {"x":0,"y":0,"w":0,"h":0} text="表头颜色"
+      · li#-.table-bs "" {"x":0,"y":0,"w":0,"h":0} text="表体颜色"
+      · li#-.table-xk "" {"x":0,"y":0,"w":0,"h":0} text="边框颜色"
+      · li#-.table-tr "" {"x":0,"y":0,"w":0,"h":0} text="表格透明"
+      · li#-.table-border "" {"x":0,"y":0,"w":0,"h":0} text="边框粗细"
+      · li#-.table-out-color "" {"x":0,"y":0,"w":0,"h":0} text="外框颜色"
+      · li#-.table-out-border "" {"x":0,"y":0,"w":0,"h":0} text="外框粗细"
+      · li#-.table-bk-color new-table-btn "" {"x":0,"y":0,"w":0,"h":0} text="边框色"
+      · li#-.table-background-cell new-table-btn "" {"x":0,"y":0,"w":0,"h":0} text="背景色"
+      · li#-.table-col-w new-table-btn "" {"x":0,"y":0,"w":0,"h":0} text="列宽:mm"
+      · li#-.table-row-h new-table-btn "" {"x":0,"y":0,"w":0,"h":0} text="行高:mm"
+  [6] group toolGroup showTip 0x0@0,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.groupAlign "" {"x":0,"y":0,"w":0,"h":0} text="对齐"
+  [7] editBar-guides toolGroup showTip 0x0@0,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.colorG color "" {"x":0,"y":0,"w":0,"h":0} text="颜色"
+      · li#-.delete "" {"x":0,"y":0,"w":0,"h":0} text="删除"
+  [8] cupOneKeyTool toolGroup showTip 0x0@0,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.oneKeySymmetric "" {"x":0,"y":0,"w":0,"h":0} text="一键对称"
+  [9] generalTool toolGroup showTip 0x0@0,0 bg=rgba(0, 0, 0, 0) border= radius=0px
+      · li#-.lock "" {"x":0,"y":0,"w":0,"h":0} text="锁定"
+      · li#-.move "" {"x":0,"y":0,"w":0,"h":0} text="图层"
+      · li#-.opacity "" {"x":0,"y":0,"w":0,"h":0} text="透明度"
+      · li#-.mid "" {"x":0,"y":0,"w":0,"h":0} text="画布对齐"
+      · li#-.flip "" {"x":0,"y":0,"w":0,"h":0} text="翻转"
+      · li#-.rotate "" {"x":0,"y":0,"w":0,"h":0} text="旋转"
+      · li#-.shadow "" {"x":0,"y":0,"w":0,"h":0} text="投影"
+      · li#-.ungroup "" {"x":0,"y":0,"w":0,"h":0} text="解组"
+      · li#-.group "" {"x":0,"y":0,"w":0,"h":0} text="编组"
+      · li#-.oneKeySymmetric "" {"x":0,"y":0,"w":0,"h":0} text="一键对称"
+      · li#-.copy "" {"x":0,"y":0,"w":0,"h":0} text="复制"
+      · li#-.delete "" {"x":0,"y":0,"w":0,"h":0} text="删除"
+  [10] unknowR toolGroup showTip 0x0@0,0 bg=rgba(0, 0, 0, 0) border=0px none rgb(66, 66, 66) radius=0px
+      · li#-.delete "" {"x":0,"y":0,"w":0,"h":0} text="删除"
+
+## F. tabPageLayer (rightBar tab controller)
+  {"cls":"tabPageLayer","rect":{"x":1250,"y":51,"w":190,"h":33},"h":33,"bg":"rgb(255, 255, 255)"}
+  html=<div class="tabPageLayer">
+                <a class="page-suolve on" href="javascript:void(0)">页面</a>
+                <a class="gilding-tab" href="javascript:void(0)" style="display: none">烫金</a>
+                <a class="img-level" href="javascript:void(0)">图层</a>
+                
+            </div>
+    [0] a#-.page-suolve on text="页面"
+    [1] a#-.gilding-tab text="烫金"
+    [2] a#-.img-level text="图层"
+    child html: <a class="page-suolve on" href="javascript:void(0)">页面</a> || <a class="gilding-tab" href="javascript:void(0)" style="display: none">烫金</a> || <a class="img-level" href="javascript:void(0)">图层</a>
+
+## G. .bg-material (260px sliding panel)
+  {"cls":"bg-material","rect":{"x":1550,"y":0,"w":260,"h":900},"pos":"fixed","z":"auto","bg":"rgb(255, 255, 255)","shadow":null,"border":"0px none rgb(106, 106, 106)"}
+  html=<div class="bg-material">
+                <div class="material-title">常用素材</div>
+                <div class="material-auto">
+                    <div class="mbtnGroup">
+                        <a class="mbtn on" materialtype="0" href="javascript:void(0)">相框素材</a>
+                        <a class="mbtn" materialtype="1" href="javascript:void(0)">矢量素材</a>
+                        
+                    </div>
+                    <ul class="list sclist">
+                    </ul>
+                    <ul class="list xklist">
+                    </ul>
+                </div>
+                <!--正面背景-素材-结束-->
+            </div>
+
+## H. switch/content pull-tab
+  switchContent = {"cls":"switch-content","rect":{"x":1210,"y":51,"w":41,"h":849},"pos":"absolute","w":"40px","bg":"rgb(255, 255, 255)","fontSize":"12px","color":"rgb(106, 106, 106)"}
+  switchContent.html = <div class="switch-content">
+                <div class="material-show">
+                    <span style="display: none">&lt;</span>
+                    <p class="source-material">常用素材</p>
+                </div>
+                    
+            </div>
+  btnSwitch = {"cls":"btn-switch","rect":{"x":1238,"y":436,"w":12,"h":80},"pos":"absolute","bg":"rgb(255, 255, 255)","radius":"40px 0px 0px 40px","border":"0px none rgb(74, 137, 220)","fontSize":"20px"}
+  btnSwitch.html = <div class="btn-switch"><span>&gt;</span></div>
+
+## I. ICON FONT SAMPLES (25)
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  diyicon icon-loadingtishi ::before="" ff=diyicon
+  icon-blood ::before="" ff=diyicon
+  icon-blood-hidden ::before="" ff=diyicon
+  icon-guide ::before="" ff=diyicon
+  icon-guide-hidden ::before="" ff=diyicon
+  icon-thum ::before="" ff=diyicon
+  icon-thum-hidden ::before="" ff=diyicon
+  icon-chicun f14 ::before="" ff=diyicon
+  icon-chehui ::before="" ff=diyicon
+  icon-recovery ::before="" ff=diyicon
+  diyicon icon-clear ::before="" ff=diyicon
+  diyicon icon-huabi ::before="" ff=diyicon
+  diyicon  icon-draw-rect ::before="" ff=diyicon
+  diyicon  icon-draw-circle ::before="" ff=diyicon
+  diyicon  icon-draw-line ::before="" ff=diyicon
+  diyicon  icon-draw-triangle ::before="" ff=diyicon
+
+## J. FRAMEWORKS
+  {"jquery":"1.10.2","vue":true,"react":false,"layer":true}

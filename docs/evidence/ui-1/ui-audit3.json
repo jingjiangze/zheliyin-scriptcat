@@ -1,0 +1,846 @@
+[
+  {
+    "viewport": {
+      "w": 1366,
+      "h": 768
+    },
+    "scrollW": 1366,
+    "docW": 1366,
+    "hasHScroll": false,
+    "rightBar": {
+      "sel": ".rightPageBar.rightBar",
+      "rect": {
+        "x": 1176,
+        "y": 51,
+        "w": 190,
+        "h": 717
+      },
+      "pos": "absolute",
+      "z": "20",
+      "bg": "rgb(255, 255, 255)",
+      "right": 0,
+      "display": "block",
+      "visible": true
+    },
+    "switchContent": {
+      "sel": ".switch-content",
+      "rect": {
+        "x": 1136,
+        "y": 51,
+        "w": 41,
+        "h": 717
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 189,
+      "display": "block",
+      "visible": true
+    },
+    "btnSwitch": {
+      "sel": ".btn-switch",
+      "rect": {
+        "x": 1164,
+        "y": 370,
+        "w": 12,
+        "h": 80
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 190,
+      "display": "block",
+      "visible": true
+    },
+    "tabPageLayer": {
+      "sel": ".tabPageLayer",
+      "rect": {
+        "x": 1176,
+        "y": 51,
+        "w": 190,
+        "h": 33
+      },
+      "pos": "static",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 0,
+      "display": "flex",
+      "visible": true
+    },
+    "bgMaterial": {
+      "sel": ".bg-material",
+      "rect": {
+        "x": 1476,
+        "y": 0,
+        "w": 260,
+        "h": 768
+      },
+      "pos": "fixed",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": -370,
+      "display": "block",
+      "visible": true
+    },
+    "layerWrap": {
+      "sel": ".layerWrap",
+      "rect": {
+        "x": 1176,
+        "y": 86,
+        "w": 190,
+        "h": 682
+      },
+      "pos": "fixed",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 0,
+      "display": "block",
+      "visible": true
+    },
+    "toolBar": {
+      "sel": ".toolBar",
+      "rect": {
+        "x": 248,
+        "y": 0,
+        "w": 396,
+        "h": 49
+      },
+      "pos": "relative",
+      "z": "2",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 722,
+      "display": "block",
+      "visible": true
+    },
+    "extraBar": {
+      "sel": ".extraBar",
+      "rect": {
+        "x": 0,
+        "y": 623,
+        "w": 55,
+        "h": 135
+      },
+      "pos": "absolute",
+      "z": "1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 1311,
+      "display": "block",
+      "visible": true
+    },
+    "aiFangzhi": {
+      "sel": "#ai-fangzhiCont",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "pos": "absolute",
+      "z": "100",
+      "bg": "rgb(253, 253, 253)",
+      "right": 1366,
+      "display": "flex",
+      "visible": false
+    },
+    "aiSheji": {
+      "sel": "#ai-shejiCont",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "pos": "absolute",
+      "z": "100",
+      "bg": "rgb(253, 253, 253)",
+      "right": 1366,
+      "display": "flex",
+      "visible": false
+    },
+    "canvasHost": {
+      "sel": "#rectCanvas",
+      "rect": {
+        "x": 492,
+        "y": 237,
+        "w": 568,
+        "h": 345
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 307,
+      "display": "block",
+      "visible": true
+    },
+    "canvasBground": {
+      "sel": "#canvasBground",
+      "rect": {
+        "x": 492,
+        "y": 237,
+        "w": 568,
+        "h": 345
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 307,
+      "display": "block",
+      "visible": true
+    },
+    "leftPanel": {
+      "sel": ".leftMenu",
+      "rect": {
+        "x": 0,
+        "y": 51,
+        "w": 55,
+        "h": 717
+      },
+      "pos": "absolute",
+      "z": "110",
+      "bg": "rgb(242, 243, 248)",
+      "right": 1311,
+      "display": "block",
+      "visible": true
+    },
+    "derived": {
+      "rightBarX": 1176,
+      "rightBarW": 190,
+      "gapLeftOfRightBar": 1176,
+      "bgMaterialX": 1476
+    },
+    "tag": "1366"
+  },
+  {
+    "viewport": {
+      "w": 1440,
+      "h": 900
+    },
+    "scrollW": 1440,
+    "docW": 1440,
+    "hasHScroll": false,
+    "rightBar": {
+      "sel": ".rightPageBar.rightBar",
+      "rect": {
+        "x": 1250,
+        "y": 51,
+        "w": 190,
+        "h": 849
+      },
+      "pos": "absolute",
+      "z": "20",
+      "bg": "rgb(255, 255, 255)",
+      "right": 0,
+      "display": "block",
+      "visible": true
+    },
+    "switchContent": {
+      "sel": ".switch-content",
+      "rect": {
+        "x": 1210,
+        "y": 51,
+        "w": 41,
+        "h": 849
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 189,
+      "display": "block",
+      "visible": true
+    },
+    "btnSwitch": {
+      "sel": ".btn-switch",
+      "rect": {
+        "x": 1238,
+        "y": 436,
+        "w": 12,
+        "h": 80
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 190,
+      "display": "block",
+      "visible": true
+    },
+    "tabPageLayer": {
+      "sel": ".tabPageLayer",
+      "rect": {
+        "x": 1250,
+        "y": 51,
+        "w": 190,
+        "h": 33
+      },
+      "pos": "static",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 0,
+      "display": "flex",
+      "visible": true
+    },
+    "bgMaterial": {
+      "sel": ".bg-material",
+      "rect": {
+        "x": 1550,
+        "y": 0,
+        "w": 260,
+        "h": 900
+      },
+      "pos": "fixed",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": -370,
+      "display": "block",
+      "visible": true
+    },
+    "layerWrap": {
+      "sel": ".layerWrap",
+      "rect": {
+        "x": 1250,
+        "y": 86,
+        "w": 190,
+        "h": 814
+      },
+      "pos": "fixed",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 0,
+      "display": "block",
+      "visible": true
+    },
+    "toolBar": {
+      "sel": ".toolBar",
+      "rect": {
+        "x": 248,
+        "y": 0,
+        "w": 442,
+        "h": 49
+      },
+      "pos": "relative",
+      "z": "2",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 750,
+      "display": "block",
+      "visible": true
+    },
+    "extraBar": {
+      "sel": ".extraBar",
+      "rect": {
+        "x": 0,
+        "y": 755,
+        "w": 55,
+        "h": 135
+      },
+      "pos": "absolute",
+      "z": "1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 1385,
+      "display": "block",
+      "visible": true
+    },
+    "aiFangzhi": {
+      "sel": "#ai-fangzhiCont",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "pos": "absolute",
+      "z": "100",
+      "bg": "rgb(253, 253, 253)",
+      "right": 1440,
+      "display": "flex",
+      "visible": false
+    },
+    "aiSheji": {
+      "sel": "#ai-shejiCont",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "pos": "absolute",
+      "z": "100",
+      "bg": "rgb(253, 253, 253)",
+      "right": 1440,
+      "display": "flex",
+      "visible": false
+    },
+    "canvasHost": {
+      "sel": "#rectCanvas",
+      "rect": {
+        "x": 503,
+        "y": 287,
+        "w": 620,
+        "h": 377
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 318,
+      "display": "block",
+      "visible": true
+    },
+    "canvasBground": {
+      "sel": "#canvasBground",
+      "rect": {
+        "x": 503,
+        "y": 287,
+        "w": 620,
+        "h": 377
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 318,
+      "display": "block",
+      "visible": true
+    },
+    "leftPanel": {
+      "sel": ".leftMenu",
+      "rect": {
+        "x": 0,
+        "y": 51,
+        "w": 55,
+        "h": 849
+      },
+      "pos": "absolute",
+      "z": "110",
+      "bg": "rgb(242, 243, 248)",
+      "right": 1385,
+      "display": "block",
+      "visible": true
+    },
+    "derived": {
+      "rightBarX": 1250,
+      "rightBarW": 190,
+      "gapLeftOfRightBar": 1250,
+      "bgMaterialX": 1550
+    },
+    "tag": "1440"
+  },
+  {
+    "viewport": {
+      "w": 1600,
+      "h": 900
+    },
+    "scrollW": 1600,
+    "docW": 1600,
+    "hasHScroll": false,
+    "rightBar": {
+      "sel": ".rightPageBar.rightBar",
+      "rect": {
+        "x": 1410,
+        "y": 51,
+        "w": 190,
+        "h": 849
+      },
+      "pos": "absolute",
+      "z": "20",
+      "bg": "rgb(255, 255, 255)",
+      "right": 0,
+      "display": "block",
+      "visible": true
+    },
+    "switchContent": {
+      "sel": ".switch-content",
+      "rect": {
+        "x": 1370,
+        "y": 51,
+        "w": 41,
+        "h": 849
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 189,
+      "display": "block",
+      "visible": true
+    },
+    "btnSwitch": {
+      "sel": ".btn-switch",
+      "rect": {
+        "x": 1398,
+        "y": 436,
+        "w": 12,
+        "h": 80
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 190,
+      "display": "block",
+      "visible": true
+    },
+    "tabPageLayer": {
+      "sel": ".tabPageLayer",
+      "rect": {
+        "x": 1410,
+        "y": 51,
+        "w": 190,
+        "h": 33
+      },
+      "pos": "static",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 0,
+      "display": "flex",
+      "visible": true
+    },
+    "bgMaterial": {
+      "sel": ".bg-material",
+      "rect": {
+        "x": 1710,
+        "y": 0,
+        "w": 260,
+        "h": 900
+      },
+      "pos": "fixed",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": -370,
+      "display": "block",
+      "visible": true
+    },
+    "layerWrap": {
+      "sel": ".layerWrap",
+      "rect": {
+        "x": 1410,
+        "y": 86,
+        "w": 190,
+        "h": 814
+      },
+      "pos": "fixed",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 0,
+      "display": "block",
+      "visible": true
+    },
+    "toolBar": {
+      "sel": ".toolBar",
+      "rect": {
+        "x": 248,
+        "y": 0,
+        "w": 602,
+        "h": 49
+      },
+      "pos": "relative",
+      "z": "2",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 750,
+      "display": "block",
+      "visible": true
+    },
+    "extraBar": {
+      "sel": ".extraBar",
+      "rect": {
+        "x": 0,
+        "y": 755,
+        "w": 55,
+        "h": 135
+      },
+      "pos": "absolute",
+      "z": "1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 1545,
+      "display": "block",
+      "visible": true
+    },
+    "aiFangzhi": {
+      "sel": "#ai-fangzhiCont",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "pos": "absolute",
+      "z": "100",
+      "bg": "rgb(253, 253, 253)",
+      "right": 1600,
+      "display": "flex",
+      "visible": false
+    },
+    "aiSheji": {
+      "sel": "#ai-shejiCont",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "pos": "absolute",
+      "z": "100",
+      "bg": "rgb(253, 253, 253)",
+      "right": 1600,
+      "display": "flex",
+      "visible": false
+    },
+    "canvasHost": {
+      "sel": "#rectCanvas",
+      "rect": {
+        "x": 527,
+        "y": 253,
+        "w": 732,
+        "h": 445
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 342,
+      "display": "block",
+      "visible": true
+    },
+    "canvasBground": {
+      "sel": "#canvasBground",
+      "rect": {
+        "x": 527,
+        "y": 253,
+        "w": 732,
+        "h": 445
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 342,
+      "display": "block",
+      "visible": true
+    },
+    "leftPanel": {
+      "sel": ".leftMenu",
+      "rect": {
+        "x": 0,
+        "y": 51,
+        "w": 55,
+        "h": 849
+      },
+      "pos": "absolute",
+      "z": "110",
+      "bg": "rgb(242, 243, 248)",
+      "right": 1545,
+      "display": "block",
+      "visible": true
+    },
+    "derived": {
+      "rightBarX": 1410,
+      "rightBarW": 190,
+      "gapLeftOfRightBar": 1410,
+      "bgMaterialX": 1710
+    },
+    "tag": "1600"
+  },
+  {
+    "viewport": {
+      "w": 1920,
+      "h": 1080
+    },
+    "scrollW": 1920,
+    "docW": 1920,
+    "hasHScroll": false,
+    "rightBar": {
+      "sel": ".rightPageBar.rightBar",
+      "rect": {
+        "x": 1730,
+        "y": 51,
+        "w": 190,
+        "h": 1029
+      },
+      "pos": "absolute",
+      "z": "20",
+      "bg": "rgb(255, 255, 255)",
+      "right": 0,
+      "display": "block",
+      "visible": true
+    },
+    "switchContent": {
+      "sel": ".switch-content",
+      "rect": {
+        "x": 1690,
+        "y": 51,
+        "w": 41,
+        "h": 1029
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 189,
+      "display": "block",
+      "visible": true
+    },
+    "btnSwitch": {
+      "sel": ".btn-switch",
+      "rect": {
+        "x": 1718,
+        "y": 526,
+        "w": 12,
+        "h": 80
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 190,
+      "display": "block",
+      "visible": true
+    },
+    "tabPageLayer": {
+      "sel": ".tabPageLayer",
+      "rect": {
+        "x": 1730,
+        "y": 51,
+        "w": 190,
+        "h": 33
+      },
+      "pos": "static",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": 0,
+      "display": "flex",
+      "visible": true
+    },
+    "bgMaterial": {
+      "sel": ".bg-material",
+      "rect": {
+        "x": 2030,
+        "y": 0,
+        "w": 260,
+        "h": 1080
+      },
+      "pos": "fixed",
+      "z": "auto",
+      "bg": "rgb(255, 255, 255)",
+      "right": -370,
+      "display": "block",
+      "visible": true
+    },
+    "layerWrap": {
+      "sel": ".layerWrap",
+      "rect": {
+        "x": 1730,
+        "y": 86,
+        "w": 190,
+        "h": 994
+      },
+      "pos": "fixed",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 0,
+      "display": "block",
+      "visible": true
+    },
+    "toolBar": {
+      "sel": ".toolBar",
+      "rect": {
+        "x": 248,
+        "y": 0,
+        "w": 922,
+        "h": 49
+      },
+      "pos": "relative",
+      "z": "2",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 750,
+      "display": "block",
+      "visible": true
+    },
+    "extraBar": {
+      "sel": ".extraBar",
+      "rect": {
+        "x": 0,
+        "y": 935,
+        "w": 55,
+        "h": 135
+      },
+      "pos": "absolute",
+      "z": "1",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 1865,
+      "display": "block",
+      "visible": true
+    },
+    "aiFangzhi": {
+      "sel": "#ai-fangzhiCont",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "pos": "absolute",
+      "z": "100",
+      "bg": "rgb(253, 253, 253)",
+      "right": 1920,
+      "display": "flex",
+      "visible": false
+    },
+    "aiSheji": {
+      "sel": "#ai-shejiCont",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "pos": "absolute",
+      "z": "100",
+      "bg": "rgb(253, 253, 253)",
+      "right": 1920,
+      "display": "flex",
+      "visible": false
+    },
+    "canvasHost": {
+      "sel": "#rectCanvas",
+      "rect": {
+        "x": 575,
+        "y": 275,
+        "w": 956,
+        "h": 581
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 390,
+      "display": "block",
+      "visible": true
+    },
+    "canvasBground": {
+      "sel": "#canvasBground",
+      "rect": {
+        "x": 575,
+        "y": 275,
+        "w": 956,
+        "h": 581
+      },
+      "pos": "absolute",
+      "z": "auto",
+      "bg": "rgba(0, 0, 0, 0)",
+      "right": 390,
+      "display": "block",
+      "visible": true
+    },
+    "leftPanel": {
+      "sel": ".leftMenu",
+      "rect": {
+        "x": 0,
+        "y": 51,
+        "w": 55,
+        "h": 1029
+      },
+      "pos": "absolute",
+      "z": "110",
+      "bg": "rgb(242, 243, 248)",
+      "right": 1865,
+      "display": "block",
+      "visible": true
+    },
+    "derived": {
+      "rightBarX": 1730,
+      "rightBarW": 190,
+      "gapLeftOfRightBar": 1730,
+      "bgMaterialX": 2030
+    },
+    "tag": "1920"
+  }
+]

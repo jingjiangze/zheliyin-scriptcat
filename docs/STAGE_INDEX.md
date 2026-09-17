@@ -67,6 +67,7 @@ FIXTURE OCR（人为构造 OCRCandidate，bbox 来自合成图的已知绘制坐
 | **Stage 5.4** | Native OCR 边界 + 真实图片输入 + 重建精度 | 2026-09-16 | `438effb` `2e51280` `1f3e6d8` `96649cc` `3becf04` | **CONDITIONAL-GO** | REAL + **FIXTURE_OCR**：4 实验深探 → `NATIVE_OCR_RESULT_ACCESS = BLOCKED`；字号校准 `fontSize = 0.829 × visualHeight`，**重建后回读 mean height error 5.03%**；group/rollback 全 PASS | Local OCR 评估未接入 → 5.5；原生图片输入自动化 `PARTIAL`；多行字号反推 deferred |
 | **Stage 5.5** | **真实 OCR Provider 接入 + Basic Real OCR Demo** | 2026-09-16 | `1ea948b` `131658e` `0707035` `7ef1aed` `03f2167` `4cb0819` | **GO（Demo 级）** | **REAL**（当前 HEAD）：tesseract.js 本地 provider 实测（chi_sim：18 words / bbox 18/18 / avg-conf 90.4 / 首跑 ~3s / **零上传零 key**）；`BASIC_REAL_OCR_DEMO = PASS` —— 真实 OCR 6 行候选 → mapper(1000×800 natural × 0.45) → matcher（**电话行 MATCHED 复用模板槽**，其余 NOT_FOUND 保护）→ 6 个真 textbox（editable / 思源黑体 Regular / markuuid=null）→ 字号误差 **3.3%** → 参考图保留 → rollback 21/4/3 零残留 | 引擎注入为 `GM_addElement`/side-page（**待真机一键验证**，5.6 前置）；行聚合词序质量 → 5.9；真实用户粘贴 → 待真机；`ocr-provider.js`/`tesseract-loader.js` **未挂接生产** |
 | **Stage 5.5A** | **Basic Real OCR Demo 产品化验收**（引擎注入 + 用户闭环） | 2026-09-16 | `13b348a` `7c412b8` | **BLOCKED（产品级）** | REAL：`GM_addElement` 注入动作 **PASS**（主世界 DOM 标记 `data-zy-55a-inj=1`）；**`engine-in-editor = BLOCKED`** —— 三层证据：① 外链 CDN 被 CSP `script-src` 拦截（`performance` 资源为空，未发起）② inline 注入真引擎 30s 无全局 ③ inline + 屏蔽 `window.define`（requirejs AMD 吸收 UMD）20s 仍无 `window.Tesseract`。属 **PRODUCT/BROWSER-ENV** 边界，非 harness 自动化问题 | 引擎装载工程（3 候选）为 **5.6 P1 前置**；编辑器页缓存命中实测顺延；真实用户上传/粘贴 + 双击编辑待人工 |
+| **UI-1** | **OCR UI 原生化 · 真实页面 UI / DOM 审计**（不修改生产代码） | 2026-09-17 | （本轮） | **CONDITIONAL-GO** | **REAL**（4 viewport 实测 + 真实 `cssRules` 提取）：`.rightPageBar.rightBar` 四视口恒 **190px 宽 / right=0 / top=51 / h=vh−51 / z=20**，无横向滚动；提取原生设计语言（font `Microsoft YaHei` / `12·13.33·14px` / `weight 400`；栅格 `4·5·8·10·20`；primary `#278fcf`；AI 面板族 `.design-ai-panel` 310px/radius8/shadow`rgba(0,0,0,.1) 0 4px 20px`/z100）；**CSS variables 全站仅 1 个（不可依赖）**；发现原生 OCR UI 资产（`dd#clk-ocr`「OCR识别alt+q」、`#logincallOcrCount` 0/100、`#ocrTableCont`「返回 上传表格图片」）与原生「文字识别」入口 `li#textDisNav` | §七 推荐 **方案 B**（原生右栏入口+邻接抽屉）；当前实现偏差清单 + 9 项风险；**UI-RISK-09：面板实测几何缺失**（审计时未加载 ScriptCat）→ UI-2 入口条件；`OCR_DEPENDENCY_POLICY.md` §7.4 `NATIVE_PANEL` 建议 `PASS → PARTIAL`（结构达成 / 视觉未达成） |
 
 ---
 
@@ -133,6 +134,7 @@ Stage 5.4     CONDITIONAL-GO
 Stage 5.5     GO（Demo 级）    ← 真实 OCR 接入，BASIC_REAL_OCR_DEMO = PASS
 Stage 5.5A    BLOCKED          （产品化验收：引擎在编辑器页运行环境不可达）
 Stage 5.5A-R2 PASS             ← 当前 HEAD（page-world executor 突破：引擎装载成功）
+UI-1          CONDITIONAL-GO   ← OCR UI 原生化审计（推荐方案 B；视觉原生化待 UI-2/3）
 ```
 
 > 注意 `Stage 5.3 = GO` 与 `Stage 5.4 = CONDITIONAL-GO` 不矛盾：5.4 因为**深探后确认原生 OCR 不可程序读取**，按 `docs/EVIDENCE_POLICY.md` §3 如实降级为 CONDITIONAL-GO —— 这是**诚实结论**，不是退步。

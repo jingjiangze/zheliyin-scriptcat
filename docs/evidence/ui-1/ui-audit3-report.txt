@@ -1,0 +1,76 @@
+### MULTI-VIEWPORT GEOMETRY PROBE (real page, read-only)
+
+## viewport 1366  (1366x768)
+  hasHScroll=false scrollW=1366 docW=1366
+  rightBar      = 190x717@1176,51 right=0 pos=absolute z=20 vis=true
+  switchContent = 41x717@1136,51 right=189 pos=absolute z=auto vis=true
+  btnSwitch     = 12x80@1164,370 right=190 pos=absolute z=auto vis=true
+  tabPageLayer  = 190x33@1176,51 right=0 pos=static z=auto vis=true
+  layerWrap     = 190x682@1176,86 right=0 pos=fixed z=auto vis=true
+  bgMaterial    = 260x768@1476,0 right=-370 pos=fixed z=auto vis=true
+  toolBar       = 396x49@248,0 right=722 pos=relative z=2 vis=true
+  extraBar      = 55x135@0,623 right=1311 pos=absolute z=1 vis=true
+  leftMenu      = 55x717@0,51 right=1311 pos=absolute z=110 vis=true
+  rectCanvas    = 568x345@492,237 right=307 pos=absolute z=auto vis=true
+  canvasBground = 568x345@492,237 right=307 pos=absolute z=auto vis=true
+  aiFangzhi     = 0x0@0,0 right=1366 pos=absolute z=100 vis=false
+  aiSheji       = 0x0@0,0 right=1366 pos=absolute z=100 vis=false
+  derived       = {"rightBarX":1176,"rightBarW":190,"gapLeftOfRightBar":1176,"bgMaterialX":1476}
+
+## viewport 1440  (1440x900)
+  hasHScroll=false scrollW=1440 docW=1440
+  rightBar      = 190x849@1250,51 right=0 pos=absolute z=20 vis=true
+  switchContent = 41x849@1210,51 right=189 pos=absolute z=auto vis=true
+  btnSwitch     = 12x80@1238,436 right=190 pos=absolute z=auto vis=true
+  tabPageLayer  = 190x33@1250,51 right=0 pos=static z=auto vis=true
+  layerWrap     = 190x814@1250,86 right=0 pos=fixed z=auto vis=true
+  bgMaterial    = 260x900@1550,0 right=-370 pos=fixed z=auto vis=true
+  toolBar       = 442x49@248,0 right=750 pos=relative z=2 vis=true
+  extraBar      = 55x135@0,755 right=1385 pos=absolute z=1 vis=true
+  leftMenu      = 55x849@0,51 right=1385 pos=absolute z=110 vis=true
+  rectCanvas    = 620x377@503,287 right=318 pos=absolute z=auto vis=true
+  canvasBground = 620x377@503,287 right=318 pos=absolute z=auto vis=true
+  aiFangzhi     = 0x0@0,0 right=1440 pos=absolute z=100 vis=false
+  aiSheji       = 0x0@0,0 right=1440 pos=absolute z=100 vis=false
+  derived       = {"rightBarX":1250,"rightBarW":190,"gapLeftOfRightBar":1250,"bgMaterialX":1550}
+
+## viewport 1600  (1600x900)
+  hasHScroll=false scrollW=1600 docW=1600
+  rightBar      = 190x849@1410,51 right=0 pos=absolute z=20 vis=true
+  switchContent = 41x849@1370,51 right=189 pos=absolute z=auto vis=true
+  btnSwitch     = 12x80@1398,436 right=190 pos=absolute z=auto vis=true
+  tabPageLayer  = 190x33@1410,51 right=0 pos=static z=auto vis=true
+  layerWrap     = 190x814@1410,86 right=0 pos=fixed z=auto vis=true
+  bgMaterial    = 260x900@1710,0 right=-370 pos=fixed z=auto vis=true
+  toolBar       = 602x49@248,0 right=750 pos=relative z=2 vis=true
+  extraBar      = 55x135@0,755 right=1545 pos=absolute z=1 vis=true
+  leftMenu      = 55x849@0,51 right=1545 pos=absolute z=110 vis=true
+  rectCanvas    = 732x445@527,253 right=342 pos=absolute z=auto vis=true
+  canvasBground = 732x445@527,253 right=342 pos=absolute z=auto vis=true
+  aiFangzhi     = 0x0@0,0 right=1600 pos=absolute z=100 vis=false
+  aiSheji       = 0x0@0,0 right=1600 pos=absolute z=100 vis=false
+  derived       = {"rightBarX":1410,"rightBarW":190,"gapLeftOfRightBar":1410,"bgMaterialX":1710}
+
+## viewport 1920  (1920x1080)
+  hasHScroll=false scrollW=1920 docW=1920
+  rightBar      = 190x1029@1730,51 right=0 pos=absolute z=20 vis=true
+  switchContent = 41x1029@1690,51 right=189 pos=absolute z=auto vis=true
+  btnSwitch     = 12x80@1718,526 right=190 pos=absolute z=auto vis=true
+  tabPageLayer  = 190x33@1730,51 right=0 pos=static z=auto vis=true
+  layerWrap     = 190x994@1730,86 right=0 pos=fixed z=auto vis=true
+  bgMaterial    = 260x1080@2030,0 right=-370 pos=fixed z=auto vis=true
+  toolBar       = 922x49@248,0 right=750 pos=relative z=2 vis=true
+  extraBar      = 55x135@0,935 right=1865 pos=absolute z=1 vis=true
+  leftMenu      = 55x1029@0,51 right=1865 pos=absolute z=110 vis=true
+  rectCanvas    = 956x581@575,275 right=390 pos=absolute z=auto vis=true
+  canvasBground = 956x581@575,275 right=390 pos=absolute z=auto vis=true
+  aiFangzhi     = 0x0@0,0 right=1920 pos=absolute z=100 vis=false
+  aiSheji       = 0x0@0,0 right=1920 pos=absolute z=100 vis=false
+  derived       = {"rightBarX":1730,"rightBarW":190,"gapLeftOfRightBar":1730,"bgMaterialX":2030}
+
+### RIGHT-RAIL ACROSS VIEWPORTS
+tag    vpW   rbX   rbW   rbRight  bgMatX  bgMatW  tabX  switchX  canvasW
+1366   1366  1176  190   0        1476    260     1176  1136     568    
+1440   1440  1250  190   0        1550    260     1250  1210     620    
+1600   1600  1410  190   0        1710    260     1410  1370     732    
+1920   1920  1730  190   0        2030    260     1730  1690     956    

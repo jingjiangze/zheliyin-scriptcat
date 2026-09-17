@@ -115,6 +115,7 @@ recognize(image, ctx) → { provider, providerType, candidates[], meta }
 |---|---|
 | 2026-09-16 | 初版：依赖清单（含实测耗时）、六维度登记、7 项风险、禁止提交语言数据、隐私底线、与契约的关系 |
 | 2026-09-17 | 新增 §7.3（`LOCAL_FIRST`/`REMOTE_FALLBACK` 结构可达性证明）、§7.4（`NATIVE_PANEL` 验证依据）；§7 五项审计项由 `TODO` 更新为实测结论（对象 `demo` @ `e0abcf0` v0.3.6.0） |
+| 2026-09-17 | **UI-1 审计修订**：`NATIVE_PANEL` 由 `PASS` 降级为 `PARTIAL`（结构达成 / 视觉未达成）；§7.4 补「视觉原生化」检查行与修订依据；详见 `docs/UI_NATIVE_AUDIT.md` |
 
 ---
 
@@ -128,7 +129,7 @@ AI-1 接下来进入「本地优先 + 百度兜底 + 网页原生面板 + 背景
 | `LOCAL_FIRST` | 默认 provider = local；且 **local 成功时不得发出任何远程请求**（这是隐私属性，不是性能优化） | ✅ **PASS**（结构验证，见 §7.3） |
 | `REMOTE_FALLBACK` | 仅当 local 失败才请求远程；且 **local 成功时远程请求数必须为 0** | ✅ **PASS**（结构验证，见 §7.3） |
 | `BACKGROUND_IMAGE` | 背景图场景下坐标映射仍正确（背景图为 canvas 最底层，其变换语义与普通 image 可能不同） | ⚠️ `PARTIAL`（`ocrPrepare` 已按 active→背景→首图 优先级取图 + 居中兜底；真实视觉位置比对仍 `TODO`） |
-| `NATIVE_PANEL` | 若最终仍以 `position: fixed` 浮窗作为**主 UI** → 标记为**未达成**设计要求 | ✅ **PASS**（主 UI 已改为 `.rightPageBar.rightBar` 邻接抽屉 + 右栏工具按钮；旧浮窗降为 fallback） |
+| `NATIVE_PANEL` | 若最终仍以 `position: fixed` 浮窗作为**主 UI** → 标记为**未达成**设计要求 | ⚠️ **`PARTIAL`**（结构达成 / 视觉未达成，见 §7.4 修订） |
 | `NO_SILENT_FAILURE` | 任何失败路径都必须有用户可见反馈；禁止静默返回空结果冒充成功 | ✅ **PASS**（`OCR_ERR` 四类中文提示 + PREPARING 状态机 + 120s 超时 + `notify-config` 分支；`799e96d` 修复了 P1 静默失败） |
 
 > **复核时间**：2026-09-17，对象 `demo` @ `e0abcf0`（v0.3.6.0）。方法：源码逐行阅读 + 调用点可达性分析（非黑盒跑测）。
@@ -158,14 +159,20 @@ AI-1 接下来进入「本地优先 + 百度兜底 + 网页原生面板 + 背景
 
 ### 7.4 `NATIVE_PANEL` 的验证依据
 
+> ⚠️ **2026-09-17 修订（UI-1 审计，见 `docs/UI_NATIVE_AUDIT.md`）**：本项由 `PASS` 降级为 **`PARTIAL`**。
+> 原判定只回答了"主 UI 是不是浮动卡片"，未回答 UI 专项的**视觉原生化**要求。复核结果：
+
 | 检查 | 结论 |
 |---|---|
-| 主 UI 是否 `position: fixed` 浮窗 | ✅ 否 —— 主 UI 为 `<aside id="zy-native-ocr-panel">`，邻接 `.rightPageBar.rightBar` |
-| 是否有右栏工具按钮入口 | ✅ 有（与原生工具栏同区） |
+| 主 UI 是否 `position: fixed` 浮窗 | ⚠️ **是 `fixed` 贴边**（同 `.bg-material` 体例），非浮动卡片。原文写"否"与源码不符 —— `#zy-native-ocr-panel` 的 CSS 明写 `position: fixed`（`demo` @`7c1df21` L273） |
+| 是否有右栏工具按钮入口 | ✅ 有（`#zy-native-ocr-tool-btn`，`rightBar.appendChild`）——**但视觉非原生**：`background:#2e7ff0; height:52px; font-size:18px; font-weight:700`，原生右栏无任何实色大按钮（原生 `li` 约 26–33px、`12px/400`） |
 | 旧浮窗去向 | 保留为 fallback（符合 §16 约定，非删除） |
 | 唯一性 | `renderNativeOcrDrawer` 先 `getElementById("zy-native-ocr-panel")`，存在即返回 → 不重复创建 |
 | SPA 重挂载 | `MutationObserver` 处理 late `rightBar` mount（`6517715` 修复「rail 后建则抽屉永不出现」） |
+| **视觉原生化**（UI 专项新增） | ❌ **未达成**：自成 `zy-*` 设计体系（蓝 `#1f6feb` 系 vs 原生 `#278fcf`/`#3b82f6`）、`z-index:2147483000`（原生最高 10000）、`radius 6px`（原生 3–8px）、`gap 3px`（不在原生 4/5/8/10/20 栅格）、未复用原生 `.design-ai-panel`/`.ai-*` 组件族 |
 
+> **判定**：结构要求（右栏入口 + 邻接抽屉 + 唯一性 + 重挂载）**达成**；**视觉原生化未达成**。
+> 因此 `NATIVE_PANEL = PARTIAL`，视觉部分交由 UI-2（入口/基础样式）与 UI-3（视觉融合）闭环。
 > 4 场景（refresh / route change / SPA navigation / script reinstall）的面板数恒为 1 —— AI-1 报告 P2-B 已验 `refresh-no-dup`；
 > route change / SPA navigation / reinstall 三场景仍建议补回归用例。
 

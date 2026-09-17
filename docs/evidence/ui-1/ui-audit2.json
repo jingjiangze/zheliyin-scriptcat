@@ -1,0 +1,3131 @@
+{
+  "designCssRules": [
+    "ocr.css?v=20260707017 :: width: 65px; height: 65px; border-radius: 50%; background: rgb(255, 255, 255); cursor: pointer; transition: 0.5s; position: relative;",
+    "ocr.css?v=20260707017 :: width: 26px; height: 26px; background: url(\"../imgs/ocrDesign/add.png\") no-repeat; content: \"\"; display: inline-block; position: absolute; left: 50%; top: 50%; margin-left: -13px; margin-top: -13px; transition: 0.5s;",
+    "ocr.css?v=20260707017 :: background: rgb(40, 124, 252);",
+    "ocr.css?v=20260707017 :: background: url(\"../imgs/ocrDesign/add-1.png\");",
+    "ocr.css?v=20260707017 :: width: 65px; height: 65px; border-radius: 50%; position: absolute; left: 0px; top: 0px; opacity: 0; font-size: 0px; cursor: pointer;",
+    "ocr.css?v=20260707017 :: color: rgb(133, 133, 133); margin-top: 20px; font-size: 14px;",
+    "ocr.css?v=20260707017 :: max-width: 100%; max-height: 100%;",
+    "ocr.css?v=20260707017 :: width: 530px; height: 470px; float: right; padding: 15px; border: 1px solid rgb(208, 208, 208); overflow-y: scroll;",
+    "ocr.css?v=20260707017 :: color: rgb(181, 181, 181); font-size: 14px;",
+    "ocr.css?v=20260707017 :: display: flex; justify-content: center; align-items: center; flex-direction: column; float: left; width: 100px; height: 470px;",
+    "ocr.css?v=20260707017 :: width: 80px; height: 30px; line-height: 30px; border-radius: 3px; text-align: center; color: rgb(255, 255, 255); margin: 10px 0px; transition: 0.3s;",
+    "ocr.css?v=20260707017 :: background: rgb(252, 110, 81);",
+    "ocr.css?v=20260707017 :: background: rgb(93, 156, 236);",
+    "ocr.css?v=20260707017 :: background: rgb(255, 255, 255); color: rgb(114, 114, 114); border: 1px solid rgb(224, 224, 224);",
+    "ocr.css?v=20260707017 :: background: rgb(243, 80, 47);",
+    "ocr.css?v=20260707017 :: background: rgb(58, 127, 216);",
+    "ocr.css?v=20260707017 :: color: rgb(51, 51, 51); border: 1px solid rgb(209, 209, 209);",
+    "ocr.css?v=20260707017 :: position: absolute; left: 0px; width: 65px; height: 65px;",
+    "design-ai.css?v=20260707017 :: position: relative; overflow: visible; border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: rgba(74, 110, 255, 0.28) 0px 10px 24px, rgba(255, 255, 255, 0.24) 0px 1px 0px inset;",
+    "design-ai.css?v=20260707017 :: content: \"\"; position: absolute; inset: 0px; background: linear-gradient(145deg, rgba(255, 255, 255, 0.18) 0px, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.12) 100%); pointer-events: none;",
+    "design-ai.css?v=20260707017 :: position: relative; z-index: 1; color: rgb(255, 255, 255);",
+    "design-ai.css?v=20260707017 :: text-shadow: rgba(22, 32, 72, 0.28) 0px 2px 8px;",
+    "design-ai.css?v=20260707017 :: text-shadow: rgba(22, 32, 72, 0.3) 0px 4px 12px;",
+    "design-ai.css?v=20260707017 :: position: absolute; top: -6px; right: -6px; z-index: 2; display: inline-block; min-width: 28px; height: 16px; line-height: 16px; padding: 0px 6px; border-radius: 10px; background: linear-gradient(135deg, rgb(255, 247, 178) 0px, rgb(255, 159, 90) 100%); color: rgb(122, 47, 0); font-size: 10px; font-w",
+    "design-ai.css?v=20260707017 :: background: linear-gradient(135deg, rgb(111, 69, 255) 0px, rgb(47, 123, 255) 52%, rgb(46, 230, 214) 100%); box-shadow: rgba(74, 110, 255, 0.28) 0px 10px 24px, rgba(255, 255, 255, 0.24) 0px 1px 0px inset;",
+    "design-ai.css?v=20260707017 :: background: linear-gradient(135deg, rgb(255, 79, 216) 0px, rgb(122, 92, 255) 48%, rgb(0, 212, 255) 100%); box-shadow: rgba(122, 92, 255, 0.26) 0px 10px 24px, rgba(255, 255, 255, 0.24) 0px 1px 0px inset;",
+    "design-ai.css?v=20260707017 :: text-shadow: rgba(40, 20, 80, 0.28) 0px 2px 8px;",
+    "design-ai.css?v=20260707017 :: text-shadow: rgba(40, 20, 80, 0.3) 0px 4px 12px;",
+    "design-ai.css?v=20260707017 :: background: rgb(253, 253, 253); border-radius: 8px; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;",
+    "design-ai.css?v=20260707017 :: display: flex; justify-content: center; align-items: center; padding: 10px 20px; border-bottom: 1px solid rgb(234, 234, 234); background: rgb(255, 255, 255);",
+    "design-ai.css?v=20260707017 :: font-size: 16px; font-weight: bold; display: flex; align-items: center; gap: 6px;",
+    "design-ai.css?v=20260707017 :: font-size: 18px; background: linear-gradient(135deg, rgb(122, 92, 255) 0px, rgb(0, 210, 255) 100%) text; -webkit-text-fill-color: transparent; filter: drop-shadow(rgba(122, 92, 255, 0.3) 0px 2px 4px);",
+    "design-ai.css?v=20260707017 :: background: linear-gradient(135deg, rgb(122, 92, 255) 0px, rgb(59, 130, 246) 100%) text; -webkit-text-fill-color: transparent; font-weight: 800; letter-spacing: 0.5px;",
+    "design-ai.css?v=20260707017 :: font-size: 18px; background: linear-gradient(135deg, rgb(59, 130, 246) 0px, rgb(0, 210, 255) 100%) text; -webkit-text-fill-color: transparent; filter: drop-shadow(rgba(59, 130, 246, 0.3) 0px 2px 4px);",
+    "design-ai.css?v=20260707017 :: background: linear-gradient(135deg, rgb(59, 130, 246) 0px, rgb(122, 92, 255) 100%) text; -webkit-text-fill-color: transparent; font-weight: 800; letter-spacing: 0.5px;",
+    "design-ai.css?v=20260707017 :: color: rgb(204, 204, 204); font-size: 14px; cursor: pointer;",
+    "design-ai.css?v=20260707017 :: color: rgb(153, 153, 153);",
+    "design-ai.css?v=20260707017 :: padding: 10px 15px 10px 5px; flex-shrink: 1; flex-basis: 0%; overflow-y: auto; flex-grow: 1 !important;",
+    "design-ai.css?v=20260707017 :: border: 1px dashed rgb(193, 193, 193); border-radius: 8px; background: rgb(255, 255, 255); text-align: center; padding: 30px 10px; cursor: pointer; position: relative; transition: 0.3s; margin-bottom: 24px;",
+    "design-ai.css?v=20260707017 :: border-color: rgb(122, 92, 255); background: rgb(247, 245, 255);",
+    "design-ai.css?v=20260707017 :: font-size: 32px; color: rgb(181, 165, 255); margin-bottom: 12px; display: block;",
+    "design-ai.css?v=20260707017 :: color: rgb(122, 92, 255);",
+    "design-ai.css?v=20260707017 :: font-size: 14px; color: rgb(51, 51, 51); margin-bottom: 6px; font-weight: 500;",
+    "design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(153, 153, 153);",
+    "design-ai.css?v=20260707017 :: max-width: 100%; max-height: 180px; border-radius: 6px;",
+    "design-ai.css?v=20260707017 :: position: absolute; top: -10px; right: -10px; background: rgb(85, 85, 85); border-radius: 50%; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px; width: 26px; height: 26px; line-height: 26px; text-align: center; color: rgb(255, 255, 255); z-index: 2; transition: 0.2s;",
+    "design-ai.css?v=20260707017 :: background: rgb(255, 77, 79); transform: scale(1.1);",
+    "design-ai.css?v=20260707017 :: font-size: 12px;",
+    "design-ai.css?v=20260707017 :: position: absolute; inset: 0px; background: rgba(255, 255, 255, 0.9); display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px;",
+    "design-ai.css?v=20260707017 :: width: 36px; margin-bottom: 10px;",
+    "design-ai.css?v=20260707017 :: font-size: 13px; color: rgb(102, 102, 102);",
+    "design-ai.css?v=20260707017 :: height: 1px; background: rgb(234, 234, 234); margin: 10px 0px;",
+    "design-ai.css?v=20260707017 :: margin-bottom: 24px;",
+    "design-ai.css?v=20260707017 :: margin-bottom: 0px;",
+    "design-ai.css?v=20260707017 :: display: flex; justify-content: space-between; align-items: center; margin-bottom: 0px;",
+    "design-ai.css?v=20260707017 :: display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: rgb(240, 236, 255); color: rgb(122, 92, 255); border-radius: 4px; margin-right: 8px;",
+    "design-ai.css?v=20260707017 :: font-size: 14px;",
+    "design-ai.css?v=20260707017 :: font-size: 11px; color: rgb(153, 153, 153); background: rgb(245, 245, 245); padding: 2px 8px; border-radius: 12px; margin-left: 8px; font-weight: normal;",
+    "design-ai.css?v=20260707017 :: font-size: 14px; color: rgb(51, 51, 51); font-weight: 500; margin-bottom: 6px; display: flex; align-items: center;",
+    "design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(153, 153, 153);",
+    "design-ai.css?v=20260707017 :: position: relative; display: inline-block; width: 40px; height: 22px;",
+    "design-ai.css?v=20260707017 :: opacity: 0; width: 0px; height: 0px;",
+    "design-ai.css?v=20260707017 :: position: absolute; cursor: pointer; inset: 0px; background-color: rgb(204, 204, 204); transition: 0.4s; border-radius: 22px;",
+    "design-ai.css?v=20260707017 :: position: absolute; content: \"\"; height: 18px; width: 18px; left: 2px; bottom: 2px; background-color: white; transition: 0.4s; border-radius: 50%;",
+    "design-ai.css?v=20260707017 :: background-color: rgb(122, 92, 255);",
+    "design-ai.css?v=20260707017 :: transform: translateX(18px);",
+    "design-ai.css?v=20260707017 :: display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;",
+    "design-ai.css?v=20260707017 :: display: flex; gap: 12px;",
+    "design-ai.css?v=20260707017 :: flex: 1 1 0%; border: 1px solid rgb(234, 234, 234); border-radius: 6px; padding: 10px 0px; text-align: center; cursor: pointer; transition: 0.3s; background: rgb(255, 255, 255); position: relative; display: flex; align-items: center; justify-content: center;",
+    "design-ai.css?v=20260707017 :: border-color: rgb(122, 92, 255);",
+    "design-ai.css?v=20260707017 :: border-color: rgb(122, 92, 255); color: rgb(122, 92, 255);",
+    "design-ai.css?v=20260707017 :: font-size: 13px; color: rgb(51, 51, 51); font-weight: 500;",
+    "design-ai.css?v=20260707017 :: color: rgb(122, 92, 255);",
+    "design-ai.css?v=20260707017 :: position: absolute; top: -8px; right: 10px; background: linear-gradient(135deg, rgb(255, 159, 67) 0px, rgb(255, 123, 0) 100%); color: rgb(255, 255, 255); font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; line-height: 14px; box-shadow: rgba(255, 123, 0, 0.3) 0px 2px 4px;",
+    "design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(122, 92, 255); text-decoration: none;",
+    "design-ai.css?v=20260707017 :: text-decoration: underline;",
+    "design-ai.css?v=20260707017 :: position: relative;",
+    "design-ai.css?v=20260707017 :: width: 100%; height: 120px; border: 1px solid rgb(234, 234, 234); border-radius: 8px; padding: 12px 12px 28px; font-size: 13px; color: rgb(102, 102, 102); line-height: 1.6; resize: none; box-sizing: border-box; background: rgb(255, 255, 255); transition: border-color 0.3s;",
+    "design-ai.css?v=20260707017 :: outline: 0px; border-color: rgb(122, 92, 255);",
+    "design-ai.css?v=20260707017 :: position: absolute; bottom: 10px; right: 12px; font-size: 12px; color: rgb(204, 204, 204);",
+    "design-ai.css?v=20260707017 :: margin-top: 30px; text-align: center;",
+    "design-ai.css?v=20260707017 :: display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, rgb(139, 106, 255) 0px, rgb(99, 64, 255) 100%); font-size: 15px; font-weight: bold; height: 44px; border-radius: 22px; text-decoration: none; transition: 0.3s; box-shadow: rgba(122, 92, 255, 0.25) 0px 6p",
+    "design-ai.css?v=20260707017 :: box-shadow: rgba(122, 92, 255, 0.35) 0px 8px 20px; transform: translateY(-2px); color: rgb(255, 255, 255) !important;",
+    "design-ai.css?v=20260707017 :: background: rgb(224, 224, 224); box-shadow: none; cursor: not-allowed; pointer-events: none; color: rgb(153, 153, 153) !important;",
+    "design-ai.css?v=20260707017 :: display: flex; align-items: center; gap: 8px;",
+    "design-ai.css?v=20260707017 :: height: 18px;",
+    "design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(153, 153, 153); margin-top: 12px;",
+    "design-ai.css?v=20260707017 :: display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding: 0px 10px;",
+    "design-ai.css?v=20260707017 :: display: flex; align-items: center; gap: 6px; color: rgb(153, 153, 153);",
+    "design-ai.css?v=20260707017 :: color: rgb(59, 130, 246);",
+    "design-ai.css?v=20260707017 :: color: rgb(51, 51, 51);",
+    "design-ai.css?v=20260707017 :: display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: rgb(234, 234, 234); color: rgb(153, 153, 153); font-size: 12px; font-weight: bold;",
+    "design-ai.css?v=20260707017 :: background: rgb(59, 130, 246); color: rgb(255, 255, 255);",
+    "design-ai.css?v=20260707017 :: background: rgb(16, 185, 129); color: rgb(255, 255, 255);",
+    "design-ai.css?v=20260707017 :: font-size: 13px; font-weight: 500;",
+    "design-ai.css?v=20260707017 :: flex: 1 1 0%; height: 1px; background: rgb(234, 234, 234); margin: 0px 12px;",
+    "design-ai.css?v=20260707017 :: background: rgb(59, 130, 246); box-shadow: rgba(59, 130, 246, 0.3) 0px 4px 12px; color: rgb(255, 255, 255) !important;",
+    "design-ai.css?v=20260707017 :: background: rgb(37, 99, 235); box-shadow: rgba(59, 130, 246, 0.4) 0px 6px 16px;",
+    "design-ai.css?v=20260707017 :: display: flex; align-items: center; justify-content: center; gap: 6px; height: 44px; border-radius: 22px; border: 1px solid rgb(234, 234, 234); background: rgb(255, 255, 255); color: rgb(51, 51, 51); font-size: 14px; padding: 0px 24px; transition: 0.3s; text-decoration: none; cursor: pointer;",
+    "design-ai.css?v=20260707017 :: border-color: rgb(59, 130, 246); color: rgb(59, 130, 246); background: rgb(248, 250, 252);",
+    "design-ai.css?v=20260707017 :: color: rgb(239, 68, 68); margin-left: 4px;",
+    "design-ai.css?v=20260707017 :: border: 1px dashed rgb(193, 193, 193); border-radius: 8px; background: rgb(250, 250, 250); padding: 10px; min-height: 100px;",
+    "design-ai.css?v=20260707017 :: display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px;",
+    "design-ai.css?v=20260707017 :: position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 6px; overflow: hidden; background: rgb(255, 255, 255); box-shadow: rgba(0, 0, 0, 0.05) 0px 2px 8px; cursor: move;",
+    "design-ai.css?v=20260707017 :: width: 100%; height: 100%; object-fit: cover;",
+    "design-ai.css?v=20260707017 :: position: absolute; bottom: 4px; left: 4px; width: 18px; height: 18px; background: rgb(59, 130, 246); color: rgb(255, 255, 255); border-radius: 4px; font-size: 11px; display: flex; align-items: center; justify-content: center; font-weight: bold;",
+    "design-ai.css?v=20260707017 :: position: absolute; top: 4px; right: 4px; width: 18px; height: 18px; background: rgba(0, 0, 0, 0.5); color: rgb(255, 255, 255); border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;",
+    "design-ai.css?v=20260707017 :: background: rgb(239, 68, 68);",
+    "design-ai.css?v=20260707017 :: width: 100%; aspect-ratio: 1 / 1; border: 1px dashed rgb(204, 204, 204); border-radius: 6px; background: rgb(255, 255, 255); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; color: rgb(153, 153, 153);",
+    "design-ai.css?v=20260707017 :: border-color: rgb(59, 130, 246); color: rgb(59, 130, 246); background: rgb(239, 246, 255);",
+    "design-ai.css?v=20260707017 :: font-size: 14px; margin-bottom: 6px; color: rgb(153, 153, 153);",
+    "design-ai.css?v=20260707017 :: font-size: 12px;",
+    "design-ai.css?v=20260707017 :: font-size: 11px; color: rgb(153, 153, 153); text-align: center;",
+    "design-ai.css?v=20260707017 :: position: relative;",
+    "design-ai.css?v=20260707017 :: height: 140px; padding-bottom: 36px;",
+    "design-ai.css?v=20260707017 :: color: rgb(193, 193, 193);",
+    "design-ai.css?v=20260707017 :: position: absolute; bottom: 12px; right: 12px; font-size: 20px; color: rgb(153, 153, 153); cursor: pointer; transition: 0.3s;",
+    "design-ai.css?v=20260707017 :: color: rgb(59, 130, 246);",
+    "design-ai.css?v=20260707017 :: font-size: 13px; color: rgb(51, 51, 51); font-weight: 500; margin-bottom: 8px;",
+    "design-ai.css?v=20260707017 :: display: flex; flex-wrap: wrap; gap: 8px;",
+    "design-ai.css?v=20260707017 :: padding: 6px 12px; border: 1px solid rgb(234, 234, 234); border-radius: 4px; font-size: 13px; color: rgb(102, 102, 102); cursor: pointer; transition: 0.3s; background: rgb(255, 255, 255);",
+    "design-ai.css?v=20260707017 :: border-color: rgb(59, 130, 246);",
+    "design-ai.css?v=20260707017 :: border-color: rgb(59, 130, 246); color: rgb(59, 130, 246);",
+    "design-ai.css?v=20260707017 :: display: flex; align-items: center; padding: 12px; border: 1px solid rgb(234, 234, 234); border-radius: 8px; background: rgb(255, 255, 255); margin-bottom: 24px;",
+    "design-ai.css?v=20260707017 :: display: flex; gap: 4px; margin-right: 12px;",
+    "design-ai.css?v=20260707017 :: width: 36px; height: 36px; border-radius: 4px; object-fit: cover;",
+    "design-ai.css?v=20260707017 :: flex: 1 1 0%; font-size: 13px; color: rgb(51, 51, 51);",
+    "design-ai.css?v=20260707017 :: font-size: 13px; color: rgb(59, 130, 246); text-decoration: none; display: flex; align-items: center; gap: 4px;",
+    "design-ai.css?v=20260707017 :: text-decoration: underline;",
+    "design-ai.css?v=20260707017 :: border: 1px solid rgb(234, 234, 234); border-radius: 8px; background: rgb(250, 250, 250); overflow: hidden;",
+    "design-ai.css?v=20260707017 :: display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid rgb(234, 234, 234); background: rgb(255, 255, 255);",
+    "design-ai.css?v=20260707017 :: font-size: 13px; font-weight: bold; color: rgb(51, 51, 51); display: flex; align-items: center; gap: 6px;",
+    "design-ai.css?v=20260707017 :: background: rgb(99, 102, 241); color: rgb(255, 255, 255); font-size: 10px; padding: 2px 6px; border-radius: 4px;",
+    "design-ai.css?v=20260707017 :: display: flex; gap: 12px;",
+    "design-ai.css?v=20260707017 :: font-size: 12px; color: rgb(59, 130, 246); text-decoration: none; display: flex; align-items: center; gap: 4px;",
+    "design-ai.css?v=20260707017 :: text-decoration: underline;",
+    "design-ai.css?v=20260707017 :: width: 100%; height: 200px; border: 0px; padding: 16px; font-size: 13px; line-height: 1.6; color: rgb(51, 51, 51); background: rgb(250, 250, 250); resize: vertical; box-sizing: border-box;",
+    "design-ai.css?v=20260707017 :: outline: 0px; background: rgb(255, 255, 255);",
+    "design-ai.css?v=20260707017 :: display: flex; gap: 12px; margin-top: 30px;",
+    "design-ai.css?v=20260707017 :: flex: 1 1 0%;",
+    "design-ai.css?v=20260707017 :: text-align: center;",
+    "design-ai.css?v=20260707017 :: margin-top: 30px; border-top: 1px dashed rgb(234, 234, 234); padding-top: 24px;",
+    "design-ai.css?v=20260707017 :: font-size: 15px; color: rgb(51, 51, 51); font-weight: bold; margin-bottom: 16px;",
+    "design-ai.css?v=20260707017 :: position: relative; border-radius: 8px; overflow: hidden; border: 1px solid rgb(234, 234, 234); background: rgb(250, 250, 250); text-align: center;",
+    "design-ai.css?v=20260707017 :: max-width: 100%; max-height: 220px; display: block; margin: 0px auto;",
+    "design-ai.css?v=20260707017 :: position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; line-height: 32px; text-align: center; background: rgba(255, 255, 255, 0.95); color: rgb(51, 51, 51); border-radius: 50%; box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px; transition: 0.3s;",
+    "design-ai.css?v=20260707017 :: font-size: 16px;",
+    "design-ai.css?v=20260707017 :: background: rgb(122, 92, 255); color: rgb(255, 255, 255);",
+    "design-ai.css?v=20260707017 :: display: flex; justify-content: space-between; gap: 12px; margin-top: 16px;",
+    "design-ai.css?v=20260707017 :: flex: 1 1 0%; height: 40px; border-radius: 20px; margin: 0px;",
+    "design-ai.css?v=20260707017 :: flex: 1 1 0%; display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 20px; background: rgb(59, 130, 246); font-size: 14px; text-decoration: none; transition: 0.3s; box-shadow: rgba(59, 130, 246, 0.3) 0px 4px 12px; color: rgb(255, 255, 255) !important;",
+    "design-ai.css?v=20260707017 :: background: rgb(37, 99, 235); box-shadow: rgba(59, 130, 246, 0.4) 0px 6px 16px;"
+  ],
+  "aiPanels": [
+    {
+      "tag": "div",
+      "id": "ai-fangzhiCont",
+      "cls": "subItem design-ai-panel",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "flex",
+      "position": "absolute",
+      "zIndex": "100",
+      "width": "310px",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgb(253, 253, 253)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "8px",
+      "padding": "0px 0px 0px 10px",
+      "margin": "0px",
+      "boxShadow": "rgba(0, 0, 0, 0.1) 0px 4px 20px 0px",
+      "transition": "0.3s",
+      "text": "返回 AI 仿制展开图 点击选中此区域后，按 Ctrl+V 粘贴上传 支持 JPG / PNG，建议",
+      "sub": [
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "ai-panel-header",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "lineHeight": "16.8px",
+          "color": "rgb(66, 66, 66)",
+          "background": "rgb(255, 255, 255)",
+          "border": "",
+          "borderRadius": "0px",
+          "padding": "10px 20px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "all",
+          "text": "AI 仿制展开图"
+        },
+        {
+          "tag": "span",
+          "id": null,
+          "cls": "ai-panel-title",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "16px",
+          "fontWeight": "700",
+          "lineHeight": "22.4px",
+          "color": "rgb(66, 66, 66)",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px none rgb(66, 66, 66)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "all",
+          "text": "AI 仿制展开图"
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "ai-panel-body",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "block",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "lineHeight": "16.8px",
+          "color": "rgb(66, 66, 66)",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px none rgb(66, 66, 66)",
+          "borderRadius": "0px",
+          "padding": "10px 15px 10px 5px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "all",
+          "text": "点击选中此区域后，按 Ctrl+V 粘贴上传 支持 JPG / PNG，建议大小 ≤ 10MB 正在"
+        }
+      ],
+      "buttons": [
+        {
+          "tag": "a",
+          "id": "aiFangzhiGenerateBtn",
+          "cls": "ai-generate-btn disabled",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "15px",
+          "fontWeight": "700",
+          "lineHeight": "21px",
+          "color": "rgb(153, 153, 153)",
+          "background": "rgb(224, 224, 224)",
+          "border": "0px none rgb(153, 153, 153)",
+          "borderRadius": "22px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "0.3s",
+          "text": "一键生成展开图"
+        },
+        {
+          "tag": "span",
+          "id": null,
+          "cls": "btn-text",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "15px",
+          "fontWeight": "700",
+          "lineHeight": "21px",
+          "color": "rgb(153, 153, 153)",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px none rgb(153, 153, 153)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "all",
+          "text": "一键生成展开图"
+        },
+        {
+          "tag": "a",
+          "id": "aiFangzhiResultUseBtn",
+          "cls": "ai-result-use-btn",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "100%",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "14px",
+          "fontWeight": "400",
+          "lineHeight": "19.6px",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(59, 130, 246)",
+          "border": "0px none rgb(255, 255, 255)",
+          "borderRadius": "20px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": "rgba(59, 130, 246, 0.3) 0px 4px 12px 0px",
+          "transition": "0.3s",
+          "text": "应用到画布"
+        }
+      ]
+    },
+    {
+      "tag": "div",
+      "id": "ai-shejiCont",
+      "cls": "subItem design-ai-panel",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "flex",
+      "position": "absolute",
+      "zIndex": "100",
+      "width": "310px",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgb(253, 253, 253)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "8px",
+      "padding": "0px 0px 0px 10px",
+      "margin": "0px",
+      "boxShadow": "rgba(0, 0, 0, 0.1) 0px 4px 20px 0px",
+      "transition": "0.3s",
+      "text": "返回 AI 设计 参考素材 * 已上传 0/9 张 Ctrl+V 粘贴 点击选中此区域后，按 Ctr",
+      "sub": [
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "ai-panel-header",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "lineHeight": "16.8px",
+          "color": "rgb(66, 66, 66)",
+          "background": "rgb(255, 255, 255)",
+          "border": "",
+          "borderRadius": "0px",
+          "padding": "10px 20px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "all",
+          "text": "AI 设计"
+        },
+        {
+          "tag": "span",
+          "id": null,
+          "cls": "ai-panel-title",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "16px",
+          "fontWeight": "700",
+          "lineHeight": "22.4px",
+          "color": "rgb(66, 66, 66)",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px none rgb(66, 66, 66)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "all",
+          "text": "AI 设计"
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "ai-panel-body",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "block",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "lineHeight": "16.8px",
+          "color": "rgb(66, 66, 66)",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px none rgb(66, 66, 66)",
+          "borderRadius": "0px",
+          "padding": "10px 15px 10px 5px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "all",
+          "text": "参考素材 * 已上传 0/9 张 Ctrl+V 粘贴 点击选中此区域后，按 Ctrl+V 粘贴图片，"
+        }
+      ],
+      "buttons": [
+        {
+          "tag": "div",
+          "id": "aiShejiUploadBtn",
+          "cls": "ai-multi-upload-btn",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "100%",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "12px",
+          "fontWeight": "400",
+          "lineHeight": "16.8px",
+          "color": "rgb(153, 153, 153)",
+          "background": "rgb(255, 255, 255)",
+          "border": "1px dashed rgb(204, 204, 204)",
+          "borderRadius": "6px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "0.3s",
+          "text": "Ctrl+V 粘贴"
+        },
+        {
+          "tag": "a",
+          "id": "aiShejiGenPromptBtn",
+          "cls": "ai-generate-btn ai-btn-blue disabled",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "15px",
+          "fontWeight": "700",
+          "lineHeight": "21px",
+          "color": "rgb(153, 153, 153)",
+          "background": "rgb(224, 224, 224)",
+          "border": "0px none rgb(153, 153, 153)",
+          "borderRadius": "22px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "0.3s",
+          "text": "AI 智能生成提示词"
+        },
+        {
+          "tag": "span",
+          "id": null,
+          "cls": "btn-text",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "15px",
+          "fontWeight": "700",
+          "lineHeight": "21px",
+          "color": "rgb(153, 153, 153)",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px none rgb(153, 153, 153)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "all",
+          "text": "AI 智能生成提示词"
+        },
+        {
+          "tag": "a",
+          "id": "aiShejiPrevStepBtn",
+          "cls": "ai-btn-outline",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "14px",
+          "fontWeight": "400",
+          "lineHeight": "19.6px",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255, 255, 255)",
+          "border": "1px solid rgb(234, 234, 234)",
+          "borderRadius": "22px",
+          "padding": "0px 24px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "0.3s",
+          "text": "上一步"
+        },
+        {
+          "tag": "a",
+          "id": "aiShejiGenDesignBtn",
+          "cls": "ai-generate-btn ai-btn-blue flex-1",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "15px",
+          "fontWeight": "700",
+          "lineHeight": "21px",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(59, 130, 246)",
+          "border": "0px none rgb(255, 255, 255)",
+          "borderRadius": "22px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": "rgba(59, 130, 246, 0.3) 0px 4px 12px 0px",
+          "transition": "0.3s",
+          "text": "生成设计稿"
+        },
+        {
+          "tag": "span",
+          "id": null,
+          "cls": "btn-text",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "15px",
+          "fontWeight": "700",
+          "lineHeight": "21px",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgba(0, 0, 0, 0)",
+          "border": "0px none rgb(255, 255, 255)",
+          "borderRadius": "0px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "all",
+          "text": "生成设计稿"
+        },
+        {
+          "tag": "a",
+          "id": "aiShejiBackToStep2",
+          "cls": "ai-btn-outline",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "14px",
+          "fontWeight": "400",
+          "lineHeight": "19.6px",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255, 255, 255)",
+          "border": "1px solid rgb(234, 234, 234)",
+          "borderRadius": "20px",
+          "padding": "0px 24px",
+          "margin": "0px",
+          "boxShadow": null,
+          "transition": "0.3s",
+          "text": "重新生成"
+        },
+        {
+          "tag": "a",
+          "id": "aiShejiResultUseBtn",
+          "cls": "ai-result-use-btn",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "display": "flex",
+          "position": "static",
+          "zIndex": "auto",
+          "width": "auto",
+          "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+          "fontSize": "14px",
+          "fontWeight": "400",
+          "lineHeight": "19.6px",
+          "color": "rgb(255, 255, 255)",
+          "background": "rgb(59, 130, 246)",
+          "border": "0px none rgb(255, 255, 255)",
+          "borderRadius": "20px",
+          "padding": "0px",
+          "margin": "0px",
+          "boxShadow": "rgba(59, 130, 246, 0.3) 0px 4px 12px 0px",
+          "transition": "0.3s",
+          "text": "应用到画布"
+        }
+      ]
+    }
+  ],
+  "aiPanelsVisible": [],
+  "ocrNodes": [
+    {
+      "tag": "dd",
+      "id": null,
+      "cls": "clk-ocr",
+      "rect": {
+        "x": 65,
+        "y": 690,
+        "w": 260,
+        "h": 28
+      },
+      "display": "block",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "260px",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "13px",
+      "fontWeight": "400",
+      "lineHeight": "28px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px 0px 10px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "OCR识别alt+q"
+    },
+    {
+      "tag": "span",
+      "id": "logincallOcrCount",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "block",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px 0px 0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "0/100"
+    },
+    {
+      "tag": "i",
+      "id": null,
+      "cls": "diyicon icon-ocr ai-ocr-icon",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "block",
+      "position": "absolute",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "diyicon",
+      "fontSize": "20px",
+      "fontWeight": "400",
+      "lineHeight": "28px",
+      "color": "rgb(153, 153, 153)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(153, 153, 153)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "0.3s",
+      "text": null
+    },
+    {
+      "tag": "div",
+      "id": "ocrTableCont",
+      "cls": "subItem",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "flex",
+      "position": "absolute",
+      "zIndex": "100",
+      "width": "310px",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgb(255, 255, 255)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 0px 0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "0.3s",
+      "text": "返回 上传表格图片"
+    },
+    {
+      "tag": "a",
+      "id": "ocrLianDan",
+      "cls": "btn-liandan pc",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "block",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "289.6px",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "30px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(38, 155, 254)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "4px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "上传表格图片"
+    },
+    {
+      "tag": "div",
+      "id": null,
+      "cls": "refOcrcrop1",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "取消 确定"
+    },
+    {
+      "tag": "img",
+      "id": "refOcrcrop1Img",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "inline",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": null
+    },
+    {
+      "tag": "div",
+      "id": null,
+      "cls": "refOcrcrop2",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "取消 确定"
+    },
+    {
+      "tag": "img",
+      "id": "refOcrcrop2Img",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "inline",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": null
+    },
+    {
+      "tag": "div",
+      "id": null,
+      "cls": "ocrcrop",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "取消 确定"
+    },
+    {
+      "tag": "input",
+      "id": "ocrBgColor",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "13.3333px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "1px solid rgb(162, 162, 162)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": null
+    },
+    {
+      "tag": "input",
+      "id": "ocrUid",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "13.3333px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "1px solid rgb(162, 162, 162)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": null
+    },
+    {
+      "tag": "input",
+      "id": "ocrDesign",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "13.3333px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "1px solid rgb(162, 162, 162)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": null
+    }
+  ],
+  "ocrLianDan": [
+    {
+      "tag": "span",
+      "id": "logincallOcrCount",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "block",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px 0px 0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "0/100"
+    },
+    {
+      "tag": "div",
+      "id": "ocrTableCont",
+      "cls": "subItem",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "flex",
+      "position": "absolute",
+      "zIndex": "100",
+      "width": "310px",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgb(255, 255, 255)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 0px 0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "0.3s",
+      "text": "返回 上传表格图片"
+    },
+    {
+      "tag": "a",
+      "id": "ocrLianDan",
+      "cls": "btn-liandan pc",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "block",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "289.6px",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "30px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(38, 155, 254)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "4px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "上传表格图片"
+    },
+    {
+      "tag": "input",
+      "id": "ocrBgColor",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "13.3333px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "1px solid rgb(162, 162, 162)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": null
+    },
+    {
+      "tag": "input",
+      "id": "ocrUid",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "13.3333px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "1px solid rgb(162, 162, 162)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": null
+    },
+    {
+      "tag": "input",
+      "id": "ocrDesign",
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "13.3333px",
+      "fontWeight": "400",
+      "lineHeight": "normal",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "1px solid rgb(162, 162, 162)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": null
+    }
+  ],
+  "ocrEntryCandidates": [
+    {
+      "tag": "li",
+      "id": "textDisNav",
+      "cls": "recognitionColor",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "list-item",
+      "position": "relative",
+      "zIndex": "auto",
+      "width": "82px",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "16.8px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(255, 116, 116)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "4px",
+      "padding": "8px 0px 0px",
+      "margin": "0px 7px 10px",
+      "boxShadow": null,
+      "transition": "0.3s",
+      "text": "文字识别",
+      "html": "<li class=\"recognitionColor\" id=\"textDisNav\">\n                        <span>文字识别</span>\n                        <i class=\"icon-discern\"></i>\n                    </li>",
+      "parent": {
+        "tag": "ul",
+        "id": null,
+        "cls": "materialType clearfix holdAllItemUl official-material",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "display": "block",
+        "position": "static",
+        "zIndex": "auto",
+        "width": "290px",
+        "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "16.8px",
+        "color": "rgb(66, 66, 66)",
+        "background": "rgba(0, 0, 0, 0)",
+        "border": "0px none rgb(66, 66, 66)",
+        "borderRadius": "0px",
+        "padding": "20px 0px 0px",
+        "margin": "0px",
+        "boxShadow": null,
+        "transition": "all",
+        "text": "文字识别 中英互译 汉语转拼音 创建表格 色值检查 后道设置 信息录入 表格识别"
+      }
+    },
+    {
+      "tag": "span",
+      "id": null,
+      "cls": null,
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "block",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "lineHeight": "19.6px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "文字识别",
+      "html": "<span>文字识别</span>",
+      "parent": {
+        "tag": "li",
+        "id": "textDisNav",
+        "cls": "recognitionColor",
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "w": 0,
+          "h": 0
+        },
+        "display": "list-item",
+        "position": "relative",
+        "zIndex": "auto",
+        "width": "82px",
+        "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "16.8px",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(255, 116, 116)",
+        "border": "0px none rgb(255, 255, 255)",
+        "borderRadius": "4px",
+        "padding": "8px 0px 0px",
+        "margin": "0px 7px 10px",
+        "boxShadow": null,
+        "transition": "0.3s",
+        "text": "文字识别"
+      }
+    }
+  ],
+  "toolBar": {
+    "tag": "section",
+    "id": null,
+    "cls": "toolBar",
+    "rect": {
+      "x": 248,
+      "y": 0,
+      "w": 442,
+      "h": 49
+    },
+    "display": "block",
+    "position": "relative",
+    "zIndex": "2",
+    "width": "442.062px",
+    "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+    "fontSize": "12px",
+    "fontWeight": "400",
+    "lineHeight": "49px",
+    "color": "rgb(66, 66, 66)",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "0px none rgb(66, 66, 66)",
+    "borderRadius": "0px",
+    "padding": "0px",
+    "margin": "0px",
+    "boxShadow": null,
+    "transition": "all",
+    "text": "背景色 重置 清空画布 自由绘制 连续绘制(按shift提示角度) 颜色 汉仪行楷简 对齐 间距 对"
+  },
+  "editBar": {
+    "tag": "div",
+    "id": null,
+    "cls": "editBar",
+    "rect": {
+      "x": 0,
+      "y": 50,
+      "w": 1440,
+      "h": 0
+    },
+    "display": "flex",
+    "position": "fixed",
+    "zIndex": "20",
+    "width": "1440px",
+    "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+    "fontSize": "12px",
+    "fontWeight": "400",
+    "lineHeight": "49px",
+    "color": "rgb(66, 66, 66)",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "0px none rgb(66, 66, 66)",
+    "borderRadius": "0px",
+    "padding": "0px",
+    "margin": "0px",
+    "boxShadow": null,
+    "transition": "all",
+    "text": "颜色 汉仪行楷简 对齐 间距 对齐 环绕 背景填充 字效 描边 艺术字 列表 大小写 描边 智能抠图"
+  },
+  "editBarR": {
+    "tag": "menu",
+    "id": null,
+    "cls": "generalTool editBarR r",
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "w": 0,
+      "h": 0
+    },
+    "display": "none",
+    "position": "static",
+    "zIndex": "auto",
+    "width": "auto",
+    "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+    "fontSize": "14px",
+    "fontWeight": "400",
+    "lineHeight": "19.6px",
+    "color": "rgb(66, 66, 66)",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "",
+    "borderRadius": "0px",
+    "padding": "0px",
+    "margin": "0px",
+    "boxShadow": null,
+    "transition": "all",
+    "text": null
+  },
+  "extraBar": {
+    "tag": "menu",
+    "id": null,
+    "cls": "extraBar",
+    "rect": {
+      "x": 0,
+      "y": 755,
+      "w": 55,
+      "h": 135
+    },
+    "display": "block",
+    "position": "absolute",
+    "zIndex": "1",
+    "width": "55px",
+    "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+    "fontSize": "14px",
+    "fontWeight": "400",
+    "lineHeight": "19.6px",
+    "color": "rgb(66, 66, 66)",
+    "background": "rgba(0, 0, 0, 0)",
+    "border": "0px none rgb(66, 66, 66)",
+    "borderRadius": "0px",
+    "padding": "0px",
+    "margin": "0px",
+    "boxShadow": null,
+    "transition": "all",
+    "text": "快捷键 基础操作 移动← ↑ → ↓ 删除delete 复制ctrl+c 粘贴ctrl+v 剪切ct"
+  },
+  "toolGroups": [
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "leftBtn toolGroup",
+      "rect": {
+        "x": 248,
+        "y": 0,
+        "w": 442,
+        "h": 50
+      },
+      "display": "flex",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "442.062px",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "50px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "背景色 重置 清空画布 自由绘制 连续绘制(按shift提示角度)",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "undo disabled",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 248,
+            "y": 0,
+            "w": 42,
+            "h": 50
+          },
+          "html": "<li class=\"undo disabled\"><i class=\"icon-chehui\"></i></li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "redo disabled",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 290,
+            "y": 0,
+            "w": 42,
+            "h": 50
+          },
+          "html": "<li class=\"redo disabled\"><i class=\"icon-recovery\"></i></li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "color backColor notdisabled",
+          "title": null,
+          "text": "背景色 重置",
+          "rect": {
+            "x": 332,
+            "y": 0,
+            "w": 136,
+            "h": 50
+          },
+          "html": "<li class=\"color backColor notdisabled\" style=\"display: block;\">\n                        <span>背景色</span>\n                        <label class=\"backColorSpan\">\n"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "clearPage notdisabled",
+          "title": null,
+          "text": "清空画布",
+          "rect": {
+            "x": 468,
+            "y": 0,
+            "w": 88,
+            "h": 50
+          },
+          "html": "<li class=\"clearPage notdisabled\"><i class=\"diyicon icon-clear\" style=\"display: inline-block;\"></i><span>清空画布</span></li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "drawShape notdisabled rel",
+          "title": null,
+          "text": "自由绘制 连续绘制(按shift提示角度",
+          "rect": {
+            "x": 556,
+            "y": 0,
+            "w": 88,
+            "h": 50
+          },
+          "html": "<li class=\"drawShape notdisabled rel\" style=\"height: 50px;line-height: 50px;z-index: 190;\"><i class=\"diyicon icon-huabi\" style=\"display: inline-block;\"></i><spa"
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "shape-items",
+          "title": null,
+          "text": "连续绘制(按shift提示角度)",
+          "rect": {
+            "x": 505,
+            "y": 51,
+            "w": 189,
+            "h": 81
+          },
+          "html": "<div class=\"shape-items\">\n                        <div class=\"shape-wrapper\">\n                            <div class=\"shape-item\" shape-name=\"rectangle\">\n      "
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "shape-wrapper",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 510,
+            "y": 56,
+            "w": 179,
+            "h": 41
+          },
+          "html": "<div class=\"shape-wrapper\">\n                            <div class=\"shape-item\" shape-name=\"rectangle\">\n                                <span class=\"shape-img\">"
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "shape-item",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 510,
+            "y": 56,
+            "w": 41,
+            "h": 41
+          },
+          "html": "<div class=\"shape-item\" shape-name=\"rectangle\">\n                                <span class=\"shape-img\"><i class=\"diyicon  icon-draw-rect\"></i></span>\n         "
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "shape-item",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 556,
+            "y": 56,
+            "w": 41,
+            "h": 41
+          },
+          "html": "<div class=\"shape-item\" shape-name=\"circle\">\n                                <span class=\"shape-img\"><i class=\"diyicon  icon-draw-circle\"></i></span>\n          "
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "shape-item",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 602,
+            "y": 56,
+            "w": 41,
+            "h": 41
+          },
+          "html": "<div class=\"shape-item\" shape-name=\"line\">\n                                <span class=\"shape-img\"><i class=\"diyicon  icon-draw-line\"></i></span>\n              "
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "shape-item",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 648,
+            "y": 56,
+            "w": 41,
+            "h": 41
+          },
+          "html": "<div class=\"shape-item\" shape-name=\"triangle\">\n                                <span class=\"shape-img\"><i class=\"diyicon  icon-draw-triangle\"></i></span>\n      "
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "cls": "drawSvgType",
+          "title": null,
+          "text": "连续绘制(按shift提示角度)",
+          "rect": {
+            "x": 565,
+            "y": 97,
+            "w": 68,
+            "h": 30
+          },
+          "html": "<div class=\"drawSvgType\">\n                            <label class=\"f14\">\n                                <input type=\"checkbox\">\n                              "
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "editFontStyle text toolGroup showTip",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "颜色 汉仪行楷简 对齐 间距 对齐 环绕 背景填充 字效 描边 艺术字 列表 大小写",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "color colorWz",
+          "title": null,
+          "text": "颜色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"color colorWz\">\n                        <span class=\"color-item\" style=\" background:#fff;\"></span>\n                        <span class=\"tip\">颜色</span"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "fontFamily",
+          "title": null,
+          "text": "汉仪行楷简",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"fontFamily\">汉仪行楷简</li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "fontSize",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"fontSize\">\n                        <span class=\"add-size\"><i class=\"diyicon icon-triangle-bottom\"></i></span>\n                        <input type=\"te"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "align",
+          "title": null,
+          "text": "对齐",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"align\">\n                        <i class=\"icon-alignL\"></i>\n                        <span class=\"tip\">对齐</span>\n                        <!--左对齐icon-t"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "wordSpace",
+          "title": null,
+          "text": "间距",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"wordSpace\">\n                        <i class=\"icon-space\"></i>\n                        <span class=\"tip\">间距</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "groupAlign",
+          "title": null,
+          "text": "对齐",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"groupAlign\">\n                        <i class=\"icon-align-l\"></i>\n                        <span class=\"tip\">对齐</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "around",
+          "title": null,
+          "text": "环绕",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"around\">\n                        <i class=\"icon-text-around-t\"></i>\n                        <span class=\"tip\">环绕</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "textBg textbackground",
+          "title": null,
+          "text": "背景填充",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"textBg textbackground\" style=\"display: none;\">\n                            <i class=\"icon-text-bg\" style=\"background-color: rgba(124,45,126,.6);\"></i"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "fontStyle",
+          "title": null,
+          "text": "字效",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"fontStyle\">\n                            <i class=\"icon-compose-text\"></i>\n                            <span class=\"tip\">字效</span>\n                   "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "stroke",
+          "title": null,
+          "text": "描边",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"stroke\">\n                            <i class=\"icon-stroke\"></i>\n                            <span class=\"tip\">描边</span>\n                        </li"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "textArt",
+          "title": null,
+          "text": "艺术字",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"textArt\">\n                            <i class=\"icon-text-art\"></i>\n                            <span class=\"tip\">艺术字</span>\n                        "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "textUl showTip",
+          "title": null,
+          "text": "列表",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"textUl showTip\">\n                            <i class=\"diyicon icon-liebiao\"></i>\n                            <span class=\"tip\">列表</span>\n           "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "lowerToUpperCase",
+          "title": null,
+          "text": "大小写",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"lowerToUpperCase\">\n                        <i class=\"icon-zimuzhuandaxie\"></i>\n                        <span class=\"tip\">大小写</span>\n                 "
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "imgmask toolGroup showTip",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "描边",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "imgmaskStroke",
+          "title": null,
+          "text": "描边",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"imgmaskStroke\" style=\"opacity: 1;\">\n                        <i class=\"icon-stroke\"></i>\n                        <span class=\"tip\">描边</span>\n         "
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "bitmap toolGroup showTip",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "智能抠图 裁切 异形裁切 自动裁切 美化 尺寸 圆角 换图 设为背景 描边 3D文字 改色",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "cutOut",
+          "title": null,
+          "text": "智能抠图",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"cutOut\">\n                        <i class=\"icon-cutout\"></i>\n                        <span class=\"tip\">智能抠图</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "crop",
+          "title": null,
+          "text": "裁切",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"crop\">\n                        <i class=\"icon-cut\"></i>\n                        <span class=\"tip\">裁切</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "dysmorphismCrop",
+          "title": null,
+          "text": "异形裁切",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"dysmorphismCrop\">\n                            <i class=\"diyicon icon-yixingcaiqie\"></i>\n                            <span class=\"tip\">异形裁切</span>\n   "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "autoCutImage",
+          "title": null,
+          "text": "自动裁切",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"autoCutImage\">\n                        <i class=\"diyicon icon-caiqie\" style=\"font-size: 24px\"></i>\n                        <span class=\"tip\">自动裁切</sp"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "imgFilter",
+          "title": null,
+          "text": "美化",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"imgFilter\">\n                        <i class=\"icon-beautify\"></i>\n                        <span class=\"tip\">美化</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "imgSize",
+          "title": null,
+          "text": "尺寸",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"imgSize\">\n                            <i class=\"icon-chicun\"></i>\n                            <span class=\"tip\">尺寸</span>\n                        </l"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "imgCorner",
+          "title": null,
+          "text": "圆角",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"imgCorner \">\n                            <i class=\"icon-radius\"></i>\n                            <span class=\"tip\">圆角</span>\n                        "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "changeImg",
+          "title": null,
+          "text": "换图",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"changeImg\">\n                        <i class=\"icon-img-replace\"></i>\n                        <span class=\"tip\">换图</span>\n                    <input i"
+        },
+        {
+          "tag": "a",
+          "id": "file_upload_1-button",
+          "cls": "uploadify-button",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<a id=\"file_upload_1-button\" href=\"javascript:void(0)\" class=\"uploadify-button\"></a>"
+        },
+        {
+          "tag": "div",
+          "id": "file_upload_1-queue",
+          "cls": "uploadify-queue",
+          "title": null,
+          "text": null,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<div id=\"file_upload_1-queue\" class=\"uploadify-queue\"></div>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "changeToBackImg",
+          "title": null,
+          "text": "设为背景",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"changeToBackImg\">\n                            <i class=\"icon-huanbeijing\"></i>\n                            <span class=\"tip\">设为背景</span>\n            "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "imgStroke",
+          "title": null,
+          "text": "描边",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"imgStroke\">\n                            <i class=\"diyicon icon-tupianwaimiao\" style=\"font-size: 16px\"></i>\n                            <span class=\"t"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "text3D",
+          "title": null,
+          "text": "3D文字",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"text3D\">\n                            <i class=\"icon-D\"></i>\n                            <span class=\"tip\">3D文字</span>\n                        </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "color colorImage",
+          "title": null,
+          "text": "改色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"color colorImage\" style=\"border-color: transparent\">\n                        \n                        <i class=\"diyicon  icon-yanse\" style=\"font-size"
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "svg toolGroup showTip",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "颜色 一键改色 填充色 边框色 描边 尺寸 边框粗细 边框角度",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "color",
+          "title": null,
+          "text": "颜色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"color\">\n                        <span class=\"color-item colorSvg\" style=\" background:#000;\"></span>\n                        <span class=\"color-item\" "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "colorChangeOneKey",
+          "title": null,
+          "text": "一键改色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"colorChangeOneKey\">\n                        <i class=\"icon-yanse\"></i>\n                        <span class=\"tip\">一键改色</span>\n                    </li"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "fillColorChangeOneKey",
+          "title": null,
+          "text": "填充色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"fillColorChangeOneKey\">\n                        <i class=\"icon-yanse\"></i>\n                        <span class=\"tip\">填充色</span>\n                    <"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "strokeColorChangeOneKey",
+          "title": null,
+          "text": "边框色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"strokeColorChangeOneKey\" style=\"display: none;\">\n                        <i class=\"icon-yanse\"></i>\n                        <span class=\"tip\">边框色</sp"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "colorStroke",
+          "title": null,
+          "text": "描边",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"colorStroke\" style=\"display: none;\">\n                            <i class=\"diyicon icon-tupianwaimiao\"></i>\n                            <span class=\""
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "svgSize",
+          "title": null,
+          "text": "尺寸",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"svgSize\">\n                            <i class=\"icon-chicun\"></i>\n                            <span class=\"tip\">尺寸</span>\n                        </l"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "svgStrokeWidth",
+          "title": null,
+          "text": "边框粗细",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"svgStrokeWidth\" style=\"display: none;\">\n                        <i class=\"diyicon icon-border-width\" style=\"font-size: 24px;\"></i>\n                  "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "svgRectyuanjiao",
+          "title": null,
+          "text": "边框角度",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"svgRectyuanjiao\" style=\"display: none;\">\n                        <i class=\"diyicon icon-border-radius\" style=\"font-size: 24px;\"></i>\n                "
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "table toolGroup showTip tableOperat",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "表头颜色 表体颜色 边框颜色 表格透明 边框粗细 外框颜色 外框粗细 边框色 背景色 列宽:mm 行",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-bt",
+          "title": null,
+          "text": "表头颜色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-bt\">\n                        <i class=\"icon-table-head\"></i>\n                        <span class=\"tip\">表头颜色</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-bs",
+          "title": null,
+          "text": "表体颜色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-bs\">\n                        <i class=\"icon-table-body\"></i>\n                        <span class=\"tip\">表体颜色</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-xk",
+          "title": null,
+          "text": "边框颜色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-xk\">\n                        <i class=\"icon-table-border\"></i>\n                        <span class=\"tip\">边框颜色</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-tr",
+          "title": null,
+          "text": "表格透明",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-tr\">\n                        <i class=\"icon-table-opacity\"></i>\n                        <span class=\"tip\">表格透明</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-border",
+          "title": null,
+          "text": "边框粗细",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-border\">\n                        <i class=\"diyicon icon-tneibiankuang\"></i>\n                        <span class=\"tip\">边框粗细</span>\n             "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-out-color",
+          "title": null,
+          "text": "外框颜色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-out-color\">\n                        <i class=\"diyicon icon-tcolor\"></i>\n                        <span class=\"tip\">外框颜色</span>\n                 "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-out-border",
+          "title": null,
+          "text": "外框粗细",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-out-border\">\n                        <i class=\"diyicon icon-twaibiankuang\"></i>\n                        <span class=\"tip\">外框粗细</span>\n         "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-bk-color new-table-btn",
+          "title": null,
+          "text": "边框色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-bk-color new-table-btn\" style=\"display:inline-flex;\">\n                        <span class=\"color-item\"></span>\n                        <span cl"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-background-cell new-table-btn",
+          "title": null,
+          "text": "背景色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-background-cell new-table-btn\" style=\"display:inline-flex;\">\n                        <span class=\"color-item\"></span>\n                        <"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-col-w new-table-btn",
+          "title": null,
+          "text": "列宽:mm",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-col-w new-table-btn\">\n                        <span class=\"tip\">列宽:<input type=\"number\" min=\"1\" value=\"15\" step=\"0.1\">mm</span>\n               "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "table-row-h new-table-btn",
+          "title": null,
+          "text": "行高:mm",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"table-row-h new-table-btn\">\n                        <span class=\"tip\">行高:<input type=\"number\" min=\"1\" value=\"15\" step=\"0.1\">mm</span>\n               "
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "group toolGroup showTip",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "对齐",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "groupAlign",
+          "title": null,
+          "text": "对齐",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"groupAlign\">\n                        <i class=\"icon-align-l\"></i>\n                        <span class=\"tip\">对齐</span>\n                    </li>"
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "editBar-guides toolGroup showTip",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "颜色 删除",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "colorG color",
+          "title": null,
+          "text": "颜色",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"colorG color\">\n                        <span class=\"color-item\" style=\"background: rgb(74, 255, 255);\"></span>\n                        <span class=\"t"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "delete",
+          "title": null,
+          "text": "删除",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"delete\">\n                        <i class=\"icon-delete\"></i>\n                        <span class=\"tip\">删除</span>\n                    </li>"
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "cupOneKeyTool toolGroup showTip",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "一键对称",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "oneKeySymmetric",
+          "title": null,
+          "text": "一键对称",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"oneKeySymmetric\">\n                        <i class=\"icon-copy-page\"></i>\n                        <span class=\"tip\">一键对称</span>\n                    </"
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "generalTool toolGroup showTip",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "锁定 图层 透明度 画布对齐 翻转 旋转 投影 解组 编组 一键对称 复制 删除",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "lock",
+          "title": null,
+          "text": "锁定",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"lock\">\n                        <i class=\"icon-lock1\"></i>\n                        <span class=\"tip\">锁定</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "move",
+          "title": null,
+          "text": "图层",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"move\">\n                        <i class=\"icon-tuceng\"></i>\n                        <span class=\"tip\">图层</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "opacity",
+          "title": null,
+          "text": "透明度",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"opacity\">\n                        <i class=\"diyicon icon-toumingdu\" style=\"background-image: -webkit-linear-gradient(left bottom, #0f1010, #f2f6f3);-"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "mid",
+          "title": null,
+          "text": "画布对齐",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"mid\">\n                            <i class=\"icon-map-chenter\"></i>\n                            <span class=\"tip\">画布对齐</span>\n                        "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "flip",
+          "title": null,
+          "text": "翻转",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"flip\">\n                            <i class=\"icon-fanzhuan\"></i>\n                            <span class=\"tip\">翻转</span>\n                        </li"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "rotate",
+          "title": null,
+          "text": "旋转",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"rotate\">\n                            <i class=\"icon-xuanzhuan1\"></i>\n                            <span class=\"tip\">旋转</span>\n                        "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "shadow",
+          "title": null,
+          "text": "投影",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"shadow\">\n                            <i class=\"icon-shadow\"></i>\n                            <span class=\"tip\">投影</span>\n                        </li"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "ungroup",
+          "title": null,
+          "text": "解组",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"ungroup\" style=\"display: none;\">\n                            <i class=\"icon-ungroup\"></i>\n                            <span class=\"tip\">解组</span>\n   "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "group",
+          "title": null,
+          "text": "编组",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"group\" style=\"display: none;\">\n                            <i class=\"icon-group\"></i>\n                            <span class=\"tip\">编组</span>\n       "
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "oneKeySymmetric",
+          "title": null,
+          "text": "一键对称",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"oneKeySymmetric\">\n                        <i class=\"icon-copy-page\"></i>\n                        <span class=\"tip\">一键对称</span>\n                    </"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "copy",
+          "title": null,
+          "text": "复制",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"copy\">\n                        <i class=\"icon-fuzhi\"></i>\n                        <span class=\"tip\">复制</span>\n                    </li>"
+        },
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "delete",
+          "title": null,
+          "text": "删除",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"delete\">\n                        <i class=\"icon-shanchu\"></i>\n                        <span class=\"tip\">删除</span>\n                    </li>"
+        }
+      ]
+    },
+    {
+      "tag": "menu",
+      "id": null,
+      "cls": "unknowR toolGroup showTip",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 0,
+        "h": 0
+      },
+      "display": "none",
+      "position": "static",
+      "zIndex": "auto",
+      "width": "auto",
+      "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "fontSize": "0px",
+      "fontWeight": "400",
+      "lineHeight": "49px",
+      "color": "rgb(66, 66, 66)",
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px none rgb(66, 66, 66)",
+      "borderRadius": "0px",
+      "padding": "0px 10px",
+      "margin": "0px",
+      "boxShadow": null,
+      "transition": "all",
+      "text": "删除",
+      "items": [
+        {
+          "tag": "li",
+          "id": null,
+          "cls": "delete",
+          "title": null,
+          "text": "删除",
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "w": 0,
+            "h": 0
+          },
+          "html": "<li class=\"delete\">\n                        <i class=\"icon-delete\"></i>\n                        <span class=\"tip\">删除</span>\n                    </li>"
+        }
+      ]
+    }
+  ],
+  "tabPageLayer": {
+    "tag": "div",
+    "id": null,
+    "cls": "tabPageLayer",
+    "rect": {
+      "x": 1250,
+      "y": 51,
+      "w": 190,
+      "h": 33
+    },
+    "display": "flex",
+    "position": "static",
+    "zIndex": "auto",
+    "width": "190px",
+    "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+    "fontSize": "12px",
+    "fontWeight": "400",
+    "lineHeight": "32px",
+    "color": "rgb(106, 106, 106)",
+    "background": "rgb(255, 255, 255)",
+    "border": "",
+    "borderRadius": "0px",
+    "padding": "0px",
+    "margin": "0px 0px 10px",
+    "boxShadow": null,
+    "transition": "all",
+    "text": "页面 烫金 图层",
+    "html": "<div class=\"tabPageLayer\">\n                <a class=\"page-suolve on\" href=\"javascript:void(0)\">页面</a>\n                <a class=\"gilding-tab\" href=\"javascript:void(0)\" style=\"display: none\">烫金</a>\n                <a class=\"img-level\" href=\"javascript:void(0)\">图层</a>\n                \n            </div>",
+    "children": [
+      {
+        "tag": "a",
+        "id": null,
+        "cls": "page-suolve on",
+        "text": "页面",
+        "html": "<a class=\"page-suolve on\" href=\"javascript:void(0)\">页面</a>"
+      },
+      {
+        "tag": "a",
+        "id": null,
+        "cls": "gilding-tab",
+        "text": "烫金",
+        "html": "<a class=\"gilding-tab\" href=\"javascript:void(0)\" style=\"display: none\">烫金</a>"
+      },
+      {
+        "tag": "a",
+        "id": null,
+        "cls": "img-level",
+        "text": "图层",
+        "html": "<a class=\"img-level\" href=\"javascript:void(0)\">图层</a>"
+      }
+    ]
+  },
+  "bgMaterial": {
+    "tag": "div",
+    "id": null,
+    "cls": "bg-material",
+    "rect": {
+      "x": 1550,
+      "y": 0,
+      "w": 260,
+      "h": 900
+    },
+    "display": "block",
+    "position": "fixed",
+    "zIndex": "auto",
+    "width": "260px",
+    "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+    "fontSize": "12px",
+    "fontWeight": "400",
+    "lineHeight": "16.8px",
+    "color": "rgb(106, 106, 106)",
+    "background": "rgb(255, 255, 255)",
+    "border": "0px none rgb(106, 106, 106)",
+    "borderRadius": "0px",
+    "padding": "0px",
+    "margin": "0px",
+    "boxShadow": null,
+    "transition": "0.3s",
+    "text": "常用素材 相框素材 矢量素材",
+    "html": "<div class=\"bg-material\">\n                <div class=\"material-title\">常用素材</div>\n                <div class=\"material-auto\">\n                    <div class=\"mbtnGroup\">\n                        <a class=\"mbtn on\" materialtype=\"0\" href=\"javascript:void(0)\">相框素材</a>\n                        <a class=\"mbtn\" materialtype=\"1\" href=\"javascript:void(0)\">矢量素材</a>\n                        \n                    </div>\n                    <ul class=\"list sclist\">\n                    </ul>\n                    <ul class=\"list xklist\">\n                    </ul>\n                </div>\n                <!--正面背景-素材-结束-->\n            </div>"
+  },
+  "switchContent": {
+    "tag": "div",
+    "id": null,
+    "cls": "switch-content",
+    "rect": {
+      "x": 1210,
+      "y": 51,
+      "w": 41,
+      "h": 849
+    },
+    "display": "block",
+    "position": "absolute",
+    "zIndex": "auto",
+    "width": "40px",
+    "fontFamily": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+    "fontSize": "12px",
+    "fontWeight": "400",
+    "lineHeight": "16.8px",
+    "color": "rgb(106, 106, 106)",
+    "background": "rgb(255, 255, 255)",
+    "border": "",
+    "borderRadius": "0px",
+    "padding": "0px",
+    "margin": "0px",
+    "boxShadow": null,
+    "transition": "all",
+    "text": "< 常用素材",
+    "html": "<div class=\"switch-content\">\n                <div class=\"material-show\">\n                    <span style=\"display: none\">&lt;</span>\n                    <p class=\"source-material\">常用素材</p>\n                </div>\n                    \n            </div>"
+  },
+  "btnSwitch": {
+    "tag": "div",
+    "id": null,
+    "cls": "btn-switch",
+    "rect": {
+      "x": 1238,
+      "y": 436,
+      "w": 12,
+      "h": 80
+    },
+    "display": "block",
+    "position": "absolute",
+    "zIndex": "auto",
+    "width": "12px",
+    "fontFamily": "宋体",
+    "fontSize": "20px",
+    "fontWeight": "400",
+    "lineHeight": "80px",
+    "color": "rgb(74, 137, 220)",
+    "background": "rgb(255, 255, 255)",
+    "border": "0px none rgb(74, 137, 220)",
+    "borderRadius": "40px 0px 0px 40px",
+    "padding": "0px",
+    "margin": "-40px 0px 0px",
+    "boxShadow": null,
+    "transition": "all",
+    "text": ">",
+    "html": "<div class=\"btn-switch\"><span>&gt;</span></div>"
+  },
+  "iconFontSample": [
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-loadingtishi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "icon-blood",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "icon-blood-hidden",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "icon-guide",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "icon-guide-hidden",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "icon-thum",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "icon-thum-hidden",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "icon-chicun f14",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "icon-chehui",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "icon-recovery",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-clear",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon icon-huabi",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon  icon-draw-rect",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon  icon-draw-circle",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon  icon-draw-line",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    },
+    {
+      "cls": "diyicon  icon-draw-triangle",
+      "content": "\"\"",
+      "fontFamily": "diyicon"
+    }
+  ],
+  "frameworks": {
+    "jquery": "1.10.2",
+    "vue": true,
+    "react": false,
+    "layer": true
+  }
+}
