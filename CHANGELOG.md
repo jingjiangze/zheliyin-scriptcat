@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Stage 5.6 P0 hotfix（2026-09-17）— v0.3.8.4：空白模板「生成失败 null.left」修复（真机第 5 轮）
+- 真机错误「生成失败：Cannot read properties of null (reading 'left')」= 无文字层模板：`createTextObject` fabric 兜底分支在 `reference=null && layout=null` 时读 `layout.left` 抛错（旧代码整段 forEach 抛掉→永不回复=早前 BUILDING 卡死；0.3.8.3 兜底把它显性化）。
+- 修复：`createTextObject` 无参考层/无布局时给安全默认（位置/尺寸随后由 ocrCreate 的 obj.set 覆盖），空白模板亦可生成。
+- 版本统一 0.3.8.4。
+
 ### Stage 5.6 P0 hotfix（2026-09-17）— v0.3.8.3：@require 版本化缓存 + ocrCreate 兜底（真机第 4 轮）
 - 真机定位：正式版=旧缓存桥（probe 回、getCanvasInfo 无）→ @require 全部加 `?v=0.3.8.3` 版本参数，机制上杜绝旧模块缓存复用（重装/更新即拉新模块）；扩展为本地文件加载，不受影响。
 - 测试版=BUILDING 卡死 → page-bridge `ocrCreate` 全 try/catch 兜底：任何创建异常也必定回 `ocrCreateResult`（带 message）+ 页面 `console.warn`；调用侧 `buildItemsFromOcr` 增加 10s 回复超时兜底，不再死等。

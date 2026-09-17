@@ -448,10 +448,15 @@ function pageBridge() {
         if (!fabric) return null;
         const Klass = fabric.Textbox || fabric.IText || fabric.Text;
         if (!Klass) return null;
+        // Stage 5.6 P0（真机：空白模板无文字层时 reference=null 且 layout=null → layout.left 抛错）：
+        // 无参考层/无布局时给安全默认（位置/尺寸随后由 ocrCreate 的 obj.set 覆盖）。
+        const fbLeft = reference ? style.left : (layout ? layout.left : 20 + index * 24);
+        const fbTop = reference ? style.top + Math.max(style.height, style.fontSize * 1.55) : (layout ? layout.top + index * layout.step : 20 + index * 30);
+        const fbWidth = reference ? style.width : (layout ? layout.contentWidth : 240);
         obj = new Klass(text, {
-          left: reference ? style.left : layout.left,
-          top: reference ? style.top + Math.max(style.height, style.fontSize * 1.55) : layout.top + index * layout.step,
-          width: reference ? style.width : layout.contentWidth,
+          left: fbLeft,
+          top: fbTop,
+          width: fbWidth,
           fontSize: style.fontSize,
           fill: style.fill,
           fontFamily: style.fontFamily,
