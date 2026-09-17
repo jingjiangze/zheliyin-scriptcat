@@ -1,0 +1,183 @@
+{
+  "compare": [
+    {
+      "name": "面板 position",
+      "before": "fixed",
+      "after": "fixed",
+      "verdict": "OK"
+    },
+    {
+      "name": "面板 z-index",
+      "before": "2147483000",
+      "after": "100",
+      "verdict": "PASS"
+    },
+    {
+      "name": "面板 width",
+      "before": "246px",
+      "after": "311px",
+      "verdict": "PASS (原生310)"
+    },
+    {
+      "name": "面板 background",
+      "before": "rgb(255, 255, 255)",
+      "after": "rgb(253, 253, 253)",
+      "verdict": "PASS"
+    },
+    {
+      "name": "面板 color",
+      "before": "rgb(23, 32, 51)",
+      "after": "rgb(66, 66, 66)",
+      "verdict": "PASS"
+    },
+    {
+      "name": "面板 border-left",
+      "before": "0.8px rgb(215, 220, 229)",
+      "after": "0.8px rgb(234, 234, 234)",
+      "verdict": "OK"
+    },
+    {
+      "name": "面板 box-shadow",
+      "before": "rgba(16, 24, 40, 0.12) -8px 0px 24px 0px",
+      "after": "rgba(0, 0, 0, 0.1) 0px 4px 20px 0px",
+      "verdict": "PASS"
+    },
+    {
+      "name": "面板 font-family",
+      "before": "\"Microsoft YaHei\", \"Segoe UI\", Arial, sans-serif",
+      "after": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "verdict": "OK"
+    },
+    {
+      "name": "面板头 bg",
+      "before": "rgb(31, 111, 235)",
+      "after": "rgb(255, 255, 255)",
+      "verdict": "PASS 修复UI-RISK-10"
+    },
+    {
+      "name": "面板头 color",
+      "before": "rgb(255, 255, 255)",
+      "after": "rgb(66, 66, 66)",
+      "verdict": "PASS"
+    },
+    {
+      "name": "面板头 padding",
+      "before": "10px 12px",
+      "after": "10px 20px",
+      "verdict": "PASS (原生10px 20px)"
+    },
+    {
+      "name": "面板头 cursor",
+      "before": "move",
+      "after": "default",
+      "verdict": "PASS"
+    },
+    {
+      "name": "入口 tag",
+      "after": "LI",
+      "verdict": "PASS (BUTTON->LI)"
+    },
+    {
+      "name": "入口 width",
+      "before": "190px",
+      "after": "190px",
+      "verdict": "PASS"
+    },
+    {
+      "name": "入口 height",
+      "before": "52px",
+      "after": "33px",
+      "verdict": "PASS (原生33)"
+    },
+    {
+      "name": "入口 background",
+      "before": "rgb(46, 127, 240)",
+      "after": "rgb(255, 255, 255)",
+      "verdict": "PASS"
+    },
+    {
+      "name": "入口 color",
+      "before": "rgb(255, 255, 255)",
+      "after": "rgb(66, 66, 66)",
+      "verdict": "PASS"
+    },
+    {
+      "name": "入口 font-size",
+      "before": "18px",
+      "after": "12px",
+      "verdict": "PASS"
+    },
+    {
+      "name": "入口 font-weight",
+      "before": "700",
+      "after": "400",
+      "verdict": "PASS"
+    },
+    {
+      "name": "入口 font-family",
+      "before": "Arial",
+      "after": "\"Microsoft YaHei\", tahoma, arial, \"Hiragino Sans GB\", 宋体, sans-serif",
+      "verdict": "PASS (消除Arial)"
+    },
+    {
+      "name": "入口 文案",
+      "before": "(单字)识",
+      "after": "图片文字识别",
+      "verdict": "PASS"
+    },
+    {
+      "name": "入口 图标",
+      "before": "无",
+      "after": "diyicon icon-discern zyo-entry-icon",
+      "verdict": "PASS"
+    },
+    {
+      "name": "主按钮 bg",
+      "before": "n/a",
+      "after": "rgb(59, 130, 246)",
+      "verdict": "PASS (#3b82f6)"
+    },
+    {
+      "name": "select 圆角",
+      "before": "6px",
+      "after": "3px",
+      "verdict": "PASS"
+    },
+    {
+      "name": "select font-size",
+      "before": "12px",
+      "after": "13.3333px",
+      "verdict": "PASS"
+    },
+    {
+      "name": "baidu input 圆角",
+      "before": "6px",
+      "after": "3px",
+      "verdict": "PASS"
+    },
+    {
+      "name": "status color",
+      "before": "rgb(102,112,133)",
+      "after": "rgb(106, 106, 106)",
+      "verdict": "PASS (#6a6a6a)"
+    },
+    {
+      "name": "横向滚动",
+      "before": "false",
+      "after": "closed=false opened=false reclosed=false",
+      "verdict": "PASS"
+    },
+    {
+      "name": "抽屉 toggle",
+      "before": "无法打开",
+      "after": "closed=none opened=flex reclosed=none",
+      "verdict": "PASS"
+    },
+    {
+      "name": "legacy 浮窗",
+      "before": "未挂载",
+      "after": "closed=false opened=false",
+      "verdict": "PASS"
+    }
+  ]
+}

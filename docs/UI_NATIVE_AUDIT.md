@@ -6,6 +6,47 @@
 > 审计对象：`demo` @ `7c1df21`（用户脚本 `zheliyin-card-assistant.user.js` v0.3.7.0，blob `d1f96c4a4fc3a1c580fc3655c8b253cdd9cdd18a`，72705 bytes / 1480 行）
 > 方法：Playwright-core + Chromium 1243 真实浏览器，4 个 viewport 实测 + 真实 `cssRules` 提取 + 源码调用图可达性
 > 证据等级：见 `docs/EVIDENCE_POLICY.md`。本文件所有几何/样式数字为 **REAL**（真实页面 computed style / getBoundingClientRect）；涉及"当前实现是否达成"的判断标注为 **SOURCE-READ**（源码逐行阅读，非黑盒跑测）
+>
+> ---
+> **⚠️ 基线校准（2026-09-17，UI-2 入口前复查）**
+> 审计时远端 `demo` tip 为 `7c1df21`（v0.3.7.0）。复查时远端 `demo` 已推进至 **`e941e6d`**，生产版本为 **v0.3.8.0**（74905 bytes / 1555 行）。期间新增 3 个 commit：
+> `107175f`（canvas-ready 等待 UX 分级 → 0.3.7.1）、`4cb7c87`（旋转 OCR 文本框角度修复 → 0.3.8.0）、`e941e6d`（几何矩阵 harness v2 + P5 终版报告）。
+> **已逐行比对确认：本文档审计的 UI 代码段（`addStyles` / `#zy-native-ocr-panel` / `#zy-native-ocr-tool-btn` / `renderNativeOcrDrawer` / `mountNativeOcrPanel` / `observeNativeRemount` / `initZheliyin`）在 v0.3.8.0 中结构未变**（仅行号位移：L272→L272、L296→L296、L545→L545、L599→L599、L616→L616、L1445→L1467）。故本文档全部偏差结论**继续有效**，仅版本号与行号需按 v0.3.8.0 阅读。
+> `4cb7c87` 改的是 `ocrCreate`/mapper（属 §十六 划定的 OCR 技术链，不属 UI 专项职责）—— 对 UI 接线的影响留待 UI-4 功能回归验证。
+
+---
+
+## 0.A 真机实测补测（UI-RISK-09 闭环，2026-09-17）
+
+> 本节为 **UI-2 入口条件**的补测结果。方法：Playwright-core + **真实 ScriptCat v1.4.0（Chrome MV3）** + 隔离 profile + 真实目标 URL，按 ScriptCat「拼接、作用域共享」语义加载全部 `@require` 模块后执行 v0.3.8.0 主脚本，实测 `#zy-native-ocr-panel` 渲染几何。
+> 凭证与脚本：`ui-audit/ui2-env/`（`probe-ui2.js` / `inject-ui2b.js` / `ui2-inject2.json` / `shot-ui2-real.png`）
+> 环境：Chrome（隔离 profile）+ ScriptCat `ndcooeababalnlpkfedmmbbbgkljhpjf` v1.4.0 + 1440×900 + `deviceScaleFactor:1`
+
+### 0.A.1 环境可达性（真机通道成立）
+
+| 项 | 结果 |
+|---|---|
+| ScriptCat service worker | ✅ `chrome-extension://ndcooeababalnlpkfedmmbbbgkljhpjf/src/service_worker.js` 活跃 |
+| 目标页 | ✅ HTTP **200**，`readyState=complete`，title「智能设计定制未来」 |
+| 原生锚点复现 | ✅ `rightBar` 190×849 @1250,51 / `z-index:20` —— **与 §1.1 四 viewport 审计数字完全一致**（跨环境交叉验证通过） |
+| jQuery | ✅ 存在（与 §3.8 一致） |
+
+### 0.A.2 注入体实测几何（原为源码推算 → 现为 REAL）
+
+| 节点 | 实测值 | 判定 |
+|---|---|---|
+| `#zy-native-ocr-panel` | **246×900 @x=1004, y=0** `position:fixed` **`z-index:2147483000`** `bg:#ffffff` `color:rgb(23,32,51)` `border-left:0.8px rgb(215,220,229)` `box-shadow:rgba(16,24,40,.12) -8px 0 24px 0` font `"Microsoft YaHei","Segoe UI",Arial,sans-serif` | ❌ 与 §6.1 判定一致（编号全部坐实） |
+| `.zy-head`（面板头） | 245×46 `bg:` **`rgb(31,111,235)` = `#1f6feb`** `color:#fff` `font-size:12px` `font-weight:400` | ❌ **新增发现（UI-1 未捕获）**：头部是**整块高饱和蓝底白字**，且源码带 `cursor:move` —— 系 legacy 浮窗**拖拽头部**遗产，在右栏抽屉中语义与视觉**双重错误**，是"用户一眼看出是外挂"的最强信号 |
+| `.zy-body` | 245×778 @1005,46 `display:grid` `color:rgb(23,32,51)` | ⚠️ 对应 §6.1 色值偏差 |
+| `#zy-native-ocr-tool-btn` | **190×52 @1250,y=863** `bg:#2e7ff0` `color:#fff` `font-size:18px` `font-weight:700` **`font-family:Arial`** | ❌ 与 §6.2 判定**逐条坐实**（含字体回退到 Arial 的实测证据） |
+| `#zy-card-assistant`（legacy 浮窗） | `null`（未挂载） | ✅ 符合 §13 OCR-only Demo 定位 |
+| `.rightPageBar.rightBar` 子节点 | **9 个**，新增 `BUTTON` 排**最后**（在 `DIV.bg-material` 之后） | ✅ 坐实 **UI-RISK-03**（层叠依赖 DOM 顺序） |
+| `panel.parentElement` | `BODY`（`<aside>` 挂 body，非挂 rightBar） | ✅ 与源码 L590 `document.body.appendChild` 一致 |
+| 横向滚动 | `false` | ✅ 无副作用 |
+
+### 0.A.3 UI-RISK-09 结论
+
+**CLOSED。** 抽屉实际渲染几何与 z-index 影响**已获得真机实测**，UI-1 的数条"源码推算"（固定宽度/固定色/固定 z-index/font 回退）**全部被实测证实**，无一项被推翻；并**新增 1 项 UI-1 遗漏的严重问题**：`.zy-head` 蓝底白字 + `cursor:move` 的浮窗头部遗产（登记为 **UI-RISK-10**）。
 
 ---
 
@@ -384,7 +425,8 @@ font-size: 18px; font-weight: 700;
 | **UI-RISK-06** | 抽屉 245px 未与右栏 190px 建立间距体例 | 🟢 低 | 视觉上抽屉左边缘紧贴 rightBar 左边界，缺少原生 `.btn-switch` 那样的拉手过渡 |
 | **UI-RISK-07** | CSS 未做 namespace 隔离 | 🟢 低 | 已有 `#zy-native-ocr-panel` / `#zy-card-assistant` 前缀（ID 级），**但 `.zy-*` 类为全局类名** → 与页面 `.btn`/`.input` 不冲突（当前无同名），风险可接受；建议 UI-2 统一收进 `#zy-native-ocr-panel .zy-x` 或改前缀 `zyo-*` |
 | **UI-RISK-08** | 旧浮窗与抽屉**同时存在**（两套 UI） | 🟡 中 | OCR-only 模式下浮窗不挂载 → 正常。但 `OcrOnlyMode` 关闭时两套并存 → UI-4 需验证不会同屏出现两个 OCR 入口 |
-| **UI-RISK-09** | 4 个 viewport 下未验证抽屉实际渲染 | 🟡 中 | 本次审计时页面**未注入** `#zy-native-ocr-panel`（`injected.zyNativeOcrPanel=false`、`scriptcat=false`），几何为源码推算而非实测。**UI-2 必须在真实 ScriptCat 环境补测** |
+| **UI-RISK-09** | ~~4 个 viewport 下未验证抽屉实际渲染~~ **→ 已于 0.A 节闭环（CLOSED）** | ✅ 关闭 | 真机实测完成：面板 246×900 @1004,0 / `z-index:2147483000` / `.zy-head` `#1f6feb` 蓝底 / tool-btn 190×52 `#2e7ff0` `Arial`。原"源码推算"全部证实 |
+| **UI-RISK-10** | **`.zy-head` 为 legacy 浮窗拖拽头部遗产**（实测 `bg:#1f6feb` 蓝底白字 + 源码 `cursor:move`） | 🔴 **高** | **UI-2 必须重做**：原生 `.ai-panel-header` 体例为 `padding:10px 20px; border-bottom:1px solid #eaeaea; background:#fff` + 标题 `16px/700` 深色字。蓝底白字在右栏抽屉中既是视觉外挂信号，`cursor:move` 更是语义错误（抽屉不可拖） |
 
 ---
 
@@ -439,8 +481,20 @@ font-size: 18px; font-weight: 700;
 | No Original UI Damage | ✅ 达成（未改原生 DOM/class/event；仅 `appendChild` 新节点） |
 | Local OCR / Background Image / Active Image / Early Click / Baidu fallback | ⏸ UI-1 不涉及（功能回归列 UI-4） |
 
-> **UI-1 Gate 结论：`CONDITIONAL-GO`**
-> —— 架构判断明确、挂载方案已定（B）、风险已登记；但因"页面未注入真实面板"，**抽屉实际渲染几何为源码推算**，且视觉原生化尚未开始。进入 UI-2 前需先完成 **UI-RISK-09 的真实环境补测**。
+> **UI-1 Gate 结论：`CONDITIONAL-GO` → `GO`（2026-09-17 补测后）**
+> —— 架构判断明确、挂载方案已定（B）、风险已登记。原「入口条件 = UI-RISK-09 真实环境补测」**已于 §0.A 完成（CLOSED）**：真机 ScriptCat + 真实目标页实测确认面板几何与 z-index 影响，UI-1 全部偏差结论被证实并新增 UI-RISK-10。
+> **UI-2 可以开始**。
+
+---
+
+## 10.A UI-2 入口条件核对（补测后）
+
+| 入口条件（原 §13） | 状态 |
+|---|---|
+| 真实 ScriptCat 环境复测（UI-RISK-09） | ✅ **完成**（§0.A）：真机通道成立、面板实测几何取得、风险关闭 |
+| 基线版本校准 | ✅ 完成（§基线校准声明）：审计对象已对齐 `e941e6d` / v0.3.8.0，UI 代码段逐行比对确认未变 |
+| 施工图确认（§5.3） | ✅ 可直接执行 |
+| 遗留待办 | ⚠️ `.zy-head` 蓝底问题为 UI-1 遗漏，已补登 **UI-RISK-10**（🔴 高），纳入 UI-2 修复范围 |
 
 ---
 
@@ -466,8 +520,16 @@ font-size: 18px; font-weight: 700;
 
 ---
 
-## 13. 下一步（UI-2 入口条件）
+## 13. 下一步（UI-2）
 
-1. 在**真实 ScriptCat 环境**复测（补齐 UI-RISK-09）：确认 `#zy-native-ocr-panel` 实际几何与 `z-index` 影响。
-2. 按 §5.3 施工图改造：入口改为原生 `li`/`diyicon` 体例；抽屉宽 245→310、`z-index` 降到原生量级、色值/圆角/间距对齐 §3。
-3. 满足 §二十五 Git 规则：**入口改造单独一轮 commit + push + 确认远端**，再进入面板视觉融合。
+1. ~~在**真实 ScriptCat 环境**复测（补齐 UI-RISK-09）~~ → ✅ **已于 §0.A 完成（CLOSED）**。
+2. **UI-2 改造范围**（按 §5.3 施工图 + §6 偏差清单 + §0.A 实测 + UI-RISK-01/03/10）：
+   - **入口** `#zy-native-ocr-tool-btn` → 原生 `li`/`diyicon`/`showTip` 体例（`font-size:12px; padding:0 7px; color:#424242`，h≈26–33px），文案用完整词「图片文字识别」，**消除 `#2e7ff0` 蓝底 + `18px/700` + `Arial`**。
+   - **面板头** `.zy-head` → 对齐原生 `.ai-panel-header`（`padding:10px 20px; border-bottom:1px solid #eaeaea; background:#fff`）+ `.ai-panel-title`（`16px/700` 深色）→ **消除 UI-RISK-10 蓝底白字与 `cursor:move`**。
+   - **面板体** `.zy-body` → 对齐 `.ai-panel-body`（`padding:10px 15px 10px 5px; overflow-y:auto`）。
+   - **几何** `width 245 → 310`（对齐 `.design-ai-panel`）；`z-index 2147483000 → 原生量级`（UI-RISK-01）；层叠策略显式化（UI-RISK-03）。
+   - **色值** `#172033 → #424242/#6a6a6a`；`border-left #d7dce5 → #eaeaea`；`box-shadow → rgba(0,0,0,.1) 0 4px 20px`。
+   - **控件** `.zy-input` → 原生 `radius:3px / border:#dbdbdb / h18px`；`.zy-btn` → 对齐 `.ai-btn-blue`/`.ai-generate-btn` 体例。
+   - **字体** 补齐原生 fallback 链；**栅格** 收进 4/5/8/10/20（消除 `gap:3px`）。
+3. 满足 §十七 Git 规则：**入口 `/` 面板改造单独一轮 commit + push + 确认远端**。
+4. UI-2 后进入 UI-3（视觉融合并排比对）→ UI-4（真实 ScriptCat 回归，含 4 场景面板唯一性）→ UI-5（§十八 14 项全 PASS 终验）。

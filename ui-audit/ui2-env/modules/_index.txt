@@ -1,0 +1,15 @@
+fields/field-core.js -> fields__field-core.js (7938 B) OK
+core/config-core.js -> core__config-core.js (2100 B) OK
+ai/ai-client.js -> ai__ai-client.js (3747 B) OK
+editor/page-bridge.js -> editor__page-bridge.js (28320 B) OK
+editor/object-model.js -> editor__object-model.js (5545 B) OK
+editor/object-adapter.js -> editor__object-adapter.js (4970 B) OK
+editor/object-matcher.js -> editor__object-matcher.js (8470 B) OK
+ocr/baidu-provider.js -> ocr__baidu-provider.js (11566 B) OK
+ocr/fallback-policy.js -> ocr__fallback-policy.js (2018 B) OK
+ocr/candidate-normalizer.js -> ocr__candidate-normalizer.js (2129 B) OK
+ocr/credential-crypto.js -> ocr__credential-crypto.js (3366 B) OK
+ocr/ocr-model.js -> ocr__ocr-model.js (2325 B) OK
+ocr/image-mapper.js -> ocr__image-mapper.js (3231 B) OK
+ocr/ocr-provider.js -> ocr__ocr-provider.js (5135 B) OK
+ocr/tesseract-loader.js -> ocr__tesseract-loader.js (4722 B) OK

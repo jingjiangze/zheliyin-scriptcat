@@ -1,0 +1,79 @@
+{
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "title": "智能设计定制未来",
+  "readyState": "complete",
+  "rightBar": {
+    "exists": true,
+    "x": 1250,
+    "y": 51,
+    "w": 190,
+    "h": 849,
+    "position": "absolute",
+    "zIndex": "20",
+    "display": "block",
+    "background": "rgb(255, 255, 255)"
+  },
+  "tabPageLayer": {
+    "exists": true,
+    "x": 1250,
+    "y": 51,
+    "w": 190,
+    "h": 33,
+    "position": "static",
+    "zIndex": "auto",
+    "display": "flex",
+    "background": "rgb(255, 255, 255)"
+  },
+  "bgMaterial": {
+    "exists": true,
+    "x": 1550,
+    "y": 0,
+    "w": 260,
+    "h": 900,
+    "position": "fixed",
+    "zIndex": "auto",
+    "display": "block",
+    "background": "rgb(255, 255, 255)"
+  },
+  "switchContent": {
+    "exists": true,
+    "x": 1210,
+    "y": 51,
+    "w": 41,
+    "h": 849,
+    "position": "absolute",
+    "zIndex": "auto",
+    "display": "block",
+    "background": "rgb(255, 255, 255)"
+  },
+  "btnSwitch": {
+    "exists": true,
+    "x": 1238,
+    "y": 436,
+    "w": 12,
+    "h": 80,
+    "position": "absolute",
+    "zIndex": "auto",
+    "display": "block",
+    "background": "rgb(255, 255, 255)"
+  },
+  "clkOcr": null,
+  "textDisNav": {
+    "exists": true,
+    "x": 0,
+    "y": 0,
+    "w": 0,
+    "h": 0,
+    "position": "relative",
+    "zIndex": "auto",
+    "display": "list-item",
+    "background": "rgb(255, 116, 116)"
+  },
+  "zyPanel": null,
+  "zyToolBtn": null,
+  "zyLegacy": null,
+  "hasGmGetValue": false,
+  "hasJquery": true,
+  "bodyChildren": 242,
+  "rightBarChildren": 8
+}
