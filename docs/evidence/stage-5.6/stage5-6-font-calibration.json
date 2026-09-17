@@ -1,0 +1,190 @@
+{
+ "ts": "2026-09-17T06:20:45.476Z",
+ "stage": "STAGE-5.6-FONT-CALIBRATION",
+ "cells": [
+  {
+   "id": "blank-canvas",
+   "fs": 48,
+   "weight": "bold",
+   "bg": "#ffffff",
+   "result": "PASS",
+   "readbackFs": [
+    37,
+    37
+   ],
+   "expectedRawFs": 38.400000000000006,
+   "ratios": [
+    0.964,
+    0.964
+   ],
+   "meanRatio": 0.964,
+   "term": "已生成 2 个文字（可双击编辑）"
+  },
+  {
+   "id": "w-24-bold",
+   "fs": 24,
+   "weight": "bold",
+   "bg": "#ffffff",
+   "result": "MEASURED",
+   "readbackFs": [
+    18,
+    18
+   ],
+   "expectedRawFs": 19.200000000000003,
+   "ratios": [
+    0.937,
+    0.937
+   ],
+   "meanRatio": 0.937,
+   "term": "已生成 2 个文字（可双击编辑）"
+  },
+  {
+   "id": "w-36-bold",
+   "fs": 36,
+   "weight": "bold",
+   "bg": "#ffffff",
+   "result": "MEASURED",
+   "readbackFs": [
+    28,
+    28
+   ],
+   "expectedRawFs": 28.8,
+   "ratios": [
+    0.972,
+    0.972
+   ],
+   "meanRatio": 0.972,
+   "term": "已生成 2 个文字（可双击编辑）"
+  },
+  {
+   "id": "w-48-bold",
+   "fs": 48,
+   "weight": "bold",
+   "bg": "#ffffff",
+   "result": "MEASURED",
+   "readbackFs": [
+    37,
+    37
+   ],
+   "expectedRawFs": 38.400000000000006,
+   "ratios": [
+    0.964,
+    0.964
+   ],
+   "meanRatio": 0.964,
+   "term": "已生成 2 个文字（可双击编辑）"
+  },
+  {
+   "id": "w-64-bold",
+   "fs": 64,
+   "weight": "bold",
+   "bg": "#ffffff",
+   "result": "MEASURED",
+   "readbackFs": [
+    50,
+    50
+   ],
+   "expectedRawFs": 51.2,
+   "ratios": [
+    0.977,
+    0.977
+   ],
+   "meanRatio": 0.977,
+   "term": "已生成 2 个文字（可双击编辑）"
+  },
+  {
+   "id": "b-48-bold",
+   "fs": 48,
+   "weight": "bold",
+   "bg": "#111111",
+   "result": "MEASURED",
+   "readbackFs": [
+    38,
+    38
+   ],
+   "expectedRawFs": 38.400000000000006,
+   "ratios": [
+    0.99,
+    0.99
+   ],
+   "meanRatio": 0.99,
+   "term": "已生成 2 个文字（可双击编辑）"
+  },
+  {
+   "id": "w-48-regular",
+   "fs": 48,
+   "weight": "normal",
+   "bg": "#ffffff",
+   "result": "MEASURED",
+   "readbackFs": [
+    37,
+    38
+   ],
+   "expectedRawFs": 38.400000000000006,
+   "ratios": [
+    0.964,
+    0.99
+   ],
+   "meanRatio": 0.977,
+   "term": "已生成 2 个文字（可双击编辑）"
+  }
+ ],
+ "infra": [
+  {
+   "name": "install-userscript",
+   "ok": "PASS",
+   "detail": "status=1"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "ready=true"
+  },
+  {
+   "name": "cleanup",
+   "ok": "PASS",
+   "detail": "removed rt-fcal-mu5552cj"
+  }
+ ],
+ "logs": [
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=1 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 800x640 dataUrl=44602 chars",
+  "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=2",
+  "[zy-ocr][SUCCESS] created=2",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=1 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 800x640 dataUrl=32306 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=2",
+  "[zy-ocr][SUCCESS] created=2",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=1 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 800x640 dataUrl=38830 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=2",
+  "[zy-ocr][SUCCESS] created=2",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=1 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 800x640 dataUrl=44602 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=2",
+  "[zy-ocr][SUCCESS] created=2",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=1 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 800x640 dataUrl=52018 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=2",
+  "[zy-ocr][SUCCESS] created=2",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=1 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 800x640 dataUrl=44842 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=2",
+  "[zy-ocr][SUCCESS] created=2",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=1 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 800x640 dataUrl=44986 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=2",
+  "[zy-ocr][SUCCESS] created=2"
+ ],
+ "allMeanRatio": 0.969
+}
