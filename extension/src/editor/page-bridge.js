@@ -60,7 +60,79 @@ function pageBridge() {
         const canvas = findCanvasForSide("front");
         if (!canvas) { post("ocrCreateResult", { ok: false, message: "未找到正面画布。", detectedBlocks: 0, createdCount: 0, created: [], failedBlockIndex: null, error: "no canvas" }); return; }
         const items = Array.isArray(event.data.items) ? event.data.items : [];
-        const editorInteg = { nativeUndoFound: false, undoSavePre: false, undoSavePost: false, identityApplied: 0, uv4Total: 0, layerMax: -1 };
+        // =====================================================================
+        // Stage 6.2 §十二~§十七：Native-first —— OCR 创建改走编辑器原生新增文字入口。
+        // 找到 252438 真机原生入口：CanvasDiy.drawText(text, fontSize, left, top, mediaJson, layerNum)
+        //   → createObjProductJsonDetail（media→身份/样式字段）+ canvas.add + 图层注册
+        //     （canvasObjInfo.canvasToProductObjArr.push）+ 原生 uuid + checkObjsInProductJson。
+        // OCR 只提供 text/position/size/style（media JSON），身份字段由原生流程负责（§十七）。
+        // 原生路径不可用时回退到下方既有镜像路径（Level 1-2），并在 editorIntegration.mode 标明。
+        // =====================================================================
+        const diy = getCanvasDiyForSide("front");
+        if (diy) {
+          const editorInteg2 = { mode: "native", nativeUndoFound: false, undoSavePre: false, undoSavePost: false, drawTextBatch: 0, failedBlockIndex: -1, layerNumBase: diy.canvasObjInfo.canvasToProductObjArr.length, identityApplied: 0, uv4Total: 0, layerMax: -1 };
+          try {
+            const U2 = getNativeUndoInstance();
+            if (U2 && typeof U2.save === "function") { editorInteg2.nativeUndoFound = true; U2.save(); editorInteg2.undoSavePre = true; }
+          } catch (eUndoNat) {}
+          const fontId = getEditorDefaultFontId();
+          let createdNat = [];
+          const batchNat = [];
+          let failedBlockIndex = null;
+          let failMsg = "";
+          try {
+            for (let idx = 0; idx < items.length; idx += 1) {
+              const it = items[idx];
+              const layerNum = editorInteg2.layerNumBase + idx;
+              const entry = buildTextMediaEntry(it, layerNum, fontId);
+              let obj = null;
+              try {
+                diy.drawText(String(it.text || ""), null, null, null, entry, layerNum);
+                editorInteg2.drawTextBatch += 1;
+                obj = findOcrObject(diy, it, layerNum);
+                if (obj) {
+                  batchNat.push(obj);
+                  if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{12,}$/.test(obj.multiUuid)) editorInteg2.uv4Total += 1;
+                  try { if (it.diagnostics) obj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
+                }
+                createdNat.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: diy.canvas.getObjects().indexOf(obj), uuid: obj ? (obj.uuid || obj.multiUuid || null) : null, text: String(it.text || "").slice(0, 16) });
+              } catch (e2) {
+                failMsg = "native item" + idx + ": " + String(e2 && e2.message || e2).slice(0, 120);
+                failedBlockIndex = idx;
+                break;
+              }
+            }
+          } catch (eBatch) {
+            failMsg = "native batch: " + String(eBatch && eBatch.message || eBatch).slice(0, 160);
+            failedBlockIndex = failedBlockIndex != null ? failedBlockIndex : (items.length - 1);
+          }
+          if (failedBlockIndex != null) {
+            // §16 事务回滚：移除本批已建对象（canvas + 图层数组），恢复创建前状态
+            batchNat.forEach(function (o) {
+              try { const li = diy.canvasObjInfo.canvasToProductObjArr.indexOf(o); if (li >= 0) diy.canvasObjInfo.canvasToProductObjArr.splice(li, 1); diy.canvas.remove(o); } catch (eR) {}
+            });
+            createdNat = [];
+          }
+          try {
+            const U2 = getNativeUndoInstance();
+            if (U2 && typeof U2.save === "function") { U2.save(); editorInteg2.undoSavePost = true; }
+          } catch (eUndoNat2) {}
+          if (diy.canvas.requestRenderAll) diy.canvas.requestRenderAll();
+          const detectedBlocks = items.length;
+          const createdCount = createdNat.length;
+          editorInteg2.identityApplied = createdCount;
+          post("ocrCreateResult", {
+            ok: createdCount === detectedBlocks && detectedBlocks > 0,
+            detectedBlocks: detectedBlocks,
+            createdCount: createdCount,
+            created: createdNat,
+            failedBlockIndex: failedBlockIndex,
+            error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
+            editorIntegration: editorInteg2
+          });
+          return;
+        }
+        const editorInteg = { mode: "mirror", nativeUndoFound: false, undoSavePre: false, undoSavePost: false, identityApplied: 0, uv4Total: 0, layerMax: -1 };
         // 编辑器本地能力：native Undo 快照（仅编辑器自身 API，失败静默）
         try {
           const U = getNativeUndoInstance();
@@ -192,6 +264,69 @@ function pageBridge() {
       obj.printLocationWidth = gx.width; obj.printLocationHeight = gx.height; obj.printLocationRotation = gx.rotation;
       try { obj.layerNum = currentLayerMax(canvas) + 1; } catch (e) {}
       return true;
+    }
+
+    // ---- Stage 6.2 §十三~§十七：原生新增文字入口辅助（CanvasDiy 包装 + media JSON 构造）----
+    // 真机审计：CanvasDiy.drawText(a,b,c,d,e,f)，e=media JSON 时将身份/location/样式字段注入对象，
+    // 并把对象注册进图层数组（canvasObjInfo.canvasToProductObjArr）与产品 JSON（checkObjsInProductJson）。
+    function getCanvasDiyForSide(side) {
+      const CanvasObjVO = getLoadedModule("CanvasObjVO") || window.CanvasObjVO;
+      const total = CanvasObjVO && CanvasObjVO.totalCanvasArray;
+      const index = side === "back" ? 1 : 0;
+      if (Array.isArray(total)) {
+        const pick = function (d) { return d && typeof d.drawText === "function" && d.canvas && d.canvas.getObjects && d.canvasObjInfo ? d : null; };
+        if (total[index]) { const r = pick(total[index]); if (r) return r; }
+        for (let i = 0; i < total.length; i += 1) { const r = pick(total[i]); if (r) return r; }
+      }
+      return null;
+    }
+    function getEditorDefaultFontId() {
+      try {
+        const li = document.querySelector(".fontFamily li") || document.querySelector(".editFontFamily li");
+        if (li && li.getAttribute("fontid")) return li.getAttribute("fontid");
+      } catch (e) {}
+      return null;
+    }
+    // 按 OCR 输入（text/position/size/style）构造最小 TEXT media 条目，交给原生 drawText 消费（§十七）
+    function buildTextMediaEntry(it, layerNum, fontId) {
+      const text = String(it.text || "").trim();
+      const size = Math.max(8, it.fontSize || 14);
+      const w = Math.max(20, it.width || 60);
+      const h = Math.max(14, it.height || Math.round(size * 1.3 + 8));
+      const rot = it.angle && it.angle !== 0 ? it.angle : 0;
+      const x = it.left != null ? Math.round(it.left) : 20;
+      const y = it.top != null ? Math.round(it.top) : 20;
+      return {
+        media: {
+          mediaType: "text", text: text,
+          font: { pointSize: size, fontColor: "#000000", isHorizontal: 1, gravity: "left",
+            id: fontId || "1", isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 },
+          charSpace: 0, lineSpace: 1.2, lineIdType: 0, isBG: 0, imgPath: ""
+        },
+        location: { x: x, y: y, width: w, height: h, factWidth: w, factHeight: h, rotation: rot },
+        printLocation: { x: x, y: y, width: w, height: h, rotation: rot },
+        layer: { alpha: 1 },
+        layerNum: layerNum,
+        isEdit: 1, isDisplay: 1, deleteState: 0, visitLevel: 1,
+        multiUuid: nativeIdentityGuid(), markuuid: ""
+      };
+    }
+    function nativeIdentityGuid() {
+      const sundry = getLoadedModule("sundry");
+      try { if (sundry && typeof sundry.guid === "function") { const g = sundry.guid(); if (g) return g; } } catch (e) {}
+      try { if (window.crypto && typeof window.crypto.randomUUID === "function") return window.crypto.randomUUID(); } catch (e) {}
+      return "zy-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
+    }
+    // 定位 drawText 创建的对象：text 内容 + layerNum 双匹配（取最后一个）
+    function findOcrObject(diy, it, layerNum) {
+      const target = String(it.text || "").trim();
+      const objs = diy.canvas.getObjects();
+      let found = null;
+      for (let i = objs.length - 1; i >= 0; i -= 1) {
+        const o = objs[i];
+        if (o && String(o.text || "").trim() === target && (o.layerNum === layerNum || layerNum == null)) { found = o; break; }
+      }
+      return found;
     }
 
     // ---- Stage 5.5B P1：只读画布信息 / OCR 目标准备（页面世界执行，隔离世界不可见）----
