@@ -50,24 +50,32 @@ function pageBridge() {
       if (event.data.type === "ocrCreate") {
         // Stage 5.5A-R2（Demo）：OCR 重建入口 —— 按 OCR 行级结果在正面画布创建真实 textbox。
         // 仅创建（NOT_FOUND 路径等价物）；identity 清洁（skipBox 已隔离 markuuid，5.1）。
+        // Stage 5.6 P0（真机 BUILDING 卡死）：任何创建异常都必须兜底回复，禁止让调用方死等。
         const canvas = findCanvasForSide("front");
         if (!canvas) { post("ocrCreateResult", { ok: false, message: "未找到正面画布。" }); return; }
         const items = Array.isArray(event.data.items) ? event.data.items : [];
-        const ref = getTextObjects(canvas)[0] || canvas.getObjects().find(function (o) { return typeof o.text === "string"; }) || null;
         const created = [];
-        items.forEach(function (it, idx) {
-          const obj = createTextObject(canvas, String(it.text || ""), ref, idx, null);
-          if (!obj) return;
-          const conf = { left: it.left != null ? it.left : 20, top: it.top != null ? it.top : 20 + idx * 24, width: Math.max(60, it.width || 120), fontSize: it.fontSize || 14, fontFamily: it.fontFamily || "思源黑体 Regular", textAlign: "left", fill: "#000000" };
-          // Stage 5.6 P5-D：旋转场景（Mapper 输出 angle + origin:"center"）——中心即 left/top，绕中心旋转
-          if (it.angle) { conf.angle = it.angle; conf.originX = "center"; conf.originY = "center"; }
-          obj.set(conf);
-          setObjectText(obj, String(it.text || ""));
-          obj.zyFieldKey = "ocr_demo_" + String(it.text || "").slice(0, 4);
-          created.push({ index: canvas.getObjects().indexOf(obj), type: obj.type, text: String(it.text || "").slice(0, 16) });
-        });
+        let failMsg = "";
+        try {
+          const ref = getTextObjects(canvas)[0] || canvas.getObjects().find(function (o) { return typeof o.text === "string"; }) || null;
+          items.forEach(function (it, idx) {
+            const obj = createTextObject(canvas, String(it.text || ""), ref, idx, null);
+            if (!obj) return;
+            const conf = { left: it.left != null ? it.left : 20, top: it.top != null ? it.top : 20 + idx * 24, width: Math.max(60, it.width || 120), fontSize: it.fontSize || 14, fontFamily: it.fontFamily || "思源黑体 Regular", textAlign: "left", fill: "#000000" };
+            // Stage 5.6 P5-D：旋转场景（Mapper 输出 angle + origin:"center"）——中心即 left/top，绕中心旋转
+            if (it.angle) { conf.angle = it.angle; conf.originX = "center"; conf.originY = "center"; }
+            obj.set(conf);
+            setObjectText(obj, String(it.text || ""));
+            obj.zyFieldKey = "ocr_demo_" + String(it.text || "").slice(0, 4);
+            created.push({ index: canvas.getObjects().indexOf(obj), type: obj.type, text: String(it.text || "").slice(0, 16) });
+          });
+        } catch (e) {
+          failMsg = String(e && e.message || e).slice(0, 160);
+          console.warn("[zy-ocr][ocrCreate] partial error: " + failMsg + " created=" + created.length);
+        }
         if (canvas.requestRenderAll) canvas.requestRenderAll();
-        post("ocrCreateResult", { ok: created.length > 0, created: created });
+        post("ocrCreateResult", { ok: created.length > 0, created: created, message: failMsg || undefined });
+        return;
       }
       if (event.data.type === "getCanvasInfo") {
         // Stage 5.5B P1：只读画布自检 —— 隔离世界读不到页面 world 的 requirejs 注册表，
