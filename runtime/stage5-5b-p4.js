@@ -117,22 +117,24 @@ const FAKE_SK = "SK-FAKE-4P4-654321";
     function statusReset() { return page.evaluate(() => { const n = document.getElementById("zy-native-status"); if (n) n.textContent = ""; }).catch(() => {}); }
     function clickOcr() { return page.evaluate(() => { const b = document.getElementById("zy-native-ocr-btn"); if (b) b.click(); return !!b; }).catch(() => false); }
     async function clickWithLocalFailure() {
-      return page.evaluate(() => {
+      return page.evaluate(() => new Promise((resolve) => {
         const btn = document.getElementById("zy-native-ocr-btn") || document.getElementById("zy-ocr-btn");
-        if (!btn) return { ok: false };
+        if (!btn) return resolve({ ok: false });
         btn.click();
-        return new Promise((resolve) => {
-          const t0 = Date.now();
-          const iv = setInterval(() => {
-            const v = document.documentElement.getAttribute("data-zy-ocr-result");
-            if (v === "") {
-              document.documentElement.setAttribute("data-zy-ocr-result", JSON.stringify({ ok: false, err: "engine" }));
-              clearInterval(iv);
-              resolve({ ok: true, armed: true });
-            } else if (Date.now() - t0 > 20000) { clearInterval(iv); resolve({ ok: true, armed: false, v: v }); }
-          }, 100);
-        });
-      });
+        let done = false;
+        const t0 = Date.now();
+        const iv = setInterval(() => {
+          const v = document.documentElement.getAttribute("data-zy-ocr-result");
+          if (v === "" && !done) {
+            // 持续覆盖失败结果 2.5s：确保 500ms 轮询一定读到失败（避免与 executor 真实结果竞态）
+            done = true;
+            const write = () => document.documentElement.setAttribute("data-zy-ocr-result", JSON.stringify({ ok: false, err: "engine" }));
+            write();
+            const keep = setInterval(write, 50);
+            setTimeout(() => { clearInterval(keep); resolve({ ok: true, armed: true }); }, 2500);
+          } else if (Date.now() - t0 > 20000 && !done) { clearInterval(iv); resolve({ ok: true, armed: false, v: v }); }
+        }, 100);
+      }));
     }
     async function saveFakeKeys() {
       return page.evaluate(({ ak, sk }) => {
@@ -156,7 +158,7 @@ const FAKE_SK = "SK-FAKE-4P4-654321";
       });
     }
     const resetKeys = await resetMainStorage().catch((e) => ["err:" + String(e && e.message || e)]);
-    step("reset-main-gm-storage", !Array.isArray(resetKeys) || !String(resetKeys[0]).indexOf("err:") === 0, "removedKeys=" + JSON.stringify(resetKeys), "R3_UNCONFIGURED_PRECONDITION");
+    step("reset-main-gm-storage", !(Array.isArray(resetKeys) && resetKeys.join(",").indexOf("err:") === 0), "removedKeys=" + JSON.stringify(resetKeys), "R3_UNCONFIGURED_PRECONDITION");
     const leakCheck = () => {
       const hay = JSON.stringify({ console: cn, matrix: report.matrix, pageErrors: pageErrors });
       const hits = [];
