@@ -1,0 +1,862 @@
+{
+ "ts": "2026-09-17T05:35:50.071Z",
+ "stage": "STAGE-5.6-P5-GEOMETRY",
+ "matrix": [
+  {
+   "id": "A-base",
+   "kind": "active",
+   "size": [
+    900,
+    1200
+   ],
+   "scale": 1,
+   "pos": "center",
+   "angle": 0,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 6.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 82.7,
+      "top": -228.9,
+      "w": 195,
+      "h": 52,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 36.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": 82.7,
+      "top": -48.9,
+      "w": 246,
+      "h": 112.3,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "corner",
+     "posErrPx": 11,
+     "centerErrPx": 5.4,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 86.7,
+      "top": 184.1,
+      "w": 327,
+      "h": 42.9,
+      "fs": 38
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": -14.250000000000057,
+    "top": -334.91875000000005
+   },
+   "maxPosErrPx": 11,
+   "angleOk": true,
+   "wrapWarn": 1
+  },
+  {
+   "id": "B-s05",
+   "kind": "active",
+   "size": [
+    900,
+    1200
+   ],
+   "scale": 0.5,
+   "pos": "center",
+   "angle": 0,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "corner",
+     "posErrPx": 4,
+     "centerErrPx": 1.5,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 257.2,
+      "top": 16.1,
+      "w": 101.5,
+      "h": 26,
+      "fs": 23
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "corner",
+     "posErrPx": 4,
+     "centerErrPx": 16.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": 257.2,
+      "top": 106.1,
+      "w": 127,
+      "h": 56.1,
+      "fs": 23
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "corner",
+     "posErrPx": 5.5,
+     "centerErrPx": 1.5,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 259.2,
+      "top": 222.6,
+      "w": 167.5,
+      "h": 21.5,
+      "fs": 19
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": 210.74999999999994,
+    "top": -34.918750000000045
+   },
+   "maxPosErrPx": 5.5,
+   "angleOk": true,
+   "wrapWarn": 1
+  },
+  {
+   "id": "B-s2",
+   "kind": "active",
+   "size": [
+    900,
+    1200
+   ],
+   "scale": 2,
+   "pos": "center",
+   "angle": 0,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "corner",
+     "posErrPx": 16,
+     "centerErrPx": 76.8,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": -266.3,
+      "top": -718.9,
+      "w": 382,
+      "h": 224.6,
+      "fs": 92
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "corner",
+     "posErrPx": 16,
+     "centerErrPx": 76.8,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": -266.3,
+      "top": -358.9,
+      "w": 484,
+      "h": 224.6,
+      "fs": 92
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "corner",
+     "posErrPx": 22,
+     "centerErrPx": 14,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": -258.3,
+      "top": 107.1,
+      "w": 646,
+      "h": 85.9,
+      "fs": 76
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": -464.25000000000006,
+    "top": -934.91875
+   },
+   "maxPosErrPx": 22,
+   "angleOk": true,
+   "wrapWarn": 2
+  },
+  {
+   "id": "C-lt",
+   "kind": "active",
+   "size": [
+    900,
+    1200
+   ],
+   "scale": 1,
+   "pos": "left-top",
+   "angle": 0,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 6.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 137,
+      "top": 146,
+      "w": 195,
+      "h": 52,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 36.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": 137,
+      "top": 326,
+      "w": 246,
+      "h": 112.3,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "corner",
+     "posErrPx": 11,
+     "centerErrPx": 5.4,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 141,
+      "top": 559,
+      "w": 327,
+      "h": 42.9,
+      "fs": 38
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": 40,
+    "top": 40
+   },
+   "maxPosErrPx": 11,
+   "angleOk": true,
+   "wrapWarn": 1
+  },
+  {
+   "id": "C-rb",
+   "kind": "active",
+   "size": [
+    900,
+    1200
+   ],
+   "scale": 1,
+   "pos": "right-bottom",
+   "angle": 0,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 6.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 8.5,
+      "top": -623.8,
+      "w": 195,
+      "h": 52,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 36.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": 8.5,
+      "top": -443.8,
+      "w": 246,
+      "h": 112.3,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "corner",
+     "posErrPx": 11,
+     "centerErrPx": 5.4,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 12.5,
+      "top": -210.8,
+      "w": 327,
+      "h": 42.9,
+      "fs": 38
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": -88.50000000000011,
+    "top": -729.8375000000001
+   },
+   "maxPosErrPx": 11,
+   "angleOk": true,
+   "wrapWarn": 1
+  },
+  {
+   "id": "D-r15",
+   "kind": "active",
+   "size": [
+    900,
+    1200
+   ],
+   "scale": 1,
+   "pos": "center",
+   "angle": 15,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "rot-center",
+     "posErrPx": 7.2,
+     "centerErrPx": 7.2,
+     "tbAngle": 15,
+     "expAngle": 15,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 309.8,
+      "top": -252.1,
+      "w": 195,
+      "h": 52,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "rot-center",
+     "posErrPx": 7,
+     "centerErrPx": 7,
+     "tbAngle": 15,
+     "expAngle": 15,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": 287.9,
+      "top": -71.7,
+      "w": 246,
+      "h": 112.3,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "rot-center",
+     "posErrPx": 6.2,
+     "centerErrPx": 6.2,
+     "tbAngle": 15,
+     "expAngle": 15,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 271.6,
+      "top": 161,
+      "w": 327,
+      "h": 42.9,
+      "fs": 38
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": -14.250000000000057,
+    "top": -334.91875000000005
+   },
+   "maxPosErrPx": 7.2,
+   "angleOk": true,
+   "wrapWarn": 1
+  },
+  {
+   "id": "D-r45",
+   "kind": "active",
+   "size": [
+    900,
+    1200
+   ],
+   "scale": 1,
+   "pos": "center",
+   "angle": 45,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "rot-center",
+     "posErrPx": 7.2,
+     "centerErrPx": 7.2,
+     "tbAngle": 45,
+     "expAngle": 45,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 585.3,
+      "top": -245.8,
+      "w": 195,
+      "h": 52,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "rot-center",
+     "posErrPx": 7,
+     "centerErrPx": 7,
+     "tbAngle": 45,
+     "expAngle": 45,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": 476.1,
+      "top": -100.5,
+      "w": 246,
+      "h": 112.3,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "rot-center",
+     "posErrPx": 6.2,
+     "centerErrPx": 6.2,
+     "tbAngle": 45,
+     "expAngle": 45,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 345.6,
+      "top": 92.9,
+      "w": 327,
+      "h": 42.9,
+      "fs": 38
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": -14.250000000000057,
+    "top": -334.91875000000005
+   },
+   "maxPosErrPx": 7.2,
+   "angleOk": true,
+   "wrapWarn": 1
+  },
+  {
+   "id": "D-r90",
+   "kind": "active",
+   "size": [
+    900,
+    1200
+   ],
+   "scale": 1,
+   "pos": "center",
+   "angle": 90,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "rot-center",
+     "posErrPx": 7.2,
+     "centerErrPx": 7.2,
+     "tbAngle": 90,
+     "expAngle": 90,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 902.8,
+      "top": 9.6,
+      "w": 195,
+      "h": 52,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "rot-center",
+     "posErrPx": 7,
+     "centerErrPx": 7,
+     "tbAngle": 90,
+     "expAngle": 90,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": 722.8,
+      "top": 35.1,
+      "w": 246,
+      "h": 112.3,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "rot-center",
+     "posErrPx": 6.2,
+     "centerErrPx": 6.2,
+     "tbAngle": 90,
+     "expAngle": 90,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 493.7,
+      "top": 79.6,
+      "w": 327,
+      "h": 42.9,
+      "fs": 38
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": -14.250000000000057,
+    "top": -334.91875000000005
+   },
+   "maxPosErrPx": 7.2,
+   "angleOk": true,
+   "wrapWarn": 1
+  },
+  {
+   "id": "E-s500",
+   "kind": "active",
+   "size": [
+    500,
+    500
+   ],
+   "scale": 1,
+   "pos": "center",
+   "angle": 0,
+   "result": "FAIL",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 6.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 282.7,
+      "top": 121.1,
+      "w": 195,
+      "h": 52,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 36.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": 282.7,
+      "top": 301.1,
+      "w": 246,
+      "h": 112.3,
+      "fs": 46
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": 185.74999999999994,
+    "top": 15.081249999999955
+   },
+   "note": "countMismatch boxes=2 expected=3",
+   "maxPosErrPx": 8,
+   "angleOk": true,
+   "wrapWarn": 1
+  },
+  {
+   "id": "E-l2000",
+   "kind": "active",
+   "size": [
+    2000,
+    3000
+   ],
+   "scale": 1,
+   "pos": "center",
+   "angle": 0,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 6.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": -467.3,
+      "top": -1128.9,
+      "w": 195,
+      "h": 52,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "corner",
+     "posErrPx": 8,
+     "centerErrPx": 36.6,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": -467.3,
+      "top": -948.9,
+      "w": 246,
+      "h": 112.3,
+      "fs": 46
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "corner",
+     "posErrPx": 11,
+     "centerErrPx": 5.4,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": -463.3,
+      "top": -715.9,
+      "w": 327,
+      "h": 42.9,
+      "fs": 38
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": -564.25,
+    "top": -1234.91875
+   },
+   "maxPosErrPx": 11,
+   "angleOk": true,
+   "wrapWarn": 1
+  },
+  {
+   "id": "F-bg",
+   "kind": "background",
+   "size": [
+    900,
+    1200
+   ],
+   "scale": 0.7,
+   "pos": "left-top",
+   "angle": 0,
+   "result": "PASS",
+   "rows": [
+    {
+     "line": "测试 公司",
+     "mode": "corner",
+     "posErrPx": 5.6,
+     "centerErrPx": 3.4,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 106.7,
+      "top": 113,
+      "w": 138.9,
+      "h": 36.2,
+      "fs": 32
+     },
+     "ok": true
+    },
+    {
+     "line": "折 立 印 设计",
+     "mode": "corner",
+     "posErrPx": 5.6,
+     "centerErrPx": 24.4,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": true,
+     "obj": {
+      "left": 106.7,
+      "top": 239,
+      "w": 174.6,
+      "h": 78.1,
+      "fs": 32
+     },
+     "ok": true
+    },
+    {
+     "line": "13800138000",
+     "mode": "corner",
+     "posErrPx": 7.7,
+     "centerErrPx": 3.1,
+     "tbAngle": 0,
+     "expAngle": 0,
+     "wrapTwoLines": false,
+     "obj": {
+      "left": 109.5,
+      "top": 402.1,
+      "w": 231.3,
+      "h": 30.5,
+      "fs": 27
+     },
+     "ok": true
+    }
+   ],
+   "lt": {
+    "left": 40,
+    "top": 40
+   },
+   "maxPosErrPx": 7.7,
+   "angleOk": true,
+   "wrapWarn": 1
+  }
+ ],
+ "infra": [
+  {
+   "name": "install-userscript",
+   "ok": "PASS",
+   "detail": "status=1"
+  },
+  {
+   "name": "editor-ready",
+   "ok": "PASS",
+   "detail": "ready=true"
+  },
+  {
+   "name": "bridge-rotation-probe",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"created\":1,\"angle\":45,\"origin\":\"center/center\"}"
+  },
+  {
+   "name": "cleanup-userscript",
+   "ok": "PASS",
+   "detail": "removed rt-p5g-mu53jak7"
+  }
+ ],
+ "console": [
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 900x1200 dataUrl=61834 chars",
+  "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 900x1200 dataUrl=61834 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 900x1200 dataUrl=61834 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 900x1200 dataUrl=61834 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 900x1200 dataUrl=61834 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 900x1200 dataUrl=61834 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 900x1200 dataUrl=61834 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 900x1200 dataUrl=61834 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 500x500 dataUrl=26214 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=2",
+  "[zy-ocr][SUCCESS] created=2",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][PREPARING] kind=active-image 2000x3000 dataUrl=199202 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=21 bg=true active=null",
+  "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=61834 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3"
+ ]
+}

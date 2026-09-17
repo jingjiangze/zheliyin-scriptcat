@@ -103,6 +103,13 @@ const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user
       const all = (await adapter.getAllScripts(optsPage)) || [];
       for (const s of all.filter((x) => /折立印|zheliyin/.test(String(JSON.stringify(x) || "")))) { try { await adapter.removeScript(optsPage, s.uuid); } catch (e) {} }
     } catch (e) {}
+    // @require 资源按 URL 缓存（compiled_resource/resource）：安装前清空，真实验证最新 page-bridge.js 等模块（P5-D 起）
+    await optsPage.evaluate(async () => {
+      const all = await chrome.storage.local.get(null);
+      const targets = Object.keys(all).filter((k) => /^compiled_resource:|^resource:/.test(k));
+      for (const k of targets) { try { await chrome.storage.local.remove(k); } catch (e) {} }
+      return targets.length;
+    }).catch(() => 0);
     const inst = await adapter.installByCode(optsPage, { uuid: UUID, code: userScriptSrc, upsertBy: "user" }).catch((e) => ({ __err: String(e && e.message || e) }));
     step("install-userscript", !inst.__err, inst.__err || "status=" + inst.status, "REAL_SCRIPT_CAT_INSTALL");
     if (inst.__err) throw new Error("install failed: " + inst.__err);
