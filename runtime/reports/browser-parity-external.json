@@ -1,0 +1,167 @@
+{
+ "ts": "2026-09-17T23:45:21.317Z",
+ "probe": "BROWSER-PARITY",
+ "env": "external-chrome-persistent-profile-usc3",
+ "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+ "phases": {
+  "ready": {
+   "ok": true,
+   "objs": 9
+  },
+  "core": {
+   "env": {
+    "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+    "title": "智能设计定制未来",
+    "isTop": true,
+    "frames": 1,
+    "bridgeMarker": true,
+    "panelCount": 0,
+    "fabric": true,
+    "requirejs": true,
+    "canvasObjVO": true,
+    "currentCanvas": true,
+    "canvasDiy": true,
+    "canvas": {
+     "canvasCount": 1,
+     "firstW": 619.5,
+     "firstH": 376.8625,
+     "firstObjs": 9
+    },
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36"
+   },
+   "editor": {
+    "loaded": true,
+    "totalCanvasArrayLength": 1,
+    "currentCanvasNum": 1,
+    "canvasPagesNum": 0,
+    "frontImgPathStr": true,
+    "backImgPathStr": true,
+    "objectCount": 9,
+    "textboxCount": 0,
+    "objectTypeDistribution": {
+     "rect": 1,
+     "line": 8
+    },
+    "canvasWidth": 619.5,
+    "canvasHeight": 376.8625,
+    "hasDrawText": true,
+    "hasCanvasObjInfo": true,
+    "layerArrLen": 1
+   },
+   "bridge": {
+    "probe": {
+     "ok": true,
+     "canvases": [
+      {
+       "side": "front",
+       "found": true,
+       "ctor": "b",
+       "width": 619.5,
+       "height": 376.8625,
+       "textObjects": 0
+      },
+      {
+       "side": "back",
+       "found": true,
+       "ctor": "b",
+       "width": 619.5,
+       "height": 376.8625,
+       "textObjects": 0
+      }
+     ]
+    },
+    "getCanvasInfo": {
+     "ok": true,
+     "width": 619.5,
+     "height": 376.8625,
+     "objs": 9,
+     "textTotal": 0,
+     "imageTotal": 0,
+     "bgImage": false,
+     "activeType": null
+    },
+    "ocrPrepare": {
+     "ok": false,
+     "code": "IMAGE_UNAVAILABLE",
+     "message": "未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+    }
+   },
+   "errors": []
+  },
+  "native": {
+   "env": {
+    "loaded": true
+   },
+   "steps": [
+    {
+     "tag": "before",
+     "objectCount": 9,
+     "layerLen": 1,
+     "markerOnCanvas": false,
+     "markerInLayer": false,
+     "markerType": null,
+     "markerUuid": null
+    },
+    {
+     "tag": "afterCreate",
+     "objectCount": 10,
+     "layerLen": 2,
+     "markerOnCanvas": true,
+     "markerInLayer": true,
+     "markerType": "textbox",
+     "markerUuid": "0bb12d97-b637-4986-bd6c-2737de65dfc7"
+    },
+    {
+     "tag": "afterUndo",
+     "objectCount": 9,
+     "layerLen": 1,
+     "markerOnCanvas": false,
+     "markerInLayer": false,
+     "markerType": null,
+     "markerUuid": null
+    },
+    {
+     "tag": "afterCleanup",
+     "objectCount": 9,
+     "layerLen": 1,
+     "markerOnCanvas": false,
+     "markerInLayer": false,
+     "markerType": null,
+     "markerUuid": null
+    }
+   ],
+   "created": {
+    "ok": true,
+    "code": null,
+    "createdCount": 1,
+    "detectedBlocks": 1,
+    "mode": "native"
+   },
+   "undo": {
+    "found": true,
+    "clicksUsed": 2,
+    "removedAfterUndo": true,
+    "method": "jquery-visible-trigger"
+   },
+   "cleanup": {
+    "removed": 0,
+    "objectCount": 9,
+    "layerLen": 1,
+    "markerOnCanvas": false,
+    "markerInLayer": false,
+    "markerType": null,
+    "markerUuid": null
+   },
+   "metrics": {
+    "createdOne": true,
+    "nativeMode": true,
+    "landedOnCanvas": true,
+    "registeredInLayer": true,
+    "hasUuid": true,
+    "undoRemoved": true,
+    "finalClean": true
+   }
+  }
+ },
+ "errors": []
+}

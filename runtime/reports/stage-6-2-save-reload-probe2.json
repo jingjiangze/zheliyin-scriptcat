@@ -1,11 +1,11 @@
 {
- "ts": "2026-09-17T09:09:21.115Z",
+ "ts": "2026-09-17T14:42:26.308Z",
  "stage": "STAGE-6-2-SAVE-RELOAD-PROBE2",
  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
  "phases": {
   "ready": {
    "ok": true,
-   "objs": 9
+   "objs": 8
   },
   "ocrCreate": {
    "ok": true,
