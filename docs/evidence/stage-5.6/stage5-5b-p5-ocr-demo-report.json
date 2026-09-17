@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-17T06:38:01.758Z",
+ "ts": "2026-09-17T06:47:57.764Z",
  "stage": "STAGE-5.6-P5-OCR-DEMO",
  "steps": [
   {
@@ -46,20 +46,20 @@
   },
   {
    "name": "scenario-A-ocr-flow",
-   "ok": "FAIL",
-   "detail": "clicked=true status=本地识别失败（LOCAL_OCR_EMPTY），百度云端未配置：请在「百度云 OCR」中填写 API Key / Secret Key 后重试",
+   "ok": "PASS",
+   "detail": "clicked=true status=已生成 3 个文字（可双击编辑）",
    "evidence": "P5_BG_LOCAL_OCR_TEXTCREATE"
   },
   {
    "name": "scenario-A-readable-textbox",
-   "ok": "FAIL",
-   "detail": "{\"ocrCount\":0,\"samples\":[],\"total\":21}",
+   "ok": "PASS",
+   "detail": "{\"ocrCount\":3,\"samples\":[{\"text\":\"测试 公司\",\"type\":\"textbox\",\"editable\":true},{\"text\":\"折 立 印 设计\",\"type\":\"textbox\",\"editable\":true},{\"text\":\"13800138000\",\"type\":\"textbox\",\"editable\":true}],\"total\":12}",
    "evidence": "P5_REAL_EDITABLE_TEXTBOX"
   },
   {
    "name": "scenario-A-rollback",
    "ok": "PASS",
-   "detail": "{\"ok\":true,\"removed\":0,\"totalAfter\":21,\"bgAfter\":false}",
+   "detail": "{\"ok\":true,\"removed\":3,\"totalAfter\":9,\"bgAfter\":false}",
    "evidence": "P5_ROLLBACK_CLEAN"
   },
   {
@@ -77,7 +77,7 @@
   {
    "name": "scenario-B-rollback",
    "ok": "PASS",
-   "detail": "{\"ok\":true,\"removed\":2,\"totalAfter\":22,\"bgAfter\":false}",
+   "detail": "{\"ok\":true,\"removed\":2,\"totalAfter\":10,\"bgAfter\":false}",
    "evidence": "P5_ROLLBACK_B"
   },
   {
@@ -88,14 +88,14 @@
   },
   {
    "name": "scenario-C-early-click",
-   "ok": "PASS",
-   "detail": "clicked=true terminal=已生成 12 个文字（可双击编辑） early=true",
+   "ok": "FAIL",
+   "detail": "clicked=true terminal=未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图 early=true",
    "evidence": "P5_CANVAS_EARLY_CLICK"
   },
   {
    "name": "scenario-C-rollback",
    "ok": "PASS",
-   "detail": "{\"ok\":true,\"removed\":12,\"totalAfter\":21,\"bgAfter\":false}",
+   "detail": "{\"ok\":true,\"removed\":0,\"totalAfter\":9,\"bgAfter\":false}",
    "evidence": "P5_ROLLBACK_C"
   },
   {
@@ -131,46 +131,32 @@
   {
    "name": "cleanup-userscript",
    "ok": "PASS",
-   "detail": "removed rt5-6-p5-mu55r9y6",
+   "detail": "removed rt5-6-p5-mu5641tw",
    "evidence": "n/a"
   }
  ],
  "errors": [
-  "scenario-A-ocr-flow",
-  "scenario-A-readable-textbox"
+  "scenario-C-early-click"
  ],
  "console": [
   "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
   "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=21 bg=true active=null",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=true active=null",
   "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars",
   "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
   "[zy-ocr][LOCAL_RECOGNIZING] lines=3 words=7 image=undefinedxundefined",
-  "[zy-ocr][ERROR] no lines recognized",
-  "[zy-ocr][ERROR] baidu not configured for fallback: LOCAL_OCR_EMPTY",
-  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
+  "[zy-ocr][GROUP] empty aggregated words=7 sampleKeys=[\"text\",\"bbox\",\"confidence\"] bboxKeys=[\"x0\",\"y0\",\"x1\",\"y1\"]",
+  "[zy-ocr][BUILDING] items=3",
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=10 bg=false active=image",
   "[zy-ocr][PREPARING] kind=active-image 700x500 dataUrl=25886 chars",
   "[zy-ocr][LOCAL_RECOGNIZING] lines=2 words=6 image=undefinedxundefined",
-  "[zy-ocr][ERROR] no lines recognized",
-  "[zy-ocr][ERROR] baidu not configured for fallback: LOCAL_OCR_EMPTY",
-  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
-  "[zy-ocr][PREPARING] kind=active-image 700x500 dataUrl=25886 chars",
-  "[zy-ocr][LOCAL_RECOGNIZING] lines=2 words=6 image=undefinedxundefined",
-  "[zy-ocr][ERROR] no lines recognized",
-  "[zy-ocr][FALLBACK] local LOCAL_OCR_EMPTY → baidu",
-  "[zy-ocr][BAIDU_RECOGNIZING] lines=2 elapsed=176ms",
+  "[zy-ocr][GROUP] empty aggregated words=6 sampleKeys=[\"text\",\"bbox\",\"confidence\"] bboxKeys=[\"x0\",\"y0\",\"x1\",\"y1\"]",
   "[zy-ocr][BUILDING] items=2",
   "[zy-ocr][SUCCESS] created=2",
   "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=20 bg=false active=null",
-  "[zy-ocr][PREPARING] kind=first-image 980x1264 dataUrl=583014 chars",
-  "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
-  "[zy-ocr][LOCAL_RECOGNIZING] lines=3 words=4 image=undefinedxundefined",
-  "[zy-ocr][ERROR] no lines recognized",
-  "[zy-ocr][FALLBACK] local LOCAL_OCR_EMPTY → baidu",
-  "[zy-ocr][BAIDU_RECOGNIZING] lines=12 elapsed=551ms",
-  "[zy-ocr][BUILDING] items=12",
-  "[zy-ocr][SUCCESS] created=12",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
+  "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图",
   "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
   "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
   "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
