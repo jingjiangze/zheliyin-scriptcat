@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-17T05:37:09.930Z",
+ "ts": "2026-09-17T05:46:19.887Z",
  "stage": "STAGE-5.6-P5-OCR-DEMO",
  "steps": [
   {
@@ -131,12 +131,14 @@
   {
    "name": "cleanup-userscript",
    "ok": "PASS",
-   "detail": "removed rt5-6-p5-mu53l06i",
+   "detail": "removed rt5-6-p5-mu53wsj2",
    "evidence": "n/a"
   }
  ],
  "errors": [],
  "console": [
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
   "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=21 bg=true active=null",
   "[zy-ocr][PREPARING] kind=background-image 900x1200 dataUrl=73810 chars",
   "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
@@ -148,12 +150,16 @@
   "[zy-ocr][LOCAL_RECOGNIZING] lines=2 image=undefinedxundefined",
   "[zy-ocr][BUILDING] items=2",
   "[zy-ocr][SUCCESS] created=2",
-  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=20 bg=false active=null",
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=8 bg=false active=null",
   "[zy-ocr][PREPARING] kind=first-image 980x1264 dataUrl=583014 chars",
   "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
   "[zy-ocr][LOCAL_RECOGNIZING] lines=3 image=undefinedxundefined",
   "[zy-ocr][BUILDING] items=3",
-  "[zy-ocr][SUCCESS] created=3"
+  "[zy-ocr][SUCCESS] created=3",
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
  ],
  "pending": []
 }
