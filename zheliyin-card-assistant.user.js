@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.8.9
+// @version      0.3.9.0
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,14 +14,14 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.8.9
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.8.9
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.8.9
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.8.9
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.8.9
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.8.9
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.8.9
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.8.9
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.9.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.9.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.9.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.9.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.9.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.9.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.9.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.9.0
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -42,7 +42,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.8.9";
+  const VERSION = "0.3.9.0";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -775,44 +775,142 @@
       resizeImage: baiduResizeImage
     });
   }
-  // 自动模式 fallback：本地失败分类 → 百度云端；配置缺失 → 明确提示（§47 local-first）
-  // 决策复用 fallback-policy（@require 注入，与单测同源）
+  // Stage 7.2：自动模式 fallback = Cloud PRIMARY → cloud 失败分类 → Local FALLBACK（§8.1）。
+  // 决策复用 fallback-policy（@require 注入，与单测同源）；每次 OCR 输出诊断 {engine, attempt, fallback, reason}。
   const FALLBACK_POLICY = (typeof decideFallback === "function") ? decideFallback : null;
-  function maybeBaiduFallback(img, failCode) {
+  function classifyBaiduError(code) {
+    const s = String(code || "").toUpperCase();
+    if (s.indexOf("TIMEOUT") >= 0) return "timeout";
+    if (s.indexOf("TOKEN") >= 0 || s.indexOf("AUTH") >= 0 || s.indexOf("NOT_CONFIGURED") >= 0) return "auth-error";
+    if (s.indexOf("NETWORK") >= 0 || s.indexOf("HTTP") >= 0 || s.indexOf("REMOTE") >= 0) return "http-error";
+    if (s.indexOf("IMAGE") >= 0 || s.indexOf("INVALID") >= 0 || s.indexOf("LARGE") >= 0) return "invalid-result";
+    if (s.indexOf("EMPTY") >= 0) return "empty-result";
+    return "exception";
+  }
+  function emitOcrDiag(d) {
+    try { ocrLog("DIAG", JSON.stringify(d)); } catch (e) {}
+  }
+  // 云端（Cloud Primary）失败 → Local FALLBACK：仅 auto 模式换路（manual local/baidu 一律 stop，§8.1）
+  function maybeLocalFallback(img, failCode, failReason, attempt) {
+    const att = attempt || "cloud-primary";
     const canonical = String(failCode).split(":")[0];
     const decision = FALLBACK_POLICY
-      ? FALLBACK_POLICY({ mode: getOcrMode(), baiduEnabled: baiduConfigured(), failCode: canonical })
-      : { action: getOcrMode() === "auto" ? (baiduConfigured() ? "baidu" : "notify-config") : "stop" };
-    if (decision.action === "stop") { ocrRunning = false; return; }
-    if (decision.action === "notify-config") {
-      ocrRunning = false; // 终态：不切云端，释放锁让用户可重试
-      setStatus("本地识别失败（" + failCode + "），百度云端未配置：请在「百度云 OCR」中填写 API Key / Secret Key 后重试");
-      ocrLog("ERROR", "baidu not configured for fallback: " + canonical);
+      ? FALLBACK_POLICY({ mode: getOcrMode(), baiduEnabled: baiduConfigured(), failCode: canonical, failReason: failReason })
+      : { action: getOcrMode() === "auto" ? "local" : "stop" };
+    emitOcrDiag({ engine: "cloud", attempt: att, fallback: decision.action === "local", reason: failReason || null, failCode: canonical });
+    if (decision.action !== "local") {
+      ocrRunning = false; // manual 模式：不换路，明确报错
+      setStatus("云端识别失败（" + (failReason || canonical) + "）：" + String(failCode || "").slice(0, 60));
+      ocrLog("ERROR", "cloud failed mode=" + getOcrMode() + " reason=" + (failReason || "unknown") + " code=" + canonical);
       return;
     }
-    ocrRunning = true;
-    setStatus("本地识别失败，正在切换到百度云端…");
-    ocrLog("FALLBACK", "local " + failCode + " → baidu");
-    runBaiduOcr(img)
-      .catch((e) => { ocrRunning = false; setStatus("百度识别异常：" + String(e && e.message || e).slice(0, 80)); ocrLog("ERROR", "baidu unexpected: " + e); });
-    return;
+    setStatus("云端识别失败（" + (failReason || canonical) + "），已切换到本地识别…");
+    ocrLog("FALLBACK", "cloud " + canonical + " (" + (failReason || "unknown") + ") → local");
+    runLocalOcr(img, { engine: "local", attempt: "local-fallback", fallback: true, reason: null });
   }
-  async function runBaiduOcr(img) {
+  async function runBaiduOcr(img, diag) {
+    // diag = {engine:"cloud", attempt:"cloud-primary"|"manual-baidu", fallback:false}
     const provider = makeBaiduProvider();
-    if (!provider) { setStatus("百度 OCR 模块未加载（@require 失败）"); ocrRunning = false; return; }
+    if (!provider) { maybeLocalFallback(img, "CLOUD_MODULE_LOAD_FAILED", "exception", (diag && diag.attempt) || "cloud-primary"); return; }
     setStatus("百度云端识别中…");
-    const res = await provider.recognize(img.dataUrl, { imageWidth: img.width, imageHeight: img.height });
-    if (res.error) { ocrRunning = false; setStatus(res.error.errorMessage); ocrLog("ERROR", "baidu " + res.error.errorCode); return; }
-    if (!res.candidates.length) { ocrRunning = false; setStatus("百度识别未检测到文字"); ocrLog("ERROR", "baidu empty"); return; }
+    let res = null;
+    try {
+      res = await provider.recognize(img.dataUrl, { imageWidth: img.width, imageHeight: img.height });
+    } catch (e) {
+      maybeLocalFallback(img, "CLOUD_EXCEPTION", "exception", (diag && diag.attempt) || "cloud-primary");
+      return;
+    }
+    if (res.error) {
+      maybeLocalFallback(img, String(res.error.errorCode || "CLOUD_ERROR"), classifyBaiduError(res.error.errorCode), (diag && diag.attempt) || "cloud-primary");
+      return;
+    }
+    if (!res.candidates.length) { maybeLocalFallback(img, "CLOUD_EMPTY", "empty-result", (diag && diag.attempt) || "cloud-primary"); return; }
+    emitOcrDiag(Object.assign({}, diag, { reason: null, fallback: false }));
     ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " elapsed=" + res.meta.elapsed + "ms");
     // P3 边界：Baidu Provider 已是统一候选（含 bbox{x,y,width,height}），直接交给统一 Mapper（§39 解耦）
     // Stage 6.1：行级候选 → TextBlock（1 block = 1 textbox，§8）→ 统一 Mapper
     // 锁不在此释放：由 buildItemsFromOcr（ocrCreate 回复/超时/空结果）决定事务终态
     const lineCandidates = unifyCandidates(res.candidates, { width: img.width, height: img.height });
     const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(lineCandidates) : (lineCandidates || []).map(oneLineBlock);
-    buildItemsFromOcr(blocks, img);
+    buildItemsFromOcr(blocks, img, diag);
   }
 
+  // 本地 Tesseract 执行器（manual local / auto 下 Cloud 失败后的 local-fallback 共用，§8.1）
+  // executor 结构严格复刻 5.5A 已验证版本（node 复现：原 userscript 版尾部括号不平衡 → "Unexpected token ')'" → 脚本未执行 → 死等超时）
+  async function runLocalOcr(img, diag) {
+    setStatus("正在加载 OCR（首次约需下载 20MB 中文识别库，请耐心等待）…");
+    const run = (engineText) => {
+      const executor = "(function(){" +
+        "var module={exports:{}};var exports=module.exports;var define;var require;" +
+        engineText + "\n" +
+        "var T=module.exports;" +
+        "if(!T||typeof T.createWorker!=='function'){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:'engine'}));return;}" +
+        "window.addEventListener('message',function(ev){if(!ev.data||ev.data.source!=='zy-ocr-req')return;" +
+        "T.createWorker('chi_sim',1,{cacheMethod:'indexeddb'}).then(function(w){return w.recognize(ev.data.dataUrl).then(function(r){" +
+        "var lines=(r.data.lines||[]).map(function(l){return {text:l.text.trim(),bbox:l.bbox};});" +
+        "var words=(r.data.words||[]).map(function(wo){return {text:(wo.text||'').trim(),bbox:wo.bbox,confidence:typeof wo.confidence==='number'?wo.confidence:null};}).filter(function(wo){return wo.text&&wo.bbox;});" +
+        "w.terminate();" +
+        "document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:true,lines:lines,words:words,w:r.data.imageWidth,h:r.data.imageHeight}));" +
+        "});" +
+        "}).catch(function(e){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));});" +
+        "});" +
+        "})();";
+      GM_addElement("script", { textContent: executor });
+      document.documentElement.setAttribute("data-zy-ocr-result", "");
+      window.postMessage({ source: "zy-ocr-req", dataUrl: img.dataUrl }, location.origin);
+      setStatus("OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…");
+      let tries = 0;
+      const timer = setInterval(() => {
+        tries += 1;
+        const out = document.documentElement.getAttribute("data-zy-ocr-result");
+        if (out) {
+          clearInterval(timer);
+          // 锁保持到 BUILDING/CREATING：释放收敛到 buildItemsFromOcr（回复/超时/空结果）及各错误终态
+          try {
+            const r = JSON.parse(out);
+            if (!r.ok) {
+              // 本地已是 manual/fallback 路径末端，无再上层 fallback → 终态报错
+              ocrRunning = false; setStatus("OCR 失败：" + r.err); ocrLog("ERROR", "local ocr failed: " + r.err);
+              emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "exception", error: String(r.err).slice(0, 80) }));
+              return;
+            }
+            ocrLog("LOCAL_RECOGNIZING", "lines=" + (r.lines || []).length + " words=" + (r.words || []).length + " image=" + r.w + "x" + r.h);
+            emitOcrDiag(Object.assign({}, diag, { reason: null }));
+            const size = { width: r.w || img.width, height: r.h || img.height };
+            let unified = null;
+            if (r.words && r.words.length && typeof aggregateLineCandidates === "function") {
+              try {
+                unified = aggregateLineCandidates(r.words, size, r.lines);
+                if (!unified.length) {
+                  ocrLog("GROUP", "empty aggregated words=" + r.words.length + " sampleKeys=" + JSON.stringify(Object.keys(r.words[0] || {})) + " bboxKeys=" + JSON.stringify(Object.keys((r.words[0] || {}).bbox || {})));
+                  unified = null;
+                }
+              } catch (e) {
+                ocrLog("ERROR", "grouping failed: " + String(e && e.message || e).slice(0, 120));
+                unified = null;
+              }
+            }
+            if (!unified) unified = unifyCandidates((r && r.lines) || [], size);
+            if (unified && unified.length && typeof aggregateLineCandidates === "function") {
+              ocrLog("GROUP", "lines=" + unified.length + " y=" + unified.map((l) => Math.round(l.bbox.y || 0)).join(",") + " h=" + unified.map((l) => Math.round(l.bbox.height || 0)).join(","));
+            }
+            const blocks = (typeof buildTextBlocks === "function")
+              ? buildTextBlocks(unified)
+              : (unified || []).map(oneLineBlock);
+            buildItemsFromOcr(blocks, img, diag);
+          } catch (e) {
+            ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e);
+            emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "exception" }));
+          }
+        } else if (tries > OCR_TIMEOUT_TRIES) {
+          clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout");
+          emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "timeout" }));
+        }
+      }, 500);
+    };
+    if (ocrEngineCache) { run(ocrEngineCache); return; }
+    GM_xmlhttpRequest({ method: "GET", url: OCR_CDN, timeout: 45000, onload: (x) => { if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) { ocrEngineCache = x.responseText; ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars"); run(ocrEngineCache); } else { ocrRunning = false; setStatus("OCR 引擎加载失败（HTTP " + x.status + "）"); emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "http-error", error: "engine load http " + x.status })); } }, onerror: () => { ocrRunning = false; setStatus("OCR 引擎网络错误"); ocrLog("ERROR", "network error"); emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "http-error", error: "engine load network" })); } });
+  }
   async function handleOcrImage() {
     if (state.ocrPanelClosed) return;
     if (ocrRunning) { setStatus("OCR 正在运行，请稍候…"); return; }
@@ -864,82 +962,24 @@
       ocrLog("PREPARING", "kind=" + prep.kind + " " + prep.width + "x" + prep.height + " dataUrl=" + prep.dataUrl.length + " chars");
       ocrTarget = { kind: prep.kind, geo: prep.geometry };
       const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height };
-      if (getOcrMode() === "baidu") {
+      const mode = getOcrMode();
+      if (mode === "baidu") {
+        // Stage 7.2：manual baidu → 仅 Cloud（无本地 fallback，§8.1）
         setStatus("百度云端识别中…");
-        // 锁贯穿到 BUILDING/CREATING：终态由 runBaiduOcr（错误/空）或 buildItemsFromOcr（回复/超时）释放
-        runBaiduOcr(img)
+        runBaiduOcr(img, { engine: "cloud", attempt: "manual-baidu", fallback: false })
           .catch((e) => { ocrRunning = false; setStatus("百度识别异常：" + String(e && e.message || e).slice(0, 80)); ocrLog("ERROR", "baidu unexpected: " + e); });
         return;
       }
-      // 本地 Tesseract（auto / local 共用，§54 互斥已由 ocrRunning 保证）
-      setStatus("正在加载 OCR（首次约需下载 20MB 中文识别库，请耐心等待）…");
-      // executor 结构严格复刻 5.5A 已验证版本（node 复现：原 userscript 版尾部括号不平衡 → "Unexpected token ')'" → 脚本未执行 → 死等超时）
-      const run = (engineText) => {
-        const executor = "(function(){" +
-          "var module={exports:{}};var exports=module.exports;var define;var require;" +
-          engineText + "\n" +
-          "var T=module.exports;" +
-          "if(!T||typeof T.createWorker!=='function'){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:'engine'}));return;}" +
-          "window.addEventListener('message',function(ev){if(!ev.data||ev.data.source!=='zy-ocr-req')return;" +
-          "T.createWorker('chi_sim',1,{cacheMethod:'indexeddb'}).then(function(w){return w.recognize(ev.data.dataUrl).then(function(r){" +
-          "var lines=(r.data.lines||[]).map(function(l){return {text:l.text.trim(),bbox:l.bbox};});" +
-          "var words=(r.data.words||[]).map(function(wo){return {text:(wo.text||'').trim(),bbox:wo.bbox,confidence:typeof wo.confidence==='number'?wo.confidence:null};}).filter(function(wo){return wo.text&&wo.bbox;});" +
-          "w.terminate();" +
-          "document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:true,lines:lines,words:words,w:r.data.imageWidth,h:r.data.imageHeight}));" +
-          "});" +
-          "}).catch(function(e){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));});" +
-          "});" +
-          "})();";
-        GM_addElement("script", { textContent: executor });
-        document.documentElement.setAttribute("data-zy-ocr-result", "");
-        window.postMessage({ source: "zy-ocr-req", dataUrl: img.dataUrl }, location.origin);
-        setStatus("OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…");
-        let tries = 0;
-        const timer = setInterval(() => {
-          tries += 1;
-          const out = document.documentElement.getAttribute("data-zy-ocr-result");
-          if (out) {
-            clearInterval(timer);
-            // Stage 6（用户指令 §16-B）：识别完成不解锁——busy 必须保持到 BUILDING/CREATING 终态，
-            // 释放点统一收敛到 buildItemsFromOcr（ocrCreate 回复/超时/空结果）及各错误终态。
-            try {
-              const r = JSON.parse(out);
-              if (!r.ok) { setStatus("OCR 失败：" + r.err); ocrLog("ERROR", "local ocr failed: " + r.err); maybeBaiduFallback(img, "LOCAL_OCR_FAILED:" + r.err); return; }
-              ocrLog("LOCAL_RECOGNIZING", "lines=" + (r.lines || []).length + " words=" + (r.words || []).length + " image=" + r.w + "x" + r.h);
-              // P3 边界：executor 私有 lines/words → 统一 OCRCandidate → 统一 Mapper
-              // Stage 6 P6.0：executor 提供 words 时优先做轻量行聚类（紧致 bbox+wordBoxes）；否则回落行级统一
-              // Stage 6.1 §7：line.text 优先作最终文本（tessLines 传入 aggregate，word bbox 只作几何）
-              const size = { width: r.w || img.width, height: r.h || img.height };
-              let unified = null;
-              if (r.words && r.words.length && typeof aggregateLineCandidates === "function") {
-                try {
-                  unified = aggregateLineCandidates(r.words, size, r.lines);
-                  if (!unified.length) {
-                    // 诊断：聚合全空（word bbox 形状不符）→ 记录样本后回退行级
-                    ocrLog("GROUP", "empty aggregated words=" + r.words.length + " sampleKeys=" + JSON.stringify(Object.keys(r.words[0] || {})) + " bboxKeys=" + JSON.stringify(Object.keys((r.words[0] || {}).bbox || {})));
-                    unified = null;
-                  }
-                } catch (e) {
-                  ocrLog("ERROR", "grouping failed: " + String(e && e.message || e).slice(0, 120));
-                  unified = null;
-                }
-              }
-              if (!unified) unified = unifyCandidates((r && r.lines) || [], size);
-              // 诊断（仅数字，无文本内容）：聚合行几何（行数/中心y/高），用于行聚类容差真机调参
-              if (unified && unified.length && typeof aggregateLineCandidates === "function") {
-                ocrLog("GROUP", "lines=" + unified.length + " y=" + unified.map((l) => Math.round(l.bbox.y || 0)).join(",") + " h=" + unified.map((l) => Math.round(l.bbox.height || 0)).join(","));
-              }
-              // Stage 6.1 §3/§8：统一候选(行) → TextBlock（1 TextBlock = 1 textbox）；容错：模块缺失时逐行独立 block
-              const blocks = (typeof buildTextBlocks === "function")
-                ? buildTextBlocks(unified)
-                : (unified || []).map(oneLineBlock);
-              buildItemsFromOcr(blocks, img);
-            } catch (e) { setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e); maybeBaiduFallback(img, "LOCAL_OCR_PARSE_FAIL"); }
-          } else if (tries > OCR_TIMEOUT_TRIES) { clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout"); maybeBaiduFallback(img, "LOCAL_OCR_TIMEOUT"); }
-        }, 500);
-      };
-      if (ocrEngineCache) { run(ocrEngineCache); return; }
-      GM_xmlhttpRequest({ method: "GET", url: OCR_CDN, timeout: 45000, onload: (x) => { if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) { ocrEngineCache = x.responseText; ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars"); run(ocrEngineCache); } else { ocrRunning = false; setStatus("OCR 引擎加载失败（HTTP " + x.status + "）"); maybeBaiduFallback(img, "LOCAL_ENGINE_LOAD_FAILED:" + x.status); } }, onerror: () => { ocrRunning = false; setStatus("OCR 引擎网络错误"); ocrLog("ERROR", "network error"); maybeBaiduFallback(img, "LOCAL_ENGINE_NETWORK_ERROR"); } });
+      if (mode === "local") {
+        // Stage 7.2：manual local → 仅 Local（无云端 fallback，§8.1）
+        runLocalOcr(img, { engine: "local", attempt: "manual-local", fallback: false });
+        return;
+      }
+      // Stage 7.2：auto → Cloud PRIMARY（失败 → Local FALLBACK，见 maybeLocalFallback）
+      setStatus("百度云端识别中…");
+      runBaiduOcr(img, { engine: "cloud", attempt: "cloud-primary", fallback: false })
+        .catch((e) => { maybeLocalFallback(img, "CLOUD_EXCEPTION", "exception", "cloud-primary"); });
+      return;
     } catch (e) {
       ocrRunning = false;
       setStatus("识别异常：" + String(e && e.message || e).slice(0, 100));
@@ -968,7 +1008,7 @@
   // Stage 6.1 §13：多行 textbox 高度须容纳 lineCount×lineHeight（无参考样式的默认行高系数）
   const FONT_LINE_HEIGHT = 1.3;
 
-  function buildItemsFromOcr(blocks, img) {
+  function buildItemsFromOcr(blocks, img, diag) {
     // Stage 6.1：消费 TextBlock（1 TextBlock = 1 textbox，§8 硬规则）。
     // block 结构：{text(含\n), bbox, center, confidence, wordBoxes, lineBoxes, lineCount, coordinateSpace}
     // 几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）。P3：只消费统一候选边界。
@@ -1022,14 +1062,16 @@
       return Object.assign({}, base, { left: pcx, top: pcy, angle: angle, origin: "center", width: layout.layoutWidth, fontSize: fs, height: boxHeight });
     });
     if (!items.length) {
+      // 空结果：Cloud Primary 阶段空 → 转 Local FALLBACK；本地（manual/fallback）空 → 终态报错
+      if (img && !img._cloudFallbackDone && diag && diag.engine === "cloud" && diag.attempt === "cloud-primary") {
+        img._cloudFallbackDone = true;
+        maybeLocalFallback(img, "CLOUD_EMPTY", "empty-result", "cloud-primary");
+        return;
+      }
       setStatus("未识别到文字");
       ocrLog("ERROR", "no lines recognized");
       ocrRunning = false; // 空结果终态
-      // 空结果 → 交给 fallback 策略决定是否切百度（auto+已配置才切，其余 stop）
-      if (img && !img._baiduDone) {
-        img._baiduDone = true;
-        maybeBaiduFallback(img, "LOCAL_OCR_EMPTY");
-      }
+      emitOcrDiag(Object.assign({}, diag || { engine: "unknown", attempt: "unknown", fallback: false }, { fallback: !!(diag && diag.fallback), reason: "empty-result" }));
       return;
     }
     setStatus("识别到 " + items.length + " 个文字区域，正在生成（BUILDING）…");

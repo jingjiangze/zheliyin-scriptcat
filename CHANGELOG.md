@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+### Stage 7.2（2026-09-17）— v0.3.9.0：Cloud Primary / Local Fallback（策略修正 §8.1）
+- **策略反转**：`auto` 模式由「Local 优先 → 百度 fallback」改为 **Cloud PRIMARY → Local FALLBACK**；`manual local` → 仅 Local；`manual baidu` → 仅 Cloud；manual 模式任何失败不换路（`fallback-policy.js` `FALLBACK_ABLE(LOCAL_*)` → `CLOUD_FAIL_ABLE(REASON_CODES)`，决策 action "baidu" → "local"，并输出 `engine/attempt/fallback/reasonCode` 诊断字段）。
+- **共用同一后续管线**：Cloud 与 Local 同样走 `candidate-normalizer → TextBlock → buildItemsFromOcr → Native drawText`（`buildItemsFromOcr` 增加 `diag` 参数标识 engine/attempt；`runLocalOcr` 复用原 executor 字符串，仅移除旧 local→baidu 回流）。
+- **失败原因分类（§9）**：`classifyBaiduError` 将 baidu-provider 错误码归类为 {timeout, http-error, auth-error, empty-result, invalid-result, exception}；每次 OCR 完成/换路输出 `[zy-ocr] DIAG {engine, attempt, fallback, reason}`。
+- **单测**：fallback-policy.test.js 重写为新矩阵（auto×7 reason → local、not-configured→local、manual→stop+engine/attempt 标注、cancelled→stop、未知 reason 归 exception）13 项全 PASS；12 套件聚合全 PASS。
+- 版本 0.3.8.9 → 0.3.9.0 同步（userscript/manifest/README/CHANGELOG）。
+- 真机 Case A/B/C 验证：待 s6 真机会话执行（登录环境已确认可用）。
+
 ### Stage 7.1（2026-09-17）— v0.3.8.9：Current Page Resolver —— OCR 创建入口不再硬编码 front
 - **入口改造**：page-bridge `ocrCreate`/`buildOcrPrepare` 由 `findCanvasForSide("front")` 改为 `resolveCurrentEditorPage()` 判定「当前实际编辑页面」；无法识别 → `CURRENT_PAGE_UNKNOWN` → 创建 STOP（含诊断 reason），严禁静默写入 front。
 - **resolver 判定次序**（真机运行时证据，不猜索引、不依赖 front=0/back=1/UI 文案/OCR）：① `CurrentCanvas.getCurrentCanvas()` 与 `totalCanvasArray` 条目 `.canvas` 同一实例（真机 isSameAsCurrent=true，confidence=3）；② `CanvasObjVO.currentCanvasNum`（1 基）指向条目（confidence=2）；③ 单条目 + `frontImgPathStr` 业务字段 → 唯一正面页（confidence=1）；side/version 仅在业务字段可见时输出，否则 null。
