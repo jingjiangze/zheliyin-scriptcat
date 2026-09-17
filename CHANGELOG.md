@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Stage 6 P6.0（2026-09-17）— v0.3.8.6：OCR words+lines 双输出 + 轻量行聚类
+- executor 输出 `words`（word bbox+confidence）与 `lines` 并存；`candidate-normalizer` 扩展统一候选：新增 `wordBoxes`/`lineBBox`（向后兼容，缺省时行为不变），新增纯函数 `groupWordsToLines`（y 重叠/中心 y 距/字高相似/阅读顺序）与 `aggregateLineCandidates`（words→逻辑行→紧致 bbox+wordBoxes）。
+- 本地路径 words 存在时优先行聚类（紧致 bbox，Clumping 冗余行/混合字号自动分行）；Baidu 路径不变。
+- 单测扩展（Case A 中文两行 / B 中英混合 / C 数字手机号 / 混合字号分行 / v2 words 携带 / 兼容性）全 PASS；@require ?v=0.3.8.6 对齐。
+- Mapper/桥/UI 未动。
+
 ### Stage 6 起点（2026-09-17）— v0.3.8.5：@require 版本对齐 + OCR busy lock 贯穿事务（用户指令 §16 A/B）
 - A. @require query 版本号与 @version 对齐为 0.3.8.5（此前 0.3.8.4 时 query 仍为 0.3.8.3，会导致模块缓存滞后）。
 - B. OCR busy lock 覆盖 LOAD→RECOGNIZING→BUILDING→CREATING→DONE/ERROR 全事务：识别完成后不再提前释放；终态收敛到 `buildItemsFromOcr`（ocrCreate 回复/10s 超时/空结果）与各错误分支（含 maybeBaiduFallback stop/notify-config）；百度路径同步收敛（移除提前 .finally 释放）。

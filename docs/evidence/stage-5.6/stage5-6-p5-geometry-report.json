@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-17T05:35:50.071Z",
+ "ts": "2026-09-17T06:01:40.750Z",
  "stage": "STAGE-5.6-P5-GEOMETRY",
  "matrix": [
   {
@@ -798,10 +798,12 @@
   {
    "name": "cleanup-userscript",
    "ok": "PASS",
-   "detail": "removed rt-p5g-mu53jak7"
+   "detail": "removed rt-p5g-mu54gj2m"
   }
  ],
  "console": [
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
   "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=22 bg=false active=image",
   "[zy-ocr][PREPARING] kind=active-image 900x1200 dataUrl=61834 chars",
   "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
