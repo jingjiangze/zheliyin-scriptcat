@@ -73,6 +73,11 @@ if (fs.existsSync(MANIFEST)) {
     if (mf.version_name && mf.version_name !== version) {
       fail(`版本不一致：@version=${version} 但 manifest version_name=${mf.version_name}`);
     }
+    // manifest.version 必须是 @version 的前三段（Chrome MV3 语义，项目既有约定）
+    const prefix = String(version).split(".").slice(0, 3).join(".");
+    if (mf.version && mf.version !== prefix) {
+      fail(`版本不一致：manifest version=${mf.version} 但应为 @version 前三段 ${prefix}`);
+    }
   } catch (e) { fail("extension/manifest.json 不是合法 JSON: " + e.message); }
 } else {
   warn("extension/manifest.json 不存在，跳过检查");
