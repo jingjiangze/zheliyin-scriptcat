@@ -906,9 +906,21 @@
               // P3 边界：executor 私有 lines/words → 统一 OCRCandidate → 统一 Mapper
               // Stage 6 P6.0：executor 提供 words 时优先做轻量行聚类（紧致 bbox+wordBoxes）；否则回落行级统一
               const size = { width: r.w || img.width, height: r.h || img.height };
-              const unified = (r.words && r.words.length && typeof aggregateLineCandidates === "function")
-                ? aggregateLineCandidates(r.words, size)
-                : unifyCandidates((r && r.lines) || [], size);
+              let unified = null;
+              if (r.words && r.words.length && typeof aggregateLineCandidates === "function") {
+                try {
+                  unified = aggregateLineCandidates(r.words, size);
+                  if (!unified.length) {
+                    // 诊断：聚合全空（word bbox 形状不符）→ 记录样本后回退行级
+                    ocrLog("GROUP", "empty aggregated words=" + r.words.length + " sampleKeys=" + JSON.stringify(Object.keys(r.words[0] || {})) + " bboxKeys=" + JSON.stringify(Object.keys((r.words[0] || {}).bbox || {})));
+                    unified = null;
+                  }
+                } catch (e) {
+                  ocrLog("ERROR", "grouping failed: " + String(e && e.message || e).slice(0, 120));
+                  unified = null;
+                }
+              }
+              if (!unified) unified = unifyCandidates((r && r.lines) || [], size);
               buildItemsFromOcr(unified, img);
             } catch (e) { setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e); maybeBaiduFallback(img, "LOCAL_OCR_PARSE_FAIL"); }
           } else if (tries > OCR_TIMEOUT_TRIES) { clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout"); maybeBaiduFallback(img, "LOCAL_OCR_TIMEOUT"); }

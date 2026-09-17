@@ -14,7 +14,7 @@ const { chromium } = require("playwright");
 const adapter = require("./scriptcat-adapter");
 
 const EXT_ID = adapter.EXT_ID;
-const EDITOR_URL = "https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/thirdDiyAdd.do";
+const EDITOR_URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const UUID = "rt-p5g-" + Date.now().toString(36);
 const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user.js");
 const DEBUG_CELL = process.env.ZY_P5G_DEBUG || ""; // "A-base" 等单格调试
