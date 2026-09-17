@@ -1,9 +1,10 @@
 # CURRENT_STATUS — 当前状态总览
 
 > 维护者：AI-2（Repository Governance 线）
-> 基线：分支 `stage-4.1-runtime-validation` @ `7c412b8`（Stage 5.5A，2026-09-16）
+> 基线：`stage-4.1-runtime-validation` @ `e9235af`（Stage 5.5A-R2）；demo @ `f3ae3cb`（v0.3.5.0，2026-09-16）
 > 修订：@ `3becf04`（5.4）初版；@ `4cb0819`（5.5）同步真实 OCR；@ `7c412b8`（5.5A）同步产品化验收结论；
 > @ `e9235af` / demo `58337a8`（5.5A-R2）**同步引擎装载突破：`engine-in-editor` BLOCKED → PASS**；
+> demo `f3ae3cb`：**`DEFECT-VER-01` 已修复**（版本四处统一到 0.3.5.0）；新增 Demo 依赖闭包 / 更新链自动检查。
 > 本页同时覆盖 **四轨状态**（main / demo / AI-1 开发 / 治理），分支明细见 §4。
 > **本页只陈述已有证据支持的状态。没有证据的一律写 `TODO`，不预判。**
 > 状态取值：`PASS` / `PARTIAL` / `BLOCKED` / `TODO` / `DEFERRED` / `UNVERIFIED`
@@ -81,12 +82,15 @@ P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
              → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview
 ```
 
-**Demo 现状**（`demo` @ `ceedbb5`，版本 `0.3.0.1`）：
+**Demo 现状**（`demo` @ `f3ae3cb`，版本 `0.3.5.0`）——四字段 Gate 独立，见 `docs/DEMO_RELEASE.md`：
 
 ```text
-USER_INSTALLABLE    = PASS（自动可验部分；人工安装动作 PENDING）
-USER_UPDATEABLE     = PASS（8 处 URL 均已指向 demo）
-REAL_FEATURE_USABLE = 部分（套版填层可用；图片识别 BLOCKED）
+DEMO_INSTALLABLE = PASS    （raw 200；元数据齐全；@require 闭包全部指向 demo）
+DEMO_UPDATEABLE  = PASS    （@updateURL/@downloadURL 指向 demo；@version 0.3.5.0 单调递增；raw 可达）
+DEMO_FUNCTIONAL  = PARTIAL （套版填层可用；图片识别机制 PASS，识别质量待改进 → Stage 5.9）
+DEMO_SAFE        = PASS    （secret scan 通过；无真实图片/文字/凭据入库）
+
+ENGINE_TEST = PASS   ／  REAL_USER = PENDING   ← 两者不得互相替代
 ```
 > 详见 `docs/DEMO_RELEASE.md`（发布清单）与 `docs/DEMO_INSTALL.md`（安装与验收）。
 
@@ -120,7 +124,7 @@ BASIC_REAL_OCR_DEMO_PRODUCT                     = BLOCKED
 | Branch | HEAD | Purpose | Installable | Stable |
 |---|---|---|---|---|
 | `main` | `7446faa` | 稳定公开版（默认分支） | ✅ Yes | ✅ **Yes** |
-| `demo` | `58337a8` | 真实用户试用（实验性） | ✅ Yes | ❌ No（实验版） |
+| `demo` | `f3ae3cb` | 真实用户试用（实验性） | ✅ Yes | ❌ No（实验版） |
 | `stage-4.1-runtime-validation` | `e9235af` | AI-1 持续开发 | ❌ No（未配元数据，`@require` 指 main） | ❌ No |
 | `ai2-repo-governance` | 见 `git rev-parse origin/ai2-repo-governance` | 文档 / 规范 / 契约 | — （非交付物） | — |
 
@@ -135,13 +139,13 @@ https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-c
 | 轨道 | `@version` | 说明 |
 |---|---|---|
 | `main` | `0.3.0.0` | 稳定线 |
-| `demo` | `0.3.5.0` | AI-1 采用 0.3.x 递增（见 BRANCH_POLICY §4）；⚠️ **与脚本内 `VERSION` 不一致 → 见 §3 已知缺陷** |
+| `demo` | `0.3.5.0` | AI-1 采用 0.3.x 递增（见 BRANCH_POLICY §4/§4.1）；**四处版本已统一**（`DEFECT-VER-01` 已修） |
 
 **四分支血缘与祖先关系**：
 
 ```text
-main 7446faa  ⊂  stage-4.1-runtime-validation e9235af  ⊂  demo 58337a8
-   (85c/44f)              (152c/189f)                       (155c/190f)
+main 7446faa  ⊂  stage-4.1-runtime-validation e9235af  ⊂  demo f3ae3cb
+   (85c/44f)              (152c/189f)                       (156c/190f)
                                      ↑
                         ai2-repo-governance e14b48c（文档线，基线 3becf04，不含 Stage 5.5/5.5A/R2 文件）
 ```

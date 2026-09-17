@@ -113,4 +113,43 @@ recognize(image, ctx) → { provider, providerType, candidates[], meta }
 
 | 日期 | 变更 |
 |---|---|
+
+---
+
+## 7. AI-1 后续轨道的审计项（先行约定，待实现后逐项核）
+
+AI-1 接下来进入「本地优先 + 百度兜底 + 网页原生面板 + 背景图片」。以下审计项**先行登记**，
+实现落地后由 AI-2 逐项核查，结论写回本表。**未实现写 `TODO`，不得预判 PASS。**
+
+| 审计项 | 判定标准 | 当前 |
+|---|---|---|
+| `LOCAL_FIRST` | 默认 provider = local；且 **local 成功时不得发出任何远程请求**（这是隐私属性，不是性能优化） | TODO |
+| `REMOTE_FALLBACK` | 仅当 local 失败才请求远程；且 **local 成功时远程请求数必须为 0** | TODO |
+| `BACKGROUND_IMAGE` | 背景图场景下坐标映射仍正确（背景图为 canvas 最底层，其变换语义与普通 image 可能不同） | TODO |
+| `NATIVE_PANEL` | 若最终仍以 `position: fixed` 浮窗作为**主 UI** → 标记为**未达成**设计要求 | TODO |
+| `NO_SILENT_FAILURE` | 任何失败路径都必须有用户可见反馈；禁止静默返回空结果冒充成功 | TODO |
+
+### 7.1 各审计项的取证方式
+
+| 项 | 怎么验 |
+|---|---|
+| `LOCAL_FIRST` | 断网/拦截远程域名后跑一次识别：应成功；同时检查网络面板/请求日志为 **0 次外发** |
+| `REMOTE_FALLBACK` | ① 正常识别 → 记远程请求数（应为 0）；② 人为使 local 失败（如禁用 worker）→ 应出现远程请求且结果仍可用 |
+| `BACKGROUND_IMAGE` | 用带背景图的真实模板，比对 mapper 输出的 canvas bbox 与视觉位置 |
+| `NATIVE_PANEL` | 检查 DOM：是否存在 `position: fixed` 且承担主交互的面板；若存在但仅作辅助 → 记录为「辅助浮窗」而非主 UI |
+| `NO_SILENT_FAILURE` | 制造 4 类失败（引擎缺失 / 网络失败 / 无选中图 / 空候选），逐个确认都有可见提示 |
+
+### 7.2 面板重复注入（与 OCR 无关，但同属 UI 轨道）
+
+必须验证以下 4 种场景下面板数量恒为 **1**：
+
+```text
+refresh              （F5 刷新）
+route change         （编辑器内切换路由/模板）
+SPA navigation       （前端路由跳转）
+script reinstall     （ScriptCat 内重装/更新脚本）
+```
+
+> 既有机制：闭包标志（`pageBridgeInstalled`）+ 页面级 marker（`window.__ZY_CARD_ASSISTANT_BRIDGE__`）+ `bridge-lifecycle` 回归（6 用例）。
+> 新增 SPA/路由场景需补回归用例后才可标 PASS。
 | 2026-09-16 | 初版：依赖清单（含实测耗时）、六维度登记、7 项风险、禁止提交语言数据、隐私底线、与契约的关系 |
