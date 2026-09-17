@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.8.4
+// @version      0.3.8.5
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,14 +14,14 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.8.3
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.8.3
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.8.3
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.8.3
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.8.3
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.8.3
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.8.3
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.8.3
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.8.5
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.8.5
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.8.5
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.8.5
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.8.5
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.8.5
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.8.5
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.8.5
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -42,7 +42,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.8.4";
+  const VERSION = "0.3.8.5";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -783,8 +783,9 @@
     const decision = FALLBACK_POLICY
       ? FALLBACK_POLICY({ mode: getOcrMode(), baiduEnabled: baiduConfigured(), failCode: canonical })
       : { action: getOcrMode() === "auto" ? (baiduConfigured() ? "baidu" : "notify-config") : "stop" };
-    if (decision.action === "stop") return;
+    if (decision.action === "stop") { ocrRunning = false; return; }
     if (decision.action === "notify-config") {
+      ocrRunning = false; // 终态：不切云端，释放锁让用户可重试
       setStatus("本地识别失败（" + failCode + "），百度云端未配置：请在「百度云 OCR」中填写 API Key / Secret Key 后重试");
       ocrLog("ERROR", "baidu not configured for fallback: " + canonical);
       return;
@@ -801,11 +802,11 @@
     if (!provider) { setStatus("百度 OCR 模块未加载（@require 失败）"); ocrRunning = false; return; }
     setStatus("百度云端识别中…");
     const res = await provider.recognize(img.dataUrl, { imageWidth: img.width, imageHeight: img.height });
-    ocrRunning = false;
-    if (res.error) { setStatus(res.error.errorMessage); ocrLog("ERROR", "baidu " + res.error.errorCode); return; }
-    if (!res.candidates.length) { setStatus("百度识别未检测到文字"); ocrLog("ERROR", "baidu empty"); return; }
+    if (res.error) { ocrRunning = false; setStatus(res.error.errorMessage); ocrLog("ERROR", "baidu " + res.error.errorCode); return; }
+    if (!res.candidates.length) { ocrRunning = false; setStatus("百度识别未检测到文字"); ocrLog("ERROR", "baidu empty"); return; }
     ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " elapsed=" + res.meta.elapsed + "ms");
     // P3 边界：Baidu Provider 已是统一候选（含 bbox{x,y,width,height}），直接交给统一 Mapper（§39 解耦）
+    // 锁不在此释放：由 buildItemsFromOcr（ocrCreate 回复/超时/空结果）决定事务终态
     buildItemsFromOcr(unifyCandidates(res.candidates, { width: img.width, height: img.height }), img);
   }
 
@@ -862,9 +863,9 @@
       const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height };
       if (getOcrMode() === "baidu") {
         setStatus("百度云端识别中…");
+        // 锁贯穿到 BUILDING/CREATING：终态由 runBaiduOcr（错误/空）或 buildItemsFromOcr（回复/超时）释放
         runBaiduOcr(img)
-          .catch((e) => { setStatus("百度识别异常：" + String(e && e.message || e).slice(0, 80)); ocrLog("ERROR", "baidu unexpected: " + e); })
-          .finally(() => { ocrRunning = false; });
+          .catch((e) => { ocrRunning = false; setStatus("百度识别异常：" + String(e && e.message || e).slice(0, 80)); ocrLog("ERROR", "baidu unexpected: " + e); });
         return;
       }
       // 本地 Tesseract（auto / local 共用，§54 互斥已由 ocrRunning 保证）
@@ -895,7 +896,8 @@
           const out = document.documentElement.getAttribute("data-zy-ocr-result");
           if (out) {
             clearInterval(timer);
-            ocrRunning = false;
+            // Stage 6（用户指令 §16-B）：识别完成不解锁——busy 必须保持到 BUILDING/CREATING 终态，
+            // 释放点统一收敛到 buildItemsFromOcr（ocrCreate 回复/超时/空结果）及各错误终态。
             try {
               const r = JSON.parse(out);
               if (!r.ok) { setStatus("OCR 失败：" + r.err); ocrLog("ERROR", "local ocr failed: " + r.err); maybeBaiduFallback(img, "LOCAL_OCR_FAILED:" + r.err); return; }
@@ -918,7 +920,7 @@
     // 统一 OCRCandidate（text + bbox{x,y,width,height} + coordinateSpace=image-pixel）→ canvas 坐标。
     // 几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）。P3：只消费统一候选边界。
     const geo = ocrTarget && ocrTarget.geo;
-    if (!geo) { setStatus("OCR 目标已失效，请重新识别"); ocrLog("ERROR", "ocrTarget missing"); return; }
+    if (!geo) { setStatus("OCR 目标已失效，请重新识别"); ocrLog("ERROR", "ocrTarget missing"); ocrRunning = false; return; }
     const w = geo.width, h = geo.height, sx = geo.scaleX || 1, sy = geo.scaleY || 1;
     // 背景图 left/top 可能缺失：ocrPrepare 已在页面世界用画布居中兜底（§13）
     const left = geo.left, top = geo.top;
@@ -946,6 +948,7 @@
     if (!items.length) {
       setStatus("未识别到文字");
       ocrLog("ERROR", "no lines recognized");
+      ocrRunning = false; // 空结果终态
       // 空结果 → 交给 fallback 策略决定是否切百度（auto+已配置才切，其余 stop）
       if (img && !img._baiduDone) {
         img._baiduDone = true;
@@ -956,8 +959,9 @@
     setStatus("识别到 " + items.length + " 个文字区域，正在生成（BUILDING）…");
     ocrLog("BUILDING", "items=" + items.length);
     // P0（真机 BUILDING 卡死）：页面桥异常时兜底，10 秒内未收到 ocrCreateResult 即走出死等状态
-    const on = (e) => { if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "ocrCreateResult") { clearTimeout(fallbackTimer); window.removeEventListener("message", on); setStatus(e.data.ok ? "已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）" : "生成失败：" + (e.data.message || "未创建文字")); ocrLog("SUCCESS", "created=" + (e.data.created || []).length); } };
-    const fallbackTimer = setTimeout(() => { window.removeEventListener("message", on); setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
+    const on = (e) => { if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "ocrCreateResult") { clearTimeout(fallbackTimer); window.removeEventListener("message", on); ocrRunning = false; // 事务终态 DONE/生成失败
+setStatus(e.data.ok ? "已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）" : "生成失败：" + (e.data.message || "未创建文字")); ocrLog("SUCCESS", "created=" + (e.data.created || []).length); } };
+    const fallbackTimer = setTimeout(() => { window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
     window.addEventListener("message", on);
     window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", items: items }, location.origin);
     // 事务结束：释放 ocrTarget，避免下次识别串用旧目标

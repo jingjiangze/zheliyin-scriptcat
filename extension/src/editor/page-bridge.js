@@ -59,19 +59,25 @@ function pageBridge() {
         try {
           const ref = getTextObjects(canvas)[0] || canvas.getObjects().find(function (o) { return typeof o.text === "string"; }) || null;
           items.forEach(function (it, idx) {
-            const obj = createTextObject(canvas, String(it.text || ""), ref, idx, null);
-            if (!obj) return;
-            const conf = { left: it.left != null ? it.left : 20, top: it.top != null ? it.top : 20 + idx * 24, width: Math.max(60, it.width || 120), fontSize: it.fontSize || 14, fontFamily: it.fontFamily || "思源黑体 Regular", textAlign: "left", fill: "#000000" };
-            // Stage 5.6 P5-D：旋转场景（Mapper 输出 angle + origin:"center"）——中心即 left/top，绕中心旋转
-            if (it.angle) { conf.angle = it.angle; conf.originX = "center"; conf.originY = "center"; }
-            obj.set(conf);
-            setObjectText(obj, String(it.text || ""));
-            obj.zyFieldKey = "ocr_demo_" + String(it.text || "").slice(0, 4);
-            created.push({ index: canvas.getObjects().indexOf(obj), type: obj.type, text: String(it.text || "").slice(0, 16) });
+            try {
+              const obj = createTextObject(canvas, String(it.text || ""), ref, idx, null);
+              if (!obj) return;
+              const conf = { left: it.left != null ? it.left : 20, top: it.top != null ? it.top : 20 + idx * 24, width: Math.max(60, it.width || 120), fontSize: it.fontSize || 14, fontFamily: it.fontFamily || "思源黑体 Regular", textAlign: "left", fill: "#000000" };
+              // Stage 5.6 P5-D：旋转场景（Mapper 输出 angle + origin:"center"）——中心即 left/top，绕中心旋转
+              if (it.angle) { conf.angle = it.angle; conf.originX = "center"; conf.originY = "center"; }
+              obj.set(conf);
+              setObjectText(obj, String(it.text || ""));
+              obj.zyFieldKey = "ocr_demo_" + String(it.text || "").slice(0, 4);
+              created.push({ index: canvas.getObjects().indexOf(obj), type: obj.type, text: String(it.text || "").slice(0, 16) });
+            } catch (e2) {
+              // 单条失败不拖垮整批；带完整堆栈便于定位
+              failMsg = "item" + idx + ": " + String(e2 && e2.message || e2).slice(0, 120);
+              console.warn("[zy-ocr][ocrCreate] item error stack=" + String(e2 && e2.stack || e2).slice(0, 500));
+            }
           });
         } catch (e) {
-          failMsg = String(e && e.message || e).slice(0, 160);
-          console.warn("[zy-ocr][ocrCreate] partial error: " + failMsg + " created=" + created.length);
+          failMsg = "ocrCreate: " + String(e && e.message || e).slice(0, 160);
+          console.warn("[zy-ocr][ocrCreate] batch error stack=" + String(e && e.stack || e).slice(0, 500));
         }
         if (canvas.requestRenderAll) canvas.requestRenderAll();
         post("ocrCreateResult", { ok: created.length > 0, created: created, message: failMsg || undefined });

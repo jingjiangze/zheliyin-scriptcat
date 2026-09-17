@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Stage 6 起点（2026-09-17）— v0.3.8.5：@require 版本对齐 + OCR busy lock 贯穿事务（用户指令 §16 A/B）
+- A. @require query 版本号与 @version 对齐为 0.3.8.5（此前 0.3.8.4 时 query 仍为 0.3.8.3，会导致模块缓存滞后）。
+- B. OCR busy lock 覆盖 LOAD→RECOGNIZING→BUILDING→CREATING→DONE/ERROR 全事务：识别完成后不再提前释放；终态收敛到 `buildItemsFromOcr`（ocrCreate 回复/10s 超时/空结果）与各错误分支（含 maybeBaiduFallback stop/notify-config）；百度路径同步收敛（移除提前 .finally 释放）。
+- 版本统一 0.3.8.5（userscript/manifest/assistant/README/DEMO_REAL_MACHINE_TEST）。
+
 ### Stage 5.6 P0 hotfix（2026-09-17）— v0.3.8.4：空白模板「生成失败 null.left」修复（真机第 5 轮）
 - 真机错误「生成失败：Cannot read properties of null (reading 'left')」= 无文字层模板：`createTextObject` fabric 兜底分支在 `reference=null && layout=null` 时读 `layout.left` 抛错（旧代码整段 forEach 抛掉→永不回复=早前 BUILDING 卡死；0.3.8.3 兜底把它显性化）。
 - 修复：`createTextObject` 无参考层/无布局时给安全默认（位置/尺寸随后由 ocrCreate 的 obj.set 覆盖），空白模板亦可生成。
