@@ -9,7 +9,7 @@
 > demo `604f552` → `7c1df21`（**当前 v0.3.7.0**）：**OCR-only Demo 模式**（默认停用旧套版浮窗，`zyShowTemplatePanel=1` 可恢复）；
 > `7c1df21` 为**证据型提交**（`docs/evidence/` + `runtime/probe-gm-*.js`，16 files / +966 −50），**userscript 字节未变**（sha256 仍 `b37018fe…`）；
 > AI-2 于 2026-09-17 对 `e0abcf0`、`604f552`、`7c1df21` 分别完成闭包/更新链/元数据/单测/安全实测复核，结论见 §3。
-> **治理分支已推送成功**：`ai2-repo-governance` 远端 = `2ae249b`（原 `340fef3`，10 commit 已同步；推送方式见 §4 说明）。
+> **治理分支已推送成功**：`ai2-repo-governance` 远端 = `3d8df6b`（原 `340fef3`，11 commit 已同步；推送方式见 §4 说明）。
 > 本页同时覆盖 **四轨状态**（main / demo / AI-1 开发 / 治理），分支明细见 §4。
 > **本页只陈述已有证据支持的状态。没有证据的一律写 `TODO`，不预判。**
 > 状态取值：`PASS` / `PARTIAL` / `BLOCKED` / `TODO` / `DEFERRED` / `UNVERIFIED`
@@ -167,7 +167,7 @@ BASIC_REAL_OCR_DEMO_PRODUCT                     = BLOCKED
 | `main` | `6840170`（remote） | 稳定公开版（默认分支） | ✅ Yes | ✅ **Yes** |
 | `demo` | `7c1df21`（remote） | 真实用户试用（实验性，**OCR-only 默认**） | ✅ Yes | ❌ No（实验版） |
 | `stage-4.1-runtime-validation` | `e9235af`（remote） | AI-1 持续开发 | ❌ No（未配元数据，`@require` 指 main） | ❌ No |
-| `ai2-repo-governance` | `2ae249b`（remote，**已同步**） | 文档 / 规范 / 契约 | — （非交付物） | — |
+| `ai2-repo-governance` | `3d8df6b`（remote，**已同步**） | 文档 / 规范 / 契约 | — （非交付物） | — |
 
 > **取数时间**：2026-09-17。远端 SHA 取自 `FETCH_HEAD`（本机 PortableGit 存在 ref 写入不落盘的已知问题，故以 `FETCH_HEAD` 为准，见 §4 末注）。
 
@@ -190,7 +190,7 @@ https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-c
 main 6840170  ⊂  stage-4.1-runtime-validation e9235af  ⊂  demo 7c1df21
    (86c/44f)             (152c/189f)                        (188c/234f)
                                      ↑
-                        ai2-repo-governance（本地 @ 4615f5e；远端 @ 2ae249b ✅ 已同步）
+                        ai2-repo-governance（本地 = 远端 @ 3d8df6b ✅ 已同步）
                         文档线，基线 3becf04，不含 Stage 5.5/5.5A/R2/5.5B/5.6 文件
 ```
 
@@ -234,8 +234,20 @@ done
 > 故改用 **GitHub Git Data API**（`blobs` → `trees` → `commits` → `PATCH /git/refs/heads/…`）逐对象重放。
 > 该路径使用**短 JSON POST**，不受长连接中断影响。
 >
-> **结果**：`ai2-repo-governance` 远端由 `340fef3` → **`2ae249b`**，10 个 commit 全部同步；
-> 本地 HEAD `4615f5e`，内容 SHA 逐对象一致（`docs/DEMO_RELEASE.md` = `1c4d3c02…`）。
+> **结果**：`ai2-repo-governance` 远端由 `340fef3` → **`3d8df6b`**，**11 个 commit** 全部同步。
+> 本地 HEAD 已与远端对齐（`3d8df6b`），工作树干净。
+>
+> **⚠️ 关键机制说明（务必知晓，避免误判）**：Git Data API 重放会生成**不同的 commit SHA**
+> （父链不同），因此云端历史与本地原始 SHA **并行存在**。已通过 **tree 哈希** 证明内容等价：
+>
+> ```text
+> 远端 2ae249b^{tree} = 48a64390d4125baa2be60b324777a4d6ddb77b23
+> 本地 4615f5e^{tree} = 48a64390d4125baa2be60b324777a4d6ddb77b23   ← 完全相同（0 文件差异）
+> ```
+>
+> 为保证后续可用普通 `git push`（或再次 API 推送）线性推进，AI-2 已执行
+> `git reset --soft <remote-tip>` 把本地历史**重挂到远端父链**上，再以新提交追加有效改动。
+> 原 SHA 链已用分支 `ai2-local-backup-4615f5e` 保留（如需回溯）。
 >
 > **遗留环境注意**：本机 `http.schannelCheckRevoke=false` / `http.version=HTTP/1.1` / `http.postBuffer` 已在仓库本地配置中设定；
 > `credential.helper` 仍指向无凭据的 `wincred`，**下次推送需重复 API 路径或在凭据管理器补录 github.com**。
