@@ -1,9 +1,12 @@
 name: test
 
-# 轻量测试：零依赖（无 npm install、无浏览器、无网络）。
-# 设计原则：不重构构建系统，只做"有收益且可复现"的检查。
-#  - 若某分支尚无某套件，则 SKIP 而不是 FAIL（main 上还没有 editor-object-model）
-#  - userscript 元数据检查会捕获 demo/开发分支 URL 指错分支、版本号不同步等真实缺陷
+# 轻量测试与发布门禁。零依赖（无 npm install、无浏览器）。
+#
+# 设计原则：
+#  - 离线 job 只做"可确定性判定"的检查；网络相关检查独立成 job，
+#    且网络不可用时脚本退出码为 0（标记 DEPENDENCY_NETWORK_UNKNOWN），
+#    避免 CDN 抖动把「代码正确性」判成 FAIL（治理指令 §二十七）。
+#  - 某个分支尚无某套件时 SKIP 而不是 FAIL（main 上还没有 editor-object-model）。
 
 on:
   push:
@@ -14,7 +17,8 @@ permissions:
   contents: read
 
 jobs:
-  unit-and-metadata:
+  # ============ 离线：版本一致性 / 元数据 / 测试 / 语法 / 敏感信息 ============
+  offline-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,8 +29,22 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Userscript metadata check
+      - name: Version consistency (@version === const VERSION === assistant.js === manifest)
         run: node .github/scripts/check-userscript.js
+
+      - name: Demo metadata consistency (offline structure check)
+        run: |
+          if [ -f runtime/check-demo-closure.js ]; then
+            # 交付分支期望值：只有 demo 分支才强制要求交付分支=demo
+            EXTRA=""
+            if [ "${GITHUB_REF_NAME}" = "demo" ]; then EXTRA="--expect-branch demo"; fi
+            node runtime/check-demo-closure.js --ref HEAD $EXTRA || {
+              echo "::error::Demo 依赖闭包结构违规（分支自洽 / 版本一致性 / updateURL 一致性）"
+              exit 1
+            }
+          else
+            echo "SKIP: runtime/check-demo-closure.js 不存在（该分支尚无此检查）"
+          fi
 
       - name: Node unit suites (editor-object-model)
         run: |
@@ -44,7 +62,7 @@ jobs:
               node --check "$f" && echo "OK  $f" || { echo "ERR $f"; fail=1; }
             fi
           done
-          for f in extension/src/*/*.js; do
+          for f in extension/src/*/*.js runtime/*.js; do
             [ -f "$f" ] || continue
             node --check "$f" && echo "OK  $f" || { echo "ERR $f"; fail=1; }
           done
@@ -59,5 +77,49 @@ jobs:
           done < <(find . -path ./node_modules -prune -o -name '*.json' -print)
           exit $fail
 
-      - name: Secret scan (keywords + real phone numbers)
+      - name: Secret scan (keywords + phone numbers + base64 image in reports)
         run: node .github/scripts/secret-scan.js
+
+  # ============ 联网：Demo 依赖可达性 / 更新链（网络未知不判失败）============
+  demo-network-checks:
+    runs-on: ubuntu-latest
+    needs: offline-checks
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Demo dependency closure (network)
+        run: |
+          if [ -f runtime/check-demo-closure.js ]; then
+            EXTRA=""
+            if [ "${GITHUB_REF_NAME}" = "demo" ]; then EXTRA="--expect-branch demo"; fi
+            for i in 1 2 3; do
+              node runtime/check-demo-closure.js --ref HEAD --net $EXTRA && exit 0
+              rc=$?
+              # 退出码 1 = 结构违规（重试无意义）；2 = 用法/环境；其余按网络抖动重试
+              if [ "$rc" = "1" ]; then echo "::error::闭包结构违规，不重试"; exit 1; fi
+              echo "网络抖动，第 $i 次重试"; sleep 5
+            done
+            echo "::warning::网络检查不可用 —— 记为 DEPENDENCY_NETWORK_UNKNOWN，不判代码 FAIL"
+          else
+            echo "SKIP: runtime/check-demo-closure.js 不存在"
+          fi
+
+      - name: Demo update chain (raw URL reachable / metadata / monotonic version)
+        run: |
+          if [ -f runtime/check-demo-update.js ]; then
+            for i in 1 2 3; do
+              node runtime/check-demo-update.js && exit 0
+              rc=$?
+              if [ "$rc" = "1" ]; then echo "::error::Demo 更新链违规，不重试"; exit 1; fi
+              echo "网络抖动，第 $i 次重试"; sleep 5
+            done
+            echo "::warning::网络检查不可用 —— 记为 DEPENDENCY_NETWORK_UNKNOWN，不判代码 FAIL"
+          else
+            echo "SKIP: runtime/check-demo-update.js 不存在"
+          fi
