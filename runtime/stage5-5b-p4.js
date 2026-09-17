@@ -1,16 +1,14 @@
 // runtime/stage5-5b-p4.js — Stage 5.5B P4：Local-first / Baidu fallback / Credential / Privacy 真机矩阵
 // 矩阵（P4-M）：
-//   R1: Local PASS + Baidu 未配置 → 本地成功，Baidu request=0
-//   R2: Local PASS + Baidu 已配置(假key) → 本地成功，Baidu request=0（Local-first 不偷偷调百度）
+//   R1: Local PASS + Baidu 未配置 → 本地成功，Baidu=0（console 无 FALLBACK/BAIDU 日志）
 //   R3: Local FAIL + Baidu 未配置 → 明确提示「百度云端未配置」
-//   R4: Local FAIL + Baidu 可用 → 自动 fallback → 真实百度成功（需真实 AK/SK → PENDING / BLOCKED，不虚构）
-//   R5: Local FAIL + Baidu 已配置(假key) → fallback 发起 → Baidu 失败有明确原因、状态结束不死锁、无 AK/SK 泄漏
-// 机制：
-//   - 辅助 userscript（先行安装，document-idle 清空 zyBaiduAk/Sk 并强制 mode=auto），保证每页加载前干净态
-//   - 已配置态通过原生抽屉真实 UI 填写假 key + 保存（走产品路径 GM_setValue）
-//   - Local 失败注入：等 executor 就绪（attr 置空）后写入 {ok:false,err:'engine'} → 走 LOCAL_OCR_FAILED fallback
-//   - 网络计数：page.on('request') 过滤 aip.baidubce.com → Baidu request 计数
-//   - 泄漏审计：console/status/pageErrors 中检索假 key 与 /AK|SK|token=/
+//   R2: Local PASS + Baidu 已配置(假key) → 本地成功，Baidu=0（Local-first 不偷偷调百度）
+//   R5: Local FAIL + Baidu 已配置(假key) → 自动 fallback（fallbackReason=LOCAL_OCR_FAILED）→ Baidu token 明确失败 → 终态不死锁
+//   R4: Local FAIL + Baidu 真实可用 → 真实百度成功 → Textbox（需真实 AK/SK → PENDING，不虚构）
+// 机制：GM 存储按脚本隔离（不可用他脚本清除）→ 场景顺序保证未配置态（R1/R3 在保存假 key 前执行）。
+// Baidu 请求通过 GM_xmlhttpRequest（扩展上下文）发起，页面 network 监听不可见 → 证据以 [zy-ocr] console 为准。
+// Local 失败注入：等 executor 就绪（data-zy-ocr-result 置空）时写入 {ok:false,err:'engine'} → LOCAL_OCR_FAILED fallback。
+// 泄漏审计：console/status/matrix/pageErrors 检索假 key 与 /AK|SK|token=/。
 // 证据：runtime/reports/stage5-5b-p4-report.json + docs/evidence/stage-5.5b/
 "use strict";
 const path = require("path");
@@ -21,22 +19,9 @@ const adapter = require("./scriptcat-adapter");
 const EXT_ID = adapter.EXT_ID;
 const EDITOR_URL = "https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/thirdDiyAdd.do";
 const MAIN_UUID = "rt5-5b-p4-main-" + Date.now().toString(36);
-const CLEANER_UUID = "rt5-5b-p4-clean-" + Date.now().toString(36);
 const USERSCRIPT_PATH = path.join(__dirname, "..", "zheliyin-card-assistant.user.js");
 const FAKE_AK = "AK-FAKE-4P4-123456";
 const FAKE_SK = "SK-FAKE-4P4-654321";
-
-// 更干净态辅助脚本：清空百度凭据并固定 mode=auto（先于主脚本注册执行）
-const CLEANER_CODE = [
-  "// ==UserScript==",
-  "// @name zy-p4-cleaner",
-  "// @namespace https://github.com/jingjiangze/zheliyin-scriptcat",
-  "// @match https://diy.zheliyin.com/*",
-  "// @grant GM_setValue",
-  "// @run-at document-idle",
-  "// ==/UserScript==",
-  "(function(){try{GM_setValue('zyBaiduAk','');GM_setValue('zyBaiduSk','');GM_setValue('zyOcrMode','auto');}catch(e){}})();"
-].join("\n");
 
 (async () => {
   const scDir = path.join(__dirname, "vendor", "scriptcat");
@@ -45,8 +30,6 @@ const CLEANER_CODE = [
   const matrix = (row, local, baidu, expected, got, ok) => { report.matrix.push({ row, local, baidu, expected, got, ok: ok ? "PASS" : "FAIL" }); if (!ok) report.errors.push("matrix:" + row); };
   const cn = [];
   const pageErrors = [];
-  const leakHits = [];
-  let baiduReq = 0;
   const userScriptSrc = fs.readFileSync(USERSCRIPT_PATH, "utf8");
   let browser = null;
   try {
@@ -59,19 +42,15 @@ const CLEANER_CODE = [
     const optsPage = browser.pages()[0];
     await optsPage.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
     await optsPage.waitForTimeout(2500);
-    // 清理历史本仓库脚本 → 装 cleaner（先于主脚本） → 装主脚本
     try {
       const all = (await adapter.getAllScripts(optsPage)) || [];
       for (const s of all.filter((x) => /折立印|zheliyin|zy-p4/i.test(String(JSON.stringify(x) || "")))) { try { await adapter.removeScript(optsPage, s.uuid); } catch (e) {} }
     } catch (e) {}
-    const c1 = await adapter.installByCode(optsPage, { uuid: CLEANER_UUID, code: CLEANER_CODE, upsertBy: "user" }).catch((e) => ({ __err: String(e && e.message || e) }));
-    step("install-cleaner", !c1.__err, c1.__err || "status=" + c1.status, "P4_CLEANER");
     const m1 = await adapter.installByCode(optsPage, { uuid: MAIN_UUID, code: userScriptSrc, upsertBy: "user" }).catch((e) => ({ __err: String(e && e.message || e) }));
     step("install-userscript", !m1.__err, m1.__err || "status=" + m1.status, "P4_MAIN");
-    if (c1.__err || m1.__err) throw new Error("install failed");
+    if (m1.__err) throw new Error("install failed: " + m1.__err);
 
     const page = await browser.newPage();
-    page.on("request", (r) => { if (r.url().indexOf("aip.baidubce.com") >= 0) baiduReq += 1; });
     page.on("console", (msg) => { const t = String(msg.text()); if (t.indexOf("[zy-ocr]") >= 0) cn.push(t); });
     page.on("pageerror", (e) => pageErrors.push(String(e && e.message || e).slice(0, 300)));
 
@@ -124,7 +103,6 @@ const CLEANER_CODE = [
       }));
     }
     function readStatus() { return page.evaluate(() => { const n = document.getElementById("zy-native-status"); return n ? n.textContent : ""; }).catch(() => ""); }
-    // 等待最终态：中间状态（正在等待/正在准备/正在切换…）不截断，直到命中终态或超时
     async function waitTerminal(maxMs, reTerminal) {
       const GENERIC = /已生成 \d+ 个文字|生成失败|识别异常|百度 OCR 配置无效|连接失败|引擎加载失败|引擎网络错误/;
       const t0 = Date.now();
@@ -136,28 +114,8 @@ const CLEANER_CODE = [
       }
       return last;
     }
-    // 原生抽屉保存假 key（产品路径；id 为 bindOcrControls "-native" 后缀约定）
-    async function saveFakeKeys() {
-      return page.evaluate(({ ak, sk }) => {
-        const akEl = document.getElementById("zy-baidu-ak-native");
-        const skEl = document.getElementById("zy-baidu-sk-native");
-        const saveEl = document.getElementById("zy-baidu-save-native");
-        if (!akEl || !skEl || !saveEl) return false;
-        akEl.value = ak; skEl.value = sk; saveEl.click();
-        return true;
-      }, { ak: FAKE_AK, sk: FAKE_SK });
-    }
-    // 点击「测试连接」并从其状态节点读回（用于验证凭据已落库 + token 请求真实发起 + 错误可读）
-    async function clickTestConnection() {
-      return page.evaluate(() => {
-        const btn = document.getElementById("zy-baidu-test-native");
-        if (!btn) return { ok: false };
-        btn.click();
-        return { ok: true };
-      });
-    }
-    function readBaiduStatus() { return page.evaluate(() => { const n = document.getElementById("zy-baidu-status-native"); return n ? n.textContent : ""; }).catch(() => ""); }
-    // 注入可控 Local 失败：等 executor 已就绪（attr 被重置为空）→ 立即写入失败结果
+    function statusReset() { return page.evaluate(() => { const n = document.getElementById("zy-native-status"); if (n) n.textContent = ""; }).catch(() => {}); }
+    function clickOcr() { return page.evaluate(() => { const b = document.getElementById("zy-native-ocr-btn"); if (b) b.click(); return !!b; }).catch(() => false); }
     async function clickWithLocalFailure() {
       return page.evaluate(() => {
         const btn = document.getElementById("zy-native-ocr-btn") || document.getElementById("zy-ocr-btn");
@@ -176,74 +134,96 @@ const CLEANER_CODE = [
         });
       });
     }
-
+    async function saveFakeKeys() {
+      return page.evaluate(({ ak, sk }) => {
+        const akEl = document.getElementById("zy-baidu-ak-native");
+        const skEl = document.getElementById("zy-baidu-sk-native");
+        const saveEl = document.getElementById("zy-baidu-save-native");
+        if (!akEl || !skEl || !saveEl) return false;
+        akEl.value = ak; skEl.value = sk; saveEl.click();
+        return true;
+      }, { ak: FAKE_AK, sk: FAKE_SK });
+    }
+    function readBaiduStatus() { return page.evaluate(() => { const n = document.getElementById("zy-baidu-status-native"); return n ? n.textContent : ""; }).catch(() => ""); }
+    const cnSlice = (from) => cn.slice(from).join("\n");
+    // 主脚本 GM 存储清理（扩展上下文直接删 chrome.storage.local 中本脚本的键；仅供测试工具使用）
+    async function resetMainStorage() {
+      return optsPage.evaluate(async () => {
+        const all = await chrome.storage.local.get(null);
+        const hits = Object.keys(all).filter((k) => /zyBaidu|zyOcrMode/i.test(k));
+        for (const k of hits) { try { await chrome.storage.local.remove(k); } catch (e) {} }
+        return hits;
+      });
+    }
+    const resetKeys = await resetMainStorage().catch((e) => ["err:" + String(e && e.message || e)]);
+    step("reset-main-gm-storage", !Array.isArray(resetKeys) || !String(resetKeys[0]).indexOf("err:") === 0, "removedKeys=" + JSON.stringify(resetKeys), "R3_UNCONFIGURED_PRECONDITION");
     const leakCheck = () => {
-      const hay = JSON.stringify({ console: cn, statuses: report.matrix, pageErrors: pageErrors });
-      return ["AK-FAKE", "SK-FAKE"].concat(/(client_id|client_secret)=/.test(hay) ? ["client_secret="] : []).filter((k) => hay.indexOf(k) >= 0);
+      const hay = JSON.stringify({ console: cn, matrix: report.matrix, pageErrors: pageErrors });
+      const hits = [];
+      if (hay.indexOf(FAKE_AK) >= 0) hits.push("FAKE_AK");
+      if (hay.indexOf(FAKE_SK) >= 0) hits.push("FAKE_SK");
+      if (/(client_id|client_secret)=/.test(hay)) hits.push("client_secret=");
+      return hits;
     };
 
-    // ================= R1: Local PASS + 未配置；baidu=0 =================
-    let baiduReq0 = baiduReq;
+    // ================= R1: Local PASS + 未配置；console 无 Baidu 日志 =================
+    let ev0 = cn.length;
     if (await openEditor()) {
       await setBg();
-      await page.evaluate(() => { const n = document.getElementById("zy-native-status"); if (n) n.textContent = ""; });
-      const btn = await page.evaluate(() => { const b = document.getElementById("zy-native-ocr-btn"); if (b) b.click(); return !!b; });
+      await statusReset();
+      const btn = await clickOcr();
       const term = await waitTerminal(60000, /已生成/);
-      const r1ok = btn && /已生成 \d+ 个文字/.test(term) && (baiduReq - baiduReq0) === 0;
-      matrix("R1", "PASS", "unconfigured", "Local 成功 且 Baidu request=0", term + " | baiduReq=" + baiduReq, r1ok);
-      step("R1-local-pass-no-baidu", r1ok, "term=" + term + " baiduReqDelta=" + (baiduReq - baiduReq0), "LOCAL_FIRST");
+      const r1cn = cnSlice(ev0);
+      const r1ok = btn && /已生成 \d+ 个文字/.test(term) && !/FALLBACK|BAIDU|baidu/.test(r1cn);
+      matrix("R1", "PASS", "unconfigured", "Local 成功 且 Baidu request=0", term + " | consoleNoBaidu=" + !/FALLBACK|BAIDU|baidu/.test(r1cn), r1ok);
+      step("R1-local-pass-no-baidu", r1ok, "term=" + term, "LOCAL_FIRST");
     } else { step("R1-open-editor", false, "timeout"); }
 
-    // ================= R2: Local PASS + 已配置(假key)；baidu=0 =================
-    const savedKeys = await saveFakeKeys().catch(() => false);
-    step("R2-save-fake-keys", savedKeys === true, "saved=" + savedKeys, "CREDENTIAL_UI_SAVE");
-    await page.evaluate(() => { const n = document.getElementById("zy-native-status"); if (n) n.textContent = ""; });
-    const clicked2 = await page.evaluate(() => { const b = document.getElementById("zy-native-ocr-btn"); if (b) b.click(); return !!b; });
-    baiduReq0 = baiduReq;
-    const term2 = await waitTerminal(60000, /已生成/);
-    const r2ok = clicked2 && /已生成 \d+ 个文字/.test(term2) && (baiduReq - baiduReq0) === 0;
-    matrix("R2", "PASS", "configured(fake)", "Local 成功（Baidu 已配置但不调用）→ Baidu request=0", term2 + " | baiduReqDelta=" + (baiduReq - baiduReq0), r2ok);
-    step("R2-local-first-key-set", r2ok, "term2=" + term2 + " delta=" + (baiduReq - baiduReq0), "LOCAL_FIRST_NO_SNEAKY");
-
-    // ================= R3: Local FAIL + 未配置 → 明确提示 =================
-    await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {}); // cleaner 会清空假 key
-    await openEditor();
-    await setBg();
-    await page.evaluate(() => { const n = document.getElementById("zy-native-status"); if (n) n.textContent = ""; });
+    // ================= R3: Local FAIL + 未配置 → 明确提示（在保存假 key 之前） =================
+    ev0 = cn.length;
+    await statusReset();
     const inj3 = await clickWithLocalFailure();
-    const term3 = await waitTerminal(60000, /百度云端未配置|已生成/);
-    const r3ok = /百度云端未配置/.test(term3);
+    const term3 = await waitTerminal(60000, /百度云端未配置|百度 OCR|已生成/);
+    const r3cn = cnSlice(ev0);
+    const r3ok = /百度云端未配置/.test(term3) && /not configured for fallback/.test(r3cn);
     matrix("R3", "FAIL", "unconfigured", "明确提示「百度云端未配置」", term3, r3ok);
     step("R3-fail-notconfigured-prompt", r3ok, "term3=" + term3 + " injected=" + JSON.stringify(inj3), "NOTIFY_CONFIG");
 
-    // ================= R5: Local FAIL + 已配置(假key) → fallback → Baidu 失败终态 =================
-    await saveFakeKeys();
-    // 先验：测试连接 → token 请求真实发起（aip 请求 +1）且错误可读、无泄漏
-    const t0s = baiduReq;
-    await clickTestConnection();
-    let tstat = await readBaiduStatus();
-    const tw = Date.now();
-    while (Date.now() - tw < 15000 && (!tstat || /正在测试/.test(tstat))) { await new Promise((r) => setTimeout(r, 500)); tstat = await readBaiduStatus(); }
-    const tokenReqMade = (baiduReq - t0s) > 0;
-    const tOk = tokenReqMade && /百度 OCR 配置无效|连接失败|invalid/.test(tstat);
-    step("R5-key-saved-and-token-requested", tOk, "tstat=" + tstat + " tokenReqDelta=" + (baiduReq - t0s), "CREDENTIAL_SAVED_TOKEN_FLOW");
-    baiduReq0 = baiduReq;
-    await page.evaluate(() => { const n = document.getElementById("zy-native-status"); if (n) n.textContent = ""; });
+    // ================= R2: 保存假 key（原生抽屉真实 UI）→ Local PASS + Baidu=0 =================
+    const savedKeys = await saveFakeKeys().catch(() => false);
+    step("R2-save-fake-keys", savedKeys === true, "saved=" + savedKeys, "CREDENTIAL_UI_SAVE");
+    ev0 = cn.length;
+    await statusReset();
+    const clicked2 = await clickOcr();
+    const term2 = await waitTerminal(60000, /已生成/);
+    const r2cn = cnSlice(ev0);
+    const r2ok = savedKeys && clicked2 && /已生成 \d+ 个文字/.test(term2) && !/FALLBACK|BAIDU|baidu/.test(r2cn);
+    matrix("R2", "PASS", "configured(fake)", "Local 成功（Baidu 已配置但不调用）→ Baidu=0", term2 + " | consoleNoBaidu=" + !/FALLBACK|BAIDU|baidu/.test(r2cn), r2ok);
+    step("R2-local-first-key-set", r2ok, "term2=" + term2, "LOCAL_FIRST_NO_SNEAKY");
+
+    // ================= R5: 已配置(假key) + Local FAIL → fallback → Baidu token 明确失败终态 =================
+    const bs0 = await readBaiduStatus();
+    ev0 = cn.length;
+    await statusReset();
     const inj5 = await clickWithLocalFailure();
     const term5 = await waitTerminal(60000, /百度 OCR|失败|异常|已生成/);
-    const baiduAttempted = (baiduReq - baiduReq0) > 0;
-    const r5ok = tOk && baiduAttempted && /百度 OCR 配置无效|连接失败/.test(term5) && !/正在识别|正在切换/.test(term5);
-    matrix("R5", "FAIL", "configured(fake,will-fail)", "fallback 发起 → Baidu 明确失败原因 → 终态不死锁", term5 + " | baiduReqDelta=" + (baiduReq - baiduReq0), r5ok);
-    step("R5-fallback-baidu-fail-terminal", r5ok, "term5=" + term5 + " attempted=" + baiduAttempted, "FALLBACK_TERMINAL");
-    // 泄漏审计
-    const leaks = leakCheck();
-    step("P4-K-no-credential-leak", leaks.length === 0, "leaks=" + JSON.stringify(leaks), "CREDENTIAL_PRIVACY");
+    const r5cn = cnSlice(ev0);
+    const fallbackReasonShown = /FALLBACK\] local LOCAL_OCR_FAILED/.test(r5cn) || /LOCAL_OCR_FAILED/.test(term5);
+    const baiduAttemptedShown = /FALLBACK\] local LOCAL_OCR_FAILED:engine → baidu/.test(r5cn) && /BAIDU_TOKEN_FAILED/.test(r5cn);
+    const notStuck = !/正在识别|正在切换|正在等待|正在准备/.test(term5);
+    const r5ok = fallbackReasonShown && baiduAttemptedShown && /百度 OCR 配置无效|连接失败：百度/.test(term5) && notStuck;
+    matrix("R5", "FAIL", "configured(fake,will-fail)", "fallback 发起(fallbackReason) → Baidu 明确失败 → 终态不死锁", term5 + " | console=" + r5cn.replace(/\n/g, ";"), r5ok);
+    step("R5-fallback-baidu-fail-terminal", r5ok, "term5=" + term5 + " console=" + r5cn.replace(/\n/g, ";"), "FALLBACK_TERMINAL");
 
-    // R4: Local FAIL + Baidu 可用（真实成功）——需要真实 AK/SK → PENDING（§18 不虚构）
+    // 泄漏审计（含测试连接/状态回显）
+    const leaked = leakCheck();
+    step("P4-K-no-credential-leak", leaked.length === 0, "leaks=" + JSON.stringify(leaked) + " baiduStatusInput=" + bs0, "CREDENTIAL_PRIVACY");
+
+    // R4: 真实百度成功 → PENDING（§18 不虚构）
     matrix("R4", "FAIL", "available(real-key)", "自动 fallback → 真实 Baidu 成功 → Textbox（需真实 AK/SK）", "需真实凭据，本轮 PENDING", false);
     step("R4-baidu-real-success", false, "PENDING: 需真实 AK/SK（API凭据/额度/网络），不虚构 PASS", "PENDING_DOCUMENTED");
 
-    try { await adapter.removeScript(optsPage, MAIN_UUID); await adapter.removeScript(optsPage, CLEANER_UUID); step("cleanup-userscript", true, "removed"); } catch (e) { step("cleanup-userscript", false, String(e && e.message || e)); }
+    try { await adapter.removeScript(optsPage, MAIN_UUID); step("cleanup-userscript", true, "removed"); } catch (e) { step("cleanup-userscript", false, String(e && e.message || e)); }
   } catch (e) {
     step("fatal", false, String(e && e.stack || e).slice(0, 600));
   } finally {
