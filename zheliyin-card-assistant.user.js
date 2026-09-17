@@ -1034,8 +1034,15 @@
     const on = (e) => {
       if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "ocrCreateResult") {
         clearTimeout(fallbackTimer); window.removeEventListener("message", on); ocrRunning = false; // 事务终态 DONE/生成失败（含回滚）
-        if (e.data.ok) { setStatus("已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）"); ocrLog("SUCCESS", "created=" + (e.data.created || []).length + "/" + (e.data.detectedBlocks || 0)); }
-        else { setStatus("生成失败：" + (e.data.message || "未创建文字") + (e.data.failedBlockIndex != null ? "（第 " + e.data.failedBlockIndex + " 个失败，已回滚）" : "")); ocrLog("ERROR", "ocrCreate failed created=" + (e.data.created || []).length + " detected=" + (e.data.detectedBlocks || 0) + " failedIdx=" + (e.data.failedBlockIndex != null ? e.data.failedBlockIndex : "n/a") + " msg=" + String(e.data.message || "").slice(0, 120)); }
+        // Stage 6 P0（编辑器接入诊断 §18）：仅记录计数与原生 API 可用性，禁止输出对象/文本内容
+        const integ = e.data.editorIntegration || {};
+        if (e.data.ok) {
+          setStatus("已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）");
+          ocrLog("SUCCESS", "created=" + (e.data.created || []).length + "/" + (e.data.detectedBlocks || 0) + " editorInteg=" + JSON.stringify({ undo: !!integ.nativeUndoFound, savePre: !!integ.undoSavePre, savePost: !!integ.undoSavePost, ident: integ.identityApplied, uv4: integ.uv4Total, layerMax: integ.layerMax }));
+        } else {
+          setStatus("生成失败：" + (e.data.message || "未创建文字") + (e.data.failedBlockIndex != null ? "（第 " + e.data.failedBlockIndex + " 个失败，已回滚）" : ""));
+          ocrLog("ERROR", "ocrCreate failed created=" + (e.data.created || []).length + " detected=" + (e.data.detectedBlocks || 0) + " failedIdx=" + (e.data.failedBlockIndex != null ? e.data.failedBlockIndex : "n/a") + " msg=" + String(e.data.message || "").slice(0, 120));
+        }
       }
     };
     const fallbackTimer = setTimeout(() => { window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);

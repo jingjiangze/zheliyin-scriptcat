@@ -53,15 +53,29 @@ function pageBridge() {
         // Stage 6.1 §16/§17：事务语义 —— 1 TextBlock = 1 textbox（§8 硬规则）；
         //   任一 block 创建失败 → 全量回滚本批已建对象 → 恢复创建前状态 → created=0，
         //   回复 {ok, detectedBlocks, createdCount, created[], failedBlockIndex, error}。
+        // Stage 6 P0（2026-09-17 强制补充）：OCR 对象必须尽量接入编辑器对象模型/历史
+        //   —— 用编辑器原生生成器（sundry.guid）赋 multiUuid，镜像 location*/printLocation*/
+        //   mediaMediaType/layerNum 等编辑器业务字段（§七/§八），并在创建前后尝试调用
+        //   原生 Undo.getInstance().save()（仅使用编辑器自身 API，不伪造历史，§十三）。
         const canvas = findCanvasForSide("front");
         if (!canvas) { post("ocrCreateResult", { ok: false, message: "未找到正面画布。", detectedBlocks: 0, createdCount: 0, created: [], failedBlockIndex: null, error: "no canvas" }); return; }
         const items = Array.isArray(event.data.items) ? event.data.items : [];
+        const editorInteg = { nativeUndoFound: false, undoSavePre: false, undoSavePost: false, identityApplied: 0, uv4Total: 0, layerMax: -1 };
+        // 编辑器本地能力：native Undo 快照（仅编辑器自身 API，失败静默）
+        try {
+          const U = getNativeUndoInstance();
+          if (U && typeof U.save === "function") {
+            editorInteg.nativeUndoFound = true;
+            U.save(); editorInteg.undoSavePre = true; // 创建前快照（让后续原生 undo 有机会回到创建前）
+          }
+        } catch (eUndo) {}
         let created = [];
         const batch = [];
         let failedBlockIndex = null;
         let failMsg = "";
         try {
           const ref = getTextObjects(canvas)[0] || canvas.getObjects().find(function (o) { return typeof o.text === "string"; }) || null;
+          editorInteg.layerMax = currentLayerMax(canvas);
           for (let idx = 0; idx < items.length; idx += 1) {
             const it = items[idx];
             let obj = null;
@@ -78,6 +92,9 @@ function pageBridge() {
               obj.zyFieldKey = "ocr_demo_" + String(it.text || "").slice(0, 4);
               // §18：换行诊断挂载到对象（用于真实渲染行数校验）
               if (it.diagnostics) { obj.zyOcrDiagnostics = it.diagnostics; }
+              // Stage 6 P0：编辑器对象模型镜像（native 字段，多数字段为审计所得 252438 真机 schema）
+              try { if (mirrorEditorObjectModel(canvas, obj)) editorInteg.identityApplied += 1; } catch (eMirror) { console.warn("[zy-ocr][ocrCreate] mirror err=" + String(eMirror && eMirror.message || eMirror).slice(0, 120)); }
+              if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{20,}$/.test(obj.multiUuid)) editorInteg.uv4Total += 1;
               created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16) });
               batch.push(obj);
             } catch (e2) {
@@ -97,6 +114,11 @@ function pageBridge() {
           batch.forEach(function (o) { try { if (o && canvas.remove) canvas.remove(o); } catch (_e) {} });
           created = [];
         }
+        // Stage 6 P0：创建后再快照（若前置快照生效，undo/redo 可由原生管线闭环）
+        try {
+          const U = getNativeUndoInstance();
+          if (U && typeof U.save === "function") { U.save(); editorInteg.undoSavePost = true; }
+        } catch (eUndo2) {}
         if (canvas.requestRenderAll) canvas.requestRenderAll();
         const detectedBlocks = items.length;
         const createdCount = created.length;
@@ -106,7 +128,8 @@ function pageBridge() {
           createdCount: createdCount,
           created: created,
           failedBlockIndex: failedBlockIndex,
-          error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined)
+          error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
+          editorIntegration: editorInteg
         });
         return;
       }
@@ -126,6 +149,49 @@ function pageBridge() {
 
     function post(type, payload) {
       window.postMessage(Object.assign({ source: PAGE_SOURCE_IN_PAGE, type: type }, payload), location.origin);
+    }
+
+    // ---- Stage 6 P0：原生编辑器接入辅助（252438 真机审计所得字段 schema；仅用编辑器自身 API）----
+    function getNativeUndoInstance() {
+      const req = window.requirejs || window.require;
+      const ctx = req && req.s && req.s.contexts && req.s.contexts._;
+      const U = ctx && ctx.defined && ctx.defined.Undo;
+      if (U && typeof U.getInstance === "function") return U.getInstance();
+      return null;
+    }
+    function currentLayerMax(canvas) {
+      let maxL = -1;
+      try {
+        (canvas.getObjects() || []).forEach(function (o) { if (o && typeof o.layerNum === "number" && o.layerNum > maxL) maxL = o.layerNum; });
+      } catch (e) {}
+      return maxL;
+    }
+    // 给 OCR 新建 textbox 镜像编辑器对象模型字段（审计：原生 rect/textbox schema）。
+    // multiUuid：优先编辑器原生生成器 sundry.guid()（§八 复用原生流程）；markuuid 保持原生空串约定。
+    function mirrorEditorObjectModel(canvas, obj) {
+      if (!obj) return false;
+      const req = window.requirejs || window.require;
+      const ctx = req && req.s && req.s.contexts && req.s.contexts._;
+      const defs = ctx && ctx.defined ? ctx.defined : {};
+      const sundry = defs["sundry"];
+      let guid = null;
+      try { if (sundry && typeof sundry.guid === "function") guid = sundry.guid(); } catch (e) {}
+      if (!guid) { try { if (window.crypto && typeof window.crypto.randomUUID === "function") guid = window.crypto.randomUUID(); } catch (e) {} }
+      if (!guid) guid = "zz-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
+      obj.multiUuid = guid;
+      obj.markuuid = "";                            // 原生新对象 markuuid 为空串
+      obj.mediaMediaType = "text";
+      obj.isDesign = true;
+      obj.isEdit = false;
+      obj.isLineText = false;
+      obj.deleteState = false;
+      const gx = { left: obj.left != null ? obj.left : 0, top: obj.top != null ? obj.top : 0, width: obj.width != null ? obj.width : 60, height: obj.height != null ? obj.height : 20, rotation: obj.angle || 0 };
+      obj.locationX = gx.left; obj.locationY = gx.top;
+      obj.locationWidth = gx.width; obj.locationHeight = gx.height; obj.locationRotation = gx.rotation;
+      obj.printLocationX = gx.left; obj.printLocationY = gx.top;
+      obj.printLocationWidth = gx.width; obj.printLocationHeight = gx.height; obj.printLocationRotation = gx.rotation;
+      try { obj.layerNum = currentLayerMax(canvas) + 1; } catch (e) {}
+      return true;
     }
 
     // ---- Stage 5.5B P1：只读画布信息 / OCR 目标准备（页面世界执行，隔离世界不可见）----

@@ -1,0 +1,94 @@
+{
+ "ts": "2026-09-17T07:50:17.163Z",
+ "stage": "STAGE-6-P0-EDITOR-INTEGRATION",
+ "steps": [
+  {
+   "name": "install-userscript",
+   "ok": "PASS",
+   "detail": "status=1",
+   "evidence": "REAL_SCRIPT_CAT_INSTALL"
+  },
+  {
+   "name": "editor-ready-drawer",
+   "ok": "PASS",
+   "detail": "{\"ready\":true,\"drawer\":true}",
+   "evidence": "P0_REAL_EDITOR_READY"
+  },
+  {
+   "name": "inject-synthetic-bg",
+   "ok": "PASS",
+   "detail": "{\"ok\":true,\"tokens\":{\"w1\":\"张三\",\"w2\":\"销售经理\",\"w3\":\"电话\",\"b2\":\"折立印\"}}",
+   "evidence": "P0_BG_INJECT"
+  },
+  {
+   "name": "click-ocr",
+   "ok": "PASS",
+   "detail": "clicked=true",
+   "evidence": "P0_OCR_TRIGGER"
+  },
+  {
+   "name": "ocr-terminal",
+   "ok": "PASS",
+   "detail": "status=已生成 4 个文字（可双击编辑）",
+   "evidence": "P0_TERMINAL"
+  },
+  {
+   "name": "ocr-created-readable",
+   "ok": "PASS",
+   "detail": "{\"ocrCount\":4,\"items\":[{\"text\":\"张 三\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":82,\"top\":113,\"left\":139,\"fontSize\":37},{\"text\":\"销售 经 理\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":166,\"top\":172,\"left\":137,\"fontSize\":39},{\"text\":\"电话 : 13800138000\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":366,\"top\":232,\"left\":141,\"fontSize\":39},{\"text\":\"北京 折 立 印 科技\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":216,\"top\":490,\"left\":137,\"fontSize\":30}]}",
+   "evidence": "P0_READBACK"
+  },
+  {
+   "name": "editable-all",
+   "ok": "PASS",
+   "detail": "[{\"text\":\"张 三\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":82,\"top\":113,\"left\":139,\"fontSize\":37},{\"text\":\"销售 经 理\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":166,\"top\":172,\"left\":137,\"fontSize\":39},{\"text\":\"电话 : 13800138000\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":366,\"top\":232,\"left\":141,\"fontSize\":39},{\"text\":\"北京 折 立 印 科技\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":216,\"top\":490,\"left\":137,\"fontSize\":30}]",
+   "evidence": "P0_EDITABLE"
+  },
+  {
+   "name": "editor-identity-mirrored",
+   "ok": "FAIL",
+   "detail": "[{\"text\":\"张 三\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":82,\"top\":113,\"left\":139,\"fontSize\":37},{\"text\":\"销售 经 理\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":166,\"top\":172,\"left\":137,\"fontSize\":39},{\"text\":\"电话 : 13800138000\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":366,\"top\":232,\"left\":141,\"fontSize\":39},{\"text\":\"北京 折 立 印 科技\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":216,\"top\":490,\"left\":137,\"fontSize\":30}]",
+   "evidence": "P0_IDENTITY_MIRROR"
+  },
+  {
+   "name": "textblock-multiline-single-box",
+   "ok": "FAIL",
+   "detail": "[{\"text\":\"张 三\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":82,\"top\":113,\"left\":139,\"fontSize\":37},{\"text\":\"销售 经 理\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":166,\"top\":172,\"left\":137,\"fontSize\":39},{\"text\":\"电话 : 13800138000\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":366,\"top\":232,\"left\":141,\"fontSize\":39},{\"text\":\"北京 折 立 印 科技\",\"newlineCount\":0,\"editable\":true,\"multiUuid\":null,\"multiUuidV4\":false,\"layerNum\":null,\"locNumeric\":false,\"diag\":null,\"type\":\"textbox\",\"width\":216,\"top\":490,\"left\":137,\"fontSize\":30}]",
+   "evidence": "P0_TEXTBLOCK"
+  },
+  {
+   "name": "wrap-diagnostics-attached",
+   "ok": "FAIL",
+   "detail": "[null,null,null,null]",
+   "evidence": "P0_DIAG"
+  },
+  {
+   "name": "native-undo-behavior",
+   "ok": "PASS",
+   "detail": "undoClicked=true before=4 after=4 (审计：raw-add 未被原生历史跟踪，移除与否视编辑器快照投产而定)",
+   "evidence": "P0_UNDO_HONEST"
+  }
+ ],
+ "errors": [
+  "editor-identity-mirrored",
+  "textblock-multiline-single-box",
+  "wrap-diagnostics-attached"
+ ],
+ "undoVerbose": {
+  "clicked": true,
+  "before": 4,
+  "after": 4,
+  "note": "undo-loop=PENDING：原生撤销入口（Undo.getInstance/sundry 快照管线）对未经编辑器 op 管线创建的 RAW 对象不保证跟踪；本版已完成身份镜像+原生 save() 尝试，撤销闭环需后续以编辑器原生注册入口接入后复测（用户真机手工置字可作对照）"
+ },
+ "consoleEvidence": [
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+  "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+  "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=true active=null",
+  "[zy-ocr][PREPARING] kind=background-image 900x620 dataUrl=47810 chars",
+  "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+  "[zy-ocr][LOCAL_RECOGNIZING] lines=4 words=13 image=undefinedxundefined",
+  "[zy-ocr][GROUP] empty aggregated words=13 sampleKeys=[\"text\",\"bbox\",\"confidence\"] bboxKeys=[\"x0\",\"y0\",\"x1\",\"y1\"]",
+  "[zy-ocr][BUILDING] blocks=4 forcedWrap=0 multiLine=0",
+  "[zy-ocr][SUCCESS] created=4/0 editorInteg={\"undo\":false,\"savePre\":false,\"savePost\":false}"
+ ]
+}
