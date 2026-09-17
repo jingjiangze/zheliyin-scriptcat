@@ -6,6 +6,47 @@
 
 ---
 
+## 0. 真机验收记录模板（复制使用）
+
+每条真机验收必须逐项填写；未测的写 `NOT_TESTED`，**不得留空、不得推断**。
+
+```text
+### 真机验收 · <日期> · Demo v<version> · commit <short>
+
+环境
+  Browser          : <名称 + 完整版本>
+  OS               : <Windows 版本>
+  ScriptCat        : <版本>
+  Demo version     : <@version，面板显示版本>
+  Install URL      : https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
+
+安装与更新
+  Open editor      : PASS / FAIL / NOT_TESTED   —— 折立印设计器是否正常打开（登录态）
+  Panel visible    : PASS / FAIL / NOT_TESTED   —— 右侧「名片套版助手」面板是否出现
+  Update           : PASS / FAIL / NOT_TESTED   —— ScriptCat「检查更新」是否识别到当前版本
+
+OCR 链路（逐项）
+  Image input      : PASS / FAIL / NOT_TESTED   —— 网页上传/粘贴图片
+  Background image : PASS / FAIL / NOT_TESTED   —— 背景图场景（若该功能已上线）
+  Local OCR        : PASS / FAIL / NOT_TESTED   —— 本地 Tesseract 识别
+  Baidu fallback   : PASS / FAIL / NOT_TESTED / N_A —— 百度兜底（若已接入）
+  OCR result       : <识别出的行数 / 文本摘要，勿写真实客户内容>
+  Position         : PASS / FAIL / NOT_TESTED   —— 文字位置是否贴合原图
+  Textbox          : PASS / FAIL / NOT_TESTED   —— 是否生成真实 textbox
+  Double-click edit: PASS / FAIL / NOT_TESTED   —— 双击是否可继续编辑
+  Second recognit. : PASS / FAIL / NOT_TESTED   —— 二次识别是否正常（不重复注入/不叠加）
+  Rollback         : PASS / FAIL / NOT_TESTED   —— 刷新后是否零残留
+
+证据
+  report           : <runtime/reports/*.json 或人工观察说明>
+  截图             : <已脱敏；或写「未截图」>
+```
+
+> ⚠️ **绝对不要**在本模板或任何入库文件中出现：真实手机号、真实微信、真实客户资料、二维码、Cookie、Token、API Key。
+> 结果摘要只写「行数 / 结构 / 是否 PASS」，**不要粘贴识别出的真实文字**。
+
+---
+
 ## 1. 绝对禁止入库
 
 ```text
