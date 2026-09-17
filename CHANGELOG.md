@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+### Stage 6.2（2026-09-17）— v0.3.8.8：TextBlock 拆分收紧 + OCR 走原生编辑管线（Native-first）
+- **问题 A（TextBlock 单块过大）**：`groupLinesToBlocks` 合并规则改为严格 AND 强关系——左边界高度一致（leftAlignTolRatio=0.5）、行距 ≤1.25×medianLineHeight（gapRatioMax=1.25、maxGapPx=1.5×medianLineHeight）、字高相近（heightRatioMax=2.0）、横向重叠明显（overlapRatioMin=0.5）；左右两列文字绝对禁止合并；block 输出带 `mergeReasons` 诊断（旧宽松条件 maxGapPx=240 等禁用）。
+- **问题 B（OCR 对象未进原生管线）**：真机逆向 252438 定位原生新增文字真实调用链 `Undo.save → CanvasDiy.drawText(text, fontSize, left, top, mediaJson, layerNum) → createObjProductJsonDetail → canvas.add → checkObjsInProductJson(图层注册) → Undo.save`；`ocrCreate` 改为 Native-first——OCR 只提供 text/position/size/style（media JSON），身份字段（uuid/multiUuid/layerNum/location*）由原生流程生成，禁止手工伪造（§十七）；原生路径不可用时回退镜像路径，回复 `editorIntegration.mode` 标明。
+- **历史/撤销闭环**：原生 Undo 创建前后快照；真机验证 undo1 撤后续编辑 → undo2 撤 OCR 批次 → redo 恢复整批；`createdTextboxes == detectedBlocks`、`canvasTextCount == layerTextCount`、图层注册一致（§十八/§十九/§二十）；1 TextBlock=1 textbox，多行保持单个 textbox 原始换行。
+- **P1 Save/Reload = PENDING**：自动化无登录 profile 下保存仅触发保存前置检查、无内容写库请求，刷新未恢复；需真实登录手动验证回填（见 docs/stage-6-2-native-pipeline-report.md §4）。
+- 回归：e2e（ocrCreate → native 模式、3 blocks==3 created、undo/redo 边界、templateIntact）+ hook 对拍 probe 全 PASS；版本 0.3.8.8 五处同步。
+
 ### Stage 6.1 + Stage 6 P0（2026-09-17）— v0.3.8.7：TextBlock 排版稳定 + 编辑器对象模型接入
 - **Stage 6.1（TextBlock 层）**：`candidate-normalizer` 新增 `joinWordsSmart`（中文+中文/数字+数字无空格、邮箱/网址结构保留；修复「折 立 印」这类中文间空格）、`applyTessLineText`（Tesseract line.text 优先作最终文本，word bbox 仅作几何）、`groupLinesToBlocks`/`buildTextBlocks`（确定性聚类：左边界/行距/字高/水平方向；禁止左右两列/上下独立区过度合并；1 TextBlock=1 textbox，text 保留 `\n`）、`estimateTextWidth/Layout`（layoutWidth 容纳最长行防提前换行，`forcedWrapDetected` 换行诊断 §18）。
 - `buildItemsFromOcr` 消费 TextBlock：fontSize=视觉字高÷0.969（真机标定）、textbox height=lineCount×lineHeight、每 block 挂 `diagnostics{sourceLineCount, estimatedFinalLineCount, forcedWrapDetected}`。
