@@ -156,8 +156,10 @@ function groupWordsToLines(words, opts) {
     .filter(Boolean)
     .filter(function (w) { return w.text; });
   const o = opts || {};
-  const hTol = o.heightTolRatio != null ? o.heightTolRatio : 0.3;
-  const yTolRatio = o.yTolRatio != null ? o.yTolRatio : 0.35;
+  // 真机调参（252438，stage-6）：chi_sim 逐字 bbox 同行的字高差异可达 1.5~1.8×（如 张=56px/三=36px），
+  // 而行中心 y 差极小（5px）→ 以「中心 y 距」为主，字高相似度放宽（0.5），避免同一视觉行被拆成多行。
+  const hTol = o.heightTolRatio != null ? o.heightTolRatio : 0.5;
+  const yTolRatio = o.yTolRatio != null ? o.yTolRatio : 0.45;
   if (!list.length) return [];
   const sorted = list.slice().sort(function (a, b) { return (a.bbox.y - b.bbox.y) || (a.bbox.x - b.bbox.x); });
   const lines = [];
@@ -168,8 +170,8 @@ function groupWordsToLines(words, opts) {
       const L = lines[i];
       const lMid = L.bbox.y + L.bbox.height / 2;
       const scale = Math.max(w.bbox.height, L.bbox.height);
-      if (Math.abs(midY - lMid) <= Math.max(4, scale * yTolRatio) &&
-          Math.abs(w.bbox.height - L.bbox.height) <= Math.max(3, scale * hTol)) { placed = L; break; }
+      if (Math.abs(midY - lMid) <= Math.max(6, scale * yTolRatio) &&
+          Math.abs(w.bbox.height - L.bbox.height) <= Math.max(6, scale * hTol)) { placed = L; break; }
     }
     if (!placed) { placed = { words: [], bbox: null, sumC: 0, nC: 0 }; lines.push(placed); }
     placed.words.push(w);
