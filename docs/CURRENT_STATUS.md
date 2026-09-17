@@ -1,12 +1,13 @@
 # CURRENT_STATUS — 当前状态总览
 
 > 维护者：AI-2（Repository Governance 线）
-> 基线：`stage-4.1-runtime-validation` @ `e9235af`（Stage 5.5A-R2）；demo @ `e0abcf0`（v0.3.6.0，2026-09-17）；main @ `6840170`
+> 基线：`stage-4.1-runtime-validation` @ `e9235af`（Stage 5.5A-R2）；demo @ `604f552`（v0.3.7.0，2026-09-17）；main @ `6840170`
 > 修订：@ `3becf04`（5.4）初版；@ `4cb0819`（5.5）同步真实 OCR；@ `7c412b8`（5.5A）同步产品化验收结论；
 > @ `e9235af` / demo `58337a8`（5.5A-R2）**同步引擎装载突破：`engine-in-editor` BLOCKED → PASS**；
 > demo `f3ae3cb`：**`DEFECT-VER-01` 已修复**（版本四处统一到 0.3.5.0）；新增 Demo 依赖闭包 / 更新链自动检查；
-> demo `e0abcf0`（**当前**）：**v0.3.6.0 —— 本地优先 + 百度云兜底、凭据 AES-GCM 加密落库、网页原生右栏面板、候选边界统一**；
-> AI-2 于 2026-09-17 对 `e0abcf0` 完成闭包/更新链/元数据/单测/安全五项实测复核，结论见 §3。
+> demo `e0abcf0`（v0.3.6.0）：**本地优先 + 百度云兜底、凭据 AES-GCM 加密落库、网页原生右栏面板、候选边界统一**；
+> demo `604f552`（**当前 v0.3.7.0**）：**OCR-only Demo 模式**（默认停用旧套版浮窗，`zyShowTemplatePanel=1` 可恢复）；
+> AI-2 于 2026-09-17 对 `e0abcf0` 与 `604f552` 分别完成闭包/更新链/元数据/单测/安全实测复核，结论见 §3。
 > 本页同时覆盖 **四轨状态**（main / demo / AI-1 开发 / 治理），分支明细见 §4。
 > **本页只陈述已有证据支持的状态。没有证据的一律写 `TODO`，不预判。**
 > 状态取值：`PASS` / `PARTIAL` / `BLOCKED` / `TODO` / `DEFERRED` / `UNVERIFIED`
@@ -99,30 +100,34 @@ P1:          0（Stage 5.1 的 CREATION_IDENTITY_LEAK 已修复并回归）
              → 5.11 智能匹配 → 5.12 编组 → 5.13 Undo → 5.14 Preview
 ```
 
-**Demo 现状**（`demo` @ `e0abcf0`，版本 `0.3.6.0`）——四字段 Gate 独立，见 `docs/DEMO_RELEASE.md`：
+**Demo 现状**（`demo` @ `604f552`，版本 `0.3.7.0`）——四字段 Gate 独立，见 `docs/DEMO_RELEASE.md`：
 
 ```text
 DEMO_INSTALLABLE = PASS    （raw 200；10 条依赖全部 200；@require 闭包全部指向 demo；元数据 PASS）
-DEMO_UPDATEABLE  = PASS    （@updateURL/@downloadURL 指向 demo 且一致；@version 0.3.6.0 单调递增；raw 可达）
-DEMO_FUNCTIONAL  = PARTIAL （套版填层 + 本地 OCR + 百度兜底可用；识别质量与旋转映射待改进）
+DEMO_UPDATEABLE  = PASS    （@updateURL/@downloadURL 指向 demo 且一致；@version 0.3.7.0 单调递增；raw 可达）
+DEMO_FUNCTIONAL  = PARTIAL （图片识别 + 百度兜底 + 原生面板可用；套版填层默认停用需开关；识别质量与旋转映射待改进）
 DEMO_SAFE        = PASS    （secret scan 通过；凭据 AES-GCM 加密落库；日志零图片/零凭据）
 
 ENGINE_TEST = PASS   ／  REAL_USER = PENDING   ← 两者不得互相替代
 ```
 
-**AI-2 对 `e0abcf0` 的五项实测复核（2026-09-17）**：
+> ⚠️ **v0.3.7.0 产品范围变更（重要）**：Demo 默认切换为 **OCR-only 模式**
+> （`OCR_ONLY_MODE = GM_getValue("zyShowTemplatePanel","0") !== "1"`），**默认不再挂载旧套版浮窗**。
+> 对期待套版功能的试用者这是**行为回退**，可用 GM 开关 `zyShowTemplatePanel="1"` 恢复（代码完整保留，非删除）。
+> 原生右栏缺失时仍自动回退挂载旧浮窗（`if (!OCR_ONLY_MODE || !nativeOk) renderPanel()`）。
+
+**AI-2 对 `604f552` 的实测复核（2026-09-17）**：
 
 | 检查 | 命令 | 结果 |
 |---|---|---|
-| 依赖闭包（结构） | `node runtime/check-demo-closure.js --ref e0abcf0 --expect-branch demo` | ✅ `PASS`，10 条全 `branch-consistent` |
-| 依赖闭包（联网） | `node runtime/check-demo-closure.js --ref e0abcf0 --net` | ✅ `PASS`，10 条全 HTTP 200，`networkUnknown: []` |
-| 更新链 | `node runtime/check-demo-update.js --ref e0abcf0` | ✅ `PASS`，0.3.6.0 ≥ 0.3.5.0 单调成立 |
-| 元数据一致性 | `.github/scripts/check-userscript.js`（demo 树，`GITHUB_REF_NAME=demo`） | ✅ `PASS`，四镜像一致，URL 分支集合 = `{demo}` |
-| 单元测试 | `node tests/editor-object-model/run.js` | ✅ **12/12 套件 `ALL PASS`** |
-| 安全审计 | 见 `docs/SENSITIVE_DATA_AUDIT.md` | ✅ 凭据加密、日志脱敏；⚠️ `FINDING-SD-04` 待 AI-1 首改（当前无真实像素入库） |
+| 依赖闭包（结构） | `node runtime/check-demo-closure.js --ref 604f552 --expect-branch demo` | ✅ `PASS`，10 条全 `branch-consistent` |
+| 更新链 | `node runtime/check-demo-update.js --ref 604f552` | ✅ `PASS`，0.3.7.0 ≥ 0.3.6.0 单调成立 |
+| 版本四处 | `manifest` / `assistant.js` / userscript | ✅ `0.3.7.0`（`manifest.version` = `0.3.7`） |
+| 单元测试 | `node tests/editor-object-model/run.js` | ✅ **12/12 套件 `ALL PASS`，exit=0** |
+| 安全审计 | 见 `docs/SENSITIVE_DATA_AUDIT.md` | ✅ 凭据加密、日志脱敏；⚠️ `FINDING-SD-04` 待 AI-1 处置（当前无真实像素入库） |
 
-> **raw 与 git 一致性（关键证据）**：`@updateURL` / `@downloadURL` 的 raw 响应 sha256 **均为** `d6ff947c…`（71859 bytes），
-> 与 git `e0abcf0` 中的 userscript **完全一致** → CDN 无滞后、无缓存错版。
+> **raw 与 git 一致性（关键证据）**：`@updateURL` / `@downloadURL` 的 raw 响应 sha256 = `b37018fe…`（72705 bytes），
+> 与 git `604f552` 中的 userscript **完全一致** → CDN 无滞后、无缓存错版。
 
 > 详见 `docs/DEMO_RELEASE.md`（发布清单）与 `docs/DEMO_INSTALL.md`（安装与验收）。
 
@@ -156,9 +161,9 @@ BASIC_REAL_OCR_DEMO_PRODUCT                     = BLOCKED
 | Branch | HEAD | Purpose | Installable | Stable |
 |---|---|---|---|---|
 | `main` | `6840170`（remote） | 稳定公开版（默认分支） | ✅ Yes | ✅ **Yes** |
-| `demo` | `e0abcf0`（remote） | 真实用户试用（实验性） | ✅ Yes | ❌ No（实验版） |
+| `demo` | `604f552`（remote） | 真实用户试用（实验性，**OCR-only 默认**） | ✅ Yes | ❌ No（实验版） |
 | `stage-4.1-runtime-validation` | `e9235af`（remote） | AI-1 持续开发 | ❌ No（未配元数据，`@require` 指 main） | ❌ No |
-| `ai2-repo-governance` | `7f24b8e`（local；remote 见 `git rev-parse origin/ai2-repo-governance`） | 文档 / 规范 / 契约 | — （非交付物） | — |
+| `ai2-repo-governance` | 见本地 `git rev-parse ai2-repo-governance`（远端落后，见下） | 文档 / 规范 / 契约 | — （非交付物） | — |
 
 > **取数时间**：2026-09-17。远端 SHA 取自 `FETCH_HEAD`（本机 PortableGit 存在 ref 写入不落盘的已知问题，故以 `FETCH_HEAD` 为准，见 §4 末注）。
 
@@ -173,16 +178,16 @@ https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-c
 | 轨道 | `@version` | 说明 |
 |---|---|---|
 | `main` | `0.3.0.0` | 稳定线 |
-| `demo` | `0.3.6.0` | AI-1 采用 0.3.x 递增（见 BRANCH_POLICY §4/§4.1）；**四处版本已统一**（`DEFECT-VER-01` 保持 RESOLVED） |
+| `demo` | `0.3.7.0` | AI-1 采用 0.3.x 递增（见 BRANCH_POLICY §4/§4.1）；**四处版本已统一**（`DEFECT-VER-01` 保持 RESOLVED，连续三个版本复验通过） |
 
 **四分支血缘与祖先关系**：
 
 ```text
-main 6840170  ⊂  stage-4.1-runtime-validation e9235af  ⊂  demo e0abcf0
-   (86c/44f)             (152c/189f)                        (184c/231f)
+main 6840170  ⊂  stage-4.1-runtime-validation e9235af  ⊂  demo 604f552
+   (86c/44f)             (152c/189f)                        (186c/232f)
                                      ↑
-                        ai2-repo-governance 7f24b8e（文档线，基线 3becf04，不含 Stage 5.5/5.5A/R2/5.5B 文件）
-                        远端基线：origin/ai2-repo-governance @ 340fef3
+                        ai2-repo-governance（本地 @ 49724c8；远端 340fef3 —— 推送受阻，见下）
+                        文档线，基线 3becf04，不含 Stage 5.5/5.5A/R2/5.5B/5.6 文件
 ```
 
 > ⚠️ **GitHub 默认展示的是 `main`**，它**不包含**任何 Stage 5.x / RUNTIME-8.x / OCR / object-model 代码（落后 98 commit，可快进）。
@@ -232,14 +237,15 @@ done
 
 | 层 | 套件 | 结果 | 执行方式 |
 |---|---|---|---|
-| UNIT | `tests/editor-object-model/` **12 套件** | ✅ **12/12 SUITES `ALL PASS`**（2026-09-17 治理线对 demo `e0abcf0` 复跑） | `node tests/editor-object-model/run.js` |
+| UNIT | `tests/editor-object-model/` **12 套件** | ✅ **12/12 SUITES `ALL PASS`**（2026-09-17 治理线对 demo `604f552` 与 `e0abcf0` 各跑一次，均 `exit=0`） | `node tests/editor-object-model/run.js` |
 | UNIT | `field-core` 43 / `config-core` 15 / `ai` 18 / `editor-bridge` 18 | PASS（2026-09-16 治理线复跑确认） | headless 浏览器 |
 | INTEGRATION | `bridge-lifecycle` 6/6；`wiring-check` 5/5 | PASS（2026-09-16 治理线复跑确认） | headless 浏览器 |
-| DEMO-GATE | `check-demo-closure` / `check-demo-update` / `check-userscript` | ✅ 全部 `PASS`（2026-09-17 治理线对 demo `e0abcf0` 实测，含联网） | `node runtime/check-demo-*.js`（见 §3） |
+| DEMO-GATE | `check-demo-closure` / `check-demo-update` / `check-userscript` | ✅ 全部 `PASS`（2026-09-17 治理线对 demo `e0abcf0`／`604f552` 实测，含联网） | `node runtime/check-demo-*.js`（见 §3） |
 | REAL | `npm run runtime:scriptcat` 全链 18 步 | PASS，`errors=0`（历史报告，治理线未复跑） | Playwright + 真实 ScriptCat |
 | REAL | Stage 5.5 `BASIC_REAL_OCR_DEMO` | PASS，`errors=0`（历史报告，治理线未复跑） | Playwright + 真实编辑器 + tesseract |
 | REAL | Stage 5.5A-R2 `engine-in-editor` | **PASS**（page-world executor；治理线未复跑） | Playwright + 真实 ScriptCat |
 | REAL | Stage 5.5B P4 真实百度链路 | **PASS**（425ms → 3 可编辑 textbox；AI-1 执行记录 008） | Playwright + 真实编辑器 + 真实 AK/SK（env-only） |
+| REAL | Stage 5.5B P5 OCR-only Demo | AI-1 报告 harness PASS（bg/active/early-click + refresh 不重复 + 恢复开关 + rollback）；**治理线未复跑** | Playwright + 真实 ScriptCat |
 
 明细与复现命令见 `docs/TEST_MATRIX.md`。
 

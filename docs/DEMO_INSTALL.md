@@ -13,22 +13,34 @@
 | | 版本 | 说明 |
 |---|---|---|
 | 稳定版（`main`） | `0.3.0.0` | 日常使用请安装这个 |
-| **Demo（`demo`）** | **`0.3.6.0`**（四处版本已统一，见 `docs/DEMO_RELEASE.md`） | 试用 AI-1 最新实现；含**图片识别**、**网页原生右栏面板**、**本地优先 + 百度云兜底** |
+| **Demo（`demo`）** | **`0.3.7.0`**（四处版本已统一，见 `docs/DEMO_RELEASE.md`） | 试用 AI-1 最新实现；含**图片识别**、**网页原生右栏面板**、**本地优先 + 百度云兜底** |
+
+## ⚠️ v0.3.7.0 起：Demo 默认是「仅 OCR 模式」
+
+从 `0.3.7.0` 开始，**Demo 默认不再显示旧套版浮窗**，主界面只有**原生右栏的「图片文字识别」抽屉**。
+
+| 你想要 | 怎么切换 |
+|---|---|
+| **只用图片识别**（默认） | 无需操作。右侧原生栏出现 OCR 抽屉 |
+| **要用套版填层等旧功能** | 在 ScriptCat 里给本脚本添加 GM 值：`zyShowTemplatePanel` = `"1"`，然后刷新页面 |
+
+> **代码没有删除**：旧套版浮窗的全部实现（豆包 / AI 设置 / 字段 / 正反面 / 诊断 / 更新提示）仍完整保留在脚本里，
+> 只是默认不挂载。另外，**如果页面没有原生右栏**（页面变体），脚本会**自动回退**挂载旧浮窗，不会出现"什么都没有"。
 
 **当前 Demo 的能力与限制**：
 
 ```text
 编辑器内 OCR 引擎装载       = PASS（Stage 5.5A-R2 突破，原 BLOCKED）
 图片识别（「识别图片文字」）  = 可用（3 个真 textbox，可双击编辑）
-网页原生右栏面板            = 可用（P2-B；旧浮窗保留为 fallback）
+网页原生右栏面板            = 可用（P2-B 主 UI；旧浮窗默认停用、可开关恢复）
 本地优先 + 百度云端兜底      = 可用（auto 模式：本地失败才切云端；凭据 AES-GCM 加密）
+套版填层（旧浮窗）           = 可用，但 v0.3.7.0 起**默认停用**（需 zyShowTemplatePanel="1"）
 识别质量（真实样本）         = PARTIAL（词序/断行待改进 → 待 Stage 5.9 改进）
 旋转坐标映射                = TODO（未启动）
-套版填层等既有功能           = 正常可用
 ```
 
-> ✅ **`DEFECT-VER-01` 保持已修复**：`@version` / `const VERSION` / `extension/assistant.js VERSION` / `manifest version_name` 四处一致 = `0.3.6.0`（`manifest.version` = `0.3.6`，为 `@version` 前三段）。
-> 修复前表现为「面板显示 0.3.0.1 + 每次提示发现新版」；现由 AI-2 在 `e0abcf0` 复验 PASS，CI 的 metadata check 会持续守护该不变量（`docs/BRANCH_POLICY.md` §4.1）。
+> ✅ **`DEFECT-VER-01` 保持已修复**：`@version` / `const VERSION` / `extension/assistant.js VERSION` / `manifest version_name` 四处一致 = `0.3.7.0`（`manifest.version` = `0.3.7`，为 `@version` 前三段）。
+> 修复前表现为「面板显示 0.3.0.1 + 每次提示发现新版」；现由 AI-2 在 `e0abcf0` 与 `604f552` 连续复验 PASS，CI 的 metadata check 会持续守护该不变量（`docs/BRANCH_POLICY.md` §4.1）。
 
 ---
 
@@ -56,20 +68,21 @@
 
 | 面板显示 | 含义 |
 |---|---|
-| `版本：0.3.6.0` | ✅ Demo（与 `@version` 一致） |
+| `版本：0.3.7.0` | ✅ Demo（与 `@version` 一致） |
 | `版本：0.3.0.0` | ❌ 这是稳定版，说明装到了 `main` |
 
 > 更可靠的确认方式：用 sha256 核对（见下），或检查是否存在 **「识别图片文字」按钮** / **右栏 OCR 抽屉**（稳定版没有）。
+> 注意：v0.3.7.0 起**默认看不到旧套版浮窗**（那是 OCR-only 模式，不是装错）。
 
 也可以直接核对交付物哈希（无争议的标识）：
 
 ```bash
 curl -sSk https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js | sha256sum
-# 期望（2026-09-17 实测，71859 bytes）：
-# d6ff947c9796c3fc66061abd52159f464ce5d5d615e2a80a048968d83729ef3b
+# 期望（2026-09-17 实测，72705 bytes）：
+# b37018fece8c9ddfa3602b35a47e78da013726d3f9343c0c15bbca238d0033b2
 ```
 
-> 该 sha256 对应 `demo` @ `e0abcf0`，并已实测**与 raw 响应完全一致**（即 CDN 无滞后）。
+> 该 sha256 对应 `demo` @ `604f552`，并已实测**与 raw 响应完全一致**（即 CDN 无滞后）。
 > 版本升级后该值会变 —— 那时以 `node runtime/check-demo-update.js` 的实测输出为准，不要照抄本文档。
 
 ---

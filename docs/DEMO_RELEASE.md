@@ -54,7 +54,79 @@ Version | Commit | Date | Branch | Raw URL
 
 ## 三、记录
 
-### Demo v0.3.6.0 · 2026-09-17（当前）
+### Demo v0.3.7.0 · 2026-09-17（当前）
+
+| 项 | 值 |
+|---|---|
+| **Version** | `@version` = `0.3.7.0` |
+| **Commit** | `604f552795ef2bad9a6876705a5cd76e64376e36` |
+| **Date** | 2026-09-17 |
+| **Branch** | `demo` |
+| **Raw URL** | `https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js` |
+| **userscript sha256（git = raw 实测）** | `b37018fece8c9ddfa3602b35a47e78da013726d3f9343c0c15bbca238d0033b2`（72705 bytes） |
+
+**主功能（相对 v0.3.6.0 的增量）—— ⚠️ 这是一次产品范围变更**：
+
+| 变更 | 说明 |
+|---|---|
+| **OCR-only Demo 模式（默认开启）** | `const OCR_ONLY_MODE = GM_getValue("zyShowTemplatePanel", "0") !== "1"`。默认**不再挂载旧套版浮窗**，Demo 主 UI 收敛为**原生右栏 OCR 抽屉** |
+| **可恢复开关** | GM 值 `zyShowTemplatePanel="1"` 可恢复旧套版浮窗（豆包 / AI 设置 / 字段 / 正反面 / 诊断 / 更新提示） |
+| **代码保留，仅停用挂载** | `renderPanel` 函数体与全部套版代码**完整保留**，非删除 |
+| **初始化幂等提升** | `addStyles` / `installPageBridge` / `checkForUpdateSoon` 上提到 `init`，使 OCR 抽屉可独立工作（不依赖套版浮窗；`renderPanel` 内保留原调用作双保险） |
+| **兜底** | `if (!OCR_ONLY_MODE || !nativeOk) renderPanel()` —— 原生右栏缺失（页面变体）时**仍挂载旧浮窗** |
+
+**技术实现（AI-1）**：`45eb057`（OCR-only 模式 + 幂等提升 + 版本 0.3.7.0 同步）→ `604f552`（P5 OCR-only 真机 harness：bg/active/early-click 三场景 + OCR-only 默认断言 + refresh 不重复 + `zyShowTemplatePanel=1` 恢复校验 + rollback）。
+
+**⚠️ 治理线判定的重要影响**：
+
+```text
+v0.3.6.0 及以前：Demo 默认能力 = 套版填层 + 图片识别（双功能）
+v0.3.7.0 起    ：Demo 默认能力 = 仅图片识别（套版填层需手动开关恢复）
+```
+
+> 这意味着 **`DEMO_FUNCTIONAL` 的判定口径发生变化**：套版填层由「默认可用」变为「需开关」。
+> 对**期待试用套版功能的用户**，这是一个**行为回退**（虽可恢复）。
+> 治理线已如实登记，不视为缺陷（AI-1 依据用户指令 2026-09-17 主动收敛范围），但**必须在 `DEMO_INSTALL.md` 明确告知用户如何恢复**。
+
+**已知阻塞**：
+
+| 项 | 状态 |
+|---|---|
+| 识别质量（真实编辑器样本） | ⚠️ `PARTIAL` —— 词序/断行待改进，排入 Stage 5.9 |
+| 真实用户上传/粘贴 + 双击编辑 | ⏳ `PENDING`（需人工真机，见 `docs/REAL_MACHINE_EVIDENCE.md`） |
+| 百度真实链路（真 AK/SK） | ✅ `PASS`（AI-1 执行记录 008：真实百度 425ms → 3 个可编辑 textbox） |
+| 旋转坐标映射 | ⏳ `PENDING`（`0ff2c69` 记录） |
+| P5 OCR-only 真机（AI-1 侧） | ✅ AI-1 报告 harness PASS；**治理线未复跑**（需 Playwright + 真实编辑器） |
+
+**真机状态**：
+
+| 层级 | 状态 | 证据 |
+|---|---|---|
+| `ENGINE_TEST` | ✅ `PASS` | `tests/editor-object-model/run.js` —— **12 套件全 PASS**（AI-2 于 `604f552` 复跑，`exit=0`） |
+| `REAL_USER` | ⏳ `PENDING` | 尚未由真实用户完成「上传图片 → 点按钮 → 双击编辑 → 二次识别 → 更新」闭环 |
+
+**四字段 Gate（AI-2 于 2026-09-17 对 `604f552` 实测复核）**：
+
+```text
+DEMO_INSTALLABLE = PASS   （raw 200；10 条依赖全部 200；@require 闭包全部指向 demo；元数据 PASS）
+DEMO_UPDATEABLE  = PASS   （@updateURL/@downloadURL 指向 demo 且一致；@version 0.3.7.0 单调递增；raw 可达）
+DEMO_FUNCTIONAL  = PARTIAL（图片识别 + 百度兜底 + 原生面板可用；套版填层默认停用需开关；识别质量与旋转映射待改进）
+DEMO_SAFE        = PASS   （secret scan 通过；凭据 AES-GCM 加密落库；日志零图片/零凭据；真实图片未入库）
+```
+
+**本版本交付物校验（AI-2 实测）**：
+
+| 检查 | 命令 | 结果 |
+|---|---|---|
+| 依赖闭包（结构） | `node runtime/check-demo-closure.js --ref 604f552 --expect-branch demo` | ✅ `PASS`（10 条全 `branch-consistent`） |
+| 更新链 | `node runtime/check-demo-update.js --ref 604f552` | ✅ `PASS`（0.3.7.0 ≥ 已记录 0.3.6.0） |
+| 版本四处 | `manifest` / `assistant.js` / userscript | ✅ `0.3.7.0`（`manifest.version` = `0.3.7`） |
+| 单元测试 | `node tests/editor-object-model/run.js` | ✅ **12/12 套件 `ALL PASS`，exit=0** |
+| raw 与 git 一致性 | sha256 比对 | ✅ raw = git = `b37018fe…`（72705 bytes） |
+
+---
+
+### （历史）Demo v0.3.6.0 · 2026-09-17
 
 | 项 | 值 |
 |---|---|
@@ -87,13 +159,6 @@ Version | Commit | Date | Branch | Raw URL
 | 百度真实链路（真 AK/SK） | ✅ `PASS`（AI-1 执行记录 008：真实百度 425ms → 3 个可编辑 textbox） |
 | 旋转坐标映射 | ⏳ `PENDING`（`0ff2c69` 记录） |
 
-**真机状态**：
-
-| 层级 | 状态 | 证据 |
-|---|---|---|
-| `ENGINE_TEST` | ✅ `PASS` | `tests/editor-object-model/run.js` —— **12 套件全 PASS**；`runtime/reports/stage5-5b-p4-report.json`（含真实百度链路） |
-| `REAL_USER` | ⏳ `PENDING` | 尚未由真实用户完成「上传图片 → 点按钮 → 双击编辑 → 二次识别 → 更新」闭环 |
-
 **四字段 Gate（AI-2 于 2026-09-17 实测复核）**：
 
 ```text
@@ -122,15 +187,17 @@ DEMO_SAFE        = PASS   （secret scan 通过；凭据 AES-GCM 加密落库；
 AI-1 在 1680c81 引入 v0.3.6.0 时自行保持四处一致：
   @version 0.3.6.0 / const VERSION 0.3.6.0 / assistant.js 0.3.6.0 / manifest.version_name 0.3.6.0
   manifest.version = 0.3.6（@version 前三段，符合约定）
-状态：  RESOLVED → 保持 RESOLVED（AI-2 于 e0abcf0 复验 PASS）
+v0.3.7.0（604f552）继续保持四处一致，manifest.version = 0.3.7
+状态：  RESOLVED → 保持 RESOLVED（AI-2 于 e0abcf0 与 604f552 两次复验 PASS）
 ```
 
 **AI-2 审计发现（本版本）**：
 
 | 编号 | 级别 | 内容 | 状态 |
 |---|---|---|---|
-| `FINDING-SD-04` | 🟠 中（潜在） | `runtime/stage5-5a-scriptcat-ocr-smoke.js:249` 把 `out` 整体写盘，其中 `out.gm.img.dataUrl` 为**真实名片图片 base64**；报告路径 `runtime/reports/stage5-5a-real-scriptcat-ocr.json` **未被 `.gitignore` 覆盖**。<br>**实测现状**：`e0abcf0` 中该报告仅 2009 bytes，`ocrRaw={err,injectMode,amdHint}`（引擎装载失败，未走到取图），**当前无真实像素入库**。<br>**风险**：一旦引擎装载成功（Stage 5.5A-R2 已达成前置条件），下一次运行即会提交真实图片。 | ⏳ `OPEN`（已提交 AI-1 处置建议：写入前 redaction + `.gitignore` 增加该报告路径） |
+| `FINDING-SD-04` | 🟠 中（潜在） | `runtime/stage5-5a-scriptcat-ocr-smoke.js:249` 把 `out` 整体写盘，其中 `out.gm.img.dataUrl` 为**真实名片图片 base64**；报告路径 `runtime/reports/stage5-5a-real-scriptcat-ocr.json` **未被 `.gitignore` 覆盖**。<br>**实测现状**：`e0abcf0` 中该报告仅 2009 bytes，`ocrRaw={err,injectMode,amdHint}`（引擎装载失败，未走到取图），**当前无真实像素入库**。<br>**风险**：一旦引擎装载成功（Stage 5.5A-R2 已达成前置条件），下一次运行即会提交真实图片。 | ⏳ `OPEN`（已移交 `docs/AI1_HANDOFF.md`） |
 | `FINDING-ROBUST-01` | 🟢 低 | `runtime/check-demo-closure.js` / `check-demo-update.js` 原以 `process.cwd()` 定位仓库，非仓库根调用时误报「找不到 demo 引用」 | ✅ 已修（AI-2，改用 `path.resolve(__dirname,"..")` + `git -C`） |
+| `FINDING-SCOPE-01` | 🟢 低（提示） | v0.3.7.0 默认停用套版浮窗 → 对期待套版功能的试用者是**行为回退**（可用 `zyShowTemplatePanel=1` 恢复） | ✅ 已登记（`DEMO_INSTALL.md` 增恢复说明） |
 
 ---
 
