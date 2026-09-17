@@ -58,7 +58,10 @@ function pageBridge() {
         items.forEach(function (it, idx) {
           const obj = createTextObject(canvas, String(it.text || ""), ref, idx, null);
           if (!obj) return;
-          obj.set({ left: it.left != null ? it.left : 20, top: it.top != null ? it.top : 20 + idx * 24, width: Math.max(60, it.width || 120), fontSize: it.fontSize || 14, fontFamily: it.fontFamily || "思源黑体 Regular", textAlign: "left", fill: "#000000" });
+          const conf = { left: it.left != null ? it.left : 20, top: it.top != null ? it.top : 20 + idx * 24, width: Math.max(60, it.width || 120), fontSize: it.fontSize || 14, fontFamily: it.fontFamily || "思源黑体 Regular", textAlign: "left", fill: "#000000" };
+          // Stage 5.6 P5-D：旋转场景（Mapper 输出 angle + origin:"center"）——中心即 left/top，绕中心旋转
+          if (it.angle) { conf.angle = it.angle; conf.originX = "center"; conf.originY = "center"; }
+          obj.set(conf);
           setObjectText(obj, String(it.text || ""));
           obj.zyFieldKey = "ocr_demo_" + String(it.text || "").slice(0, 4);
           created.push({ index: canvas.getObjects().indexOf(obj), type: obj.type, text: String(it.text || "").slice(0, 16) });

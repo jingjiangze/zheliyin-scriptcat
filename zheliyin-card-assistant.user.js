@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.7.1
+// @version      0.3.8.0
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -42,7 +42,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.7.1";
+  const VERSION = "0.3.8.0";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -906,14 +906,26 @@
     const w = geo.width, h = geo.height, sx = geo.scaleX || 1, sy = geo.scaleY || 1;
     // 背景图 left/top 可能缺失：ocrPrepare 已在页面世界用画布居中兜底（§13）
     const left = geo.left, top = geo.top;
-    const rad = ((geo.angle || 0) * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
+    const angle = geo.angle || 0;
+    const rad = (angle * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
     const cx = left + (w * sx) / 2, cy = top + (h * sy) / 2;
     const items = (candidates || []).filter((c) => c && c.bbox && typeof c.bbox.x === "number" && c.bbox.width > 0).map((c) => {
-      const bw = c.bbox.width * sx, bh = c.bbox.height * sy; // 注：旋转未展开（Demo 常量，5.5 记录）
+      const bw = c.bbox.width * sx, bh = c.bbox.height * sy;
+      // θ=0：既有角点路径（AABB 左上角，-4px 视觉留白）——行为零变化
       const ux = c.bbox.x / w - 0.5, uy = c.bbox.y / h - 0.5;
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
-      return { text: c.text, left: px - 4, top: py - 4, width: Math.max(60, bw + 8), fontSize: Math.max(10, Math.round(bw > 0 ? (bh * 1.0) : 14)), fontFamily: "思源黑体 Regular" };
+      if (!angle) {
+        return { text: c.text, left: px - 4, top: py - 4, width: Math.max(60, bw + 8), fontSize: Math.max(10, Math.round(bw > 0 ? (bh * 1.0) : 14)), fontFamily: "思源黑体 Regular" };
+      }
+      // P5-D（最小修复，Stage 5.6）：θ≠0 → 输出旋转中心 + 角度 + center 原点。
+      // 图像像素空间即旋转后的局部空间，bw/bh 天然是沿行/法向尺寸；fabric 绕对象中心旋转，
+      // 因此把 textbox 中心定在「旋转后的 bbox 中心」并设置 angle，即与图中文字重合。
+      const ucx = (c.bbox.x + c.bbox.width / 2) / w - 0.5;
+      const ucy = (c.bbox.y + c.bbox.height / 2) / h - 0.5;
+      const dcx = ucx * w * sx, dcy = ucy * h * sy;
+      const pcx = cx + dcx * cos - dcy * sin, pcy = cy + dcx * sin + dcy * cos;
+      return { text: c.text, left: pcx, top: pcy, angle: angle, origin: "center", width: Math.max(60, bw + 8), fontSize: Math.max(10, Math.round(bw > 0 ? (bh * 1.0) : 14)), fontFamily: "思源黑体 Regular" };
     });
     if (!items.length) {
       setStatus("未识别到文字");

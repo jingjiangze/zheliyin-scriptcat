@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+### Stage 5.6 P5（2026-09-17）— v0.3.8.0：几何矩阵验证 + 旋转最小修复（P5-D）
+- P5-2 真机几何矩阵（runtime/stage5-6-p5-geometry.js，10 格）：A 基础 / B 缩放 0.5/2 / C 位置 / E 多尺寸 500/2000 / F 背景图全部 PASS（角点误差 ≤22px）；旋转 D(15/45/90°) FAIL（textbox 未携带角度 + 轴对齐盒与旋转文字区不重合，误差随 θ 增至 222px）。
+- P5-3 最小修复（仅两处，不重写 Mapper）：`buildItemsFromOcr` 对 θ≠0 输出旋转中心+角度+center 原点；page-bridge `ocrCreate` 应用 angle/originX/Y=center。θ=0 路径零改动。修复后矩阵复跑验证。
+- 版本统一 0.3.8.0（userscript/manifest/assistant/README/DEMO_REAL_MACHINE_TEST）。
+
 ### Stage 5.6 hotfix（2026-09-17）— v0.3.7.1：画布就绪提示分级 + 超时加长（P0 真机反馈）
 - 真机反馈「编辑器画布长时间未就绪（30 秒）」：`waitForCanvasReady` 从 30s→60s，并将失败原因分级（BRIDGE_NO_REPLY=桥未注入/画布在 iframe vs CANVAS_NOT_FOUND=编辑器还没加载出画布），给出可操作自查提示（刷新页/确认在设计编辑页/扩展「允许用户脚本」）。
 - 版本统一 0.3.7.1（userscript/manifest/assistant/README/DEMO_REAL_MACHINE_TEST）。

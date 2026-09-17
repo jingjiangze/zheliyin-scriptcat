@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "折立印名片套版助手",
-  "version": "0.3.7",
-  "version_name": "0.3.7.1",
+  "version": "0.3.8",
+  "version_name": "0.3.8.0",
   "description": "在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时按原样式补充。支持一键填正反面、AI 辅助识别。",
   "minimum_chrome_version": "102",
   "host_permissions": [
