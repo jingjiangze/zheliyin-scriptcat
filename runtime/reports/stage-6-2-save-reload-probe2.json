@@ -1,0 +1,49 @@
+{
+ "ts": "2026-09-17T09:09:21.115Z",
+ "stage": "STAGE-6-2-SAVE-RELOAD-PROBE2",
+ "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+ "phases": {
+  "ready": {
+   "ok": true,
+   "objs": 9
+  },
+  "ocrCreate": {
+   "ok": true,
+   "created": 2,
+   "mode": "native"
+  },
+  "saveClick": {
+   "found": true,
+   "clicked": true,
+   "net": [
+    "jq.post third/IfDiyOrderidExit.do?designId=",
+    "POST third/IfDiyOrderidExit.do?designId= ->200"
+   ]
+  },
+  "afterReload": {
+   "canvas": 9,
+   "layer": 1,
+   "probeOnCanvas": 0,
+   "probeInLayer": 0
+  },
+  "clearData": {},
+  "afterClearReload": {
+   "canvas": 9,
+   "layer": 1,
+   "probeOnCanvas": 0,
+   "probeInLayer": 0
+  },
+  "cleanupNote": "clear 后无残留，服务端本就不含探针对象；无需清理（若此前保存被取消，则对象从未写库）。"
+ },
+ "errors": [],
+ "dialogs": [
+  "",
+  ""
+ ],
+ "conclusion": {
+  "serverSavePersistence": "PENDING",
+  "reloadStability": "not-restored",
+  "note": "刷新未恢复。 服务端持久化需真实登录账号在编辑器内点击保存完成，自动化无登录 profile 无法确认 → 按 §二十六 记录限制（P1 limitation 已记录）。",
+  "limitation": "server-save 需真实登录（红线：不在自动化中伪造保存），P1 标记 PENDING 并记录限制"
+ }
+}

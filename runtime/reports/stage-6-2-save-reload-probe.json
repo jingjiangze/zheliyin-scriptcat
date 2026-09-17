@@ -1,0 +1,87 @@
+{
+ "ts": "2026-09-17T09:04:58.946Z",
+ "stage": "STAGE-6-2-SAVE-RELOAD-PROBE",
+ "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+ "phases": {
+  "ready": {
+   "ok": true,
+   "objs": 9
+  },
+  "pre": {
+   "canvas": 9,
+   "layer": 1,
+   "href": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do"
+  },
+  "netHook": true,
+  "ocrCreate": {
+   "ok": true,
+   "created": 2,
+   "editorIntegration": {
+    "mode": "native",
+    "nativeUndoFound": true,
+    "undoSavePre": true,
+    "undoSavePost": true,
+    "drawTextBatch": 2,
+    "failedBlockIndex": -1,
+    "layerNumBase": 1,
+    "identityApplied": 2,
+    "uv4Total": 2,
+    "layerMax": -1
+   }
+  },
+  "saveClick": {
+   "found": true,
+   "clicked": true,
+   "text": "保存",
+   "chain": [
+    "LI.save",
+    "MENU.rightBtn",
+    "HEADER.diyTop",
+    "SECTION.diyMain",
+    "BODY.",
+    "HTML.ovh wf--n4-active wf-medium-n4-active wf"
+   ],
+   "net": [
+    "jqajax third/IfDiyOrderidExit.do?designId="
+   ],
+   "toast": "no",
+   "undoLen": null
+  },
+  "afterReload": {
+   "isEditor": true,
+   "href": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+   "canvas": 11,
+   "layer": 3,
+   "probeOnCanvas": 2,
+   "probeInLayer": 2
+  },
+  "cleanup": {
+   "removed": 2,
+   "final": {
+    "canvas": 9,
+    "layer": 1
+   },
+   "undo": {
+    "undoLen": 2,
+    "redoLen": 0
+   }
+  }
+ },
+ "errors": [],
+ "dialogs": [
+  ""
+ ],
+ "conclusion": {
+  "saveButtonFound": true,
+  "saveClicked": true,
+  "persistence": "SERVER-SAVE-PERSISTED",
+  "reloadStability": "verified",
+  "serverSavePersistence": "verified",
+  "limitation": "none"
+ },
+ "superseded": {
+  "by": "stage-6-2-save-reload-probe2.json",
+  "reason": "v1 刷新恢复未做站点数据隔离，可能来自本地草稿缓存；v2 接受保存确认弹窗 + 清缓存后再刷新，对象不复现，判定服务端持久化为 PENDING",
+  "verdict": "server-save persistence: PENDING (needs real logged-in save)"
+ }
+}

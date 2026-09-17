@@ -1,0 +1,29 @@
+{
+ "ts": "2026-09-17T09:06:53.220Z",
+ "stage": "STAGE-6-2-CLEANUP-PERSISTED",
+ "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+ "phases": {
+  "ready": {
+   "ok": true,
+   "objs": 9
+  },
+  "removed": {
+   "removed": 0,
+   "canvas": 9,
+   "layer": 1
+  },
+  "save": {
+   "clicked": true,
+   "text": "保存"
+  },
+  "verifyAfterReload": {
+   "canvas": 9,
+   "layer": 1,
+   "probeLeft": 0
+  }
+ },
+ "dialogs": [
+  ""
+ ],
+ "conclusion": "SERVER-CLEAN"
+}

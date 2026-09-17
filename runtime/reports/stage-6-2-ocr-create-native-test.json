@@ -1,0 +1,200 @@
+{
+ "ts": "2026-09-17T09:02:59.826Z",
+ "stage": "STAGE-6-2-OCR-CREATE-NATIVE-TEST",
+ "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+ "phases": {
+  "ready": {
+   "ok": true,
+   "objs": 9
+  },
+  "bridgeInject": {
+   "ok": true,
+   "marker": true,
+   "typeofPageBridge": "undefined",
+   "installErr": null
+  },
+  "pre": {
+   "canvas": 9,
+   "layer": 1,
+   "undoLen": 1,
+   "redoLen": 0
+  },
+  "ocrCreateResult": {
+   "source": "zy-card-assistant-page",
+   "type": "ocrCreateResult",
+   "ok": true,
+   "detectedBlocks": 3,
+   "createdCount": 3,
+   "created": [
+    {
+     "blockIndex": 0,
+     "objectIndex": 1,
+     "uuid": "f7eb8389-8da3-4a2d-8563-c0864a7bfc28",
+     "text": "张三"
+    },
+    {
+     "blockIndex": 1,
+     "objectIndex": 2,
+     "uuid": "6991914e-5eaf-4754-af1e-a9de494a4a86",
+     "text": "销售经理"
+    },
+    {
+     "blockIndex": 2,
+     "objectIndex": 3,
+     "uuid": "5d1f7d5f-b3f7-4aaf-a04c-5c9485cb871f",
+     "text": "电话：13800138000"
+    }
+   ],
+   "failedBlockIndex": null,
+   "editorIntegration": {
+    "mode": "native",
+    "nativeUndoFound": true,
+    "undoSavePre": true,
+    "undoSavePost": true,
+    "drawTextBatch": 3,
+    "failedBlockIndex": -1,
+    "layerNumBase": 1,
+    "identityApplied": 3,
+    "uv4Total": 3,
+    "layerMax": -1
+   }
+  },
+  "postCreate": {
+   "canvas": 12,
+   "layer": 4,
+   "textObjs": 3,
+   "layerTextObjs": 3,
+   "identity": [
+    {
+     "layerIdx": 1,
+     "layerNum": 1,
+     "uuid": "f7eb8389-8da3-4a2d-8563-c0864a7bfc28",
+     "multiUuid": "d75901e3-4cf2-8aab-566d-ef738abf32e9",
+     "mediaMediaType": "text",
+     "fontSize": 28,
+     "left": 60,
+     "top": 80
+    },
+    {
+     "layerIdx": 2,
+     "layerNum": 2,
+     "uuid": "6991914e-5eaf-4754-af1e-a9de494a4a86",
+     "multiUuid": "02069d5f-143e-564e-d306-205de567089b",
+     "mediaMediaType": "text",
+     "fontSize": 22,
+     "left": 60,
+     "top": 118
+    },
+    {
+     "layerIdx": 3,
+     "layerNum": 3,
+     "uuid": "5d1f7d5f-b3f7-4aaf-a04c-5c9485cb871f",
+     "multiUuid": "5a25012d-098d-23ba-ce63-cb15157038d4",
+     "mediaMediaType": "text",
+     "fontSize": 18,
+     "left": 60,
+     "top": 152
+    }
+   ],
+   "undoLen": 2,
+   "redoLen": 0
+  },
+  "editBoundary": {
+   "editedOn": "张三-编辑",
+   "undoLen": 3,
+   "redoLen": 0
+  },
+  "undoRedo": [
+   {
+    "tag": "beforeUndo",
+    "canvas": 12,
+    "ocrOnCanvas": 2,
+    "editOnCanvas": true,
+    "layer": 4,
+    "ocrInLayer": 2,
+    "undoLen": 3,
+    "redoLen": 0
+   },
+   {
+    "tag": "undoClick",
+    "action": "clicked"
+   },
+   {
+    "tag": "afterUndo1",
+    "canvas": 12,
+    "ocrOnCanvas": 3,
+    "editOnCanvas": false,
+    "layer": 4,
+    "ocrInLayer": 3,
+    "undoLen": 2,
+    "redoLen": 1
+   },
+   {
+    "tag": "undoClick2",
+    "action": "clicked"
+   },
+   {
+    "tag": "afterUndo2",
+    "canvas": 9,
+    "ocrOnCanvas": 0,
+    "editOnCanvas": false,
+    "layer": 1,
+    "ocrInLayer": 0,
+    "undoLen": 1,
+    "redoLen": 2
+   },
+   {
+    "tag": "redoClick",
+    "action": "clicked"
+   },
+   {
+    "tag": "afterRedo1",
+    "canvas": 12,
+    "ocrOnCanvas": 3,
+    "editOnCanvas": false,
+    "layer": 4,
+    "ocrInLayer": 3,
+    "undoLen": 2,
+    "redoLen": 1
+   },
+   {
+    "tag": "redoClick2",
+    "action": "clicked"
+   },
+   {
+    "tag": "afterRedo2",
+    "canvas": 12,
+    "ocrOnCanvas": 2,
+    "editOnCanvas": true,
+    "layer": 4,
+    "ocrInLayer": 2,
+    "undoLen": 3,
+    "redoLen": 0
+   }
+  ],
+  "cleanup": {
+   "removed": 3,
+   "final": {
+    "canvas": 9,
+    "layer": 1
+   },
+   "undoRestored": {
+    "undoLen": 1,
+    "redoLen": 0
+   }
+  }
+ },
+ "errors": [],
+ "metrics": {
+  "modeNative": true,
+  "ok": true,
+  "createdEqualsBlocks": true,
+  "canvasTextEqualsLayerText": true,
+  "allRegisteredAsLayer": true,
+  "undo1ReversesEdit": true,
+  "undo2RemovesBatch": true,
+  "redoRestoresBatch": true,
+  "editBoundaryHooked": true,
+  "templateIntact": true
+ }
+}
