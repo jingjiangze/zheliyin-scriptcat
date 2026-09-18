@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-18T07:40:50.111Z",
+  "ts": "2026-09-18T08:39:23.904Z",
   "ocrRunId": "OCR-20260918-001",
   "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
   "editUrlBranch": "test",
@@ -25,6 +25,9 @@
         },
         "submitUserDesignHits": [
           {
+            "status": null
+          },
+          {
             "status": 200,
             "result": true,
             "loginState": "timeOut"
@@ -32,8 +35,13 @@
         ]
       },
       "submit": {
-        "hitCount": 1,
+        "hitCount": 2,
         "raw": [
+          {
+            "status": null,
+            "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+            "body": {}
+          },
           {
             "status": 200,
             "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
@@ -46,17 +54,11 @@
       },
       "hegao": {
         "hegaoPreprintGate": true,
-        "proofSurfaces": null,
         "postSubmitNetHits": [],
         "hegaoPostSubmitEvidence": false
       },
       "proof": {
-        "proofCounts": {
-          "total": 0,
-          "pass": 0,
-          "errAutoCheck": 0,
-          "popup": false
-        },
+        "proofCounts": null,
         "popup": false
       },
       "object": {
@@ -97,12 +99,32 @@
     "authAfterStart": {
       "loginLayerVisible": false
     },
+    "authStateAtStart": {
+      "logout": false,
+      "loginBtn": false,
+      "hasSession": false
+    },
+    "authForced": true,
+    "authForcedPost": {
+      "loginLayerVisible": false,
+      "logout": false
+    },
+    "hegaoOk": true,
+    "authBootstrap": {
+      "ok": true,
+      "stage": "logged-in",
+      "loginClosed": true,
+      "authPost": {
+        "loginLayerVisible": false
+      }
+    },
     "userscript": {
       "ok": true,
       "toolBtn": true,
       "bridge": true
     },
     "scriptVersionSeen": [
+      "0.3.10.2",
       "0.3.10.2",
       "0.3.10.2"
     ],
@@ -119,19 +141,9 @@
     },
     "ocrReplySeen": true,
     "ocrVisible": "PASS",
-    "reloadReady": true,
-    "saveReload": {
-      "identityMatched": 0,
-      "textMatched": 0,
-      "wanted": [
-        "ABC 科技 有 限 公司",
-        "张三",
-        "13800138000",
-        "销售经理"
-      ],
-      "verdict": "LOST"
+    "saveOnly": {
+      "clicked": true
     },
-    "hegaoOk": true,
     "orderNo": {
       "ok": true
     },
@@ -139,17 +151,20 @@
       "ok": true,
       "attempt": 0
     },
-    "proofSurfaces": null,
-    "retried": 1,
-    "previews": [],
-    "autoProofreadPopup": false,
-    "realOcrProof": "FAIL",
-    "proofCounts": {
-      "total": 0,
-      "pass": 0,
-      "errAutoCheck": 0,
-      "popup": false
-    }
+    "submitTry": [
+      {
+        "round": 0,
+        "status": null,
+        "expired": false,
+        "body": ""
+      }
+    ],
+    "submitFirstStatus": "NO_SUBMIT_RESPONSE",
+    "retried": 0,
+    "authRecovered": true,
+    "submitFired": 2,
+    "submitFiredPage": 0,
+    "realOcrProof": "SKIPPED(reload-not-ready)"
   },
   "statusLog": [
     "就绪",
@@ -159,219 +174,270 @@
     "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
     "折立印名片套版助手已加载 0.3.10.2",
     "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "折立印名片套版助手已加载 0.3.10.2",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
     "折立印名片套版助手已加载 0.3.10.2"
   ],
   "errors": [],
   "netLog": [
     {
       "status": 404,
+      "k": "res",
       "u": "https://ext.scriptcat.org/api/v1/open/favicons?domain=diy.zheliyin.com&sz=64",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
-      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
-      "body": null
-    },
-    {
-      "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
-      "status": 200,
+      "status": null,
+      "k": "req",
       "u": "https://diy.zheliyin.com/diyWeb/commontool/getImgInfos.do",
-      "body": null
+      "body": null,
+      "post": "productJsonStr=%7B%22diyType%22%3A%22print%22%2C%22version%22%3A200%2C%22templateInfo%22%3A%7B%22bindingType%22%3A%22%E6%97%A0%E8%A3%85%E8%AE%A2%22%2C%22bindingHeight%22%3A0%2C%22foldNum%22%3A0%2C%22diyType%22%3A%2212%22%2C%22bleedWidth%22%3A1%2C%22packageThick%22%3A0%2C%22packageWidth%22%3A0%2C%22minPage%22%3A1%2C%22bleedHeight%22%3A1%2C%22packageHeight%22%3A0%2C%22name%22%3A%22%E7%94%9F%E6%B4%BB%E6%9C%8D%E5%8A%A1++%E7%BB%BC%E5%90%88++%E7%AE%80%E7%BA%A6%E9%A3%8E%22%2C%22width%22%3A92%2C%22style%22%3A%22%22%2C%22theme%22%3A%22%22%2C%22foldType%22%3A0%2C%22designModel%22%3A%22%E5%8D%95%E9%A1%B5"
     },
     {
-      "status": 200,
+      "status": null,
+      "k": "req",
       "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
-      "body": "{\"result\":true,\"loginState\":\"timeOut\"}"
+      "body": null,
+      "post": "{\"picCanvasPath\":[\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAFtCAYAAADbORRfAAAQAElEQVR4AezY23Ictw4FUJX//5/PiWPHljS37mmQBMCVSmxpmg0CC/OwKz/+5x8CBAgQIECAAIFQgR8f/iFAgAABAukENESgtoCAVXt/uidAgAABAgQSCghYCZeiJQIRAmoQIECAwDoBAWudvZsJECBAgACBpgIC1sPFekCAAAECBAgQeE9AwHrPzVsECBAgQGCNgFtLCAhYJdakSQIECBAgQKCSgIBVaVt6JUAgQkANAgQIDBcQsIYTu4AAAQIECBDYTUDA2m3jEfOqQYAAAQIECDwVELCe8nhIgAABAgQIVBHI1KeAlWkbeiFAgAABAgRaCAhYLdZoCAIECEQIqEGAQJSAgBUlqQ4BAgQIECBA4LeAgPUbwl8EIgTUIECAAAECPwUErJ8K/iNAgAABAgQIBAokC1iBkylFgAABAgQIEFgkIGAtgnctAQIECBQS0CqBkwIC1kkwxwkQIECAAAECrwQErFdCnhMgECGgBgECBLYSELC2WrdhCRAgQIA"
     },
     {
       "status": 200,
+      "k": "res",
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/getImgInfos.do",
+      "body": null,
+      "post": null
+    },
+    {
+      "status": 200,
+      "k": "res",
+      "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+      "body": "{\"result\":true,\"loginState\":\"timeOut\"}",
+      "post": null
+    },
+    {
+      "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/siteWeb/jsj/checkRedisLoginVerify.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/siteWeb/jsj/userLogin.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
+      "k": "res",
       "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
-      "body": null
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
-      "u": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
-      "body": null
+      "k": "res",
+      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
-      "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
-      "body": null
+      "k": "res",
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+      "body": null,
+      "post": null
     },
     {
       "status": 200,
-      "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
-      "body": null
-    },
-    {
-      "status": 200,
-      "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
-      "body": null
-    },
-    {
-      "status": 200,
-      "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
-      "body": null
-    },
-    {
-      "status": 200,
-      "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
-      "body": null
-    },
-    {
-      "status": 200,
-      "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
-      "body": null
-    },
-    {
-      "status": 200,
-      "u": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
-      "body": null
-    },
-    {
-      "status": 200,
-      "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=[REDACTED]",
-      "body": null
+      "k": "res",
+      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+      "body": null,
+      "post": null
     }
   ]
 }

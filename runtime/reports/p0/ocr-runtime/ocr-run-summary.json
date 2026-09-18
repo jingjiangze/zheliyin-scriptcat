@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-18T07:36:21.550Z",
+  "ts": "2026-09-18T08:37:57.637Z",
   "ocrRunId": "OCR-20260918-001",
   "stage": "REAL_OCR",
   "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
@@ -12,12 +12,32 @@
     "authAfterStart": {
       "loginLayerVisible": false
     },
+    "authStateAtStart": {
+      "logout": false,
+      "loginBtn": false,
+      "hasSession": false
+    },
+    "authForced": true,
+    "authForcedPost": {
+      "loginLayerVisible": false,
+      "logout": false
+    },
+    "hegaoOk": true,
+    "authBootstrap": {
+      "ok": true,
+      "stage": "logged-in",
+      "loginClosed": true,
+      "authPost": {
+        "loginLayerVisible": false
+      }
+    },
     "userscript": {
       "ok": true,
       "toolBtn": true,
       "bridge": true
     },
     "scriptVersionSeen": [
+      "0.3.10.2",
       "0.3.10.2",
       "0.3.10.2"
     ],
@@ -34,19 +54,9 @@
     },
     "ocrReplySeen": true,
     "ocrVisible": "PASS",
-    "reloadReady": true,
-    "saveReload": {
-      "identityMatched": 0,
-      "textMatched": 0,
-      "wanted": [
-        "ABC 科技 有 限 公司",
-        "张三",
-        "13800138000",
-        "销售经理"
-      ],
-      "verdict": "LOST"
+    "saveOnly": {
+      "clicked": true
     },
-    "hegaoOk": true,
     "orderNo": {
       "ok": true
     },
@@ -54,17 +64,20 @@
       "ok": true,
       "attempt": 0
     },
-    "proofSurfaces": null,
-    "retried": 1,
-    "previews": [],
-    "autoProofreadPopup": false,
-    "realOcrProof": "FAIL",
-    "proofCounts": {
-      "total": 0,
-      "pass": 0,
-      "errAutoCheck": 0,
-      "popup": false
-    }
+    "submitTry": [
+      {
+        "round": 0,
+        "status": null,
+        "expired": false,
+        "body": ""
+      }
+    ],
+    "submitFirstStatus": "NO_SUBMIT_RESPONSE",
+    "retried": 0,
+    "authRecovered": true,
+    "submitFired": 2,
+    "submitFiredPage": 0,
+    "realOcrProof": "SKIPPED(reload-not-ready)"
   },
   "statusLog": [
     "就绪",
@@ -152,11 +165,13 @@
     "type": 1,
     "status": 1,
     "runStatus": "complete",
-    "createtime": 1789716992786,
-    "updatetime": 1789716992786,
-    "checktime": 1789716992788
+    "createtime": 1789720688712,
+    "updatetime": 1789720688712,
+    "checktime": 1789720688717
   },
   "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "折立印名片套版助手已加载 0.3.10.2",
     "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
     "折立印名片套版助手已加载 0.3.10.2",
     "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
@@ -206,25 +221,25 @@
       {
         "blockIndex": 0,
         "objectIndex": 2,
-        "uuid": "905a4b7b-caea-471f-8850-08695a93a483",
+        "uuid": "7473f60a-6f4f-41a6-b654-4fcec4d0c95a",
         "text": "ABC 科技 有 限 公司"
       },
       {
         "blockIndex": 1,
         "objectIndex": 3,
-        "uuid": "66940528-e658-4ec3-b741-64568a333d5c",
+        "uuid": "4da2c54c-981a-4afc-8d1e-73bbdfd0474a",
         "text": "张三"
       },
       {
         "blockIndex": 2,
         "objectIndex": 4,
-        "uuid": "aff9dff4-8570-4853-b5ce-ba43f5d3746e",
+        "uuid": "b519011c-238d-43a4-af1c-a0d3abca321f",
         "text": "13800138000"
       },
       {
         "blockIndex": 3,
         "objectIndex": 5,
-        "uuid": "fbed6281-9570-46f1-a2e0-e37b9ef9d9c4",
+        "uuid": "13e94b96-43bf-43ed-8b40-b4c0197c2d0a",
         "text": "销售经理"
       }
     ],
@@ -245,23 +260,23 @@
   "ocrObs": {
     "events": [
       {
-        "t": 1789717015151,
+        "t": 1789720724600,
         "s": "req",
         "y": "getCanvasInfo"
       },
       {
-        "t": 1789717015162,
+        "t": 1789720724613,
         "s": "req",
         "y": "ocrPrepare"
       },
       {
-        "t": 1789717016227,
+        "t": 1789720725683,
         "s": "req",
         "y": "ocrCreate",
         "ic": 4
       },
       {
-        "t": 1789717016239,
+        "t": 1789720725684,
         "s": "res",
         "y": "ocrCreateResult",
         "c": 4,
@@ -373,25 +388,25 @@
         {
           "blockIndex": 0,
           "objectIndex": 2,
-          "uuid": "905a4b7b-caea-471f-8850-08695a93a483",
+          "uuid": "7473f60a-6f4f-41a6-b654-4fcec4d0c95a",
           "text": "ABC 科技 有 限 公司"
         },
         {
           "blockIndex": 1,
           "objectIndex": 3,
-          "uuid": "66940528-e658-4ec3-b741-64568a333d5c",
+          "uuid": "4da2c54c-981a-4afc-8d1e-73bbdfd0474a",
           "text": "张三"
         },
         {
           "blockIndex": 2,
           "objectIndex": 4,
-          "uuid": "aff9dff4-8570-4853-b5ce-ba43f5d3746e",
+          "uuid": "b519011c-238d-43a4-af1c-a0d3abca321f",
           "text": "13800138000"
         },
         {
           "blockIndex": 3,
           "objectIndex": 5,
-          "uuid": "fbed6281-9570-46f1-a2e0-e37b9ef9d9c4",
+          "uuid": "13e94b96-43bf-43ed-8b40-b4c0197c2d0a",
           "text": "销售经理"
         }
       ],
@@ -595,7 +610,7 @@
         "maskEnable": false,
         "lowPixelFlag": false,
         "topEnable": false,
-        "multiUuid": "4dd6aaea-4a7a-4435-a220-35dfbd6a99ea",
+        "multiUuid": "32543cfc-fc12-4875-b29f-43b92b10f80f",
         "markuuid": "",
         "layerNum": 0,
         "index": 0
@@ -653,8 +668,8 @@
         "maskEnable": 0,
         "lowPixelFlag": 0,
         "topEnable": 1,
-        "uuid": "905a4b7b-caea-471f-8850-08695a93a483",
-        "multiUuid": "d808ef48-6105-f19f-1195-c4ed85ec149c",
+        "uuid": "7473f60a-6f4f-41a6-b654-4fcec4d0c95a",
+        "multiUuid": "9ab9a080-e198-67ae-a383-b5e3b9ac2189",
         "markuuid": "",
         "layerNum": 1,
         "isLineText": true,
@@ -694,8 +709,8 @@
         "maskEnable": 0,
         "lowPixelFlag": 0,
         "topEnable": 1,
-        "uuid": "66940528-e658-4ec3-b741-64568a333d5c",
-        "multiUuid": "9b4ec676-9376-2edf-2431-f67aa3ac27cd",
+        "uuid": "4da2c54c-981a-4afc-8d1e-73bbdfd0474a",
+        "multiUuid": "e6d60680-3874-d7a2-97ee-cfd308d93357",
         "markuuid": "",
         "layerNum": 2,
         "isLineText": true,
@@ -735,8 +750,8 @@
         "maskEnable": 0,
         "lowPixelFlag": 0,
         "topEnable": 1,
-        "uuid": "aff9dff4-8570-4853-b5ce-ba43f5d3746e",
-        "multiUuid": "c5dea549-ea25-844d-d2f4-8b84c01f70b3",
+        "uuid": "b519011c-238d-43a4-af1c-a0d3abca321f",
+        "multiUuid": "bf86b3c1-b1a7-e631-a0cd-450f207c0d17",
         "markuuid": "",
         "layerNum": 3,
         "isLineText": true,
@@ -776,8 +791,8 @@
         "maskEnable": 0,
         "lowPixelFlag": 0,
         "topEnable": 1,
-        "uuid": "fbed6281-9570-46f1-a2e0-e37b9ef9d9c4",
-        "multiUuid": "74419d2c-7794-48db-f7b6-271e80ff3c45",
+        "uuid": "13e94b96-43bf-43ed-8b40-b4c0197c2d0a",
+        "multiUuid": "2df1455b-a001-b8b5-88eb-976d1940a1b0",
         "markuuid": "",
         "layerNum": 4,
         "isLineText": true,
@@ -974,8 +989,8 @@
       "maskEnable": 0,
       "lowPixelFlag": 0,
       "topEnable": 1,
-      "uuid": "905a4b7b-caea-471f-8850-08695a93a483",
-      "multiUuid": "d808ef48-6105-f19f-1195-c4ed85ec149c",
+      "uuid": "7473f60a-6f4f-41a6-b654-4fcec4d0c95a",
+      "multiUuid": "9ab9a080-e198-67ae-a383-b5e3b9ac2189",
       "markuuid": "",
       "layerNum": 1,
       "isLineText": true,
@@ -1015,8 +1030,8 @@
       "maskEnable": 0,
       "lowPixelFlag": 0,
       "topEnable": 1,
-      "uuid": "66940528-e658-4ec3-b741-64568a333d5c",
-      "multiUuid": "9b4ec676-9376-2edf-2431-f67aa3ac27cd",
+      "uuid": "4da2c54c-981a-4afc-8d1e-73bbdfd0474a",
+      "multiUuid": "e6d60680-3874-d7a2-97ee-cfd308d93357",
       "markuuid": "",
       "layerNum": 2,
       "isLineText": true,
@@ -1056,8 +1071,8 @@
       "maskEnable": 0,
       "lowPixelFlag": 0,
       "topEnable": 1,
-      "uuid": "aff9dff4-8570-4853-b5ce-ba43f5d3746e",
-      "multiUuid": "c5dea549-ea25-844d-d2f4-8b84c01f70b3",
+      "uuid": "b519011c-238d-43a4-af1c-a0d3abca321f",
+      "multiUuid": "bf86b3c1-b1a7-e631-a0cd-450f207c0d17",
       "markuuid": "",
       "layerNum": 3,
       "isLineText": true,
@@ -1097,8 +1112,8 @@
       "maskEnable": 0,
       "lowPixelFlag": 0,
       "topEnable": 1,
-      "uuid": "fbed6281-9570-46f1-a2e0-e37b9ef9d9c4",
-      "multiUuid": "74419d2c-7794-48db-f7b6-271e80ff3c45",
+      "uuid": "13e94b96-43bf-43ed-8b40-b4c0197c2d0a",
+      "multiUuid": "2df1455b-a001-b8b5-88eb-976d1940a1b0",
       "markuuid": "",
       "layerNum": 4,
       "isLineText": true,
@@ -1119,7 +1134,7 @@
   "visibility": [
     {
       "index": 2,
-      "uuid": "905a4b7b-caea-471f-8850-08695a93a483",
+      "uuid": "7473f60a-6f4f-41a6-b654-4fcec4d0c95a",
       "text": "ABC 科技 有 限 公司",
       "type": "textbox",
       "visible": true,
@@ -1133,7 +1148,7 @@
     },
     {
       "index": 3,
-      "uuid": "66940528-e658-4ec3-b741-64568a333d5c",
+      "uuid": "4da2c54c-981a-4afc-8d1e-73bbdfd0474a",
       "text": "张三",
       "type": "textbox",
       "visible": true,
@@ -1147,7 +1162,7 @@
     },
     {
       "index": 4,
-      "uuid": "aff9dff4-8570-4853-b5ce-ba43f5d3746e",
+      "uuid": "b519011c-238d-43a4-af1c-a0d3abca321f",
       "text": "13800138000",
       "type": "textbox",
       "visible": true,
@@ -1161,7 +1176,7 @@
     },
     {
       "index": 5,
-      "uuid": "fbed6281-9570-46f1-a2e0-e37b9ef9d9c4",
+      "uuid": "13e94b96-43bf-43ed-8b40-b4c0197c2d0a",
       "text": "销售经理",
       "type": "textbox",
       "visible": true,
@@ -1175,26 +1190,8 @@
     }
   ],
   "shots": [
-    "ocr-after-create.png",
-    "ocr-before-proof.png"
+    "ocr-after-create.png"
   ],
-  "saveClick": {
-    "clicked": true
-  },
-  "reloadSnapshot": {
-    "ok": true,
-    "total": 9,
-    "matched": [],
-    "textsAfter": [],
-    "textMatched": [],
-    "wanted": [
-      "ABC 科技 有 限 公司",
-      "张三",
-      "13800138000",
-      "销售经理"
-    ]
-  },
-  "reloadTexts": [],
   "verdict": {
     "AUTH": "EXPIRED",
     "SUBMIT": "UNKNOWN",
@@ -1216,6 +1213,9 @@
         },
         "submitUserDesignHits": [
           {
+            "status": null
+          },
+          {
             "status": 200,
             "result": true,
             "loginState": "timeOut"
@@ -1223,8 +1223,13 @@
         ]
       },
       "submit": {
-        "hitCount": 1,
+        "hitCount": 2,
         "raw": [
+          {
+            "status": null,
+            "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+            "body": {}
+          },
           {
             "status": 200,
             "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
@@ -1237,17 +1242,11 @@
       },
       "hegao": {
         "hegaoPreprintGate": true,
-        "proofSurfaces": null,
         "postSubmitNetHits": [],
         "hegaoPostSubmitEvidence": false
       },
       "proof": {
-        "proofCounts": {
-          "total": 0,
-          "pass": 0,
-          "errAutoCheck": 0,
-          "popup": false
-        },
+        "proofCounts": null,
         "popup": false
       },
       "object": {
@@ -1280,11 +1279,12 @@
     }
   },
   "final": {
-    "realOcrProof": "FAIL",
+    "realOcrProof": "SKIPPED(reload-not-ready)",
     "ocrVisible": "PASS",
     "ocrReplySeen": true,
     "newTextCount": 4,
     "scriptVersionSeen": [
+      "0.3.10.2",
       "0.3.10.2",
       "0.3.10.2"
     ]
