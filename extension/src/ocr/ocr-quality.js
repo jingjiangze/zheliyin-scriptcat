@@ -92,4 +92,164 @@ function assessOcrCandidates(candidates, meta) {
   return { ok: true, reasonCode: null, reason: null, total: list.length, kept: kept, dropped: dropped };
 }
 
-if (typeof module !== "undefined" && module.exports) module.exports = { assessOcrCandidates, normQBox, LOW_CONFIDENCE, MAX_TEXT_LENGTH, MAX_LINES, KEEP_RATIO };
+// =====================================================================
+// Stage 7.8 §三十二/§三十三：六维质量门（分级输出）
+// bundleOcrQuality(candidates, meta, opts) -> {
+//   provider, textQuality, blockQuality, bboxQuality, sizeQuality,
+//   symbolQuality, mergeQuality, overall, reasonCode, total, imageSize
+// }
+// 每个维度 {status: "PASS"|"FAIL"|"WARN"|"UNKNOWN", reason?, ...counts}。
+// overall = 任一维 FAIL → FAIL（reasonCode=首个失败维原因）；有 WARN 无 FAIL → WARN；否则 PASS。
+// UNKNOWN（如缺 imageSize 的 sizeQuality）不判 FAIL（保持诚实不误杀）。
+// assessOcrCandidates 保持兼容（运行时仍做第一道门），bundle 为完整分级诊断。
+// 约束：纯函数；sanitize 依赖注入（opts.sanitize 或全局 sanitizeOcrText，@require 同作用域）。
+// =====================================================================
+
+function medianOf(values) {
+  var arr = values.filter(isFiniteNum).sort(function (a, b) { return a - b; });
+  var n = arr.length;
+  if (!n) return null;
+  return n % 2 ? arr[(n - 1) / 2] : (arr[n / 2 - 1] + arr[n / 2]) / 2;
+}
+
+function dimPASS(extra) { return Object.assign({ status: "PASS" }, extra || {}); }
+function dimFAIL(reason, extra) { return Object.assign({ status: "FAIL", reason: reason }, extra || {}); }
+function dimWARN(reason, extra) { return Object.assign({ status: "WARN", reason: reason }, extra || {}); }
+function dimUNKNOWN(reason, extra) { return Object.assign({ status: "UNKNOWN", reason: reason }, extra || {}); }
+
+function rectArea(b) {
+  return b ? b.width * b.height : 0;
+}
+function rectInter(a, b) {
+  if (!a || !b) return 0;
+  var x0 = Math.max(a.x, b.x), y0 = Math.max(a.y, b.y);
+  var x1 = Math.min(a.x + a.width, b.x + b.width), y1 = Math.min(a.y + a.height, b.y + b.height);
+  var w = x1 - x0, h = y1 - y0;
+  return (w > 0 && h > 0) ? w * h : 0;
+}
+
+function bundleOcrQuality(candidates, meta, opts) {
+  var o = opts || {};
+  var list = Array.isArray(candidates) ? candidates : [];
+  var m = meta || {};
+  var img = null;
+  if (m.imageSize && isFiniteNum(m.imageSize.width) && isFiniteNum(m.imageSize.height)) img = m.imageSize;
+  else if (isFiniteNum(m.width) && isFiniteNum(m.height)) img = { width: m.width, height: m.height };
+  if (!img && list[0] && list[0].imageSize && isFiniteNum(list[0].imageSize.width) && isFiniteNum(list[0].imageSize.height)) img = list[0].imageSize;
+  var sanitize = o.sanitize ? o.sanitize : (typeof sanitizeOcrText === "function" ? sanitizeOcrText : null);
+  var provider = m.provider || (list[0] && (list[0].sourceProvider || null)) || null;
+  if (!list.length) {
+    return { provider: provider, textQuality: dimFAIL("empty-result"), blockQuality: dimFAIL("empty-result"), bboxQuality: dimFAIL("empty-result"), sizeQuality: dimFAIL("empty-result"), symbolQuality: dimFAIL("empty-result"), mergeQuality: dimFAIL("empty-result"), overall: "FAIL", reasonCode: "empty-result", total: 0, imageSize: img };
+  }
+
+  // ---- textQuality：空文本 / 超长（§三十三 文字质量）----
+  var textEmpty = 0, textLong = 0;
+  list.forEach(function (c) {
+    var txt = String((c && c.text) != null ? c.text : "").trim();
+    if (!txt) textEmpty += 1;
+    else if (txt.length > MAX_TEXT_LENGTH) textLong += 1;
+  });
+  var textQuality = (textEmpty || textLong)
+    ? dimFAIL("text-invalid", { invalid: textEmpty + textLong, empty: textEmpty, long: textLong })
+    : dimPASS();
+
+  // ---- bboxQuality：非法 / 越界（§三十三 bbox / 页面尺寸）----
+  var bboxInvalid = 0, bboxOob = 0;
+  list.forEach(function (c) {
+    var b = c && c.bbox ? normQBox(c.bbox) : null;
+    if (!b) { bboxInvalid += 1; return; }
+    if (img && (b.x + b.width < -img.width * BOUND_TOL || b.x > img.width * (1 + BOUND_TOL) ||
+                b.y + b.height < -img.height * BOUND_TOL || b.y > img.height * (1 + BOUND_TOL))) bboxOob += 1;
+  });
+  var bboxQuality = (bboxInvalid || bboxOob)
+    ? dimFAIL("bbox-invalid", { invalid: bboxInvalid, outOfBounds: bboxOob })
+    : (img ? dimPASS() : dimUNKNOWN("no-image-size"));
+
+  // ---- sizeQuality：字号合理性（§十九 归一化 + 页面中位比值，§三十三 size）----
+  var heights = list.map(function (c) { return c && c.bbox ? c.bbox.height : null; }).filter(isFiniteNum);
+  var medH = medianOf(heights);
+  var sizeQuality;
+  if (!img) {
+    sizeQuality = dimUNKNOWN("no-image-size");
+  } else {
+    var maxNorm = heights.reduce(function (mx, h) { return Math.max(mx, h / img.height); }, 0);
+    var ratioSpread = (medH != null && medH > 0) ? heights.reduce(function (mx, h) { return Math.max(mx, h / medH); }, 0) : null;
+    if (maxNorm > 0.6) sizeQuality = dimFAIL("size-anomaly-huge", { maxNormalizedHeight: Math.round(maxNorm * 100) / 100 });
+    else if (ratioSpread != null && heights.length >= 2 && ratioSpread > 4) sizeQuality = dimFAIL("size-anomaly-spread", { maxHeightRatio: Math.round(ratioSpread * 100) / 100 });
+    else sizeQuality = dimPASS({ maxNormalizedHeight: Math.round(maxNorm * 100) / 100, maxHeightRatio: ratioSpread != null ? Math.round(ratioSpread * 100) / 100 : null });
+  }
+
+  // ---- blockQuality：异常少 / 大规模重叠（§三十三 block）----
+  var blockQuality;
+  var tooFew = false;
+  if (img && list.length === 1) {
+    var b0 = normQBox(list[0].bbox);
+    if (b0 && rectArea(b0) > 0.6 * img.width * img.height) tooFew = true;
+  }
+  var heavyPairs = 0, totalPairs = list.length * (list.length - 1) / 2;
+  for (var i = 0; i < list.length; i += 1) {
+    for (var j = i + 1; j < list.length; j += 1) {
+      var ai = normQBox(list[i].bbox), aj = normQBox(list[j].bbox);
+      if (!ai || !aj) continue;
+      var inter = rectInter(ai, aj);
+      var minArea = Math.min(rectArea(ai), rectArea(aj));
+      if (minArea > 0 && inter / minArea > 0.5) heavyPairs += 1;
+    }
+  }
+  if (tooFew) blockQuality = dimFAIL("too-few-blocks", { total: list.length });
+  else if (totalPairs && heavyPairs / totalPairs >= 0.2) blockQuality = dimFAIL("large-overlap", { heavyPairs: heavyPairs, totalPairs: totalPairs });
+  else if (heavyPairs > 0) blockQuality = dimWARN("overlap-observed", { heavyPairs: heavyPairs });
+  else blockQuality = dimPASS();
+
+  // ---- symbolQuality：BLOCKED 符号检测（§三十三 special character，复用 sanitizer）----
+  var symbolQuality;
+  if (!sanitize) {
+    symbolQuality = dimUNKNOWN("sanitizer-missing");
+  } else {
+    var blockedList = [];
+    list.forEach(function (c) {
+      var txt = String((c && c.text) != null ? c.text : "");
+      if (!txt) return;
+      var sr = sanitize(txt);
+      if (sr && Array.isArray(sr.blocked) && sr.blocked.length) {
+        sr.blocked.forEach(function (b) {
+          if (blockedList.length >= 8) return;
+          var key = b.char + "|" + b.reason;
+          if (blockedList.some(function (x) { return x.key === key; })) return;
+          blockedList.push({ key: key, char: b.char, reason: b.reason, sample: txt.slice(0, 12) });
+        });
+      }
+    });
+    symbolQuality = blockedList.length ? dimFAIL("blocked-symbol", { blockedSymbols: blockedList }) : dimPASS();
+  }
+
+  // ---- mergeQuality：潜在 merge 冲突（同排 y 重叠高但字高比大 → normalizer 应拆分，§二十/§二十二）----
+  var mergeConflict = 0;
+  for (var p = 0; p < list.length; p += 1) {
+    for (var q = p + 1; q < list.length; q += 1) {
+      var bp = normQBox(list[p].bbox), bq = normQBox(list[q].bbox);
+      if (!bp || !bq) continue;
+      var minH = Math.min(bp.height, bq.height);
+      if (minH <= 0) continue;
+      var yInter = Math.min(bp.y + bp.height, bq.y + bq.height) - Math.max(bp.y, bq.y);
+      var sizeR = Math.max(bp.height, bq.height) / minH;
+      if (yInter > 0.5 * minH && sizeR > 1.5) mergeConflict += 1;
+    }
+  }
+  var mergeQuality = mergeConflict ? dimWARN("merge-conflict-candidates", { conflicts: mergeConflict }) : dimPASS();
+
+  var dims = { textQuality: textQuality, blockQuality: blockQuality, bboxQuality: bboxQuality, sizeQuality: sizeQuality, symbolQuality: symbolQuality, mergeQuality: mergeQuality };
+  var fails = Object.keys(dims).filter(function (k) { return dims[k].status === "FAIL"; });
+  var warns = Object.keys(dims).filter(function (k) { return dims[k].status === "WARN"; });
+  var overall = fails.length ? "FAIL" : (warns.length ? "WARN" : "PASS");
+  var reasonCode = null;
+  if (fails.length) {
+    var first = dims[fails[0]];
+    reasonCode = first && first.reason ? String(first.reason) : "invalid-result";
+  } else if (warns.length) {
+    reasonCode = "WARN";
+  }
+  return Object.assign({ provider: provider, mergeQuality: mergeQuality, overall: overall, reasonCode: reasonCode, total: list.length, imageSize: img }, dims);
+}
+
+if (typeof module !== "undefined" && module.exports) module.exports = { assessOcrCandidates, bundleOcrQuality, normQBox, LOW_CONFIDENCE, MAX_TEXT_LENGTH, MAX_LINES, KEEP_RATIO };
