@@ -273,10 +273,9 @@ async function searchSync(maxRounds = 4) {
     } catch (e) { RUN.errors.push("scriptcat install: " + String(e && e.message || e).slice(0, 200)); }
     await sleep(1500);
 
-    // ---- 3. 编辑器就绪（先 about:blank 再进编辑器，确保用户脚本注入全新文档）----
-    await page.goto("about:blank").catch(() => {});
-    await sleep(800);
+    // ---- 3. 编辑器就绪（沿历史流程：goto → reload 一次注入）----
     await page.goto(EDITOR_URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+    await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     const w = await waitUntil(isReadyExpr(), "editor", 120000);
     RUN.phases.editorReady = !!(w && w.ok);
     if (!(w && w.ok)) throw new Error("editor not ready");
@@ -334,38 +333,9 @@ async function searchSync(maxRounds = 4) {
     });
     RUN.canvasBefore = before;
 
-    RUN.upload = { method: null, done: false };
-    try {
-      const inp = page.locator("input[type=file][accept*=image], input[type=file][accept*=png], input[type=file][accept*=jpg]").first();
-      if (await inp.count()) { await inp.setInputFiles(FIX_PNG); RUN.upload.method = "NATIVE_FILE_INPUT"; RUN.upload.done = true; }
-      else {
-        const clicked = await ev(() => {
-          const el = Array.from(document.querySelectorAll("li,a,span,button,div")).find((x) => x.offsetParent && /^图片$|上传图片|本地上传/.test(String(x.textContent || "").trim()));
-          if (el) { try { el.click(); return true; } catch (e) { return false; } } return false;
-        });
-        if (clicked) { await sleep(1500); const inp2 = page.locator("input[type=file][accept*=image], input[type=file][accept*=png], input[type=file][accept*=jpg]").first(); if (await inp2.count()) { await inp2.setInputFiles(FIX_PNG); RUN.upload.method = "UI_UPLOAD_FILE_INPUT"; RUN.upload.done = true; } }
-      }
-    } catch (e) { RUN.upload.method = "ERR:" + String(e && e.message || e).slice(0, 120); }
-    if (!RUN.upload.done && fixt && fixt.dataUrl) {
-      const r = await ev((arg) => new Promise((res) => {
-        const img = new Image();
-        img.onload = () => { try { const req = window.requirejs || window.require; let vo = null; try { vo = req.s.contexts._.defined.CanvasObjVO || window.CanvasObjVO; } catch (e2) { vo = window.CanvasObjVO; } const d = vo.totalCanvasArray[0]; const c = d.canvas || d; const f = window.fabric; const fi = new f.Image(img, { left: 60, top: 40, scaleX: 0.5, scaleY: 0.5, selectable: true }); c.add(fi); if (c.requestRenderAll) c.requestRenderAll(); if (c.setActiveObject) c.setActiveObject(fi); res({ ok: true }); } catch (e3) { res({ ok: false, err: String(e3 && e3.message || e3).slice(0, 160) }); } };
-        img.onerror = () => res({ ok: false, err: "img load" });
-        img.src = arg.dataUrl;
-      }), { dataUrl: fixt.dataUrl }).catch(() => ({ ok: false }));
-      RUN.upload.method = (r && r.ok) ? "FABRIC_IMAGE_NATIVE" : "FABRIC_FAIL:" + JSON.stringify(r).slice(0, 100);
-      RUN.upload.done = !!(r && r.ok);
-    }
-    await sleep(2000);
-    await ev(() => {
-      try {
-        const req = window.requirejs || window.require; const vo = req.s.contexts._.defined.CanvasObjVO || window.CanvasObjVO;
-        const d = vo.totalCanvasArray[0]; const c = d.canvas || d;
-        const objs = c.getObjects(); const imgs = objs.filter((o) => String(o.type) === "image");
-        if (imgs.length) { c.setActiveObject(imgs[imgs.length - 1]); if (c.requestRenderAll) c.requestRenderAll(); }
-      } catch (e) {}
-      return {};
-    });
+    // 不触碰 file input（避免「换图」弹窗）；OCR 源 = 真实「当前图片」(active→background→首图), 与历史脚本一致
+    RUN.upload = { method: "SKIP(current-image)", done: false };
+    RUN.ocrSource = "CURRENT_IMAGE(active->background->first-image)";
 
     // ---- 6. 观测 hook（非侵入）+ 点击真实「识别当前图片」----
     await ev(() => {
