@@ -31,11 +31,11 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     const d = (vo && Array.isArray(vo.totalCanvasArray) && vo.totalCanvasArray[0]) || null;
     return { ok: !!(d && d.canvas && typeof d.drawText === "function") };
   };
-  const clickPage = (txt) => ev(() => {
+  const clickPage = (txt) => ev((arg) => {
     const all = Array.from(document.querySelectorAll("li, a, span, div, i, em, button"));
-    for (const el of all) { if (!el.offsetParent) continue; const t = String(el.textContent || "").trim(); if (t === txt && t.length <= 4) { try { el.click(); return { clicked: true, txt: t }; } catch (e) { return { clicked: false }; } } }
+    for (const el of all) { if (!el.offsetParent) continue; const t = String(el.textContent || "").trim(); if (t === arg.txt && t.length <= 4) { try { el.click(); return { clicked: true, txt: t }; } catch (e) { return { clicked: false }; } } }
     return { clicked: false };
-  });
+  }, { txt: txt });
   const snapCurrent = (label) => ev((arg) => {
     const req = window.requirejs || window.require;
     const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);

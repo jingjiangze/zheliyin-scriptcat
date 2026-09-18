@@ -1,0 +1,214 @@
+{
+  "ts": "2026-09-18T10:13:17.648Z",
+  "stage": "STAGE-7.6-PAGE-REGISTRY",
+  "rounds": [
+    {
+      "click": "toBack",
+      "result": {
+        "clicked": true,
+        "txt": "背面"
+      }
+    },
+    {
+      "label": "after_toBack",
+      "currentCanvasNum": 2,
+      "uiTxt": "背面",
+      "pages": [
+        {
+          "pageId": "canvas:c0",
+          "canvasId": "c0",
+          "pageIndex": 0
+        },
+        {
+          "pageId": "canvas:c1",
+          "canvasId": "c1",
+          "pageIndex": 1
+        }
+      ],
+      "resolution": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c1",
+        "side": "BACK",
+        "sideSource": "page-group.current",
+        "identity": {
+          "pageId": "canvas:c1",
+          "pageIndex": 1,
+          "pageName": null,
+          "canvasId": "c1",
+          "canvasIndex": 1,
+          "width": 871.4999999999999,
+          "height": 530.1624999999999,
+          "objectCount": 9
+        },
+        "currentCanvasNum": 2,
+        "pageIndex": 1,
+        "canvasId": "c1",
+        "canvasIndex": 1,
+        "width": 871.4999999999999,
+        "height": 530.1624999999999
+      }
+    },
+    {
+      "click": "toFront",
+      "result": {
+        "clicked": true,
+        "txt": "正面"
+      }
+    },
+    {
+      "label": "after_toFront",
+      "currentCanvasNum": 1,
+      "uiTxt": "正面",
+      "pages": [
+        {
+          "pageId": "canvas:c0",
+          "canvasId": "c0",
+          "pageIndex": 0
+        },
+        {
+          "pageId": "canvas:c1",
+          "canvasId": "c1",
+          "pageIndex": 1
+        }
+      ],
+      "resolution": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "sideSource": "page-group.current",
+        "identity": {
+          "pageId": "canvas:c0",
+          "pageIndex": 0,
+          "pageName": null,
+          "canvasId": "c0",
+          "canvasIndex": 0,
+          "width": 871.4999999999999,
+          "height": 530.1624999999999,
+          "objectCount": 9
+        },
+        "currentCanvasNum": 1,
+        "pageIndex": 0,
+        "canvasId": "c0",
+        "canvasIndex": 0,
+        "width": 871.4999999999999,
+        "height": 530.1624999999999
+      }
+    },
+    {
+      "click": "toBack2",
+      "result": {
+        "clicked": true,
+        "txt": "背面"
+      }
+    },
+    {
+      "label": "after_toBack2",
+      "currentCanvasNum": 2,
+      "uiTxt": "背面",
+      "pages": [
+        {
+          "pageId": "canvas:c0",
+          "canvasId": "c0",
+          "pageIndex": 0
+        },
+        {
+          "pageId": "canvas:c1",
+          "canvasId": "c1",
+          "pageIndex": 1
+        }
+      ],
+      "resolution": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c1",
+        "side": "BACK",
+        "sideSource": "page-group.current",
+        "identity": {
+          "pageId": "canvas:c1",
+          "pageIndex": 1,
+          "pageName": null,
+          "canvasId": "c1",
+          "canvasIndex": 1,
+          "width": 871.4999999999999,
+          "height": 530.1624999999999,
+          "objectCount": 9
+        },
+        "currentCanvasNum": 2,
+        "pageIndex": 1,
+        "canvasId": "c1",
+        "canvasIndex": 1,
+        "width": 871.4999999999999,
+        "height": 530.1624999999999
+      }
+    },
+    {
+      "click": "toFront2",
+      "result": {
+        "clicked": true,
+        "txt": "正面"
+      }
+    },
+    {
+      "label": "after_toFront2",
+      "currentCanvasNum": 1,
+      "uiTxt": "正面",
+      "pages": [
+        {
+          "pageId": "canvas:c0",
+          "canvasId": "c0",
+          "pageIndex": 0
+        },
+        {
+          "pageId": "canvas:c1",
+          "canvasId": "c1",
+          "pageIndex": 1
+        }
+      ],
+      "resolution": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "sideSource": "page-group.current",
+        "identity": {
+          "pageId": "canvas:c0",
+          "pageIndex": 0,
+          "pageName": null,
+          "canvasId": "c0",
+          "canvasIndex": 0,
+          "width": 871.4999999999999,
+          "height": 530.1624999999999,
+          "objectCount": 9
+        },
+        "currentCanvasNum": 1,
+        "pageIndex": 0,
+        "canvasId": "c0",
+        "canvasIndex": 0,
+        "width": 871.4999999999999,
+        "height": 530.1624999999999
+      }
+    }
+  ],
+  "errors": [
+    "Error: page.goto: Navigation to \"https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do\" is interrupted by anothe"
+  ],
+  "ready": true,
+  "inject": {
+    "ok": true
+  },
+  "conflictProbe": {
+    "ok": false,
+    "code": "PAGE_IDENTITY_CONFLICT",
+    "pageId": null,
+    "side": "UNKNOWN",
+    "reason": "ui side conflicts canvas index",
+    "evidence": {
+      "currentCanvasNum": 2,
+      "uiSide": "FRONT",
+      "canvasId": "c1",
+      "conflictingImplicit": "BACK"
+    }
+  }
+}
