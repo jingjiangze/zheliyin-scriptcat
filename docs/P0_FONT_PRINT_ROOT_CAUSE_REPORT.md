@@ -27,9 +27,24 @@
 
 ## 六、环境准入（自动化 vs 真机）
 
-- 自动化可达：编辑器加载、drawText 创建、核稿图、印刷→设计信息层→填 1/2→确定。
-- 自动化不可达：交稿层（「提交稿件」）、错字检查结果、核稿同步（搜索/刷新）、红框检查页、suspect 定位 —— 全部被 `submitUserDesign.do` timeOut 阻在入口前。
-- 结论：**P0 剩余取证必须在真机会话（可通过该提交鉴权）执行**；Fast Runner 已把可评估环节全部自动化并留好断点（--from-check 可复用检查页取证）。
+- 自动化可达：编辑器加载、drawText 创建、核稿、订单号输入、印刷、设计信息、确定、提交后登录浮层自动登录、重试印刷、搜索同步、去检查尝试、canvas 红框扫描（--from-check）。
+- 自动化不可达：真实交稿终态、核稿最终结果、错误截图（managed 下变量），suspect 红框（本环境命中背景 rect 属误报）——因 `submitUserDesign.do` 恒 timeOut 阻在交稿入口前。
+- 结论：**REAL/managed 会话对比未完成**，剩余取证需真实会话（CDP 接管或真实进入 URL）。
+
+## 六之二、REAL vs MANAGED 会话结果（2026-09-18 收窄范围）
+
+| 状态 | 值 |
+|---|---|
+| SESSION_SOURCE | MANAGED_PERSISTENT_PROFILE（`--adopt-session` → CDP_NOT_AVAILABLE，无 9222-9231 端点） |
+| REAL_SESSION_RESULT | NOT_ADOPTED（无可调试浏览器；等待用户调试 Chrome 或真实 URL 链） |
+| MANAGED_SESSION_RESULT | submitUserDesign.do → `loginState:"timeOut"`（多轮稳定） |
+| USER_LOGIN | PASS（page 可登录；登录浮层自动填充 env 凭据成功 userLogin.do success:true） |
+| SUBMIT_AUTH | FAIL（timeOut，独立于账号登录——与 USER_LOGIN 分离记录） |
+
+## P0 判定（截至本报告）
+
+- OCR_TEXT_PROOF / OCR_FONT_PRINT：**FAIL（未达成）**——managed 会话无法取得核稿终态，无法证明或否定「OCR 文本核稿不报错并正常显示」。
+- 生产代码零改动；按「REAL 会话→提交→核稿」优先级推进，通道：```chrome.exe --remote-debugging-port=9222``` → `node runtime/p0/runner.js --adopt-session/--session-parity`。
 
 ## 二、OBSERVATION（观察，未完全归因）
 

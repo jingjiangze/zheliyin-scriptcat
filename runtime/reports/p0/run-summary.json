@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-18T04:06:15.416Z",
+  "ts": "2026-09-18T04:14:31.324Z",
   "flags": {
     "fromProof": false,
     "fromPrint": false,
@@ -48,17 +48,8 @@
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=17606256193",
-        "body": "{\"success\":true,\"message\":null,\"userData\":null}"
-      },
-      {
-        "status": 200,
         "u": "https://diy.zheliyin.com/diyWeb/commontool/previewCheckForBase64.do",
-        "body": "{\"success\":true,\"message\":\"成功\",\"userData\":1065600}"
-      },
-      {
-        "status": 200,
-        "u": "https://diy.zheliyin.com/diyWeb/commontool/uploadBase64Img.do"
+        "body": "{\"success\":true,\"message\":\"成功\",\"userData\":1065616}"
       },
       {
         "status": 200,
@@ -77,7 +68,26 @@
       {
         "status": 200,
         "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
-        "body": ""
+        "body": "{\"result\":true,\"loginState\":\"timeOut\"}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/siteWeb/jsj/checkRedisLoginVerify.do",
+        "body": "{\"success\":true,\"message\":null,\"userData\":false}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/siteWeb/jsj/userLogin.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+        "body": "{\"data\":\"\",\"status\":\"error\"}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+        "body": "{\"success\":true,\"message\":\"1#\",\"userData\":[\"\",\"\"]}"
       },
       {
         "status": 200,
@@ -85,56 +95,68 @@
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb//captcha/get.do"
+        "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
-        "body": "{\"success\":true,\"message\":null,\"userData\":{\"orderType\":\"p\",\"showName\":\"名片（生产尺寸：92*56 模板ID：252438 印刷格式:PDF CMYK ）\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAChF6AAAHvUa9seE251.png\",\"previewImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuG-ACQsxAAAyc5XniCs329.png\"},{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAS5FNAAAHvUa9seE789.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"printWidth\":\"92\",\"addInfo\":\"{\\\"colorspace\\\":\\\"cmyk\\\",\\\"webSign\\\":{},\\\"tbOrderNo\\\":\\\"\\\",\\\"printingtype\\\":\\\"pdf\\\",\\\"workName\\\":\\\"1\\\",\\\"userName\\\":\\\"2\\\",\\\"kfUseSign\\\":\\\"1\\\",\\\"remarkInfor\\\":\\\"p0 runner\\\"}\",\"producestate\":1,\"checkToken\":\"\",\"printHeight\":\"56\",\"designId\":20424222,\"tbOrderNo\":null,\"isMobile\":\"0\",\"orignType\":999,\"typename\":\"名片\"}}"
+        "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/queryDesignInfo.do?id=20424222"
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
-        "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAChF6AAAHvUa9seE251.png\",\"previewImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuG-ACQsxAAAyc5XniCs329.png\"},{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAS5FNAAAHvUa9seE789.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20424222,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+        "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
-        "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAChF6AAAHvUa9seE251.png\",\"previewImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuG-ACQsxAAAyc5XniCs329.png\"},{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAS5FNAAAHvUa9seE789.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20424222,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+        "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
-        "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAChF6AAAHvUa9seE251.png\",\"previewImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuG-ACQsxAAAyc5XniCs329.png\"},{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAS5FNAAAHvUa9seE789.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20424222,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+        "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=17606256193",
+        "body": "{\"success\":true,\"message\":null,\"userData\":null}"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
-        "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAChF6AAAHvUa9seE251.png\",\"previewImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuG-ACQsxAAAyc5XniCs329.png\"},{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAS5FNAAAHvUa9seE789.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20424222,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
-        "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAChF6AAAHvUa9seE251.png\",\"previewImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuG-ACQsxAAAyc5XniCs329.png\"},{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAS5FNAAAHvUa9seE789.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20424222,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
-        "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAChF6AAAHvUa9seE251.png\",\"previewImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuG-ACQsxAAAyc5XniCs329.png\"},{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAS5FNAAAHvUa9seE789.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20424222,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
-        "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAChF6AAAHvUa9seE251.png\",\"previewImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuG-ACQsxAAAyc5XniCs329.png\"},{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAS5FNAAAHvUa9seE789.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20424222,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
-        "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAChF6AAAHvUa9seE251.png\",\"previewImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuG-ACQsxAAAyc5XniCs329.png\"},{\"productImg\":\"printdiy1/M00/B1/F7/o4YBAGqsuHCAS5FNAAAHvUa9seE789.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20424222,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
       }
     ],
     "editor": {
@@ -142,7 +164,7 @@
       "data": {
         "ok": true
       },
-      "ms": 1522
+      "ms": 1534
     },
     "proofDone": true,
     "orderNo": {
@@ -151,48 +173,48 @@
       "ph": "请输入订单号"
     },
     "proofSurfaces": null,
-    "retried": 0,
+    "retried": 1,
     "printDone": true,
     "sync": {
       "log": [
         {
           "r": 0,
           "clicked": true,
-          "cls": "search-btn",
-          "beforeHegao": null,
-          "afterHegao": null,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
           "reqDelta": 1
         },
         {
           "r": 1,
           "clicked": true,
-          "cls": "search-btn",
-          "beforeHegao": null,
-          "afterHegao": null,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
           "reqDelta": 1
         },
         {
           "r": 2,
           "clicked": true,
-          "cls": "search-btn",
-          "beforeHegao": null,
-          "afterHegao": null,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
           "reqDelta": 1
         },
         {
           "r": 3,
           "clicked": true,
-          "cls": "search-btn",
-          "beforeHegao": null,
-          "afterHegao": null,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
           "reqDelta": 1
         },
         {
           "r": 4,
           "clicked": true,
-          "cls": "search-btn",
-          "beforeHegao": null,
-          "afterHegao": null,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
           "reqDelta": 1
         }
       ],
@@ -200,37 +222,11 @@
       "generatingHandled": 0
     },
     "dialogPassAfterSync": {
-      "handled": [
-        {
-          "handled": true,
-          "kind": "proof-fail",
-          "goto": true
-        }
-      ],
+      "handled": [],
       "layers": [
         {
-          "cls": "modal",
-          "txt": "点击图片可放大\n\t\t\t\t\t\n\t\t\t    \t设计稿 \n\t\t\t\t\t\n\t\t\t    \t生产稿"
-        },
-        {
-          "cls": "layui-layer layui-layer-page",
-          "txt": "自动核稿提醒\n自动核稿失败提醒\n\n生产文件与设计稿不一致，请仔细核对是否影响生产。可能导致原因：色差大、素材缺失或位移、文字换行或字体字号有误。\n\n注意：存在非常细微的误差，如不影响生产，可点击【标记正常】即可正常交稿。 仔细检查带红框页面，避免售后！\n\n去检查"
-        },
-        {
-          "cls": "modal",
-          "txt": "错误截图"
-        },
-        {
-          "cls": "modal",
-          "txt": "历史订单\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t设计单号\n\t\t\t\t\t\t\t设计时间\n\t\t\t\t\t\t\t模板编号\n\t\t\t\t\t\t\t数据操作"
-        },
-        {
-          "cls": "modal",
-          "txt": "提交稿件（交稿）\n\t\t\t\t  \n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t顾客信息\n\t\t\t\t\t\n\t\t\t\t\t\t订单号：\n\t\t\t\t\t\t店铺名：\n\t\t\t\t\t\t旺旺号：\n\t\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t设计信息\n\t\t\t\t\t\n\t\t\t\t\t\t设计单号：\n\t\t\t\t\t\t设计信息：-\n\t\t\t\t\t\t订单价格：   设计费：申请改价\n\t\t\t\t\t\t设计需求：\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t错字检查结果：\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t展开详情\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t提交稿件\n\t\t\t\t\t取消"
-        },
-        {
-          "cls": "modal order-price",
-          "txt": "订单改价\n\t\t\t\t  \n\t\t\t\n\t\t\t\n\t\t\t\t改价类型：版数\n\t\t\t\t订单号：12132131321\n\t\t\t\t产品类型：名片当前设计费：10.0\n\t\t\t\t改价原因：\n\t\t\t\n\t\t\t\n\t\t\t\t取消\n\t\t\t\t确认"
+          "cls": "hegao-preview",
+          "txt": "核稿"
         }
       ]
     },
@@ -239,25 +235,25 @@
         {
           "r": 0,
           "clicked": true,
-          "cls": "search-btn",
-          "beforeHegao": null,
-          "afterHegao": null,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
           "reqDelta": 1
         },
         {
           "r": 1,
           "clicked": true,
-          "cls": "search-btn",
-          "beforeHegao": null,
-          "afterHegao": null,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
           "reqDelta": 1
         },
         {
           "r": 2,
           "clicked": true,
-          "cls": "search-btn",
-          "beforeHegao": null,
-          "afterHegao": null,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
           "reqDelta": 1
         }
       ],
@@ -265,35 +261,110 @@
       "generatingHandled": 0
     },
     "suspect": {
-      "located": false,
-      "ts": "2026-09-18T04:06:15.416Z",
-      "mapped": null,
+      "located": true,
+      "ts": "2026-09-18T04:14:31.324Z",
+      "mapped": {
+        "ok": true,
+        "cRect": {
+          "x": 502.75,
+          "y": 287.0625,
+          "w": 619.5,
+          "h": 376.8625183105469
+        },
+        "suspects": [
+          {
+            "redRect": {
+              "x": 289.8999938964844,
+              "y": 0,
+              "w": 42,
+              "h": 50
+            },
+            "canvasXY": {
+              "px": -191.85000610351565,
+              "py": -262.06248726721964
+            },
+            "hit": null
+          },
+          {
+            "redRect": {
+              "x": 502.75,
+              "y": 287.0625,
+              "w": 619.5,
+              "h": 376.8625183105469
+            },
+            "canvasXY": {
+              "px": 309.75,
+              "py": 188.43125
+            },
+            "hit": {
+              "index": 0,
+              "uuid": "b1c1ab79-e118-46c8-937a-1540e259ff30",
+              "type": "rect",
+              "text": null,
+              "fontId": " ",
+              "mediaFont": null,
+              "bbox": {
+                "left": -0.5,
+                "top": -0.5,
+                "w": 601,
+                "h": 366
+              }
+            }
+          },
+          {
+            "redRect": {
+              "x": 502.75,
+              "y": 287.0625,
+              "w": 58,
+              "h": 16.80000114440918
+            },
+            "canvasXY": {
+              "px": 29,
+              "py": 8.400000164075374
+            },
+            "hit": {
+              "index": 0,
+              "uuid": "b1c1ab79-e118-46c8-937a-1540e259ff30",
+              "type": "rect",
+              "text": null,
+              "fontId": " ",
+              "mediaFont": null,
+              "bbox": {
+                "left": -0.5,
+                "top": -0.5,
+                "w": 601,
+                "h": 366
+              }
+            }
+          }
+        ]
+      },
       "redRects": [
         {
           "src": "dom",
-          "cls": "item",
-          "x": 20.200000762939453,
-          "y": 115,
-          "w": 344.8000183105469,
-          "h": 704.7999877929688,
+          "cls": "redo disabled",
+          "x": 289.8999938964844,
+          "y": 0,
+          "w": 42,
+          "h": 50,
           "likely": true
         },
         {
           "src": "dom",
-          "cls": "item",
-          "x": 375,
-          "y": 115,
-          "w": 344.8000183105469,
-          "h": 704.7999877929688,
+          "cls": "canvasWrap",
+          "x": 502.75,
+          "y": 287.0625,
+          "w": 619.5,
+          "h": 376.8625183105469,
           "likely": true
         },
         {
           "src": "dom",
-          "cls": "text-error-check",
-          "x": 140,
-          "y": 559.2999877929688,
-          "w": 1170,
-          "h": 19.600000381469727,
+          "cls": "",
+          "x": 502.75,
+          "y": 287.0625,
+          "w": 58,
+          "h": 16.80000114440918,
           "likely": true
         }
       ]
@@ -301,72 +372,76 @@
   },
   "events": [
     {
-      "t": "04:04:50",
+      "t": "04:12:25",
       "s": "runner-start {\"fromProof\":false,\"fromPrint\":false,\"fromCheck\":false,\"caseFontSchema\":false,\"adoptSession\":false,\"sessionParity\":false,\"submitProbe\":false,\"relogin\":false}"
     },
     {
-      "t": "04:04:50",
+      "t": "04:12:25",
       "s": "SESSION-SOURCE=MANAGED_PERSISTENT_PROFILE"
     },
     {
-      "t": "04:04:54",
+      "t": "04:12:28",
       "s": "object-missing-create"
     },
     {
-      "t": "04:04:54",
+      "t": "04:12:28",
       "s": "create-object"
     },
     {
-      "t": "04:04:54",
+      "t": "04:12:28",
       "s": "stage-proof"
     },
     {
-      "t": "04:04:58",
+      "t": "04:12:32",
       "s": "order-no-filled {\"ok\":true,\"cls\":\"\",\"ph\":\"请输入订单号\"}"
     },
     {
-      "t": "04:04:59",
+      "t": "04:12:34",
       "s": "stage-print"
     },
     {
-      "t": "04:04:59",
+      "t": "04:12:34",
       "s": "print-click 0 {\"clicked\":true,\"cls\":\"btn print\",\"tag\":\"LI\"}"
     },
     {
-      "t": "04:05:02",
-      "s": "print-diag 0 [{\"cls\":\"hegao-preview\",\"t\":\"核稿\"},{\"cls\":\"modal\",\"t\":\"设计信息\\n订单号：\\n获取信息\\n作品名：\\n*\\n用户名：\\n*\\n确定取消\"}]"
+      "t": "04:12:37",
+      "s": "print-diag 0 [{\"cls\":\"hegao-preview\",\"t\":\"核稿\"},{\"cls\":\"modal\",\"t\":\"设计信息\\n作品名：\\n*\\n用户名：\\n*\\n确定取消\"}]"
     },
     {
-      "t": "04:05:04",
+      "t": "04:12:38",
       "s": "design-info-submit {\"clicked\":true}"
     },
     {
-      "t": "04:05:04",
+      "t": "04:12:38",
       "s": "wait-proof-surfaces"
     },
     {
-      "t": "04:05:49",
+      "t": "04:13:24",
       "s": "proof-surfaces null"
     },
     {
-      "t": "04:05:50",
-      "s": "jiaogao-submit {\"clicked\":true,\"tx\":\"提交稿件\"}"
+      "t": "04:13:24",
+      "s": "login-popup-after-submit auto-login retry=0"
     },
     {
-      "t": "04:05:53",
+      "t": "04:13:24",
+      "s": "login-required"
+    },
+    {
+      "t": "04:13:24",
+      "s": "login-clicked"
+    },
+    {
+      "t": "04:14:06",
+      "s": "jiaogao-submit {\"clicked\":false}"
+    },
+    {
+      "t": "04:14:09",
       "s": "sync-search-start"
     },
     {
-      "t": "04:06:05",
-      "s": "dialog-proof-fail"
-    },
-    {
-      "t": "04:06:07",
+      "t": "04:14:23",
       "s": "stage-check"
-    },
-    {
-      "t": "04:06:15",
-      "s": "map-fail no canvas"
     }
   ],
   "pages": [],
