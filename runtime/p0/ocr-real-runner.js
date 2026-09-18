@@ -352,6 +352,17 @@ async function searchSync(maxRounds = 4) {
       } catch (e) {}
     });
     RUN.authConfigured = !!(USER && PASS);
+    // request 级捕获：submit/save/imgPreview payload 必须可判定（不依赖响应流读取）
+    page.on("request", (req) => {
+      try {
+        const u = req.url();
+        if (u.indexOf("zheliyin.com") < 0) return;
+        if (/submitUserDesign|saveThirdUserDesign|batchSaveKeepMaterial|imgPreviewSearch|getImgInfos|saveDiy/i.test(u)) {
+          const post = req.postData() || "";
+          browserNet.push({ k: "req", m: req.method(), u: u.slice(0, 220), status: null, post: post ? redactEvidence(String(post).slice(0, 8000)) : null });
+        }
+      } catch (e) {}
+    });
 
     // ---- 2. ScriptCat：安装当前用户脚本（清旧 + 清 @require 资源缓存）----
     const opts = browser.pages()[0];
@@ -381,6 +392,23 @@ async function searchSync(maxRounds = 4) {
     RUN.phases.authAtStart = { loginLayerVisible: !!(lg && lg.visible), authConfiguredEnv: !!(USER && PASS) };
     if (lg.visible) { const lk = await ensureLogin(); RUN.phases.userLogin = lk ? "PASS" : "FAIL"; await waitUntil(isReadyExpr(), "editor after login", 90000); }
     RUN.phases.authAfterStart = await ev(() => { const ua = document.querySelector("#userAccount"); return { loginLayerVisible: !!(ua && ua.offsetParent) }; });
+    // 会话有效性前置检查：guest 态（无退出/欢迎标记）→ 清 cookie 强制登录后再继续（保存/提交需真实会话）
+    const authProbe = await ev(() => {
+      const body = String(document.body.innerText || "");
+      const logout = /退出|注销|登出/.test(body);
+      const loginBtn = /登录/.test(body);
+      return { logout, loginBtn, hasSession: logout && !loginBtn };
+    }).catch(() => ({ hasSession: false }));
+    RUN.phases.authStateAtStart = authProbe;
+    if (!(authProbe && authProbe.hasSession)) {
+      RUN.phases.authForced = true;
+      await browser.clearCookies().catch(() => {});
+      await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+      await waitUntil(isReadyExpr(), "editor after forced reload", 90000);
+      const lg2 = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
+      if (lg2) { const lk = await ensureLogin(); RUN.phases.userLogin = ((RUN.phases.userLogin || "") + "|forced:" + (lk ? "PASS" : "FAIL")); await waitUntil(isReadyExpr(), "editor after login2", 90000); }
+      RUN.phases.authForcedPost = await ev(() => { const ua = document.querySelector("#userAccount"); return { loginLayerVisible: !!(ua && ua.offsetParent), logout: /退出|注销|登出/.test(String(document.body.innerText || "")) }; });
+    }
 
     // ---- 4. 用户脚本 UI + 桥 + 版本 ----
     const uiExpr = () => {
@@ -804,7 +832,7 @@ async function searchSync(maxRounds = 4) {
       ts: new Date().toISOString(), ocrRunId: RUN.ocrRunId, url: EDITOR_URL,
       editUrlBranch: "test", editorIntegrationMode: EDITOR_INTEGRATION,
       verdict: RUN.verdict, phases: RUN.phases, statusLog: (RUN.statusLog || []).map(redactEvidence), console: (RUN.console || []).map(redactEvidence), errors: (RUN.errors || []).map(redactEvidence),
-      netLog: browserNet.map((n) => ({ status: n.status, u: redactEvidence(n.u), body: n.body ? redactEvidence(String(n.body).slice(0, 800)) : null })),
+      netLog: browserNet.map((n) => ({ status: n.status, k: n.k || "res", u: redactEvidence(n.u), body: n.body ? redactEvidence(String(n.body).slice(0, 800)) : null, post: n.post ? redactEvidence(String(n.post).slice(0, 600)) : null })),
     });
     console.log("P0-SUBMIT_CODE=" + SUBMIT_CODE + " P0-SAVERELOAD=" + ((RUN.phases.saveReload && RUN.phases.saveReload.verdict) || "?") + " AUTH=" + AUTH + " SUBMIT=" + SUBMIT + " HEGAO=" + HEGAO + " PROOF=" + PROOF + " OBJECT=" + OBJECT + " INTEG=" + EDITOR_INTEGRATION + " REDBOX=" + redBox.state + " OCR_TARGET=" + (RUN.phases.ocrTargetBootstrap || "UNKNOWN"));
     wr("ocr-run-summary.json", RUN);
