@@ -1,0 +1,483 @@
+{
+  "ready": true,
+  "dom": {
+    "boxes": [
+      {
+        "hop": 0,
+        "tag": "DIV",
+        "id": "",
+        "cls": "phoneNumber",
+        "html": "<div class=\"phoneNumber\"><span class=\"diyicon icon-user\"></span> <input placeholder=\"请输入注册时的手机号\" id=\"userAccount\"></div>"
+      },
+      {
+        "hop": 1,
+        "tag": "FORM",
+        "id": "",
+        "cls": "register-area",
+        "html": "<form class=\"register-area\"><div class=\"phoneNumber\"><span class=\"diyicon icon-user\"></span> <input placeholder=\"请输入注册时的手机号\" id=\"userAccount\"></div> <div class=\"identifying phoneNumber\"><span class=\"diyicon icon-password\"></span> <input type=\"password\" placeholder=\"请输入密码\" id=\"userPassword\"></div> <div class=\"user-register\"><a href=\"javascript:void(0);\" class=\"btn-register\">确定</a></div></form>"
+      },
+      {
+        "hop": 2,
+        "tag": "DIV",
+        "id": "",
+        "cls": "tab-con",
+        "html": "<div class=\"tab-con\"><form class=\"register-area\"><div class=\"phoneNumber\"><span class=\"diyicon icon-user\"></span> <input placeholder=\"请输入注册时的手机号\" id=\"userAccount\"></div> <div class=\"identifying phoneNumber\"><span class=\"diyicon icon-password\"></span> <input type=\"password\" placeholder=\"请输入密码\" id=\"userPassword\"></div> <div class=\"user-register\"><a href=\"javascript:void(0);\" class=\"btn-register\">确定</a></div></form></div>"
+      },
+      {
+        "hop": 3,
+        "tag": "DIV",
+        "id": "",
+        "cls": "login-tab",
+        "html": "<div class=\"login-tab\"><div class=\"close-btn\"><a href=\"javascript:void(0)\" class=\"diyicon icon-close1\"></a></div> <h3 class=\"loginTit\">账户登录</h3> <div class=\"tab-con\"><form class=\"register-area\"><div class=\"phoneNumber\"><span class=\"diyicon icon-user\"></span> <input placeholder=\"请输入注册时的手机号\" id=\"userAccount\"></div> <div class=\"identifying phoneNumber\"><span class=\"diyicon icon-password\"></span> <input type=\"password\" placeholder=\"请输入密码\" id=\"userPassword\"></div> <div class=\"user-register\"><a href=\"javascript:void(0);\" class=\"btn-register\">确定</a></div></form></div></div>"
+      }
+    ],
+    "clickables": [
+      {
+        "tag": "DIV",
+        "id": "fontdetectHelper",
+        "cls": "",
+        "tx": "abcdefghijklmnopqrst",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "abcdefghijklmnopqrst",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "temp-info",
+        "tx": "文件\n            \n    ",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "印刷尺寸:",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "unit",
+        "tx": "*",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "unit",
+        "tx": "mm",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "出血尺寸:",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "unit",
+        "tx": "mm",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "temp-info",
+        "tx": "设置\n            \n    ",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "icon-blood",
+        "tx": "出血线",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "出血线",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "icon-guide-hidden",
+        "tx": "参考线",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "参考线",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "icon-thum-hidden",
+        "tx": "缩略图",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "缩略图",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "icon-chicun f14",
+        "tx": "改尺寸",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "改尺寸",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "icon-chehui",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "icon-recovery",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "背景色",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "bgcolor",
+        "cls": "color-item",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "resetBack",
+        "tx": "重置",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon icon-clear",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "清空画布",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon icon-huabi",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "自由绘制",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "shape-items",
+        "tx": "连续绘制(按shift提示角度)",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "shape-wrapper",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "shape-item",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "shape-img",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon  icon-draw-rect",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "shape-item",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "shape-img",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon  icon-draw-circle",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "shape-item",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "shape-img",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon  icon-draw-line",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "shape-item",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "shape-img",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon  icon-draw-triangle",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "drawSvgType",
+        "tx": "连续绘制(按shift提示角度)",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "",
+        "tx": "连续绘制(按shift提示角度)",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon icon-tupiancaozuo",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "searchOrderInput",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "A",
+        "id": "",
+        "cls": "icon icon-search inputorderno",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "cls": "orderinfo-list",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "customer-info",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "shop-info",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "remark-info",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon icon-tongguo",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon icon-baocun",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon icon-hedui",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "tipthird hover-tips",
+        "tx": "色差检查",
+        "t": 5
+      },
+      {
+        "tag": "A",
+        "id": "printColorCheck",
+        "cls": "",
+        "tx": "色差检查",
+        "t": 5
+      },
+      {
+        "tag": "I",
+        "id": "",
+        "cls": "diyicon icon-fenxiang",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "icon-preview",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "icon-template1",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "icon-text1",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "icon-material1",
+        "tx": "",
+        "t": 5
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "cls": "icon-bg1",
+        "tx": "",
+        "t": 5
+      }
+    ],
+    "hostBtns": [
+      {
+        "tag": "A",
+        "cls": "diyicon icon-close1",
+        "tx": "",
+        "html": "<a href=\"javascript:void(0)\" class=\"diyicon icon-close1\"></a>"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "diyicon icon-user",
+        "tx": "",
+        "html": "<span class=\"diyicon icon-user\"></span>"
+      },
+      {
+        "tag": "SPAN",
+        "cls": "diyicon icon-password",
+        "tx": "",
+        "html": "<span class=\"diyicon icon-password\"></span>"
+      },
+      {
+        "tag": "A",
+        "cls": "btn-register",
+        "tx": "确定",
+        "html": "<a href=\"javascript:void(0);\" class=\"btn-register\">确定</a>"
+      }
+    ]
+  }
+}

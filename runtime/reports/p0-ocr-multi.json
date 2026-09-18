@@ -1,0 +1,21 @@
+{
+  "ts": "2026-09-18T02:36:31.412Z",
+  "stage": "P0-OCR-MULTI",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "phases": {
+    "ready": true,
+    "ocrCreate": {
+      "ok": false,
+      "reason": "timeout 12s"
+    },
+    "created": {
+      "count": 0,
+      "objs": []
+    },
+    "proofDialog": null,
+    "stringify": []
+  },
+  "stringify": [],
+  "dialogs": [],
+  "errors": []
+}
