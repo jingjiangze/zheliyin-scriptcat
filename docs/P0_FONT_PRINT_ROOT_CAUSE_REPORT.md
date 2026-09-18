@@ -23,6 +23,13 @@
 - font：manual `mediafontId=248 方正黑体简体 fontSize=18 fill=rgb(0,0,0) lineHeight=1.16`；script `mediafontId=556 思源黑体 Regular fontSize=24 fill=#000000 lineHeight=1.3` | case-font-schema（runtime/reports/p0/manual-vs-script-diff.json）
 | F9 | 印刷提交 payload 序列化中，manual 对象 `uuid:"undefined"`、`lineIdType:"undefined"`（字符串）；script 对象 uuid=真实 | serial-diff（p0-serial-diff.json head） |
 | F10 | 556 思源黑 Regular 在 `findAllFont.do`（287 字体）中合法存在且前端加载生效 | stage-7-3-font-inventory + getFontCss.do |
+| F11 | 自动化环境确认：设计信息层确定 → `submitUserDesign.do` 恒 `loginState:"timeOut"` → 前端 return → **交稿层/核稿同步/红框在自动化环境不可达**。timeOut 为该 merchant 级提交鉴权硬闸门，与账号登录解耦（F3）。runner 已验证到该边界并记录（after-submit-diag） | runner 多轮 + net resp |
+
+## 六、环境准入（自动化 vs 真机）
+
+- 自动化可达：编辑器加载、drawText 创建、核稿图、印刷→设计信息层→填 1/2→确定。
+- 自动化不可达：交稿层（「提交稿件」）、错字检查结果、核稿同步（搜索/刷新）、红框检查页、suspect 定位 —— 全部被 `submitUserDesign.do` timeOut 阻在入口前。
+- 结论：**P0 剩余取证必须在真机会话（可通过该提交鉴权）执行**；Fast Runner 已把可评估环节全部自动化并留好断点（--from-check 可复用检查页取证）。
 
 ## 二、OBSERVATION（观察，未完全归因）
 
