@@ -1,0 +1,1 @@
+function keepheartbeat(){$.ajax({url:"commontool/pingpong.do",type:"get",dataType:"json",success:function(a){console.log(a)},error:function(){}})};

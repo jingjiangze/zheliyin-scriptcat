@@ -1,0 +1,2 @@
+define(["jquery","fabric","TablePropPanel","GeneralPropPannel"],function(d,k,f,g){function h(){this.init=function(a,b){c.init(a,b)};this.update=function(a){var b="undefined"==a.objType;if("group"==a.type||b||-1!=a.mediaMediaType.indexOf("table"))_editor=a,a.tableToDomData||a.isEmptyTable||"group"!=a.type||(d("#hold-all").trigger("click"),d("#editTableCont").addClass("on")),c.update(a),e.update(a)};this.hide=function(){c.hide();e.hide()}}var c=f.getInstance(),e=g.getInstance(),b;return{getInstance:function(a){void 0===
+b&&(b=new h);return b}}});

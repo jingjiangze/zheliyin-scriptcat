@@ -1,0 +1,1 @@
+define(["jquery","fabric","UnknowPropPannelR","MediaTypeInfo"],function(g,h,d,e){function f(){this.init=function(a){b.init(a)};this.update=function(a){a.mediaMediaType==e.UNKNOWN&&b.update(a)};this.hide=function(){b.hide()}}var b=d.getInstance(),c;return{getInstance:function(){void 0===c&&(c=new f);return c}}});

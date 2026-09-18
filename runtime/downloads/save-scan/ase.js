@@ -1,0 +1,1 @@
+function aesEncrypt(a,b){b=CryptoJS.enc.Utf8.parse(b);a=CryptoJS.enc.Utf8.parse(a);return CryptoJS.AES.encrypt(a,b,{mode:CryptoJS.mode.ECB,padding:CryptoJS.pad.Pkcs7}).toString()};

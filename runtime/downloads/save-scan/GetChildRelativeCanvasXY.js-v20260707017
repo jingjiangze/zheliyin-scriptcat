@@ -1,0 +1,2 @@
+define(["fabric"],function(c){return{calRelativeCanvasXY:function(a,b){var g=new c.Point(b.getLeft(),b.getTop()),e=new c.Point(a.getLeft(),a.getTop()),d=new c.Point(a.getCenterPoint().x,a.getCenterPoint().y),h=a.getAngle()*Math.PI/180,e=c.util.rotatePoint(e,d,-h);if("image"!=b.mediaMediaType||b.selfGroupUuid)f=a.getObjectScaling().scaleX,b=a.getObjectScaling().scaleY;else{var f=1;b=1}f=e.x+a.getWidth()*a.scaleX/2+g.x*f;a=e.y+a.getHeight()*a.scaleY/2+g.y*b;a=new c.Point(f,a);d=c.util.rotatePoint(a,
+d,h);return{x:d.x,y:d.y}}}});

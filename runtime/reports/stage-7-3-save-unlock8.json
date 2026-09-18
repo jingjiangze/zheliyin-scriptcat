@@ -1,0 +1,83 @@
+{
+  "ts": "2026-09-18T01:37:10.476Z",
+  "stage": "STAGE-7.3-SAVE-UNLOCK8",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "phases": {
+    "ready": true,
+    "probe": {
+      "uid": "zlyunlock8-434828",
+      "before": {
+        "w": 209.36785888671875,
+        "h": 27.12,
+        "locW": 200,
+        "locH": 40
+      },
+      "after": {
+        "locW": 210.36785888671875,
+        "locH": 28.12,
+        "uuid": "64f02598-7aba-4b0f-8138-ad2317e9dd6a"
+      }
+    },
+    "save1": {
+      "click": {
+        "clicked": true
+      },
+      "fill": {
+        "log": [
+          "set:workName",
+          "set:userName",
+          "set:remarkInfor",
+          "select:printingtype->pdf",
+          "select:colorspace->cmyk"
+        ]
+      },
+      "commit": {
+        "clicked": "确定"
+      },
+      "layers": [
+        {
+          "title": "",
+          "text": "设计信息 作品名： * 用户名： * 备注信息： * 印刷格式： PDF CDR(x4) JPG TIF 色彩模式： CMYK RGB 顾客信息： 以下信息由订单号获取，确认当前设计与客户信息是否一致 确定 取消"
+        },
+        {
+          "title": "素材错误提示",
+          "text": "第1页发现错误素材，请点击【删除错误素材】继续设计！"
+        }
+      ],
+      "bodySnippet": "文件  | 设置  | 背景色  重置 | 清空画布 | 自由绘制 |  核稿  |    商用无风险 保存  印前核对 分享  印刷 | 搜索 | 模板 | 文字 | 素材 | 背景 | 上传 | 版式 | 工具箱 | 快捷键 | 帮助 | 官方素材 | 我的素材 | 形状 | 线条 | 图标和素材 | 标志 | 花纹 | 免抠素材 | 标题 | 电商 | 相框 | 版权照片 | 版权素材 | 节日素材 | 返回 | 返回 | 亮度 | 对比度 | 色调 | 饱和度 | 模糊 | 负片 | 像素不足 | 103% | 网格 | 辅助线 | 安全线 | 预览 | > | 常用素材 | 页面 | 图层 | 正面 | 背面 | 常用素材 | 相框素材 | 矢量素材 | 素材错误提示 | 第1页发现错误素材，请点击【删除错误素材】继续设计！ | 删除错误素材",
+      "objCount": [
+        10
+      ],
+      "keyReqs": [
+        {
+          "m": "POST",
+          "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+          "b": null
+        }
+      ]
+    }
+  },
+  "console": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+    },
+    {
+      "type": "pageerror",
+      "text": "window.closeSocket is not a function"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+    }
+  ],
+  "dialogs": [],
+  "errors": [],
+  "resp": [
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+      "body": "{\"data\":\"\",\"status\":\"error\"}"
+    }
+  ]
+}

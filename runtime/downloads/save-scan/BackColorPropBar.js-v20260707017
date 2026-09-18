@@ -1,0 +1,1 @@
+define(["jquery","fabric","BackColorPropPanel"],function(f,g,c){function d(){this.init=function(e,a){b.init(e,a)};this.update=function(a){null==a&&b.update(a)};this.hide=function(){b.hide()}}var b=c.getInstance(),a;return{getInstance:function(b){void 0===a&&(a=new d);return a}}});

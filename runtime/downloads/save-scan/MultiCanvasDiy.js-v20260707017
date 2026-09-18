@@ -1,0 +1,1 @@
+define(["jquery","fabric","CanvasDiy"],function(e,d,b){function a(c){this.idName=c;this.canvas=new d.Canvas(c);this.canvas.defaultCursor="default";b.CanvasDiy.call(this);a.prototype.canvas=this.canvas}a.prototype=new b.CanvasDiy;a.prototype.constructor=a;return{MultiCanvasDiy:a}});

@@ -1,0 +1,2 @@
+define(["jquery","fabric","SVGPropPanel","GeneralPropPannel"],function(e,k,f,g){function h(){this.init=function(a,b){c.init(a,b)};this.update=function(a){var b="undefined"==a.objType;if("group"==a.type||"activeSelection"==a.type||"table"==a.type||b||-1!=a.objType.indexOf("svg"))_editor=a,c.update(a),a.antLineSVG||d.update(a),a.antLineSVG&&e(".editBar .svg li").not(".color").hide()};this.hide=function(){c.hide();d.hide()}}var c=f.getInstance(),d=g.getInstance(),b;return{getInstance:function(a){void 0===
+b&&(b=new h);return b}}});

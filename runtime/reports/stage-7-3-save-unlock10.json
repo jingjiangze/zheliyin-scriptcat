@@ -1,0 +1,30 @@
+{
+  "ts": "2026-09-18T01:40:01.164Z",
+  "stage": "STAGE-7.3-SAVE-UNLOCK10",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "phases": {
+    "ready": true,
+    "probe": {
+      "uid": "zlyunlock10-605346"
+    },
+    "save1": {
+      "click": {
+        "clicked": true
+      },
+      "fill": {
+        "log": [
+          "workName",
+          "userName",
+          "remarkInfor"
+        ],
+        "clicked": "确定"
+      },
+      "parse": {
+        "fails": []
+      },
+      "bodySnippet": "文件  | 设置  | 背景色  重置 | 清空画布 | 自由绘制 |  核稿  |    商用无风险 保存  印前核对 分享  印刷 | 搜索 | 模板 | 文字 | 素材 | 背景 | 上传 | 版式 | 工具箱 | 快捷键 | 帮助 | 官方素材 | 我的素材 | 形状 | 线条 | 图标和素材 | 标志 | 花纹 | 免抠素材 | 标题 | 电商 | 相框 | 版权照片 | 版权素材 | 节日素材 | 返回 | 返回 | 亮度 | 对比度 | 色调 | 饱和度 | 模糊 | 负片 | 像素不足 | 103% | 网格 | 辅助线 | 安全线 | 预览 | > | 常用素材 | 页面 |"
+    }
+  },
+  "dialogs": [],
+  "errors": []
+}

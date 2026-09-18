@@ -1,0 +1,1 @@
+define(function(){return{diyType:"print",version:200,templateInfo:{},diyName:"",pageList:[],hyId:""}});

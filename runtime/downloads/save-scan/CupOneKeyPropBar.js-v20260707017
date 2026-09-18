@@ -1,0 +1,1 @@
+define(["jquery","fabric","CupOneKeyPropPanel"],function(f,g,d){function e(){this.init=function(a){b.init(a)};this.update=function(a){null!=a&&b.update(a)};this.hide=function(){b.hide()}}var b=d.getInstance(),c;return{getInstance:function(a){void 0===c&&(c=new e);return c}}});

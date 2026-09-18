@@ -1,0 +1,1 @@
+define(["InterFace","ICommand"],function(c,d){function b(){}var a;b.prototype.excute=function(a){a.excute()};return{getInstance:function(e){void 0===a&&(a=new b,c.ensureImplements(a,d));return a}}});

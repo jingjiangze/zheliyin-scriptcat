@@ -1,0 +1,64 @@
+{
+  "ts": "2026-09-18T01:16:18.966Z",
+  "stage": "STAGE-7.3-SAVE-SOURCE3",
+  "totalUrls": 171,
+  "hits": [
+    {
+      "file": "CustomerIndexThird.js-v20260707017",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/business/CustomerIndexThird.js?v=20260707017",
+      "len": 37082,
+      "kws": [
+        "workOrderNum"
+      ],
+      "sample": null
+    },
+    {
+      "file": "MultiNewPagePublic.js-v20260707017",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/moreCanvas/MultiNewPagePublic.js?v=20260707017",
+      "len": 152521,
+      "kws": [
+        "designId"
+      ],
+      "sample": null
+    },
+    {
+      "file": "CustomerHeadMenuBarThird.js-v20260707017",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CustomerHeadMenuBarThird.js?v=20260707017",
+      "len": 399769,
+      "kws": [
+        "IfDiyOrderidExit",
+        "designId",
+        "workOrderNum",
+        "tbOrderNo"
+      ],
+      "sample": null
+    },
+    {
+      "file": "sundry.js-v20260707017",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/sundry.js?v=20260707017",
+      "len": 61128,
+      "kws": [
+        "designId"
+      ],
+      "sample": null
+    },
+    {
+      "file": "DULeftNativePublic.js-v20260707017",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/DULeftNativePublic.js?v=20260707017",
+      "len": 382591,
+      "kws": [
+        "workOrderNum"
+      ],
+      "sample": null
+    },
+    {
+      "file": "HeadPublic.js-v20260707017",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/HeadPublic.js?v=20260707017",
+      "len": 92298,
+      "kws": [
+        "autoSaveIntervalMillisecond"
+      ],
+      "sample": null
+    }
+  ]
+}

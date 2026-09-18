@@ -1,0 +1,1 @@
+define(["CanvasObjVO"],function(b){var c=function(){var a=b.currentCanvasNum-1;0>a&&(a=0);return b.totalCanvasArray[a]?b.totalCanvasArray[a]:b.totalCanvasArray[0]};return{getCurrentCanvas:c,getCanvasFromArray:function(a){a=b.totalCanvasArray[a];void 0==a&&(a=c());return a}}});

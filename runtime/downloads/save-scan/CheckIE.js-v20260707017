@@ -1,0 +1,1 @@
+define(function(){return{isIE:function(){return window.ActiveXObject||"ActiveXObject"in window?!0:!1},ieVersion:function(){var a,c=navigator.userAgent.toLowerCase(),b;(b=c.match(/rv:([\d.]+)\) like gecko/))?a=b[1]:(b=c.match(/msie ([\d.]+)/))?a=b[1]:0;if(a)var d=a;return d}}});

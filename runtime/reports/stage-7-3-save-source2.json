@@ -1,0 +1,136 @@
+{
+  "ts": "2026-09-18T01:15:25.783Z",
+  "stage": "STAGE-7.3-SAVE-SOURCE2",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "phases": {
+    "ready": true,
+    "moduleCandidates": {
+      "totalModules": 136,
+      "cand": [
+        {
+          "id": "CustomerIndexThird",
+          "url": "js/mulitCanvas/v2/CustomerIndexThird?v=20260707017"
+        },
+        {
+          "id": "js/mulitCanvas/v2/design/business/config.js",
+          "url": "js/mulitCanvas/v2/js/mulitCanvas/v2/design/business/config.js?v=20260707017"
+        },
+        {
+          "id": "ProductVO",
+          "url": "js/mulitCanvas/v2/../common/model/vo/ProductVO?v=20260707017"
+        },
+        {
+          "id": "DesignVO",
+          "url": "js/mulitCanvas/v2/../common/model/vo/DesignVO?v=20260707017"
+        },
+        {
+          "id": "DesignPageVO",
+          "url": "js/mulitCanvas/v2/../common/model/vo/DesignPageVO?v=20260707017"
+        },
+        {
+          "id": "IndexPublic",
+          "url": "js/mulitCanvas/v2/design/public/view/public/IndexPublic?v=20260707017"
+        },
+        {
+          "id": "CalculationDesignAreaPixel",
+          "url": "js/mulitCanvas/v2/../utils/CalculationDesignAreaPixel?v=20260707017"
+        },
+        {
+          "id": "ProductJsonObjAssignment",
+          "url": "js/mulitCanvas/v2/design/public/jsonmedia/ProductJsonObjAssignment?v=20260707017"
+        },
+        {
+          "id": "ProductDataModel",
+          "url": "js/mulitCanvas/v2/design/public/model/ProductDataModel?v=20260707017"
+        },
+        {
+          "id": "HeadPublic",
+          "url": "js/mulitCanvas/v2/design/public/view/public/HeadPublic?v=20260707017"
+        },
+        {
+          "id": "CustomerHeadMenuBar",
+          "url": "js/mulitCanvas/v2/design/public/view/CustomerHeadMenuBarThird?v=20260707017"
+        },
+        {
+          "id": "LoadFromProductJsonCommand",
+          "url": "js/mulitCanvas/v2/design/public/command/LoadFromProductJsonCommand?v=20260707017"
+        }
+      ]
+    },
+    "sources": [
+      {
+        "url": "js/mulitCanvas/v2/CustomerIndexThird?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/js/mulitCanvas/v2/design/business/config.js?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/../common/model/vo/ProductVO?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/../common/model/vo/DesignVO?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/../common/model/vo/DesignPageVO?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/design/public/view/public/IndexPublic?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/../utils/CalculationDesignAreaPixel?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/design/public/jsonmedia/ProductJsonObjAssignment?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/design/public/model/ProductDataModel?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/design/public/view/public/HeadPublic?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/design/public/view/CustomerHeadMenuBarThird?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      },
+      {
+        "url": "js/mulitCanvas/v2/design/public/command/LoadFromProductJsonCommand?v=20260707017",
+        "status": 404,
+        "hits": 0,
+        "snippets": []
+      }
+    ]
+  },
+  "errors": []
+}

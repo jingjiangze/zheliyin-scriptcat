@@ -1,0 +1,2 @@
+define(function(){return{DesignPageVOFun:function(){this.content={};this.bleedHeight=this.bleedWidth=this.diyWorkAreaHeight=this.diyWorkAreaWidth=this.diyDisplayHeight=this.diyDisplayWidth=this.workAreaHeight=this.workAreaWidth="";this.designModel="单页模式";this.scaleNumShowImgY=this.scaleNumShowImgX=this.scaleNum=this.y=this.x=this.onlyShowImgURL=this.maxPage=this.minPage=this.pageGroup=this.previewImagePath=this.resourceType=this.title=this.templateID=this.pageOrder="";this.zIndexNum=0;this.id="";
+this.hasymmetry=this.needRope=!1}}});

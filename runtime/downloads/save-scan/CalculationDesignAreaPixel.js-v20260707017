@@ -1,0 +1,1 @@
+define(function(){return{setDesignSizePixel:function(a,c,b){return{frontWidth:b,frontHeight:c/a*b}},setDesignBleedPixel:function(a,c,b,d){return{bleedDisplayWidth:c/a*d,bleedDisplayHeight:b/a*d}}}});

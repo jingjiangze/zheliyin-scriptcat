@@ -1,0 +1,138 @@
+{
+  "file": "D:\\zheliyin-scriptcat\\runtime\\downloads\\save-scan\\CustomerHeadMenuBarThird.js-v20260707017",
+  "len": 399769,
+  "totalHits": 104,
+  "groups": {
+    "IfDiyOrderidExit": [
+      {
+        "kw": "IfDiyOrderidExit",
+        "idx": 3182,
+        "seg": "=a(\"#typeid\").val()&&\"14\"!=a(\"#typeid\").val()&&\"39\"!=a(\"#typeid\").val()&&\"326\"!=a(\"#typeid\").val()&&\"282\"!=a(\"#typeid\").val()&&\"338\"!=a(\"#typeid\").val()||\"true\"==a(\"#multiCheck\").val()?(a(\".saveLoading\").find(\"p\").text(\"\"),\na(\".saveLoading\").show(),Ha=\"submit\",b=a(\"#diyId\").val(),a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",success:function(b){var d=b.thirdOrderNo;\"error\"!=b.status&&a(\"#thirdOrderNo\").val(d);if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else if(v.isMoreCanvasMode&&1==a(\"#isNoSave\").val()&&void 0!=a(\".rightBtn .save\"))l.open({type:0,title:\"错误提示\",icon:2,content:\"请先保存数据再提交生产！\"});else{na(\"submit\");b=a(\"#worksStatus\").val();d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&\n1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑!\");return}}else if(d=a(\"#canEdit\").val(),\"\"!=b&&\"0\"!=b&&1!=d){l.alert(\"作品已提交生产,不允许再次提交!\");return}w.isNoExistImgForRq();if(w.eachImgisExitArray())l.open({title:\"温馨提示\",content:\"容器中请放入图片\"});else{if(\"13\"==a(\"#typeid\").val()&&c.pageList[0].technologyJson){"
+      },
+      {
+        "kw": "IfDiyOrderidExit",
+        "idx": 9827,
+        "seg": ")&&v.totalCanvasArray.length<c.pageList.length?l.msg(\"请点击您的每一页设计确认设计内容后再次提交预览！\",{icon:7,time:3E3}):a(\".effect-preview\").trigger(\"click\");else if(\"13\"==a(\"#typeid\").val()&&\"true\"!=a(\"#multiCheck\").val())a(\".effect-preview\").trigger(\"click\");else{Ha=\"submit\";var b=a(\"#diyId\").val();a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",async:!1,\nsuccess:function(b){var d=b.thirdOrderNo;\"error\"!=b.status&&a(\"#thirdOrderNo\").val(d);if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else if(v.isMoreCanvasMode&&1==a(\"#isNoSave\").val()&&void 0!=a(\".rightBtn .save\"))l.open({type:0,title:\"错误提示\",icon:2,content:\"请先保存数据再提交生产！\"});else{na(\"submit\");b=a(\"#worksStatus\").val();d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑!\");return}}else if(d=a(\"#canEdit\").val(),\"\"!=b&&\"0\"!=b&&1!=d){l.alert(\"作品已提交生产,不允许再次提交!\");\nreturn}w.isNoExistImgForRq();if(w.eachImgisExitArray())l.open({title:\"温馨提示\",content:\"容器中请放入图片\"});else{b=!1;if(\"38\"==a(\"#typeid\").val())a:for(d=c.pageLi"
+      },
+      {
+        "kw": "IfDiyOrderidExit",
+        "idx": 54823,
+        "seg": "\").is(\":visible\")||1!=b.ctrlKey||90!=b.keyCode||\"block\"==a(\".layui-layer\").css(\"display\")||(w.stopDefault(b),w.stopBubble(b),a(\".leftBtn .undo\").trigger(\"click\"))};\na(\".rightBtn .save\").on(\"click\",function(){afterLoginExecuteBtn=\".rightBtn .save\";Ha=\"save\";var b=a(\"#diyId\").val();a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",async:!1,success:function(b){if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else{b=a(\"#worksStatus\").val();var d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑\");E=!1;return}}else if(\"\"!=b&&\"0\"!=b){l.alert(\"作品已提交生产,不允许再次提交\");E=!1;return}w.isNoExistImgForRq();if(w.eachImgisExitArray())l.open({title:\"温馨提示\",\ncontent:\"容器中请放入图片\"});else{var g=a(\".centerTitle .title\").val();b=\"999\"==a(\"#sourceId\").val()||\"31\"==a(\"#sourceId\").val()||-1<a(\"#thirdOrderNo\").val().indexOf(\"CV2-\")||-1<a(\"#copyDesignNo\").val().indexOf(\"CV2-\")?pb(\"save\"):nb(\"save\");\"999\"==a(\"#sourceId\").val()||\"31\"==a(\"#sourceId\").val()||-1<a(\"#thirdOrderNo\").v"
+      }
+    ],
+    "designId": [
+      {
+        "kw": "designId",
+        "idx": 3202,
+        "seg": "&\"14\"!=a(\"#typeid\").val()&&\"39\"!=a(\"#typeid\").val()&&\"326\"!=a(\"#typeid\").val()&&\"282\"!=a(\"#typeid\").val()&&\"338\"!=a(\"#typeid\").val()||\"true\"==a(\"#multiCheck\").val()?(a(\".saveLoading\").find(\"p\").text(\"\"),\na(\".saveLoading\").show(),Ha=\"submit\",b=a(\"#diyId\").val(),a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",success:function(b){var d=b.thirdOrderNo;\"error\"!=b.status&&a(\"#thirdOrderNo\").val(d);if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else if(v.isMoreCanvasMode&&1==a(\"#isNoSave\").val()&&void 0!=a(\".rightBtn .save\"))l.open({type:0,title:\"错误提示\",icon:2,content:\"请先保存数据再提交生产！\"});else{na(\"submit\");b=a(\"#worksStatus\").val();d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&\n1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑!\");return}}else if(d=a(\"#canEdit\").val(),\"\"!=b&&\"0\"!=b&&1!=d){l.alert(\"作品已提交生产,不允许再次提交!\");return}w.isNoExistImgForRq();if(w.eachImgisExitArray())l.open({title:\"温馨提示\",content:\"容器中请放入图片\"});else{if(\"13\"==a(\"#typeid\").val()&&c.pageList[0].technologyJson){if(a.trim(a("
+      },
+      {
+        "kw": "designId",
+        "idx": 9847,
+        "seg": "y.length<c.pageList.length?l.msg(\"请点击您的每一页设计确认设计内容后再次提交预览！\",{icon:7,time:3E3}):a(\".effect-preview\").trigger(\"click\");else if(\"13\"==a(\"#typeid\").val()&&\"true\"!=a(\"#multiCheck\").val())a(\".effect-preview\").trigger(\"click\");else{Ha=\"submit\";var b=a(\"#diyId\").val();a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",async:!1,\nsuccess:function(b){var d=b.thirdOrderNo;\"error\"!=b.status&&a(\"#thirdOrderNo\").val(d);if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else if(v.isMoreCanvasMode&&1==a(\"#isNoSave\").val()&&void 0!=a(\".rightBtn .save\"))l.open({type:0,title:\"错误提示\",icon:2,content:\"请先保存数据再提交生产！\"});else{na(\"submit\");b=a(\"#worksStatus\").val();d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑!\");return}}else if(d=a(\"#canEdit\").val(),\"\"!=b&&\"0\"!=b&&1!=d){l.alert(\"作品已提交生产,不允许再次提交!\");\nreturn}w.isNoExistImgForRq();if(w.eachImgisExitArray())l.open({title:\"温馨提示\",content:\"容器中请放入图片\"});else{b=!1;if(\"38\"==a(\"#typeid\").val())a:for(d=c.pageList.length-2;"
+      },
+      {
+        "kw": "designId",
+        "idx": 54843,
+        "seg": "!=b.ctrlKey||90!=b.keyCode||\"block\"==a(\".layui-layer\").css(\"display\")||(w.stopDefault(b),w.stopBubble(b),a(\".leftBtn .undo\").trigger(\"click\"))};\na(\".rightBtn .save\").on(\"click\",function(){afterLoginExecuteBtn=\".rightBtn .save\";Ha=\"save\";var b=a(\"#diyId\").val();a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",async:!1,success:function(b){if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else{b=a(\"#worksStatus\").val();var d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑\");E=!1;return}}else if(\"\"!=b&&\"0\"!=b){l.alert(\"作品已提交生产,不允许再次提交\");E=!1;return}w.isNoExistImgForRq();if(w.eachImgisExitArray())l.open({title:\"温馨提示\",\ncontent:\"容器中请放入图片\"});else{var g=a(\".centerTitle .title\").val();b=\"999\"==a(\"#sourceId\").val()||\"31\"==a(\"#sourceId\").val()||-1<a(\"#thirdOrderNo\").val().indexOf(\"CV2-\")||-1<a(\"#copyDesignNo\").val().indexOf(\"CV2-\")?pb(\"save\"):nb(\"save\");\"999\"==a(\"#sourceId\").val()||\"31\"==a(\"#sourceId\").val()||-1<a(\"#thirdOrderNo\").val().indexOf"
+      }
+    ],
+    "thirdOrderNo": [
+      {
+        "kw": "thirdOrderNo",
+        "idx": 3258,
+        "seg": "6\"!=a(\"#typeid\").val()&&\"282\"!=a(\"#typeid\").val()&&\"338\"!=a(\"#typeid\").val()||\"true\"==a(\"#multiCheck\").val()?(a(\".saveLoading\").find(\"p\").text(\"\"),\na(\".saveLoading\").show(),Ha=\"submit\",b=a(\"#diyId\").val(),a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",success:function(b){var d=b.thirdOrderNo;\"error\"!=b.status&&a(\"#thirdOrderNo\").val(d);if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else if(v.isMoreCanvasMode&&1==a(\"#isNoSave\").val()&&void 0!=a(\".rightBtn .save\"))l.open({type:0,title:\"错误提示\",icon:2,content:\"请先保存数据再提交生产！\"});else{na(\"submit\");b=a(\"#worksStatus\").val();d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&\n1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑!\");return}}else if(d=a(\"#canEdit\").val(),\"\"!=b&&\"0\"!=b&&1!=d){l.alert(\"作品已提交生产,不允许再次提交!\");return}w.isNoExistImgForRq();if(w.eachImgisExitArray())l.open({title:\"温馨提示\",content:\"容器中请放入图片\"});else{if(\"13\"==a(\"#typeid\").val()&&c.pageList[0].technologyJson){if(a.trim(a(\"#codeChange input[value\\x3d'\"+c.pageList[0].technologyJson."
+      },
+      {
+        "kw": "thirdOrderNo",
+        "idx": 3294,
+        "seg": "ypeid\").val()&&\"338\"!=a(\"#typeid\").val()||\"true\"==a(\"#multiCheck\").val()?(a(\".saveLoading\").find(\"p\").text(\"\"),\na(\".saveLoading\").show(),Ha=\"submit\",b=a(\"#diyId\").val(),a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",success:function(b){var d=b.thirdOrderNo;\"error\"!=b.status&&a(\"#thirdOrderNo\").val(d);if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else if(v.isMoreCanvasMode&&1==a(\"#isNoSave\").val()&&void 0!=a(\".rightBtn .save\"))l.open({type:0,title:\"错误提示\",icon:2,content:\"请先保存数据再提交生产！\"});else{na(\"submit\");b=a(\"#worksStatus\").val();d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&\n1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑!\");return}}else if(d=a(\"#canEdit\").val(),\"\"!=b&&\"0\"!=b&&1!=d){l.alert(\"作品已提交生产,不允许再次提交!\");return}w.isNoExistImgForRq();if(w.eachImgisExitArray())l.open({title:\"温馨提示\",content:\"容器中请放入图片\"});else{if(\"13\"==a(\"#typeid\").val()&&c.pageList[0].technologyJson){if(a.trim(a(\"#codeChange input[value\\x3d'\"+c.pageList[0].technologyJson.codeChange+\"']\").parent(\".label-chec"
+      },
+      {
+        "kw": "thirdOrderNo",
+        "idx": 9913,
+        "seg": "7,time:3E3}):a(\".effect-preview\").trigger(\"click\");else if(\"13\"==a(\"#typeid\").val()&&\"true\"!=a(\"#multiCheck\").val())a(\".effect-preview\").trigger(\"click\");else{Ha=\"submit\";var b=a(\"#diyId\").val();a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",async:!1,\nsuccess:function(b){var d=b.thirdOrderNo;\"error\"!=b.status&&a(\"#thirdOrderNo\").val(d);if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else if(v.isMoreCanvasMode&&1==a(\"#isNoSave\").val()&&void 0!=a(\".rightBtn .save\"))l.open({type:0,title:\"错误提示\",icon:2,content:\"请先保存数据再提交生产！\"});else{na(\"submit\");b=a(\"#worksStatus\").val();d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑!\");return}}else if(d=a(\"#canEdit\").val(),\"\"!=b&&\"0\"!=b&&1!=d){l.alert(\"作品已提交生产,不允许再次提交!\");\nreturn}w.isNoExistImgForRq();if(w.eachImgisExitArray())l.open({title:\"温馨提示\",content:\"容器中请放入图片\"});else{b=!1;if(\"38\"==a(\"#typeid\").val())a:for(d=c.pageList.length-2;d<c.pageList.length;d++)for(var g=$jscomp.makeIterator(c.pageList[d].c"
+      }
+    ],
+    "workOrderNum": [
+      {
+        "kw": "workOrderNum",
+        "idx": 11145,
+        "seg": "ilkScreenProduct?a(\".design_check_wrap .qiangzhitijiao\").trigger(\"click\"):\n(a(\".saveLoading\").find(\"p\").text(\"正在进行印前检查...\"),a(\".saveLoading\").show(),Ia())}}},error:function(){}});_hmt.push([\"_trackEvent\",a(\"#templateName\").val(),\"导出按钮\",\"印刷第三方设计\"])}}function ia(){var b=c.templateInfo.userInforInCard.workOrderNum,g={address:\"\",telNo:\"\",userName:b,workName:b};if(\"38\"==a(\"#typeid\").val()){\"none\"==a(\".gildingLoading\").css(\"display\")&&(a(\".gildingLoading\").find(\"p\").text(\"正在保存...\"),a(\".gildingLoading\").show());var d=v.currentCanvasNum-1,f=a(\".pageWrap .gildPage\").index(a(\".pageWrap li\").eq(d));\n0>f&&(f=0);var d=y.getCurrentCanvas().canvasObjInfo.bleedLinesArr,h;for(h in d)d[h]&&(d[h].visible=!1);y.getCurrentCanvas().canvas.renderAll();ma(document.querySelector(\".canvasWrap\"),{useCORS:!0,backgroundColor:\"transparent\"}).then(function(b){var c=b.toDataURL(\"image/png\");b=y.getCurrentCanvas().canvasObjInfo.bleedLinesArr;for(var d in b)b[d]&&(b[d].visible=!0);y.getCurrentCanvas().canvas.renderAll();W[f]=c;0=="
+      },
+      {
+        "kw": "workOrderNum",
+        "idx": 74728,
+        "seg": "dingDiyId;A.diyTypeNum=\"38\";m=\"calendar/saveUserDesign.do\"}else\"export\"!=b||\"171\"!=a(\"#typeid\").val()&&\"294\"!=a(\"#typeid\").val()?\"export\"==b&&\"353\"==\na(\"#typeid\").val()?(h=JSON.parse(JSON.stringify(c)),A.ProductVO=h,A.calendarCanvasPath=W,A.saveType=\"submit\",A.orderNo=h.templateInfo.userInforInCard.workOrderNum,m=\"calendar/saveUserDesign.do\"):(m=\"third/saveThirdUserDesign.do\",\"autoSave\"!=b&&(A=a.extend({},A,k)),\"share\"==b&&O&&(A.picTShirtPath=v.canvasTshirtPagesBase64Arr)):(A.saveType=\"submit\",A.diyTypeNum=a(\"#diyTypeNumCup\").val(),h=[],ca&&h.push(ca),da&&h.push(da),A.silkScreenPicturePath=h,h=[],Xa&&h.push(Xa),A.silkScreenAllPicturePath=h,h=[],\nh.push(oa),A.totalImg=h,m=\"calendar/saveUserDesign.do\");O&&(A.tShirtColorId=a(\".rightPageBar .colorBox\").find(\".current\").attr(\"colorId\"),A.tShirtTemplateId=a(\"#choosePro .pageBox .current img\").attr(\"templateid\"),c.diyType=\"Tshirt\");for(t=0;t<c.pageList.length;t++)for(p=c.pageList[t].content.itemList,n=0;n<p.length;n++)if(\"text\"==p[n].media.mediaType&&!p["
+      },
+      {
+        "kw": "workOrderNum",
+        "idx": 101758,
+        "seg": "l-poupon uvShow\"\\x3e',p=p+'\\x3cdiv class\\x3d\"popup-content export-file\"\\x3e',p=p+'\\x3cdiv class\\x3d\"file-content\"\\x3e\\x3cdiv class\\x3d\"order-content\"\\x3e',p=p+'\\x3ctable class\\x3d\"order-table\" style\\x3d\"height: 90%\"\\x3e',p=p+'\\x3ctr\\x3e\\x3ctd\\x3e\\x3cp class\\x3d\"item-name\"\\x3e工单编号：\\x3cspan class\\x3d\"workOrderNum\"\\x3e\\x3c/span\\x3e\\x3c/p\\x3e\\x3c/td\\x3e',p=p+'\\x3ctd\\x3e\\x3cdiv class\\x3d\"item-name input-radio\"\\x3e三部填写',\np=p+'\\x3clabel class\\x3d\"radio-box\"\\x3e\\x3cinput type\\x3d\"radio\" name\\x3d\"radio\" disabled\\x3d\"disabled\"/\\x3e\\x3cspan\\x3e是\\x3c/span\\x3e\\x3c/label\\x3e',p=p+'\\x3clabel class\\x3d\"radio-box\"\\x3e\\x3cinput type\\x3d\"radio\" name\\x3d\"radio\" disabled\\x3d\"disabled\"/\\x3e\\x3cspan\\x3e否\\x3c/span\\x3e\\x3c/label\\x3e\\x3c/div\\x3e',p=p+\"\\x3c/td\\x3e\\x3c/tr\\x3e\",p=p+('\\x3ctr\\x3e\\x3ctd colSpan\\x3d\"2\" align\\x3d\"center\"\\x3e\\x3cp class\\x3d\"item-name\"\\x3e\\x3cspan class\\x3d\"red\"\\x3e*\\x3c/span\\x3eUV位置：\\x3cspan class\\x3d\"gildingPostion\"\\x3e'+\nq+\"\\x3c/span\\x3e\\x3c/p\\x3e\\x3c/td\\x3e\\x3c/tr\\x3e\"),p=p+('\\x3ctr\\x3e\\x3ctd co"
+      }
+    ],
+    "tbOrderNo": [
+      {
+        "kw": "tbOrderNo",
+        "idx": 34262,
+        "seg": "serName\").length&&0<a(\".searchOrderInput\").length&&\"\"!=a(\".searchOrderInput input\").val().trim()&&\"\"==a(\".designUserName\").val().trim()&&a(\".designUserName\").val(a.trim(a(\".searchOrderInput input\").val()));\na(\"#telNo\").val(L.thirdInfo.telNo);a(\"#address\")&&a(\"#address\").val(L.thirdInfo.address);a(\"#tbOrderNo\")&&(\"99\"==a(\"#typeid\").val()&&\"\"!=a(\"#bind-orderNo\").val()&&(L.thirdInfo.tbOrderNo=a(\"#bind-orderNo\").val()),a(\"#tbOrderNo\").val(L.thirdInfo.tbOrderNo),N=L.thirdInfo.tbOrderNo);0<a(\"#remarkInfor\").length&&(\"324\"==a(\"#typeid\").val()?c.templateInfo.balloonInfor?a(\"#remarkInfor\").val(c.templateInfo.balloonInfor):(b=a(\"#templateName\").val().split(\"（\")[1].replace(\"）\",\"\"),a(\"#remarkInfor\").val(b)):\"48\"==\na(\"#typeid\").val()&&\"外协(CDR)\"==a(\"#afterFileName\").val()&&-1!=c.templateInfo.balloonInfor.indexOf(\"【扇柄颜色】文件命名\")?(a(\"#remarkInfor\").val(c.templateInfo.balloonInfor.split(\"【扇柄颜色】文件命名\")[0]),a(\"#handleColor\").val(c.templateInfo.balloonInfor.split(\"【扇柄颜色】文件命名\")[1])):a(\"#remarkInfor\").val(c.templateInf"
+      },
+      {
+        "kw": "tbOrderNo",
+        "idx": 34345,
+        "seg": ".val().trim()&&\"\"==a(\".designUserName\").val().trim()&&a(\".designUserName\").val(a.trim(a(\".searchOrderInput input\").val()));\na(\"#telNo\").val(L.thirdInfo.telNo);a(\"#address\")&&a(\"#address\").val(L.thirdInfo.address);a(\"#tbOrderNo\")&&(\"99\"==a(\"#typeid\").val()&&\"\"!=a(\"#bind-orderNo\").val()&&(L.thirdInfo.tbOrderNo=a(\"#bind-orderNo\").val()),a(\"#tbOrderNo\").val(L.thirdInfo.tbOrderNo),N=L.thirdInfo.tbOrderNo);0<a(\"#remarkInfor\").length&&(\"324\"==a(\"#typeid\").val()?c.templateInfo.balloonInfor?a(\"#remarkInfor\").val(c.templateInfo.balloonInfor):(b=a(\"#templateName\").val().split(\"（\")[1].replace(\"）\",\"\"),a(\"#remarkInfor\").val(b)):\"48\"==\na(\"#typeid\").val()&&\"外协(CDR)\"==a(\"#afterFileName\").val()&&-1!=c.templateInfo.balloonInfor.indexOf(\"【扇柄颜色】文件命名\")?(a(\"#remarkInfor\").val(c.templateInfo.balloonInfor.split(\"【扇柄颜色】文件命名\")[0]),a(\"#handleColor\").val(c.templateInfo.balloonInfor.split(\"【扇柄颜色】文件命名\")[1])):a(\"#remarkInfor\").val(c.templateInfo.balloonInfor));0<a(\".materialBag\").length&&c.templateInfo.materialBag?(a(\".materi"
+      },
+      {
+        "kw": "tbOrderNo",
+        "idx": 34385,
+        "seg": "val().trim()&&a(\".designUserName\").val(a.trim(a(\".searchOrderInput input\").val()));\na(\"#telNo\").val(L.thirdInfo.telNo);a(\"#address\")&&a(\"#address\").val(L.thirdInfo.address);a(\"#tbOrderNo\")&&(\"99\"==a(\"#typeid\").val()&&\"\"!=a(\"#bind-orderNo\").val()&&(L.thirdInfo.tbOrderNo=a(\"#bind-orderNo\").val()),a(\"#tbOrderNo\").val(L.thirdInfo.tbOrderNo),N=L.thirdInfo.tbOrderNo);0<a(\"#remarkInfor\").length&&(\"324\"==a(\"#typeid\").val()?c.templateInfo.balloonInfor?a(\"#remarkInfor\").val(c.templateInfo.balloonInfor):(b=a(\"#templateName\").val().split(\"（\")[1].replace(\"）\",\"\"),a(\"#remarkInfor\").val(b)):\"48\"==\na(\"#typeid\").val()&&\"外协(CDR)\"==a(\"#afterFileName\").val()&&-1!=c.templateInfo.balloonInfor.indexOf(\"【扇柄颜色】文件命名\")?(a(\"#remarkInfor\").val(c.templateInfo.balloonInfor.split(\"【扇柄颜色】文件命名\")[0]),a(\"#handleColor\").val(c.templateInfo.balloonInfor.split(\"【扇柄颜色】文件命名\")[1])):a(\"#remarkInfor\").val(c.templateInfo.balloonInfor));0<a(\".materialBag\").length&&c.templateInfo.materialBag?(a(\".materialBag input\").prop(\"checked\",!1),a(\".mat"
+      }
+    ],
+    "getShopAndWangWangInfo": [
+      {
+        "kw": "getShopAndWangWangInfo",
+        "idx": 41572,
+        "seg": "s,a=$jscomp.makeIterator(a),c=\na.next();!c.done;c=a.next())item=c.value,\"text\"!=item.mediaMediaType||item.isVertical||y.getCurrentCanvas().TextboxToCurved(item)}function qb(b){N=Utils.trim(a(\"#tbOrderNo\").val(),2);console.log(Utils.trim(a(\"#tbOrderNo\").val(),2));a.ajax({url:contextPath+\"/commontool/getShopAndWangWangInfo.do\",type:\"get\",data:{orderid:N,diyTypeNum:a(\"#typeid\").val()},success:function(c){if(c.success){a(\"#cosumerInfo\").show();a(\".cnt p\").eq(0).text(\"顾客名：\"+c.userData.wangwangNo);a(\".cnt p\").eq(1).text(\"店铺名：\"+c.userData.shopName);\na(\".designUserName\").val(N);a(\"#workName\").val(N);if(c.userData.balloonInfor&&(\"133\"==a(\"#typeid\").val()||\"137\"==a(\"#typeid\").val()||\"40\"==a(\"#typeid\").val()||\"247\"==a(\"#typeid\").val()||\"282\"==a(\"#typeid\").val())||\"95\"==a(\"#typeid\").val()&&\"单色\"==a(\"#afterFileName\").val()||\"324\"==a(\"#typeid\").val()){var d=c.userData.balloonInfor;a(\"#remarkInfor\").val(d.bz)}if(\"48\"==a(\"#typeid\").val()&&\"外协(CDR)\"==a(\"#afterFileName\").val())try{var g=c.userData.balloonInfor.bz.split(\"扇柄颜色："
+      },
+      {
+        "kw": "getShopAndWangWangInfo",
+        "idx": 52301,
+        "seg": ".alert(\"请输入用户名\"),\nd=!1;if(!w.checkInputStr(g))return l.alert(\"用户名含有特殊字符（只能输入文字、数字、英文）\"),d=!1}else if(\"tbOrderNo\"==b&&(\"999\"==a(\"#sourceId\").val()||-1<a(\"#thirdOrderNo\").val().indexOf(\"CV2-\")||-1<a(\"#copyDesignNo\").val().indexOf(\"CV2-\"))&&\"save\"!=Ha)w.isEmpty(g)||a.ajax({url:contextPath+\"/commontool/getShopAndWangWangInfo.do\",type:\"get\",data:{orderid:g,diyTypeNum:\"\"},async:!1,success:function(a){if(!a.success)return l.alert(\"订单号错误！\"),d=!1},error:function(a){l.alert(\"订单号错误！\");return d=!1}});else if(\"remarkInfor\"==b&&\n\"137\"!=a(\"#typeid\").val()&&\"12\"!=a(\"#typeid\").val()&&\"282\"!=a(\"#typeid\").val()&&\"13\"!=a(\"#typeid\").val()&&\"48\"!=a(\"#typeid\").val()){b=!0;if(\"282\"==a(\"#typeid\").val()){b=!1;for(var f=0;f<c.pageList.length;f++)if(!c.pageList[f].printRemark){b=!0;break}}if(w.isEmpty(g)&&b)return\"48\"==a(\"#typeid\").val()&&\"外协(CDR)\"==a(\"#afterFileName\").val()?l.alert(\"必须填写扇柄颜色！\"):l.alert(\"请输入备注信息\"),d=!1}else if(\"handleColor\"==b&&w.isEmpty(g))return l.alert(\"必须填写扇柄颜色！\"),d=!1;return d},ub=function(){\"newFlag\"==a(\"#newFla"
+      }
+    ],
+    "orderid": [
+      {
+        "kw": "orderid",
+        "idx": 41616,
+        "seg": "one;c=a.next())item=c.value,\"text\"!=item.mediaMediaType||item.isVertical||y.getCurrentCanvas().TextboxToCurved(item)}function qb(b){N=Utils.trim(a(\"#tbOrderNo\").val(),2);console.log(Utils.trim(a(\"#tbOrderNo\").val(),2));a.ajax({url:contextPath+\"/commontool/getShopAndWangWangInfo.do\",type:\"get\",data:{orderid:N,diyTypeNum:a(\"#typeid\").val()},success:function(c){if(c.success){a(\"#cosumerInfo\").show();a(\".cnt p\").eq(0).text(\"顾客名：\"+c.userData.wangwangNo);a(\".cnt p\").eq(1).text(\"店铺名：\"+c.userData.shopName);\na(\".designUserName\").val(N);a(\"#workName\").val(N);if(c.userData.balloonInfor&&(\"133\"==a(\"#typeid\").val()||\"137\"==a(\"#typeid\").val()||\"40\"==a(\"#typeid\").val()||\"247\"==a(\"#typeid\").val()||\"282\"==a(\"#typeid\").val())||\"95\"==a(\"#typeid\").val()&&\"单色\"==a(\"#afterFileName\").val()||\"324\"==a(\"#typeid\").val()){var d=c.userData.balloonInfor;a(\"#remarkInfor\").val(d.bz)}if(\"48\"==a(\"#typeid\").val()&&\"外协(CDR)\"==a(\"#afterFileName\").val())try{var g=c.userData.balloonInfor.bz.split(\"扇柄颜色：\")[1].substring(0,2);a(\"#hand"
+      },
+      {
+        "kw": "orderid",
+        "idx": 52345,
+        "seg": "))return l.alert(\"用户名含有特殊字符（只能输入文字、数字、英文）\"),d=!1}else if(\"tbOrderNo\"==b&&(\"999\"==a(\"#sourceId\").val()||-1<a(\"#thirdOrderNo\").val().indexOf(\"CV2-\")||-1<a(\"#copyDesignNo\").val().indexOf(\"CV2-\"))&&\"save\"!=Ha)w.isEmpty(g)||a.ajax({url:contextPath+\"/commontool/getShopAndWangWangInfo.do\",type:\"get\",data:{orderid:g,diyTypeNum:\"\"},async:!1,success:function(a){if(!a.success)return l.alert(\"订单号错误！\"),d=!1},error:function(a){l.alert(\"订单号错误！\");return d=!1}});else if(\"remarkInfor\"==b&&\n\"137\"!=a(\"#typeid\").val()&&\"12\"!=a(\"#typeid\").val()&&\"282\"!=a(\"#typeid\").val()&&\"13\"!=a(\"#typeid\").val()&&\"48\"!=a(\"#typeid\").val()){b=!0;if(\"282\"==a(\"#typeid\").val()){b=!1;for(var f=0;f<c.pageList.length;f++)if(!c.pageList[f].printRemark){b=!0;break}}if(w.isEmpty(g)&&b)return\"48\"==a(\"#typeid\").val()&&\"外协(CDR)\"==a(\"#afterFileName\").val()?l.alert(\"必须填写扇柄颜色！\"):l.alert(\"请输入备注信息\"),d=!1}else if(\"handleColor\"==b&&w.isEmpty(g))return l.alert(\"必须填写扇柄颜色！\"),d=!1;return d},ub=function(){\"newFlag\"==a(\"#newFlag\").val()?\nl.open({title:\"温馨提"
+      },
+      {
+        "kw": "orderid",
+        "idx": 116226,
+        "seg": "en\").val()},function(b){\"ok\"==b.result&&(window.location.href=b.icpurl+\"/shop/mydiyfile1.do?token\\x3d\"+a(\"#token\").val())},\"json\")):\"newFlag\"==a(\"#newFlag\").val()?(c=window.location.host,console.log(c),c=\"http://\"+c+\"/siteWeb\",console.log(c),window.location.href=c+\"/thirdOrderDesign/showOrderInf.do?orderid\\x3d\"+a(\"#orderId\").val()):(c=a(\"#isAdmin\").val(),1==c||2==c?(c=a(\"#zlyThirdAdminUrl\").val(),\nwindow.location.href=c):v.isNoOneKeyLi?(a(\"#wangwangName\").val(),isWindowTip=!1,window.location.href=contextPath+\"/third/goSumbitSuccess.do?designId\\x3d\"+a(\"#diyId\").val()):(isWindowTip=!1,c=a(\"#siteWebDomain\").val(),\"\"!=a(\"#accessToken\").val()?(f={accessToken:a(\"#accessToken\").val(),designid:a(\"#diyId\").val(),odrGoodsCode:a(\"#odrGoodsCode\").val()},a.ajax({url:c+\"/api/auth/v1/thirdAppAuthCallBack.do\",data:f,dataType:\"json\",type:\"post\",success:function(a){a.success&&(window.location.href=a.userData)},\nerror:function(a){console.log(a);l.open({type:0,title:\"错误提示\",icon:2,content:\"合并连接分销订单保存失败!\"})}})):\"3"
+      }
+    ],
+    "saveThirdUserDesign": [
+      {
+        "kw": "saveThirdUserDesign",
+        "idx": 62333,
+        "seg": "(\"true\"!=a(\"#checkOperate\").val()){a(\".gildingLoading\").hide();\nreturn}a(\"#checkOperate\").val(\"false\");checkOperateStart()}fa=!1;a(\"#AllOrderSelected\")[0]&&!a(\"#AllOrderSelected\").is(\":checked\")&&\"autoSave\"!=b&&J.stopCount();E=!0;var q=a(\".centerTitle .title\").val();console.log(\"保存开始\");var m=\"third/saveThirdUserDesign.do\";ha.getInstance().jsonParameter.name=q;c.diyName=q;O||(h=a(\".onlyShow img\")[0].src,k=h.indexOf(\"resource\"),h.substring(k,h.length-1),\"\"==a(\".onlyShow img\")[0].src&&a(\".onlyShow img\").removeAttr(\"src\"));c.templateInfo.radius&&\"true\"==a(\"#curvedToText\").val()&&\nNa();na();try{w.getBgIndexByProduct(c)}catch(P){console.log(\"检测背景图片数量时出错\"),E=!1}if(fa)\"autoSave\"!=b?a(\".saveLoading\").hide():a(\".updateTime\").eq(0).hide(),E=!1,a(\".gildingLoading\").hide();else var t=function(){if(O&&w.isProductVoisNull())\"none\"==a(\".saveLoading\").css(\"display\")&&(a(\".saveLoading\").find(\"p\").text(\"正在保存...\"),a(\".saveLoading\").show(),a(\".gildingLoading\").hide()),E=!1,l.open({title:\"温馨提示\",content:\"亲,您的T恤还没有进行设计，请设计以后再保存"
+      },
+      {
+        "kw": "saveThirdUserDesign",
+        "idx": 74783,
+        "seg": "do\"}else\"export\"!=b||\"171\"!=a(\"#typeid\").val()&&\"294\"!=a(\"#typeid\").val()?\"export\"==b&&\"353\"==\na(\"#typeid\").val()?(h=JSON.parse(JSON.stringify(c)),A.ProductVO=h,A.calendarCanvasPath=W,A.saveType=\"submit\",A.orderNo=h.templateInfo.userInforInCard.workOrderNum,m=\"calendar/saveUserDesign.do\"):(m=\"third/saveThirdUserDesign.do\",\"autoSave\"!=b&&(A=a.extend({},A,k)),\"share\"==b&&O&&(A.picTShirtPath=v.canvasTshirtPagesBase64Arr)):(A.saveType=\"submit\",A.diyTypeNum=a(\"#diyTypeNumCup\").val(),h=[],ca&&h.push(ca),da&&h.push(da),A.silkScreenPicturePath=h,h=[],Xa&&h.push(Xa),A.silkScreenAllPicturePath=h,h=[],\nh.push(oa),A.totalImg=h,m=\"calendar/saveUserDesign.do\");O&&(A.tShirtColorId=a(\".rightPageBar .colorBox\").find(\".current\").attr(\"colorId\"),A.tShirtTemplateId=a(\"#choosePro .pageBox .current img\").attr(\"templateid\"),c.diyType=\"Tshirt\");for(t=0;t<c.pageList.length;t++)for(p=c.pageList[t].content.itemList,n=0;n<p.length;n++)if(\"text\"==p[n].media.mediaType&&!p[n].artText&&\"[object Object]\"==p[n].media.font.fontColor){h=\"\""
+      },
+      {
+        "kw": "saveThirdUserDesign",
+        "idx": 85581,
+        "seg": "a(\"#checkOperate\").length){if(\"true\"!=a(\"#checkOperate\").val())return;a(\"#checkOperate\").val(\"false\");checkOperateStart()}fa=!1;a(\"#AllOrderSelected\")[0]&&!a(\"#AllOrderSelected\").is(\":checked\")&&\"autoSave\"!=b&&J.stopCount();aa=!0;var h=a(\".centerTitle .title\").val();console.log(\"保存开始\");var k=\"third/saveThirdUserDesign.do\";ha.getInstance().jsonParameter.name=h;c.diyName=h;if(!O){f=a(\".onlyShow img\")[0].src;var n=f.indexOf(\"resource\");f.substring(n,f.length-1);\"\"==a(\".onlyShow img\")[0].src&&\na(\".onlyShow img\").removeAttr(\"src\")}c.templateInfo.radius&&\"true\"==a(\"#curvedToText\").val()&&Na();na(\"autoSave\");try{w.getBgIndexByProduct(c)}catch(t){console.log(\"检测背景图片数量时出错\"),aa=!1}if(fa)\"autoSave\"!=b?a(\".saveLoading\").hide():a(\".updateTime\").eq(0).hide(),aa=!1;else var q=function(){if(O&&w.isProductVoisNull())\"none\"==a(\".saveLoading\").css(\"display\")&&(a(\".saveLoading\").find(\"p\").text(\"正在保存...\"),a(\".saveLoading\").show()),aa=!1,l.open({title:\"温馨提示\",content:\"亲,您的T恤还没有进行设计，请设计以后再保存或提交！\"});else if(w.isMaskImgEmpty(c))a"
+      }
+    ]
+  }
+}

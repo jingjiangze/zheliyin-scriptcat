@@ -1,0 +1,2 @@
+define("jquery fabric CanvasDiy sundry DULeftNativePublic photoupload qrcodeEventBind CupImgUpload".split(" "),function(a,f,g,h,b,k,d,e){return{init:function(){b.showFolderCont(".materialItem");b.showFolderCont(".backItem");b.showFolderCont(".textItem");b.showFolderCont(".formatItem");b.showFolderCont(".boxItem");b.showFolderCont(".teamItem");var c;void 0!=a("#diyTypeNum").val()?c=a("#diyTypeNum").val():void 0!=a("#diyTypeNumCup").val()?c=a("#diyTypeNumCup").val():void 0!=a("#diyTypeNumPc").val()&&
+(c=a("#diyTypeNumPc").val());"16"==c?e.init():d.init()}}});

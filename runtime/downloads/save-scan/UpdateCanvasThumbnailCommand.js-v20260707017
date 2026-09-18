@@ -1,0 +1,1 @@
+define(["InterFace","ICommand","CurrentCanvas"],function(c,d,e){function b(a){this.type=a;c.ensureImplements(this,d)}var a;b.prototype.excute=function(){if(a=e.getCurrentCanvas())a.canvas.requestRenderAll(),this.type&&a.setCanvasURL(this.type);else throw Error("canvasObj不是有效对象，导致无法截图");};return b});

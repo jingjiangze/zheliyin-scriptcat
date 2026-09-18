@@ -1,0 +1,2 @@
+define(function(){return{IAMGE:"image",TEXT:"text",ADVANCED_IMAGE_MASK:"advancedImageMask",SVG_TEXT:"svgText",SVG:"svg",SHAPE:"shape",PHOTO_IMAGE_MASK:"photoImageMask",IMAGE_MASK:"imageMask",UNKNOWN:"unknown",GROUP:"group",GROUP_MASK:"groupMask",TABLE:"table",PACKING_BOX_IMAGE:"packingboximage",CURVED_TEXT:"curvedText",CANVAS_GUIDE_LINE:"canvasguideline",CURVED_IMAGE:"curvedImage",ProductDataType:"image shape text curvedText curvedImage advancedImageMask imageMask svgText svg table packingboximage selfGroup".split(" "),
+SELF_GROUP:"selfGroup",STROKESHAPE:"strokeShape"}});

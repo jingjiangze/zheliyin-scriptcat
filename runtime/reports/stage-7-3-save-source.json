@@ -1,0 +1,105 @@
+{
+  "ts": "2026-09-18T01:14:09.353Z",
+  "stage": "STAGE-7.3-SAVE-SOURCE",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "phases": {
+    "ready": true,
+    "checkboxRevert": {
+      "reverted": [
+        "reverted:jsjMaterial",
+        "reverted:sczMaterial",
+        "already-unchecked:hiddenExistsFill",
+        "already-unchecked:hiddenFill",
+        "already-unchecked:hiddenFill",
+        "already-unchecked:zidongcaiqie",
+        "already-unchecked:uploadCheckBox",
+        "already-unchecked:hiddenExistsFill",
+        "already-unchecked:aiFangzhiSymmetric",
+        "already-unchecked:aixieyi-checkbox",
+        "already-unchecked:hiddenExistsFill",
+        "already-unchecked:setBLChange",
+        "reverted:brush-type"
+      ]
+    },
+    "sources": [
+      {
+        "file": "js/mulitCanvas/v2/design/business/CustomerIndexThird.js",
+        "status": 200,
+        "hits": 5,
+        "snippets": [
+          {
+            "kw": "thirdOrderNo",
+            "idx": 5518,
+            "seg": "anshi-area textarea\").val(b.silkScreenKuanShi),a(\".siyin-size .zhengmian\").text(b.silkScreenSize.split(\",\")[0]),a(\".siyin-size .beimian\").text(b.silkScreenSize.split(\",\")[1]),c.templateInfo.userInforInCard&&(b=c.templateInfo.userInforInCard.workOrderNum,a(\"#hdgyMenu .search-area input\").val(b),a(\"#hdgyMenu .search-area a\").trigger(\"click\"),\"\"!=a(\"#thirdOrderNo\").val()&&a(\"#hdgyMenu .search-area input\").attr(\"disabled\",!0))):\"98\"==a(\"#diyTypeNumCup\").val()?(c.templateInfo.gildingProduct&&c.templateInfo.userInforInCard?\n(b=c.templateInfo.paperData,a(\".calendar-number .num-choose input\").val(b.calendarNumber),a(\".kuanshi-area textarea\").val(b.paperKuanShi),c.templateInfo.userInforInCard&&(b=c.templateInfo.userInforInCard.workOrderNum,a(\"#hdgyMenu .search-area input\").val(b),a(\"#hdgyMenu .search-area a\").trigger(\"click\"),a(\"#paperOrdId\").val(b),a(\"#hold-all\").click(),setTimeout(function(){a(\"#hdgyNav\")."
+          }
+        ],
+        "len": 37082
+      },
+      {
+        "file": "js/mulitCanvas/v2/util/designAi.js",
+        "status": 200,
+        "hits": 0,
+        "snippets": [],
+        "len": 19752
+      },
+      {
+        "file": "js/mulitCanvas/v2/design/business/config.js",
+        "status": 200,
+        "hits": 0,
+        "snippets": [],
+        "len": 8751
+      },
+      {
+        "file": "js/mulitCanvas/v2/design/public/view/moreCanvas/MultiCanvasDiy.js",
+        "status": 200,
+        "hits": null,
+        "snippets": [],
+        "len": 282,
+        "fullText": "define([\"jquery\",\"fabric\",\"CanvasDiy\"],function(e,d,b){function a(c){this.idName=c;this.canvas=new d.Canvas(c);this.canvas.defaultCursor=\"default\";b.CanvasDiy.call(this);a.prototype.canvas=this.canvas}a.prototype=new b.CanvasDiy;a.prototype.constructor=a;return{MultiCanvasDiy:a}});"
+      },
+      {
+        "file": "js/mulitCanvas/v2/design/public/model/ParseJsonModel.js",
+        "status": 200,
+        "hits": 0,
+        "snippets": [],
+        "len": 59135
+      },
+      {
+        "file": "js/mulitCanvas/v2/design/public/view/public/HeadPublic.js",
+        "status": 200,
+        "hits": 1,
+        "snippets": [
+          {
+            "kw": "thirdOrderNo",
+            "idx": 16466,
+            "seg": " .title\").focus(function(){$(this).next(\".edit\").css({opacity:0})}).blur(function(){$(this).next(\".edit\").css({opacity:1});console.log($(this).html())});$(\".centerTitle .edit\").on(\"click\",function(){$(\".centerTitle .title\").focus()});var oa=function(){-1<$(\"#templateName\").val().indexOf(\"喜家德桌牌\")||\"0\"==$(\"#templateState\").val()||f.isNoOneKey||0<$(\"#thirdOrderNo\").val()||0<$(\"#isAdmin\").val()||\"1\"==$(\"#aiCup\").val()||\"1\"==$(\"#aiCup_kyzs\").val()||\n(stopTimeNum&&clearTimeout(stopTimeNum),stopTimeNum=setInterval(function(){na&&(na=!1);K[0](K[1],K[2],K[3],K[4],K[5])},autoSaveIntervalMillisecond))},pa=function(){clearTimeout(stopTimeNum)};$(\".rightBtn li:visible\").on(\"click\",function(){if(!$(this).hasClass(\"copyright-preview\")&&(c=y.getCurrentCanvas())){var b=c.canvas.getActiveObject(),g=c.canvas.getActiveGroup();(b||g)&&c.canvas.deactivateAll();c.canvas.renderAll();$(this).hasClass(\"print\")&&requirejs([\"S"
+          }
+        ],
+        "len": 92298
+      },
+      {
+        "file": "js/mulitCanvas/v2/design/public/view/CustomerLeftNavigationBar.js",
+        "status": 200,
+        "hits": null,
+        "snippets": [],
+        "len": 563,
+        "fullText": "define(\"jquery fabric CanvasDiy sundry DULeftNativePublic photoupload qrcodeEventBind CupImgUpload\".split(\" \"),function(a,f,g,h,b,k,d,e){return{init:function(){b.showFolderCont(\".materialItem\");b.showFolderCont(\".backItem\");b.showFolderCont(\".textItem\");b.showFolderCont(\".formatItem\");b.showFolderCont(\".boxItem\");b.showFolderCont(\".teamItem\");var c;void 0!=a(\"#diyTypeNum\").val()?c=a(\"#diyTypeNum\").val():void 0!=a(\"#diyTypeNumCup\").val()?c=a(\"#diyTypeNumCup\").val():void 0!=a(\"#diyTypeNumPc\").val()&&\n(c=a(\"#diyTypeNumPc\").val());\"16\"==c?e.init():d.init()}}});"
+      },
+      {
+        "file": "js/mulitCanvas/v2/design/public/command/LoadFromProductJsonCommand.js",
+        "status": 200,
+        "hits": 0,
+        "snippets": [],
+        "len": 18989
+      },
+      {
+        "file": "js/mulitCanvas/v2/design/public/model/DesignVO.js",
+        "status": 404,
+        "hits": 0,
+        "snippets": [],
+        "len": 7350
+      }
+    ]
+  },
+  "errors": []
+}

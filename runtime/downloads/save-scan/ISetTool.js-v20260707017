@@ -1,0 +1,1 @@
+define(["InterFace"],function(a){return new a("ISetTool",["set"])});

@@ -1,0 +1,7 @@
+/*
+  2014 Jennifer Simonds
+ @license    MIT License http://opensource.org/licenses/MIT
+*/
+FontDetect=function(){function h(){if(!g){g=!0;var b=document.body,c=document.body.firstChild,a=document.createElement("div");a.id="fontdetectHelper";e=document.createElement("span");e.innerText=k[l];a.appendChild(e);b.insertBefore(a,c);a.style.position="absolute";a.style.visibility="hidden";a.style.top="-200px";a.style.left="-100000px";a.style.width="100000px";a.style.height="200px";a.style.fontSize="100px"}}var g=!1,f=["serif","sans-serif","monospace","cursive","fantasy"],e=null,l="en",k={en:"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+fa:"ابپتجچحخدذرزسشصضططعغفقکگلمنوهی"};return{onFontLoaded:function(b,c,a,d){if(b){var e=d&&d.msInterval?d.msInterval:100,f=d&&d.msTimeout?d.msTimeout:2E3;l=d&&d.eLang&&d.eLang in k?d.eLang:"en";if(c||a)if(g||h(),this.isFontLoaded(b))c&&c(b);else var n=this,p=(new Date).getTime(),m=setInterval(function(){n.isFontLoaded(b)?(clearInterval(m),c(b)):(new Date).getTime()-p>f&&(clearInterval(m),a&&a(b))},e)}},isFontLoaded:function(b){var c,a=0;g||h();for(var d=0;d<f.length;++d){e.style.fontFamily='"'+b+'",'+
+f[d];c=e.offsetWidth;if(0<d&&c!=a)return!1;a=c}return!0},whichFont:function(b){b=b instanceof Element?window.getComputedStyle(b).getPropertyValue("font-family"):window.jQuery?$(b).css("font-family"):"";b=b.split(",");for(var c=b.shift();c;){for(var c=c.replace(/^\s*['"]?\s*([^'"]*)\s*['"]?\s*$/,"$1"),a=0;a<f.length;a++)if(c==f[a])return c;if(this.isFontLoaded(c))return c;c=b.shift()}return null}}}();
