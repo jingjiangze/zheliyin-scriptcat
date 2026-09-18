@@ -1,0 +1,182 @@
+{
+  "ts": "2026-09-18T09:03:52.821Z",
+  "stage": "STAGE-7.4-PAGE-INVENTORY",
+  "reportDir": "D:\\zheliyin-scriptcat\\runtime\\reports\\stage-7-page",
+  "cases": {
+    "CASE_B_DUAL": {
+      "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "expect": "dual",
+      "ready": true,
+      "canvas": {
+        "ok": true,
+        "canvasCount": 1,
+        "canvases": [
+          {
+            "runtimeIndex": 0,
+            "canvasId": null,
+            "pageNumber": null,
+            "pageNo": null,
+            "pageName": null,
+            "title": null,
+            "templateID": null,
+            "pageGroup": null,
+            "autoKey": null,
+            "canvasOrder": null,
+            "width": 871.4999999999999,
+            "height": 530.1624999999999,
+            "objectCount": 9,
+            "hasBackground": false,
+            "objectTypes": {
+              "shape": 1,
+              "line": 8
+            },
+            "canvasKeyList": [
+              "minMediaSideDistance",
+              "maxMediaSidePecent"
+            ]
+          }
+        ]
+      },
+      "currentState": {
+        "topKeys": [
+          "currentCanvasNum",
+          "canvasPagesNum",
+          "canvasToProductObjArr",
+          "totalCanvasArray",
+          "CanvasObjInfo",
+          "multiCanvas",
+          "canvasPagesBase64Arr",
+          "canvasPagesPureBase64Arr",
+          "canvasPackingBoxArray",
+          "canvasPagesSVGArr",
+          "initialPagesBgArr",
+          "copyAndRedoCanvas",
+          "diyCanvasW",
+          "canvasPagesJsonArr",
+          "canvasPagesArr",
+          "canvasObjPagesArr"
+        ],
+        "vals": {
+          "currentCanvasNum": 1,
+          "canvasPagesNum": 0,
+          "multiCanvas": true,
+          "diyCanvasW": 1800
+        }
+      },
+      "rawIdentifiers": [
+        {
+          "runtimeIndex": 0,
+          "identify": {
+            "canvasObjInfo": {}
+          }
+        }
+      ],
+      "net": [],
+      "errors": [
+        "Error: page.goto: Navigation to \"https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do\" is interrupted"
+      ]
+    },
+    "CASE_A_SINGLE": {
+      "url": "https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/thirdDiyAdd.do",
+      "expect": "single",
+      "ready": false,
+      "canvas": null,
+      "currentState": null,
+      "rawIdentifiers": null,
+      "net": null,
+      "errors": [
+        "Error: page.goto: net::ERR_ABORTED at https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/thirdDiyAdd.do\nCall log:",
+        "editor not ready"
+      ]
+    }
+  },
+  "errors": [],
+  "scriptRegistered": {
+    "uuid": "zheliyin-page-inv-1789722241494",
+    "name": "折立印名片套版助手 (OCR Demo 版)",
+    "author": "jingjiangze",
+    "namespace": "https://github.com/jingjiangze/zheliyin-scriptcat",
+    "originDomain": "",
+    "origin": "",
+    "checkUpdate": true,
+    "checkUpdateUrl": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js",
+    "downloadUrl": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js",
+    "metadata": {
+      "name": [
+        "折立印名片套版助手 (OCR Demo 版)"
+      ],
+      "namespace": [
+        "https://github.com/jingjiangze/zheliyin-scriptcat"
+      ],
+      "version": [
+        "0.3.10.2"
+      ],
+      "description": [
+        "【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。"
+      ],
+      "author": [
+        "jingjiangze"
+      ],
+      "match": [
+        "https://diy.zheliyin.com/diyWeb/third/*",
+        "https://diy.zheliyin.com/diyWeb/third/*/*/thirdLoginDiyEdit.do*",
+        "https://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*",
+        "https://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*",
+        "https://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*",
+        "http://diy.zheliyin.com/diyWeb/third/*",
+        "http://diy.zheliyin.com/diyWeb/third/*/*/thirdLoginDiyEdit.do*",
+        "http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*",
+        "http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*",
+        "http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*"
+      ],
+      "require": [
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-quality.js?v=0.3.10.2"
+      ],
+      "run-at": [
+        "document-idle"
+      ],
+      "grant": [
+        "GM_xmlhttpRequest",
+        "GM_setValue",
+        "GM_getValue",
+        "GM_addStyle",
+        "GM_setClipboard",
+        "GM_addElement"
+      ],
+      "connect": [
+        "ark.cn-beijing.volces.com",
+        "raw.githubusercontent.com",
+        "github.com",
+        "cdn.jsdelivr.net",
+        "aip.baidubce.com",
+        "*"
+      ],
+      "updateurl": [
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js"
+      ],
+      "downloadurl": [
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js"
+      ]
+    },
+    "selfMetadata": {},
+    "sort": -1,
+    "type": 1,
+    "status": 1,
+    "runStatus": "complete",
+    "createtime": 1789722244011,
+    "updatetime": 1789722244011,
+    "checktime": 1789722244017
+  },
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "折立印名片套版助手已加载 0.3.10.2"
+  ]
+}

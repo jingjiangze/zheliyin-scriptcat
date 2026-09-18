@@ -1,0 +1,162 @@
+{
+  "ts": "2026-09-18T09:11:47.752Z",
+  "stage": "STAGE-7.5-PAGE-SWITCH",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "rounds": [
+    {
+      "label": "ROUND1_FRONT_INITIAL",
+      "state": {
+        "currentCanvasNum": 1,
+        "canvasPagesNum": 0,
+        "multiCanvas": true,
+        "totalCanvasCount": 1,
+        "base64Count": 2,
+        "pagesJsonCount": 0,
+        "perTotal": [
+          {
+            "i": 0,
+            "idName": "c0",
+            "objCount": 9
+          }
+        ]
+      },
+      "switchUi": [
+        {
+          "tag": "DIV",
+          "cls": "page-group current",
+          "txt": "正面",
+          "id": ""
+        },
+        {
+          "tag": "DIV",
+          "cls": "pageNum",
+          "txt": "正面",
+          "id": ""
+        },
+        {
+          "tag": "DIV",
+          "cls": "page-group",
+          "txt": "背面",
+          "id": ""
+        },
+        {
+          "tag": "DIV",
+          "cls": "pageNum",
+          "txt": "背面",
+          "id": ""
+        }
+      ]
+    },
+    {
+      "label": "ROUND2_BACK_AFTER_CLICK",
+      "state": {
+        "currentCanvasNum": 2,
+        "canvasPagesNum": 0,
+        "multiCanvas": true,
+        "totalCanvasCount": 2,
+        "base64Count": 2,
+        "pagesJsonCount": 0,
+        "perTotal": [
+          {
+            "i": 0,
+            "idName": "c0",
+            "objCount": 9
+          },
+          {
+            "i": 1,
+            "idName": "c1",
+            "objCount": 9
+          }
+        ]
+      },
+      "switchUi": [
+        {
+          "tag": "DIV",
+          "cls": "page-group",
+          "txt": "正面",
+          "id": ""
+        },
+        {
+          "tag": "DIV",
+          "cls": "pageNum",
+          "txt": "正面",
+          "id": ""
+        },
+        {
+          "tag": "DIV",
+          "cls": "page-group current",
+          "txt": "背面",
+          "id": ""
+        },
+        {
+          "tag": "DIV",
+          "cls": "pageNum",
+          "txt": "背面",
+          "id": ""
+        }
+      ]
+    },
+    {
+      "label": "ROUND3_FRONT_BACK_AGAIN",
+      "state": {
+        "currentCanvasNum": 1,
+        "canvasPagesNum": 0,
+        "multiCanvas": true,
+        "totalCanvasCount": 2,
+        "base64Count": 2,
+        "pagesJsonCount": 0,
+        "perTotal": [
+          {
+            "i": 0,
+            "idName": "c0",
+            "objCount": 9
+          },
+          {
+            "i": 1,
+            "idName": "c1",
+            "objCount": 9
+          }
+        ]
+      },
+      "switchUi": [
+        {
+          "tag": "DIV",
+          "cls": "page-group current",
+          "txt": "正面",
+          "id": ""
+        },
+        {
+          "tag": "DIV",
+          "cls": "pageNum",
+          "txt": "正面",
+          "id": ""
+        },
+        {
+          "tag": "DIV",
+          "cls": "page-group",
+          "txt": "背面",
+          "id": ""
+        },
+        {
+          "tag": "DIV",
+          "cls": "pageNum",
+          "txt": "背面",
+          "id": ""
+        }
+      ]
+    }
+  ],
+  "errors": [
+    "Error: page.goto: Navigation to \"https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do\" is interrupted by anothe"
+  ],
+  "ready": true,
+  "backClick": {
+    "clicked": true,
+    "txt": "背面",
+    "cls": "page-group current"
+  },
+  "frontClick": {
+    "clicked": true,
+    "txt": "正面"
+  }
+}

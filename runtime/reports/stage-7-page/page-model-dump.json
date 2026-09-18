@@ -1,0 +1,97 @@
+{
+  "ts": "2026-09-18T09:07:59.158Z",
+  "stage": "STAGE-7.4-PAGE-MODEL-DUMP",
+  "cases": {
+    "DUAL_252438": {
+      "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "expect": "dual",
+      "ready": true,
+      "voTop": {
+        "currentCanvasNum": 1,
+        "canvasPagesNum": 0,
+        "multiCanvas": true,
+        "diyCanvasW": 1800
+      },
+      "pageArrays": {
+        "canvasPagesArr": {
+          "arrLen": 0,
+          "sample": []
+        },
+        "canvasPagesJsonArr": {
+          "arrLen": 0,
+          "sample": []
+        },
+        "canvasPackingBoxArray": {
+          "arrLen": 0,
+          "sample": []
+        },
+        "canvasObjPagesArr": {
+          "arrLen": 0,
+          "sample": []
+        },
+        "canvasPagesBase64Arr": {
+          "arrLen": 2,
+          "sample": [
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAFtCAYAAA...",
+            "MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png"
+          ]
+        },
+        "canvasPagesSVGArr": {
+          "arrLen": 2,
+          "sample": [
+            {
+              "arrLen": 0,
+              "sample": []
+            },
+            {
+              "arrLen": 0,
+              "sample": []
+            }
+          ]
+        },
+        "initialPagesBgArr": {
+          "arrLen": 4,
+          "sample": [
+            "#ffffff",
+            "#ffffff"
+          ]
+        }
+      },
+      "totalCanvas": [
+        {
+          "runtimeIndex": 0,
+          "top": {
+            "idName": "c0",
+            "currentSize": 1.4525,
+            "minMediaSideDistance": 100,
+            "maxMediaSidePecent": 0.5,
+            "cutImgNum": 0,
+            "drawCutImgCompleteNum": 0,
+            "defaulFontName": "方正黑体简体",
+            "currentFactWidth": 600,
+            "currentFactHeight": 365
+          },
+          "canvasObjInfo": {},
+          "objCount": 9
+        }
+      ],
+      "errors": [
+        "Error: page.goto: Navigation to \"https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do\" is interrupted"
+      ],
+      "net": []
+    },
+    "ALT_20408603": {
+      "url": "https://diy.zheliyin.com/diyWeb/third/20408603/2114747/999/thirdDiyAdd.do",
+      "expect": "single-or-unknown",
+      "ready": false,
+      "voTop": null,
+      "pageArrays": null,
+      "totalCanvas": null,
+      "errors": [
+        "Error: page.goto: net::ERR_ABORTED at https://diy.zheliyin.com/diyWeb/third/20408603/2114747/999/thirdDiyAdd.do\nCall log",
+        "editor not ready"
+      ]
+    }
+  },
+  "errors": []
+}
