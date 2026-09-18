@@ -97,7 +97,7 @@ async function launch(runHeadless = false) {
   browser.on("page", (p) => { try { report.pages.push({ url: p.url().slice(0, 200), count: browser.pages().length }); } catch (e) {} });
   page = browser.pages()[0];
   page.on("response", async (r) => {
-    try { const u = r.url(); if (u.indexOf("zheliyin.com") < 0) return; const ct = r.headers()["content-type"] || ""; if (ct.indexOf("json") < 0) return; let b = ""; try { b = await r.text().catch(() => ""); } catch (e) {} const rec = { status: r.status(), u: u.slice(0, 200) }; if (/search|order|hegao|check|proof|save|submit|proofread/i.test(u)) rec.body = String(b).slice(0, 1500); report.phases.net = report.phases.net || []; report.phases.net.push(rec); } catch (e) {}
+    try { const u = r.url(); if (u.indexOf("zheliyin.com") < 0) return; const ct = r.headers()["content-type"] || ""; if (ct.indexOf("json") < 0) return; let b = ""; try { b = await r.text().catch(() => ""); } catch (e) {} const rec = { status: r.status(), u: u.slice(0, 200) }; if (/search|order|hegao|check|proof|save|submit|proofread/i.test(u)) rec.body = String(b).slice(0, 1500); if (/queryDesignInfo|getImgInfos|imgPreviewSearch/i.test(u)) rec.body = String(b).slice(0, 6000); report.phases.net = report.phases.net || []; report.phases.net.push(rec); } catch (e) {}
   });
 }
 async function close() { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
@@ -615,6 +615,43 @@ async function stageCheck() {
   return suspect;
 }
 
+// ---------- 核稿详情取证：错字检查「展开详情」+ 设计稿/生产稿/错误截图下载 ----------
+async function captureProofDetails() {
+  const r = await ev(() => {
+    const layers = Array.from(document.querySelectorAll(".layui-layer, .modal, .modal-container"));
+    const out = { detail: null, imgs: [], msgs: [] };
+    for (const el of layers) {
+      if (!el.offsetParent) continue;
+      const imgs = Array.from(el.querySelectorAll("img")).filter((im) => im.offsetParent && im.src).map((im) => im.src.slice(0, 240));
+      if (imgs.length) out.imgs.push(...imgs);
+      if (/错字检查|检查结果/.test(String(el.innerText || ""))) {
+        const exp = Array.from(el.querySelectorAll("span, a, button, div")).find((x) => String(x.textContent || "").trim() === "展开详情" && x.offsetParent);
+        if (exp) { try { exp.click(); out.detail = "clicked-expand"; } catch (e) {} }
+        out.msgs.push(String(el.innerText || "").slice(0, 1200));
+      }
+    }
+    return { ok: true, detail: out.detail, imgs: out.imgs.slice(0, 12), msgs: out.msgs.slice(0, 6) };
+  });
+  if (r.ok && r.detail === "clicked-expand") {
+    await sleep(1800);
+    const d2 = await ev(() => {
+      const box = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+      let best = null;
+      document.querySelectorAll(".layui-layer, .modal, .modal-container").forEach((el) => { if (!el.offsetParent) return; const t = String(el.innerText || "").trim(); if (/错字|检查结果|核稿/.test(t) && (!best || t.length > best.length)) best = t.slice(0, 4000); });
+      return { ok: !!best, txt: best };
+    });
+    r.detailText = d2 && d2.txt;
+  }
+  if (r.ok && r.imgs && r.imgs.length) {
+    const saved = [];
+    for (const u of [...new Set(r.imgs)].slice(0, 8)) {
+      try { if (!/^https?:/i.test(u)) continue; const res = await page.request.get(u, { timeout: 25000 }); if (res && res.ok()) { const buf = await res.body().catch(() => null); if (buf && buf.length > 100) { const fn = "proof-img-" + String(saved.length + 1).padStart(2, "0") + ".png"; fs.writeFileSync(path.join(P0_DIR, fn), buf); saved.push({ fn, u: u.slice(0, 160) }); } } } catch (e) {}
+    }
+    r.savedImgs = saved;
+  }
+  report.phases.proofDetails = r;
+  return r;
+}
 // ---------- Schema 对照（--case-font-schema）----------
 async function caseFontSchema() {
   evt("case-font-schema");
@@ -786,6 +823,7 @@ async function main() {
   writeJson("proof-result.json", { ts: new Date().toISOString(), searchLog: sync.log, generatingHandled: sync.generatingHandled, failGoto: sync.failGoto });
   report.phases.sync = sync;
   if (!sync.failGoto) { const d = await dialogPass(); report.phases.dialogPassAfterSync = d; }
+  report.phases.proofDetails = await captureProofDetails();
   await sleep(2000);
   // 检查阶段
   await stageCheck();
