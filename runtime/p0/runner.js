@@ -135,16 +135,22 @@ async function ensureLogin() {
   if (!lg.visible) return true;
   evt("login-required");
   const r = await ev((arg) => {
+    const setVal = (el, v) => {
+      const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+      const setter = Object.getOwnPropertyDescriptor(proto, "value").set;
+      try { setter.call(el, v); } catch (e) { el.value = v; }
+      el.dispatchEvent(new Event("input", { bubbles: true }));
+      el.dispatchEvent(new Event("change", { bubbles: true }));
+    };
     const u = document.querySelector("#userAccount"); const p = document.querySelector("#userPassword");
     if (!u || !p) return { ok: false };
-    u.value = arg.u; p.value = arg.p;
-    try { u.dispatchEvent(new Event("input", { bubbles: true })); u.dispatchEvent(new Event("change", { bubbles: true })); } catch (e) {}
-    try { p.dispatchEvent(new Event("input", { bubbles: true })); p.dispatchEvent(new Event("change", { bubbles: true })); } catch (e) {}
-    const btn = document.querySelector(".btn-register") || Array.from(document.querySelectorAll("a, button")).find((el) => { const t = String(el.textContent || "").trim(); return /登录|确定/.test(t) && el.offsetParent && el.closest(".login-tab, .register-area"); });
-    if (!btn) return { ok: false, reason: "no login btn" };
-    btn.click(); return { ok: true };
+    u.focus(); u.select && u.select(); setVal(u, arg.u);
+    p.focus(); p.select && p.select(); setVal(p, arg.p);
+    const btn = document.querySelector(".btn-register") || Array.from(document.querySelectorAll("a, button, span")).find((el) => { const t = String(el.textContent || "").trim(); return /^登录$|^登\s*录$|^确定$|登 录/.test(t) && el.offsetParent && (el.closest(".login-tab, .register-area, .layui-layer, .modal") || true); });
+    if (!btn) return { ok: false, reason: "no login btn", cand: Array.from(document.querySelectorAll("button,a")).filter((el)=>el.offsetParent).map((el)=>String(el.textContent||"").trim().slice(0,8)).filter(Boolean).slice(0,12) };
+    btn.click(); return { ok: true, btn: String(btn.textContent||"").trim().slice(0,12) };
   }, { u: USER, p: PASS });
-  evt("login-clicked");
+  evt("login-clicked " + JSON.stringify(r));
   await sleep(10000);
   await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
   const w = await waitUntil(isReadyExpr(), "editor after login", 90000);
@@ -362,7 +368,7 @@ async function stagePrint() {
   // 3) 确定后：交稿层/核稿结果可能延迟出现 → 直接进入「搜索同步+层观察」
   //    （错误截图/生产稿/设计稿/提交稿件 任一出现即视为核稿结果面世）
   evt("wait-proof-surfaces");
-  const proofWait = await waitUntil(() => {
+  let proofWait = await waitUntil(() => {
     const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
     const seen = [];
     for (let i = 0; i < layers.length; i++) {
