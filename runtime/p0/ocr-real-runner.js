@@ -406,7 +406,14 @@ async function openSiteLoginLayer() {
       if (!op_.__zyPN) {
         XMLHttpRequest.prototype.open = function (m, u) { this.__u = String(u || ""); return op_.apply(this, arguments); };
         XMLHttpRequest.prototype.send = function (body) {
-          try { if (this.__u && this.__u.indexOf("zheliyin.com") >= 0) push({ t: Date.now(), k: "xhr", m: "XHR", u: this.__u.slice(0, 300), b: body ? red(body).slice(0, 4000) : null }); } catch (e) {}
+          const u0 = this.__u || "";
+          try { if (u0.indexOf("zheliyin.com") >= 0) push({ t: Date.now(), k: "xhr", m: "XHR", u: u0.slice(0, 300), b: body ? red(body).slice(0, 4000) : null }); } catch (e) {}
+          const self = this;
+          if (u0.indexOf("zheliyin.com") >= 0 && this.addEventListener) {
+            this.addEventListener("load", function () {
+              try { if (self.readyState === 4) push({ t: Date.now(), k: "xhrR", s: self.status, u: u0.slice(0, 300), b: red(self.responseText || "").slice(0, 4000) }); } catch (e) {}
+            });
+          }
           return sp_.apply(this, arguments);
         };
         XMLHttpRequest.prototype.open.__zyPN = true;
