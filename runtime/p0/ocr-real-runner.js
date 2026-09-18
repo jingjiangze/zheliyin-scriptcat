@@ -284,6 +284,49 @@ async function bootstrapAuthSession(RUN) {
   const authPost = await ev(() => { const ua = document.querySelector("#userAccount"); return { loginLayerVisible: !!(ua && ua.offsetParent) }; });
   return { ok: true, stage: "logged-in", loginClosed: lk, authPost: authPost };
 }
+async function doSaveReload(RUN, createdObjs) {
+  const saveClick = await ev(() => {
+    const el = Array.from(document.querySelectorAll("li,a,button,span")).find((x) => String(x.textContent || "").trim() === "保存" && x.offsetParent);
+    if (el) { try { el.click(); return { clicked: true }; } catch (e) { return { clicked: false, err: String(e) }; } }
+    return { clicked: false, why: "no save btn" };
+  });
+  RUN.saveClick = saveClick;
+  await sleep(4000);
+  await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+  const w3 = await waitUntil(isReadyExpr(), "editor after reload", 90000);
+  RUN.phases.reloadReady = !!(w3 && w3.ok);
+  await sleep(2500);
+  const reloadSnap = await ev((arg) => {
+    const snap = window.__p0Snap;
+    if (typeof snap !== "function") return { ok: false, err: "__p0Snap missing" };
+    const vo = window.CanvasObjVO; const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+    if (!(d && d.canvas)) return { ok: false, err: "no canvas" };
+    const objs = d.canvas.getObjects(); const matched = [];
+    for (const ss of arg.created || []) {
+      const found = objs.find((o) => String(o.uuid || "") === String(ss.uuid || "") || String(o.multiUuid || "") === String(ss.multiUuid || ""));
+      if (found) matched.push(snap(found, { index: objs.indexOf(found) }));
+    }
+    const textsAfter = objs.filter((o) => typeof o.text === "string" && String(o.text).trim()).map((o) => snap(o, { index: objs.indexOf(o) }));
+    const wanted = (arg.created || []).map((c) => String(c.text || "").trim()).filter(Boolean);
+    const textMatched = textsAfter.filter((t) => wanted.indexOf(String(t.text || "").trim()) >= 0);
+    return { ok: true, total: objs.length, matched, textsAfter, textMatched, wanted };
+  }, { created: createdObjs || [] }).catch((e) => ({ err: String(e).slice(0, 200) }));
+  RUN.reloadSnapshot = reloadSnap;
+  RUN.reloadTexts = (reloadSnap && reloadSnap.textsAfter) || null;
+  const verdictObj = {
+    identityMatched: ((reloadSnap && reloadSnap.matched) || []).length,
+    textMatched: ((reloadSnap && reloadSnap.textMatched) || []).length,
+    wanted: (reloadSnap && reloadSnap.wanted) || [],
+    verdict: !(reloadSnap && reloadSnap.ok) ? "UNKNOWN"
+      : (((reloadSnap.matched || []).length > 0) ? "PERSISTED(identity)"
+        : (((reloadSnap.textMatched || []).length > 0) ? "PERSISTED(text-only, uuid changed)" : "LOST")),
+  };
+  RUN.phases.saveReload = verdictObj;
+  try {
+    fs.writeFileSync(path.join(R, "ocr-object-B-after-reload.json"), JSON.stringify({ ocrRunId: RUN.ocrRunId, reloadReady: RUN.phases.reloadReady, saveClick: RUN.saveClick, matched: (reloadSnap && reloadSnap.matched) || [], textMatched: (reloadSnap && reloadSnap.textMatched) || [], textsAfter: (reloadSnap && reloadSnap.textsAfter) || [], wanted: (reloadSnap && reloadSnap.wanted) || [], verdict: verdictObj.verdict }, null, 2));
+  } catch (e) {}
+  return verdictObj;
+}
 (async () => {
   const RUN = { ts: new Date().toISOString(), ocrRunId: null, stage: "REAL_OCR", url: EDITOR_URL, phases: {}, statusLog: [], errors: [] };
   RUN.ocrRunId = ocrRunId();
@@ -693,7 +736,23 @@ async function bootstrapAuthSession(RUN) {
     // ---- 9. AUTH FIRST：核稿闸门 → 订单号 → 印刷/设计信息/确定（触发 submit）→ AUTH 状态机 ----
     RUN.phases.hegaoOk = await stageProofCore();
     if (!RUN.phases.hegaoOk) { RUN.phases.realOcrProof = "FAILED_STAGE=HEGAO"; wr("ocr-run-summary.json", RUN); await page.screenshot({ path: path.join(R, "ocr-hegao-miss.png") }).catch(() => {}); }
-    if (RUN.phases.hegaoOk) {
+    const authPreOk = !!(RUN.phases.authBootstrap && RUN.phases.authBootstrap.ok);
+    if (authPreOk) {
+      // 已建会话：先核稿闸门 → SAVE → RELOAD（验证对象持久化）→ 再正常 订单号→印刷→提交
+      RUN.phases.hegaoOk = await stageProofCore();
+      RUN.phases.saveReload = await doSaveReload(RUN, newTextboxes);
+      RUN.phases.orderNo = await fillOrderNo(1);
+      await sleep(1200);
+      const p0 = page.waitForResponse((resp) => /submitUserDesign\.do/.test(resp.url()), { timeout: 30000 }).catch(() => null);
+      RUN.phases.print = await stagePrintCore();
+      const resp0 = await p0;
+      let b0 = ""; try { b0 = resp0 ? ((await resp0.text().catch(() => "")) || "") : ""; } catch (e) { b0 = ""; }
+      const exp0 = /"?loginState"?\s*:\s*"?timeOut/i.test(b0);
+      RUN.phases.submitTry = [{ round: 0, status: resp0 ? resp0.status : null, expired: exp0, body: b0.slice(0, 300) }];
+      RUN.phases.submitFirstStatus = !resp0 ? "NO_SUBMIT_RESPONSE" : (exp0 ? "AUTH_EXPIRED(timeOut)" : "SUBMIT_RESPONDED");
+      RUN.phases.retried = 0;
+      RUN.phases.authRecovered = !exp0;
+    } else if (RUN.phases.hegaoOk) {
       RUN.phases.orderNo = await fillOrderNo(1);
       await sleep(1200);
       // ---- 提交往返（waitForResponse 可靠捕获 submit 响应体, session 判定自此可靠）----
