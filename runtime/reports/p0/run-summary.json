@@ -1,0 +1,247 @@
+{
+  "ts": "2026-09-18T03:04:02.308Z",
+  "flags": {
+    "fromProof": false,
+    "fromPrint": false,
+    "fromCheck": false,
+    "caseFontSchema": true
+  },
+  "resumeFrom": null,
+  "phases": {
+    "resumeFrom": null,
+    "net": [
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do"
+      }
+    ],
+    "editor": {
+      "ok": true,
+      "data": {
+        "ok": true
+      },
+      "ms": 1534
+    },
+    "schemaDiff": [
+      {
+        "key": "mediafontId",
+        "manual": {
+          "v": "248",
+          "t": "string"
+        },
+        "script": {
+          "v": "556",
+          "t": "string"
+        }
+      },
+      {
+        "key": "fontFamily",
+        "manual": {
+          "v": "方正黑体简体",
+          "t": "string"
+        },
+        "script": {
+          "v": "思源黑体 Regular",
+          "t": "string"
+        }
+      },
+      {
+        "key": "fontSize",
+        "manual": {
+          "v": 18,
+          "t": "number"
+        },
+        "script": {
+          "v": 24,
+          "t": "number"
+        }
+      },
+      {
+        "key": "fill",
+        "manual": {
+          "v": "rgb(0,0,0)",
+          "t": "string"
+        },
+        "script": {
+          "v": "#000000",
+          "t": "string"
+        }
+      },
+      {
+        "key": "uuid",
+        "manual": {
+          "v": "c7f460b7-2181-4b00-a11a-69d0daff1bcb",
+          "t": "string"
+        },
+        "script": {
+          "v": "a73c2cbc-9183-4ca6-ac84-dbb1fc218d51",
+          "t": "string"
+        }
+      },
+      {
+        "key": "multiUuid",
+        "manual": {
+          "v": "0a64a100-2a93-4a25-ae7d-6f430582b259",
+          "t": "string"
+        },
+        "script": {
+          "v": "p0cf642300",
+          "t": "string"
+        }
+      },
+      {
+        "key": "topEnable",
+        "manual": {
+          "v": false,
+          "t": "boolean"
+        },
+        "script": {
+          "v": 1,
+          "t": "number"
+        }
+      },
+      {
+        "key": "resourceType",
+        "manual": {
+          "v": 1,
+          "t": "number"
+        },
+        "script": {
+          "v": 0,
+          "t": "number"
+        }
+      },
+      {
+        "key": "maskEnable",
+        "manual": {
+          "v": false,
+          "t": "boolean"
+        },
+        "script": {
+          "v": 0,
+          "t": "number"
+        }
+      },
+      {
+        "key": "lowPixelFlag",
+        "manual": {
+          "v": false,
+          "t": "boolean"
+        },
+        "script": {
+          "v": 0,
+          "t": "number"
+        }
+      },
+      {
+        "key": "selectEnabled",
+        "manual": {
+          "v": true,
+          "t": "boolean"
+        },
+        "script": {
+          "v": 1,
+          "t": "number"
+        }
+      },
+      {
+        "key": "isDesign",
+        "manual": {
+          "v": true,
+          "t": "boolean"
+        },
+        "script": {
+          "v": 1,
+          "t": "number"
+        }
+      },
+      {
+        "key": "isComposite",
+        "manual": {
+          "v": true,
+          "t": "boolean"
+        },
+        "script": {
+          "v": 0,
+          "t": "number"
+        }
+      },
+      {
+        "key": "isPreview",
+        "manual": {
+          "v": true,
+          "t": "boolean"
+        },
+        "script": {
+          "v": 0,
+          "t": "number"
+        }
+      },
+      {
+        "key": "isDesignShape",
+        "manual": {
+          "v": false,
+          "t": "boolean"
+        },
+        "script": {
+          "v": 0,
+          "t": "number"
+        }
+      },
+      {
+        "key": "visitLevel",
+        "manual": {
+          "v": 1000,
+          "t": "number"
+        },
+        "script": {
+          "v": 1,
+          "t": "number"
+        }
+      },
+      {
+        "key": "lineHeight",
+        "manual": {
+          "v": 1.16,
+          "t": "number"
+        },
+        "script": {
+          "v": 1.3,
+          "t": "number"
+        }
+      }
+    ]
+  },
+  "events": [
+    {
+      "t": "03:03:59",
+      "s": "runner-start {\"fromProof\":false,\"fromPrint\":false,\"fromCheck\":false,\"caseFontSchema\":true}"
+    },
+    {
+      "t": "03:03:59",
+      "s": "case-font-schema"
+    }
+  ],
+  "pages": [],
+  "errors": []
+}
