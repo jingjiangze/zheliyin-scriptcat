@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Stage 7.3 t4（2026-09-18）— v0.3.10.1 hotfix：保存链路根因修复（“错误素材删除”→ 对象序列化缺字段）
+- **Root cause（真机证据 v16）**：drawText 创建的 textbox 缺 `resourceType/maskEnable/lowPixelFlag/selectEnabled/isDesign/isComposite/isPreview/isDesignShape/topEnable` → ProductDataModel Q() 序列化裸拼接产出 `"resourceType":undefined` → JSON 非法 → R() 校验失败 → 「素材错误提示」gate，点删除后按 uuid 移除对象 = “保存后文字消失”（与字体无关，非思源黑假设不成立）。
+- **修复**：buildTextMediaEntry 补全 9 个序列化字段（合法 JSON 数值）；drawText 后对对象双保险补齐（page-bridge.js）。
+- **验证（v16 探针，External Chrome）**：fails=0、无素材错误弹窗、`saveThirdUserDesign.do` 已发出（resp `{"result":true,"loginState":"timeOut"}`）——素材错误 gate 消除；写库落库仍受会话/订单绑定层阻塞（待解锁）。
+- 版本 0.3.10.0 → 0.3.10.1 同步（userscript @version/@require ×9、manifest version_name、extension/assistant.js、README、CHANGELOG）。
+
 ### Stage 7.3（2026-09-18）— v0.3.10.0：OCR 质量门（OCR 稳定化 §一/§二）+ 样式还原起步
 - **OCR 质量门（新模块 ocr-quality.js，@require 注入第 9 个）**：Cloud Primary 结果在进入 pipeline 前必过质量检查（empty-text / invalid-bbox / out-of-bounds / low-confidence(<0.5) / abnormal-length(>200) / abnormal-count(>200)）；全部被剔除或有效占比 <50% → FAIL → Local FALLBACK；Local 结果同样过门（末端 FAIL 为终态报错，不再换路）；PASS 时保留 dropped 诊断。整批低质候选不再被静默放过画布。
 - **诊断增强**：每次 OCR 输出 `quality:{ok, code, total, kept, dropped}`；quality fail 走既有 `{engine, attempt, fallback, reason}` DIAG。

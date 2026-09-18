@@ -99,6 +99,16 @@ function pageBridge() {
                 editorInteg2.drawTextBatch += 1;
                 obj = findOcrObject(diy, it, layerNum);
                 if (obj) {
+                  // t4 画后双保险: 原生 drawText 若未透传 entry 顶层字段, 直接补对象字段
+                  obj.topEnable = obj.topEnable !== undefined ? obj.topEnable : 1;
+                  obj.resourceType = obj.resourceType !== undefined ? obj.resourceType : 0;
+                  obj.maskEnable = obj.maskEnable !== undefined ? obj.maskEnable : 0;
+                  obj.lowPixelFlag = obj.lowPixelFlag !== undefined ? obj.lowPixelFlag : 0;
+                  obj.selectEnabled = obj.selectEnabled !== undefined ? obj.selectEnabled : 1;
+                  obj.isDesign = obj.isDesign !== undefined ? obj.isDesign : 1;
+                  obj.isComposite = obj.isComposite !== undefined ? obj.isComposite : 0;
+                  obj.isPreview = obj.isPreview !== undefined ? obj.isPreview : 0;
+                  obj.isDesignShape = obj.isDesignShape !== undefined ? obj.isDesignShape : 0;
                   batchNat.push(obj);
                   if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{12,}$/.test(obj.multiUuid)) editorInteg2.uv4Total += 1;
                   try { if (it.diagnostics) obj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
@@ -382,7 +392,11 @@ function pageBridge() {
         layer: { alpha: 1 },
         layerNum: layerNum,
         isEdit: 1, isDisplay: 1, deleteState: 0, visitLevel: 1,
-        multiUuid: nativeIdentityGuid(), markuuid: ""
+        multiUuid: nativeIdentityGuid(), markuuid: "",
+        // Stage 7.3 t4 (v16 根因修复): Q() 序列化对以下字段裸拼接, 缺省会拼出 ":undefined" -> JSON 非法 -> 被判错误素材删除
+        topEnable: 1, resourceType: 0, maskEnable: 0,
+        lowPixelFlag: 0, selectEnabled: 1, isDesign: 1,
+        isComposite: 0, isPreview: 0, isDesignShape: 0
       };
     }
     function nativeIdentityGuid() {

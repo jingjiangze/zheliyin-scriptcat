@@ -1,0 +1,236 @@
+=== loginState first at 80338 ===
+
+---@80338---
+
+&c.templateInfo.pdfMorePage&&(delete A.ProductVO.templateInfo.isMutilVersion,A.isMulti=0);
+a.ajax({type:"POST",url:m,contentType:"application/json",data:JSON.stringify(A),success:function(g){a("#checkOperate").val("true");
+resetCheckOperate&&clearInterval(resetCheckOperate);
+E=!1;
+if(1==
+g.result){if(g.loginState&&"timeOut"==g.loginState){l.msg("登录超时了,请重新登录！",{time:1500},function(){a("#userAccount").val("");
+a("#userPassword").val("");
+a(".zLoginOut").show()});
+a(".updateTime").eq(0).hide();
+a(".saveLoading").hide();
+a(".updateTime").hide();
+R=!0;
+a("#modifySelected").val("");
+return}afterLoginExecuteBtn="";
+if("1"==a("#autoChangeAndSubmit").val())""!=a("#currentTmplId").val()?l.open({title:"温馨提示",content:"成功"}):(g=a("#currentTmplIndex").val(),window.location.href=contextPath+"/third/tmplToThirdDiyAdd.
+
+---@80363---
+
+ge&&(delete A.ProductVO.templateInfo.isMutilVersion,A.isMulti=0);
+a.ajax({type:"POST",url:m,contentType:"application/json",data:JSON.stringify(A),success:function(g){a("#checkOperate").val("true");
+resetCheckOperate&&clearInterval(resetCheckOperate);
+E=!1;
+if(1==
+g.result){if(g.loginState&&"timeOut"==g.loginState){l.msg("登录超时了,请重新登录！",{time:1500},function(){a("#userAccount").val("");
+a("#userPassword").val("");
+a(".zLoginOut").show()});
+a(".updateTime").eq(0).hide();
+a(".saveLoading").hide();
+a(".updateTime").hide();
+R=!0;
+a("#modifySelected").val("");
+return}afterLoginExecuteBtn="";
+if("1"==a("#autoChangeAndSubmit").val())""!=a("#currentTmplId").val()?l.open({title:"温馨提示",content:"成功"}):(g=a("#currentTmplIndex").val(),window.location.href=contextPath+"/third/tmplToThirdDiyAdd.do?currentTmplIndex\x3d"+
+
+---@95855---
+
+338"==a("#typeid").val())delete f.ProductVO.templateInfo.isMutilVersion,f.isMulti=0;
+db(f);
+a.ajax({type:"POST",url:k,contentType:"application/json",data:JSON.stringify(f),success:function(g){a("#checkOperate").val("true");
+resetCheckOperate&&clearInterval(resetCheckOperate);
+aa=!1;
+if(1==g.result){if(g.loginState&&"timeOut"==g.loginState){l.msg("登录超时了,请重新登录！",{time:1500},function(){a("#userAccount").val("");
+a("#userPassword").val("");
+a(".zLoginOut").show()});
+a(".updateTime").eq(0).hide();
+
+a(".saveLoading").hide();
+a(".updateTime").hide();
+R=!0;
+a("#modifySelected").val("");
+Pa=!1;
+"autoSave"!=b&&console.log("2222222"+f);
+return}afterLoginExecuteBtn="";
+a("#curvedToText").val(!1);
+a("#diyName").val(h);
+w.isEmpty(g.diyId)||a("#diyId").val(g.diyId);
+w.isEmpty(g.previewImage)||a("#previewImage").val(g.previ
+
+---@95880---
+
+delete f.ProductVO.templateInfo.isMutilVersion,f.isMulti=0;
+db(f);
+a.ajax({type:"POST",url:k,contentType:"application/json",data:JSON.stringify(f),success:function(g){a("#checkOperate").val("true");
+resetCheckOperate&&clearInterval(resetCheckOperate);
+aa=!1;
+if(1==g.result){if(g.loginState&&"timeOut"==g.loginState){l.msg("登录超时了,请重新登录！",{time:1500},function(){a("#userAccount").val("");
+a("#userPassword").val("");
+a(".zLoginOut").show()});
+a(".updateTime").eq(0).hide();
+
+a(".saveLoading").hide();
+a(".updateTime").hide();
+R=!0;
+a("#modifySelected").val("");
+Pa=!1;
+"autoSave"!=b&&console.log("2222222"+f);
+return}afterLoginExecuteBtn="";
+a("#curvedToText").val(!1);
+a("#diyName").val(h);
+w.isEmpty(g.diyId)||a("#diyId").val(g.diyId);
+w.isEmpty(g.previewImage)||a("#previewImage").val(g.previewImage);
+w.isEmpty(g.page
+
+---@340114---
+
+"338"==a("#typeid").val())delete k.ProductVO.templateInfo.isMutilVersion,k.isMulti=0;
+db(k);
+a.ajax({type:"POST",url:h,contentType:"application/json",data:JSON.stringify(k),success:function(g){a("#checkOperate").val("true");
+resetCheckOperate&&clearInterval(resetCheckOperate);
+E=!1;
+if(1==g.result){if(g.loginState&&"timeOut"==g.loginState){l.msg("登录超时了,请重新登录！",{time:1500},function(){a("#userAccount").val("");
+a("#userPassword").val("");
+a(".zLoginOut").show()});
+
+a(".updateTime").eq(0).hide();
+a(".saveLoading").hide();
+a(".updateTime").hide();
+R=!0;
+a("#modifySelected").val("");
+"autoSave"!=b&&console.log("33333333"+k);
+return}afterLoginExecuteBtn="";
+if("1"==a("#autoChangeAndSubmit").val())if(""!=a("#currentTmplId").val())l.open({title:"温馨提示",content:"成功"});
+else{var h=a("#currentTmplIndex").val();
+window
+
+---@340139---
+
+)delete k.ProductVO.templateInfo.isMutilVersion,k.isMulti=0;
+db(k);
+a.ajax({type:"POST",url:h,contentType:"application/json",data:JSON.stringify(k),success:function(g){a("#checkOperate").val("true");
+resetCheckOperate&&clearInterval(resetCheckOperate);
+E=!1;
+if(1==g.result){if(g.loginState&&"timeOut"==g.loginState){l.msg("登录超时了,请重新登录！",{time:1500},function(){a("#userAccount").val("");
+a("#userPassword").val("");
+a(".zLoginOut").show()});
+
+a(".updateTime").eq(0).hide();
+a(".saveLoading").hide();
+a(".updateTime").hide();
+R=!0;
+a("#modifySelected").val("");
+"autoSave"!=b&&console.log("33333333"+k);
+return}afterLoginExecuteBtn="";
+if("1"==a("#autoChangeAndSubmit").val())if(""!=a("#currentTmplId").val())l.open({title:"温馨提示",content:"成功"});
+else{var h=a("#currentTmplIndex").val();
+window.location.href=contextPat
+
+=== saveThirdUserDesign first at 62333 ===
+
+---@62333---
+
+("true"!=a("#checkOperate").val()){a(".gildingLoading").hide();
+
+return}a("#checkOperate").val("false");
+checkOperateStart()}fa=!1;
+a("#AllOrderSelected")[0]&&!a("#AllOrderSelected").is(":checked")&&"autoSave"!=b&&J.stopCount();
+E=!0;
+var q=a(".centerTitle .title").val();
+console.log("保存开始");
+var m="third/saveThirdUserDesign.do";
+ha.getInstance().jsonParameter.name=q;
+c.diyName=q;
+O||(h=a(".onlyShow img")[0].src,k=h.indexOf("resource"),h.substring(k,h.length-1),""==a(".onlyShow img")[0].src&&a(".onlyShow img").removeAttr("src"));
+c.templateInfo.radius&&"true"==a("#curvedToText").val()&&
+Na();
+na();
+try{w.getBgIndexByProduct(c)}catch(P){console.log("检测背景图片数量时出错"),E=!1}if(fa)"autoSave"!=b?a(".saveLoading").hide():a(".updateTime").eq(0).hide(),E=!1,a(".gildingLoading").hide();
+else var t=function(){if(O&&w
+
+---@74783---
+
+do"}else"export"!=b||"171"!=a("#typeid").val()&&"294"!=a("#typeid").val()?"export"==b&&"353"==
+a("#typeid").val()?(h=JSON.parse(JSON.stringify(c)),A.ProductVO=h,A.calendarCanvasPath=W,A.saveType="submit",A.orderNo=h.templateInfo.userInforInCard.workOrderNum,m="calendar/saveUserDesign.do"):(m="third/saveThirdUserDesign.do","autoSave"!=b&&(A=a.extend({},A,k)),"share"==b&&O&&(A.picTShirtPath=v.canvasTshirtPagesBase64Arr)):(A.saveType="submit",A.diyTypeNum=a("#diyTypeNumCup").val(),h=[],ca&&h.push(ca),da&&h.push(da),A.silkScreenPicturePath=h,h=[],Xa&&h.push(Xa),A.silkScreenAllPicturePath=h,h=[],
+h.push(oa),A.totalImg=h,m="calendar/saveUserDesign.do");
+O&&(A.tShirtColorId=a(".rightPageBar .colorBox").find(".current").attr("colorId"),A.tShirtTemplateId=a("#choosePro .pageBox .current img").attr("
+
+---@85581---
+
+a("#checkOperate").length){if("true"!=a("#checkOperate").val())return;
+a("#checkOperate").val("false");
+checkOperateStart()}fa=!1;
+a("#AllOrderSelected")[0]&&!a("#AllOrderSelected").is(":checked")&&"autoSave"!=b&&J.stopCount();
+aa=!0;
+var h=a(".centerTitle .title").val();
+console.log("保存开始");
+var k="third/saveThirdUserDesign.do";
+ha.getInstance().jsonParameter.name=h;
+c.diyName=h;
+if(!O){f=a(".onlyShow img")[0].src;
+var n=f.indexOf("resource");
+f.substring(n,f.length-1);
+""==a(".onlyShow img")[0].src&&
+a(".onlyShow img").removeAttr("src")}c.templateInfo.radius&&"true"==a("#curvedToText").val()&&Na();
+na("autoSave");
+try{w.getBgIndexByProduct(c)}catch(t){console.log("检测背景图片数量时出错"),aa=!1}if(fa)"autoSave"!=b?a(".saveLoading").hide():a(".updateTime").eq(0).hide(),aa=!1;
+else var q=function(){if(O&&w.isProduct
+
+---@94781---
+
+put input").val().trim()&&
+(f.kfUseSign=a.trim(a(".searchOrderInput input").val()));
+""!=a("#orderTypeThird").val()&&(f.orderTypeThird=a("#orderTypeThird").val());
+0<a("#currentCanvasBase64").length&&""!=a("#currentCanvasBase64").val()&&(f.currentCanvasBase64=a("#currentCanvasBase64").val());
+k="third/saveThirdUserDesign.do";
+O&&(f.tShirtColorId=a(".rightPageBar .colorBox").find(".current").attr("colorId"),f.tShirtTemplateId=a("#choosePro .pageBox .current img").attr("templateid"),c.diyType="Tshirt");
+for(q=0;
+q<c.pageList.length;
+q++)for(n=
+c.pageList[q].content.itemList,r=0;
+r<n.length;
+r++)if("text"==n[r].media.mediaType&&!n[r].artText&&"[object Object]"==n[r].media.font.fontColor){f="";
+f=0==q?"一":"二";
+l.open({title:"温馨提示",content:"您的第"+f+"页设计中的文本【"+n[r].media.text+"】字体颜色设定有误，请重新选择颜色再次保存"});
+a(".s
+
+---@332930---
+
+true"!=a("#checkOperate").val()){a(".saveLoading").hide();
+return}a("#checkOperate").val("false");
+checkOperateStart()}fa=!1;
+a("#AllOrderSelected")[0]&&!a("#AllOrderSelected").is(":checked")&&"autoSave"!=b&&J.stopCount();
+E=!0;
+var f=a(".centerTitle .title").val();
+console.log("save start");
+var h="third/saveThirdUserDesign.do";
+ha.getInstance().jsonParameter.name=f;
+c.diyName=f;
+if(!O){var k=a(".onlyShow img")[0].src,n=k.indexOf("resource");
+k.substring(n,k.length-
+1);
+""==a(".onlyShow img")[0].src&&a(".onlyShow img").removeAttr("src")}c.templateInfo.radius&&"true"==a("#curvedToText").val()&&Na();
+na();
+try{w.getBgIndexByProduct(c)}catch(t){E=!1}if(fa)"autoSave"!=b?a(".saveLoading").hide():a(".updateTime").eq(0).hide(),E=!1;
+else var q=function(){c.templateInfo.diyType=ha.getInstance().jsonParameter.di
+
+---@338924---
+
+put input").val().trim()&&(k.kfUseSign=a.trim(a(".searchOrderInput input").val()));
+""!=a("#orderTypeThird").val()&&
+(k.orderTypeThird=a("#orderTypeThird").val());
+0<a("#currentCanvasBase64").length&&""!=a("#currentCanvasBase64").val()&&(k.currentCanvasBase64=a("#currentCanvasBase64").val());
+h="third/saveThirdUserDesign.do";
+"autoSave"!=b&&(k=a.extend({},k,n));
+"share"==b&&O&&(k.picTShirtPath=v.canvasTshirtPagesBase64Arr);
+O&&(k.tShirtColorId=a(".rightPageBar .colorBox").find(".current").attr("colorId"),k.tShirtTemplateId=a("#choosePro .pageBox .current img").attr("templateid"),c.diyType="Tshirt");
+for(q=0;
+q<c.pageList.length;
+q++)for(r=
+c.pageList[q].content.itemList,p=0;
+p<r.length;
+p++)if("text"==r[p].media.mediaType&&!r[p].artText&&"[object Object]"==r[p].media.font.fontColor){n="";
+n=0==q?"一":"
