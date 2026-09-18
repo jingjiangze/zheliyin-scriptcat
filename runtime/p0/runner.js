@@ -21,17 +21,18 @@ const EDITOR_URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thi
 const P0_DIR = path.join(__dirname, "..", "reports", "p0");
 const RESUME = path.join(P0_DIR, "resume-state.json");
 const PROFILE = path.join(__dirname, "..", "browser", "profile-usc3");
-const USER = "17606256193";
-const PASS = "tengyun666";
+// 安全：账号密码只从环境变量读取，禁止硬编码/写入报告
+const USER = process.env.P0_LOGIN_USER || "";
+const PASS = process.env.P0_LOGIN_PASS || "";
 const PROBE_TEXT = "P0_FONT_TEST";
 
 // ---------- CLI ----------
 const args = process.argv.slice(2);
-const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema") };
+const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema"), adoptSession: args.includes("--adopt-session"), sessionParity: args.includes("--session-parity"), submitProbe: args.includes("--submit-probe") };
 const resumeArg = (args.find((a) => a.startsWith("--resume=")) || "").split("=")[1];
 
 // ---------- 报告 ----------
-const report = { ts: new Date().toISOString(), stage: "P0-RUNNER", url: EDITOR_URL, flags: FLAG, phases: {}, events: [], pages: [], errors: [] };
+const report = { ts: new Date().toISOString(), stage: "P0-RUNNER", url: EDITOR_URL, flags: FLAG, authConfigured: !!(USER && PASS), sessionSource: null, phases: {}, events: [], pages: [], errors: [] };
 function writeJson(name, obj) { if (!fs.existsSync(P0_DIR)) fs.mkdirSync(P0_DIR, { recursive: true }); fs.writeFileSync(path.join(P0_DIR, name), JSON.stringify(obj, null, 2)); }
 function saveResume(stage, extra) { writeJson("resume-state.json", { ts: new Date().toISOString(), stage, url: page && page.url ? page.url().slice(0, 200) : null, ...extra }); }
 const evt = (s) => report.events.push({ t: new Date().toISOString().slice(11, 19), s: s.slice(0, 200) });
@@ -531,9 +532,69 @@ async function caseFontSchema() {
   return { ok: true, diff };
 }
 
-// ---------- 主流程 ----------
+// ---------- session parity / submit probe ----------
+// 采集 MANAGED 会话的环境指纹（脱敏），与 REAL 会话（disc）对比输出 session-parity.json
+async function parityCollect(disc) {
+  evt("session-parity-collect");
+  await launch();
+  const okE = await ensureEditor(120000);
+  if (!okE) { report.errors.push("editor not ready"); return; }
+  const lgE = await ev(() => {
+    const ua = document.querySelector("#userAccount");
+    return { loginVisible: !!(ua && ua.offsetParent), cookieKeys: Object.keys(document.cookie.split("; ").reduce((o, c) => { const k = c.split("=")[0]; if (k) o[k] = 1; return o; }, {})).sort(), storageKeys: Object.keys(localStorage).sort().slice(0, 80), sessionKeys: Object.keys(sessionStorage).sort().slice(0, 40) };
+  });
+  const globalsProbe = await ev(() => {
+    const names = Object.getOwnPropertyNames(window).sort();
+    return { ok: true, count: names.length, sample: names.filter((n) => /zy|diy|product|canvas|order|user|token|login/i.test(n)).slice(0, 60) };
+  });
+  const managed = { loginVisible: lgE.loginVisible, cookieKeys: (lgE.cookieKeys || []).slice(0, 80), storageKeys: lgE.storageKeys, sessionKeys: lgE.sessionKeys, globalsCount: globalsProbe.count, globalsSample: (globalsProbe.sample || []), submitResp: null };
+  report.phases.managedEnv = { loginVisible: managed.loginVisible, cookieCount: (managed.cookieKeys || []).length, storageCount: (managed.storageKeys || []).length, sessionCount: (managed.sessionKeys || []).length };
+  evt("managed-env captured");
+  writeJson("session-parity.json", {
+    ts: new Date().toISOString(),
+    realSession: disc.source === "EXISTING_REAL_BROWSER" ? { source: disc.source, pages: (disc.pages || []).length, editorPages: (disc.pages || []).filter((p) => p.isEditor).length, cookieNames: disc.cookieNames || [] } : null,
+    managedSession: managed,
+    note: "敏感值已脱敏：仅记录 cookie/storage key 名称，不含 value"
+  });
+}
+// managed 提交探测：创建对象→核稿→印刷→设计信息→确定，抓 submitUserDesign.do 响应
+async function submitProbe() {
+  evt("submit-probe");
+  await launch();
+  await ensureEditor(120000);
+  const lgE = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
+  if (lgE) { const lk = await ensureLogin(); if (!lk) { report.errors.push("AUTH_REQUIRED"); return; } }
+  await createProbeObject();
+  await stageProof();
+  const pr = await stagePrint();
+  report.phases.submitProbe = { print: pr };
+  // 抓 submit 响应
+  const sub = (report.phases.net || []).filter((n) => /submitUserDesign|saveThirdUserDesign/.test(n.u)).map((n) => ({ u: n.u.slice(0, 140), status: n.status, body: String(n.body || "").slice(0, 200) }));
+  report.phases.submitResp = sub;
+  writeJson("submit-probe.json", { ts: new Date().toISOString(), printOk: !!(pr && pr.ok), submitResp: sub });
+}
 async function main() {
   evt("runner-start " + JSON.stringify(FLAG));
+  const adopt = require("./session-adopt");
+  const disc = await adopt.discover();
+  report.sessionSource = disc.source;
+  report.disc = { source: disc.source, cdpUrl: disc.cdpUrl || null, pages: disc.pages || [], cookieNames: disc.cookieNames || [] };
+  if (disc.source === "EXISTING_REAL_BROWSER") {
+    evt("REAL-BROWSER-FOUND cdp=" + (disc.cdpUrl || ""));
+    const ep = (disc.pages || []).find((p) => p.isEditor);
+    if (ep) evt("REAL-EDITOR-PAGE ready=" + ep.editorReady + " " + ep.url.slice(0, 100));
+  } else {
+    evt("SESSION-SOURCE=MANAGED_PERSISTENT_PROFILE");
+  }
+  // 模式：仅 session 相关
+  if (FLAG.adoptSession) {
+    writeJson("session-parity.json", { mode: "adopt", ts: new Date().toISOString(), sessionSource: report.sessionSource, pages: disc.pages || [], cookieNames: disc.cookieNames || [] });
+    writeSummary();
+    return;
+  }
+  if (FLAG.sessionParity) { await parityCollect(disc); writeSummary(); return; }
+  if (FLAG.submitProbe) { await submitProbe(); writeSummary(); return; }
+
   await launch();
   const resumeFrom = resumeArg || (FLAG.fromCheck ? "check" : FLAG.fromPrint ? "print" : FLAG.fromProof ? "proof" : null);
   report.phases.resumeFrom = resumeFrom;
@@ -602,6 +663,9 @@ function writeSummary() {
   writeJson("run-summary.json", {
     ts: new Date().toISOString(),
     flags: FLAG,
+    authConfigured: !!(USER && PASS),
+    sessionSource: report.sessionSource,
+    disc: report.disc,
     resumeFrom: report.phases.resumeFrom || null,
     phases: Object.keys(report.phases).reduce((o, k) => { o[k] = report.phases[k]; return o; }, {}),
     events: report.events,
