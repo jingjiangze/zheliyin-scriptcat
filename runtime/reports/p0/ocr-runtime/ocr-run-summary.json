@@ -1,0 +1,181 @@
+{
+  "ts": "2026-09-18T05:35:19.537Z",
+  "ocrRunId": "OCR-20260918-001",
+  "stage": "REAL_OCR",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "phases": {
+    "editorReady": true,
+    "userscript": {
+      "ok": true,
+      "toolBtn": true,
+      "bridge": true
+    },
+    "scriptVersionSeen": [
+      "0.3.10.2"
+    ],
+    "fixtureFile": ".\\runtime\\p0\\fixtures\\ocr-test.png",
+    "panelOpen": false,
+    "ocrClick": {
+      "ok": true
+    },
+    "ocrReplySeen": false,
+    "ocrVisible": "FAIL",
+    "reloadReady": true,
+    "hegaoOk": false,
+    "orderNo": {
+      "ok": true
+    },
+    "print": {
+      "ok": true,
+      "attempt": 0
+    },
+    "proofSurfaces": null,
+    "retried": 2,
+    "previews": [],
+    "autoProofreadPopup": {
+      "err": "Error: page.evaluate: Target page, context or browser has been closed"
+    },
+    "realOcrProof": "FAIL",
+    "proofCounts": {
+      "total": 0,
+      "pass": 0,
+      "errAutoCheck": 0,
+      "popup": {
+        "err": "Error: page.evaluate: Target page, context or browser has been closed"
+      }
+    }
+  },
+  "statusLog": [],
+  "errors": [],
+  "authConfigured": true,
+  "scriptRegistered": {
+    "uuid": "zheliyin-real-ocr-0.3.10.2",
+    "name": "折立印名片套版助手 (OCR Demo 版)",
+    "author": "jingjiangze",
+    "namespace": "https://github.com/jingjiangze/zheliyin-scriptcat",
+    "originDomain": "",
+    "origin": "",
+    "checkUpdate": true,
+    "checkUpdateUrl": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/zheliyin-card-assistant.user.js",
+    "downloadUrl": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/zheliyin-card-assistant.user.js",
+    "metadata": {
+      "name": [
+        "折立印名片套版助手 (OCR Demo 版)"
+      ],
+      "namespace": [
+        "https://github.com/jingjiangze/zheliyin-scriptcat"
+      ],
+      "version": [
+        "0.3.10.2"
+      ],
+      "description": [
+        "【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。"
+      ],
+      "author": [
+        "jingjiangze"
+      ],
+      "match": [
+        "https://diy.zheliyin.com/diyWeb/third/*",
+        "https://diy.zheliyin.com/diyWeb/third/*/*/thirdLoginDiyEdit.do*",
+        "https://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*",
+        "https://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*",
+        "https://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*",
+        "http://diy.zheliyin.com/diyWeb/third/*",
+        "http://diy.zheliyin.com/diyWeb/third/*/*/thirdLoginDiyEdit.do*",
+        "http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*",
+        "http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*",
+        "http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*"
+      ],
+      "require": [
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.10.2",
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.10.2"
+      ],
+      "run-at": [
+        "document-idle"
+      ],
+      "grant": [
+        "GM_xmlhttpRequest",
+        "GM_setValue",
+        "GM_getValue",
+        "GM_addStyle",
+        "GM_setClipboard",
+        "GM_addElement"
+      ],
+      "connect": [
+        "ark.cn-beijing.volces.com",
+        "raw.githubusercontent.com",
+        "github.com",
+        "cdn.jsdelivr.net",
+        "aip.baidubce.com",
+        "*"
+      ],
+      "updateurl": [
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/zheliyin-card-assistant.user.js"
+      ],
+      "downloadurl": [
+        "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/zheliyin-card-assistant.user.js"
+      ]
+    },
+    "selfMetadata": {},
+    "sort": -1,
+    "type": 1,
+    "status": 1,
+    "runStatus": "complete",
+    "createtime": 1789709730932,
+    "updatetime": 1789709730932,
+    "checktime": 1789709730932
+  },
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "折立印名片套版助手已加载 0.3.10.2"
+  ],
+  "fixture": {
+    "width": 900,
+    "height": 560,
+    "rows": [
+      "ABC科技有限公司",
+      "张三",
+      "13800138000",
+      "销售经理"
+    ]
+  },
+  "canvasBefore": {
+    "ok": false,
+    "err": "no canvas"
+  },
+  "upload": {
+    "method": "NATIVE_FILE_INPUT",
+    "done": true
+  },
+  "ocrObs": null,
+  "ocrRawEl": null,
+  "after": {},
+  "delta": 0,
+  "newTextboxes": [],
+  "shots": [
+    "ocr-after-create.png"
+  ],
+  "saveClick": {
+    "clicked": true
+  },
+  "reloadSnapshot": {
+    "ok": false,
+    "err": "no canvas"
+  },
+  "final": {
+    "realOcrProof": "FAIL",
+    "ocrVisible": "FAIL",
+    "ocrReplySeen": false,
+    "newTextCount": 0,
+    "scriptVersionSeen": [
+      "0.3.10.2"
+    ]
+  }
+}

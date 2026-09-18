@@ -1,0 +1,42 @@
+{
+  "ts": "2026-09-18T04:54:41.792Z",
+  "mode": "VARIANT:display0",
+  "previews": [
+    {
+      "success": false,
+      "producestate": 3
+    },
+    {
+      "success": true,
+      "producestate": 1
+    },
+    {
+      "success": true,
+      "producestate": 1
+    },
+    {
+      "success": true,
+      "producestate": 1
+    },
+    {
+      "success": true,
+      "producestate": 1
+    },
+    {
+      "success": true,
+      "producestate": 1
+    },
+    {
+      "success": true,
+      "producestate": 1
+    },
+    {
+      "success": true,
+      "producestate": 1
+    },
+    {
+      "success": true,
+      "producestate": 1
+    }
+  ]
+}

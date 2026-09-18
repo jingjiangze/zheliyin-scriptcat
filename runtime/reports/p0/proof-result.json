@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-18T04:06:05.851Z",
+  "ts": "2026-09-18T05:00:12.546Z",
   "searchLog": [
     {
       "r": 0,
@@ -7,7 +7,7 @@
       "cls": "search-btn",
       "beforeHegao": null,
       "afterHegao": null,
-      "reqDelta": 1
+      "reqDelta": 2
     },
     {
       "r": 1,
@@ -15,7 +15,7 @@
       "cls": "search-btn",
       "beforeHegao": null,
       "afterHegao": null,
-      "reqDelta": 1
+      "reqDelta": 2
     },
     {
       "r": 2,
@@ -23,7 +23,7 @@
       "cls": "search-btn",
       "beforeHegao": null,
       "afterHegao": null,
-      "reqDelta": 1
+      "reqDelta": 2
     },
     {
       "r": 3,
@@ -31,15 +31,7 @@
       "cls": "search-btn",
       "beforeHegao": null,
       "afterHegao": null,
-      "reqDelta": 1
-    },
-    {
-      "r": 4,
-      "clicked": true,
-      "cls": "search-btn",
-      "beforeHegao": null,
-      "afterHegao": null,
-      "reqDelta": 1
+      "reqDelta": 2
     }
   ],
   "generatingHandled": 0,
