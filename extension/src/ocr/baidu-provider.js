@@ -52,6 +52,15 @@ function fromDataUrl(dataUrl) {
   return m ? m[1] : null;
 }
 
+// Stage 7.8 §四/§五：Common OCR Result 候选 id —— 稳定确定性 hash（sourceProvider:源行号）。
+// 下游 OCRCandidate.id 唯一标识该候选（跨 Provider 唯一），用于诊断映射与质量门禁去重。
+function candidateId(source, index) {
+  var s = String(source == null ? "cand" : source) + ":" + (index == null ? 0 : index);
+  var h = 5381;
+  for (var i = 0; i < s.length; i += 1) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return (h >>> 0).toString(16);
+}
+
 function mapBaiduError(res) {
   var errno = res && res.error_code != null ? Number(res.error_code) : null;
   if (errno != null && BAIDU_ERR_MAP[errno]) return { errorCode: "BAIDU_REMOTE_" + errno, errorMessage: BAIDU_ERR_MAP[errno], errno: errno };
@@ -156,19 +165,28 @@ function createBaiduProvider(opts) {
       }
       var imageW = (ctx && ctx.imageWidth) || null;
       var imageH = (ctx && ctx.imageHeight) || null;
+      // Stage 7.8 §四/§五/§二十八：Common OCR Result —— 候选必须带 id/sourceProvider/rawMeta，
+      // 不丢失百度 words_result 原始结构（words + location + probability），供下游 normalizer/诊断复用。
       var candidates = parsed.words_result
-        .map(function (w) {
+        .map(function (w, wi) {
           var loc = w && w.location;
           if (!loc || !w.words) return null;
           if ([loc.left, loc.top, loc.width, loc.height].some(function (v) { return typeof v !== "number" || !isFinite(v); })) return null;
           if (loc.width <= 0 || loc.height <= 0) return null;
+          var line = { words: String(w.words).trim(), location: { left: loc.left, top: loc.top, width: loc.width, height: loc.height } };
+          if (w.probability != null) line.probability = w.probability;
           return {
-            text: String(w.words).trim(),
+            id: candidateId("BAIDU", wi),
+            text: line.words,
             bbox: { x: loc.left, y: loc.top, width: loc.width, height: loc.height },
             confidence: w.probability != null ? w.probability : null,
             rotation: null,
             coordinateSpace: "image-pixel",
-            imageSize: imageW != null ? { width: imageW, height: imageH } : null
+            imageSize: imageW != null ? { width: imageW, height: imageH } : null,
+            sourceProvider: "BAIDU",
+            lineIndex: wi,
+            wordIndex: 0,
+            rawMeta: line
           };
         })
         .filter(Boolean)
@@ -183,4 +201,4 @@ function createBaiduProvider(opts) {
   };
 }
 
-if (typeof module !== "undefined" && module.exports) module.exports = { createBaiduProvider, BAIDU_ERR_MAP, fromDataUrl, TOKEN_URL, OCR_URL, MAX_BYTES, MAX_SIDE };
+if (typeof module !== "undefined" && module.exports) module.exports = { createBaiduProvider, BAIDU_ERR_MAP, fromDataUrl, candidateId, TOKEN_URL, OCR_URL, MAX_BYTES, MAX_SIDE };

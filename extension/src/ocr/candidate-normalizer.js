@@ -38,31 +38,47 @@ function normBox(b) {
   return null;
 }
 
-function unifyCandidates(raw, imageSize) {
+// Stage 7.8 §四/§五：Common OCR Result 候选 id —— 与 baidu-provider.candidateId 同构的确定性 hash。
+function candidateId(source, index) {
+  const s = String(source == null ? "cand" : source) + ":" + (index == null ? 0 : index);
+  let h = 5381;
+  for (let i = 0; i < s.length; i += 1) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+  return (h >>> 0).toString(16);
+}
+
+function unifyCandidates(raw, imageSize, opts) {
+  const o = opts || {};
   const list = Array.isArray(raw) ? raw : [];
   const out = [];
-  list.forEach(function (it) {
+  list.forEach(function (it, i) {
     if (!it || !it.bbox || !it.text) return;
     const bbox = normBox(it.bbox);
     if (!bbox) return;
     const text = String(it.text).trim();
     if (!text) return;
+    const sourceProvider = it.sourceProvider || o.sourceProvider || null;
     const cand = {
       text: text,
       bbox: bbox,
       confidence: typeof it.confidence === "number" ? it.confidence : null,
       rotation: typeof it.rotation === "number" ? it.rotation : null,
       coordinateSpace: "image-pixel",
-      imageSize: imageSize || null
+      imageSize: imageSize || null,
+      // Stage 7.8 §四/§五：Common OCR Result 字段（Provider 自带则透传，缺省回落）
+      id: (it.id != null) ? String(it.id) : candidateId(sourceProvider || "cand", i),
+      sourceProvider: sourceProvider,
+      lineIndex: (it.lineIndex != null) ? it.lineIndex : i,
+      wordIndex: (it.wordIndex != null) ? it.wordIndex : 0,
+      rawMeta: (it.rawMeta != null) ? it.rawMeta : null
     };
     // Stage 6 P6.0：word/行信息（有则携带，缺省保持向后兼容）
     if (Array.isArray(it.words)) {
       const wb = [];
-      it.words.forEach(function (w) {
+      it.words.forEach(function (w, wi) {
         if (!w || !w.text) return;
         const nb = normBox(w.bbox);
         if (!nb) return;
-        wb.push({ text: String(w.text).trim(), bbox: nb, confidence: typeof w.confidence === "number" ? w.confidence : null });
+        wb.push({ text: String(w.text).trim(), bbox: nb, confidence: typeof w.confidence === "number" ? w.confidence : null, sourceProvider: sourceProvider, lineIndex: i, wordIndex: wi });
       });
       if (wb.length) { cand.wordBoxes = wb; cand.lineBBox = bbox; }
     }
@@ -201,9 +217,11 @@ function groupWordsToLines(words, opts) {
 
 // words → 统一 OCRCandidate 列表（bbox=行紧致包围盒，lineBBox 同 bbox，wordBoxes 全量）
 // tessLines：executor 的原始 Tesseract 行（含 line.text），有则优先作最终文本（§7）。
+// Stage 7.8 §五/§三十：Local 结果与 Baidu 同一 Common OCR Result schema，sourceProvider="LOCAL"。
 function aggregateLineCandidates(words, imageSize, tessLines) {
-  return groupWordsToLines(words, { tessLines: tessLines || null }).map(function (line) {
+  return groupWordsToLines(words, { tessLines: tessLines || null }).map(function (line, i) {
     return {
+      id: candidateId("LOCAL", i),
       text: line.text,
       bbox: line.bbox,
       lineBBox: line.bbox,
@@ -211,7 +229,11 @@ function aggregateLineCandidates(words, imageSize, tessLines) {
       confidence: line.confidence,
       rotation: null,
       coordinateSpace: "image-pixel",
-      imageSize: imageSize || null
+      imageSize: imageSize || null,
+      sourceProvider: "LOCAL",
+      lineIndex: i,
+      wordIndex: 0,
+      rawMeta: null
     };
   });
 }
@@ -416,7 +438,7 @@ function estimateTextLayout(textLines, fontSize, opts) {
 }
 
 if (typeof module !== "undefined" && module.exports) module.exports = {
-  unifyCandidates, groupWordsToLines, aggregateLineCandidates, normBox,
+  unifyCandidates, groupWordsToLines, aggregateLineCandidates, normBox, candidateId,
   joinWordsSmart, applyTessLineText, rectOverlapArea,
   groupLinesToBlocks, buildTextBlocks,
   estimateCharWidth, estimateTextWidth, estimateTextLayout
