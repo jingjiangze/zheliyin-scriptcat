@@ -177,7 +177,7 @@ async function clickConfirmInLayer() {
     return { clicked: false };
   });
 }
-async function stagePrintCore() {
+async function stagePrintCore(beforeConfirm) {
   for (let attempt = 0; attempt < 3; attempt++) {
     await ev(() => {
       const cands = document.querySelectorAll(".btn.print, li.print, [class*=' print'], .rightBtn li, .rightBtn a");
@@ -199,6 +199,7 @@ async function stagePrintCore() {
     if (!(w && w.ok)) continue;
     await fillDesignInfo();
     await sleep(600);
+    if (typeof beforeConfirm === "function") { await beforeConfirm(); }
     await clickConfirmInLayer();
     return { ok: true, attempt };
   }
@@ -668,18 +669,22 @@ async function openSiteLoginLayer() {
     if (RUN.phases.hegaoOk) {
       RUN.phases.orderNo = await fillOrderNo(1);
       await sleep(1200);
-      RUN.phases.print = await stagePrintCore();
-      await sleep(3000);
-      const subHits = () => browserNet.filter((n) => /submitUserDesign/i.test(n.u));
-      const subPage = await ev(() => (window.__p0PageNet || []).filter((n) => /submitUserDesign/i.test(String(n.u || "")))).catch(() => []);
-      const lastResBody = async () => {
-        const all = subHits().filter((n) => n.k === "res" && n.body).concat(subPage.filter((n) => n.k === "fetchR" || n.k === "xhrR"));
-        const last = all[all.length - 1];
-        return last ? String(last.body || last.b || "") : null;
+      // ---- 提交往返（waitForResponse 可靠捕获 submit 响应体, session 判定自此可靠）----
+      RUN.phases.submitTry = [];
+      const doSubmitRun = async (round) => {
+        const p = page.waitForResponse((resp) => /submitUserDesign\.do/.test(resp.url()), { timeout: 30000 }).catch(() => null);
+        RUN.phases.print = await stagePrintCore();
+        const resp = await p;
+        if (!resp) return { captured: false, round };
+        let b = ""; try { b = await resp.text().catch(() => ""); } catch (e) { b = ""; }
+        const expired = /loginState\s*:\s*"?timeOut/i.test(b);
+        const rec = { round, status: resp.status(), expired: expired, body: String(b || "").slice(0, 300) };
+        RUN.phases.submitTry.push(rec);
+        return { captured: true, round, status: resp.status(), body: b, expired: expired };
       };
-      const body1 = await lastResBody();
-      const authExpired = !!body1 && /loginState\s*:\s*"?timeOut/i.test(body1);
-      RUN.phases.submitFirst = { hits: subHits().length + subPage.length, body: (body1 || "").slice(0, 200) };
+      const r1 = await doSubmitRun(0);
+      const authExpired = !!(r1 && r1.captured) && !!r1.expired;
+      RUN.phases.submitFirstStatus = !(r1 && r1.captured) ? "NO_SUBMIT_RESPONSE" : (authExpired ? "AUTH_EXPIRED(timeOut)" : "SUBMIT_RESPONDED");
       // ---- AUTH 恢复状态机（≤2 次）：站点自愈优先 → 手动 env 登录（原位，不 reload 保对象）----
       let recovered = !authExpired;
       let retried = 0;
@@ -698,11 +703,9 @@ async function openSiteLoginLayer() {
         retried++;
         if (!lk) break;
         RUN.phases.hegaoOk = await stageProofCore();
-        if (RUN.phases.hegaoOk) { await fillOrderNo(1); await sleep(1200); await stagePrintCore(); }
-        await sleep(3000);
-        const body2 = await lastResBody();
-        if (body2 && !/loginState\s*:\s*"?timeOut/i.test(body2)) recovered = true;
-        else if (!body2 && (subHits().length + subPage.length) > 0) recovered = true;
+        if (RUN.phases.hegaoOk) { await fillOrderNo(1); await sleep(1200); }
+        const r2 = await doSubmitRun(retried);
+        if (r2 && r2.captured && !r2.expired) recovered = true;
       }
       RUN.phases.retried = retried;
       RUN.phases.authRecovered = recovered;
