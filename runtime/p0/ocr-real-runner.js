@@ -263,6 +263,27 @@ async function openSiteLoginLayer() {
     return { ok: false, reason: "no site login entry" };
   });
 }
+async function bootstrapAuthSession() {
+  // 站点登录会整页 reload（历史验证），故必须在创建对象前建立真实会话：
+  // 用一次「印刷→设计信息→确定」触发 loginState:timeOut → 等登录弹层 → env 登录 → 校验会话
+  RUN.phases.hegaoOk = await stageProofCore();
+  if (!RUN.phases.hegaoOk) return { ok: false, stage: "hegao" };
+  await fillOrderNo(1); await sleep(1200);
+  const p = page.waitForResponse((resp) => /submitUserDesign\.do/.test(resp.url()), { timeout: 30000 }).catch(() => null);
+  await stagePrintCore();
+  const resp = await p;
+  let body = ""; try { body = resp ? ((await resp.text().catch(() => "")) || "") : ""; } catch (e) { body = ""; }
+  if (body && !/"?loginState"?\s*:\s*"?timeOut/i.test(body)) return { ok: true, stage: "already-auth", body: body.slice(0, 120) };
+  const formW = await waitUntil(() => {
+    const ua = document.querySelector("#userAccount");
+    return { ok: !!(ua && ua.offsetParent) };
+  }, "login popup", 20000, 1000);
+  if (!(formW && formW.ok)) return { ok: false, stage: "no-login-form", body: body.slice(0, 120) };
+  const lk = await ensureLogin();
+  await waitUntil(isReadyExpr(), "editor after bootstrap login", 90000);
+  const authPost = await ev(() => { const ua = document.querySelector("#userAccount"); return { loginLayerVisible: !!(ua && ua.offsetParent) }; });
+  return { ok: true, stage: "logged-in", loginClosed: lk, authPost: authPost };
+}
 (async () => {
   const RUN = { ts: new Date().toISOString(), ocrRunId: null, stage: "REAL_OCR", url: EDITOR_URL, phases: {}, statusLog: [], errors: [] };
   RUN.ocrRunId = ocrRunId();
@@ -477,6 +498,12 @@ async function openSiteLoginLayer() {
       const lg2 = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
       if (lg2) { const lk = await ensureLogin(); RUN.phases.userLogin = ((RUN.phases.userLogin || "") + "|forced:" + (lk ? "PASS" : "FAIL")); await waitUntil(isReadyExpr(), "editor after login2", 90000); }
       RUN.phases.authForcedPost = await ev(() => { const ua = document.querySelector("#userAccount"); return { loginLayerVisible: !!(ua && ua.offsetParent), logout: /退出|注销|登出/.test(String(document.body.innerText || "")) }; });
+    }
+    // ---- 会话引导：创建对象前必须先有真实会话（登录会整页 reload, 否则 OCR 对象无法保存/提交）----
+    if (USER && !(authProbe && authProbe.hasSession)) {
+      RUN.phases.authBootstrap = await bootstrapAuthSession();
+    } else {
+      RUN.phases.authBootstrap = { ok: true, stage: "skip(already-auth)" };
     }
 
     // ---- 4. 用户脚本 UI + 桥 + 版本 ----
