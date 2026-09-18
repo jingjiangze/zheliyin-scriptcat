@@ -338,6 +338,61 @@ async function stagePrint() {
   }, "proof surfaces (jiao/check/error)", 45000);
   report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
   evt("proof-surfaces " + JSON.stringify(report.phases.proofSurfaces));
+  // ---- 登录浮层 → 自动登录 → 重试印刷（最多 2 次）----
+  let retried = 0;
+  while (!(proofWait && proofWait.ok) && retried < 2) {
+    const lgNow = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
+    if (!lgNow) break;
+    evt("login-popup-after-submit auto-login retry=" + retried);
+    await ensureLogin();
+    retried++;
+    await clickByName("印刷");
+    await sleep(3000);
+    const w1b = await waitUntil(() => {
+      const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+      for (let i = 0; i < layers.length; i++) {
+        const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
+        const t = String(el.innerText || "");
+        if (/作品名|设计信息/.test(t) && /用户名/.test(t)) return { ok: true, txt: t.slice(0, 120) };
+      }
+      return { ok: false };
+    }, "design-info retry", 25000);
+    if (!(w1b && w1b.ok)) break;
+    await ev(() => {
+      const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+      let host = null;
+      for (let i = 0; i < layers.length; i++) { const el = layers[i]; if (el.offsetParent && /作品名/.test(String(el.innerText || ""))) { host = el; break; } }
+      const scope = host || document;
+      const inputs = scope.querySelectorAll("input[type=text], input:not([type]), textarea");
+      const setByLabel = (keys, val) => {
+        for (let i = 0; i < inputs.length; i++) { const el = inputs[i]; if (el.__p0) continue; const joined = (el.previousElementSibling ? String(el.previousElementSibling.textContent || "") : "") + String(el.placeholder || "") + String(el.title || ""); for (let k = 0; k < keys.length; k++) { if (joined.indexOf(keys[k]) >= 0) { el.value = val; try { el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true })); } catch (e) {} el.__p0 = 1; break; } } }
+      };
+      setByLabel(["作品", "作品名", "workName", "名称"], "1");
+      setByLabel(["用户", "用户名", "userName", "姓名"], "2");
+      setByLabel(["备注"], "p0 retry");
+      return { ok: true };
+    });
+    await sleep(1200);
+    await ev(() => {
+      const btns = document.querySelectorAll(".layui-layer button, .layui-layer a, .layui-layer-btn0, .modal button, .modal a");
+      for (let i = 0; i < btns.length; i++) { const tx = String(btns[i].textContent || "").trim(); if (/^确定$|^保存$/.test(tx)) { const host = btns[i].closest(".layui-layer, .modal, .modal-container") || document; if (/确定进行印刷|提交生产|提交制作|确认提交|确定印刷|下单/i.test(String(host.textContent || ""))) continue; try { btns[i].click(); return { clicked: true }; } catch (e) {} break; } }
+      return { clicked: false };
+    });
+    evt("retry-print-submitted");
+    proofWait = await waitUntil(() => {
+      const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+      const seen = [];
+      for (let i = 0; i < layers.length; i++) {
+        const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
+        const t = String(el.innerText || "");
+        if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) seen.push(t.slice(0, 100));
+      }
+      return seen.length ? { ok: true, seen } : { ok: false };
+    }, "proof surfaces retry", 45000);
+    report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
+    evt("proof-surfaces-retry " + JSON.stringify(report.phases.proofSurfaces));
+  }
+  report.phases.retried = retried;
   // 出现核稿结果面（错误截图/生产稿/设计稿）→ 保存截图
   if (report.phases.proofSurfaces && report.phases.proofSurfaces.some((t) => /错误截图|生产稿|设计稿/.test(t))) {
     try { await page.screenshot({ path: path.join(P0_DIR, "proof-surfaces.png") }); report.phases.shot = { ok: true }; } catch (e) { report.phases.shot = { err: String(e) }; }
