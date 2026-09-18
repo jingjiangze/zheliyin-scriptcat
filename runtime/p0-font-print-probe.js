@@ -12,11 +12,10 @@ const { chromium } = require("playwright");
 
 const EDITOR_URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const REPORT_PATH = path.join(__dirname, "reports", "p0-font-print-probe.json");
-const REAL_ORDER = "5115522170112153822";
 const PROBE_TEXT = "P0_FONT_TEST";
 
 (async () => {
-  const report = { ts: new Date().toISOString(), stage: "P0-FONT-PRINT-PROBE", url: EDITOR_URL, probeText: PROBE_TEXT, order: REAL_ORDER, phases: {}, reqs: [], dialogs: [], logs: [], windows: [], errors: [] };
+  const report = { ts: new Date().toISOString(), stage: "P0-FONT-PRINT-PROBE", url: EDITOR_URL, probeText: PROBE_TEXT, phases: {}, reqs: [], dialogs: [], logs: [], windows: [], errors: [] };
   let browser = null, page = null;
   try {
     browser = await chromium.launchPersistentContext(path.join(__dirname, "browser", "profile-usc3"), {
@@ -160,11 +159,28 @@ const PROBE_TEXT = "P0_FONT_TEST";
       return { exists: !!o, canvasCount: d.canvas.getObjects().length, listCount: d.canvasObjInfo.canvasToProductObjArr.length };
     }).catch((e) => ({ err: String(e || "").slice(0, 200) }));
 
-    // 点击保存（只触发弹层，不点确认）
+    // 点击「印刷」按钮（不再单独点保存；印刷流程内含校验）
     report.phases.saveClick = await page.evaluate(() => {
-      const btn = document.querySelector(".rightBtn .save") || document.querySelector("a.save") || null;
-      if (!btn) return { clicked: false };
-      try { btn.click(); return { clicked: true }; } catch (e) { return { err: String(e) }; }
+      const cands = document.querySelectorAll(".btn.print, li.print, [class*=' print'], .rightBtn li, .rightBtn a, .rightBtn span, .rightBtn div");
+      let best = null;
+      for (let i = 0; i < cands.length; i++) {
+        const el = cands[i];
+        const tx = String(el.textContent || "").trim();
+        const cls = String(el.className || "");
+        if (/印刷/.test(tx) && /print/i.test(cls)) { best = el; break; }
+        if (/印刷/.test(tx) && !best) best = el;
+      }
+      if (!best) {
+        // 兜底：文本含「印刷」且可见
+        const all = document.querySelectorAll("li,a,button,span,div");
+        for (let i = 0; i < all.length; i++) {
+          const el = all[i];
+          const tx = String(el.textContent || "").trim();
+          if (tx === "印刷" && el.offsetParent) { best = el; break; }
+        }
+      }
+      if (!best) return { clicked: false };
+      try { best.click(); return { clicked: true, cls: String(best.className).slice(0, 60), tag: best.tagName }; } catch (e) { return { err: String(e) }; }
     }).catch((e) => ({ err: String(e || "").slice(0, 200) }));
     await page.waitForTimeout(4000);
     report.phases.afterSaveClick = await page.evaluate(() => {
@@ -192,8 +208,8 @@ const PROBE_TEXT = "P0_FONT_TEST";
           for (let k = 0; k < keys.length; k++) { if (joined.indexOf(keys[k]) >= 0) { el.value = val; try { el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true })); } catch (e) {} el.__p0 = 1; break; } }
         }
       };
-      setByLabel(["作品", "作品名", "workName", "名称"], "P0字体印刷探针");
-      setByLabel(["用户", "用户名", "userName", "姓名"], "P0测试");
+      setByLabel(["作品", "作品名", "workName", "名称"], "1");
+      setByLabel(["用户", "用户名", "userName", "姓名"], "2");
       setByLabel(["备注"], "p0 print probe");
       let orderFilled = 0;
       document.querySelectorAll("input").forEach((el) => { const c = String(el.className || ""); const id = String(el.id || ""); if (/search|order/i.test(c + id)) { el.value = o.order; try { el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true })); } catch (e) {} orderFilled++; } });
