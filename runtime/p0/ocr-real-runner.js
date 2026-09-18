@@ -738,9 +738,15 @@ async function doSaveReload(RUN, createdObjs) {
     if (!RUN.phases.hegaoOk) { RUN.phases.realOcrProof = "FAILED_STAGE=HEGAO"; wr("ocr-run-summary.json", RUN); await page.screenshot({ path: path.join(R, "ocr-hegao-miss.png") }).catch(() => {}); }
     const authPreOk = !!(RUN.phases.authBootstrap && RUN.phases.authBootstrap.ok);
     if (authPreOk) {
-      // 已建会话：先核稿闸门 → SAVE → RELOAD（验证对象持久化）→ 再正常 订单号→印刷→提交
+      // 已建会话：核稿闸门 → 保存轻点(环境持久化受限, 不断链) → 订单号→印刷→提交
       RUN.phases.hegaoOk = await stageProofCore();
-      RUN.phases.saveReload = await doSaveReload(RUN, newTextboxes);
+      const saveOnly = await ev(() => {
+        const el = Array.from(document.querySelectorAll("li,a,button,span")).find((x) => String(x.textContent || "").trim() === "保存" && x.offsetParent);
+        if (el) { try { el.click(); return { clicked: true }; } catch (e) { return { clicked: false, err: String(e) }; } }
+        return { clicked: false, why: "no save btn" };
+      });
+      RUN.phases.saveOnly = saveOnly;
+      await sleep(2500);
       RUN.phases.orderNo = await fillOrderNo(1);
       await sleep(1200);
       const p0 = page.waitForResponse((resp) => /submitUserDesign\.do/.test(resp.url()), { timeout: 30000 }).catch(() => null);
