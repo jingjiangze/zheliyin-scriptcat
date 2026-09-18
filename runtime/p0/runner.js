@@ -216,6 +216,7 @@ function variantOverrides(name) {
     preview1: { isPreview: 1 },
     visit1000: { visitLevel: 1000 },
     display0: { isDisplay: 0 },
+    disp1: { isDisplay: 1 },
     allmanual: { topEnable: 0, resourceType: 1, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 1, isPreview: 1, isDesignShape: 0, isDisplay: 0, visitLevel: 1000 }
   };
   return map[name] || {};
@@ -223,7 +224,7 @@ function variantOverrides(name) {
 async function createProbeObject() {
   evt("create-object variant=" + (FLAG.variant || "default"));
   await ev((arg) => {
-    const vb = Object.assign({ topEnable: 1, resourceType: 0, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 0, isPreview: 0, isDesignShape: 0, isDisplay: 1, visitLevel: 1 }, arg.v || {});
+    const vb = Object.assign({ topEnable: 1, resourceType: 0, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 0, isPreview: 0, isDesignShape: 0, isDisplay: 0, visitLevel: 1 }, arg.v || {});
     const req = window.requirejs || window.require;
     const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
     for (let i = 0; i < vo.totalCanvasArray.length; i++) {
