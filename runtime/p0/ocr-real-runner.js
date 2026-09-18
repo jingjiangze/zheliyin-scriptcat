@@ -381,6 +381,13 @@ async function searchSync(maxRounds = 4) {
         if (st) { const t = String(st.innerText || "").trim(); if (t && window.__p0Status[window.__p0Status.length - 1] !== t) window.__p0Status.push(t); }
       }, 800);
     });
+    // 先打开 OCR 抽屉（handleOcrImage 首行检查 state.ocrPanelClosed, 未打开会被静默忽略）
+    await ev(() => { const tb = document.getElementById("zy-native-ocr-tool-btn"); if (tb) { try { tb.click(); } catch (e) {} } return {}; });
+    const panelW = await waitUntil(() => {
+      const p = document.getElementById("zy-native-ocr-panel");
+      return { ok: !!(p && p.offsetParent) };
+    }, "ocr panel open", 15000, 1000);
+    RUN.phases.panelOpen = !!(panelW && panelW.ok);
     const ck = await ev(() => { const b = document.getElementById("zy-native-ocr-btn"); if (!b) return { ok: false, why: "no ocr btn" }; b.click(); return { ok: true }; });
     RUN.phases.ocrClick = ck;
 
