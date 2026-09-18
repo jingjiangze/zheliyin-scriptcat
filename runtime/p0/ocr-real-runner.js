@@ -34,6 +34,17 @@ const FIX_PNG = path.join(FIX_DIR, "ocr-test.png");
 const TERMINAL_RE = /已生成\s*\d+\s*个文字|生成失败|识别异常|未识别到文字|引擎加载失败|引擎网络错误|OCR 失败|OCR 超时|超时|未找到|过旧|无响应|失败/;
 
 let OCR_RUN_SEQ = 0;
+// 脱敏（安全纪律）：证据可入库，但不得包含账号/凭据值。
+//   netLog 里站点自身会带 userId=<账号>（batchSaveKeepMaterial.do 等），必须抹掉；
+//   同时兜底抹掉环境变量里传入的账号与口令本身。
+function redactEvidence(txt) {
+  let t = String(txt == null ? "" : txt);
+  if (USER) t = t.split(USER).join("[REDACTED_USER]");
+  if (PASS) t = t.split(PASS).join("[REDACTED_PASS]");
+  t = t.replace(/(userId=|userid=|userName=|username=)[^&"\s]*/gi, "$1[REDACTED]");
+  t = t.replace(/"(access_token|token|password|pwd|secret|cookie|authorization)"\s*:\s*"[^"]*"/gi, '"$1":"[REDACTED]"');
+  return t;
+}
 function ocrRunId() { OCR_RUN_SEQ += 1; const d = new Date(); return "OCR-" + d.toISOString().slice(0, 10).replace(/-/g, "") + "-" + String(OCR_RUN_SEQ).padStart(3, "0"); }
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 function snapshotOcrObject(o, extra) {
@@ -50,7 +61,6 @@ function snapshotOcrObject(o, extra) {
     uuid: o.uuid, multiUuid: o.multiUuid, markuuid: o.markuuid, layerNum: o.layerNum, isLineText: o.isLineText
   }, extra || {});
 }
-const SNAP_FN_SRC = snapshotOcrObject.toString();
 
 let browser = null, page = null;
 const browserNet = [];
@@ -238,6 +248,94 @@ async function searchSync(maxRounds = 4) {
       viewport: { width: 1440, height: 900 }
     });
     browser.on("dialog", (d) => { try { d.accept().catch(() => {}); } catch (e) {} });
+    // ---- P0 专项（唯一 harness 观测修复）：画布访问器对齐 ----
+    // 真机证据（runtime/reports/p0/p0-path-check.json）：
+    //   window.CanvasObjVO = undefined ；requirejs 上下文 defined.CanvasObjVO = true
+    //   → 本文件 7 处 `window.CanvasObjVO` 读取全部静默退化为 {err:"no canvas"}，
+    //     导致 canvasBefore/imgPlace/对象快照/可见性校验一律拿不到画布（前几轮 OBJECT 证据为空即此因）。
+    // 修复：document-start 暴露一个惰性解析器（优先 requirejs 模块，保留 setter 以防站点自身赋值被劫持），
+    //   不触碰站点对象、不改产品代码、不改 OCR 算法。仅使 harness 与生产 page-bridge 使用同一取值路径。
+    await browser.addInitScript(() => {
+      try {
+        let fallback;
+        Object.defineProperty(window, "CanvasObjVO", {
+          configurable: true,
+          get() {
+            const req = window.requirejs || window.require;
+            const v = req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO;
+            return v || fallback;
+          },
+          set(v) { fallback = v; },
+        });
+      } catch (e) {}
+      // 同上（§十/§十七）：对象快照原先用 `const snap = (0, eval)(SNAP_FN_SRC)` 注入。
+      //   实测根因（非 CSP）：`(0, eval)("function f(){...}")` 的完成值是 undefined
+      //   （函数「声明」语句没有 completion value）→ snap === undefined →
+      //   `snap(o, {index})` 抛 TypeError: snap is not a function → 被 ev() 的 catch 吞掉
+      //   → after.count=undefined / newTextboxes=[] / OCR 可见性无法判定
+      //   → OBJECT 恒为 INVALID（即便 ocrCreateResult createdCount=4）。
+      //   已另行实测站点 CSP 不拦 eval（p0-path-check.json: indirectEval=OK, newFunction=OK），
+      //   故此处只修「取函数」的方式：document-start 直定义，每次导航自动重建，不依赖 eval。
+      try {
+        window.__p0Snap = function (o, extra) {
+          if (!o) return null;
+          const media = o.media || null;
+          return Object.assign({
+            constructor: o.constructor ? o.constructor.name : null, type: o.type, kind: o.mediaMediaType || o.objType || null, text: o.text,
+            mediaType: media && media.mediaType, mediaFont: media && media.font ? media.font : null,
+            fontId: o.mediafontId, fontFamily: o.fontFamily, fontSize: o.fontSize, fill: o.fill, fontWeight: o.fontWeight, lineHeight: o.lineHeight,
+            left: o.left, top: o.top, width: o.width, height: o.height, scaleX: o.scaleX, scaleY: o.scaleY, angle: o.angle,
+            visible: o.visible, opacity: o.opacity, selectable: o.selectable,
+            isDisplay: o.isDisplay, isEdit: o.isEdit, resourceType: o.resourceType, isComposite: o.isComposite, isPreview: o.isPreview, isDesign: o.isDesign,
+            selectEnabled: o.selectEnabled, visitLevel: o.visitLevel, maskEnable: o.maskEnable, lowPixelFlag: o.lowPixelFlag, topEnable: o.topEnable,
+            uuid: o.uuid, multiUuid: o.multiUuid, markuuid: o.markuuid, layerNum: o.layerNum, isLineText: o.isLineText,
+          }, extra || {});
+        };
+      } catch (e) {}
+      // P0 专项（§四/§七）：OCR 目标图注入（幂等，可重复调用）。
+      //   站点原生 drawText/图片层会被设计器自身的画布重建冲掉（实测：placed=true 但
+      //   随后 after.count 回到 9，说明 raw fabric.Image 不在站点产品模型里，可能被清）。
+      //   故本函数设计为可重复调用：已在画布 → 返回 placed:false；不在 → 重新注入。
+      try {
+        window.__p0HasImage = function () {
+          const vo = window.CanvasObjVO;
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          if (!(d && d.canvas)) return -1;
+          return d.canvas.getObjects().filter((o) => String(o.type) === "image").length;
+        };
+        window.__p0PlaceImage = function (dataUrl, s) {
+          const vo = window.CanvasObjVO;
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          if (!(d && d.canvas)) return Promise.resolve({ ok: false, err: "no canvas" });
+          const c = d.canvas;
+          const existing = c.getObjects().filter((o) => String(o.type) === "image");
+          if (existing.length) return Promise.resolve({ ok: true, placed: false, reason: "image-already-present", imageCount: existing.length });
+          const fabric = window.fabric || (c.constructor && c.constructor.fabric) || null;
+          return new Promise((resolve) => {
+            const el = new Image();
+            el.onload = () => {
+              try {
+                const opts = { left: 20, top: 20, scaleX: s, scaleY: s };
+                const o = (fabric && fabric.Image) ? new fabric.Image(el, opts) : null;
+                if (!o) return resolve({ ok: false, err: "no fabric.Image class" });
+                c.add(o);
+                try { c.setActiveObject(o); } catch (e) {}
+                if (c.requestRenderAll) c.requestRenderAll(); else if (c.renderAll) c.renderAll();
+                resolve({
+                  ok: true, placed: true,
+                  imageCount: c.getObjects().filter((x) => String(x.type) === "image").length,
+                  left: o.left, top: o.top, width: o.width, height: o.height, scaleX: o.scaleX, scaleY: o.scaleY,
+                  naturalWidth: el.naturalWidth, naturalHeight: el.naturalHeight,
+                  activeIsImage: !!(c.getActiveObject && c.getActiveObject() && String(c.getActiveObject().type) === "image"),
+                });
+              } catch (e) { resolve({ ok: false, err: String(e && e.message || e).slice(0, 160) }); }
+            };
+            el.onerror = () => resolve({ ok: false, err: "image load failed" });
+            el.src = dataUrl;
+          });
+        };
+      } catch (e) {}
+    });
     page = browser.pages()[0];
     page.on("console", (m) => { const t = String(m.text() || ""); if (/zy-ocr|折立印|INIT|BUILDING|SUCCESS|ERROR|FALLBACK|RECOGNIZING|CANVAS_READY|PREPARING|LOCAL_|QUALITY|GROUP/.test(t)) consoleLines.push(t.slice(0, 300)); });
     page.on("response", async (resp) => {
@@ -280,7 +378,9 @@ async function searchSync(maxRounds = 4) {
     RUN.phases.editorReady = !!(w && w.ok);
     if (!(w && w.ok)) throw new Error("editor not ready");
     const lg = await ev(() => { const ua = document.querySelector("#userAccount"); return { visible: !!(ua && ua.offsetParent) }; });
+    RUN.phases.authAtStart = { loginLayerVisible: !!(lg && lg.visible), authConfiguredEnv: !!(USER && PASS) };
     if (lg.visible) { const lk = await ensureLogin(); RUN.phases.userLogin = lk ? "PASS" : "FAIL"; await waitUntil(isReadyExpr(), "editor after login", 90000); }
+    RUN.phases.authAfterStart = await ev(() => { const ua = document.querySelector("#userAccount"); return { loginLayerVisible: !!(ua && ua.offsetParent) }; });
 
     // ---- 4. 用户脚本 UI + 桥 + 版本 ----
     const uiExpr = () => {
@@ -334,8 +434,19 @@ async function searchSync(maxRounds = 4) {
     RUN.canvasBefore = before;
 
     // 不触碰 file input（避免「换图」弹窗）；OCR 源 = 真实「当前图片」(active→background→首图), 与历史脚本一致
-    RUN.upload = { method: "SKIP(current-image)", done: false };
+    // P0 专项（§四/§七）：模板 252438 裸载时画布 0 图片（9 个 rect/line，无 text/无 image/无背景图）
+    //   → ocrPrepare 必然 IMAGE_UNAVAILABLE → 真实链路在 OCR 目标图阶段即停，永远到不了 submit/hegao/proof。
+    //   历史已验证：clipboard paste / file input 均 BLOCKED，唯一可用是「原生 fabric.Image 注入」
+    //   （stage5-3-image-upload.json: method=FABRIC_IMAGE_NATIVE）。此处复用该路径，仅当画布无图片时注入。
+    //   这是「给 OCR 一张当前图片」= 等价于用户上传客户照片；不改产品代码、不改 OCR 算法。
+    const imgPlace = await ev((arg) => {
+      if (typeof window.__p0PlaceImage !== "function") return { ok: false, err: "__p0PlaceImage missing" };
+      return window.__p0PlaceImage(arg.dataUrl, arg.s);
+    }, { dataUrl: (fixt && fixt.dataUrl) || null, s: 0.5 }).catch((e) => ({ ok: false, err: String(e && e.message || e).slice(0, 160) }));
+    RUN.upload = { method: "NATIVE_FABRIC_IMAGE", done: !!(imgPlace && imgPlace.placed), detail: imgPlace };
+    RUN.phases.ocrTargetBootstrap = (imgPlace && imgPlace.ok) ? "OK" : "IMAGE_UNAVAILABLE";
     RUN.ocrSource = "CURRENT_IMAGE(active->background->first-image)";
+    await sleep(1200);
 
     // ---- 6. 观测 hook（非侵入）+ 点击真实「识别当前图片」----
     await ev(() => {
@@ -358,6 +469,13 @@ async function searchSync(maxRounds = 4) {
       return { ok: !!(p && p.offsetParent) };
     }, "ocr panel open", 15000, 1000);
     RUN.phases.panelOpen = !!(panelW && panelW.ok);
+    // 点击「识别当前图片」前再确认一次目标图（站点可能在抽屉打开期间重建画布，冲掉 raw fabric.Image）
+    const pre = await ev((arg) => {
+      const has = typeof window.__p0HasImage === "function" ? window.__p0HasImage() : -2;
+      if (has === 0 && typeof window.__p0PlaceImage === "function") return window.__p0PlaceImage(arg.d, arg.s).then((r) => Object.assign({ preCount: has }, r));
+      return { preCount: has, placed: false, reasserted: false };
+    }, { d: (fixt && fixt.dataUrl) || null, s: 0.5 }).catch((e) => ({ err: String(e && e.message || e).slice(0, 160) }));
+    RUN.phases.ocrTargetPreClick = pre;
     const ck = await ev(() => { const b = document.getElementById("zy-native-ocr-btn"); if (!b) return { ok: false, why: "no ocr btn" }; b.click(); return { ok: true }; });
     RUN.phases.ocrClick = ck;
 
@@ -384,21 +502,39 @@ async function searchSync(maxRounds = 4) {
 
     // ---- 7. 对象快照 A（数量差锁定新增）+ ENTRY vs OBJECT isDisplay ----
     const after = await ev((arg) => {
-      const snap = (0, eval)(arg.src);
+      const snap = window.__p0Snap;
+      if (typeof snap !== "function") return { ok: false, err: "__p0Snap missing (init script blocked?)" };
       const vo = window.CanvasObjVO; const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
       if (!(d && d.canvas)) return { ok: false, err: "no canvas" };
       const objs = d.canvas.getObjects();
       const snapEls = [];
       for (let i = 0; i < objs.length; i++) snapEls.push(snap(objs[i], { index: i }));
       return { ok: true, count: objs.length, objs: snapEls };
-    }, { src: SNAP_FN_SRC });
-    RUN.after = { count: after.count, objs: after.objs };
+    }, {});
+    RUN.after = { count: after.count, objs: after.objs, err: after && after.err ? String(after.err).slice(0, 200) : null };
     const n0 = (before && before.count) || 0;
     const n1 = (after && after.count) || 0;
     RUN.delta = n1 - n0;
-    const newTextboxes = (after.objs || []).filter((o) => o && o.index >= n0 && String(o.type) === "textbox" && o.text);
+    // P0 专项（§十三/§十七）：新增对象识别改「按身份」而非「按索引」。
+    //   真机证据（本次运行 after.objs）：站点原生 drawText 创建的文字被插到对象列表**前部**
+    //   （OCR 4 个 textbox 落在 index 2..5，模板 rect/line 被挤到 6..13），
+    //   而 `index >= beforeCount(9)` 的旧判定恰好把它们全部排除 → newTextboxes=0
+    //   → 即使 ocrCreateResult.createdCount=4，OBJECT 也被误判 INVALID、ocrVisible=FAIL。
+    //   现以 ocrCreateResult.created[] 的 uuid（编辑器原生 uuid，唯一）为准，text 作为兜底。
+    const createdRefs = (RUN.ocrCreateReply && Array.isArray(RUN.ocrCreateReply.created)) ? RUN.ocrCreateReply.created : [];
+    const createdUuids = new Set(createdRefs.map((c) => String((c && c.uuid) || "")).filter(Boolean));
+    const createdTexts = new Set(createdRefs.map((c) => String((c && c.text) || "").trim()).filter(Boolean));
+    const newTextboxes = (after.objs || []).filter((o) => {
+      if (!o || String(o.type) !== "textbox" || !o.text) return false;
+      if (createdUuids.size) {
+        if (o.uuid && createdUuids.has(String(o.uuid))) return true;
+        if (o.multiUuid && createdUuids.has(String(o.multiUuid))) return true;
+      }
+      return createdTexts.has(String(o.text).trim());
+    });
     RUN.newTextboxes = newTextboxes;
-    wr("ocr-object-A-create.json", { ocrRunId: RUN.ocrRunId, beforeCount: n0, afterCount: n1, delta: n1 - n0, entryIsDisplayBySource: "buildTextMediaEntry(仓库 page-bridge.js)=0", objectIsDisplayValues: newTextboxes.map((o) => o.isDisplay), created: newTextboxes });
+    RUN.objectMatch = { by: createdUuids.size ? "uuid+text" : "text", createdRefs: createdRefs.length, matched: newTextboxes.length, indices: newTextboxes.map((o) => o.index) };
+    wr("ocr-object-A-create.json", { ocrRunId: RUN.ocrRunId, beforeCount: n0, afterCount: n1, delta: n1 - n0, matchBy: RUN.objectMatch.by, createdRefIndices: createdRefs.map((c) => c.objectIndex), matchedIndices: newTextboxes.map((o) => o.index), entryIsDisplayBySource: "buildTextMediaEntry(仓库 page-bridge.js)=0", objectIsDisplayValues: newTextboxes.map((o) => o.isDisplay), created: newTextboxes });
 
     // ---- 8. 可见性 + 带框截图 ----
     const vis = await ev((arg) => {
@@ -408,12 +544,17 @@ async function searchSync(maxRounds = 4) {
       const canvasEl = d.canvas.upperCanvasEl || d.canvas.lowerCanvasEl || (d.canvas.getElement && d.canvas.getElement());
       const rect = []; const checks = [];
       for (const s of arg.created || []) {
-        const o = d.canvas.getObjects()[s.index];
-        if (!o) { checks.push({ index: s.index, missing: true }); continue; }
+        // 按 uuid 优先定位（索引会因原生前插/图层重排而漂移）
+        let o = null;
+        const all = d.canvas.getObjects();
+        if (s.uuid) o = all.find((x) => x && String(x.uuid || "") === String(s.uuid)) || null;
+        if (!o && s.multiUuid) o = all.find((x) => x && String(x.multiUuid || "") === String(s.multiUuid)) || null;
+        if (!o) o = all[s.index] || null;
+        if (!o) { checks.push({ index: s.index, uuid: s.uuid || null, missing: true }); continue; }
         const w2 = o.getScaledWidth ? o.getScaledWidth() : o.width, h2 = o.getScaledHeight ? o.getScaledHeight() : o.height;
         const inside = o.left >= 0 && o.top >= 0 && (o.left + w2) <= cw && (o.top + h2) <= ch;
-        checks.push({ index: s.index, text: String(o.text || ""), visible: o.visible !== false, opacity: o.opacity, scaleX: o.scaleX, scaleY: o.scaleY, width: o.width, height: o.height, inside, pass: !!(o.visible !== false && o.opacity > 0 && o.scaleX !== 0 && o.scaleY !== 0 && o.width > 0 && o.height > 0 && inside) });
-        if (canvasEl) { const rc = canvasEl.getBoundingClientRect(); rect.push({ i: s.index, x: rc.x + o.left * (rc.width / cw), y: rc.y + o.top * (rc.height / ch), w: w2 * (rc.width / cw), h: h2 * (rc.height / ch), text: String(o.text || "").slice(0, 16) }); }
+        checks.push({ index: all.indexOf(o), uuid: o.uuid || null, text: String(o.text || ""), type: String(o.type || ""), visible: o.visible !== false, opacity: o.opacity, scaleX: o.scaleX, scaleY: o.scaleY, width: o.width, height: o.height, inside, pass: !!(o.visible !== false && o.opacity > 0 && o.scaleX !== 0 && o.scaleY !== 0 && o.width > 0 && o.height > 0 && inside) });
+        if (canvasEl) { const rc = canvasEl.getBoundingClientRect(); rect.push({ i: all.indexOf(o), x: rc.x + o.left * (rc.width / cw), y: rc.y + o.top * (rc.height / ch), w: w2 * (rc.width / cw), h: h2 * (rc.height / ch), text: String(o.text || "").slice(0, 16) }); }
       }
       return { checks, rect };
     }, { created: newTextboxes }).catch((e) => ({ err: String(e).slice(0, 200) }));
@@ -438,7 +579,8 @@ async function searchSync(maxRounds = 4) {
     RUN.phases.reloadReady = !!(w3 && w3.ok);
     await sleep(2500);
     const reloadSnap = await ev((arg) => {
-      const snap = (0, eval)(arg.src);
+      const snap = window.__p0Snap;
+      if (typeof snap !== "function") return { ok: false, err: "__p0Snap missing (init script blocked?)" };
       const vo = window.CanvasObjVO; const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
       if (!(d && d.canvas)) return { ok: false, err: "no canvas" };
       const objs = d.canvas.getObjects(); const matched = [];
@@ -446,10 +588,25 @@ async function searchSync(maxRounds = 4) {
         const found = objs.find((o) => String(o.uuid || "") === String(s.uuid || "") || String(o.multiUuid || "") === String(s.multiUuid || ""));
         if (found) matched.push(snap(found, { index: objs.indexOf(found) }));
       }
-      return { ok: true, total: objs.length, matched };
-    }, { src: SNAP_FN_SRC, created: newTextboxes }).catch((e) => ({ err: String(e).slice(0, 200) }));
+      // 观测补齐（§十三/§十七）：保存+刷新后「文字是否还在」必须可判 ——
+      //   身份匹配（uuid/multiUuid）失败不一定等于文字消失（后端重建可能换 uuid）。
+      //   故同时输出刷新后的全部文字对象，并按 text 做二次匹配。
+      const textsAfter = objs.filter((o) => typeof o.text === "string" && String(o.text).trim()).map((o) => snap(o, { index: objs.indexOf(o) }));
+      const wanted = (arg.created || []).map((c) => String(c.text || "").trim()).filter(Boolean);
+      const textMatched = textsAfter.filter((t) => wanted.indexOf(String(t.text || "").trim()) >= 0);
+      return { ok: true, total: objs.length, matched, textsAfter, textMatched, wanted };
+    }, { created: newTextboxes }).catch((e) => ({ err: String(e).slice(0, 200) }));
     RUN.reloadSnapshot = reloadSnap;
-    wr("ocr-object-B-after-reload.json", { ocrRunId: RUN.ocrRunId, reloadReady: RUN.phases.reloadReady, saveClick: RUN.saveClick, matched: (reloadSnap && reloadSnap.matched) || [] });
+    RUN.reloadTexts = (reloadSnap && reloadSnap.textsAfter) || null;
+    RUN.phases.saveReload = {
+      identityMatched: ((reloadSnap && reloadSnap.matched) || []).length,
+      textMatched: ((reloadSnap && reloadSnap.textMatched) || []).length,
+      wanted: (reloadSnap && reloadSnap.wanted) || [],
+      verdict: !(reloadSnap && reloadSnap.ok) ? "UNKNOWN"
+        : (((reloadSnap.matched || []).length > 0) ? "PERSISTED(identity)"
+          : (((reloadSnap.textMatched || []).length > 0) ? "PERSISTED(text-only, uuid changed)" : "LOST")),
+    };
+    wr("ocr-object-B-after-reload.json", { ocrRunId: RUN.ocrRunId, reloadReady: RUN.phases.reloadReady, saveClick: RUN.saveClick, matched: (reloadSnap && reloadSnap.matched) || [], textMatched: (reloadSnap && reloadSnap.textMatched) || [], textsAfter: (reloadSnap && reloadSnap.textsAfter) || [], wanted: (reloadSnap && reloadSnap.wanted) || [], verdict: RUN.phases.saveReload.verdict });
 
     // ---- 10. 核稿 → 订单号 → 印刷 → 设计信息/确定 → 等核稿结果 → 交稿 → 搜索 → 自动核稿判定 ----
     if (RUN.phases.reloadReady) {
@@ -516,19 +673,140 @@ async function searchSync(maxRounds = 4) {
       RUN.phases.realOcrProof = (previews.length > 0 && failedCount === 0 && passCount > 0 && !hasPopup) ? "PASS" : "FAIL";
       RUN.phases.proofCounts = { total: previews.length, pass: passCount, errAutoCheck: failedCount, popup: hasPopup };
       const dSnap = await ev((arg) => {
-        const snap = (0, eval)(arg.src);
+        const snap = window.__p0Snap;
+        if (typeof snap !== "function") return null;
         const vo = window.CanvasObjVO; const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
         if (!(d && d.canvas)) return null;
         const objs = d.canvas.getObjects(); const out = [];
         for (let i = 0; i < objs.length; i++) { const s = snap(objs[i], { index: i }); if (s && s.text) out.push(s); }
         return out;
-      }, { src: SNAP_FN_SRC }).catch(() => null);
+      }, {}).catch(() => null);
       wr("ocr-object-D-before-proof.json", { ocrRunId: RUN.ocrRunId, textObjs: dSnap });
       try { await page.screenshot({ path: path.join(R, "ocr-before-proof.png") }); RUN.shots.push("ocr-before-proof.png"); } catch (e) {}
-    } else {
+      } else {
       RUN.phases.realOcrProof = "SKIPPED(reload-not-ready)";
     }
+
+    // ========================================================================
+    // P0 专项（§五/§十/§十一/§十二/§十三/§十七）：把笼统的「自动核稿失败」拆成
+    // 独立可判定状态 AUTH / SUBMIT / HEGAO / PROOF / OBJECT，并额外输出
+    // EDITOR_INTEGRATION（native|mirror）与 RED-BOX MAPPING（found|none|unknown）。
+    // 纯观测：只读取已有证据（browserNet / ocrCreate reply / statusLog / DOM），
+    // 不修改产品代码、不修改 OCR 算法、不新增业务行为。
+    // ========================================================================
+    const reply = RUN.ocrCreateReply || (RUN.ocrObs && RUN.ocrObs.reply) || null;
+
+    // ---- AUTH：登录态（起止）+ 提交请求中的 loginState ----
+    const authEnd = await ev(() => { const ua = document.querySelector("#userAccount"); return { loginLayerVisible: !!(ua && ua.offsetParent) }; }).catch(() => null);
+    const submitHits = browserNet.filter((n) => /submitUserDesign/i.test(n.u));
+    const parseSubmit = (n) => { try { return JSON.parse(String(n.body || "{}")); } catch (e) { return null; } };
+    const submitParsed = submitHits.map((n) => ({ status: n.status, u: n.u, body: parseSubmit(n) }));
+    const submitTimeout = submitParsed.some((x) => x.body && x.body.loginState && /timeout|time_out/i.test(String(x.body.loginState)));
+    const AUTH = (submitTimeout || (authEnd && authEnd.loginLayerVisible)) ? "EXPIRED"
+      : ((lg && lg.visible && RUN.phases.userLogin === "FAIL") ? "FAIL" : "PASS");
+
+    // ---- SUBMIT：submitUserDesign.do 的请求/响应 ----
+    const submitAccepted = submitParsed.some((x) => x.body && String(x.body.result) === "true" && !(x.body.loginState && /timeout/i.test(String(x.body.loginState))));
+    const submitRejected = submitParsed.some((x) => (x.status >= 400) || (x.body && String(x.body.result) === "false"));
+    // SUBMIT 语义（§五/§十一）：HTTP 200 + result:true 但 loginState=timeOut 属于
+    //   「请求已发出、服务端未完成业务」→ 不能算 PASS，也不能算 FAIL（无 4xx/result:false）→ UNKNOWN，
+    //   并把原因显式记录为 SUBMIT_NOT_COMPLETED_AUTH。避免与 SUBMIT_REJECTED 混为一谈。
+    const SUBMIT = !submitParsed.length ? "UNKNOWN" : (submitAccepted ? "PASS" : (submitRejected ? "FAIL" : "UNKNOWN"));
+    const SUBMIT_CODE = !submitParsed.length ? "NO_SUBMIT_REQUEST" : (submitAccepted ? "ACCEPTED" : (submitRejected ? "REJECTED" : "NOT_COMPLETED_AUTH"));
+
+    // ---- HEGAO：是否真正进入「交稿后的核稿阶段」（§十一）----
+    //   注意区分两件事，不能混用：
+    //     A) 印刷前的「核稿」弹窗（stageProofCore 的 hegaoOk 闸门）—— 这是流程前置闸门；
+    //     B) 交稿提交后服务端自动核稿的结果面 / 核稿请求 —— 这才是 P0 关心的 HEGAO_ENTRY。
+    //   判定只用 B 类证据（proofSurfaces 面 / 核稿相关请求），A 类单独记为 hegaoPreprintGate。
+    const netHits = browserNet.filter((n) => /imgPreviewSearch|hegaocheck|proofread|checkResult|autoCheck/i.test(n.u));
+    const hegaoPreprintGate = !!(RUN.phases.hegaoOk);
+    const hegaoPostSubmitEvidence = !!RUN.phases.proofSurfaces || netHits.length > 0;
+    const HEGAO = hegaoPostSubmitEvidence ? "ENTERED"
+      : (SUBMIT === "PASS" ? "UNKNOWN" : "NOT_REACHED");
+
+    // ---- PROOF：核稿结果（必须与「没进入核稿」严格分开，§十一）----
+    const pc = RUN.phases.proofCounts || null;
+    const popup = RUN.phases.autoProofreadPopup === true;
+    let PROOF;
+    if (popup || (pc && (pc.errAutoCheck > 0 || pc.fail > 0))) PROOF = "FAIL";
+    else if (pc && pc.total > 0 && pc.pass > 0) PROOF = "PASS";
+    else if (HEGAO === "ENTERED") PROOF = "UNKNOWN";
+    else PROOF = "NOT_REACHED";
+
+    // ---- OBJECT：OCR 是否真的创建了合法文字对象 ----
+    const createdN = (newTextboxes || []).length;
+    const replyOk = !!(reply && reply.ok);
+    const replyCreated = reply ? Number(reply.createdCount || 0) : 0;
+    const replyDetected = reply ? Number(reply.detectedBlocks || 0) : 0;
+    let OBJECT;
+    if (!reply) OBJECT = "UNKNOWN";
+    else if (replyOk && replyCreated > 0 && replyCreated === replyDetected && createdN > 0 && RUN.phases.ocrVisible === "PASS") OBJECT = "VALID";
+    else OBJECT = "INVALID";
+
+    // ---- EDITOR_INTEGRATION：真实创建走 native 还是 mirror ----
+    const integ = (reply && reply.editorIntegration) || null;
+    const EDITOR_INTEGRATION = integ && integ.mode ? String(integ.mode).toUpperCase() : "UNKNOWN";
+
+    // ---- RED-BOX MAPPING：核稿错误框 → 画布对象（§十二）----
+    const redBox = await ev((arg) => {
+      const MARK = ".text-error-check, [class*=error-check], [class*=errorCheck]";
+      const marks = Array.from(document.querySelectorAll(MARK)).filter((el) => {
+        const rc = el.getBoundingClientRect();
+        return rc.width > 0 && rc.height > 0;
+      });
+      if (!marks.length) return { state: "NONE", reason: "no error-marker in DOM", markers: [], candidates: [] };
+      const vo = window.CanvasObjVO; const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+      if (!(d && d.canvas)) return { state: "UNKNOWN", reason: "no canvas", markers: marks.length, candidates: [] };
+      const c = d.canvas;
+      const cvEl = c.upperCanvasEl || c.lowerCanvasEl || (c.getElement && c.getElement());
+      if (!cvEl) return { state: "UNKNOWN", reason: "no canvas element", markers: marks.length, candidates: [] };
+      const cr = cvEl.getBoundingClientRect();
+      const sx = c.width / cr.width, sy = c.height / cr.height;
+      const objs = c.getObjects().filter((o) => typeof o.text === "string" && String(o.text).trim());
+      const outM = [], outC = [];
+      marks.forEach((el, i) => {
+        const rc = el.getBoundingClientRect();
+        const local = { x: (rc.left - cr.left) * sx, y: (rc.top - cr.top) * sy, width: rc.width * sx, height: rc.height * sy };
+        outM.push({ i: i, cls: String(el.className || "").slice(0, 60), text: String(el.textContent || "").trim().slice(0, 60), local });
+        objs.forEach((o) => {
+          const w2 = (o.width || 0) * (o.scaleX == null ? 1 : o.scaleX);
+          const h2 = (o.height || 0) * (o.scaleY == null ? 1 : o.scaleY);
+          const box = { x: o.left || 0, y: o.top || 0, width: w2, height: h2 };
+          const ox = Math.max(0, Math.min(local.x + local.width, box.x + box.width) - Math.max(local.x, box.x));
+          const oy = Math.max(0, Math.min(local.y + local.height, box.y + box.height) - Math.max(local.y, box.y));
+          const overlap = ox * oy;
+          const area = Math.max(1, Math.min(local.width * local.height, box.width * box.height));
+          if (overlap > 0) outC.push({ markerIndex: i, uuid: o.uuid || o.multiUuid || null, text: String(o.text).slice(0, 24), bbox: box, overlapPx: Math.round(overlap), overlapRatio: Number((overlap / area).toFixed(3)) });
+        });
+      });
+      outC.sort((a, b) => b.overlapPx - a.overlapPx);
+      return { state: outC.length ? "FOUND" : "NONE", reason: outC.length ? "mapped" : "markers present but no object intersect", markers: outM, candidates: outC.slice(0, 8) };
+    }, {}).catch((e) => ({ state: "UNKNOWN", reason: "eval error: " + String(e && e.message || e).slice(0, 120), markers: [], candidates: [] }));
+
+    RUN.verdict = {
+      AUTH: AUTH, SUBMIT: SUBMIT, SUBMIT_CODE: SUBMIT_CODE, HEGAO: HEGAO, PROOF: PROOF, OBJECT: OBJECT,
+      EDITOR_INTEGRATION: EDITOR_INTEGRATION, RED_BOX_MAPPING: redBox.state,
+      OCR_TARGET: RUN.phases.ocrTargetBootstrap || "UNKNOWN",
+      evidence: {
+        auth: { authAtStart: RUN.phases.authAtStart || null, authEnd: authEnd, submitUserDesignHits: submitParsed.map((x) => ({ status: x.status, result: x.body && x.body.result, loginState: x.body && x.body.loginState })) },
+        submit: { hitCount: submitParsed.length, raw: submitParsed.map((x) => ({ status: x.status, u: x.u.slice(0, 120), body: x.body })) },
+        hegao: { hegaoPreprintGate: hegaoPreprintGate, proofSurfaces: RUN.phases.proofSurfaces, postSubmitNetHits: netHits.map((n) => ({ status: n.status, u: n.u.slice(0, 120) })), hegaoPostSubmitEvidence: hegaoPostSubmitEvidence },
+        proof: { proofCounts: pc, popup: popup },
+        object: { replySeen: !!reply, replyOk: replyOk, createdCount: replyCreated, detectedBlocks: replyDetected, newTextboxes: createdN, ocrVisible: RUN.phases.ocrVisible, replyMessage: reply ? String(reply.message || "").slice(0, 200) : null },
+        editorIntegration: integ,
+        redBox: redBox,
+      },
+    };
+    
     RUN.final = { realOcrProof: RUN.phases.realOcrProof, ocrVisible: RUN.phases.ocrVisible, ocrReplySeen: RUN.phases.ocrReplySeen, newTextCount: newTextboxes.length, scriptVersionSeen: RUN.phases.scriptVersionSeen };
+    wr("real-proof-investigation.json", {
+      ts: new Date().toISOString(), ocrRunId: RUN.ocrRunId, url: EDITOR_URL,
+      editUrlBranch: "test", editorIntegrationMode: EDITOR_INTEGRATION,
+      verdict: RUN.verdict, phases: RUN.phases, statusLog: (RUN.statusLog || []).map(redactEvidence), console: (RUN.console || []).map(redactEvidence), errors: (RUN.errors || []).map(redactEvidence),
+      netLog: browserNet.map((n) => ({ status: n.status, u: redactEvidence(n.u), body: n.body ? redactEvidence(String(n.body).slice(0, 800)) : null })),
+    });
+    console.log("P0-SUBMIT_CODE=" + SUBMIT_CODE + " P0-SAVERELOAD=" + ((RUN.phases.saveReload && RUN.phases.saveReload.verdict) || "?") + " AUTH=" + AUTH + " SUBMIT=" + SUBMIT + " HEGAO=" + HEGAO + " PROOF=" + PROOF + " OBJECT=" + OBJECT + " INTEG=" + EDITOR_INTEGRATION + " REDBOX=" + redBox.state + " OCR_TARGET=" + (RUN.phases.ocrTargetBootstrap || "UNKNOWN"));
     wr("ocr-run-summary.json", RUN);
     console.log("OCR-REAL-DONE proof=" + RUN.phases.realOcrProof + " visible=" + RUN.phases.ocrVisible + " newText=" + newTextboxes.length + " errors=" + RUN.errors.length + " sum=" + path.join(R, "ocr-run-summary.json"));
   } catch (e) {
