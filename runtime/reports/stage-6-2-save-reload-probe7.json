@@ -1,0 +1,141 @@
+{
+ "ts": "2026-09-18T00:25:28.635Z",
+ "stage": "STAGE-6-2-SAVE-RELOAD-PROBE7",
+ "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+ "phases": {
+  "ready": {
+   "ok": false
+  },
+  "audit": {
+   "diyId": "",
+   "sourceId": "999",
+   "worksStatus": "0",
+   "isAdmin": "0",
+   "thirdOrderNo": "",
+   "copyDesignNo": "",
+   "canEdit": "",
+   "checkOperate": "<absent>",
+   "multiCheck": "false",
+   "isNoSave": "<absent>",
+   "typeid": "12",
+   "diyTypeNumCup": "02",
+   "centerTitle": "",
+   "templateName": "名片-新横版常规（92*56）"
+  },
+  "flow": {
+   "found": true,
+   "modal": "found",
+   "fields": [
+    {
+     "tag": "INPUT",
+     "id": "workName",
+     "name": "",
+     "type": "text",
+     "val": "",
+     "visible": true,
+     "ph": "请输入作品名"
+    },
+    {
+     "tag": "INPUT",
+     "id": "userName",
+     "name": "",
+     "type": "text",
+     "val": "",
+     "visible": true,
+     "ph": "请输入用户名"
+    },
+    {
+     "tag": "TEXTAREA",
+     "id": "remarkInfor",
+     "name": "",
+     "type": "textarea",
+     "val": "",
+     "visible": false,
+     "ph": "请输入备注内容"
+    },
+    {
+     "tag": "SELECT",
+     "id": "printingtype",
+     "name": "",
+     "type": "select-one",
+     "val": "pdf",
+     "visible": false,
+     "ph": ""
+    },
+    {
+     "tag": "SELECT",
+     "id": "colorspace",
+     "name": "",
+     "type": "select-one",
+     "val": "cmyk",
+     "visible": false,
+     "ph": ""
+    }
+   ],
+   "filled": {
+    "workName": true,
+    "userName": true,
+    "telNo": false,
+    "address": false
+   },
+   "confirm": "no-layui-btn0",
+   "net": [
+    "GET /diyWeb/FormatCard/getDicItem.do?code=M001 ->200 body=\"{\\\"data\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"dictId\\\":\\\"AD4636D5227B49399987EA16FC0FF3EA\\\",\\\"dtabId\\\":\\\"D1F76C0E7A9243D4B297C5E3ECE56289\\\",\\\"dictCode\\\":\\\"文字_01\\\",\\\"dictName\\\":\\\"姓名\\\",\\\"dictGroup\\\":null,\\\"xfield0\\\":null,\\\"xfield1\\\":null,\\\"xfield2\\\":null,\\\"xfield3\\\":null,\\\"xfield4\\\":null,\\\"xfield5\\\":null,\\\"xfield6\\\":null,\\\"xfield7\\\":n\"",
+    "GET commontool/queryWebInfo.do?sourceId=999 ->200 body=\"{\\\"response\\\":{\\\"result\\\":{\\\"isUse\\\":1,\\\"pageNumber\\\":0,\\\"sign\\\":3,\\\"pageSize\\\":0,\\\"imageInfo\\\":\\\"assets/resource/imgs/small/MXYZ-ADBA1C98771C4BA3B9B99FB62E4C6F04.jpg\\\",\\\"shopUrl\\\":\\\"\\\",\\\"albumurl\\\":\\\"\\\",\\\"webStyleId\\\":3,\\\"wangWang\\\":\\\"\\\",\\\"webName\\\":\\\"简设计\\\",\\\"pageOffset\\\":0,\\\"id\\\":999,\\\"albumshoplogo\\\":\\\"\\\",\\\"shopAbb\\\":\\\"jsj\\\"},\\\"success\\\":true,\"",
+    "POST diy/findTemplateById.do ->200 body=\"{\\\"userData\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"id\\\":\\\"500429\\\",\\\"maskId\\\":\\\"146125\\\",\\\"tmplId\\\":\\\"252937\\\",\\\"pageNo\\\":\\\"1\\\",\\\"pageName\\\":\\\"正面\\\",\\\"detail\\\":\\\"{\\\\\\\"diyName\\\\\\\":\\\\\\\"生活服务  综合  简约风\\\\\\\",\\\\\\\"templateInfo\\\\\\\":{\\\\\\\"bindingType\\\\\\\":\\\\\\\"无装订\\\\\\\",\\\\\\\"bindingHeight\\\\\\\":0,\\\\\\\"foldNum\\\\\\\":0,\\\\\\\"diyType\\\\\\\":\\\\\\\"12\\\\\\\",\\\\\\\"bleedWidth\\\\\\\":1.0,\\\\\\\"packageThick\\\\\\\":0\"",
+    "POST diy/findAllFont.do ->200 body=\"{\\\"success\\\":true,\\\"message\\\":null,\\\"userData\\\":[{\\\"fonttype\\\":1,\\\"fontpath\\\":\\\"MXYZ-698E3EFE9AEC4BC28C56E6C061176B9E.ttf\\\",\\\"searchword\\\":\\\"BebasNeue Bold\\\",\\\"fontpathwoff\\\":\\\"MXYZ-666BCF3451ED4753939600AD3755D39E.woff\\\",\\\"id\\\":708,\\\"fontclassify\\\":\\\"隐藏使用\\\",\\\"fontname\\\":\\\"BebasNeue Bold\\\",\\\"defaultimage\\\":\\\"MXYZ-04E88B1D84184CCDB4\"",
+    "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+   ],
+   "snaps": [
+    [
+     "GET /diyWeb/FormatCard/getDicItem.do?code=M001 ->200 body=\"{\\\"data\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"dictId\\\":\\\"AD4636D5227B49399987EA16FC0FF3EA\\\",\\\"dtabId\\\":\\\"D1F76C0E7A9243D4B297C5E3ECE56289\\\",\\\"dictCode\\\":\\\"文字_01\\\",\\\"dictName\\\":\\\"姓名\\\",\\\"dictGroup\\\":null,\\\"xfield0\\\":null,\\\"xfield1\\\":null,\\\"xfield2\\\":null,\\\"xfield3\\\":null,\\\"xfield4\\\":null,\\\"xfield5\\\":null,\\\"xfield6\\\":null,\\\"xfield7\\\":n\"",
+     "GET commontool/queryWebInfo.do?sourceId=999 ->200 body=\"{\\\"response\\\":{\\\"result\\\":{\\\"isUse\\\":1,\\\"pageNumber\\\":0,\\\"sign\\\":3,\\\"pageSize\\\":0,\\\"imageInfo\\\":\\\"assets/resource/imgs/small/MXYZ-ADBA1C98771C4BA3B9B99FB62E4C6F04.jpg\\\",\\\"shopUrl\\\":\\\"\\\",\\\"albumurl\\\":\\\"\\\",\\\"webStyleId\\\":3,\\\"wangWang\\\":\\\"\\\",\\\"webName\\\":\\\"简设计\\\",\\\"pageOffset\\\":0,\\\"id\\\":999,\\\"albumshoplogo\\\":\\\"\\\",\\\"shopAbb\\\":\\\"jsj\\\"},\\\"success\\\":true,\"",
+     "POST diy/findTemplateById.do ->200 body=\"{\\\"userData\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"id\\\":\\\"500429\\\",\\\"maskId\\\":\\\"146125\\\",\\\"tmplId\\\":\\\"252937\\\",\\\"pageNo\\\":\\\"1\\\",\\\"pageName\\\":\\\"正面\\\",\\\"detail\\\":\\\"{\\\\\\\"diyName\\\\\\\":\\\\\\\"生活服务  综合  简约风\\\\\\\",\\\\\\\"templateInfo\\\\\\\":{\\\\\\\"bindingType\\\\\\\":\\\\\\\"无装订\\\\\\\",\\\\\\\"bindingHeight\\\\\\\":0,\\\\\\\"foldNum\\\\\\\":0,\\\\\\\"diyType\\\\\\\":\\\\\\\"12\\\\\\\",\\\\\\\"bleedWidth\\\\\\\":1.0,\\\\\\\"packageThick\\\\\\\":0\"",
+     "POST diy/findAllFont.do ->200 body=\"{\\\"success\\\":true,\\\"message\\\":null,\\\"userData\\\":[{\\\"fonttype\\\":1,\\\"fontpath\\\":\\\"MXYZ-698E3EFE9AEC4BC28C56E6C061176B9E.ttf\\\",\\\"searchword\\\":\\\"BebasNeue Bold\\\",\\\"fontpathwoff\\\":\\\"MXYZ-666BCF3451ED4753939600AD3755D39E.woff\\\",\\\"id\\\":708,\\\"fontclassify\\\":\\\"隐藏使用\\\",\\\"fontname\\\":\\\"BebasNeue Bold\\\",\\\"defaultimage\\\":\\\"MXYZ-04E88B1D84184CCDB4\"",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ],
+    [
+     "GET /diyWeb/FormatCard/getDicItem.do?code=M001 ->200 body=\"{\\\"data\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"dictId\\\":\\\"AD4636D5227B49399987EA16FC0FF3EA\\\",\\\"dtabId\\\":\\\"D1F76C0E7A9243D4B297C5E3ECE56289\\\",\\\"dictCode\\\":\\\"文字_01\\\",\\\"dictName\\\":\\\"姓名\\\",\\\"dictGroup\\\":null,\\\"xfield0\\\":null,\\\"xfield1\\\":null,\\\"xfield2\\\":null,\\\"xfield3\\\":null,\\\"xfield4\\\":null,\\\"xfield5\\\":null,\\\"xfield6\\\":null,\\\"xfield7\\\":n\"",
+     "GET commontool/queryWebInfo.do?sourceId=999 ->200 body=\"{\\\"response\\\":{\\\"result\\\":{\\\"isUse\\\":1,\\\"pageNumber\\\":0,\\\"sign\\\":3,\\\"pageSize\\\":0,\\\"imageInfo\\\":\\\"assets/resource/imgs/small/MXYZ-ADBA1C98771C4BA3B9B99FB62E4C6F04.jpg\\\",\\\"shopUrl\\\":\\\"\\\",\\\"albumurl\\\":\\\"\\\",\\\"webStyleId\\\":3,\\\"wangWang\\\":\\\"\\\",\\\"webName\\\":\\\"简设计\\\",\\\"pageOffset\\\":0,\\\"id\\\":999,\\\"albumshoplogo\\\":\\\"\\\",\\\"shopAbb\\\":\\\"jsj\\\"},\\\"success\\\":true,\"",
+     "POST diy/findTemplateById.do ->200 body=\"{\\\"userData\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"id\\\":\\\"500429\\\",\\\"maskId\\\":\\\"146125\\\",\\\"tmplId\\\":\\\"252937\\\",\\\"pageNo\\\":\\\"1\\\",\\\"pageName\\\":\\\"正面\\\",\\\"detail\\\":\\\"{\\\\\\\"diyName\\\\\\\":\\\\\\\"生活服务  综合  简约风\\\\\\\",\\\\\\\"templateInfo\\\\\\\":{\\\\\\\"bindingType\\\\\\\":\\\\\\\"无装订\\\\\\\",\\\\\\\"bindingHeight\\\\\\\":0,\\\\\\\"foldNum\\\\\\\":0,\\\\\\\"diyType\\\\\\\":\\\\\\\"12\\\\\\\",\\\\\\\"bleedWidth\\\\\\\":1.0,\\\\\\\"packageThick\\\\\\\":0\"",
+     "POST diy/findAllFont.do ->200 body=\"{\\\"success\\\":true,\\\"message\\\":null,\\\"userData\\\":[{\\\"fonttype\\\":1,\\\"fontpath\\\":\\\"MXYZ-698E3EFE9AEC4BC28C56E6C061176B9E.ttf\\\",\\\"searchword\\\":\\\"BebasNeue Bold\\\",\\\"fontpathwoff\\\":\\\"MXYZ-666BCF3451ED4753939600AD3755D39E.woff\\\",\\\"id\\\":708,\\\"fontclassify\\\":\\\"隐藏使用\\\",\\\"fontname\\\":\\\"BebasNeue Bold\\\",\\\"defaultimage\\\":\\\"MXYZ-04E88B1D84184CCDB4\"",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ],
+    [
+     "GET /diyWeb/FormatCard/getDicItem.do?code=M001 ->200 body=\"{\\\"data\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"dictId\\\":\\\"AD4636D5227B49399987EA16FC0FF3EA\\\",\\\"dtabId\\\":\\\"D1F76C0E7A9243D4B297C5E3ECE56289\\\",\\\"dictCode\\\":\\\"文字_01\\\",\\\"dictName\\\":\\\"姓名\\\",\\\"dictGroup\\\":null,\\\"xfield0\\\":null,\\\"xfield1\\\":null,\\\"xfield2\\\":null,\\\"xfield3\\\":null,\\\"xfield4\\\":null,\\\"xfield5\\\":null,\\\"xfield6\\\":null,\\\"xfield7\\\":n\"",
+     "GET commontool/queryWebInfo.do?sourceId=999 ->200 body=\"{\\\"response\\\":{\\\"result\\\":{\\\"isUse\\\":1,\\\"pageNumber\\\":0,\\\"sign\\\":3,\\\"pageSize\\\":0,\\\"imageInfo\\\":\\\"assets/resource/imgs/small/MXYZ-ADBA1C98771C4BA3B9B99FB62E4C6F04.jpg\\\",\\\"shopUrl\\\":\\\"\\\",\\\"albumurl\\\":\\\"\\\",\\\"webStyleId\\\":3,\\\"wangWang\\\":\\\"\\\",\\\"webName\\\":\\\"简设计\\\",\\\"pageOffset\\\":0,\\\"id\\\":999,\\\"albumshoplogo\\\":\\\"\\\",\\\"shopAbb\\\":\\\"jsj\\\"},\\\"success\\\":true,\"",
+     "POST diy/findTemplateById.do ->200 body=\"{\\\"userData\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"id\\\":\\\"500429\\\",\\\"maskId\\\":\\\"146125\\\",\\\"tmplId\\\":\\\"252937\\\",\\\"pageNo\\\":\\\"1\\\",\\\"pageName\\\":\\\"正面\\\",\\\"detail\\\":\\\"{\\\\\\\"diyName\\\\\\\":\\\\\\\"生活服务  综合  简约风\\\\\\\",\\\\\\\"templateInfo\\\\\\\":{\\\\\\\"bindingType\\\\\\\":\\\\\\\"无装订\\\\\\\",\\\\\\\"bindingHeight\\\\\\\":0,\\\\\\\"foldNum\\\\\\\":0,\\\\\\\"diyType\\\\\\\":\\\\\\\"12\\\\\\\",\\\\\\\"bleedWidth\\\\\\\":1.0,\\\\\\\"packageThick\\\\\\\":0\"",
+     "POST diy/findAllFont.do ->200 body=\"{\\\"success\\\":true,\\\"message\\\":null,\\\"userData\\\":[{\\\"fonttype\\\":1,\\\"fontpath\\\":\\\"MXYZ-698E3EFE9AEC4BC28C56E6C061176B9E.ttf\\\",\\\"searchword\\\":\\\"BebasNeue Bold\\\",\\\"fontpathwoff\\\":\\\"MXYZ-666BCF3451ED4753939600AD3755D39E.woff\\\",\\\"id\\\":708,\\\"fontclassify\\\":\\\"隐藏使用\\\",\\\"fontname\\\":\\\"BebasNeue Bold\\\",\\\"defaultimage\\\":\\\"MXYZ-04E88B1D84184CCDB4\"",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ],
+    [
+     "GET /diyWeb/FormatCard/getDicItem.do?code=M001 ->200 body=\"{\\\"data\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"dictId\\\":\\\"AD4636D5227B49399987EA16FC0FF3EA\\\",\\\"dtabId\\\":\\\"D1F76C0E7A9243D4B297C5E3ECE56289\\\",\\\"dictCode\\\":\\\"文字_01\\\",\\\"dictName\\\":\\\"姓名\\\",\\\"dictGroup\\\":null,\\\"xfield0\\\":null,\\\"xfield1\\\":null,\\\"xfield2\\\":null,\\\"xfield3\\\":null,\\\"xfield4\\\":null,\\\"xfield5\\\":null,\\\"xfield6\\\":null,\\\"xfield7\\\":n\"",
+     "GET commontool/queryWebInfo.do?sourceId=999 ->200 body=\"{\\\"response\\\":{\\\"result\\\":{\\\"isUse\\\":1,\\\"pageNumber\\\":0,\\\"sign\\\":3,\\\"pageSize\\\":0,\\\"imageInfo\\\":\\\"assets/resource/imgs/small/MXYZ-ADBA1C98771C4BA3B9B99FB62E4C6F04.jpg\\\",\\\"shopUrl\\\":\\\"\\\",\\\"albumurl\\\":\\\"\\\",\\\"webStyleId\\\":3,\\\"wangWang\\\":\\\"\\\",\\\"webName\\\":\\\"简设计\\\",\\\"pageOffset\\\":0,\\\"id\\\":999,\\\"albumshoplogo\\\":\\\"\\\",\\\"shopAbb\\\":\\\"jsj\\\"},\\\"success\\\":true,\"",
+     "POST diy/findTemplateById.do ->200 body=\"{\\\"userData\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"id\\\":\\\"500429\\\",\\\"maskId\\\":\\\"146125\\\",\\\"tmplId\\\":\\\"252937\\\",\\\"pageNo\\\":\\\"1\\\",\\\"pageName\\\":\\\"正面\\\",\\\"detail\\\":\\\"{\\\\\\\"diyName\\\\\\\":\\\\\\\"生活服务  综合  简约风\\\\\\\",\\\\\\\"templateInfo\\\\\\\":{\\\\\\\"bindingType\\\\\\\":\\\\\\\"无装订\\\\\\\",\\\\\\\"bindingHeight\\\\\\\":0,\\\\\\\"foldNum\\\\\\\":0,\\\\\\\"diyType\\\\\\\":\\\\\\\"12\\\\\\\",\\\\\\\"bleedWidth\\\\\\\":1.0,\\\\\\\"packageThick\\\\\\\":0\"",
+     "POST diy/findAllFont.do ->200 body=\"{\\\"success\\\":true,\\\"message\\\":null,\\\"userData\\\":[{\\\"fonttype\\\":1,\\\"fontpath\\\":\\\"MXYZ-698E3EFE9AEC4BC28C56E6C061176B9E.ttf\\\",\\\"searchword\\\":\\\"BebasNeue Bold\\\",\\\"fontpathwoff\\\":\\\"MXYZ-666BCF3451ED4753939600AD3755D39E.woff\\\",\\\"id\\\":708,\\\"fontclassify\\\":\\\"隐藏使用\\\",\\\"fontname\\\":\\\"BebasNeue Bold\\\",\\\"defaultimage\\\":\\\"MXYZ-04E88B1D84184CCDB4\"",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ],
+    [
+     "GET /diyWeb/FormatCard/getDicItem.do?code=M001 ->200 body=\"{\\\"data\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"dictId\\\":\\\"AD4636D5227B49399987EA16FC0FF3EA\\\",\\\"dtabId\\\":\\\"D1F76C0E7A9243D4B297C5E3ECE56289\\\",\\\"dictCode\\\":\\\"文字_01\\\",\\\"dictName\\\":\\\"姓名\\\",\\\"dictGroup\\\":null,\\\"xfield0\\\":null,\\\"xfield1\\\":null,\\\"xfield2\\\":null,\\\"xfield3\\\":null,\\\"xfield4\\\":null,\\\"xfield5\\\":null,\\\"xfield6\\\":null,\\\"xfield7\\\":n\"",
+     "GET commontool/queryWebInfo.do?sourceId=999 ->200 body=\"{\\\"response\\\":{\\\"result\\\":{\\\"isUse\\\":1,\\\"pageNumber\\\":0,\\\"sign\\\":3,\\\"pageSize\\\":0,\\\"imageInfo\\\":\\\"assets/resource/imgs/small/MXYZ-ADBA1C98771C4BA3B9B99FB62E4C6F04.jpg\\\",\\\"shopUrl\\\":\\\"\\\",\\\"albumurl\\\":\\\"\\\",\\\"webStyleId\\\":3,\\\"wangWang\\\":\\\"\\\",\\\"webName\\\":\\\"简设计\\\",\\\"pageOffset\\\":0,\\\"id\\\":999,\\\"albumshoplogo\\\":\\\"\\\",\\\"shopAbb\\\":\\\"jsj\\\"},\\\"success\\\":true,\"",
+     "POST diy/findTemplateById.do ->200 body=\"{\\\"userData\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"id\\\":\\\"500429\\\",\\\"maskId\\\":\\\"146125\\\",\\\"tmplId\\\":\\\"252937\\\",\\\"pageNo\\\":\\\"1\\\",\\\"pageName\\\":\\\"正面\\\",\\\"detail\\\":\\\"{\\\\\\\"diyName\\\\\\\":\\\\\\\"生活服务  综合  简约风\\\\\\\",\\\\\\\"templateInfo\\\\\\\":{\\\\\\\"bindingType\\\\\\\":\\\\\\\"无装订\\\\\\\",\\\\\\\"bindingHeight\\\\\\\":0,\\\\\\\"foldNum\\\\\\\":0,\\\\\\\"diyType\\\\\\\":\\\\\\\"12\\\\\\\",\\\\\\\"bleedWidth\\\\\\\":1.0,\\\\\\\"packageThick\\\\\\\":0\"",
+     "POST diy/findAllFont.do ->200 body=\"{\\\"success\\\":true,\\\"message\\\":null,\\\"userData\\\":[{\\\"fonttype\\\":1,\\\"fontpath\\\":\\\"MXYZ-698E3EFE9AEC4BC28C56E6C061176B9E.ttf\\\",\\\"searchword\\\":\\\"BebasNeue Bold\\\",\\\"fontpathwoff\\\":\\\"MXYZ-666BCF3451ED4753939600AD3755D39E.woff\\\",\\\"id\\\":708,\\\"fontclassify\\\":\\\"隐藏使用\\\",\\\"fontname\\\":\\\"BebasNeue Bold\\\",\\\"defaultimage\\\":\\\"MXYZ-04E88B1D84184CCDB4\"",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ],
+    [
+     "GET /diyWeb/FormatCard/getDicItem.do?code=M001 ->200 body=\"{\\\"data\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"dictId\\\":\\\"AD4636D5227B49399987EA16FC0FF3EA\\\",\\\"dtabId\\\":\\\"D1F76C0E7A9243D4B297C5E3ECE56289\\\",\\\"dictCode\\\":\\\"文字_01\\\",\\\"dictName\\\":\\\"姓名\\\",\\\"dictGroup\\\":null,\\\"xfield0\\\":null,\\\"xfield1\\\":null,\\\"xfield2\\\":null,\\\"xfield3\\\":null,\\\"xfield4\\\":null,\\\"xfield5\\\":null,\\\"xfield6\\\":null,\\\"xfield7\\\":n\"",
+     "GET commontool/queryWebInfo.do?sourceId=999 ->200 body=\"{\\\"response\\\":{\\\"result\\\":{\\\"isUse\\\":1,\\\"pageNumber\\\":0,\\\"sign\\\":3,\\\"pageSize\\\":0,\\\"imageInfo\\\":\\\"assets/resource/imgs/small/MXYZ-ADBA1C98771C4BA3B9B99FB62E4C6F04.jpg\\\",\\\"shopUrl\\\":\\\"\\\",\\\"albumurl\\\":\\\"\\\",\\\"webStyleId\\\":3,\\\"wangWang\\\":\\\"\\\",\\\"webName\\\":\\\"简设计\\\",\\\"pageOffset\\\":0,\\\"id\\\":999,\\\"albumshoplogo\\\":\\\"\\\",\\\"shopAbb\\\":\\\"jsj\\\"},\\\"success\\\":true,\"",
+     "POST diy/findTemplateById.do ->200 body=\"{\\\"userData\\\":[{\\\"pageNumber\\\":null,\\\"pageSize\\\":null,\\\"id\\\":\\\"500429\\\",\\\"maskId\\\":\\\"146125\\\",\\\"tmplId\\\":\\\"252937\\\",\\\"pageNo\\\":\\\"1\\\",\\\"pageName\\\":\\\"正面\\\",\\\"detail\\\":\\\"{\\\\\\\"diyName\\\\\\\":\\\\\\\"生活服务  综合  简约风\\\\\\\",\\\\\\\"templateInfo\\\\\\\":{\\\\\\\"bindingType\\\\\\\":\\\\\\\"无装订\\\\\\\",\\\\\\\"bindingHeight\\\\\\\":0,\\\\\\\"foldNum\\\\\\\":0,\\\\\\\"diyType\\\\\\\":\\\\\\\"12\\\\\\\",\\\\\\\"bleedWidth\\\\\\\":1.0,\\\\\\\"packageThick\\\\\\\":0\"",
+     "POST diy/findAllFont.do ->200 body=\"{\\\"success\\\":true,\\\"message\\\":null,\\\"userData\\\":[{\\\"fonttype\\\":1,\\\"fontpath\\\":\\\"MXYZ-698E3EFE9AEC4BC28C56E6C061176B9E.ttf\\\",\\\"searchword\\\":\\\"BebasNeue Bold\\\",\\\"fontpathwoff\\\":\\\"MXYZ-666BCF3451ED4753939600AD3755D39E.woff\\\",\\\"id\\\":708,\\\"fontclassify\\\":\\\"隐藏使用\\\",\\\"fontname\\\":\\\"BebasNeue Bold\\\",\\\"defaultimage\\\":\\\"MXYZ-04E88B1D84184CCDB4\"",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ]
+   ],
+   "layerText": [
+    "设计信息作品名：*用户名：*备注信息：*印刷格式： PDFCDR(x4)JPGTIF色彩模式：CMYKRGB 顾客信息：以下信息由订单号获取，确认当前设计与客户信息是否一致确定取消"
+   ],
+   "errs": []
+  },
+  "wroteToServer": false
+ },
+ "errors": []
+}

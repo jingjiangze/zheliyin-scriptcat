@@ -1,0 +1,16 @@
+{
+ "ts": "2026-09-18T00:21:49.971Z",
+ "stage": "STAGE-6-2-SAVE-RELOAD-PROBE6",
+ "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+ "hits": [
+  {
+   "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CustomerHeadMenuBarThird.js?v=20260707017",
+   "len": 399769,
+   "ctx": "||\"40\"==a(\"#typeid\").val()||\"133\"==a(\"#typeid\").val()||\"170\"==a(\"#typeid\").val())&&\"true\"!=\na(\"#multiCheck\").val()&&0<a(\".pageWrapMulti\").length&&1<a(\".pageWrapMulti li\").length?(\"137\"==a(\"#typeid\").val()||\"325\"==a(\"#typeid\").val())&&v.totalCanvasArray.length<c.pageList.length?l.msg(\"请点击您的每一页设计确认设计内容后再次提交预览！\",{icon:7,time:3E3}):a(\".effect-preview\").trigger(\"click\"):\"13\"!=a(\"#typeid\").val()&&\"137\"!=a(\"#typeid\").val()&&\"14\"!=a(\"#typeid\").val()&&\"39\"!=a(\"#typeid\").val()&&\"326\"!=a(\"#typeid\").val()&&\"282\"!=a(\"#typeid\").val()&&\"338\"!=a(\"#typeid\").val()||\"true\"==a(\"#multiCheck\").val()?(a(\".saveLoading\").find(\"p\").text(\"\"),\na(\".saveLoading\").show(),Ha=\"submit\",b=a(\"#diyId\").val(),a.ajax({url:\"third/IfDiyOrderidExit.do?designId\\x3d\"+b,type:\"post\",success:function(b){var d=b.thirdOrderNo;\"error\"!=b.status&&a(\"#thirdOrderNo\").val(d);if(\"1\"==b.testThirdOrderNo)l.alert(\"作品已经提交制作，不能再次提交\"),E=!1;else if(v.isMoreCanvasMode&&1==a(\"#isNoSave\").val()&&void 0!=a(\".rightBtn .save\"))l.open({type:0,title:\"错误提示\",icon:2,content:\"请先保存数据再提交生产！\"});else{na(\"submit\");b=a(\"#worksStatus\").val();d=a(\"#isAdmin\").val();if(1==d||2==d){if(0!=b&&\n1!=b&&2!=b){l.alert(\"用户未提交或生产排队中，不允许编辑!\");return}}else if(d=a(\"#canEdit\")."
+  }
+ ],
+ "errors": [],
+ "editorReady": true,
+ "scriptCount": 120,
+ "hitCount": 1
+}

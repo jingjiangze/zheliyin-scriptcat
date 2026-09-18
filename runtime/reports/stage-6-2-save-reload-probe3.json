@@ -1,0 +1,103 @@
+{
+ "ts": "2026-09-18T00:16:30.457Z",
+ "stage": "STAGE-6-2-SAVE-RELOAD-PROBE3",
+ "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+ "phases": {
+  "ready": {
+   "ok": true,
+   "objs": 9,
+   "href": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do"
+  },
+  "pre": {
+   "canvas": 9,
+   "layer": 1,
+   "href": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do"
+  },
+  "ocrCreate": {
+   "ok": true,
+   "created": 1,
+   "mode": "native"
+  },
+  "save": {
+   "found": true,
+   "clicked": true,
+   "chain": [
+    "LI.save",
+    "MENU.rightBtn",
+    "HEADER.diyTop",
+    "SECTION.diyMain",
+    "BODY.",
+    "HTML.ovh wf--n4-active wf-active wf"
+   ],
+   "net": [
+    "jq.post third/IfDiyOrderidExit.do?designId=",
+    "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\"",
+    "jqRes.post third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+   ],
+   "netSnaps": [
+    [
+     "jq.post third/IfDiyOrderidExit.do?designId=",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\"",
+     "jqRes.post third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ],
+    [
+     "jq.post third/IfDiyOrderidExit.do?designId=",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\"",
+     "jqRes.post third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ],
+    [
+     "jq.post third/IfDiyOrderidExit.do?designId=",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\"",
+     "jqRes.post third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ],
+    [
+     "jq.post third/IfDiyOrderidExit.do?designId=",
+     "POST third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\"",
+     "jqRes.post third/IfDiyOrderidExit.do?designId= ->200 body=\"{\\\"data\\\":\\\"\\\",\\\"status\\\":\\\"error\\\"}\""
+    ]
+   ],
+   "layerText": [
+    "页面\n                烫金\n                图层",
+    "设计信息作品名：*用户名：*备注信息：*印刷格式： PDFCDR(x4)JPGTIF色彩模式：CMYKRGB 顾客信息：以下信息由订单号获取，确认当前设计与客户信息是否一致确定取消",
+    "设计信息",
+    "作品名：*用户名：*备注信息：*印刷格式： PDFCDR(x4)JPGTIF色彩模式：CMYKRGB 顾客信息：以下信息由订单号获取，确认当前设计与客户信息是否一致",
+    "确定取消"
+   ],
+   "after": {
+    "canvas": 10,
+    "layer": 2
+   }
+  },
+  "afterReload": {
+   "canvas": 9,
+   "layer": 1,
+   "probeOnCanvas": 0,
+   "probeInLayer": 0
+  },
+  "cleanup": {
+   "clicked": true,
+   "net": []
+  },
+  "cleanupVerify": {
+   "canvas": 9,
+   "layer": 1,
+   "probeOnCanvas": 0,
+   "probeInLayer": 0
+  }
+ },
+ "errors": [],
+ "dialogs": [
+  {
+   "msg": "<empty>",
+   "type": "beforeunload"
+  },
+  {
+   "msg": "<empty>",
+   "type": "beforeunload"
+  }
+ ],
+ "conclusion": {
+  "note": "保存点击后请求序列见 phases.save.net；IfDiyOrderidExit.do 响应体见 jqRes/fetchRes/XHR body。",
+  "reloadRestored": false
+ }
+}
