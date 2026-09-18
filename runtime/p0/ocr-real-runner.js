@@ -677,7 +677,7 @@ async function openSiteLoginLayer() {
         const resp = await p;
         if (!resp) return { captured: false, round };
         let b = ""; try { b = await resp.text().catch(() => ""); } catch (e) { b = ""; }
-        const expired = /loginState\s*:\s*"?timeOut/i.test(b);
+        const expired = /"?loginState"?\s*:\s*"?timeOut/i.test(b);
         const rec = { round, status: resp.status(), expired: expired, body: String(b || "").slice(0, 300) };
         RUN.phases.submitTry.push(rec);
         return { captured: true, round, status: resp.status(), body: b, expired: expired };
