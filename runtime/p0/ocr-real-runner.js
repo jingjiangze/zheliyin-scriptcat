@@ -273,7 +273,9 @@ async function searchSync(maxRounds = 4) {
     } catch (e) { RUN.errors.push("scriptcat install: " + String(e && e.message || e).slice(0, 200)); }
     await sleep(1500);
 
-    // ---- 3. 编辑器就绪 ----
+    // ---- 3. 编辑器就绪（先 about:blank 再进编辑器，确保用户脚本注入全新文档）----
+    await page.goto("about:blank").catch(() => {});
+    await sleep(800);
     await page.goto(EDITOR_URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     const w = await waitUntil(isReadyExpr(), "editor", 120000);
     RUN.phases.editorReady = !!(w && w.ok);
@@ -282,11 +284,18 @@ async function searchSync(maxRounds = 4) {
     if (lg.visible) { const lk = await ensureLogin(); RUN.phases.userLogin = lk ? "PASS" : "FAIL"; await waitUntil(isReadyExpr(), "editor after login", 90000); }
 
     // ---- 4. 用户脚本 UI + 桥 + 版本 ----
-    const uiw = await waitUntil(() => {
+    const uiExpr = () => {
       const tb = document.getElementById("zy-native-ocr-tool-btn");
       const br = window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed;
       return { ok: !!(tb && br), toolBtn: !!tb, bridge: !!br };
-    }, "userscript ui", 60000, 1500);
+    };
+    let uiw = await waitUntil(uiExpr, "userscript ui", 45000, 1500);
+    if (!(uiw && uiw.ok)) {
+      RUN.errors.push("userscript ui missing on first load, reload retry");
+      await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+      await waitUntil(isReadyExpr(), "editor re-ready", 60000);
+      uiw = await waitUntil(uiExpr, "userscript ui retry", 45000, 1500);
+    }
     RUN.phases.userscript = uiw.ok ? uiw.data : null;
     RUN.console = consoleLines.slice(-80);
     RUN.phases.scriptVersionSeen = consoleLines.map((l) => (/折立印名片套版助手已加载\s+(\S+)/.exec(l) || [])[1] || "").filter(Boolean);
