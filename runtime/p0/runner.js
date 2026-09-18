@@ -20,7 +20,7 @@ const { chromium } = require("playwright");
 const EDITOR_URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const P0_DIR = path.join(__dirname, "..", "reports", "p0");
 const RESUME = path.join(P0_DIR, "resume-state.json");
-const PROFILE = path.join(__dirname, "..", "browser", "profile-usc3");
+const PROFILE = process.env.P0_PROFILE || path.join(__dirname, "..", "browser", "profile-usc3");
 // 安全：账号密码只从环境变量读取，禁止硬编码/写入报告
 const USER = process.env.P0_LOGIN_USER || "";
 const PASS = process.env.P0_LOGIN_PASS || "";
@@ -28,7 +28,7 @@ const PROBE_TEXT = "P0_FONT_TEST";
 
 // ---------- CLI ----------
 const args = process.argv.slice(2);
-const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema"), adoptSession: args.includes("--adopt-session"), sessionParity: args.includes("--session-parity"), submitProbe: args.includes("--submit-probe") };
+const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema"), adoptSession: args.includes("--adopt-session"), sessionParity: args.includes("--session-parity"), submitProbe: args.includes("--submit-probe"), relogin: args.includes("--relogin") };
 const resumeArg = (args.find((a) => a.startsWith("--resume=")) || "").split("=")[1];
 
 // ---------- 报告 ----------
@@ -608,6 +608,7 @@ async function parityCollect(disc) {
 async function submitProbe() {
   evt("submit-probe");
   await launch();
+  if (FLAG.relogin) { try { await browser.clearCookies(); } catch (e) {} evt("relogin-clear-cookies"); }
   await ensureEditor(120000);
   const lgE = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
   if (lgE) { const lk = await ensureLogin(); if (!lk) { report.errors.push("AUTH_REQUIRED"); return; } }
@@ -643,6 +644,11 @@ async function main() {
   if (FLAG.submitProbe) { await submitProbe(); writeSummary(); return; }
 
   await launch();
+  // --relogin：清除既有会话 cookie（正常登出），用 env 账号重新走真实登录流程
+  if (FLAG.relogin) {
+    evt("relogin: clear cookies + login with env account");
+    try { await browser.clearCookies(); } catch (e) {}
+  }
   const resumeFrom = resumeArg || (FLAG.fromCheck ? "check" : FLAG.fromPrint ? "print" : FLAG.fromProof ? "proof" : null);
   report.phases.resumeFrom = resumeFrom;
   saveResume("start", { resumeFrom });
