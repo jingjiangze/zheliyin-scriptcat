@@ -46,6 +46,53 @@ async function launch(runHeadless = false) {
     args: ["--disable-features=DisableLoadExtensionCommandLineSwitch", "--enable-unsafe-extension-debugging"],
     viewport: { width: 1440, height: 900 }
   });
+  // ---- pre-navigation instrumentation：必须在任何 goto 之前注入 ----
+  // 收集到 window.__p0Net（请求/响应红acted、JSON 序列化、console/error、DOM 变化）
+  await browser.addInitScript(() => {
+    if (window.__zyP0Init) return;
+    window.__zyP0Init = true;
+    window.__p0Net = { reqs: [], jsons: [], logs: [], errors: [], mutations: 0, start: Date.now() };
+    const push = (rec) => { const a = window.__p0Net.reqs; if (a.length < 400) a.push(rec); };
+    const redact = (s) => { try { return String(s).replace(/"(access_token|token|password|pwd|secret|cookie|authorization)"\s*:\s*"[^"]*"/gi, '"$1":"[REDACTED]"'); } catch (e) { return "[ERR]"; } };
+    // fetch
+    const of = window.fetch;
+    if (of && !of.__zyP0) {
+      window.fetch = function () {
+        const url = String(arguments[0] && arguments[0].url || arguments[0] || "");
+        const opt = arguments[1] || {};
+        if (url.indexOf("zheliyin.com") >= 0) push({ t: Date.now(), k: "fetch", m: opt.method || "GET", u: url.slice(0, 300), b: opt.body ? redact(opt.body).slice(0, 2000) : null });
+        return of.apply(this, arguments).then((r) => { try { if (r && r.url && r.url.indexOf("zheliyin.com") >= 0) { const clone = r.clone(); clone.text().then((t) => push({ t: Date.now(), k: "fetchR", s: r.status, u: r.url.slice(0, 300), b: redact(t).slice(0, 2000) })).catch(() => {}); } } catch (e) {} return r; });
+      };
+      window.fetch.__zyP0 = true;
+    }
+    // XHR
+    const op_ = XMLHttpRequest.prototype.open, sp_ = XMLHttpRequest.prototype.send;
+    if (!op_.__zyP0) {
+      XMLHttpRequest.prototype.open = function (m, u) { this.__u = String(u || ""); return op_.apply(this, arguments); };
+      XMLHttpRequest.prototype.send = function (body) {
+        try { if (this.__u && this.__u.indexOf("zheliyin.com") >= 0) push({ t: Date.now(), k: "xhr", m: "XHR", u: this.__u.slice(0, 300), b: body ? redact(body).slice(0, 2000) : null }); } catch (e) {}
+        return sp_.apply(this, arguments);
+      };
+      XMLHttpRequest.prototype.open.__zyP0 = true;
+    }
+    // JSON.stringify（捕获提交 payload，脱敏）
+    const os = JSON.stringify;
+    if (!os.__zyP0) {
+      JSON.stringify = function (v) {
+        const r = os.apply(this, arguments);
+        try { if (typeof r === "string" && r.indexOf('"printLocation"') >= 0 && r.indexOf('"mediaType":"text"') >= 0 && window.__p0Net.jsons.length < 6) window.__p0Net.jsons.push({ t: Date.now(), len: r.length, b: redact(r).slice(0, 8000) }); } catch (e) {}
+        return r;
+      };
+      JSON.stringify.__zyP0 = true;
+    }
+    // console.error / window error
+    window.addEventListener("error", (e) => { try { window.__p0Net.errors.push({ t: Date.now(), s: String(e.message || "").slice(0, 200) }); } catch (x) {} });
+    // MutationObserver（DOM 变化计数，限制频率）
+    try {
+      const mo = new MutationObserver(() => { window.__p0Net.mutations++; });
+      mo.observe(document.documentElement, { childList: true, subtree: true });
+    } catch (e) {}
+  });
   browser.on("dialog", (d) => { try { d.accept().catch(() => {}); } catch (e) {} });
   browser.on("page", (p) => { try { report.pages.push({ url: p.url().slice(0, 200), count: browser.pages().length }); } catch (e) {} });
   page = browser.pages()[0];
