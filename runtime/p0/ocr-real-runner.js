@@ -690,7 +690,12 @@ async function openSiteLoginLayer() {
       let retried = 0;
       const persistBefore = await canvasTextCount();
       while (!recovered && retried < 2) {
-        let lgNow = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
+        // 站点在 submit timeOut 后约 1~10s 弹出登录层（历史 relogin 探针 poll 验证）；先轮询等它出现
+        const formW = await waitUntil(() => {
+          const ua = document.querySelector("#userAccount");
+          return { ok: !!(ua && ua.offsetParent) };
+        }, "login popup appears", 20000, 1000);
+        let lgNow = !!(formW && formW.ok);
         if (!lgNow) { const opened = await openSiteLoginLayer(); RUN.phases.authLayerOpenAttempt = opened; await sleep(1500); lgNow = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); }); }
         if (!lgNow) { RUN.phases.authRecovery = "AUTH_RECOVERY_UNAVAILABLE"; break; }
         const settled = await waitUntil(() => {
