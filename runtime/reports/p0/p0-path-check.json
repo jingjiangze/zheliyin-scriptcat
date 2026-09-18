@@ -1,0 +1,116 @@
+{
+  "ts": "2026-09-18T07:09:25.828Z",
+  "profile": "D:\\zheliyin-scriptcat\\runtime\\browser\\profile-usc3",
+  "editorUrl": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "scriptCatVendor": true,
+  "scriptCatManifest": {
+    "version": "1.4.0",
+    "mv": 3
+  },
+  "extensionLoaded": true,
+  "realPath": "ScriptCat (+userscript)",
+  "installedScripts": [
+    {
+      "uuid": "zheliyin-real-ocr-0.3.10.2",
+      "name": "折立印名片套版助手 (OCR Demo 版)",
+      "version": [
+        "0.3.10.2"
+      ],
+      "enabled": 1,
+      "requiresCount": null
+    }
+  ],
+  "userscriptInstalled": {
+    "uuid": "zheliyin-real-ocr-0.3.10.2",
+    "name": "折立印名片套版助手 (OCR Demo 版)",
+    "version": [
+      "0.3.10.2"
+    ],
+    "enabled": 1,
+    "requiresCount": null
+  },
+  "authConfigured": false,
+  "page": {
+    "href": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+    "title": "智能设计定制未来",
+    "editorReady": true,
+    "canvasCount": 1,
+    "currentCanvasNum": 1,
+    "userAccountVisible": false,
+    "loginLayerCandidates": [],
+    "marker": true,
+    "ocrToolBtn": true,
+    "ocrDrawer": true,
+    "ocrBtn": true,
+    "templatePanel": false,
+    "rightBar": true,
+    "windowCanvasObjVOType": "undefined",
+    "requirejsCanvasObjVO": true,
+    "requirejsCurrentCanvas": true,
+    "requirejsUndo": true,
+    "globalFabric": "object",
+    "indirectEval": "OK",
+    "newFunction": "OK",
+    "canvasCtorFabric": false,
+    "pageBridgeType": "undefined",
+    "gmAvailable": "undefined",
+    "ocrObjectsOnCanvas": 0
+  },
+  "requirements": {
+    "bridgeMarker": true,
+    "ocrUiRendered": true,
+    "inferredNote": "隔离世界的 @require 变量无法从页面世界直读；以 bridge marker + OCR UI 渲染 + console INIT 行三者交叉判断"
+  },
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "折立印名片套版助手已加载 0.3.10.2"
+  ],
+  "errors": [],
+  "canvasInventory": {
+    "ok": true,
+    "totalObjects": 9,
+    "objectTypes": [
+      "rect",
+      "line"
+    ],
+    "textObjects": [],
+    "imageObjects": [],
+    "backgroundImage": null,
+    "backgroundImageType": null,
+    "frontImgPathStr": "assets/resource/imgs/large/",
+    "addImageLikeMethods": [
+      "AdvanceContainerImgDel",
+      "CheckImgPixel",
+      "addContainerToImg",
+      "addText",
+      "arrowHeadDistance",
+      "changImgColor",
+      "cutImgNum",
+      "cutImgsArr",
+      "cutImgsLayerArr",
+      "drawAndReturnImg",
+      "drawCurvedCutImg",
+      "drawCurvedImg",
+      "drawCutImg",
+      "drawCutImgCompleteNum",
+      "drawImg",
+      "drawImgForChangeColor",
+      "drawTextToImg",
+      "getCurrPageCanvasObjectImgs",
+      "handlerBleedAndOverImg",
+      "imgScaleB",
+      "mSelectCurvedImgNewArr",
+      "mSelectCurvedImgOldArr",
+      "randomMoveForPicOfRq",
+      "reCutImg",
+      "reMaskImgGroup",
+      "removeContainerToImg",
+      "resetImg",
+      "setAdvanceImgMask",
+      "setAdvanceImgMaskForCrop",
+      "setCanvasBgImg"
+    ],
+    "canvasWidth": 619.5,
+    "canvasHeight": 376.8625
+  }
+}

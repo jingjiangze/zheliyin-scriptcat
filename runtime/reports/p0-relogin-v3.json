@@ -19,7 +19,7 @@
         "b": "{\"result\":true,\"loginState\":\"timeOut\"}"
       },
       {
-        "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=17606256193",
+        "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=[REDACTED]",
         "b": "{\"success\":true,\"message\":null,\"userData\":null}"
       }
     ]
@@ -363,7 +363,7 @@
     {
       "status": 200,
       "u": "https://diy.zheliyin.com/siteWeb/jsj/userLogin.do",
-      "body": "{\"success\":true,\"message\":\"17606256193\",\"userData\":{\"teamId\":\"\"}}"
+      "body": "{\"success\":true,\"message\":\"[REDACTED_USER]\",\"userData\":{\"teamId\":\"\"}}"
     },
     {
       "status": 200,
@@ -532,7 +532,7 @@
     },
     {
       "status": 200,
-      "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=17606256193",
+      "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=[REDACTED]",
       "body": "{\"success\":true,\"message\":null,\"userData\":null}"
     },
     {

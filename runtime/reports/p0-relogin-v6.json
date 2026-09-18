@@ -120,7 +120,7 @@
     {
       "status": 200,
       "u": "https://diy.zheliyin.com/siteWeb/jsj/userLogin.do",
-      "body": "{\"success\":true,\"message\":\"17606256193\",\"userData\":{\"teamId\":\"\"}}"
+      "body": "{\"success\":true,\"message\":\"[REDACTED_USER]\",\"userData\":{\"teamId\":\"\"}}"
     },
     {
       "status": 200,

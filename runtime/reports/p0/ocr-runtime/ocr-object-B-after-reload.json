@@ -4,5 +4,14 @@
   "saveClick": {
     "clicked": true
   },
-  "matched": []
+  "matched": [],
+  "textMatched": [],
+  "textsAfter": [],
+  "wanted": [
+    "ABC 科技 有 限 公司",
+    "张三",
+    "13800138000",
+    "销售经理"
+  ],
+  "verdict": "LOST"
 }

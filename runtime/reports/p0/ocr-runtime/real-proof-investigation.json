@@ -1,0 +1,377 @@
+{
+  "ts": "2026-09-18T07:40:50.111Z",
+  "ocrRunId": "OCR-20260918-001",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "editUrlBranch": "test",
+  "editorIntegrationMode": "NATIVE",
+  "verdict": {
+    "AUTH": "EXPIRED",
+    "SUBMIT": "UNKNOWN",
+    "SUBMIT_CODE": "NOT_COMPLETED_AUTH",
+    "HEGAO": "NOT_REACHED",
+    "PROOF": "NOT_REACHED",
+    "OBJECT": "VALID",
+    "EDITOR_INTEGRATION": "NATIVE",
+    "RED_BOX_MAPPING": "NONE",
+    "OCR_TARGET": "OK",
+    "evidence": {
+      "auth": {
+        "authAtStart": {
+          "loginLayerVisible": false,
+          "authConfiguredEnv": true
+        },
+        "authEnd": {
+          "loginLayerVisible": false
+        },
+        "submitUserDesignHits": [
+          {
+            "status": 200,
+            "result": true,
+            "loginState": "timeOut"
+          }
+        ]
+      },
+      "submit": {
+        "hitCount": 1,
+        "raw": [
+          {
+            "status": 200,
+            "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+            "body": {
+              "result": true,
+              "loginState": "timeOut"
+            }
+          }
+        ]
+      },
+      "hegao": {
+        "hegaoPreprintGate": true,
+        "proofSurfaces": null,
+        "postSubmitNetHits": [],
+        "hegaoPostSubmitEvidence": false
+      },
+      "proof": {
+        "proofCounts": {
+          "total": 0,
+          "pass": 0,
+          "errAutoCheck": 0,
+          "popup": false
+        },
+        "popup": false
+      },
+      "object": {
+        "replySeen": true,
+        "replyOk": true,
+        "createdCount": 4,
+        "detectedBlocks": 4,
+        "newTextboxes": 4,
+        "ocrVisible": "PASS",
+        "replyMessage": ""
+      },
+      "editorIntegration": {
+        "mode": "native",
+        "nativeUndoFound": true,
+        "undoSavePre": true,
+        "undoSavePost": true,
+        "drawTextBatch": 4,
+        "failedBlockIndex": -1,
+        "layerNumBase": 1,
+        "identityApplied": 4,
+        "uv4Total": 4,
+        "layerMax": -1
+      },
+      "redBox": {
+        "state": "NONE",
+        "reason": "no error-marker in DOM",
+        "markers": [],
+        "candidates": []
+      }
+    }
+  },
+  "phases": {
+    "editorReady": true,
+    "authAtStart": {
+      "loginLayerVisible": false,
+      "authConfiguredEnv": true
+    },
+    "authAfterStart": {
+      "loginLayerVisible": false
+    },
+    "userscript": {
+      "ok": true,
+      "toolBtn": true,
+      "bridge": true
+    },
+    "scriptVersionSeen": [
+      "0.3.10.2",
+      "0.3.10.2"
+    ],
+    "fixtureFile": ".\\runtime\\p0\\fixtures\\ocr-test.png",
+    "ocrTargetBootstrap": "OK",
+    "panelOpen": false,
+    "ocrTargetPreClick": {
+      "preCount": 1,
+      "placed": false,
+      "reasserted": false
+    },
+    "ocrClick": {
+      "ok": true
+    },
+    "ocrReplySeen": true,
+    "ocrVisible": "PASS",
+    "reloadReady": true,
+    "saveReload": {
+      "identityMatched": 0,
+      "textMatched": 0,
+      "wanted": [
+        "ABC 科技 有 限 公司",
+        "张三",
+        "13800138000",
+        "销售经理"
+      ],
+      "verdict": "LOST"
+    },
+    "hegaoOk": true,
+    "orderNo": {
+      "ok": true
+    },
+    "print": {
+      "ok": true,
+      "attempt": 0
+    },
+    "proofSurfaces": null,
+    "retried": 1,
+    "previews": [],
+    "autoProofreadPopup": false,
+    "realOcrProof": "FAIL",
+    "proofCounts": {
+      "total": 0,
+      "pass": 0,
+      "errAutoCheck": 0,
+      "popup": false
+    }
+  },
+  "statusLog": [
+    "就绪",
+    "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…"
+  ],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "折立印名片套版助手已加载 0.3.10.2",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "折立印名片套版助手已加载 0.3.10.2"
+  ],
+  "errors": [],
+  "netLog": [
+    {
+      "status": 404,
+      "u": "https://ext.scriptcat.org/api/v1/open/favicons?domain=diy.zheliyin.com&sz=64",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/getImgInfos.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+      "body": "{\"result\":true,\"loginState\":\"timeOut\"}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/checkRedisLoginVerify.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/userLogin.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
+      "body": null
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=[REDACTED]",
+      "body": null
+    }
+  ]
+}

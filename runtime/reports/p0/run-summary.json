@@ -119,7 +119,7 @@
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=17606256193",
+        "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=[REDACTED]",
         "body": "{\"success\":true,\"message\":null,\"userData\":null}"
       },
       {
@@ -148,7 +148,7 @@
       },
       {
         "status": 200,
-        "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=17606256193",
+        "u": "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do?userId=[REDACTED]",
         "body": "{\"success\":true,\"message\":null,\"userData\":null}"
       },
       {

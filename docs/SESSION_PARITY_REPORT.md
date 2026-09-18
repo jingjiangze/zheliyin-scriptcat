@@ -28,7 +28,7 @@ cookie 名称（脱敏仅名称）：略（详见 runtime/reports/p0/session-par
 | 会话 | 请求 | 响应 |
 |---|---|---|
 | MANAGED (profile-usc3，旧登录态) | POST /third/submitUserDesign.do | `{"result":true,"loginState":"timeOut"}` |
-| MANAGED (全新 profile + 账号 17606256193 登录) | 同上 | `{"result":true,"loginState":"timeOut"}` |
+| MANAGED (全新 profile + 账号 [REDACTED_USER] 登录) | 同上 | `{"result":true,"loginState":"timeOut"}` |
 | MANAGED (清 cookie 匿名) | 同上 | `{"result":true,"loginState":"timeOut"}` |
 | REAL（用户真机） | 未接管（无 CDP），已知可继续交稿/核稿 | — |
 
@@ -37,7 +37,7 @@ cookie 名称（脱敏仅名称）：略（详见 runtime/reports/p0/session-par
 | 维度 | 结论 |
 |---|---|
 | 页面账号登录 | **排除**：匿名/登录/全新 profile 三种状态 timeOut 一致；编辑页本身可匿名打开并完成 drawText |
-| 账号身份 | **排除**：17606256193（真机号）全新 profile 仍 timeOut |
+| 账号身份 | **排除**：[REDACTED_USER]（真机号）全新 profile 仍 timeOut |
 | 浏览器 profile 缓存 | **待验证**：接管真机浏览器（CDP）后才能对比其 cookie/存储/全局量 |
 | 进入路径 / 商户上下文 | **高度怀疑**：真机进入 URL 链可能携带订单/商户参数（thirdOrderNo/orderId/accessToken 等），此判定的鉴权依据尚未定位 |
 | 前置请求链 | **待验证**：REAL 前置请求序列 vs MANAGED 的差异需 CDP 抓取 |

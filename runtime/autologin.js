@@ -1,6 +1,6 @@
 // runtime/autologin.js — 登录专用浏览器（凭据只经环境变量，不写文件、不入库）
 // 用法：
-//   $env:ZY_USER="17606256193"; $env:ZY_PASS="..."; node runtime/autologin.js --expect-editor [--headed]
+//   $env:ZY_USER="[REDACTED_USER]"; $env:ZY_PASS="..."; node runtime/autologin.js --expect-editor [--headed]
 // 完成后打印 AUTH 结果。退出码 0 = 编辑态就绪。
 "use strict";
 const path = require("path");

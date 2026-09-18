@@ -1,5 +1,102 @@
 {
   "ocrRunId": "OCR-20260918-001",
   "note": "由 ocrCreate items（buildItemsFromOcr 真实产物）映射：1 block=1 textbox",
-  "items": []
+  "items": [
+    {
+      "blockIndex": 0,
+      "ocrRunId": "OCR-20260918-001",
+      "text": "ABC 科技 有 限 公司",
+      "fontFamily": "思源黑体 Regular",
+      "diagnostics": {
+        "sourceLineCount": 1,
+        "estimatedFinalLineCount": 1,
+        "forcedWrapDetected": false,
+        "layoutWidth": 256,
+        "perLineWidth": [
+          {
+            "text": "ABC 科技 有 限 公",
+            "width": 246,
+            "needsWrap": false
+          }
+        ]
+      },
+      "left": 136,
+      "top": 54.5,
+      "width": 256,
+      "fontSize": 26,
+      "height": 42
+    },
+    {
+      "blockIndex": 1,
+      "ocrRunId": "OCR-20260918-001",
+      "text": "张三",
+      "fontFamily": "思源黑体 Regular",
+      "diagnostics": {
+        "sourceLineCount": 1,
+        "estimatedFinalLineCount": 1,
+        "forcedWrapDetected": false,
+        "layoutWidth": 80,
+        "perLineWidth": [
+          {
+            "text": "张三",
+            "width": 68,
+            "needsWrap": false
+          }
+        ]
+      },
+      "left": 219,
+      "top": 115,
+      "width": 80,
+      "fontSize": 34,
+      "height": 52
+    },
+    {
+      "blockIndex": 2,
+      "ocrRunId": "OCR-20260918-001",
+      "text": "13800138000",
+      "fontFamily": "思源黑体 Regular",
+      "diagnostics": {
+        "sourceLineCount": 1,
+        "estimatedFinalLineCount": 1,
+        "forcedWrapDetected": false,
+        "layoutWidth": 161,
+        "perLineWidth": [
+          {
+            "text": "13800138000",
+            "width": 115,
+            "needsWrap": false
+          }
+        ]
+      },
+      "left": 165,
+      "top": 173,
+      "width": 161,
+      "fontSize": 19,
+      "height": 33
+    },
+    {
+      "blockIndex": 3,
+      "ocrRunId": "OCR-20260918-001",
+      "text": "销售经理",
+      "fontFamily": "思源黑体 Regular",
+      "diagnostics": {
+        "sourceLineCount": 1,
+        "estimatedFinalLineCount": 1,
+        "forcedWrapDetected": false,
+        "layoutWidth": 152,
+        "perLineWidth": [
+          {
+            "text": "销售经理",
+            "width": 140,
+            "needsWrap": false
+          }
+        ]
+      },
+      "left": 195.5,
+      "top": 219.5,
+      "width": 152,
+      "fontSize": 35,
+      "height": 54
+    }
+  ]
 }

@@ -1,6 +1,4 @@
 {
   "ocrRunId": "OCR-20260918-001",
-  "textObjs": {
-    "err": "Error: page.evaluate: Target page, context or browser has been closed"
-  }
+  "textObjs": []
 }
