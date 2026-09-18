@@ -29,7 +29,7 @@ const MANUAL_TEXT = "P0_MANUAL_CTRL";
 
 // ---------- CLI ----------
 const args = process.argv.slice(2);
-const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema"), adoptSession: args.includes("--adopt-session"), sessionParity: args.includes("--session-parity"), submitProbe: args.includes("--submit-probe"), relogin: args.includes("--relogin"), controlEmpty: args.includes("--control-empty"), controlManual: args.includes("--control-manual") };
+const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema"), adoptSession: args.includes("--adopt-session"), sessionParity: args.includes("--session-parity"), submitProbe: args.includes("--submit-probe"), relogin: args.includes("--relogin"), controlEmpty: args.includes("--control-empty"), controlManual: args.includes("--control-manual"), variant: (args.find((a) => a.startsWith("--variant=")) || "").split("=")[1] || null };
 const resumeArg = (args.find((a) => a.startsWith("--resume=")) || "").split("=")[1];
 
 // ---------- 报告 ----------
@@ -203,24 +203,36 @@ async function dialogPass() {
 }
 
 // ---------- 核稿：创建→核稿→关窗 ----------
+function variantOverrides(name) {
+  const map = {
+    resource1: { resourceType: 1 },
+    composite1: { isComposite: 1 },
+    preview1: { isPreview: 1 },
+    visit1000: { visitLevel: 1000 },
+    display0: { isDisplay: 0 },
+    allmanual: { topEnable: 0, resourceType: 1, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 1, isPreview: 1, isDesignShape: 0, isDisplay: 0, visitLevel: 1000 }
+  };
+  return map[name] || {};
+}
 async function createProbeObject() {
-  evt("create-object");
+  evt("create-object variant=" + (FLAG.variant || "default"));
   await ev((arg) => {
+    const vb = Object.assign({ topEnable: 1, resourceType: 0, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 0, isPreview: 0, isDesignShape: 0, isDisplay: 1, visitLevel: 1 }, arg.v || {});
     const req = window.requirejs || window.require;
     const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
     for (let i = 0; i < vo.totalCanvasArray.length; i++) {
       const d = vo.totalCanvasArray[i];
       if (!(d && typeof d.drawText === "function" && d.canvas && d.canvasObjInfo)) continue;
       const base = d.canvasObjInfo.canvasToProductObjArr.length;
-      const entry = { media: { mediaType: "text", text: arg.t, font: { pointSize: 24, fontColor: "#000000", isHorizontal: 1, gravity: "left", id: "556", isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 }, charSpace: 0, lineSpace: 1.3, lineIdType: 0, isBG: 0, imgPath: "" }, location: { x: 100, y: 100, width: 220, height: 40, factWidth: 220, factHeight: 40, rotation: 0 }, printLocation: { x: 100, y: 100, width: 220, height: 40, rotation: 0 }, layer: { alpha: 1 }, layerNum: base, isEdit: 1, isDisplay: 1, deleteState: 0, visitLevel: 1, multiUuid: "p0rn" + Date.now() % 1000000, markuuid: "", topEnable: 1, resourceType: 0, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 0, isPreview: 0, isDesignShape: 0 };
+      const entry = { media: { mediaType: "text", text: arg.t, font: { pointSize: 24, fontColor: "#000000", isHorizontal: 1, gravity: "left", id: "556", isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 }, charSpace: 0, lineSpace: 1.3, lineIdType: 0, isBG: 0, imgPath: "" }, location: { x: 100, y: 100, width: 220, height: 40, factWidth: 220, factHeight: 40, rotation: 0 }, printLocation: { x: 100, y: 100, width: 220, height: 40, rotation: 0 }, layer: { alpha: 1 }, layerNum: base, isEdit: 1, isDisplay: vb.isDisplay, deleteState: 0, visitLevel: vb.visitLevel, multiUuid: "p0rn" + Date.now() % 1000000, markuuid: "", topEnable: vb.topEnable, resourceType: vb.resourceType, maskEnable: vb.maskEnable, lowPixelFlag: vb.lowPixelFlag, selectEnabled: vb.selectEnabled, isDesign: vb.isDesign, isComposite: vb.isComposite, isPreview: vb.isPreview, isDesignShape: vb.isDesignShape };
       d.drawText(arg.t, null, null, null, entry, base);
       const o = d.canvas.getObjects().filter((ob) => String(ob.text || "") === arg.t)[0];
-      if (o) { o.topEnable = 1; o.resourceType = 0; o.maskEnable = 0; o.lowPixelFlag = 0; o.selectEnabled = 1; o.isDesign = 1; o.isComposite = 0; o.isPreview = 0; o.isDesignShape = 0; }
+      if (o) { Object.keys(vb).forEach((k) => { o[k] = vb[k]; }); }
       d.canvas.requestRenderAll && d.canvas.requestRenderAll();
       return { ok: true, total: d.canvas.getObjects().length };
     }
     return { ok: false, err: "no canvas" };
-  }, { t: PROBE_TEXT });
+  }, { t: PROBE_TEXT, v: variantOverrides(FLAG.variant) });
 }
 // 对照：编辑器原生 addText（手工添加文本，boolean 语义字段）→ 服务端核稿对照
 async function createManualObject(t) {
@@ -847,10 +859,11 @@ async function main() {
   // 检查阶段
   await stageCheck();
   saveResume("check", { located: report.phases.suspect && report.phases.suspect.located });
-  if (FLAG.controlEmpty || FLAG.controlManual) {
+  if (FLAG.controlEmpty || FLAG.controlManual || FLAG.variant) {
     const previews = (report.phases.net || []).filter((n) => /imgPreviewSearch/.test(n.u)).map((n) => { try { const j = JSON.parse(n.body); return { success: j && j.success, producestate: j && j.userData && j.userData.producestate, errPage: j && j.userData && j.userData.errPage, errInfo: j && j.userData && j.userData.errInfo }; } catch (e) { return { body: String(n.body || "").slice(0, 80) }; } });
-    writeJson("control-result.json", { ts: new Date().toISOString(), mode: FLAG.controlEmpty ? "EMPTY_TEMPLATE" : "MANUAL_TEXT", previews });
-    report.phases.control = { mode: FLAG.controlEmpty ? "EMPTY_TEMPLATE" : "MANUAL_TEXT", previewCount: previews.length };
+    const mode = FLAG.controlEmpty ? "EMPTY_TEMPLATE" : FLAG.controlManual ? "MANUAL_TEXT" : "VARIANT:" + FLAG.variant;
+    writeJson("control-result.json", { ts: new Date().toISOString(), mode, previews });
+    report.phases.control = { mode, previewCount: previews.length };
   }
   writeSummary();
 }
