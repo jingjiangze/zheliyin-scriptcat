@@ -148,4 +148,8 @@ Agent：不可达 → **UNVERIFIED**。
 ## 遗留
 
 - Stage 7 验证报告（`docs/stage-7-validation-report.md`）尚未产出，待后续提交补齐。
-- Agent 会话与 252438 对齐后，可重跑双端 core/native 探针，补全编辑器运行时层对照。
+- **第二轮（Session Alignment）结论已定：`AGENT_SESSION_ALIGNMENT = BLOCKED`** ——
+  Agent 会话（已合法登录）访问 252438 恒定重定向 `20422507/thirdDiyEdit.do`，原因为账号/设计权限的
+  会话绑定（与 Electron 无关）；Agent 侧 252438 编辑器运行时层仍不可对照。
+  详细证据与 CDP 接管调查见 `docs/AGENT_BROWSER_CDP_REPORT.md`。
+- 待 Agent 获得有 252438 权限的账号会话后，可重跑双端 core/native 探针，补全编辑器运行时层对照。
