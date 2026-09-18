@@ -1,5 +1,5 @@
 {
- "ts": "2026-09-17T14:43:23.531Z",
+ "ts": "2026-09-18T06:31:56.386Z",
  "stage": "STAGE-6-2-OCR-CREATE-NATIVE-TEST",
  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
  "phases": {
@@ -29,19 +29,19 @@
     {
      "blockIndex": 0,
      "objectIndex": 1,
-     "uuid": "6d9c77cf-8c8e-4121-a2eb-1ce3ed7c4fc5",
+     "uuid": "4ed76469-73d2-45c8-88c2-6a208d8f6f13",
      "text": "张三"
     },
     {
      "blockIndex": 1,
      "objectIndex": 2,
-     "uuid": "9e110d7b-a7b4-405a-b915-033b27ee5dc7",
+     "uuid": "eb656b0f-3f7b-4876-9d36-141578965e9b",
      "text": "销售经理"
     },
     {
      "blockIndex": 2,
      "objectIndex": 3,
-     "uuid": "bc1e7770-72c3-4b75-b4c1-9ef63c1da9fc",
+     "uuid": "6e3d0222-bee8-4623-afe4-ed5031dd4e38",
      "text": "电话：13800138000"
     }
    ],
@@ -68,8 +68,8 @@
     {
      "layerIdx": 1,
      "layerNum": 1,
-     "uuid": "6d9c77cf-8c8e-4121-a2eb-1ce3ed7c4fc5",
-     "multiUuid": "7d0c8966-5976-fb39-729e-eaeaf4ec7899",
+     "uuid": "4ed76469-73d2-45c8-88c2-6a208d8f6f13",
+     "multiUuid": "1d43a841-d7c0-f495-d4ee-43bd6cc01e74",
      "mediaMediaType": "text",
      "fontSize": 28,
      "left": 60,
@@ -78,8 +78,8 @@
     {
      "layerIdx": 2,
      "layerNum": 2,
-     "uuid": "9e110d7b-a7b4-405a-b915-033b27ee5dc7",
-     "multiUuid": "9c9d00df-4e55-a0f4-2914-7ee7bbd60a1f",
+     "uuid": "eb656b0f-3f7b-4876-9d36-141578965e9b",
+     "multiUuid": "8876069b-c4d2-c841-fd71-cf31bc0737ef",
      "mediaMediaType": "text",
      "fontSize": 22,
      "left": 60,
@@ -88,8 +88,8 @@
     {
      "layerIdx": 3,
      "layerNum": 3,
-     "uuid": "bc1e7770-72c3-4b75-b4c1-9ef63c1da9fc",
-     "multiUuid": "2109f85c-dd03-04e1-6704-32a57fe549cb",
+     "uuid": "6e3d0222-bee8-4623-afe4-ed5031dd4e38",
+     "multiUuid": "bda2ba67-7583-1c57-0a4f-cca8786f21ee",
      "mediaMediaType": "text",
      "fontSize": 18,
      "left": 60,
