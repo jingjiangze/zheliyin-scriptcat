@@ -1,0 +1,313 @@
+{
+  "ts": "2026-09-18T11:12:12.313Z",
+  "stage": "STAGE-7.6/7.7-REAL-OCR-PAGE-OWNERSHIP",
+  "cases": [
+    {
+      "label": "CASE1_FRONT_ONLY",
+      "wantSide": "FRONT",
+      "click": {
+        "clicked": true,
+        "via": "#zy-native-ocr-btn"
+      },
+      "current": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "cc": 1
+      },
+      "reply": {
+        "ok": true,
+        "code": "STATUS_SUC_CREATE",
+        "note": "reply 消息未进探针世界，以 status+canvas 增量为创建证据；pageId 证据取 ocrCreate 请求冻结值"
+      },
+      "statusFlow": [
+        {
+          "t": "0s",
+          "s": "正在准备图片…",
+          "objs": 10
+        },
+        {
+          "t": "1s",
+          "s": "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
+          "objs": 10
+        },
+        {
+          "t": "2s",
+          "s": "已生成 4 个文字（可双击编辑）",
+          "objs": 14
+        }
+      ],
+      "imgInjected": {
+        "ok": true,
+        "usedExisting": false,
+        "n": 1,
+        "uuid": "p7-img-1789729951443"
+      },
+      "doneAt": "2s",
+      "captureLog": [
+        {
+          "t": "getCurrentPage",
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "getCurrentPageResult",
+          "ok": true,
+          "code": "OK",
+          "pageId": "canvas:c0",
+          "side": "FRONT"
+        },
+        {
+          "t": "getCanvasInfoResult",
+          "ok": true,
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "ocrPrepare",
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "ocrPrepareResult",
+          "ok": true,
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "ocrCreate",
+          "pageId": "canvas:c0",
+          "side": "FRONT"
+        }
+      ],
+      "after": {
+        "n": 14,
+        "texts": [
+          "ABC 科技 有 限",
+          "张三",
+          "1380013800",
+          "销售经理"
+        ],
+        "before": 10
+      },
+      "assert": {
+        "done": true,
+        "sourceFreezePageId": "canvas:c0",
+        "sourceFreezeMatch": true,
+        "textsOnPage": 4,
+        "createdOwned": true
+      },
+      "imgRolled": {
+        "ok": true,
+        "removed": 1,
+        "remaining": 13
+      },
+      "textRollback": {
+        "ok": true,
+        "removed": 0,
+        "remaining": 13
+      }
+    },
+    {
+      "label": "CASE2_BACK_ONLY",
+      "wantSide": "BACK",
+      "click": {
+        "clicked": true,
+        "via": "#zy-native-ocr-btn"
+      },
+      "current": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c1",
+        "side": "BACK",
+        "cc": 2
+      },
+      "reply": {
+        "ok": true,
+        "code": "STATUS_SUC_CREATE",
+        "note": "reply 消息未进探针世界，以 status+canvas 增量为创建证据；pageId 证据取 ocrCreate 请求冻结值"
+      },
+      "statusFlow": [
+        {
+          "t": "0s",
+          "s": "正在准备图片…",
+          "objs": 13
+        },
+        {
+          "t": "1s",
+          "s": "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
+          "objs": 13
+        },
+        {
+          "t": "2s",
+          "s": "已生成 4 个文字（可双击编辑）",
+          "objs": 13
+        }
+      ],
+      "imgInjected": {
+        "ok": true,
+        "usedExisting": false,
+        "n": 1,
+        "uuid": "p7-img-1789729955919"
+      },
+      "doneAt": "2s",
+      "captureLog": [
+        {
+          "t": "getCurrentPage",
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "getCurrentPage",
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "getCurrentPageResult",
+          "ok": true,
+          "code": "OK",
+          "pageId": "canvas:c1",
+          "side": "BACK"
+        },
+        {
+          "t": "getCurrentPageResult",
+          "ok": true,
+          "code": "OK",
+          "pageId": "canvas:c1",
+          "side": "BACK"
+        },
+        {
+          "t": "getCanvasInfoResult",
+          "ok": true,
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "getCanvasInfoResult",
+          "ok": true,
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "ocrPrepare",
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "ocrPrepare",
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "ocrPrepareResult",
+          "ok": true,
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "ocrPrepareResult",
+          "ok": true,
+          "pageId": null,
+          "side": null
+        },
+        {
+          "t": "ocrCreate",
+          "pageId": "canvas:c1",
+          "side": "BACK"
+        },
+        {
+          "t": "ocrCreate",
+          "pageId": "canvas:c1",
+          "side": "BACK"
+        }
+      ],
+      "after": {
+        "n": 14,
+        "texts": [
+          "ABC 科技 有 限",
+          "张三",
+          "1380013800",
+          "销售经理"
+        ],
+        "before": 10
+      },
+      "assert": {
+        "done": true,
+        "sourceFreezePageId": "canvas:c1",
+        "sourceFreezeMatch": true,
+        "textsOnPage": 4,
+        "createdOwned": true
+      },
+      "imgRolled": {
+        "ok": true,
+        "removed": 1,
+        "remaining": 13
+      },
+      "textRollback": {
+        "ok": true,
+        "removed": 0,
+        "remaining": 13
+      }
+    }
+  ],
+  "errors": [],
+  "scriptAt": "D:\\zheliyin-scriptcat\\zheliyin-card-assistant.user.js",
+  "install": "ok",
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=10 bg=false active=null",
+    "[zy-ocr][PREPARING] kind=first-image 900x560 dataUrl=53434 chars",
+    "[zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current",
+    "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
+    "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
+    "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+    "[zy-ocr][LOCAL_RECOGNIZING] lines=4 words=11 image=undefinedxundefined",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
+    "[zy-ocr][GROUP] lines=4 y=77,198,314,407 h=50,65,37,67",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":4,\"kept\":4,\"dropped\":0}}",
+    "[zy-ocr][BUILDING] blocks=4 forcedWrap=0 multiLine=0",
+    "[zy-ocr][SUCCESS] created=4/4 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":4,\"uv4\":4,\"layerMax\":-1}",
+    "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=13 bg=false active=null",
+    "[zy-ocr][PREPARING] kind=first-image 900x560 dataUrl=53434 chars",
+    "[zy-ocr][SOURCE_PAGE] pageId=canvas:c1 side=BACK source=page-group.current",
+    "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
+    "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
+    "[zy-ocr][LOCAL_RECOGNIZING] lines=4 words=11 image=undefinedxundefined",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
+    "[zy-ocr][GROUP] lines=4 y=77,198,314,407 h=50,65,37,67",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":4,\"kept\":4,\"dropped\":0}}",
+    "[zy-ocr][BUILDING] blocks=4 forcedWrap=0 multiLine=0",
+    "[zy-ocr][SUCCESS] created=4/4 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":4,\"uv4\":4,\"layerMax\":-1}"
+  ],
+  "ready": true,
+  "bridgeVersion": {
+    "ok": true,
+    "code": "OK",
+    "pageId": "canvas:c0",
+    "side": "FRONT",
+    "cc": 1
+  },
+  "baiduCfg": {
+    "akPlaceholder": "百度智能云 API Key（未配置）",
+    "mode": "auto"
+  },
+  "verdict": {
+    "CASE1": {
+      "done": true,
+      "sourceFreezePageId": "canvas:c0",
+      "sourceFreezeMatch": true,
+      "textsOnPage": 4,
+      "createdOwned": true
+    },
+    "CASE2": {
+      "done": true,
+      "sourceFreezePageId": "canvas:c1",
+      "sourceFreezeMatch": true,
+      "textsOnPage": 4,
+      "createdOwned": true
+    }
+  },
+  "RESULT": "PASS"
+}
