@@ -255,10 +255,15 @@ function groupLinesToBlocks(lines, opts) {
   const o = opts || {};
   // §八 初始参数（保守、拆分优先）；真机样本对比后按数据微调
   const gapRatioMax = o.gapRatioMax != null ? o.gapRatioMax : 1.25;
-  const heightRatioMax = o.heightRatioMax != null ? o.heightRatioMax : 2.0;
+  // Stage 7.8 §二十/§二十二：Size Ratio Guard —— 明显大小不同禁止合并（宁可多拆，§二十七）。
+  // 默认 1.5（较旧 2.0 收紧）；1.10~1.50 实验经 opts.sizeRatioMax 覆盖（兼容旧 opts.heightRatioMax）。
+  const sizeRatioMax = (o.sizeRatioMax != null) ? o.sizeRatioMax : ((o.heightRatioMax != null) ? o.heightRatioMax : 1.5);
   const overlapRatioMin = o.overlapRatioMin != null ? o.overlapRatioMin : 0.5;
   const leftAlignTolRatio = o.leftAlignTolRatio != null ? o.leftAlignTolRatio : 0.5;
   const maxGapPxOverride = o.maxGapPx != null ? o.maxGapPx : null; // null → 1.5 × medianLineHeight
+  // Stage 7.8 §二十四：Vertical Overlap Guard —— y 带重叠超出阈值时视为同排续接，要求强横向覆盖。
+  const vOverlapMergeMax = o.vOverlapMergeMax != null ? o.vOverlapMergeMax : 0.5;
+  const vOverlapXMin = o.vOverlapXMin != null ? o.vOverlapXMin : 0.85;
   const isHorizontal = function (l) {
     const a = typeof l.angle === "number" ? ((l.angle % 360) + 360) % 360 : 0;
     return Math.min(a, Math.abs(a - 360)) < 1e-6;
@@ -300,45 +305,85 @@ function groupLinesToBlocks(lines, opts) {
     blk.mH = medianH(blk);
     blk.rotated = blk.lines.some(function (l) { return !isHorizontal(l); });
   }
-  // 五个条件全部通过才允许合并（§六 AND 语义）；任一条不满足 → 保持两个独立 Block
-  function mergeCheck(blk, L) {
-    const reasons = [];
-    if (blk.rotated || blk.mH <= 0) return { ok: false, reasons: [] };
-    // 4) 尺寸关系合理（标题大字 + 正文小字 允许；仅距离近不允许）
-    if (Math.max(blk.mH, L.bbox.height) / Math.min(blk.mH, L.bbox.height) > heightRatioMax) return { ok: false, reasons: [] };
-    reasons.push("height-ratio");
-    // 1) 左边界一致（§六-1）
-    if (Math.abs(L.bbox.x - blk.xStart) > leftAlignTolRatio * blk.mH) return { ok: false, reasons: [] };
-    reasons.push("left-alignment");
-    // 3) 横向重叠较强（§六-3 / §七 左右两列防护）
-    const overlap = Math.min(blk.xEnd, L.bbox.x + L.bbox.width) - Math.max(blk.xStart, L.bbox.x);
-    if (overlap < overlapRatioMin * Math.min(blk.bbox.width, L.bbox.width)) return { ok: false, reasons: [] };
-    reasons.push("horizontal-overlap");
-    // 2)+5) 行距合理且不跨越空白区（§六-2/5；最大绝对值 = 1.5 × 中位行高，§八）
-    const gap = L.bbox.y - blk.yEnd;
-    const maxGapPx = maxGapPxOverride != null ? maxGapPxOverride : 1.5 * blk.mH;
-    if (gap > 0) {
-      if (gap > maxGapPx) return { ok: false, reasons: [] };
-      if (gap / blk.mH > gapRatioMax) return { ok: false, reasons: [] };
+  // Stage 7.8 §二十~§二十七：Size-Aware Merge —— 每次尝试都留下数值依据（§二十六 mergeReason 数值化），
+  // 任一门禁 FAIL → KEEP_SEPARATE（§二十七 宁可多拆：容易判断→merge，明显字号冲突/无法确定→split）。
+  // 门禁顺序：rotated → size-ratio(§二十二) → left-alignment → horizontal/vertical-overlap(§二十四)
+  //   + baseline(§二十三) + xGap 归一化(§二十五) → vertical-gap。
+  const MERGE_OK = ["height-ratio", "left-alignment", "horizontal-overlap", "vertical-gap"];
+  function mergeMetrics(blk, L) {
+    const m = {
+      sizeRatio: (blk.mH > 0 && L.bbox.height > 0) ? Math.max(blk.mH, L.bbox.height) / Math.min(blk.mH, L.bbox.height) : null,
+      baselineDelta: null,   // §二十三：行中心差 / max(mH, L.h)（正常堆叠仅记录，不作为门禁）
+      verticalOverlap: null, // §二十四：y 带重叠高度 / min(mH, L.h)
+      xGapRatio: null,       // §二十五：x 间距 / mH（同行续接诊断；垂直堆叠为 null）
+      decision: "KEEP_SEPARATE"
+    };
+    const failed = [];
+    if (blk.rotated || blk.mH <= 0 || L.bbox.height <= 0) return { ok: false, m: m, failed: ["rotated-or-invalid"] };
+    if (m.sizeRatio > sizeRatioMax) failed.push("size-ratio");
+    if (!failed.length) {
+      // 1) 左边界一致（§六-1）
+      if (Math.abs(L.bbox.x - blk.xStart) > leftAlignTolRatio * blk.mH) failed.push("left-alignment");
+      // 3) 横向重叠较强（§六-3 / §七 左右两列防护）
+      if (!failed.length) {
+        const overlap = Math.min(blk.xEnd, L.bbox.x + L.bbox.width) - Math.max(blk.xStart, L.bbox.x);
+        const minW = Math.min(blk.bbox.width, L.bbox.width);
+        const xOk = overlap >= overlapRatioMin * minW;
+        const yOverlap = (L.bbox.y + L.bbox.height > blk.yStart) && (L.bbox.y < blk.yEnd);
+        if (yOverlap) {
+          // 同排续接候选：记录数值诊断，并施加 §二十四 Vertical Overlap Guard / §二十三 Baseline 近似
+          m.verticalOverlap = (Math.min(blk.yEnd, L.bbox.y + L.bbox.height) - Math.max(blk.yStart, L.bbox.y)) / Math.min(blk.mH, L.bbox.height);
+          m.xGapRatio = ((L.bbox.x - blk.xEnd) / blk.mH);
+          m.baselineDelta = Math.abs((L.bbox.y + L.bbox.height / 2) - (blk.yStart + blk.yEnd) / 2) / Math.max(blk.mH, L.bbox.height);
+          if (m.verticalOverlap > vOverlapMergeMax) {
+            if (overlap < vOverlapXMin * minW) failed.push("vertical-overlap");
+            else if (m.baselineDelta > 0.5) failed.push("baseline-offset");
+          } else if (!xOk) failed.push("horizontal-overlap");
+        } else if (!xOk) {
+          failed.push("horizontal-overlap");
+        }
+      }
+      // 2)+5) 行距合理且不跨越空白区（§六-2/5；最大绝对值 = 1.5 × 中位行高，§八）
+      if (!failed.length) {
+        const gap = L.bbox.y - blk.yEnd;
+        const maxGapPx = maxGapPxOverride != null ? maxGapPxOverride : 1.5 * blk.mH;
+        if (gap > 0) {
+          if (gap > maxGapPx) failed.push("vertical-gap");
+          else if (gap / blk.mH > gapRatioMax) failed.push("vertical-gap");
+        }
+        // §二十三 baseline 记录（正常堆叠不设门禁，仅供 Fixture 分析）
+        if (m.baselineDelta == null) m.baselineDelta = Math.abs((L.bbox.y + L.bbox.height / 2) - (blk.yStart + blk.yEnd) / 2) / Math.max(blk.mH, L.bbox.height);
+      }
     }
-    reasons.push("vertical-gap");
-    return { ok: true, reasons: reasons };
+    if (!failed.length) { m.decision = "MERGE"; return { ok: true, m: m, failed: [] }; }
+    return { ok: false, m: m, failed: failed };
   }
 
   list.forEach(function (L) {
     let placed = null;
-    let reasons = [];
+    let audit = null;
+    let best = null; // 「最接近成功」的一次失败尝试（§四十一 拆分诊断）
     if (isHorizontal(L)) {
       for (let i = 0; i < blocks.length; i += 1) {
-        const chk = mergeCheck(blocks[i], L);
-        if (chk.ok) { placed = blocks[i]; reasons = chk.reasons; break; }
+        const rc = mergeMetrics(blocks[i], L);
+        if (rc.ok) { placed = blocks[i]; audit = rc.m; break; }
+        if (!best || rc.failed.length < best.failed.length ||
+            (rc.failed.length === best.failed.length && (rc.m.sizeRatio || 99) < (best.m.sizeRatio || 99))) best = rc;
       }
     }
-    if (!placed) { placed = { lines: [], mergeReasons: [] }; blocks.push(placed); }
+    if (!placed) {
+      placed = { lines: [], mergeReasons: [], mergeAudit: [], splitAudit: [] };
+      blocks.push(placed);
+      if (isHorizontal(L) && best) placed.splitAudit.push(Object.assign({ failed: best.failed.slice() }, best.m));
+    }
     placed.lines.push(L);
-    // §九：合并依据记录（union，供「为什么 N 行合为一块」诊断）
+    // §九：合并依据字符串记录（union，向后兼容诊断）；Stage 7.8：数值化 mergeAudit（§二十六）
     placed.mergeReasons = placed.mergeReasons || [];
-    reasons.forEach(function (r) { if (placed.mergeReasons.indexOf(r) < 0) placed.mergeReasons.push(r); });
+    placed.mergeAudit = placed.mergeAudit || [];
+    if (audit) {
+      MERGE_OK.forEach(function (r) { if (placed.mergeReasons.indexOf(r) < 0) placed.mergeReasons.push(r); });
+      placed.mergeAudit.push(audit);
+    }
     updateGeometry(placed);
   });
 
@@ -360,6 +405,8 @@ function groupLinesToBlocks(lines, opts) {
       lineCount: blk.lines.length,
       lineGeometry: lineGeo,                              // §九：lines[{text,x,y,width,height}]
       mergeReasons: blk.mergeReasons || [],               // §九：合并依据（单行 block = []）
+      mergeAudit: blk.mergeAudit || [],                   // Stage 7.8 §二十六：数值化合并依据[{sizeRatio,baselineDelta,verticalOverlap,xGapRatio,decision:"MERGE"}]
+      splitAudit: blk.splitAudit || [],                   // §四十一：最接近成功的失败度量[{sizeRatio,…,decision:"KEEP_SEPARATE",failed:[原因]}]
       text: textLines.join("\n"),                         // §6/§9：保留原始逻辑换行
       bbox: blk.bbox,
       center: { x: blk.xStart + (blk.xEnd - blk.xStart) / 2, y: blk.yStart + (blk.yEnd - blk.yStart) / 2 },
