@@ -841,6 +841,14 @@
     }
     const cloudKept = (cloudQa.kept && cloudQa.kept.length) ? cloudQa.kept : res.candidates;
     ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " kept=" + cloudKept.length + " elapsed=" + res.meta.elapsed + "ms");
+    // Stage 7.8 §三十二/§四十一：六维质量门分级诊断（仅记录，不改 fallback 决策 ——
+    // §三十四 特殊符号不直接判 OCR 失败，由 sanitizer 清洗负责）
+    const cloudBundle = (typeof bundleOcrQuality === "function")
+      ? bundleOcrQuality(res.candidates, { provider: res.provider, imageSize: { width: img.width, height: img.height } })
+      : null;
+    if (cloudBundle) {
+      emitOcrDiag(Object.assign({}, diag, { quality6: { overall: cloudBundle.overall, reasonCode: cloudBundle.reasonCode, total: cloudBundle.total, text: cloudBundle.textQuality && cloudBundle.textQuality.status, block: cloudBundle.blockQuality && cloudBundle.blockQuality.status, bbox: cloudBundle.bboxQuality && cloudBundle.bboxQuality.status, size: cloudBundle.sizeQuality && cloudBundle.sizeQuality.status, symbol: cloudBundle.symbolQuality && cloudBundle.symbolQuality.status, merge: cloudBundle.mergeQuality && cloudBundle.mergeQuality.status } }));
+    }
     // P3 边界：Baidu Provider 已是统一候选（含 bbox{x,y,width,height}），直接交给统一 Mapper（§39 解耦）
     // Stage 6.1：行级候选 → TextBlock（1 block = 1 textbox，§8）→ 统一 Mapper
     // 锁不在此释放：由 buildItemsFromOcr（ocrCreate 回复/超时/空结果）决定事务终态
@@ -904,7 +912,7 @@
                 unified = null;
               }
             }
-            if (!unified) unified = unifyCandidates((r && r.lines) || [], size);
+            if (!unified) unified = unifyCandidates((r && r.lines) || [], size, { sourceProvider: "LOCAL" }); // Stage 7.8 §五：Local 结果打标 LOCAL
             if (unified && unified.length && typeof aggregateLineCandidates === "function") {
               ocrLog("GROUP", "lines=" + unified.length + " y=" + unified.map((l) => Math.round(l.bbox.y || 0)).join(",") + " h=" + unified.map((l) => Math.round(l.bbox.height || 0)).join(","));
             }
@@ -921,6 +929,13 @@
               return;
             }
             const localKept = (localQa.kept && localQa.kept.length) ? localQa.kept : (unified || []);
+            // Stage 7.8 §三十二/§四十一：六维质量门分级诊断（local 末端同样记录，不改终态判定）
+            const localBundle = (typeof bundleOcrQuality === "function")
+              ? bundleOcrQuality(localKept, { provider: "LOCAL", imageSize: { width: size.width || img.width, height: size.height || img.height } })
+              : null;
+            if (localBundle) {
+              emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, quality6: { overall: localBundle.overall, reasonCode: localBundle.reasonCode, total: localBundle.total, text: localBundle.textQuality && localBundle.textQuality.status, block: localBundle.blockQuality && localBundle.blockQuality.status, bbox: localBundle.bboxQuality && localBundle.bboxQuality.status, size: localBundle.sizeQuality && localBundle.sizeQuality.status, symbol: localBundle.symbolQuality && localBundle.symbolQuality.status, merge: localBundle.mergeQuality && localBundle.mergeQuality.status } }));
+            }
             const blocks = (typeof buildTextBlocks === "function")
               ? buildTextBlocks(localKept)
               : (localKept || []).map(oneLineBlock);
@@ -1069,6 +1084,10 @@
     // 输出指标（§22）：forced wrapped 逻辑行数、多行 block 数
     let forcedWrapTotal = 0, multiLineTotal = 0;
     const items = (blocks || []).filter((b) => b && b.bbox && typeof b.bbox.x === "number" && b.bbox.width > 0).map((b, bi) => {
+      // Stage 7.8 §十三：safeText 真正送 DIY（rawText 仅证据/诊断/重处理）；
+      // 仅含被 BLOCKED 移除字符的空块直接剔除，不创建空 textbox（§三十三 special-character 门）。
+      const srcText = (b.safeText != null && String(b.safeText).trim() !== "") ? String(b.safeText) : String(b.text || "");
+      if (!srcText.trim()) return null;
       const bw = b.bbox.width * sx, bh = b.bbox.height * sy;
       // §10：视觉字高 → fontSize 标定（取 block 内行高均值；多行 block 以行高为基准而非整块高度）
       let lineHSum = 0;
@@ -1077,25 +1096,34 @@
       const fs = Math.max(10, Math.min(160, Math.round((avgLineH * sy) / FONT_HEIGHT_RATIO)));
       // §11/§12：textbox layoutWidth —— 优先真实文本测量（字号标定+字符宽度估计+安全余量），
       // 宽度 = clamp(max(60, 视觉宽, 最长行估计宽+margin), ≤4000)，OCR 原始单行不得因宽度不足再换行
-      const textLines = String(b.text || "").split("\n").filter((t) => t !== "");
+      const textLines = srcText.split("\n").filter((t) => t !== "");
       const layout = (typeof estimateTextLayout === "function")
         ? estimateTextLayout(textLines, fs, { minWidth: Math.max(60, bw + 8), maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)) })
         : { layoutWidth: Math.max(60, bw + 8), perLine: textLines.map((t) => ({ text: t, estimatedWidth: 0, needsWrap: false })), forcedWrapDetected: false, estimatedFinalLineCount: textLines.length };
       if (layout.forcedWrapDetected) forcedWrapTotal += 1;
       if (textLines.length > 1) multiLineTotal += 1;
       // §18：换行诊断字段（sourceLineCount = OCR 原始逻辑行；forcedWrapDetected = 存在源单行放不下）
+      // Stage 7.8 §十三/§四十一：rawText/sanitize/size 加入诊断（不进入生产 payload 主文本）
       const diagnostics = {
         sourceLineCount: textLines.length,
         estimatedFinalLineCount: layout.estimatedFinalLineCount,
         forcedWrapDetected: layout.forcedWrapDetected,
         layoutWidth: layout.layoutWidth,
-        perLineWidth: layout.perLine.map((p) => ({ text: String(p.text).slice(0, 12), width: p.estimatedWidth, needsWrap: !!(p.needsWrap) }))
+        perLineWidth: layout.perLine.map((p) => ({ text: String(p.text).slice(0, 12), width: p.estimatedWidth, needsWrap: !!(p.needsWrap) })),
+        provider: b.provider || b.sourceProvider || null,
+        rawText: b.rawText != null ? String(b.rawText) : String(b.text || ""),
+        sanitized: !!(b.sanitize && b.sanitize.changed),
+        sanitizeReason: (b.sanitize && b.sanitize.reason) || "",
+        blockedCount: (b.sanitize && b.sanitize.blockedCount) || 0,
+        sizeCluster: b.sizeCluster || null,
+        sizeRatio: b.sizeRatio != null ? b.sizeRatio : null,
+        estimatedTextHeight: b.estimatedTextHeight != null ? b.estimatedTextHeight : null
       };
       // §14：几何模型 —— 水平文本 left/top；θ≠0 旋转文本 center/angle（保留 P5 rotation 行为，零变化）
       const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
-      const base = { text: b.text, blockIndex: bi, fontFamily: "思源黑体 Regular", diagnostics: diagnostics, pageId: srcPageId, side: srcSide };
+      const base = { text: srcText, blockIndex: bi, fontFamily: "思源黑体 Regular", diagnostics: diagnostics, pageId: srcPageId, side: srcSide };
       // §13：textbox height 须容纳 lineCount×lineHeight（禁止只用单行 OCR bbox.height）
       const boxHeight = Math.round(textLines.length * fs * FONT_LINE_HEIGHT + 8);
       if (!angle) {
@@ -1106,7 +1134,7 @@
       const dcx = ucx * w * sx, dcy = ucy * h * sy;
       const pcx = cx + dcx * cos - dcy * sin, pcy = cy + dcx * sin + dcy * cos;
       return Object.assign({}, base, { left: pcx, top: pcy, angle: angle, origin: "center", width: layout.layoutWidth, fontSize: fs, height: boxHeight });
-    });
+    }).filter(Boolean); // Stage 7.8：剔除 safeText 为空的块（不创建空 textbox）
     if (!items.length) {
       // 空结果：Cloud Primary 阶段空 → 转 Local FALLBACK；本地（manual/fallback）空 → 终态报错
       if (img && !img._cloudFallbackDone && diag && diag.engine === "cloud" && diag.attempt === "cloud-primary") {

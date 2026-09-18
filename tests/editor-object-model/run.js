@@ -4,7 +4,7 @@
 const path = require("path");
 const { spawnSync } = require("child_process");
 
-const files = ["object-model.test.js", "object-adapter.test.js", "object-diff.test.js", "object-matcher.test.js", "ocr-model.test.js", "image-mapper.test.js", "ocr-provider.test.js", "baidu-provider.test.js", "fallback-policy.test.js", "candidate-normalizer.test.js", "credential-crypto.test.js", "tesseract-loader.test.js", "ocr-quality.test.js", "ocr-quality-bundle.test.js", "common-schema.test.js", "ocr-text-sanitizer.test.js", "ocr-size-analyzer.test.js", "merge-guard.test.js"];
+const files = ["object-model.test.js", "object-adapter.test.js", "object-diff.test.js", "object-matcher.test.js", "ocr-model.test.js", "image-mapper.test.js", "ocr-provider.test.js", "baidu-provider.test.js", "fallback-policy.test.js", "candidate-normalizer.test.js", "credential-crypto.test.js", "tesseract-loader.test.js", "ocr-quality.test.js", "ocr-quality-bundle.test.js", "common-schema.test.js", "ocr-text-sanitizer.test.js", "ocr-size-analyzer.test.js", "merge-guard.test.js", "textblock-fields.test.js"];
 let failed = 0;
 for (const f of files) {
   const r = spawnSync(process.execPath, [path.join(__dirname, f)], { encoding: "utf8" });

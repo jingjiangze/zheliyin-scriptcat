@@ -419,14 +419,51 @@ function groupLinesToBlocks(lines, opts) {
   });
 }
 
+// 中位数（构建期局部工具；不依赖 ctx 闭包）
+function medianN(values) {
+  const arr = (Array.isArray(values) ? values : []).filter(function (v) { return typeof v === "number" && isFinite(v) && v > 0; }).sort(function (a, b) { return a - b; });
+  const n = arr.length;
+  if (!n) return null;
+  return n % 2 ? arr[(n - 1) / 2] : (arr[n / 2 - 1] + arr[n / 2]) / 2;
+}
+
 // 行级统一候选（任意 Provider）→ TextBlock 列表（§3 统一入口；行聚类后的候选无需再聚合 words）
+// Stage 7.8：TextBlock 丰富字段 —— provider/sourceProvider（§五）、rawText/safeText +
+// sanitize 诊断（§十三/§十四）、bboxHeight/estimatedTextHeight/sizeCluster/sizeConfidence/
+// sizeRatio/normalizedTextHeight（§十七~§十九，经全局 classifySize，@require 注入）。
+// 依赖缺省时安全降级（sanitize/size 字段跳过，不破坏既有结构）。
 function buildTextBlocks(candidates, opts) {
   const list = (Array.isArray(candidates) ? candidates : []).filter(function (c) {
     return c && c.text && c.bbox && c.bbox.width > 0;
   });
   if (!list.length) return [];
   const imageSize = list[0] && list[0].imageSize ? list[0].imageSize : null;
-  return groupLinesToBlocks(list, opts).map(function (b) {
+  const o = opts || {};
+  const sourceProvider = o.sourceProvider || (list[0] && list[0].sourceProvider) || null;
+  const blocks = groupLinesToBlocks(list, o);
+  // 页面内行高中位数（size-analyzer 的页面基准）
+  const medH = medianN(blocks.map(function (b) { return b.lineHeightMedian; }));
+  const sanitize = (typeof sanitizeOcrText === "function") ? sanitizeOcrText : null;
+  const classify = (typeof classifySize === "function") ? classifySize : null;
+  const imageH = imageSize && typeof imageSize.height === "number" ? imageSize.height : null;
+  return blocks.map(function (b) {
+    const txt = String(b.text || "");
+    const sr = sanitize ? sanitize(txt) : null;
+    const sc = classify ? classify(b.lineHeightMedian || b.bbox.height || 0, { imageHeight: imageH, pageMedianHeight: medH }) : null;
+    b.provider = sourceProvider;               // §五：Provider 来源保留（BAIDU/LOCAL）
+    b.sourceProvider = sourceProvider;
+    b.rawText = txt;                            // §十三：原始文本（证据/重处理）
+    b.safeText = (sr && typeof sr.safeText === "string") ? sr.safeText : txt; // §十三：送 DIY 的安全文本
+    b.sanitize = sr ? { changed: !!sr.changed, removed: sr.removed, normalized: sr.normalized, blockedCount: (sr.blocked || []).length, reason: sr.reason || "" } : null;
+    b.bboxHeight = b.bbox ? b.bbox.height : null;    // §十七：bbox 高度
+    b.estimatedTextHeight = (b.lineHeightMedian != null && b.lineHeightMedian > 0) ? b.lineHeightMedian : (b.bbox ? b.bbox.height : null); // §十七：估算字高（行高中位）
+    if (sc) {                                     // §十八/§十九：相对字号信号 + numeric proxy
+      b.sizeRatio = sc.sizeRatio;
+      b.sizeCluster = sc.sizeCluster;
+      b.sizeConfidence = sc.sizeConfidence;
+      b.estimatedHeightPx = sc.estimatedHeightPx;
+      b.normalizedTextHeight = sc.normalizedHeight;
+    }
     b.imageSize = imageSize;
     return b;
   });
