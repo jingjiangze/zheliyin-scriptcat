@@ -29,7 +29,7 @@ const MANUAL_TEXT = "P0_MANUAL_CTRL";
 
 // ---------- CLI ----------
 const args = process.argv.slice(2);
-const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema"), adoptSession: args.includes("--adopt-session"), sessionParity: args.includes("--session-parity"), submitProbe: args.includes("--submit-probe"), relogin: args.includes("--relogin"), controlEmpty: args.includes("--control-empty"), controlManual: args.includes("--control-manual"), variant: (args.find((a) => a.startsWith("--variant=")) || "").split("=")[1] || null };
+const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema"), adoptSession: args.includes("--adopt-session"), sessionParity: args.includes("--session-parity"), submitProbe: args.includes("--submit-probe"), relogin: args.includes("--relogin"), controlEmpty: args.includes("--control-empty"), controlManual: args.includes("--control-manual"), debugProof: args.includes("--debug-proof"), variant: (args.find((a) => a.startsWith("--variant=")) || "").split("=")[1] || null };
 const resumeArg = (args.find((a) => a.startsWith("--resume=")) || "").split("=")[1];
 
 // ---------- 报告 ----------
@@ -481,6 +481,172 @@ async function stagePrint() {
   return { ok: true, jt };
 }
 
+// ============================================================================
+// 证明观测层（P0 round：AUTH→SUBMIT→HEGAO→PROOF 事实型判定；旧行为/旧字段保留为 control）
+//   UI 层   ：扫描疑似核稿候选层 tag/class/text/rect/display/visibility/opacity
+//   网络层  ：从 __p0Net.reqs 提取核稿/提交相关请求（method/url/status/脱敏 body）
+//   DOM 层  ：searchSync 每轮候选层 diff → 新出现的 modal/dialog/overlay
+// ============================================================================
+const AUTH_RETRY_MAX = 2;
+function classifyLayerText(t) {
+  if (/登录超时|重新登录|账户登录|用户登录/.test(t)) return "login";
+  if (/印刷稿件生成中|请耐心等待|正在生成|生成中/.test(t)) return "generating";
+  if (/自动核稿失败|生产文件与设计稿/.test(t)) return "proof-fail";
+  if (/提交稿件|交稿/.test(t)) return "jiao-gao";
+  if (/错字检查结果|检查结果|错误截图|生产稿|设计稿/.test(t)) return "proof-result";
+  if (/作品名/.test(t) && /用户名/.test(t)) return "design-info";
+  return "unknown";
+}
+// UI 层采集：当前所有可见候选层，记录 tag/class/text/rect/display/visibility/opacity
+async function scanProofCandidatesOnce() {
+  return ev(() => {
+    const out = [];
+    const sel = ".layui-layer, .modal, .modal-container, [class*=hegao], [class*=check_wrap], [class*=proof], [class*=dialog], [class*=popup]";
+    document.querySelectorAll(sel).forEach((el) => {
+      const rc = el.getBoundingClientRect(); if (!rc.width && !rc.height) return;
+      const t = String(el.innerText || el.textContent || "").trim(); if (!t) return;
+      const cs = getComputedStyle(el);
+      out.push({ tag: el.tagName.toLowerCase(), cls: String(el.className || "").slice(0, 80), text: t.slice(0, 400), rect: { x: Math.round(rc.x), y: Math.round(rc.y), w: Math.round(rc.width), h: Math.round(rc.height) }, display: cs.display, visibility: cs.visibility, opacity: cs.opacity });
+    });
+    return { ok: true, count: out.length, candidates: out.slice(0, 24) };
+  });
+}
+// 网络层采集：核稿/提交相关请求（来自页面侧 __p0Net，method/url/status/脱敏 body）
+async function proofReqHits() {
+  return ev(() => {
+    const net = window.__p0Net || { reqs: [] };
+    const re = /(submit|check|proof|hegao|proofread|autocheck|核稿|错字|saveThird|imgPreview)/i;
+    const hits = [];
+    for (const rec of net.reqs) {
+      if (!re.test(String(rec.u || ""))) continue;
+      hits.push({ t: rec.t, k: rec.k, m: rec.m, u: String(rec.u || "").slice(0, 200), s: rec.s, b: String(rec.b || "").slice(0, 300) });
+    }
+    return { ok: true, count: hits.length, hits: hits.slice(-30) };
+  });
+}
+// 提交四态判定（§7）：AUTH_EXPIRED / SUBMIT_REJECTED / SUBMIT_ACCEPTED / SUBMIT_UNKNOWN
+function submitVerdictFromNet() {
+  const hits = (report.phases.net || []).filter((n) => /submitUserDesign|saveThirdUserDesign/.test(n.u));
+  if (!hits.length) return { kind: "SUBMIT_UNKNOWN", evidence: [] };
+  const evidence = hits.map((n) => {
+    const body = String(n.body || "");
+    let parsed = null; try { parsed = JSON.parse(body); } catch (e) {}
+    let loginState = null, result = null;
+    if (parsed) { loginState = parsed.loginState !== undefined ? parsed.loginState : null; result = parsed.result !== undefined ? String(parsed.result) : null; }
+    else { const m1 = body.match(/"loginState"\s*:\s*"([^"]+)"/); if (m1) loginState = m1[1]; const m2 = body.match(/"result"\s*:\s*([^,}]+)/); if (m2) result = String(m2[1]).trim(); }
+    return { u: n.u.slice(0, 120), status: n.status, loginState, result, body: body.slice(0, 200) };
+  });
+  const last = evidence[evidence.length - 1];
+  let kind = "SUBMIT_UNKNOWN";
+  if (last.status >= 400) kind = "SUBMIT_REJECTED";
+  else if (last.loginState && /timeout|timeOut|time_out/i.test(last.loginState)) kind = "AUTH_EXPIRED";
+  else if (last.result === "true") kind = "SUBMIT_ACCEPTED";
+  else if (last.result === "false") kind = "SUBMIT_REJECTED";
+  return { kind, evidence };
+}
+// 事实型核稿判定（§4/§8/§13）：不许「没观测到」≡「核稿失败」
+function assembleProofVerdict(sync, reqHits, submitKind, uiAfter) {
+  const ui = ((uiAfter && uiAfter.candidates) || []).map((c) => ({ layer: classifyLayerText(c.text), text: c.text.slice(0, 100), cls: c.cls }));
+  const rel = ((reqHits && reqHits.hits) || []).filter((h) => /(hegao|proofread|autocheck|checkResult|imgPreview|submitUserDesign|saveThird|核稿|错字)/i.test(h.u));
+  const hegaocheckEntered = ((sync && sync.hegaocheckIds) || []).some((v) => !!v);
+  const proofUi = ui.filter((c) => ["generating", "proof-fail", "proof-result"].indexOf(c.layer) >= 0);
+  const evidence = {
+    ui,
+    network: rel.map((h) => ({ m: h.m, u: h.u.slice(0, 150), s: h.s, b: String(h.b || "").slice(0, 150) })),
+    dom: { hegaocheckIds: (sync && sync.hegaocheckIds) || [], generatingHandled: sync && sync.generatingHandled, failGoto: sync && sync.failGoto, domNew: (sync && sync.log || []).flatMap((l) => (l.domNew || [])) }
+  };
+  let entered = "HEGAO_UNKNOWN";
+  if (proofUi.length || hegaocheckEntered || evidence.network.length) entered = "HEGAO_ENTERED";
+  let result = "PROOF_UNKNOWN";
+  if (submitKind === "AUTH_EXPIRED" || submitKind === "SUBMIT_REJECTED") { entered = "HEGAO_NOT_ENTERED"; result = "PROOF_NOT_REACHED"; }
+  else if (entered === "HEGAO_ENTERED") {
+    if (ui.some((c) => c.layer === "proof-fail") || (sync && sync.failGoto)) result = "PROOF_FAILED";
+    else if (ui.some((c) => c.layer === "proof-result")) result = "PROOF_PASSED";
+    else if (((sync && sync.hegaocheckIds) || []).some((v) => !!v)) result = "PROOF_PASSED";
+    else result = "PROOF_UNKNOWN";
+  }
+  return { entered, result, evidence };
+}
+// 设计信息表单填空+确定（auth 恢复路径复用；与 stagePrint 内联逻辑保持一致）
+async function fillDesignInfoModal(remark) {
+  await ev(() => {
+    const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+    let host = null;
+    for (let i = 0; i < layers.length; i++) { const el = layers[i]; if (el.offsetParent && /作品名/.test(String(el.innerText || ""))) { host = el; break; } }
+    const scope = host || document;
+    const inputs = scope.querySelectorAll("input[type=text], input:not([type]), textarea");
+    const setByLabel = (keys, val) => {
+      for (let i = 0; i < inputs.length; i++) { const el = inputs[i]; if (el.__p0r) continue; const joined = (el.previousElementSibling ? String(el.previousElementSibling.textContent || "") : "") + String(el.placeholder || "") + String(el.title || ""); for (let k = 0; k < keys.length; k++) { if (joined.indexOf(keys[k]) >= 0) { el.value = val; try { el.dispatchEvent(new Event("input", { bubbles: true })); el.dispatchEvent(new Event("change", { bubbles: true })); } catch (e) {} el.__p0r = 1; break; } } }
+    };
+    setByLabel(["作品", "作品名", "workName", "名称"], "1");
+    setByLabel(["用户", "用户名", "userName", "姓名"], "2");
+    setByLabel(["备注"], remark || "p0 rebuild");
+    return { ok: true };
+  });
+  await sleep(600);
+  return ev(() => {
+    const btns = document.querySelectorAll(".layui-layer button, .layui-layer a, .layui-layer-btn0, .modal button, .modal a");
+    for (let i = 0; i < btns.length; i++) { const tx = String(btns[i].textContent || "").trim(); if (/^确定$|^保存$/.test(tx)) { const host = btns[i].closest(".layui-layer, .modal, .modal-container") || document; if (/确定进行印刷|提交生产|提交制作|确认提交|确定印刷|下单/i.test(String(host.textContent || ""))) continue; try { btns[i].click(); return { clicked: true }; } catch (e) {} break; } }
+    return { clicked: false };
+  });
+}
+// AUTH_EXPIRED 恢复（§5-§6）：复用已验证登录方式（focus/select/native setter/input/change/click）
+// + 重建印刷/交稿流程 → 重新 submit；返回恢复步骤记录
+async function authRecoverAndResubmit() {
+  evt("auth-recover try");
+  const rec = { t: new Date().toISOString(), steps: [], ok: false };
+  const lgNow = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
+  if (lgNow) {
+    const lk = await ensureLogin();
+    rec.steps.push({ step: "ensureLogin", ok: !!lk });
+    if (!lk) { rec.reason = "AUTH_REQUIRED"; return rec; }
+  } else {
+    rec.steps.push({ step: "no-login-modal" });
+  }
+  await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+  const lk2 = await waitUntil(isReadyExpr(), "editor after auth recovery", 60000);
+  rec.steps.push({ step: "reload-editor", ok: !!(lk2 && lk2.ok) });
+  if (!(lk2 && lk2.ok)) { rec.reason = "editor-not-ready"; return rec; }
+  // 重建全流程：对象 → 核稿 → 订单号 → 印刷 → 设计信息 → 确定
+  await createProbeObject();
+  rec.steps.push({ step: "createProbeObject" });
+  const hegao = await stageProof();
+  rec.steps.push({ step: "stageProof", ok: !!hegao });
+  await fillOrderNo(1);
+  await sleep(1500);
+  await clickByName("印刷");
+  await sleep(1200);
+  const w2 = await waitUntil(() => {
+    const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+    for (let i = 0; i < layers.length; i++) {
+      const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
+      const t = String(el.innerText || "");
+      if (/作品名|设计信息/.test(t) && /用户名/.test(t)) return { ok: true, txt: t.slice(0, 120) };
+    }
+    return { ok: false };
+  }, "design-info rebuild (auth)", 20000);
+  rec.steps.push({ step: "stagePrint", ok: !!(w2 && w2.ok) });
+  if (!(w2 && w2.ok)) { rec.reason = "no-design-info-layer"; return rec; }
+  const di = await fillDesignInfoModal("p0 auth rebuild");
+  rec.steps.push({ step: "fillDesignInfoModal", clicked: !!(di && di.clicked) });
+  await sleep(1500);
+  const jt = await ev(() => {
+    const all = document.querySelectorAll("button, a, .layui-layer-btn0, .modal button, .modal a");
+    for (let i = 0; i < all.length; i++) {
+      const el = all[i];
+      const tx = String(el.textContent || "").trim();
+      if (/^提交稿件$|提交稿件|确认交稿|交稿/.test(tx) && !/取消|关闭/.test(tx) && el.offsetParent) {
+        try { el.click(); return { clicked: true, tx: tx.slice(0, 12) }; } catch (e) { return { clicked: false, err: String(e) }; }
+      }
+    }
+    return { clicked: false };
+  });
+  rec.steps.push({ step: "resubmit", clicked: !!(jt && jt.clicked) });
+  await sleep(2500);
+  rec.ok = !!(jt && jt.clicked);
+  return rec;
+}
+
 // ---------- 搜索同步机制（核心）----------
 // 读取当前核稿关键状态：hegaocheckid / 错字检查结果 / 核稿失败文本 / 请求数
 async function readProofState() {
@@ -488,7 +654,15 @@ async function readProofState() {
     const hegao = document.querySelector("#hegaocheckid");
     const layers = [];
     document.querySelectorAll(".layui-layer, .modal, .modal-container").forEach((el) => { if (el.offsetParent) { const t = String(el.innerText || "").trim(); if (t && /核稿|错字|生产稿|设计稿|搜索|订单号/.test(t) && layers.length < 12) layers.push(t.slice(0, 300)); } });
-    return { ok: true, hegaocheckid: hegao ? hegao.value : null, layers };
+    // 观测层 2：候选层三通道快照（tag/class/text/rect/display/visibility/opacity）+ DOM mutation 计数
+    const candidates = [];
+    document.querySelectorAll(".layui-layer, .modal, .modal-container, [class*=hegao], [class*=check_wrap], [class*=proof]").forEach((el) => {
+      const rc = el.getBoundingClientRect(); if (!rc.width && !rc.height) return;
+      const t = String(el.innerText || el.textContent || "").trim(); if (!t) return;
+      const cs = getComputedStyle(el);
+      candidates.push({ tag: el.tagName.toLowerCase(), cls: String(el.className || "").slice(0, 70), text: t.slice(0, 150), rect: { x: Math.round(rc.x), y: Math.round(rc.y), w: Math.round(rc.width), h: Math.round(rc.height) }, display: cs.display, visibility: cs.visibility, opacity: cs.opacity });
+    });
+    return { ok: true, hegaocheckid: hegao ? hegao.value : null, layers, candidates: candidates.slice(0, 20), mutCount: window.__p0Net ? window.__p0Net.mutations : null };
   });
   const reqCount = ((report.phases.net || []).length);
   return { state: r && r.ok ? r : { ok: false }, reqCount };
@@ -534,14 +708,20 @@ async function searchSync(maxRounds = 5) {
   let prevReq = (report.phases.net || []).length;
   let failGoto = false;
   let generatingHandled = 0;
+  const hegaocheckIds = [];
   for (let r = 0; r < maxRounds; r++) {
     const before = await readProofState();
+    const reqHitsBefore = await proofReqHits();
     const sc = await clickSearchOnce();
     await sleep(1200);
     const after = await readProofState();
     const reqDelta = (report.phases.net || []).length - prevReq;
     prevReq = (report.phases.net || []).length;
-    log.push({ r, clicked: sc && sc.clicked, cls: sc && sc.cls, beforeHegao: before.state && before.state.hegaocheckid, afterHegao: after.state && after.state.hegaocheckid, reqDelta });
+    hegaocheckIds.push(before.state && before.state.hegaocheckid, after.state && after.state.hegaocheckid);
+    // DOM 层：本轮新增候选层（after 中的 cls 不出现在 before）
+    const beforeCls = ((before.state && before.state.candidates) || []).map((c) => c.cls);
+    const domNew = ((after.state && after.state.candidates) || []).filter((c) => beforeCls.indexOf(c.cls) < 0).map((c) => ({ cls: c.cls, layer: classifyLayerText(c.text), text: c.text.slice(0, 100) }));
+    log.push({ r, clicked: sc && sc.clicked, cls: sc && sc.cls, beforeHegao: before.state && before.state.hegaocheckid, afterHegao: after.state && after.state.hegaocheckid, reqDelta, netHits: { before: (reqHitsBefore && reqHitsBefore.count) || 0, after: (report.phases.net || []).length }, domNew: domNew.slice(0, 8), mutCount: after.state && after.state.mutCount });
     // 生成中 → 处理
     const layers = after.state && after.state.layers ? after.state.layers.join("\n") : "";
     if (/印刷稿件生成中|请耐心等待|生成中/.test(layers)) {
@@ -555,7 +735,7 @@ async function searchSync(maxRounds = 5) {
       if (g && g.goto) { failGoto = true; evt("goto-check-clicked"); break; }
     }
   }
-  return { log, failGoto, generatingHandled };
+  return { log, failGoto, generatingHandled, hegaocheckIds };
 }
 // 刷新同步策略：优先仅检查页/当前页 reload（不重开编辑器）
 async function refreshSync() {
@@ -886,8 +1066,37 @@ async function main() {
   report.phases.printDone = !!pr;
   // 交稿/核稿同步（搜索×5 + 生成中处理 + 去检查）
   evt("sync-search-start");
-  const sync = await searchSync(4);
-  writeJson("proof-result.json", { ts: new Date().toISOString(), searchLog: sync.log, generatingHandled: sync.generatingHandled, failGoto: sync.failGoto });
+  let sync = await searchSync(4);
+  // 提交四态判定（§7）：AUTH_EXPIRED / SUBMIT_REJECTED / SUBMIT_ACCEPTED / SUBMIT_UNKNOWN
+  let submitV = submitVerdictFromNet();
+  report.phases.submitVerdict = submitV;
+  evt("submit-verdict " + submitV.kind);
+  // AUTH_EXPIRED → 保存 resume → 复用已验证登录方式恢复 → 重建印刷/交稿 → 重新 submit（§5-§6）
+  if (submitV.kind === "AUTH_EXPIRED") {
+    saveResume("auth-expired", { submit: submitV });
+    report.phases.authRecovery = [];
+    for (let ai = 0; ai < AUTH_RETRY_MAX; ai++) {
+      const rec = await authRecoverAndResubmit();
+      report.phases.authRecovery.push(rec);
+      if (rec.ok) {
+        sync = await searchSync(4);
+        report.phases.submitVerdict = submitVerdictFromNet();
+        if (report.phases.submitVerdict.kind !== "AUTH_EXPIRED") break;
+        evt("after-auth-recover submit-verdict " + report.phases.submitVerdict.kind);
+      } else { break; }
+    }
+  }
+  // 多层观测取证（§3）：网络层 + UI 层 + DOM 层
+  const reqHits = await proofReqHits();
+  const uiAfter = await scanProofCandidatesOnce();
+  report.phases.proofObservation = { reqHits: ((reqHits && reqHits.hits) || []).slice(0, 20), uiAfter: ((uiAfter && uiAfter.candidates) || []).slice(0, 12) };
+  if (FLAG.debugProof) writeJson("proof-observation.json", { ts: new Date().toISOString(), submitVerdict: submitV, reqHits: (reqHits && reqHits.hits) || [], uiAfter: (uiAfter && uiAfter.candidates) || [] });
+  evt("proof-observation captured");
+  // 事实型核稿判定（§4/§8/§13）：HEGAO_ENTERED / NOT_ENTERED / UNKNOWN + PROOF_* 分级
+  const pv = assembleProofVerdict(sync, reqHits, submitV.kind, uiAfter);
+  report.phases.proofVerdict = pv;
+  evt("proof-verdict " + pv.entered + " / " + pv.result);
+  writeJson("proof-result.json", { ts: new Date().toISOString(), searchLog: sync.log, generatingHandled: sync.generatingHandled, failGoto: sync.failGoto, hegaocheckIds: sync.hegaocheckIds || [], proof: pv, submitVerdict: submitV });
   report.phases.sync = sync;
   report.phases.proofDetails = await captureProofDetails();
   if (!sync.failGoto) { const d = await dialogPass(); report.phases.dialogPassAfterSync = d; }
