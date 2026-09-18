@@ -371,7 +371,7 @@ async function stagePrint() {
       if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) seen.push(t.slice(0, 100));
     }
     return seen.length ? { ok: true, seen } : { ok: false };
-  }, "proof surfaces (jiao/check/error)", 15000);
+  }, "proof surfaces (jiao/check/error)", 45000);
   report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
   evt("proof-surfaces " + JSON.stringify(report.phases.proofSurfaces));
   // ---- 登录浮层 → 自动登录 → 重试印刷（最多 2 次）----
@@ -424,7 +424,7 @@ async function stagePrint() {
         if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) seen.push(t.slice(0, 100));
       }
       return seen.length ? { ok: true, seen } : { ok: false };
-    }, "proof surfaces retry", 15000);
+    }, "proof surfaces retry", 45000);
     report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
     evt("proof-surfaces-retry " + JSON.stringify(report.phases.proofSurfaces));
   }
