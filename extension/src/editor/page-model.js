@@ -117,10 +117,51 @@
     return { ok: false, code: "BACK_UNRESOLVED", pageId: null, side: SIDE.UNKNOWN, pages: pages };
   }
   function isKnownPage(vo, pageId) { return !!getPageById(vo, pageId); }
+
+  // ---- Stage 7.6 OCR Source Ownership / Stage 7.7 Page Ownership 门禁（纯函数；不访问 DOM/网络） ----
+  // freezeSourcePage：OCR 事务开始时冻结 source page 快照（§13/§14/§15 —— 防 OCR 期间切页导致结果漂移；
+  // 创建时必须 targetPageId = sourcePageId，而不是 currentPageId）。
+  function freezeSourcePage(resolved) {
+    if (!resolved || resolved.ok === false || !resolved.pageId) {
+      return { ok: false, code: (resolved && resolved.code) || "CURRENT_PAGE_UNKNOWN", pageId: null, side: SIDE.UNKNOWN };
+    }
+    return {
+      ok: true,
+      pageId: resolved.pageId,
+      side: (resolved.side === SIDE.FRONT || resolved.side === SIDE.BACK) ? resolved.side : SIDE.UNKNOWN,
+      sideSource: resolved.sideSource || null,
+      currentCanvasNum: resolved.currentCanvasNum != null ? resolved.currentCanvasNum : null
+    };
+  }
+  // groupOcrBlocksByPage：TextBlock 层按 pageId 分组（§16；1 block = 1 textbox；未知页进 __UNKNOWN__ 桶）
+  function groupOcrBlocksByPage(blocks) {
+    var groups = {};
+    (blocks || []).forEach(function (b, i) {
+      var key = (b && b.pageId) ? String(b.pageId) : "__UNKNOWN__";
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(b);
+    });
+    return groups;
+  }
+  // validatePageOwnership：跨页硬保护（§26）—— source.pageId === target.pageId，否则 CREATE_BLOCKED_*
+  // 传参可为 {pageId} 对象或裸字符串；target 为 getCurrentPage 结果（含 PAGE_IDENTITY_CONFLICT 状态）。
+  function validatePageOwnership(source, target) {
+    var src = source && source.pageId ? String(source.pageId) : (typeof source === "string" ? String(source) : null);
+    if (!src) return { ok: false, code: "CREATE_BLOCKED_PAGE_UNKNOWN", reason: "source page unknown" };
+    // identity conflict 必须在 target 解析前判定（冲突结果 pageId 为 null，不能先落 UNKNOWN）
+    if (target && target.code === "PAGE_IDENTITY_CONFLICT") return { ok: false, code: "CREATE_BLOCKED_PAGE_IDENTITY_CONFLICT", reason: target.reason || "page identity conflict" };
+    var tgt = target && target.pageId ? String(target.pageId) : (typeof target === "string" ? String(target) : null);
+    if (!tgt) return { ok: false, code: "CREATE_BLOCKED_PAGE_UNKNOWN", reason: "target page unknown" };
+    if (src !== tgt) return { ok: false, code: "CREATE_BLOCKED_WRONG_PAGE", reason: "OCR source page differs target page", sourcePageId: src, targetPageId: tgt };
+    return { ok: true, code: "OK", pageId: src };
+  }
+
   return {
     SIDE: SIDE, normalizeSideLabel: normalizeSideLabel, identityOfPage: identityOfPage,
     enumeratePages: enumeratePages, getPageById: getPageById, currentByCanvasNum: currentByCanvasNum,
     sideFromUi: sideFromUi, resolvePageIdentity: resolvePageIdentity, getCurrentPage: getCurrentPage,
-    getFrontPage: getFrontPage, getBackPage: getBackPage, isKnownPage: isKnownPage
+    getFrontPage: getFrontPage, getBackPage: getBackPage, isKnownPage: isKnownPage,
+    freezeSourcePage: freezeSourcePage, groupOcrBlocksByPage: groupOcrBlocksByPage,
+    validatePageOwnership: validatePageOwnership
   };
 });
