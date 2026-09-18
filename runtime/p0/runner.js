@@ -495,6 +495,18 @@ async function mapRedBoxToObject(rects) {
     if (canvasEl) { const rc = canvasEl.getBoundingClientRect(); cRect = { x: rc.x, y: rc.y, w: rc.width, h: rc.height }; }
     const objs = d.canvas.getObjects ? d.canvas.getObjects() : [];
     const suspects = [];
+    // canvas 侧红框候选：对象带红色描边/错误标记
+    for (let i = 0; i < objs.length; i++) {
+      const o = objs[i];
+      if (!o) continue;
+      const stroke = String(o.stroke || "");
+      const name = String(o.name || o.objType || "") + " " + String(o.mediaMediaType || "");
+      if (/red|#f00|#e0|error|warn|check/i.test(stroke + name) && o.visible !== false) {
+        const w = (o.getScaledWidth && o.getScaledWidth()) || o.width || 10;
+        const h = (o.getScaledHeight && o.getScaledHeight()) || o.height || 10;
+        suspects.push({ src: "canvas-obj", redRect: { x: o.left, y: o.top, w, h }, canvasXY: { px: o.left + w / 2, py: o.top + h / 2 }, hit: { index: i, uuid: o.uuid || o.multiUuid || null, type: o.type || o.mediaMediaType, text: o.text || o.mediaText || null, fontId: o.mediafontId, fontFamily: o.fontFamily, mediaFont: o.media && o.media.font ? o.media.font : null, bbox: { left: o.left, top: o.top, w, h }, reason: "canvas-red-style" } });
+      }
+    }
     for (const rct of rectsArg) {
       if (!rct.likely || rct.src !== "dom") continue;
       if (!cRect) continue;
@@ -665,8 +677,12 @@ async function main() {
   }
 
   if (resumeFrom === "check") {
-    // 从检查页开始：当前页面即为检查页（或编辑器页有失败弹层）→ 直接 stageCheck
-    evt("from-check: detect check page");
+    // 打开编辑器 → 直接红框检查（核稿失败红框可能标在画布上）
+    evt("from-check: editor-ready red-box scan");
+    const okE2 = await ensureEditor(120000);
+    if (!okE2) { report.errors.push("editor not ready (from-check)"); writeSummary(); return; }
+    const lg2 = await ev(() => { const ua = document.querySelector("#userAccount"); return { visible: !!(ua && ua.offsetParent) }; });
+    if (lg2.visible) { const lk = await ensureLogin(); if (!lk) { report.errors.push("AUTH_REQUIRED"); writeSummary(); return; } }
     const cp = await detectCheckPage();
     report.phases.checkPageDetected = cp;
     await stageCheck();
