@@ -276,23 +276,29 @@ async function fillOrderNo(val) {
 }
 async function stageProof() {
   evt("stage-proof");
-  // 核稿
-  await clickByName("核稿");
-  await waitUntil(() => {
-    const ls = document.querySelectorAll(".layui-layer, .modal, .modal-container, [class*=hegao], [class*=check_wrap], [class*=proof]");
-    for (let i = 0; i < ls.length; i++) {
-      const el = ls[i]; const rc = el.getBoundingClientRect(); if (rc.width === 0 && rc.height === 0) continue;
-      const t = String(el.innerText || el.textContent || "").trim();
-      if (/点击图片复制|核稿|生成/.test(t) && t.length > 1) return { ok: true, txt: t.slice(0, 80) };
-    }
-    return { ok: false };
-  }, "hegao dialog", 20000);
+  // 核稿：点击 + 验证弹层，未出现则重试（印刷前必须完成核稿）
+  let hegaoOk = false;
+  for (let attempt = 0; attempt < 3 && !hegaoOk; attempt++) {
+    await clickByName("核稿");
+    const w = await waitUntil(() => {
+      const ls = document.querySelectorAll(".layui-layer, .modal, .modal-container, [class*=hegao], [class*=check_wrap], [class*=proof]");
+      for (let i = 0; i < ls.length; i++) {
+        const el = ls[i]; const rc = el.getBoundingClientRect(); if (rc.width === 0 && rc.height === 0) continue;
+        const t = String(el.innerText || el.textContent || "").trim();
+        if (/点击图片复制|核稿|生成/.test(t) && t.length > 1) return { ok: true, txt: t.slice(0, 80) };
+      }
+      return { ok: false };
+    }, "hegao dialog", 12000);
+    hegaoOk = !!(w && w.ok);
+    evt("hegao-verify attempt=" + attempt + " ok=" + hegaoOk);
+    if (!hegaoOk) await sleep(1000);
+  }
   await dialogPass(); // 若核稿弹「生成中」→ 处理
-  await sleep(2500);
+  await sleep(800);
   // 关闭核稿窗（含 核稿图 弹窗）
   await ev(() => { let c = 0; document.querySelectorAll(".close-btn, .layui-layer-close, .layui-layer-close2, [class*=close], .modal .close").forEach((el) => { if (c < 6 && el.offsetParent && /close/.test(String(el.className || ""))) { try { el.click(); c++; } catch (e) {} } }); return { closed: c }; });
-  await sleep(1500);
-  return true;
+  await sleep(600);
+  return hegaoOk;
 }
 async function stagePrint() {
   evt("stage-print");
@@ -308,7 +314,7 @@ async function stagePrint() {
       try { best.click(); return { clicked: true, cls: String(best.className).slice(0, 50), tag: best.tagName }; } catch (e) { return { clicked: false, err: String(e) }; }
     });
     evt("print-click " + attempt + " " + JSON.stringify(hit));
-    await sleep(3000);
+    await sleep(1200);
     const diag = await ev(() => {
       const out = [];
       document.querySelectorAll(".layui-layer, .modal, .modal-container, [class*=hegao]").forEach((el) => {
@@ -346,7 +352,7 @@ async function stagePrint() {
     setByLabel(["备注"], "p0 runner");
     return { ok: true };
   });
-  await sleep(1200);
+  await sleep(600);
   const d = await ev(() => {
     const btns = document.querySelectorAll(".layui-layer button, .layui-layer a, .layui-layer-btn0, .modal button, .modal a");
     for (let i = 0; i < btns.length; i++) { const tx = String(btns[i].textContent || "").trim(); if (/^确定$|^保存$/.test(tx)) { const host = btns[i].closest(".layui-layer, .modal, .modal-container") || document; if (/确定进行印刷|提交生产|提交制作|确认提交|确定印刷|下单/i.test(String(host.textContent || ""))) continue; try { btns[i].click(); return { clicked: true }; } catch (e) {} break; } }
@@ -365,7 +371,7 @@ async function stagePrint() {
       if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) seen.push(t.slice(0, 100));
     }
     return seen.length ? { ok: true, seen } : { ok: false };
-  }, "proof surfaces (jiao/check/error)", 45000);
+  }, "proof surfaces (jiao/check/error)", 15000);
   report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
   evt("proof-surfaces " + JSON.stringify(report.phases.proofSurfaces));
   // ---- 登录浮层 → 自动登录 → 重试印刷（最多 2 次）----
@@ -418,7 +424,7 @@ async function stagePrint() {
         if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) seen.push(t.slice(0, 100));
       }
       return seen.length ? { ok: true, seen } : { ok: false };
-    }, "proof surfaces retry", 45000);
+    }, "proof surfaces retry", 15000);
     report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
     evt("proof-surfaces-retry " + JSON.stringify(report.phases.proofSurfaces));
   }
@@ -501,7 +507,7 @@ async function searchSync(maxRounds = 5) {
   for (let r = 0; r < maxRounds; r++) {
     const before = await readProofState();
     const sc = await clickSearchOnce();
-    await sleep(2500);
+    await sleep(1200);
     const after = await readProofState();
     const reqDelta = (report.phases.net || []).length - prevReq;
     prevReq = (report.phases.net || []).length;
@@ -663,7 +669,7 @@ async function captureProofDetails() {
     return { ok: true, detail: out.detail, imgs: out.imgs.slice(0, 12), msgs: out.msgs.slice(0, 6) };
   });
   if (r.ok && r.detail === "clicked-expand") {
-    await sleep(1800);
+    await sleep(1000);
     const d2 = await ev(() => {
       const box = document.querySelectorAll(".layui-layer, .modal, .modal-container");
       let best = null;
@@ -850,7 +856,7 @@ async function main() {
   report.phases.printDone = !!pr;
   // 交稿/核稿同步（搜索×5 + 生成中处理 + 去检查）
   evt("sync-search-start");
-  const sync = await searchSync(5);
+  const sync = await searchSync(4);
   writeJson("proof-result.json", { ts: new Date().toISOString(), searchLog: sync.log, generatingHandled: sync.generatingHandled, failGoto: sync.failGoto });
   report.phases.sync = sync;
   report.phases.proofDetails = await captureProofDetails();
