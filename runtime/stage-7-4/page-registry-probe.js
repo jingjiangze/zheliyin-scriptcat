@@ -76,7 +76,6 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
       out.inject = inj;
       if (!(inj && inj.ok)) { out.errors.push("pageModel inject failed"); }
       else {
-        const seq = ["ROUND0_INIT", clickBack, "ROUND1_BACK", clickFront, "ROUND2_FRONT", clickBack, "ROUND3_BACK", clickFront, "ROUND4_FRONT"];
         await snapCurrent("ROUND0_INITIAL_FRONT");
         for (const step of [{ k: "toBack", f: () => clickPage("背面") }, { k: "toFront", f: () => clickPage("正面") }, { k: "toBack2", f: () => clickPage("背面") }, { k: "toFront2", f: () => clickPage("正面") }]) {
           const c = await step.f(); out.rounds.push({ click: step.k, result: c });
