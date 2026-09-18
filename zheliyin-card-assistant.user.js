@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.10.1
+// @version      0.3.10.2
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -43,7 +43,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.10.1";
+  const VERSION = "0.3.10.2";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。

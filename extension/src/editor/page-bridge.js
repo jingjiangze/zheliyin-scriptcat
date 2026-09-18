@@ -391,7 +391,7 @@ function pageBridge() {
         printLocation: { x: x, y: y, width: w, height: h, rotation: rot },
         layer: { alpha: 1 },
         layerNum: layerNum,
-        isEdit: 1, isDisplay: 1, deleteState: 0, visitLevel: 1,
+        isEdit: 1, isDisplay: 0, deleteState: 0, visitLevel: 1,
         multiUuid: nativeIdentityGuid(), markuuid: "",
         // Stage 7.3 t4 (v16 根因修复): Q() 序列化对以下字段裸拼接, 缺省会拼出 ":undefined" -> JSON 非法 -> 被判错误素材删除
         topEnable: 1, resourceType: 0, maskEnable: 0,
