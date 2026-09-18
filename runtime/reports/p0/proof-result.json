@@ -1,0 +1,47 @@
+{
+  "ts": "2026-09-18T03:36:16.232Z",
+  "searchLog": [
+    {
+      "r": 0,
+      "clicked": true,
+      "cls": "icon icon-search inputorderno",
+      "beforeHegao": "",
+      "afterHegao": "",
+      "reqDelta": 1
+    },
+    {
+      "r": 1,
+      "clicked": true,
+      "cls": "icon icon-search inputorderno",
+      "beforeHegao": "",
+      "afterHegao": "",
+      "reqDelta": 1
+    },
+    {
+      "r": 2,
+      "clicked": true,
+      "cls": "icon icon-search inputorderno",
+      "beforeHegao": "",
+      "afterHegao": "",
+      "reqDelta": 1
+    },
+    {
+      "r": 3,
+      "clicked": true,
+      "cls": "icon icon-search inputorderno",
+      "beforeHegao": "",
+      "afterHegao": "",
+      "reqDelta": 1
+    },
+    {
+      "r": 4,
+      "clicked": true,
+      "cls": "icon icon-search inputorderno",
+      "beforeHegao": "",
+      "afterHegao": "",
+      "reqDelta": 1
+    }
+  ],
+  "generatingHandled": 0,
+  "failGoto": false
+}

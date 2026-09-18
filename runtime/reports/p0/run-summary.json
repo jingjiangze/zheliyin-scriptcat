@@ -1,10 +1,10 @@
 {
-  "ts": "2026-09-18T03:04:02.308Z",
+  "ts": "2026-09-18T03:36:25.799Z",
   "flags": {
     "fromProof": false,
     "fromPrint": false,
     "fromCheck": false,
-    "caseFontSchema": true
+    "caseFontSchema": false
   },
   "resumeFrom": null,
   "phases": {
@@ -33,6 +33,65 @@
       {
         "status": 200,
         "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+        "body": "{\"success\":true,\"message\":\"1#\",\"userData\":[\"\",\"\"]}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+        "body": "{\"data\":\"\",\"status\":\"error\"}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getImgInfos.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+        "body": "{\"result\":true,\"loginState\":\"timeOut\"}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "body": "{\"success\":false,\"message\":null,\"userData\":null}"
       }
     ],
     "editor": {
@@ -40,206 +99,187 @@
       "data": {
         "ok": true
       },
-      "ms": 1534
+      "ms": 1533
     },
-    "schemaDiff": [
-      {
-        "key": "mediafontId",
-        "manual": {
-          "v": "248",
-          "t": "string"
+    "proofDone": true,
+    "printDone": true,
+    "sync": {
+      "log": [
+        {
+          "r": 0,
+          "clicked": true,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
+          "reqDelta": 1
         },
-        "script": {
-          "v": "556",
-          "t": "string"
+        {
+          "r": 1,
+          "clicked": true,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
+          "reqDelta": 1
+        },
+        {
+          "r": 2,
+          "clicked": true,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
+          "reqDelta": 1
+        },
+        {
+          "r": 3,
+          "clicked": true,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
+          "reqDelta": 1
+        },
+        {
+          "r": 4,
+          "clicked": true,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
+          "reqDelta": 1
         }
+      ],
+      "failGoto": false,
+      "generatingHandled": 0
+    },
+    "dialogPassAfterSync": {
+      "handled": [],
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        }
+      ]
+    },
+    "checkSearch": {
+      "log": [
+        {
+          "r": 0,
+          "clicked": true,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
+          "reqDelta": 1
+        },
+        {
+          "r": 1,
+          "clicked": true,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
+          "reqDelta": 1
+        },
+        {
+          "r": 2,
+          "clicked": true,
+          "cls": "icon icon-search inputorderno",
+          "beforeHegao": "",
+          "afterHegao": "",
+          "reqDelta": 1
+        }
+      ],
+      "failGoto": false,
+      "generatingHandled": 0
+    },
+    "suspect": {
+      "located": false,
+      "ts": "2026-09-18T03:36:25.798Z",
+      "mapped": {
+        "ok": true,
+        "cRect": {
+          "x": 502.75,
+          "y": 287.0625,
+          "w": 619.5,
+          "h": 376.8625183105469
+        },
+        "suspects": []
       },
-      {
-        "key": "fontFamily",
-        "manual": {
-          "v": "方正黑体简体",
-          "t": "string"
+      "redRects": [
+        {
+          "src": "dom",
+          "cls": "redo disabled",
+          "x": 289.8999938964844,
+          "y": 0,
+          "w": 42,
+          "h": 50,
+          "likely": true
         },
-        "script": {
-          "v": "思源黑体 Regular",
-          "t": "string"
-        }
-      },
-      {
-        "key": "fontSize",
-        "manual": {
-          "v": 18,
-          "t": "number"
+        {
+          "src": "dom",
+          "cls": "canvasWrap",
+          "x": 502.75,
+          "y": 287.0625,
+          "w": 619.5,
+          "h": 376.8625183105469,
+          "likely": true
         },
-        "script": {
-          "v": 24,
-          "t": "number"
+        {
+          "src": "dom",
+          "cls": "",
+          "x": 502.75,
+          "y": 287.0625,
+          "w": 58,
+          "h": 16.80000114440918,
+          "likely": true
         }
-      },
-      {
-        "key": "fill",
-        "manual": {
-          "v": "rgb(0,0,0)",
-          "t": "string"
-        },
-        "script": {
-          "v": "#000000",
-          "t": "string"
-        }
-      },
-      {
-        "key": "uuid",
-        "manual": {
-          "v": "c7f460b7-2181-4b00-a11a-69d0daff1bcb",
-          "t": "string"
-        },
-        "script": {
-          "v": "a73c2cbc-9183-4ca6-ac84-dbb1fc218d51",
-          "t": "string"
-        }
-      },
-      {
-        "key": "multiUuid",
-        "manual": {
-          "v": "0a64a100-2a93-4a25-ae7d-6f430582b259",
-          "t": "string"
-        },
-        "script": {
-          "v": "p0cf642300",
-          "t": "string"
-        }
-      },
-      {
-        "key": "topEnable",
-        "manual": {
-          "v": false,
-          "t": "boolean"
-        },
-        "script": {
-          "v": 1,
-          "t": "number"
-        }
-      },
-      {
-        "key": "resourceType",
-        "manual": {
-          "v": 1,
-          "t": "number"
-        },
-        "script": {
-          "v": 0,
-          "t": "number"
-        }
-      },
-      {
-        "key": "maskEnable",
-        "manual": {
-          "v": false,
-          "t": "boolean"
-        },
-        "script": {
-          "v": 0,
-          "t": "number"
-        }
-      },
-      {
-        "key": "lowPixelFlag",
-        "manual": {
-          "v": false,
-          "t": "boolean"
-        },
-        "script": {
-          "v": 0,
-          "t": "number"
-        }
-      },
-      {
-        "key": "selectEnabled",
-        "manual": {
-          "v": true,
-          "t": "boolean"
-        },
-        "script": {
-          "v": 1,
-          "t": "number"
-        }
-      },
-      {
-        "key": "isDesign",
-        "manual": {
-          "v": true,
-          "t": "boolean"
-        },
-        "script": {
-          "v": 1,
-          "t": "number"
-        }
-      },
-      {
-        "key": "isComposite",
-        "manual": {
-          "v": true,
-          "t": "boolean"
-        },
-        "script": {
-          "v": 0,
-          "t": "number"
-        }
-      },
-      {
-        "key": "isPreview",
-        "manual": {
-          "v": true,
-          "t": "boolean"
-        },
-        "script": {
-          "v": 0,
-          "t": "number"
-        }
-      },
-      {
-        "key": "isDesignShape",
-        "manual": {
-          "v": false,
-          "t": "boolean"
-        },
-        "script": {
-          "v": 0,
-          "t": "number"
-        }
-      },
-      {
-        "key": "visitLevel",
-        "manual": {
-          "v": 1000,
-          "t": "number"
-        },
-        "script": {
-          "v": 1,
-          "t": "number"
-        }
-      },
-      {
-        "key": "lineHeight",
-        "manual": {
-          "v": 1.16,
-          "t": "number"
-        },
-        "script": {
-          "v": 1.3,
-          "t": "number"
-        }
-      }
-    ]
+      ]
+    }
   },
   "events": [
     {
-      "t": "03:03:59",
-      "s": "runner-start {\"fromProof\":false,\"fromPrint\":false,\"fromCheck\":false,\"caseFontSchema\":true}"
+      "t": "03:35:06",
+      "s": "runner-start {\"fromProof\":false,\"fromPrint\":false,\"fromCheck\":false,\"caseFontSchema\":false}"
     },
     {
-      "t": "03:03:59",
-      "s": "case-font-schema"
+      "t": "03:35:09",
+      "s": "object-missing-create"
+    },
+    {
+      "t": "03:35:09",
+      "s": "create-object"
+    },
+    {
+      "t": "03:35:09",
+      "s": "stage-proof"
+    },
+    {
+      "t": "03:35:13",
+      "s": "stage-print"
+    },
+    {
+      "t": "03:35:13",
+      "s": "print-click 0 {\"clicked\":true,\"cls\":\"btn print\",\"tag\":\"LI\"}"
+    },
+    {
+      "t": "03:35:16",
+      "s": "print-diag 0 [{\"cls\":\"hegao-preview\",\"t\":\"核稿\"},{\"cls\":\"modal\",\"t\":\"设计信息\\n作品名：\\n*\\n用户名：\\n*\\n确定取消\"}]"
+    },
+    {
+      "t": "03:35:17",
+      "s": "design-info-submit {\"clicked\":true}"
+    },
+    {
+      "t": "03:35:22",
+      "s": "after-submit-diag {\"layers\":[{\"cls\":\"hegao-preview\",\"t\":\"核稿\"}],\"btns\":[{\"txt\":\"核稿\",\"vis\":true},{\"txt\":\"商用无风险\",\"vis\":true},{\"txt\":\"保存\",\"vis\":true},{\"txt\":\"色差检查\",\"vis\":true},{\"txt\":\"分享\",\"vis\":true},{\"tx"
+    },
+    {
+      "t": "03:36:03",
+      "s": "no-jiaogao-layer"
+    },
+    {
+      "t": "03:36:03",
+      "s": "sync-search-start"
+    },
+    {
+      "t": "03:36:18",
+      "s": "stage-check"
     }
   ],
   "pages": [],

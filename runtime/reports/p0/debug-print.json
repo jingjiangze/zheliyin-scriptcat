@@ -1,0 +1,718 @@
+{
+  "frames": [
+    {
+      "t": "03:18:32",
+      "tag": "after-hegao",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:18:33",
+      "tag": "after-close",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:18:37",
+      "tag": "print+3.5s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:18:40",
+      "tag": "print+7s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:18:44",
+      "tag": "print+10.5s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:18:48",
+      "tag": "print+14s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:18:51",
+      "tag": "print+17.5s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:18:55",
+      "tag": "print+21s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:18:58",
+      "tag": "print+24.5s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:19:02",
+      "tag": "print+28s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:19:05",
+      "tag": "print+31.5s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    },
+    {
+      "t": "03:19:09",
+      "tag": "print+35s",
+      "layers": [
+        {
+          "cls": "hegao-preview",
+          "txt": "核稿"
+        },
+        {
+          "cls": "modal",
+          "txt": "设计信息\n作品名：\n*\n用户名：\n*\n确定取消"
+        }
+      ],
+      "btns": [
+        {
+          "tag": "LI",
+          "txt": "核稿",
+          "cls": "hegao-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "商用无风险",
+          "cls": "nocopyright-preview",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "保存",
+          "cls": "save",
+          "vis": true
+        },
+        {
+          "tag": "A",
+          "txt": "色差检查",
+          "cls": "",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "分享",
+          "cls": "share",
+          "vis": true
+        },
+        {
+          "tag": "LI",
+          "txt": "导出",
+          "cls": "export",
+          "vis": false
+        },
+        {
+          "tag": "LI",
+          "txt": "印刷",
+          "cls": "btn print",
+          "vis": true
+        }
+      ],
+      "masks": []
+    }
+  ],
+  "errors": [],
+  "ready": true,
+  "printHit": {
+    "clicked": true,
+    "tag": "LI",
+    "cls": "btn print",
+    "tx": "印刷",
+    "rect": {
+      "x": 1337.8499755859375,
+      "y": 0,
+      "w": 102.1500015258789,
+      "h": 50
+    }
+  }
+}

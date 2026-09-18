@@ -107,7 +107,7 @@ async function ensureLogin() {
 async function scanLayers() {
   return ev(() => {
     const out = [];
-    document.querySelectorAll(".layui-layer, .modal, [class*=hegao], [class*=check_wrap], [class*=proof]").forEach((el) => {
+    document.querySelectorAll(".layui-layer, .modal, .modal-container, [class*=hegao], [class*=check_wrap], [class*=proof]").forEach((el) => {
       const rc = el.getBoundingClientRect(); if (rc.width === 0 && rc.height === 0) return;
       const t = String(el.innerText || el.textContent || "").trim();
       if (t) out.push({ cls: String(el.className).slice(0, 60), txt: t.slice(0, 500) });
@@ -123,7 +123,7 @@ async function handleKnownDialog(scopeTxt) {
   if (/印刷稿件生成中|请耐心等待|生成中|正在生成/.test(scopeTxt)) {
     evt("dialog-generating");
     const r = await ev(() => {
-      const btns = document.querySelectorAll(".layui-layer button, .layui-layer a, .layui-layer-btn0");
+      const btns = document.querySelectorAll(".layui-layer button, .layui-layer a, .layui-layer-btn0, .modal-container button, .modal-container a");
       for (let i = 0; i < btns.length; i++) { const tx = String(btns[i].textContent || "").trim(); if (/确认|确定|关闭|知道了|好/.test(tx) && btns[i].offsetParent) { try { btns[i].click(); return { pressed: tx.slice(0, 10) }; } catch (e) {} break; } }
       return { pressed: null };
     });
@@ -187,7 +187,15 @@ async function stageProof() {
   evt("stage-proof");
   // 核稿
   await clickByName("核稿");
-  await waitUntil(() => scanLayers().then((s) => ({ ok: s.ok && s.layers.some((l) => /点击图片复制|核稿|生成/.test(l.txt)) })), "hegao dialog", 20000);
+  await waitUntil(() => {
+    const ls = document.querySelectorAll(".layui-layer, .modal, .modal-container, [class*=hegao], [class*=check_wrap], [class*=proof]");
+    for (let i = 0; i < ls.length; i++) {
+      const el = ls[i]; const rc = el.getBoundingClientRect(); if (rc.width === 0 && rc.height === 0) continue;
+      const t = String(el.innerText || el.textContent || "").trim();
+      if (/点击图片复制|核稿|生成/.test(t) && t.length > 1) return { ok: true, txt: t.slice(0, 80) };
+    }
+    return { ok: false };
+  }, "hegao dialog", 20000);
   await dialogPass(); // 若核稿弹「生成中」→ 处理
   await sleep(2500);
   // 关闭核稿窗（含 核稿图 弹窗）
@@ -197,12 +205,44 @@ async function stageProof() {
 }
 async function stagePrint() {
   evt("stage-print");
-  await clickByName("印刷");
-  // 等设计信息弹层 → 填 1/2 → 确定
-  const w = await waitUntil(() => ev(() => { const layers = document.querySelectorAll(".layui-layer, .modal"); for (let i = 0; i < layers.length; i++) { if (layers[i].offsetParent && /作品名/.test(String(layers[i].innerText || ""))) return { ok: true }; } return { ok: false }; }), "design info dialog", 30000);
-  if (!w.ok) { evt("no-design-dialog"); return { ok: false }; }
+  // 双点击策略：class 优先 + 文本兜底；出现设计信息层为止（最多重试 3 次）
+  let w1 = null;
+  for (let attempt = 0; attempt < 3 && !(w1 && w1.ok); attempt++) {
+    const hit = await ev(() => {
+      const cands = document.querySelectorAll(".btn.print, li.print, [class*=' print'], .rightBtn li, .rightBtn a");
+      let best = null;
+      for (let i = 0; i < cands.length; i++) { const el = cands[i]; const tx = String(el.textContent || "").trim(); const cls = String(el.className || ""); if (/印刷/.test(tx) && /print/i.test(cls)) { best = el; break; } if (/印刷/.test(tx) && !best) best = el; }
+      if (!best) { const all = document.querySelectorAll("li,a,button,span,div"); for (let i = 0; i < all.length; i++) { if (String(all[i].textContent || "").trim() === "印刷" && all[i].offsetParent) { best = all[i]; break; } } }
+      if (!best) return { clicked: false };
+      try { best.click(); return { clicked: true, cls: String(best.className).slice(0, 50), tag: best.tagName }; } catch (e) { return { clicked: false, err: String(e) }; }
+    });
+    evt("print-click " + attempt + " " + JSON.stringify(hit));
+    await sleep(3000);
+    const diag = await ev(() => {
+      const out = [];
+      document.querySelectorAll(".layui-layer, .modal, .modal-container, [class*=hegao]").forEach((el) => {
+        if (!el.offsetParent) return;
+        const rc = el.getBoundingClientRect(); if (rc.width < 3) return;
+        const t = String(el.innerText || el.textContent || "").trim().slice(0, 120);
+        if (t) out.push({ cls: String(el.className).slice(0, 50), t });
+      });
+      return { ok: true, layers: out };
+    });
+    evt("print-diag " + attempt + " " + JSON.stringify(diag && diag.layers).slice(0, 600));
+    w1 = await waitUntil(() => {
+      const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+      for (let i = 0; i < layers.length; i++) {
+        const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
+        const t = String(el.innerText || "");
+        if (/作品名|设计信息/.test(t) && /用户名/.test(t)) return { ok: true, txt: t.slice(0, 120) };
+      }
+      return { ok: false };
+    }, "design-info layer", 25000);
+  }
+  if (!(w1 && w1.ok)) { evt("no-design-info-layer"); return { ok: false, reason: "no design-info layer" }; }
+  // 2) 填 1/2 → 确定
   await ev(() => {
-    const layers = document.querySelectorAll(".layui-layer, .modal");
+    const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
     let host = null;
     for (let i = 0; i < layers.length; i++) { const el = layers[i]; if (el.offsetParent && /作品名/.test(String(el.innerText || ""))) { host = el; break; } }
     const scope = host || document;
@@ -216,21 +256,55 @@ async function stagePrint() {
     return { ok: true };
   });
   await sleep(1200);
-  await ev(() => {
-    const btns = document.querySelectorAll(".layui-layer button, .layui-layer a, .layui-layer-btn0");
-    for (let i = 0; i < btns.length; i++) {
-      const tx = String(btns[i].textContent || "").trim();
-      if (/^确定$|^保存$/.test(tx)) {
-        const host = btns[i].closest(".layui-layer, .modal") || document;
-        if (/确定进行印刷|提交生产|提交制作|确认提交|确定印刷|下单/i.test(String(host.textContent || ""))) continue;
-        try { btns[i].click(); return { clicked: true }; } catch (e) {}
-        break;
+  const d = await ev(() => {
+    const btns = document.querySelectorAll(".layui-layer button, .layui-layer a, .layui-layer-btn0, .modal button, .modal a");
+    for (let i = 0; i < btns.length; i++) { const tx = String(btns[i].textContent || "").trim(); if (/^确定$|^保存$/.test(tx)) { const host = btns[i].closest(".layui-layer, .modal, .modal-container") || document; if (/确定进行印刷|提交生产|提交制作|确认提交|确定印刷|下单/i.test(String(host.textContent || ""))) continue; try { btns[i].click(); return { clicked: true }; } catch (e) {} break; } }
+    return { clicked: false };
+  });
+  evt("design-info-submit " + JSON.stringify(d));
+  // 诊断：确定后 5s 可见层全景
+  await sleep(5000);
+  const diag2 = await ev(() => {
+    const out = [];
+    document.querySelectorAll(".layui-layer, .modal, .modal-container, [class*=hegao], .progress, [class*=check_wrap]").forEach((el) => {
+      if (!el.offsetParent) return;
+      const rc = el.getBoundingClientRect(); if (rc.width < 3) return;
+      const t = String(el.innerText || el.textContent || "").trim().slice(0, 200);
+      if (t) out.push({ cls: String(el.className).slice(0, 60), t });
+    });
+    // 顶部按钮禁用态
+    const btns = [];
+    document.querySelectorAll(".rightBtn li, .rightBtn a, #submitProduct").forEach((el) => { const tx = String(el.textContent || "").trim(); if (tx && tx.length <= 6) btns.push({ txt: tx, vis: !!el.offsetParent }); });
+    return { ok: true, layers: out, btns };
+  });
+  evt("after-submit-diag " + JSON.stringify(diag2 && { layers: diag2.layers, btns: diag2.btns }).slice(0, 900));
+  // 3) 等「提交稿件（交稿）」层
+  const w2 = await waitUntil(() => {
+    const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+    for (let i = 0; i < layers.length; i++) {
+      const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
+      const t = String(el.innerText || "");
+      if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果/.test(t)) return { ok: true, txt: t.slice(0, 120) };
+    }
+    return { ok: false };
+  }, "jiaogao layer", 40000);
+  if (!w2.ok) { evt("no-jiaogao-layer"); return { ok: false, reason: "no jiaogao layer" }; }
+  // 4) 点「提交稿件」（交稿层核心按钮，排除取消）
+  await sleep(1500);
+  const jt = await ev(() => {
+    const all = document.querySelectorAll("button, a, .layui-layer-btn0, .modal button, .modal a");
+    for (let i = 0; i < all.length; i++) {
+      const el = all[i];
+      const tx = String(el.textContent || "").trim();
+      if (/^提交稿件$|提交稿件|确认交稿|交稿/.test(tx) && !/取消|关闭/.test(tx) && el.offsetParent) {
+        try { el.click(); return { clicked: true, tx: tx.slice(0, 12) }; } catch (e) { return { clicked: false, err: String(e) }; }
       }
     }
     return { clicked: false };
   });
-  evt("print-submitted");
-  return { ok: true };
+  evt("jiaogao-submit " + JSON.stringify(jt));
+  await sleep(2500);
+  return { ok: true, jt };
 }
 
 // ---------- 搜索同步机制（核心）----------
@@ -239,7 +313,7 @@ async function readProofState() {
   const r = await ev(() => {
     const hegao = document.querySelector("#hegaocheckid");
     const layers = [];
-    document.querySelectorAll(".layui-layer, .modal").forEach((el) => { if (el.offsetParent) { const t = String(el.innerText || "").trim(); if (t && /核稿|错字|生产稿|设计稿|搜索|订单号/.test(t) && layers.length < 12) layers.push(t.slice(0, 300)); } });
+    document.querySelectorAll(".layui-layer, .modal, .modal-container").forEach((el) => { if (el.offsetParent) { const t = String(el.innerText || "").trim(); if (t && /核稿|错字|生产稿|设计稿|搜索|订单号/.test(t) && layers.length < 12) layers.push(t.slice(0, 300)); } });
     return { ok: true, hegaocheckid: hegao ? hegao.value : null, layers };
   });
   const reqCount = ((report.phases.net || []).length);
@@ -253,7 +327,7 @@ async function clickSearchOnce() {
       const cands = root.querySelectorAll("a, button, span, i, em, input[type=button], input[type=submit]");
       for (let j = 0; j < cands.length; j++) {
         const el = cands[j];
-        if (!el.offsetParent) continue;
+        const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
         const cls = String(el.className || "");
         const tx = String(el.textContent || el.value || "").trim();
         if (/icon[ -]?search|search-btn/i.test(cls) || tx === "搜索" || tx === "查 询" || tx === "查询") {
@@ -269,7 +343,7 @@ async function clickSearchOnce() {
     const all = document.querySelectorAll("a, button, span, i, em");
     for (let i = 0; i < all.length; i++) {
       const el = all[i];
-      if (!el.offsetParent) continue;
+      const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
       const cls = String(el.className || "");
       const tx = String(el.textContent || "").trim();
       const inLayer = !!(el.closest && el.closest(".modal, .layui-layer"));
@@ -351,11 +425,13 @@ async function locateRedBox() {
     const vw = window.innerWidth, vh = window.innerHeight;
     return { ok: true, rects: rects.slice(0, 60), vw, vh };
   });
-  return r.ok ? r : { ok: false };
+  return r.ok ? r : { ok: false, rects: [] };
 }
 // 将红框（viewport 坐标）映射到 Canvas 对象：取 canvas 容器 rect → 相对比例 → CanvasObjVO 对象 bbox
 async function mapRedBoxToObject(rects) {
+  const rectsIn = Array.isArray(rects) ? rects : [];
   const m = await ev((arg) => {
+    const rectsArg = Array.isArray(arg && arg.rects) ? arg.rects : [];
     const req = window.requirejs || window.require;
     const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
     const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
@@ -366,7 +442,7 @@ async function mapRedBoxToObject(rects) {
     if (canvasEl) { const rc = canvasEl.getBoundingClientRect(); cRect = { x: rc.x, y: rc.y, w: rc.width, h: rc.height }; }
     const objs = d.canvas.getObjects ? d.canvas.getObjects() : [];
     const suspects = [];
-    for (const rct of arg.rects) {
+    for (const rct of rectsArg) {
       if (!rct.likely || rct.src !== "dom") continue;
       if (!cRect) continue;
       // 红框中心点相对画布的比例 → 画布坐标
@@ -390,7 +466,7 @@ async function mapRedBoxToObject(rects) {
       suspects.push({ redRect: { x: rct.x, y: rct.y, w: rct.w, h: rct.h }, canvasXY: { px, py }, hit });
     }
     return { ok: true, cRect, suspects };
-  }, { rects: (rects || []).filter((r) => r.src === "dom") });
+  }, { rects: rectsIn.filter((r) => r.src === "dom") });
   if (!m.ok) { evt("map-fail " + (m.err || "")); }
   return m;
 }
@@ -407,7 +483,7 @@ async function stageCheck() {
   }
   // 定位红框
   const rects = await locateRedBox();
-  const mapped = await mapRedBoxToObject(rects.rects || []);
+  const mapped = await mapRedBoxToObject((rects && rects.rects) || []);
   const suspect = {
     located: mapped.ok && mapped.suspects && mapped.suspects.length > 0,
     ts: new Date().toISOString(),
