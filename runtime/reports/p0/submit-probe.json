@@ -1,0 +1,11 @@
+{
+  "ts": "2026-09-18T03:48:11.487Z",
+  "printOk": false,
+  "submitResp": [
+    {
+      "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+      "status": 200,
+      "body": "{\"result\":true,\"loginState\":\"timeOut\"}"
+    }
+  ]
+}

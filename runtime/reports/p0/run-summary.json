@@ -1,24 +1,134 @@
 {
-  "ts": "2026-09-18T03:46:04.686Z",
+  "ts": "2026-09-18T03:48:11.488Z",
   "flags": {
     "fromProof": false,
     "fromPrint": false,
     "fromCheck": false,
     "caseFontSchema": false,
-    "adoptSession": true,
+    "adoptSession": false,
     "sessionParity": false,
-    "submitProbe": false
+    "submitProbe": true
+  },
+  "authConfigured": false,
+  "sessionSource": "MANAGED_PERSISTENT_PROFILE",
+  "disc": {
+    "source": "MANAGED_PERSISTENT_PROFILE",
+    "cdpUrl": null,
+    "pages": [],
+    "cookieNames": []
   },
   "resumeFrom": null,
-  "phases": {},
+  "phases": {
+    "net": [
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+        "body": "{\"success\":true,\"message\":\"1#\",\"userData\":[\"\",\"\"]}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+        "body": "{\"data\":\"\",\"status\":\"error\"}"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getImgInfos.do"
+      },
+      {
+        "status": 200,
+        "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+        "body": "{\"result\":true,\"loginState\":\"timeOut\"}"
+      }
+    ],
+    "editor": {
+      "ok": true,
+      "data": {
+        "ok": true
+      },
+      "ms": 1524
+    },
+    "submitProbe": {
+      "print": {
+        "ok": false,
+        "reason": "no jiaogao layer"
+      }
+    },
+    "submitResp": [
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+        "status": 200,
+        "body": "{\"result\":true,\"loginState\":\"timeOut\"}"
+      }
+    ]
+  },
   "events": [
     {
-      "t": "03:46:04",
-      "s": "runner-start {\"fromProof\":false,\"fromPrint\":false,\"fromCheck\":false,\"caseFontSchema\":false,\"adoptSession\":true,\"sessionParity\":false,\"submitProbe\":false}"
+      "t": "03:47:14",
+      "s": "runner-start {\"fromProof\":false,\"fromPrint\":false,\"fromCheck\":false,\"caseFontSchema\":false,\"adoptSession\":false,\"sessionParity\":false,\"submitProbe\":true}"
     },
     {
-      "t": "03:46:04",
+      "t": "03:47:14",
       "s": "SESSION-SOURCE=MANAGED_PERSISTENT_PROFILE"
+    },
+    {
+      "t": "03:47:14",
+      "s": "submit-probe"
+    },
+    {
+      "t": "03:47:17",
+      "s": "create-object"
+    },
+    {
+      "t": "03:47:17",
+      "s": "stage-proof"
+    },
+    {
+      "t": "03:47:21",
+      "s": "stage-print"
+    },
+    {
+      "t": "03:47:21",
+      "s": "print-click 0 {\"clicked\":true,\"cls\":\"btn print\",\"tag\":\"LI\"}"
+    },
+    {
+      "t": "03:47:24",
+      "s": "print-diag 0 [{\"cls\":\"hegao-preview\",\"t\":\"核稿\"},{\"cls\":\"modal\",\"t\":\"设计信息\\n作品名：\\n*\\n用户名：\\n*\\n确定取消\"}]"
+    },
+    {
+      "t": "03:47:25",
+      "s": "design-info-submit {\"clicked\":true}"
+    },
+    {
+      "t": "03:47:30",
+      "s": "after-submit-diag {\"layers\":[{\"cls\":\"hegao-preview\",\"t\":\"核稿\"}],\"btns\":[{\"txt\":\"核稿\",\"vis\":true},{\"txt\":\"商用无风险\",\"vis\":true},{\"txt\":\"保存\",\"vis\":true},{\"txt\":\"色差检查\",\"vis\":true},{\"txt\":\"分享\",\"vis\":true},{\"tx"
+    },
+    {
+      "t": "03:48:11",
+      "s": "no-jiaogao-layer"
     }
   ],
   "pages": [],
