@@ -103,7 +103,7 @@ async function launch(runHeadless = false) {
 async function close() { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
 
 // ---------- 通用 ----------
-const ev = (fn) => page.evaluate(fn).catch((e) => ({ err: String(e || "").slice(0, 240) }));
+const ev = (fn, arg) => (arg === undefined ? page.evaluate(fn) : page.evaluate(fn, arg)).catch((e) => ({ err: String(e || "").slice(0, 240) }));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function waitUntil(fnEval, desc, timeoutMs, pollMs = 1500) {
   const t0 = Date.now();
@@ -231,6 +231,19 @@ async function clickByName(txt, clsRe) {
     return { clicked: false };
   }, { tx: txt, cls: clsRe || "" });
 }
+// 核稿后：订单号输入框填值（用户流程：先文字→核稿→订单号输1→点印刷）
+async function fillOrderNo(val) {
+  return ev((arg) => {
+    const inp = Array.from(document.querySelectorAll("input")).find((el) => {
+      const probe = String(el.placeholder || "") + " " + String(el.className || "") + " " + String(el.id || "");
+      return el.offsetParent && /订单号|orderNo|orderid|orderno/i.test(probe);
+    });
+    if (!inp) return { ok: false, reason: "no order input", candidates: Array.from(document.querySelectorAll("input")).filter((el) => el.offsetParent).map((el) => (String(el.placeholder || "") + "/" + String(el.className || "")).slice(0, 40)).slice(0, 12) };
+    inp.value = arg.v;
+    try { inp.dispatchEvent(new Event("input", { bubbles: true })); inp.dispatchEvent(new Event("change", { bubbles: true })); } catch (e) {}
+    return { ok: true, cls: String(inp.className).slice(0, 40), ph: inp.placeholder };
+  }, { v: String(val) });
+}
 async function stageProof() {
   evt("stage-proof");
   // 核稿
@@ -310,34 +323,26 @@ async function stagePrint() {
     return { clicked: false };
   });
   evt("design-info-submit " + JSON.stringify(d));
-  // 诊断：确定后 5s 可见层全景
-  await sleep(5000);
-  const diag2 = await ev(() => {
-    const out = [];
-    document.querySelectorAll(".layui-layer, .modal, .modal-container, [class*=hegao], .progress, [class*=check_wrap]").forEach((el) => {
-      if (!el.offsetParent) return;
-      const rc = el.getBoundingClientRect(); if (rc.width < 3) return;
-      const t = String(el.innerText || el.textContent || "").trim().slice(0, 200);
-      if (t) out.push({ cls: String(el.className).slice(0, 60), t });
-    });
-    // 顶部按钮禁用态
-    const btns = [];
-    document.querySelectorAll(".rightBtn li, .rightBtn a, #submitProduct").forEach((el) => { const tx = String(el.textContent || "").trim(); if (tx && tx.length <= 6) btns.push({ txt: tx, vis: !!el.offsetParent }); });
-    return { ok: true, layers: out, btns };
-  });
-  evt("after-submit-diag " + JSON.stringify(diag2 && { layers: diag2.layers, btns: diag2.btns }).slice(0, 900));
-  // 3) 等「提交稿件（交稿）」层
-  const w2 = await waitUntil(() => {
+  // 3) 确定后：交稿层/核稿结果可能延迟出现 → 直接进入「搜索同步+层观察」
+  //    （错误截图/生产稿/设计稿/提交稿件 任一出现即视为核稿结果面世）
+  evt("wait-proof-surfaces");
+  const proofWait = await waitUntil(() => {
     const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+    const seen = [];
     for (let i = 0; i < layers.length; i++) {
       const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
       const t = String(el.innerText || "");
-      if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果/.test(t)) return { ok: true, txt: t.slice(0, 120) };
+      if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) seen.push(t.slice(0, 100));
     }
-    return { ok: false };
-  }, "jiaogao layer", 40000);
-  if (!w2.ok) { evt("no-jiaogao-layer"); return { ok: false, reason: "no jiaogao layer" }; }
-  // 4) 点「提交稿件」（交稿层核心按钮，排除取消）
+    return seen.length ? { ok: true, seen } : { ok: false };
+  }, "proof surfaces (jiao/check/error)", 45000);
+  report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
+  evt("proof-surfaces " + JSON.stringify(report.phases.proofSurfaces));
+  // 出现核稿结果面（错误截图/生产稿/设计稿）→ 保存截图
+  if (report.phases.proofSurfaces && report.phases.proofSurfaces.some((t) => /错误截图|生产稿|设计稿/.test(t))) {
+    try { await page.screenshot({ path: path.join(P0_DIR, "proof-surfaces.png") }); report.phases.shot = { ok: true }; } catch (e) { report.phases.shot = { err: String(e) }; }
+  }
+  // 若交稿层已出现：点「提交稿件」
   await sleep(1500);
   const jt = await ev(() => {
     const all = document.querySelectorAll("button, a, .layui-layer-btn0, .modal button, .modal a");
@@ -696,6 +701,10 @@ async function main() {
     saveResume("proof", okP);
     report.phases.proofDone = !!okP;
   }
+  // 用户流程：核稿后订单号输 1，再点印刷
+  report.phases.orderNo = await fillOrderNo(1);
+  evt("order-no-filled " + JSON.stringify(report.phases.orderNo).slice(0, 200));
+  await sleep(1500);
   // 印刷
   const pr = await stagePrint();
   saveResume("print", pr);
