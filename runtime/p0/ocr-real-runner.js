@@ -263,7 +263,7 @@ async function openSiteLoginLayer() {
     return { ok: false, reason: "no site login entry" };
   });
 }
-async function bootstrapAuthSession() {
+async function bootstrapAuthSession(RUN) {
   // 站点登录会整页 reload（历史验证），故必须在创建对象前建立真实会话：
   // 用一次「印刷→设计信息→确定」触发 loginState:timeOut → 等登录弹层 → env 登录 → 校验会话
   RUN.phases.hegaoOk = await stageProofCore();
@@ -501,7 +501,7 @@ async function bootstrapAuthSession() {
     }
     // ---- 会话引导：创建对象前必须先有真实会话（登录会整页 reload, 否则 OCR 对象无法保存/提交）----
     if (USER && !(authProbe && authProbe.hasSession)) {
-      RUN.phases.authBootstrap = await bootstrapAuthSession();
+      RUN.phases.authBootstrap = await bootstrapAuthSession(RUN);
     } else {
       RUN.phases.authBootstrap = { ok: true, stage: "skip(already-auth)" };
     }
