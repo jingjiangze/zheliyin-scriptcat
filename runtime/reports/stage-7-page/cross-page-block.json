@@ -1,0 +1,36 @@
+{
+  "ts": "2026-09-18T10:33:13.903Z",
+  "stage": "STAGE-7.7-CROSS-PAGE-BLOCK",
+  "gates": {
+    "not_found": {
+      "code": "CREATE_BLOCKED_PAGE_NOT_FOUND",
+      "ok": true,
+      "createdCount": 0,
+      "zeroCreate": true
+    },
+    "wrong_page_back_current": {
+      "code": "CREATE_BLOCKED_WRONG_PAGE",
+      "ok": true,
+      "createdCount": 0,
+      "zeroCreate": true
+    },
+    "wrong_page_front_current": {
+      "code": "CREATE_BLOCKED_WRONG_PAGE",
+      "ok": true,
+      "createdCount": 0,
+      "zeroCreate": true
+    }
+  },
+  "assertions": {
+    "R0_FRONT_REPLIED": true,
+    "R0_FRONT": true,
+    "R1_BACK_REPLIED": true,
+    "R1_BACK": true,
+    "R2_FRONT_IDENTITY_STABLE": true,
+    "R4_FRONT_IDENTITY_STABLE": true,
+    "pages_inventory": true
+  },
+  "errors": [
+    "P0_GATE_CREATE 未开启：允许创建的 OK 分支不执行（避免写真实模板）；拒绝分支照常验证"
+  ]
+}

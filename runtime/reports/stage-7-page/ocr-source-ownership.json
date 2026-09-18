@@ -1,0 +1,198 @@
+{
+  "ts": "2026-09-18T10:33:13.903Z",
+  "stage": "STAGE-7.6/7.7-OCR-SOURCE-OWNERSHIP",
+  "gateCreate": false,
+  "rounds": [
+    {
+      "label": "R0_FRONT",
+      "cur": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "sideSource": "page-group.current",
+        "cc": 1,
+        "canvasId": "c0",
+        "width": 871.4999999999999,
+        "height": 530.1624999999999,
+        "pageCount": 1
+      },
+      "pages": [
+        {
+          "pageId": "canvas:c0",
+          "canvasId": "c0",
+          "index": 0,
+          "objs": 9
+        }
+      ]
+    },
+    {
+      "label": "R1_BACK",
+      "cur": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c1",
+        "side": "BACK",
+        "sideSource": "page-group.current",
+        "cc": 2,
+        "canvasId": "c1",
+        "width": 871.4999999999999,
+        "height": 530.1624999999999,
+        "pageCount": 2
+      },
+      "pages": [
+        {
+          "pageId": "canvas:c0",
+          "canvasId": "c0",
+          "index": 0,
+          "objs": 9
+        },
+        {
+          "pageId": "canvas:c1",
+          "canvasId": "c1",
+          "index": 1,
+          "objs": 9
+        }
+      ]
+    },
+    {
+      "label": "R2_FRONT",
+      "cur": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "sideSource": "page-group.current",
+        "cc": 1,
+        "canvasId": "c0",
+        "width": 871.4999999999999,
+        "height": 530.1624999999999,
+        "pageCount": 2
+      },
+      "pages": [
+        {
+          "pageId": "canvas:c0",
+          "canvasId": "c0",
+          "index": 0,
+          "objs": 9
+        },
+        {
+          "pageId": "canvas:c1",
+          "canvasId": "c1",
+          "index": 1,
+          "objs": 9
+        }
+      ]
+    },
+    {
+      "label": "R3_BACK",
+      "cur": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c1",
+        "side": "BACK",
+        "sideSource": "page-group.current",
+        "cc": 2,
+        "canvasId": "c1",
+        "width": 871.4999999999999,
+        "height": 530.1624999999999,
+        "pageCount": 2
+      },
+      "pages": [
+        {
+          "pageId": "canvas:c0",
+          "canvasId": "c0",
+          "index": 0,
+          "objs": 9
+        },
+        {
+          "pageId": "canvas:c1",
+          "canvasId": "c1",
+          "index": 1,
+          "objs": 9
+        }
+      ]
+    },
+    {
+      "label": "R4_FRONT",
+      "cur": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "sideSource": "page-group.current",
+        "cc": 1,
+        "canvasId": "c0",
+        "width": 871.4999999999999,
+        "height": 530.1624999999999,
+        "pageCount": 2
+      },
+      "pages": [
+        {
+          "pageId": "canvas:c0",
+          "canvasId": "c0",
+          "index": 0,
+          "objs": 9
+        },
+        {
+          "pageId": "canvas:c1",
+          "canvasId": "c1",
+          "index": 1,
+          "objs": 9
+        }
+      ]
+    }
+  ],
+  "gates": {
+    "not_found": {
+      "code": "CREATE_BLOCKED_PAGE_NOT_FOUND",
+      "ok": true,
+      "createdCount": 0,
+      "zeroCreate": true
+    },
+    "wrong_page_back_current": {
+      "code": "CREATE_BLOCKED_WRONG_PAGE",
+      "ok": true,
+      "createdCount": 0,
+      "zeroCreate": true
+    },
+    "wrong_page_front_current": {
+      "code": "CREATE_BLOCKED_WRONG_PAGE",
+      "ok": true,
+      "createdCount": 0,
+      "zeroCreate": true
+    }
+  },
+  "errors": [
+    "P0_GATE_CREATE 未开启：允许创建的 OK 分支不执行（避免写真实模板）；拒绝分支照常验证"
+  ],
+  "removedScript": [
+    "zheliyin-registry-1789726405660"
+  ],
+  "ready": true,
+  "inject": {
+    "ok": true
+  },
+  "assertions": {
+    "R0_FRONT_REPLIED": true,
+    "R0_FRONT": true,
+    "R1_BACK_REPLIED": true,
+    "R1_BACK": true,
+    "R2_FRONT_IDENTITY_STABLE": true,
+    "R4_FRONT_IDENTITY_STABLE": true,
+    "pages_inventory": true
+  },
+  "race": {
+    "frozenSource": {
+      "pageId": "canvas:c0",
+      "side": "FRONT",
+      "ok": true
+    },
+    "laterCurrent": {
+      "pageId": "canvas:c1",
+      "side": "BACK",
+      "ok": true
+    },
+    "frozenStable": true
+  }
+}
