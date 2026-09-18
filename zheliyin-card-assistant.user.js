@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.9.0
+// @version      0.3.10.0
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,14 +14,15 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.9.0
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.9.0
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.9.0
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.9.0
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.9.0
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.9.0
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.9.0
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.9.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.10.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.10.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.10.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.10.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.10.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.10.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.10.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.10.0
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-quality.js?v=0.3.10.0
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -42,7 +43,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.9.0";
+  const VERSION = "0.3.10.0";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -824,13 +825,25 @@
       maybeLocalFallback(img, String(res.error.errorCode || "CLOUD_ERROR"), classifyBaiduError(res.error.errorCode), (diag && diag.attempt) || "cloud-primary");
       return;
     }
-    if (!res.candidates.length) { maybeLocalFallback(img, "CLOUD_EMPTY", "empty-result", (diag && diag.attempt) || "cloud-primary"); return; }
-    emitOcrDiag(Object.assign({}, diag, { reason: null, fallback: false }));
-    ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " elapsed=" + res.meta.elapsed + "ms");
+    // Stage 7.3（OCR 稳定化 §一/§二）：Cloud 结果在进入 pipeline 前必须通过质量门。
+    // timeout/http-error/auth-error 已在上面处理；这里覆盖 empty / invalid-bbox /
+    // low-confidence / abnormal。FAIL（含部分失败有效占比不足）→ Local FALLBACK，
+    // 不让低质候选进入 TextBlock 与画布；PASS 时保留 dropped 作为诊断。
+    const cloudQa = (typeof assessOcrCandidates === "function")
+      ? assessOcrCandidates(res.candidates, { width: img.width, height: img.height })
+      : { ok: true, reasonCode: null, total: (res.candidates || []).length, kept: res.candidates || [], dropped: [] };
+    emitOcrDiag(Object.assign({}, diag, { reason: null, fallback: false, quality: { ok: cloudQa.ok, code: cloudQa.reasonCode || null, total: cloudQa.total, kept: (cloudQa.kept || []).length, dropped: (cloudQa.dropped || []).length } }));
+    if (!cloudQa.ok) {
+      ocrLog("QUALITY", "cloud quality fail code=" + (cloudQa.reasonCode || "invalid-result") + " total=" + cloudQa.total + " kept=0 reason=" + String(cloudQa.reason || "").slice(0, 120));
+      maybeLocalFallback(img, cloudQa.reasonCode === "empty-result" ? "CLOUD_EMPTY" : "CLOUD_QUALITY_FAIL", cloudQa.reasonCode || "invalid-result", (diag && diag.attempt) || "cloud-primary");
+      return;
+    }
+    const cloudKept = (cloudQa.kept && cloudQa.kept.length) ? cloudQa.kept : res.candidates;
+    ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " kept=" + cloudKept.length + " elapsed=" + res.meta.elapsed + "ms");
     // P3 边界：Baidu Provider 已是统一候选（含 bbox{x,y,width,height}），直接交给统一 Mapper（§39 解耦）
     // Stage 6.1：行级候选 → TextBlock（1 block = 1 textbox，§8）→ 统一 Mapper
     // 锁不在此释放：由 buildItemsFromOcr（ocrCreate 回复/超时/空结果）决定事务终态
-    const lineCandidates = unifyCandidates(res.candidates, { width: img.width, height: img.height });
+    const lineCandidates = unifyCandidates(cloudKept, { width: img.width, height: img.height });
     const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(lineCandidates) : (lineCandidates || []).map(oneLineBlock);
     buildItemsFromOcr(blocks, img, diag);
   }
@@ -894,9 +907,22 @@
             if (unified && unified.length && typeof aggregateLineCandidates === "function") {
               ocrLog("GROUP", "lines=" + unified.length + " y=" + unified.map((l) => Math.round(l.bbox.y || 0)).join(",") + " h=" + unified.map((l) => Math.round(l.bbox.height || 0)).join(","));
             }
+            // Stage 7.3（OCR 稳定化 §二）：本地结果同样过质量门（本地为 fallback 末端，
+            // FAIL → 终态报错，不再换路；避免垃圾候选进入画布）
+            const localQa = (typeof assessOcrCandidates === "function")
+              ? assessOcrCandidates(unified, size)
+              : { ok: true, reasonCode: null, total: (unified || []).length, kept: unified || [], dropped: [] };
+            emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: localQa.ok ? null : (localQa.reasonCode || "invalid-result"), quality: { ok: localQa.ok, code: localQa.reasonCode || null, total: localQa.total, kept: (localQa.kept || []).length, dropped: (localQa.dropped || []).length } }));
+            if (!localQa.ok) {
+              ocrRunning = false;
+              setStatus("本地识别结果未通过质量检查（" + String(localQa.reason || "invalid-result").slice(0, 80) + "），未生成文字");
+              ocrLog("ERROR", "local quality fail code=" + (localQa.reasonCode || "invalid-result") + " total=" + localQa.total + " reason=" + String(localQa.reason || "").slice(0, 120));
+              return;
+            }
+            const localKept = (localQa.kept && localQa.kept.length) ? localQa.kept : (unified || []);
             const blocks = (typeof buildTextBlocks === "function")
-              ? buildTextBlocks(unified)
-              : (unified || []).map(oneLineBlock);
+              ? buildTextBlocks(localKept)
+              : (localKept || []).map(oneLineBlock);
             buildItemsFromOcr(blocks, img, diag);
           } catch (e) {
             ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e);

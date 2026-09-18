@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+### Stage 7.3（2026-09-18）— v0.3.10.0：OCR 质量门（OCR 稳定化 §一/§二）+ 样式还原起步
+- **OCR 质量门（新模块 ocr-quality.js，@require 注入第 9 个）**：Cloud Primary 结果在进入 pipeline 前必过质量检查（empty-text / invalid-bbox / out-of-bounds / low-confidence(<0.5) / abnormal-length(>200) / abnormal-count(>200)）；全部被剔除或有效占比 <50% → FAIL → Local FALLBACK；Local 结果同样过门（末端 FAIL 为终态报错，不再换路）；PASS 时保留 dropped 诊断。整批低质候选不再被静默放过画布。
+- **诊断增强**：每次 OCR 输出 `quality:{ok, code, total, kept, dropped}`；quality fail 走既有 `{engine, attempt, fallback, reason}` DIAG。
+- **单测**：ocr-quality.test.js 14 项全 PASS；聚合 13 套件全 PASS。
+- **样式还原起步**（后续子阶段）：待 Native Font Inventory（findAllFont.do 真机取证）→ Font Resolver → 颜色还原 → Native Style v1。
+- 版本 0.3.9.0 → 0.3.10.0 同步（userscript @version/@require ×9/VERSION、manifest version_name、extension/assistant.js、README、CHANGELOG）。
+
 ### Stage 7.2（2026-09-17）— v0.3.9.0：Cloud Primary / Local Fallback（策略修正 §8.1）
 - **策略反转**：`auto` 模式由「Local 优先 → 百度 fallback」改为 **Cloud PRIMARY → Local FALLBACK**；`manual local` → 仅 Local；`manual baidu` → 仅 Cloud；manual 模式任何失败不换路（`fallback-policy.js` `FALLBACK_ABLE(LOCAL_*)` → `CLOUD_FAIL_ABLE(REASON_CODES)`，决策 action "baidu" → "local"，并输出 `engine/attempt/fallback/reasonCode` 诊断字段）。
 - **共用同一后续管线**：Cloud 与 Local 同样走 `candidate-normalizer → TextBlock → buildItemsFromOcr → Native drawText`（`buildItemsFromOcr` 增加 `diag` 参数标识 engine/attempt；`runLocalOcr` 复用原 executor 字符串，仅移除旧 local→baidu 回流）。
