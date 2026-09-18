@@ -25,10 +25,11 @@ const PROFILE = process.env.P0_PROFILE || path.join(__dirname, "..", "browser", 
 const USER = process.env.P0_LOGIN_USER || "";
 const PASS = process.env.P0_LOGIN_PASS || "";
 const PROBE_TEXT = "P0_FONT_TEST";
+const MANUAL_TEXT = "P0_MANUAL_CTRL";
 
 // ---------- CLI ----------
 const args = process.argv.slice(2);
-const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema"), adoptSession: args.includes("--adopt-session"), sessionParity: args.includes("--session-parity"), submitProbe: args.includes("--submit-probe"), relogin: args.includes("--relogin") };
+const FLAG = { fromProof: args.includes("--from-proof"), fromPrint: args.includes("--from-print"), fromCheck: args.includes("--from-check"), caseFontSchema: args.includes("--case-font-schema"), adoptSession: args.includes("--adopt-session"), sessionParity: args.includes("--session-parity"), submitProbe: args.includes("--submit-probe"), relogin: args.includes("--relogin"), controlEmpty: args.includes("--control-empty"), controlManual: args.includes("--control-manual") };
 const resumeArg = (args.find((a) => a.startsWith("--resume=")) || "").split("=")[1];
 
 // ---------- 报告 ----------
@@ -220,6 +221,23 @@ async function createProbeObject() {
     }
     return { ok: false, err: "no canvas" };
   }, { t: PROBE_TEXT });
+}
+// 对照：编辑器原生 addText（手工添加文本，boolean 语义字段）→ 服务端核稿对照
+async function createManualObject(t) {
+  evt("create-manual-object");
+  await ev((arg) => {
+    const req = window.requirejs || window.require;
+    const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+    for (let i = 0; i < vo.totalCanvasArray.length; i++) {
+      const d = vo.totalCanvasArray[i];
+      if (!(d && typeof d.addText === "function" && d.canvas)) continue;
+      d.addText(arg.t);
+      const o = d.canvas.getObjects().filter((ob) => String(ob.text || "") === arg.t)[0];
+      if (o) { try { d.canvas.setActiveObject(o); } catch (e) {} d.canvas.requestRenderAll && d.canvas.requestRenderAll(); }
+      return { ok: true, total: d.canvas.getObjects().length };
+    }
+    return { ok: false, err: "no canvas" };
+  }, { t });
 }
 async function clickByName(txt, clsRe) {
   return ev((arg) => {
@@ -792,15 +810,16 @@ async function main() {
   }
   saveResume("editor");
   // 对象存在性（画布不跨会话保留 → from-* 都补建）
+  const cText = FLAG.controlEmpty ? "" : FLAG.controlManual ? MANUAL_TEXT : PROBE_TEXT;
   const hasObj = await ev((arg) => {
     const req = window.requirejs || window.require;
     const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
     const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
-    return { ok: !!d, has: !!(d && d.canvas && d.canvas.getObjects().some((o) => String(o.text || "") === arg.t)) };
-  }, { t: PROBE_TEXT });
-  if (!(hasObj && hasObj.has)) {
+    return { ok: !!d, has: !!arg.t && !!(d && d.canvas && d.canvas.getObjects().some((o) => String(o.text || "") === arg.t)) };
+  }, { t: cText });
+  if (!(hasObj && hasObj.has) && !FLAG.controlEmpty) {
     evt("object-missing-create");
-    await createProbeObject();
+    if (FLAG.controlManual) { await createManualObject(MANUAL_TEXT); } else { await createProbeObject(); }
     saveResume("editor+object");
   }
   // 核稿阶段（from-proof 也执行：已有对象直接核稿）
@@ -822,12 +841,17 @@ async function main() {
   const sync = await searchSync(5);
   writeJson("proof-result.json", { ts: new Date().toISOString(), searchLog: sync.log, generatingHandled: sync.generatingHandled, failGoto: sync.failGoto });
   report.phases.sync = sync;
-  if (!sync.failGoto) { const d = await dialogPass(); report.phases.dialogPassAfterSync = d; }
   report.phases.proofDetails = await captureProofDetails();
+  if (!sync.failGoto) { const d = await dialogPass(); report.phases.dialogPassAfterSync = d; }
   await sleep(2000);
   // 检查阶段
   await stageCheck();
   saveResume("check", { located: report.phases.suspect && report.phases.suspect.located });
+  if (FLAG.controlEmpty || FLAG.controlManual) {
+    const previews = (report.phases.net || []).filter((n) => /imgPreviewSearch/.test(n.u)).map((n) => { try { const j = JSON.parse(n.body); return { success: j && j.success, producestate: j && j.userData && j.userData.producestate, errPage: j && j.userData && j.userData.errPage, errInfo: j && j.userData && j.userData.errInfo }; } catch (e) { return { body: String(n.body || "").slice(0, 80) }; } });
+    writeJson("control-result.json", { ts: new Date().toISOString(), mode: FLAG.controlEmpty ? "EMPTY_TEMPLATE" : "MANUAL_TEXT", previews });
+    report.phases.control = { mode: FLAG.controlEmpty ? "EMPTY_TEMPLATE" : "MANUAL_TEXT", previewCount: previews.length };
+  }
   writeSummary();
 }
 function writeSummary() {
