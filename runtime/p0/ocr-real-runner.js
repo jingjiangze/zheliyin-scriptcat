@@ -484,11 +484,13 @@ async function searchSync(maxRounds = 4) {
     // ---- 10. 核稿 → 订单号 → 印刷 → 设计信息/确定 → 等核稿结果 → 交稿 → 搜索 → 自动核稿判定 ----
     if (RUN.phases.reloadReady) {
       RUN.phases.hegaoOk = await stageProofCore();
+      if (!RUN.phases.hegaoOk) { RUN.phases.realOcrProof = "FAILED_STAGE=HEGAO"; wr("ocr-run-summary.json", RUN); await page.screenshot({ path: path.join(R, "ocr-hegao-miss.png") }).catch(() => {}); }
+      if (RUN.phases.hegaoOk) {
       RUN.phases.orderNo = await fillOrderNo(1);
       await sleep(1200);
       RUN.phases.print = await stagePrintCore();
       // 等交稿/核稿结果面（站点侧提交+自愈，最多 45s）
-      const proofSurfaces = await waitUntil(() => {
+      let proofSurfaces = await waitUntil(() => {
         const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
         for (let i = 0; i < layers.length; i++) {
           const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
@@ -513,10 +515,8 @@ async function searchSync(maxRounds = 4) {
         await ensureLogin();
         retried++;
         await waitUntil(isReadyExpr(), "editor after manual login", 60000);
-        RUN.phases.hegaoOk = RUN.phases.hegaoOk = await stageProofCore();
-        await fillOrderNo(1);
-        await sleep(1200);
-        await stagePrintCore();
+        RUN.phases.hegaoOk = await stageProofCore();
+        if (RUN.phases.hegaoOk) { await fillOrderNo(1); await sleep(1200); await stagePrintCore(); }
         proofSurfaces = await waitUntil(() => {
           const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
           for (let i = 0; i < layers.length; i++) {
@@ -531,6 +531,7 @@ async function searchSync(maxRounds = 4) {
       await clickByName("提交稿件");
       await sleep(1500);
       await searchSync(4);
+      } // end if hegaoOk gate
 
       const previews = browserNet.filter((n) => /imgPreviewSearch/.test(n.u)).map((n) => { try { const j = JSON.parse(n.body); return { success: j.success, producestate: j.userData && j.userData.producestate, errPage: j.userData && j.userData.errPage, errInfo: j.userData && j.userData.errInfo, submitBody: null }; } catch (e) { return null; } }).filter(Boolean);
       RUN.phases.previews = previews;
