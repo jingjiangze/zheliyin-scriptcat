@@ -1,44 +1,44 @@
 {
-  "ts": "2026-09-18T03:36:16.232Z",
+  "ts": "2026-09-18T04:06:05.851Z",
   "searchLog": [
     {
       "r": 0,
       "clicked": true,
-      "cls": "icon icon-search inputorderno",
-      "beforeHegao": "",
-      "afterHegao": "",
+      "cls": "search-btn",
+      "beforeHegao": null,
+      "afterHegao": null,
       "reqDelta": 1
     },
     {
       "r": 1,
       "clicked": true,
-      "cls": "icon icon-search inputorderno",
-      "beforeHegao": "",
-      "afterHegao": "",
+      "cls": "search-btn",
+      "beforeHegao": null,
+      "afterHegao": null,
       "reqDelta": 1
     },
     {
       "r": 2,
       "clicked": true,
-      "cls": "icon icon-search inputorderno",
-      "beforeHegao": "",
-      "afterHegao": "",
+      "cls": "search-btn",
+      "beforeHegao": null,
+      "afterHegao": null,
       "reqDelta": 1
     },
     {
       "r": 3,
       "clicked": true,
-      "cls": "icon icon-search inputorderno",
-      "beforeHegao": "",
-      "afterHegao": "",
+      "cls": "search-btn",
+      "beforeHegao": null,
+      "afterHegao": null,
       "reqDelta": 1
     },
     {
       "r": 4,
       "clicked": true,
-      "cls": "icon icon-search inputorderno",
-      "beforeHegao": "",
-      "afterHegao": "",
+      "cls": "search-btn",
+      "beforeHegao": null,
+      "afterHegao": null,
       "reqDelta": 1
     }
   ],

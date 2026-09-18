@@ -5,8 +5,8 @@ const fs = require("fs");
 const { chromium } = require("playwright");
 const EDITOR_URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const REPORT_PATH = path.join(__dirname, "reports", "p0-relogin-v2.json");
-const USER = "17606256193";
-const PASS = "tengyun666";
+const USER = process.env.P0_LOGIN_USER || "";
+const PASS = process.env.P0_LOGIN_PASS || "";
 
 const fillAndSubmit = () => {};
 (async () => {

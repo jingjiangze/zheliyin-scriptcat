@@ -39,7 +39,7 @@ const OUT = path.join(__dirname, "..", "reports", "p0", "debug-print.json");
         const btn = document.querySelector(".btn-register") || Array.from(document.querySelectorAll("a, button")).find((el) => { const t = String(el.textContent || "").trim(); return /登录|确定/.test(t) && el.offsetParent && el.closest(".login-tab,.register-area"); });
         if (!btn) return { ok: false };
         btn.click(); return { ok: true };
-      }, { u: "17606256193", p: "tengyun666" });
+      }, { u: process.env.P0_LOGIN_USER || "", p: process.env.P0_LOGIN_PASS || "" });
       await page.waitForTimeout(10000);
       await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
       const d2 = Date.now() + 90000;
