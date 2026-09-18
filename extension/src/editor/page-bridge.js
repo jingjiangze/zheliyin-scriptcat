@@ -57,6 +57,34 @@ function pageBridge() {
         //   —— 用编辑器原生生成器（sundry.guid）赋 multiUuid，镜像 location*/printLocation*/
         //   mediaMediaType/layerNum 等编辑器业务字段（§七/§八），并在创建前后尝试调用
         //   原生 Undo.getInstance().save()（仅使用编辑器自身 API，不伪造历史，§十三）。
+        // Stage 7.7（Page Ownership，2026-09-18）：显式 sourcePageId → 创建前硬门禁。
+        // sourcePageId === 激活页才允许创建；否则 CREATE_BLOCKED_PAGE_NOT_FOUND /
+        // CREATE_BLOCKED_PAGE_UNKNOWN / CREATE_BLOCKED_PAGE_IDENTITY_CONFLICT /
+        // CREATE_BLOCKED_WRONG_PAGE → 立即 STOP。
+        // 绝对禁止：fallback FRONT / 静默写当前激活页 / 跨页创建。
+        // 旧调用（无 pageId）保留兼容：走下方既有 Current Page Resolver（Stage 7.1 行为）。
+        const sourcePageId = event.data.pageId || null;
+        const sourceSide = event.data.side || null;
+        if (sourcePageId) {
+          const inv = buildPageInventory();
+          const known = inv.ok && (inv.pages || []).some(function (p) { return p.pageId === sourcePageId; });
+          if (!known) {
+            post("ocrCreateResult", { ok: false, code: "CREATE_BLOCKED_PAGE_NOT_FOUND", message: "OCR 结果属于未知页面（" + sourcePageId + "），已停止创建（CREATE_BLOCKED_PAGE_NOT_FOUND）。", detectedBlocks: Array.isArray(event.data.items) ? event.data.items.length : 0, createdCount: 0, created: [], failedBlockIndex: null, error: "CREATE_BLOCKED_PAGE_NOT_FOUND", editorIntegration: { mode: "page-gate-blocked", gate: { sourcePageId: sourcePageId, reason: "page not found in inventory", activePageId: null } } });
+            return;
+          }
+          const curPage = buildCurrentPageInfo();
+          const gate = validatePageOwnership(sourcePageId, curPage);
+          if (!gate.ok) {
+            post("ocrCreateResult", {
+              ok: false, code: gate.code,
+              message: "OCR 结果属于 " + sourcePageId + "，但当前激活页为 " + (curPage && curPage.ok ? curPage.pageId : ("unknown(" + ((curPage && curPage.code) || "CURRENT_PAGE_UNKNOWN") + ")")) + "，已停止跨页创建（" + gate.code + "）。请先切回源页面后再点击识别。",
+              detectedBlocks: Array.isArray(event.data.items) ? event.data.items.length : 0,
+              createdCount: 0, created: [], failedBlockIndex: null, error: gate.code,
+              editorIntegration: { mode: "page-gate-blocked", gate: { sourcePageId: sourcePageId, sourceSide: sourceSide, activePageId: curPage && curPage.pageId ? curPage.pageId : null, activeSide: curPage && curPage.side ? curPage.side : null, currentCanvasNum: curPage && curPage.currentCanvasNum != null ? curPage.currentCanvasNum : null, reason: gate.reason } }
+            });
+            return;
+          }
+        }
         // Stage 7.1：OCR 创建入口 —— 由 Current Page Resolver 判定「当前实际编辑页面」。
         // CURRENT_PAGE_UNKNOWN → 停止创建；严禁静默写入 front。
         const resolution = resolveCurrentEditorPage();
@@ -113,7 +141,7 @@ function pageBridge() {
                   if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{12,}$/.test(obj.multiUuid)) editorInteg2.uv4Total += 1;
                   try { if (it.diagnostics) obj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
                 }
-                createdNat.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: diy.canvas.getObjects().indexOf(obj), uuid: obj ? (obj.uuid || obj.multiUuid || null) : null, text: String(it.text || "").slice(0, 16) });
+                createdNat.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: diy.canvas.getObjects().indexOf(obj), uuid: obj ? (obj.uuid || obj.multiUuid || null) : null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide });
               } catch (e2) {
                 failMsg = "native item" + idx + ": " + String(e2 && e2.message || e2).slice(0, 120);
                 failedBlockIndex = idx;
@@ -146,6 +174,7 @@ function pageBridge() {
             created: createdNat,
             failedBlockIndex: failedBlockIndex,
             error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
+            pageId: sourcePageId, side: sourceSide,
             editorIntegration: editorInteg2
           });
           return;
@@ -185,7 +214,7 @@ function pageBridge() {
               // Stage 6 P0：编辑器对象模型镜像（native 字段，多数字段为审计所得 252438 真机 schema）
               try { if (mirrorEditorObjectModel(canvas, obj)) editorInteg.identityApplied += 1; } catch (eMirror) { console.warn("[zy-ocr][ocrCreate] mirror err=" + String(eMirror && eMirror.message || eMirror).slice(0, 120)); }
               if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{20,}$/.test(obj.multiUuid)) editorInteg.uv4Total += 1;
-              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16) });
+              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide });
               batch.push(obj);
             } catch (e2) {
               // §16 事务：第一个失败即终止，全量回滚本批已建对象，恢复创建前状态（created=0）
@@ -219,6 +248,7 @@ function pageBridge() {
           created: created,
           failedBlockIndex: failedBlockIndex,
           error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
+          pageId: sourcePageId, side: sourceSide,
           editorIntegration: editorInteg
         });
         return;
@@ -232,7 +262,23 @@ function pageBridge() {
       if (event.data.type === "ocrPrepare") {
         // Stage 5.5B P1：OCR 目标准备 —— 页面世界解析目标图（active→背景图→首图）、
         // 提取 element→toDataURL、返回显示几何。只读，不修改画布。
-        post("ocrPrepareResult", buildOcrPrepare());
+        // Stage 7.6（Page Ownership）：同帧回传当前 PageIdentity（page），供调用方冻结 OCR Source Page。
+        post("ocrPrepareResult", Object.assign({}, buildOcrPrepare(), { page: buildCurrentPageInfo() }));
+        return;
+      }
+      if (event.data.type === "getPages") {
+        // Stage 7.6 只读：Page 清单（动态 materialize 全量枚举，pageId 稳定身份）
+        post("getPagesResult", buildPageInventory());
+        return;
+      }
+      if (event.data.type === "getCurrentPage") {
+        // Stage 7.6 只读：当前激活页 PageIdentity（.page-group.current × currentCanvasNum 交叉 + 冲突检测）
+        post("getCurrentPageResult", buildCurrentPageInfo());
+        return;
+      }
+      if (event.data.type === "resolvePage") {
+        // Stage 7.6 只读：按 pageId 解析单页（归属验证/诊断用）
+        post("resolvePageResult", resolvePageInfo(event.data.pageId));
         return;
       }
     });
@@ -306,6 +352,87 @@ function pageBridge() {
       // 无业务 version 字段暴露（真机未观测到）→ 如实 null
       const version = (entry && entry.version) || CV.version || null;
       return { status: "ok", pageId: pageId, side: side, sideSource: sideSource, version: version, canvas: canvas, canvasDiy: canvasDiy, canvasInfo: canvasInfo, pageIndex: matchedIndex, source: matchedSource, confidence: matchedSource === "currentCanvas-identity" ? 3 : matchedSource === "canvasObjVO.currentCanvasNum" ? 2 : 1 };
+    }
+    // ---- Stage 7.6（Page Ownership，2026-09-18）：PageIdentity 只读消息与创建硬门禁（页面世界适配器）----
+    // 事实来源与 page-model.js（@require 只读核心；单测/探针权威纯函数版本）一致：
+    //   CanvasObjVO.currentCanvasNum（1 基）＋ totalCanvasArray 动态 materialize ＋ .page-group.current ＋
+    //   canvas idName 稳定身份。pageId = "canvas:" + idName（退化 "page:N"）。
+    // 铁律：禁裸数组 index 当唯一 identity；side 只允许 FRONT/BACK/UNKNOWN；多源冲突 → PAGE_IDENTITY_CONFLICT。
+    // 用户脚本世界 ≠ 页面世界，因此本边界自足实现（不依赖跨世界注入）。OCP：只读消息 + 门禁，不改创建核心。
+    function getCanvasObjVO() {
+      const req = window.requirejs || window.require;
+      const ctx = req && req.s && req.s.contexts && req.s.contexts._;
+      return (ctx && ctx.defined && ctx.defined.CanvasObjVO) || window.CanvasObjVO || null;
+    }
+    function stablePageIdentity(entry, index) {
+      const canvas = unwrapCanvas(entry) || null;
+      const idName = entry && entry.idName ? String(entry.idName) : null;
+      return {
+        pageId: idName ? "canvas:" + idName : "page:" + (Number(index) + 1),
+        pageIndex: Number(index), canvasIndex: Number(index),
+        pageName: entry && (typeof entry.pageName === "string" ? entry.pageName : (typeof entry.title === "string" ? entry.title : null)) || null,
+        canvasId: idName,
+        width: canvas ? (canvas.width || (canvas.getWidth && canvas.getWidth())) : null,
+        height: canvas ? (canvas.height || (canvas.getHeight && canvas.getHeight())) : null,
+        objectCount: canvas && typeof canvas.getObjects === "function" ? canvas.getObjects().length : null
+      };
+    }
+    function buildPageInventory() {
+      const CV = getCanvasObjVO();
+      if (!CV || !Array.isArray(CV.totalCanvasArray) || !CV.totalCanvasArray.length) {
+        return { ok: false, code: "CURRENT_PAGE_UNKNOWN", reason: "no totalCanvasArray", currentCanvasNum: CV && CV.currentCanvasNum != null ? CV.currentCanvasNum : null, pages: [] };
+      }
+      const pages = CV.totalCanvasArray.map(stablePageIdentity);
+      return { ok: true, code: "OK", currentCanvasNum: CV.currentCanvasNum != null ? CV.currentCanvasNum : null, count: pages.length, pages: pages };
+    }
+    function uiSideFromPageGroup() {
+      try {
+        const el = document.querySelector(".page-group.current");
+        const txt = el ? String(el.textContent || "").trim() : "";
+        if (/正面|front/i.test(txt)) return "FRONT";
+        if (/反面|背面|back/i.test(txt)) return "BACK";
+      } catch (e) {}
+      return null;
+    }
+    function buildCurrentPageInfo() {
+      const inv = buildPageInventory();
+      if (!inv.ok) {
+        return { ok: false, status: "unknown", code: inv.code, reason: inv.reason, pageId: null, side: "UNKNOWN", sideSource: null, currentCanvasNum: inv.currentCanvasNum, canvasId: null, canvasIndex: null, width: null, height: null, pages: [] };
+      }
+      const cc = inv.currentCanvasNum;
+      const pages = inv.pages;
+      let resolved = null;
+      if (typeof cc === "number" && cc >= 1 && cc <= pages.length) resolved = pages[cc - 1];
+      if (!resolved) {
+        return { ok: false, status: "unknown", code: "CURRENT_PAGE_UNKNOWN", reason: "currentCanvasNum out of range", pageId: null, side: "UNKNOWN", sideSource: null, currentCanvasNum: cc, canvasId: null, canvasIndex: null, width: null, height: null, pages: pages };
+      }
+      const uiSide = uiSideFromPageGroup();
+      const led = resolveCurrentEditorPage();
+      let bizSide = "UNKNOWN", bizSource = null;
+      if (led && led.side) { bizSide = led.side === "front" ? "FRONT" : led.side === "back" ? "BACK" : "UNKNOWN"; bizSource = led.sideSource || "resolver"; }
+      let side = "UNKNOWN", sideSource = null;
+      if (uiSide) { side = uiSide; sideSource = "page-group.current"; }
+      else if (bizSide !== "UNKNOWN") { side = bizSide; sideSource = bizSource; }
+      const implicit = resolved.canvasIndex === 0 ? "FRONT" : (resolved.canvasIndex === 1 ? "BACK" : "UNKNOWN");
+      if (uiSide && implicit !== "UNKNOWN" && uiSide !== implicit) {
+        return { ok: false, status: "conflict", code: "PAGE_IDENTITY_CONFLICT", reason: "page-group.current conflicts canvas index", pageId: null, side: "UNKNOWN", sideSource: null, currentCanvasNum: cc, canvasId: resolved.canvasId, canvasIndex: resolved.canvasIndex, evidence: { currentCanvasNum: cc, uiSide: uiSide, canvasId: resolved.canvasId, conflictingImplicit: implicit }, pages: pages, width: resolved.width, height: resolved.height };
+      }
+      return { ok: true, status: "ok", code: "OK", pageId: resolved.pageId, side: side, sideSource: sideSource, currentCanvasNum: cc, canvasId: resolved.canvasId, canvasIndex: resolved.canvasIndex, pageName: resolved.pageName, width: resolved.width, height: resolved.height, objectCount: resolved.objectCount, pages: pages };
+    }
+    function resolvePageInfo(pageId) {
+      const inv = buildPageInventory();
+      const hit = (inv.pages || []).filter(function (p) { return p.pageId === pageId; })[0] || null;
+      return { ok: !!hit, code: hit ? "OK" : "PAGE_NOT_FOUND", pageId: pageId || null, page: hit || null, pages: inv.pages || [] };
+    }
+    // §26 跨页硬保护：sourcePageId 必须等于激活页 pageId
+    function validatePageOwnership(sourcePageId, current) {
+      if (!sourcePageId) return { ok: false, code: "CREATE_BLOCKED_PAGE_UNKNOWN", reason: "source pageId missing" };
+      if (!current || !current.ok) {
+        const c = (current && current.code) || "CURRENT_PAGE_UNKNOWN";
+        return { ok: false, code: c === "PAGE_IDENTITY_CONFLICT" ? "CREATE_BLOCKED_PAGE_IDENTITY_CONFLICT" : "CREATE_BLOCKED_PAGE_UNKNOWN", reason: (current && current.reason) || "active page unverifiable", current: current || null };
+      }
+      if (current.pageId !== sourcePageId) return { ok: false, code: "CREATE_BLOCKED_WRONG_PAGE", reason: "OCR source page differs active page", sourcePageId: sourcePageId, activePageId: current.pageId, activeSide: current.side, current: current };
+      return { ok: true, code: "OK", pageId: sourcePageId, page: current };
     }
     // ---- Stage 6 P0：原生编辑器接入辅助（252438 真机审计所得字段 schema；仅用编辑器自身 API）----
     function getNativeUndoInstance() {
