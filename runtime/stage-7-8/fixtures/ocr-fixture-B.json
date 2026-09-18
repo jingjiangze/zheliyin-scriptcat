@@ -1,0 +1,61 @@
+{
+  "fixture": "B",
+  "spec": "§九 Fixture B",
+  "name": "title-plus-body",
+  "page": "front",
+  "width": 560,
+  "height": 320,
+  "focus": "大标题 44px + 小正文 20px×3：标题必须与正文拆成不同 TextBlock（False Merge Rate 重点）",
+  "generatedBy": "runtime/stage-7-8/fixtures/gen-fixtures.js",
+  "renderNote": "离线 SVG 源；像素 PNG 需真机浏览器 canvas fillText 光栅化（系统字体 SimHei）",
+  "blocks": [
+    {
+      "text": "星辰创意设计工作室",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 36,
+        "width": 396,
+        "height": 44
+      },
+      "fontSizePx": 44,
+      "sizeClass": "LARGE"
+    },
+    {
+      "text": "李四",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 110,
+        "width": 40,
+        "height": 20
+      },
+      "fontSizePx": 20,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "13912345678",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 150,
+        "width": 121,
+        "height": 20
+      },
+      "fontSizePx": 20,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "资深平面设计师",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 190,
+        "width": 140,
+        "height": 20
+      },
+      "fontSizePx": 20,
+      "sizeClass": "MEDIUM"
+    }
+  ]
+}

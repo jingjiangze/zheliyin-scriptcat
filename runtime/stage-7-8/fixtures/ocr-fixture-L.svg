@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="260" viewBox="0 0 560 260">
+  <rect width="560" height="260" fill="#ffffff"/>
+  <text x="40" y="90" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="30" fill="#000000">会员等级：① Ⅳ ¼ ½</text>
+  <!-- block: "会员等级：① Ⅳ ¼ ½" x=40 top=60 width=266 height=30 sizeClass=MEDIUM -->
+  <text x="40" y="180" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="30" fill="#000000">温度 25℃ 商标™®</text>
+  <!-- block: "温度 25℃ 商标™®" x=40 top=150 width=235 height=30 sizeClass=MEDIUM -->
+</svg>

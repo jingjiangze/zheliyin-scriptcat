@@ -1,0 +1,49 @@
+{
+  "fixture": "C",
+  "spec": "§九 Fixture C",
+  "name": "big-small-digits",
+  "page": "front",
+  "width": 560,
+  "height": 320,
+  "focus": "大字 44 + 小字 18 + 数字 26：三种相对字号应分别归属不同 sizeCluster",
+  "generatedBy": "runtime/stage-7-8/fixtures/gen-fixtures.js",
+  "renderNote": "离线 SVG 源；像素 PNG 需真机浏览器 canvas fillText 光栅化（系统字体 SimHei）",
+  "blocks": [
+    {
+      "text": "云端智能科技",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 36,
+        "width": 264,
+        "height": 44
+      },
+      "fontSizePx": 44,
+      "sizeClass": "LARGE"
+    },
+    {
+      "text": "王五",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 110,
+        "width": 36,
+        "height": 18
+      },
+      "fontSizePx": 18,
+      "sizeClass": "SMALL"
+    },
+    {
+      "text": "VIP 客户 2026",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 220,
+        "width": 181,
+        "height": 26
+      },
+      "fontSizePx": 26,
+      "sizeClass": "MEDIUM"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "fixture": "L",
+  "spec": "§九 Fixture L",
+  "name": "exotic-unicode",
+  "page": "front",
+  "width": 560,
+  "height": 260,
+  "focus": "非常规 Unicode：①② Ⅳ ½ ℃ ™ ®。行为按羊羊真机证据记录（§十五 不因特殊就删；emoji 非 BMP 需真机验证 DIY 行为后定级）",
+  "generatedBy": "runtime/stage-7-8/fixtures/gen-fixtures.js",
+  "renderNote": "离线 SVG 源；像素 PNG 需真机浏览器 canvas fillText 光栅化（系统字体 SimHei）",
+  "blocks": [
+    {
+      "text": "会员等级：① Ⅳ ¼ ½",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 60,
+        "width": 266,
+        "height": 30
+      },
+      "fontSizePx": 30,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "温度 25℃ 商标™®",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 150,
+        "width": 235,
+        "height": 30
+      },
+      "fontSizePx": 30,
+      "sizeClass": "MEDIUM"
+    }
+  ]
+}

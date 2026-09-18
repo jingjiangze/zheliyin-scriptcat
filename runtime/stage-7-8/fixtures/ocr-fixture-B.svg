@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="320" viewBox="0 0 560 320">
+  <rect width="560" height="320" fill="#ffffff"/>
+  <text x="40" y="80" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="44" fill="#000000">星辰创意设计工作室</text>
+  <!-- block: "星辰创意设计工作室" x=40 top=36 width=396 height=44 sizeClass=LARGE -->
+  <text x="40" y="130" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="20" fill="#000000">李四</text>
+  <!-- block: "李四" x=40 top=110 width=40 height=20 sizeClass=MEDIUM -->
+  <text x="40" y="170" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="20" fill="#000000">13912345678</text>
+  <!-- block: "13912345678" x=40 top=150 width=121 height=20 sizeClass=MEDIUM -->
+  <text x="40" y="210" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="20" fill="#000000">资深平面设计师</text>
+  <!-- block: "资深平面设计师" x=40 top=190 width=140 height=20 sizeClass=MEDIUM -->
+</svg>

@@ -1,0 +1,61 @@
+{
+  "fixture": "A",
+  "spec": "§九 Fixture A",
+  "name": "single-size",
+  "page": "front",
+  "width": 560,
+  "height": 300,
+  "focus": "单一字号：全部 32px，应稳定合成 1 个段落块（每行独立也可接受，但禁止错误跨块/丢字）",
+  "generatedBy": "runtime/stage-7-8/fixtures/gen-fixtures.js",
+  "renderNote": "离线 SVG 源；像素 PNG 需真机浏览器 canvas fillText 光栅化（系统字体 SimHei）",
+  "blocks": [
+    {
+      "text": "武汉高端科技有限公司",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 40,
+        "width": 320,
+        "height": 32
+      },
+      "fontSizePx": 32,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "张三",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 100,
+        "width": 64,
+        "height": 32
+      },
+      "fontSizePx": 32,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "13800138000",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 160,
+        "width": 194,
+        "height": 32
+      },
+      "fontSizePx": 32,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "市场部经理",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 220,
+        "width": 160,
+        "height": 32
+      },
+      "fontSizePx": 32,
+      "sizeClass": "MEDIUM"
+    }
+  ]
+}

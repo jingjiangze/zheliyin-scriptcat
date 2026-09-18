@@ -1,0 +1,49 @@
+{
+  "fixture": "K",
+  "spec": "§九 Fixture K",
+  "name": "ascii-structure",
+  "page": "front",
+  "width": 620,
+  "height": 220,
+  "focus": "英文/数字/结构字符：ABC Ltd. +86 1380-013-8000 zhang@mail.com https://www.example.com 结构不得被空格打散",
+  "generatedBy": "runtime/stage-7-8/fixtures/gen-fixtures.js",
+  "renderNote": "离线 SVG 源；像素 PNG 需真机浏览器 canvas fillText 光栅化（系统字体 SimHei）",
+  "blocks": [
+    {
+      "text": "John Zhong, Sales Manager",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 50,
+        "width": 330,
+        "height": 24
+      },
+      "fontSizePx": 24,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "Tel: +86 1380-013-8000",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 110,
+        "width": 290,
+        "height": 24
+      },
+      "fontSizePx": 24,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "E-mail: j.zhong@example.com.cn",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 170,
+        "width": 396,
+        "height": 24
+      },
+      "fontSizePx": 24,
+      "sizeClass": "MEDIUM"
+    }
+  ]
+}

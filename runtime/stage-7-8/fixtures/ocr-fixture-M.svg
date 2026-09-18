@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="200" viewBox="0 0 560 200">
+  <rect width="560" height="200" fill="#ffffff"/>
+  <text x="40" y="88" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="28" fill="#000000">联系人：赵六</text>
+  <!-- block: "联系人：赵六" x=40 top=60 width=199 height=28 sizeClass=MEDIUM -->
+  <text x="40" y="148" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="28" fill="#000000">电话：13600001111</text>
+  <!-- block: "电话：13600001111" x=40 top=120 width=284 height=28 sizeClass=MEDIUM -->
+</svg>

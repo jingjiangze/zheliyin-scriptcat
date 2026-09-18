@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="320" viewBox="0 0 560 320">
+  <rect width="560" height="320" fill="#ffffff"/>
+  <text x="40" y="80" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="44" fill="#000000">云端智能科技</text>
+  <!-- block: "云端智能科技" x=40 top=36 width=264 height=44 sizeClass=LARGE -->
+  <text x="40" y="128" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="18" fill="#000000">王五</text>
+  <!-- block: "王五" x=40 top=110 width=36 height=18 sizeClass=SMALL -->
+  <text x="40" y="246" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="26" fill="#000000">VIP 客户 2026</text>
+  <!-- block: "VIP 客户 2026" x=40 top=220 width=181 height=26 sizeClass=MEDIUM -->
+</svg>

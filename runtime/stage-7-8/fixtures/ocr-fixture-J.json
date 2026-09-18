@@ -1,0 +1,37 @@
+{
+  "fixture": "J",
+  "spec": "§九 Fixture J",
+  "name": "cjk-punctuation",
+  "page": "front",
+  "width": 560,
+  "height": 200,
+  "focus": "常见中文标点：，。！？、；：『引号』（）《》…—— 全部 SAFE 保留（§十二）",
+  "generatedBy": "runtime/stage-7-8/fixtures/gen-fixtures.js",
+  "renderNote": "离线 SVG 源；像素 PNG 需真机浏览器 canvas fillText 光栅化（系统字体 SimHei）",
+  "blocks": [
+    {
+      "text": "联系电话：13800138000；邮箱：a@b.com",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 60,
+        "width": 491,
+        "height": 26
+      },
+      "fontSizePx": 26,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "网址：www.example.com（备用）",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 120,
+        "width": 397,
+        "height": 26
+      },
+      "fontSizePx": 26,
+      "sizeClass": "MEDIUM"
+    }
+  ]
+}

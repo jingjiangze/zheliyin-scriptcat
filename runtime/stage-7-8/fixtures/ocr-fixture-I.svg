@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="240" viewBox="0 0 560 240">
+  <rect width="560" height="240" fill="#ffffff"/>
+  <text x="40" y="76" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="30" fill="#000000">★ 至尊会员专属 ★</text>
+  <!-- block: "★ 至尊会员专属 ★" x=40 top=46 width=246 height=30 sizeClass=MEDIUM -->
+  <text x="40" y="154" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="24" fill="#000000">◆●▲♥ 品质保证</text>
+  <!-- block: "◆●▲♥ 品质保证" x=40 top=130 width=162 height=24 sizeClass=MEDIUM -->
+</svg>

@@ -1,0 +1,37 @@
+{
+  "fixture": "H",
+  "spec": "§九 Fixture H",
+  "name": "stacked-different-size",
+  "page": "front",
+  "width": 560,
+  "height": 220,
+  "focus": "上下两行字号明显不同（40 / 16）：必须拆 2 个 TextBlock（§二十三/§二十七 宁拆勿合）",
+  "generatedBy": "runtime/stage-7-8/fixtures/gen-fixtures.js",
+  "renderNote": "离线 SVG 源；像素 PNG 需真机浏览器 canvas fillText 光栅化（系统字体 SimHei）",
+  "blocks": [
+    {
+      "text": "年度盛典",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 36,
+        "width": 160,
+        "height": 40
+      },
+      "fontSizePx": 40,
+      "sizeClass": "LARGE"
+    },
+    {
+      "text": "诚邀莅临指导",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 140,
+        "width": 96,
+        "height": 16
+      },
+      "fontSizePx": 16,
+      "sizeClass": "SMALL"
+    }
+  ]
+}

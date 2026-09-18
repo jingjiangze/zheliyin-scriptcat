@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="200" viewBox="0 0 560 200">
+  <rect width="560" height="200" fill="#ffffff"/>
+  <text x="40" y="94" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="34" fill="#000000">优</text>
+  <!-- block: "优" x=40 top=60 width=34 height=34 sizeClass=LARGE -->
+  <text x="82" y="94" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="34" fill="#000000">惠</text>
+  <!-- block: "惠" x=82 top=60 width=34 height=34 sizeClass=LARGE -->
+  <text x="130" y="90" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="14" fill="#000000">全场五折</text>
+  <!-- block: "全场五折" x=130 top=76 width=56 height=14 sizeClass=SMALL -->
+</svg>

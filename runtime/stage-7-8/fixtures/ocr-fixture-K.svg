@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="220" viewBox="0 0 620 220">
+  <rect width="620" height="220" fill="#ffffff"/>
+  <text x="40" y="74" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="24" fill="#000000">John Zhong, Sales Manager</text>
+  <!-- block: "John Zhong, Sales Manager" x=40 top=50 width=330 height=24 sizeClass=MEDIUM -->
+  <text x="40" y="134" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="24" fill="#000000">Tel: +86 1380-013-8000</text>
+  <!-- block: "Tel: +86 1380-013-8000" x=40 top=110 width=290 height=24 sizeClass=MEDIUM -->
+  <text x="40" y="194" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="24" fill="#000000">E-mail: j.zhong@example.com.cn</text>
+  <!-- block: "E-mail: j.zhong@example.com.cn" x=40 top=170 width=396 height=24 sizeClass=MEDIUM -->
+</svg>

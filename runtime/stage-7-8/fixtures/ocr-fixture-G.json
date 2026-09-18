@@ -1,0 +1,49 @@
+{
+  "fixture": "G",
+  "spec": "§九 Fixture G",
+  "name": "same-line-mixed-size",
+  "page": "front",
+  "width": 560,
+  "height": 200,
+  "focus": "同一水平线上大字34+小字14：该『同一行大+小』不得被粗暴合并/丢失字高差（§二十取证样本；groupWordsToLines 字高容差 0.5 行为以真机证据为准）",
+  "generatedBy": "runtime/stage-7-8/fixtures/gen-fixtures.js",
+  "renderNote": "离线 SVG 源；像素 PNG 需真机浏览器 canvas fillText 光栅化（系统字体 SimHei）",
+  "blocks": [
+    {
+      "text": "优",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 60,
+        "width": 34,
+        "height": 34
+      },
+      "fontSizePx": 34,
+      "sizeClass": "LARGE"
+    },
+    {
+      "text": "惠",
+      "page": "front",
+      "bbox": {
+        "left": 82,
+        "top": 60,
+        "width": 34,
+        "height": 34
+      },
+      "fontSizePx": 34,
+      "sizeClass": "LARGE"
+    },
+    {
+      "text": "全场五折",
+      "page": "front",
+      "bbox": {
+        "left": 130,
+        "top": 76,
+        "width": 56,
+        "height": 14
+      },
+      "fontSizePx": 14,
+      "sizeClass": "SMALL"
+    }
+  ]
+}

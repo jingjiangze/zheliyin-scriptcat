@@ -1,0 +1,37 @@
+{
+  "fixture": "M",
+  "spec": "§九 Fixture M",
+  "name": "zero-width-invisible",
+  "page": "front",
+  "width": 560,
+  "height": 200,
+  "focus": "零宽/不可见字符（​ ZWSP）：视觉上与普通文本相同，sanitizer 应移除不可见字符且不留空白（§十五 首轮审计）",
+  "generatedBy": "runtime/stage-7-8/fixtures/gen-fixtures.js",
+  "renderNote": "离线 SVG 源；像素 PNG 需真机浏览器 canvas fillText 光栅化（系统字体 SimHei）",
+  "blocks": [
+    {
+      "text": "联系​人：​赵六",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 60,
+        "width": 199,
+        "height": 28
+      },
+      "fontSizePx": 28,
+      "sizeClass": "MEDIUM"
+    },
+    {
+      "text": "电话：136​0000​1111",
+      "page": "front",
+      "bbox": {
+        "left": 40,
+        "top": 120,
+        "width": 284,
+        "height": 28
+      },
+      "fontSizePx": 28,
+      "sizeClass": "MEDIUM"
+    }
+  ]
+}

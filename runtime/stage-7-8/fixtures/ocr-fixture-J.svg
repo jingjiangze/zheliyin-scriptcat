@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="200" viewBox="0 0 560 200">
+  <rect width="560" height="200" fill="#ffffff"/>
+  <text x="40" y="86" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="26" fill="#000000">联系电话：13800138000；邮箱：a@b.com</text>
+  <!-- block: "联系电话：13800138000；邮箱：a@b.com" x=40 top=60 width=491 height=26 sizeClass=MEDIUM -->
+  <text x="40" y="146" font-family="SimHei, Microsoft YaHei, sans-serif" font-size="26" fill="#000000">网址：www.example.com（备用）</text>
+  <!-- block: "网址：www.example.com（备用）" x=40 top=120 width=397 height=26 sizeClass=MEDIUM -->
+</svg>
