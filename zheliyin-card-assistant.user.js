@@ -667,9 +667,10 @@
   // 因此画布/目标图一律改走 page-bridge（页面世界执行），禁止隔离世界直读画布。
 
   // 桥接只读调用：postMessage 请求 → 等页面 bridge 回传（Promise，支持超时）
-  // 注：仅用于只读查询（probe/getCanvasInfo/ocrPrepare）；apply/ocrCreate 走既有专用 listener，避免双响应。
+  // 注：仅用于只读查询（probe/getCanvasInfo/ocrPrepare/getCurrentPage）；apply/ocrCreate 走既有专用 listener，避免双响应。
+  // Stage 7.6：getCurrentPage —— 供 OCR Source Page 冻结（图片与页面同帧的权威来源）。
   function bridgeCall(type, timeoutMs) {
-    const replyMap = { probe: "probeResult", getCanvasInfo: "getCanvasInfoResult", ocrPrepare: "ocrPrepareResult" };
+    const replyMap = { probe: "probeResult", getCanvasInfo: "getCanvasInfoResult", ocrPrepare: "ocrPrepareResult", getCurrentPage: "getCurrentPageResult" };
     const replyType = replyMap[type] || (type + "Result");
     return new Promise((resolve) => {
       const on = (e) => {
@@ -987,6 +988,21 @@
       }
       ocrLog("PREPARING", "kind=" + prep.kind + " " + prep.width + "x" + prep.height + " dataUrl=" + prep.dataUrl.length + " chars");
       ocrTarget = { kind: prep.kind, geo: prep.geometry };
+      // Stage 7.6（Page Ownership §13/§14/§15）：冻结 OCR Source Page —— 图片与页面同帧捕获（ocrPrepare.page），
+      // 若缺省则回退 getCurrentPage；自此刻起用户如何切页，OCR 结果仍属于 sourcePageId。
+      // 无法可靠识别页面 → 停止 OCR（CURRENT_PAGE_UNKNOWN），严禁静默默认 FRONT。
+      let srcPage = (prep.page && prep.page.ok) ? prep.page : await bridgeCall("getCurrentPage", 2500);
+      if (!srcPage || !srcPage.ok || !srcPage.pageId) {
+        const pcode = (srcPage && srcPage.code) || "CURRENT_PAGE_UNKNOWN";
+        setStatus("无法确定当前图片所属页面（" + pcode + "），已停止识别。请确认当前正处于正面/背面编辑页后重试。");
+        ocrLog("ERROR", "source page unavailable srcPage=" + JSON.stringify(srcPage));
+        ocrRunning = false; ocrTarget = null;
+        return;
+      }
+      ocrTarget.pageId = srcPage.pageId;
+      ocrTarget.side = (srcPage.side === "FRONT" || srcPage.side === "BACK") ? srcPage.side : "UNKNOWN";
+      ocrTarget.pageSource = srcPage.sideSource || null;
+      ocrLog("SOURCE_PAGE", "pageId=" + srcPage.pageId + " side=" + srcPage.side + " source=" + (srcPage.sideSource || "n/a"));
       const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height };
       const mode = getOcrMode();
       if (mode === "baidu") {
@@ -1040,6 +1056,10 @@
     // 几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）。P3：只消费统一候选边界。
     const geo = ocrTarget && ocrTarget.geo;
     if (!geo) { setStatus("OCR 目标已失效，请重新识别"); ocrLog("ERROR", "ocrTarget missing"); ocrRunning = false; return; }
+    // Stage 7.6：source page 归属（ocrTarget 已在 handleOcrImage 冻结）—— 每个 item 携带 pageId/side，
+    // 由 page-bridge 在创建前做 Ownership 硬门禁（Stage 7.7）。
+    const srcPageId = (ocrTarget && ocrTarget.pageId) || null;
+    const srcSide = (ocrTarget && ocrTarget.side) || null;
     const w = geo.width, h = geo.height, sx = geo.scaleX || 1, sy = geo.scaleY || 1;
     // 背景图 left/top 可能缺失：ocrPrepare 已在页面世界用画布居中兜底（§13）
     const left = geo.left, top = geo.top;
@@ -1075,7 +1095,7 @@
       const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
-      const base = { text: b.text, blockIndex: bi, fontFamily: "思源黑体 Regular", diagnostics: diagnostics };
+      const base = { text: b.text, blockIndex: bi, fontFamily: "思源黑体 Regular", diagnostics: diagnostics, pageId: srcPageId, side: srcSide };
       // §13：textbox height 须容纳 lineCount×lineHeight（禁止只用单行 OCR bbox.height）
       const boxHeight = Math.round(textLines.length * fs * FONT_LINE_HEIGHT + 8);
       if (!angle) {
@@ -1119,7 +1139,7 @@
     };
     const fallbackTimer = setTimeout(() => { window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
     window.addEventListener("message", on);
-    window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", items: items }, location.origin);
+    window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, items: items }, location.origin);
     // 事务结束：释放 ocrTarget，避免下次识别串用旧目标
     ocrTarget = null;
   }
