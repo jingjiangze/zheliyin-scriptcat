@@ -102,9 +102,17 @@ async function ensureLogin() {
     if (!btn) return { ok: false, reason: "no login btn" };
     btn.click(); return { ok: true };
   }, { u: USER, p: PASS });
-  await sleep(8000);
-  await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
-  return true;
+  await sleep(4000);
+  // 原位等待登录层关闭（不 reload：reload 会清空未保存设计/OCR 对象）
+  let closed = false;
+  const tL = Date.now();
+  while (Date.now() - tL < 25000) {
+    const v = await ev(() => { const ua = document.querySelector("#userAccount"); return { ok: !(ua && ua.offsetParent) }; }).catch(() => ({ ok: false }));
+    if (v && v.ok) { closed = true; break; }
+    await sleep(1500);
+  }
+  await waitUntil(isReadyExpr(), "editor alive after login", 30000);
+  return closed;
 }
 async function clickByName(txt) {
   return ev(() => {
@@ -231,6 +239,29 @@ async function searchSync(maxRounds = 4) {
   return { log };
 }
 
+async function canvasTextCount() {
+  const r = await ev(() => {
+    const req = window.requirejs || window.require;
+    const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+    const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+    if (!(d && d.canvas)) return { ok: false, count: 0, texts: [] };
+    const objs = d.canvas.getObjects();
+    const texts = objs.filter((o) => typeof o.text === "string" && String(o.text).trim()).map((o) => String(o.text).trim());
+    return { ok: true, count: objs.length, textCount: texts.length, texts: texts.slice(0, 20) };
+  });
+  return (r && r.ok) ? r : { ok: false, count: 0, texts: [] };
+}
+async function openSiteLoginLayer() {
+  return ev(() => {
+    const cands = Array.from(document.querySelectorAll("a, button, span, li, div")).filter((el) => {
+      if (!el.offsetParent) return false;
+      const t = String(el.textContent || "").trim();
+      return /^登录$|^登\s*录$/.test(t) || (t.indexOf("登录") >= 0 && t.length <= 8);
+    });
+    for (const el of cands) { try { el.click(); return { ok: true, clicked: String(el.textContent || "").trim().slice(0, 12) }; } catch (e) {} }
+    return { ok: false, reason: "no site login entry" };
+  });
+}
 (async () => {
   const RUN = { ts: new Date().toISOString(), ocrRunId: null, stage: "REAL_OCR", url: EDITOR_URL, phases: {}, statusLog: [], errors: [] };
   RUN.ocrRunId = ocrRunId();
@@ -350,6 +381,36 @@ async function searchSync(maxRounds = 4) {
         if (/imgPreviewSearch|submitUserDesign|ocr|baidu/gi.test(u)) { try { rec.body = String(b || "").slice(0, 4000); } catch (e) {} }
         browserNet.push(rec);
       } catch (e) {}
+    });
+    // 页面级网络钩子（fetch/XHR 脱敏，可靠捕获 submit/loginState/imgPreview 响应体）
+    await browser.addInitScript(() => {
+      if (window.__zyPNInit) return;
+      window.__zyPNInit = true;
+      window.__p0PageNet = [];
+      const red = (x) => { try { return String(x).replace(/"(access_token|token|password|pwd|secret|cookie|authorization)"\s*:\s*"[^"]*"/gi, "$1:[R]").replace(/userId=|\/userId\/|\/user\//gi, "u=[R]"); } catch (e) { return x; } };
+      const push = (rec) => { const a = window.__p0PageNet; if (a.length < 300) a.push(rec); };
+      const of = window.fetch;
+      if (of && !of.__zyPN) {
+        window.fetch = function () {
+          const url = String(arguments[0] && arguments[0].url || arguments[0] || "");
+          const opt = arguments[1] || {};
+          if (url.indexOf("zheliyin.com") >= 0) push({ t: Date.now(), k: "fetch", m: opt.method || "GET", u: url.slice(0, 300), b: opt.body ? red(opt.body).slice(0, 4000) : null });
+          return of.apply(this, arguments).then((r) => {
+            try { if (r && r.url && (r.url.indexOf("zheliyin.com") >= 0 || r.url.indexOf("baidubce") >= 0)) { const c = r.clone(); c.text().then((t) => push({ t: Date.now(), k: "fetchR", s: r.status, u: r.url.slice(0, 300), b: red(t).slice(0, 4000) })).catch(() => {}); } } catch (e) {}
+            return r;
+          });
+        };
+        window.fetch.__zyPN = true;
+      }
+      const op_ = XMLHttpRequest.prototype.open, sp_ = XMLHttpRequest.prototype.send;
+      if (!op_.__zyPN) {
+        XMLHttpRequest.prototype.open = function (m, u) { this.__u = String(u || ""); return op_.apply(this, arguments); };
+        XMLHttpRequest.prototype.send = function (body) {
+          try { if (this.__u && this.__u.indexOf("zheliyin.com") >= 0) push({ t: Date.now(), k: "xhr", m: "XHR", u: this.__u.slice(0, 300), b: body ? red(body).slice(0, 4000) : null }); } catch (e) {}
+          return sp_.apply(this, arguments);
+        };
+        XMLHttpRequest.prototype.open.__zyPN = true;
+      }
     });
     RUN.authConfigured = !!(USER && PASS);
     // request 级捕获：submit/save/imgPreview payload 必须可判定（不依赖响应流读取）
@@ -594,125 +655,139 @@ async function searchSync(maxRounds = 4) {
     try { await page.screenshot({ path: path.join(R, "ocr-after-create.png") }); RUN.shots = ["ocr-after-create.png"]; } catch (e) {}
     await ev(() => { document.querySelectorAll("[data-p0box]").forEach((el) => el.remove()); return {}; });
 
-    // ---- 9. SAVE → RELOAD（B 快照）----
-    const saveClick = await ev(() => {
-      const el = Array.from(document.querySelectorAll("li,a,button,span")).find((x) => String(x.textContent || "").trim() === "保存" && x.offsetParent);
-      if (el) { try { el.click(); return { clicked: true }; } catch (e) { return { clicked: false, err: String(e) }; } }
-      return { clicked: false, why: "no save btn" };
-    });
-    RUN.saveClick = saveClick;
-    await sleep(4000);
-    await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
-    const w3 = await waitUntil(isReadyExpr(), "editor after reload", 90000);
-    RUN.phases.reloadReady = !!(w3 && w3.ok);
-    await sleep(2500);
-    const reloadSnap = await ev((arg) => {
-      const snap = window.__p0Snap;
-      if (typeof snap !== "function") return { ok: false, err: "__p0Snap missing (init script blocked?)" };
-      const vo = window.CanvasObjVO; const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
-      if (!(d && d.canvas)) return { ok: false, err: "no canvas" };
-      const objs = d.canvas.getObjects(); const matched = [];
-      for (const s of arg.created || []) {
-        const found = objs.find((o) => String(o.uuid || "") === String(s.uuid || "") || String(o.multiUuid || "") === String(s.multiUuid || ""));
-        if (found) matched.push(snap(found, { index: objs.indexOf(found) }));
-      }
-      // 观测补齐（§十三/§十七）：保存+刷新后「文字是否还在」必须可判 ——
-      //   身份匹配（uuid/multiUuid）失败不一定等于文字消失（后端重建可能换 uuid）。
-      //   故同时输出刷新后的全部文字对象，并按 text 做二次匹配。
-      const textsAfter = objs.filter((o) => typeof o.text === "string" && String(o.text).trim()).map((o) => snap(o, { index: objs.indexOf(o) }));
-      const wanted = (arg.created || []).map((c) => String(c.text || "").trim()).filter(Boolean);
-      const textMatched = textsAfter.filter((t) => wanted.indexOf(String(t.text || "").trim()) >= 0);
-      return { ok: true, total: objs.length, matched, textsAfter, textMatched, wanted };
-    }, { created: newTextboxes }).catch((e) => ({ err: String(e).slice(0, 200) }));
-    RUN.reloadSnapshot = reloadSnap;
-    RUN.reloadTexts = (reloadSnap && reloadSnap.textsAfter) || null;
-    RUN.phases.saveReload = {
-      identityMatched: ((reloadSnap && reloadSnap.matched) || []).length,
-      textMatched: ((reloadSnap && reloadSnap.textMatched) || []).length,
-      wanted: (reloadSnap && reloadSnap.wanted) || [],
-      verdict: !(reloadSnap && reloadSnap.ok) ? "UNKNOWN"
-        : (((reloadSnap.matched || []).length > 0) ? "PERSISTED(identity)"
-          : (((reloadSnap.textMatched || []).length > 0) ? "PERSISTED(text-only, uuid changed)" : "LOST")),
-    };
-    wr("ocr-object-B-after-reload.json", { ocrRunId: RUN.ocrRunId, reloadReady: RUN.phases.reloadReady, saveClick: RUN.saveClick, matched: (reloadSnap && reloadSnap.matched) || [], textMatched: (reloadSnap && reloadSnap.textMatched) || [], textsAfter: (reloadSnap && reloadSnap.textsAfter) || [], wanted: (reloadSnap && reloadSnap.wanted) || [], verdict: RUN.phases.saveReload.verdict });
-
-    // ---- 10. 核稿 → 订单号 → 印刷 → 设计信息/确定 → 等核稿结果 → 交稿 → 搜索 → 自动核稿判定 ----
-    if (RUN.phases.reloadReady) {
-      RUN.phases.hegaoOk = await stageProofCore();
-      if (!RUN.phases.hegaoOk) { RUN.phases.realOcrProof = "FAILED_STAGE=HEGAO"; wr("ocr-run-summary.json", RUN); await page.screenshot({ path: path.join(R, "ocr-hegao-miss.png") }).catch(() => {}); }
-      if (RUN.phases.hegaoOk) {
+    // ---- 9. AUTH FIRST：核稿闸门 → 订单号 → 印刷/设计信息/确定（触发 submit）→ AUTH 状态机 ----
+    RUN.phases.hegaoOk = await stageProofCore();
+    if (!RUN.phases.hegaoOk) { RUN.phases.realOcrProof = "FAILED_STAGE=HEGAO"; wr("ocr-run-summary.json", RUN); await page.screenshot({ path: path.join(R, "ocr-hegao-miss.png") }).catch(() => {}); }
+    if (RUN.phases.hegaoOk) {
       RUN.phases.orderNo = await fillOrderNo(1);
       await sleep(1200);
       RUN.phases.print = await stagePrintCore();
-      // 等交稿/核稿结果面（站点侧提交+自愈，最多 45s）
-      let proofSurfaces = await waitUntil(() => {
-        const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
-        for (let i = 0; i < layers.length; i++) {
-          const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
-          const t = String(el.innerText || "");
-          if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) return { ok: true, txt: t.slice(0, 80) };
-        }
-        return { ok: false };
-      }, "proof surfaces", 45000);
-      RUN.phases.proofSurfaces = proofSurfaces.ok ? proofSurfaces.data.txt : null;
-      // 登录浮层：站点自动恢复 → 手动重建（最多 2 次）
+      await sleep(3000);
+      const subHits = () => browserNet.filter((n) => /submitUserDesign/i.test(n.u));
+      const subPage = await ev(() => (window.__p0PageNet || []).filter((n) => /submitUserDesign/i.test(String(n.u || "")))).catch(() => []);
+      const lastResBody = async () => {
+        const all = subHits().filter((n) => n.k === "res" && n.body).concat(subPage.filter((n) => n.k === "fetchR" || n.k === "xhrR"));
+        const last = all[all.length - 1];
+        return last ? String(last.body || last.b || "") : null;
+      };
+      const body1 = await lastResBody();
+      const authExpired = !!body1 && /loginState\s*:\s*"?timeOut/i.test(body1);
+      RUN.phases.submitFirst = { hits: subHits().length + subPage.length, body: (body1 || "").slice(0, 200) };
+      // ---- AUTH 恢复状态机（≤2 次）：站点自愈优先 → 手动 env 登录（原位，不 reload 保对象）----
+      let recovered = !authExpired;
       let retried = 0;
-      while (!(proofSurfaces && proofSurfaces.ok) && retried < 2) {
-        const lgNow = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
-        if (!lgNow) break;
+      const persistBefore = await canvasTextCount();
+      while (!recovered && retried < 2) {
+        let lgNow = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
+        if (!lgNow) { const opened = await openSiteLoginLayer(); RUN.phases.authLayerOpenAttempt = opened; await sleep(1500); lgNow = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); }); }
+        if (!lgNow) { RUN.phases.authRecovery = "AUTH_RECOVERY_UNAVAILABLE"; break; }
         const settled = await waitUntil(() => {
           const ua = document.querySelector("#userAccount");
           if (ua && ua.offsetParent) return { ok: false };
-          const c = document.querySelector(".icon.icon-search.inputorderno, .search-btn, [class*=hegaocheck]");
-          return { ok: !!(c && c.offsetParent) };
-        }, "site auto-login settle", 30000, 2000);
-        if (settled && settled.ok) { proofSurfaces = { ok: true }; continue; }
-        await ensureLogin();
+          return { ok: true };
+        }, "auth layer close", 25000, 2000);
+        if (settled && settled.ok) { recovered = true; break; }
+        const lk = await ensureLogin();
         retried++;
-        await waitUntil(isReadyExpr(), "editor after manual login", 60000);
+        if (!lk) break;
         RUN.phases.hegaoOk = await stageProofCore();
         if (RUN.phases.hegaoOk) { await fillOrderNo(1); await sleep(1200); await stagePrintCore(); }
-        proofSurfaces = await waitUntil(() => {
+        await sleep(3000);
+        const body2 = await lastResBody();
+        if (body2 && !/loginState\s*:\s*"?timeOut/i.test(body2)) recovered = true;
+        else if (!body2 && (subHits().length + subPage.length) > 0) recovered = true;
+      }
+      RUN.phases.retried = retried;
+      RUN.phases.authRecovered = recovered;
+      const persistAfter = await canvasTextCount();
+      RUN.phases.authObjectPersistence = { before: persistBefore, after: persistAfter,
+        pass: persistAfter.count >= persistBefore.count - 1 && persistAfter.textCount >= Math.max(1, persistBefore.textCount - 1) };
+      // ---- SAVE → RELOAD（登录恢复后验证持久化）----
+      const saveClick = await ev(() => {
+        const el = Array.from(document.querySelectorAll("li,a,button,span")).find((x) => String(x.textContent || "").trim() === "保存" && x.offsetParent);
+        if (el) { try { el.click(); return { clicked: true }; } catch (e) { return { clicked: false, err: String(e) }; } }
+        return { clicked: false, why: "no save btn" };
+      });
+      RUN.saveClick = saveClick;
+      await sleep(4000);
+      await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+      const w3 = await waitUntil(isReadyExpr(), "editor after reload", 90000);
+      RUN.phases.reloadReady = !!(w3 && w3.ok);
+      await sleep(2500);
+      const reloadSnap = await ev((arg) => {
+        const snap = window.__p0Snap;
+        if (typeof snap !== "function") return { ok: false, err: "__p0Snap missing" };
+        const vo = window.CanvasObjVO; const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+        if (!(d && d.canvas)) return { ok: false, err: "no canvas" };
+        const objs = d.canvas.getObjects(); const matched = [];
+        for (const ss of arg.created || []) {
+          const found = objs.find((o) => String(o.uuid || "") === String(ss.uuid || "") || String(o.multiUuid || "") === String(ss.multiUuid || ""));
+          if (found) matched.push(snap(found, { index: objs.indexOf(found) }));
+        }
+        const textsAfter = objs.filter((o) => typeof o.text === "string" && String(o.text).trim()).map((o) => snap(o, { index: objs.indexOf(o) }));
+        const wanted = (arg.created || []).map((c) => String(c.text || "").trim()).filter(Boolean);
+        const textMatched = textsAfter.filter((t) => wanted.indexOf(String(t.text || "").trim()) >= 0);
+        return { ok: true, total: objs.length, matched, textsAfter, textMatched, wanted };
+      }, { created: newTextboxes }).catch((e) => ({ err: String(e).slice(0, 200) }));
+      RUN.reloadSnapshot = reloadSnap;
+      RUN.reloadTexts = (reloadSnap && reloadSnap.textsAfter) || null;
+      RUN.phases.saveReload = {
+        identityMatched: ((reloadSnap && reloadSnap.matched) || []).length,
+        textMatched: ((reloadSnap && reloadSnap.textMatched) || []).length,
+        wanted: (reloadSnap && reloadSnap.wanted) || [],
+        verdict: !(reloadSnap && reloadSnap.ok) ? "UNKNOWN"
+          : (((reloadSnap.matched || []).length > 0) ? "PERSISTED(identity)"
+            : (((reloadSnap.textMatched || []).length > 0) ? "PERSISTED(text-only, uuid changed)" : "LOST")),
+      };
+      wr("ocr-object-B-after-reload.json", { ocrRunId: RUN.ocrRunId, reloadReady: RUN.phases.reloadReady, saveClick: RUN.saveClick, matched: (reloadSnap && reloadSnap.matched) || [], textMatched: (reloadSnap && reloadSnap.textMatched) || [], textsAfter: (reloadSnap && reloadSnap.textsAfter) || [], wanted: (reloadSnap && reloadSnap.wanted) || [], verdict: RUN.phases.saveReload.verdict });
+    }
+
+    // ---- 10. HEGAO / PROOF（按提交请求判定入口；AUTH 未闭环则如实记录层级）----
+    {
+      const submitFired = browserNet.filter((n) => /submitUserDesign/i.test(n.u)).length;
+      RUN.phases.submitFired = submitFired;
+      const subPageN = await ev(() => (window.__p0PageNet || []).filter((n) => /submitUserDesign/i.test(String(n.u || ""))).length).catch(() => 0);
+      RUN.phases.submitFiredPage = subPageN;
+      if (RUN.phases.reloadReady && (submitFired > 0 || subPageN > 0)) {
+        const proofSurfaces = await waitUntil(() => {
           const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
           for (let i = 0; i < layers.length; i++) {
             const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
             const t = String(el.innerText || "");
-            if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) return { ok: true };
+            if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) return { ok: true, txt: t.slice(0, 80) };
           }
           return { ok: false };
-        }, "proof surfaces rebuild", 45000);
-      }
-      RUN.phases.retried = retried;
-      await clickByName("提交稿件");
-      await sleep(1500);
-      await searchSync(4);
-      } // end if hegaoOk gate
-
-      const previews = browserNet.filter((n) => /imgPreviewSearch/.test(n.u)).map((n) => { try { const j = JSON.parse(n.body); return { success: j.success, producestate: j.userData && j.userData.producestate, errPage: j.userData && j.userData.errPage, errInfo: j.userData && j.userData.errInfo, submitBody: null }; } catch (e) { return null; } }).filter(Boolean);
-      RUN.phases.previews = previews;
-      const failedCount = previews.filter((p) => p.producestate === 2 || /ERR_AUTO_CHECK/.test(String(p.errInfo || ""))).length;
-      const passCount = previews.filter((p) => p.producestate === 1).length;
-      const hasPopup = await ev(() => {
-        const ls = document.querySelectorAll(".layui-layer, .modal, .modal-container");
-        for (let i = 0; i < ls.length; i++) { if (/自动核稿失败/.test(String(ls[i].innerText || ""))) return true; }
-        return false;
-      }).catch(() => false);
-      RUN.phases.autoProofreadPopup = hasPopup;
-      RUN.phases.realOcrProof = (previews.length > 0 && failedCount === 0 && passCount > 0 && !hasPopup) ? "PASS" : "FAIL";
-      RUN.phases.proofCounts = { total: previews.length, pass: passCount, errAutoCheck: failedCount, popup: hasPopup };
-      const dSnap = await ev((arg) => {
-        const snap = window.__p0Snap;
-        if (typeof snap !== "function") return null;
-        const vo = window.CanvasObjVO; const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
-        if (!(d && d.canvas)) return null;
-        const objs = d.canvas.getObjects(); const out = [];
-        for (let i = 0; i < objs.length; i++) { const s = snap(objs[i], { index: i }); if (s && s.text) out.push(s); }
-        return out;
-      }, {}).catch(() => null);
-      wr("ocr-object-D-before-proof.json", { ocrRunId: RUN.ocrRunId, textObjs: dSnap });
-      try { await page.screenshot({ path: path.join(R, "ocr-before-proof.png") }); RUN.shots.push("ocr-before-proof.png"); } catch (e) {}
+        }, "proof surfaces", 45000);
+        RUN.phases.proofSurfaces = proofSurfaces.ok ? proofSurfaces.data.txt : null;
+        await clickByName("提交稿件");
+        await sleep(1500);
+        await searchSync(4);
+        const previews = browserNet.filter((n) => /imgPreviewSearch/.test(n.u)).map((n) => { try { const j = JSON.parse(n.body); return { success: j.success, producestate: j.userData && j.userData.producestate, errPage: j.userData && j.userData.errPage, errInfo: j.userData && j.userData.errInfo }; } catch (e) { return null; } }).filter(Boolean);
+        RUN.phases.previews = previews;
+        const failedCount = previews.filter((p) => p.producestate === 2 || /ERR_AUTO_CHECK/.test(String(p.errInfo || ""))).length;
+        const passCount = previews.filter((p) => p.producestate === 1).length;
+        const hasPopup = await ev(() => {
+          const ls = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+          for (let i = 0; i < ls.length; i++) { if (/自动核稿失败/.test(String(ls[i].innerText || ""))) return true; }
+          return false;
+        }).catch(() => false);
+        RUN.phases.autoProofreadPopup = hasPopup;
+        RUN.phases.realOcrProof = (previews.length > 0 && failedCount === 0 && passCount > 0 && !hasPopup) ? "PASS" : "FAIL";
+        RUN.phases.proofCounts = { total: previews.length, pass: passCount, errAutoCheck: failedCount, popup: hasPopup };
+        const dSnap = await ev((arg) => {
+          const snap = window.__p0Snap;
+          if (typeof snap !== "function") return null;
+          const vo = window.CanvasObjVO; const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          if (!(d && d.canvas)) return null;
+          const objs = d.canvas.getObjects(); const out = [];
+          for (let i = 0; i < objs.length; i++) { const ss = snap(objs[i], { index: i }); if (ss && ss.text) out.push(ss); }
+          return out;
+        }, {}).catch(() => null);
+        wr("ocr-object-D-before-proof.json", { ocrRunId: RUN.ocrRunId, textObjs: dSnap });
+        try { await page.screenshot({ path: path.join(R, "ocr-before-proof.png") }); RUN.shots.push("ocr-before-proof.png"); } catch (e) {}
       } else {
-      RUN.phases.realOcrProof = "SKIPPED(reload-not-ready)";
+        RUN.phases.realOcrProof = RUN.phases.reloadReady ? "FAILED_STAGE=AUTH/SUBMIT" : "SKIPPED(reload-not-ready)";
+      }
     }
 
     // ========================================================================
@@ -726,7 +801,8 @@ async function searchSync(maxRounds = 4) {
 
     // ---- AUTH：登录态（起止）+ 提交请求中的 loginState ----
     const authEnd = await ev(() => { const ua = document.querySelector("#userAccount"); return { loginLayerVisible: !!(ua && ua.offsetParent) }; }).catch(() => null);
-    const submitHits = browserNet.filter((n) => /submitUserDesign/i.test(n.u));
+    const pageSubmit = ((await ev(() => (window.__p0PageNet || []).filter((n) => /submitUserDesign/i.test(String(n.u || "")))).catch(() => [])) || []);
+    const submitHits = browserNet.filter((n) => /submitUserDesign/i.test(n.u)).concat(pageSubmit.map((n) => ({ status: n.s || null, u: n.u, body: n.b })));
     const parseSubmit = (n) => { try { return JSON.parse(String(n.body || "{}")); } catch (e) { return null; } };
     const submitParsed = submitHits.map((n) => ({ status: n.status, u: n.u, body: parseSubmit(n) }));
     const submitTimeout = submitParsed.some((x) => x.body && x.body.loginState && /timeout|time_out/i.test(String(x.body.loginState)));
