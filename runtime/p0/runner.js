@@ -374,17 +374,49 @@ async function stagePrint() {
   }, "proof surfaces (jiao/check/error)", 45000);
   report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
   evt("proof-surfaces " + JSON.stringify(report.phases.proofSurfaces));
-  // ---- 登录浮层 → 自动登录 → 重试印刷（最多 2 次）----
+  // ---- 登录浮层：优先等站点侧自动恢复(自动重登录)；恢复失败才手动登录+全流程重建(最多2次) ----
   let retried = 0;
+  const proofPred = () => {
+    const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
+    const seen = [];
+    for (let i = 0; i < layers.length; i++) {
+      const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
+      const t = String(el.innerText || "");
+      if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) seen.push(t.slice(0, 100));
+    }
+    return seen.length ? { ok: true, seen } : { ok: false };
+  };
   while (!(proofWait && proofWait.ok) && retried < 2) {
     const lgNow = await ev(() => { const ua = document.querySelector("#userAccount"); return !!(ua && ua.offsetParent); });
     if (!lgNow) break;
-    evt("login-popup-after-submit auto-login retry=" + retried);
+    // 阶段A：等待登录浮层消失 + 检查 UI（搜索/核稿区）出现 → 站点自动重登录完成
+    const settled = await waitUntil(() => {
+      const ua = document.querySelector("#userAccount");
+      if (ua && ua.offsetParent) return { ok: false };
+      const c = document.querySelector(".icon.icon-search.inputorderno, .search-btn, [class*=hegaocheck]");
+      return { ok: !!(c && c.offsetParent), el: c ? String(c.className).slice(0, 40) : null };
+    }, "site auto-login settle", 30000, 2000);
+    if (settled && settled.ok) {
+      evt("site-auto-login-settled " + ((settled.data && settled.data.el) || ""));
+      proofWait = await waitUntil(proofPred, "proof surfaces settled", 20000);
+      report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
+      evt("proof-surfaces-settled " + JSON.stringify(report.phases.proofSurfaces));
+      continue;
+    }
+    // 阶段B：站点恢复失败（浮层仍存）→ 手动登录 → 刷新重建全流程
+    evt("site-recovery-stuck manual-login try=" + retried);
     await ensureLogin();
     retried++;
+    await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+    const lk2 = await waitUntil(isReadyExpr(), "editor after manual login", 60000);
+    if (!(lk2 && lk2.ok)) { evt("SESSION_AUTH_FAILED editor-not-ready"); break; }
+    await createProbeObject();
+    await stageProof();
+    await fillOrderNo(1);
+    await sleep(1500);
     await clickByName("印刷");
-    await sleep(3000);
-    const w1b = await waitUntil(() => {
+    await sleep(1200);
+    const w2 = await waitUntil(() => {
       const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
       for (let i = 0; i < layers.length; i++) {
         const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
@@ -392,8 +424,8 @@ async function stagePrint() {
         if (/作品名|设计信息/.test(t) && /用户名/.test(t)) return { ok: true, txt: t.slice(0, 120) };
       }
       return { ok: false };
-    }, "design-info retry", 25000);
-    if (!(w1b && w1b.ok)) break;
+    }, "design-info rebuild", 20000);
+    if (!(w2 && w2.ok)) { evt("rebuild-design-info-miss"); break; }
     await ev(() => {
       const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
       let host = null;
@@ -405,28 +437,19 @@ async function stagePrint() {
       };
       setByLabel(["作品", "作品名", "workName", "名称"], "1");
       setByLabel(["用户", "用户名", "userName", "姓名"], "2");
-      setByLabel(["备注"], "p0 retry");
+      setByLabel(["备注"], "p0 rebuild");
       return { ok: true };
     });
-    await sleep(1200);
+    await sleep(600);
     await ev(() => {
       const btns = document.querySelectorAll(".layui-layer button, .layui-layer a, .layui-layer-btn0, .modal button, .modal a");
       for (let i = 0; i < btns.length; i++) { const tx = String(btns[i].textContent || "").trim(); if (/^确定$|^保存$/.test(tx)) { const host = btns[i].closest(".layui-layer, .modal, .modal-container") || document; if (/确定进行印刷|提交生产|提交制作|确认提交|确定印刷|下单/i.test(String(host.textContent || ""))) continue; try { btns[i].click(); return { clicked: true }; } catch (e) {} break; } }
       return { clicked: false };
     });
-    evt("retry-print-submitted");
-    proofWait = await waitUntil(() => {
-      const layers = document.querySelectorAll(".layui-layer, .modal, .modal-container");
-      const seen = [];
-      for (let i = 0; i < layers.length; i++) {
-        const el = layers[i]; const rc0 = el.getBoundingClientRect(); if (rc0.width === 0 && rc0.height === 0) continue;
-        const t = String(el.innerText || "");
-        if (/提交稿件（交稿）|提交稿件|顾客信息|错字检查结果|错误截图|生产稿|设计稿/.test(t)) seen.push(t.slice(0, 100));
-      }
-      return seen.length ? { ok: true, seen } : { ok: false };
-    }, "proof surfaces retry", 45000);
+    evt("rebuild-print-submitted");
+    proofWait = await waitUntil(proofPred, "proof surfaces rebuild", 45000);
     report.phases.proofSurfaces = proofWait.ok ? proofWait.data && proofWait.data.seen : null;
-    evt("proof-surfaces-retry " + JSON.stringify(report.phases.proofSurfaces));
+    evt("proof-surfaces-rebuild " + JSON.stringify(report.phases.proofSurfaces));
   }
   report.phases.retried = retried;
   // 出现核稿结果面（错误截图/生产稿/设计稿）→ 保存截图
