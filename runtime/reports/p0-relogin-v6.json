@@ -1,0 +1,193 @@
+{
+  "ts": "2026-09-18T02:54:02.572Z",
+  "stage": "P0-RELOGIN-V6",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "phases": {
+    "ready": true,
+    "jiaogaoDump": null,
+    "searchRounds": [
+      {
+        "r": 0,
+        "clicked": true,
+        "tag": "A",
+        "cls": "search-btn",
+        "tx": "搜索"
+      },
+      {
+        "r": 1,
+        "clicked": true,
+        "tag": "A",
+        "cls": "search-btn",
+        "tx": "搜索"
+      },
+      {
+        "r": 2,
+        "clicked": true,
+        "tag": "A",
+        "cls": "search-btn",
+        "tx": "搜索"
+      },
+      {
+        "r": 3,
+        "clicked": true,
+        "tag": "A",
+        "cls": "search-btn",
+        "tx": "搜索"
+      }
+    ],
+    "failLayers": [
+      {
+        "cls": "layui-layer layui-layer-page",
+        "txt": "自动核稿提醒\n自动核稿失败提醒\n\n生产文件与设计稿不一致，请仔细核对是否影响生产。可能导致原因：色差大、素材缺失或位移、文字换行或字体字号有误。\n\n注意：存在非常细微的误差，如不影响生产，可点击【标记正常】即可正常交稿。 仔细检查带红框页面，避免售后！\n\n去检查"
+      },
+      {
+        "cls": "modal",
+        "txt": "提交稿件（交稿）\n\t\t\t\t  \n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t\t\t顾客信息\n\t\t\t\t\t\n\t\t\t\t\t\t订单号：\n\t\t\t\t\t\t店铺名：\n\t\t\t\t\t\t旺旺号：\n\t\t\t\t\t\n\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t设计信息\n\t\t\t\t\t\n\t\t\t\t\t\t设计单号：\n\t\t\t\t\t\t设计信息：-\n\t\t\t\t\t\t订单价格：   设计费：申请改价\n\t\t\t\t\t\t设计需求：\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t错字检查结果：\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t展开详情\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\n\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t提交稿件\n\t\t\t\t\t取消"
+      }
+    ],
+    "saveResp": [
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+        "b": "{\"result\":true,\"loginState\":\"timeOut\"}"
+      },
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+        "b": ""
+      }
+    ]
+  },
+  "resp": [
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":\"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvkosc8DZyVo9TOoOOdYxpGTjSJqyrBoOLEciY\\nHW+3g9bVdrU1urxparXV5mcDpB0ebhocjjYWQPiAlyK1SgwzC7Y8TXnsbmqh+1U7K3JIXSQc+ajA\\nNnuDgfmCnfJ9S8MY28AjdN8ahrmPBL1S4V/GQSxX9zhmh2LLupdpqheEuQIDAQAB\"}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
+      "body": "{\"repCode\":\"0000\",\"repMsg\":null,\"repData\":{\"captchaId\":null,\"projectCode\":null,\"captchaType\":null,\"captchaOriginalPath\":null,\"captchaFontType\":null,\"captchaFontSize\":null,\"secretKey\":\"o9jXa6tnoP28UNDE\",\"originalImageBase64\":\"iVBORw0KGgoAAAANSUhEUgAAATYAAACbCAYAAADoSbctAACAAElEQVR42pS9B3Rd13Wuy/GS3GS8+97Ly01uyk21U5zEsWM7TiRLtrply3IcucROv0mcOLYae5VEiiRAgGBVYxWb2DsIgiQIEB0gGtF7Icpp6AA7gdP+989V9lnnkHbyMMYcu5zdcdZ3/jnXnGvPGVozD6NZy5T51s6nzUUoYyHGNizF+MZlairrhjMXYXD1a7i+8mUE1y1Q5k+bp9bLNqNZS9SyTGV/mcr6QPp8tTyyfrEyWZZ9ZFv3HLKNPbcc2x5XPpd5OZ5M5XO7jRxL9rHzcn32+HIuWS/7y76y3n4m6+T8Q2teV+tkXo4pn7nbyf5yTJmGeLxQ1mI1DXBbsZEs3jePFcyU+SWYyFiKqXVLcXvDm5jkdCKdzyB9EaayVmB03WKMrV+GwbSF6FkzFwPcx7dxKfrWL8L1D9ZgpuES4lOtmL3Zivh0O3CjQ5vMi021KYtPtirDVAtiE03K4pMttGZvWT7DdKsyWW/Nfu7tN85tPWsEJhoQFxuvp13jMm3c2JhYnWNmvdqmNtkm6rRxPj5Ww6lYNeerkkzWYazazCfvl9hXT2Ojep/oSKXaz07tutjoVX2ckasAt5Xjqqlr8tnDjJ/FQhUP7ud8HrfHNeviw5XKvPM97Pi8PntdMhWz16yXq9S9/SSLjVYrc59FdKQqZV0tYsbi43UPmF7P/9Mo5yfqEZ5uwL3JWkQm5V6vIlxzEv3vLMVA2lyvPbltWdqSbZ8yb9cPvP1qUhtU7UTaZtp8DL39GkYz2eYzFnnmW/26MvlcLLB2nlo/vI68Wb9ETcX8bB8jmUsUjwLp0ta5DZf7V72mODW+cQVC63Rbte3c5ZFM58gOE5veUDsL5ALpC9SFSqOXnSY3r1AbT2xazsabgJOYBZo9gYWZ7G9hIftZcFmIyLYWVmJ2WR6UbGshKJ8JhOQYsr9ci+wvx7EP0YWf+5k1e332WmVq97X/tDH5R/G+5WGPZOrzKrhyOpQ+D7518/lP4rWu5T9o9UJMr19BiC3DDQJsKusNDKfxegmxCcJsLI3XvI7nXMUvCW1g1eu8Lt67/HP4D/FtS0PfrnRc35uOoUOZCJ7YgtvFR4BgPb9orQjf6SLQHJg5UEuArcWDlUDMnWrQ6WW77v8P2DBR7zWIZLDVPWjqszoPXKkWt9Aa+6/BRUHFWtK2BoKjBNhwuTOtIHDKlck8xirVZ56NVDzchlNMrSvXU7VfZWI7tQ8hFipPLI9d1eeTbeWcsjxu1yUsTovy2mKy3bgAjscZ09MYP9Nwq06yHwe4BOCrHwTbeG3y/4z2AOTUOg226GQjZifrMSP/lymu6y/EwIE0+Nbr9iRmxYEFmtu+ZJ1t37ZNW+HhIzcsqKRNybzAS2DV/9bLXjuzEBO4yTrZRtZPbFim5qe3rlRgE5BNbXlLiQiBnJhevzRJUFmxI/NJYJMdBGzDmRoyVj3ZRq5uaN1C7wYtJOwNWZWTqrxcCMmDmtryhtrPXow9jgWOAo3zcGV/AZfd34WWhZNsawHqXq+Fmv1H2OPba7b/qFH+E0b4cOWhyj/E/iIFRbVRUY1soirjg/RnEtAb+COw+U0ENr0JPx+4j/+AoXfegn/b2+j5cDXaP1qLvhMbMHB2C/wX3kcgbxtCV3ZivGwfbtcex2zDBdxvuIhbTedwqyUb99pyEO0r1hC62YXIjU7CjErNKjOCLe6ATVsrv6AE0ZQArMnMNymLT+rl+KS2xLxe71pcwcyahpo0Ct0YjIIyEIuP1nqWtE4a0NiDaixJmSkQWOAIjCqSAUSLj1R6KkiZo5ASyqjSAZiGWmy4LAG20WSAxUNlyhS0LLgsxFLNXZ+6zUOWLVA9M9fhmkAtwvUCMQs2DTRrlf+pYrPwcsGW+plALDpak6TaksDG/+ksARYRiKn/bz1ikw0IyzEnatSzv3X"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
+      "body": "{\"data\":[{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"AD4636D5227B49399987EA16FC0FF3EA\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_01\",\"dictName\":\"姓名\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"01\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"0A6282E80B4945EBA5F45B86FB9AA576\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_16\",\"dictName\":\"姓名2\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"02\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"82DBF6FD13B14175B652C77D7CE79660\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_02\",\"dictName\":\"职务\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"03\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"74704812482841CBBFDF8CBFD9BB020A\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_17\",\"dictName\":\"职务2\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"04\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"1B6A503A48BD4A8D9978905642CE57B0\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_05\",\"dictName\":\"地址\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"05\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"855081911D75404DB448438F425AF375\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_19\",\"dictName\":\"地址2\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"06\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dict"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
+      "body": "{\"response\":{\"result\":{\"isUse\":1,\"pageNumber\":0,\"sign\":3,\"pageSize\":0,\"imageInfo\":\"assets/resource/imgs/small/MXYZ-ADBA1C98771C4BA3B9B99FB62E4C6F04.jpg\",\"shopUrl\":\"\",\"albumurl\":\"\",\"webStyleId\":3,\"wangWang\":\"\",\"webName\":\"简设计\",\"pageOffset\":0,\"id\":999,\"albumshoplogo\":\"\",\"shopAbb\":\"jsj\"},\"success\":true,\"message\":\"查询成功!\"}}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":[{\"fonttype\":1,\"fontpath\":\"MXYZ-698E3EFE9AEC4BC28C56E6C061176B9E.ttf\",\"searchword\":\"BebasNeue Bold\",\"fontpathwoff\":\"MXYZ-666BCF3451ED4753939600AD3755D39E.woff\",\"id\":708,\"fontclassify\":\"隐藏使用\",\"fontname\":\"BebasNeue Bold\",\"defaultimage\":\"MXYZ-04E88B1D84184CCDB4753C00639D7C40.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-AC75CD0AD6954047A57B6198D65D89B2.ttf\",\"searchword\":\"BebasNeue Book\",\"fontpathwoff\":\"MXYZ-D488C00136864263B69FB851CDB0DF36.woff\",\"id\":709,\"fontclassify\":\"隐藏使用\",\"fontname\":\"BebasNeue Book\",\"defaultimage\":\"MXYZ-C8795815F1D043BEA560CC5CDADC557B.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-2F3275BB42644A9CAC89FCC49CFF1CE4.ttf\",\"searchword\":\"方正兰亭黑简体\",\"fontpathwoff\":\"MXYZ-CB05E1A25A0545D7BDD07E7D6F01E473.woff\",\"id\":806,\"fontclassify\":\"比亚迪\",\"fontname\":\"方正兰亭黑简体\",\"defaultimage\":\"MXYZ-0B69967C905444099E6F85E8303F873C.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-3838D4BAF54F4830A289E4E0C4D4F58B.ttf\",\"searchword\":\"方正清刻本悦宋简体\",\"fontpathwoff\":\"MXYZ-81AA82C0A76C4CD784437F21E81AE976.woff\",\"id\":813,\"fontclassify\":\"比亚迪\",\"fontname\":\"方正清刻本悦宋简体\",\"defaultimage\":\"MXYZ-EAC1FF5F1B854A5088261C9213D9D922.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-DBE42A69B61F4FAF8BEC08610C5BF084.ttf\",\"searchword\":\"汉仪书宋体\",\"fontpathwoff\":\"MXYZ-40325393C92A4F40BA0C3C84F869B5DF.woff\",\"id\":327,\"fontclassify\":\"隐藏使用\",\"fontname\":\"汉仪书宋体\",\"defaultimage\":\"MXYZ-3B1D24BFBF1C4DCCA24FC49064A0DDEF.jpg\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-NEWMONGO5415B4341D7D4382AC304826D4754B80.ttf\",\"searchword\":\"方正黑体简体\",\"fontpathwoff\":\"MXYZ-NEWMONGOFAEF85F21A474B82995E1DCE18782C27.woff\",\"id\":248,\"fontclassify\":\"常用\",\"fontname\":\"方正黑体简体\",\"fontimage\":\"MXYZ-29FD1A8CDC8744F781A029696E42C671.png\",\"defaultimage\":\"MXYZ-79B6D58F55E34AE0BDE6305B4180056B.jpg\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-AA21B1BA6FDF4B5083E4838B4287F953.ttf\",\"searchword\":\"阿里普惠Heavy\",\"fontpathwoff\":\"MXYZ-1CD78EC75CD0473FBC282C866A8CC73B.woff\",\"id\":381,\"fontclassify\":\"隐藏使用\",\"fontname\":\"阿里普惠Heavy\",\"defaultimage\":\"MXYZ-4E3EB5EFB7DC4058843E13B8FDA3C333.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-C2BA3E16CC274EF081A03DC5A7670B4D.ttf\",\"searchword\":\"汉仪雅酷黑-95w\",\"fontpathwoff\":\"MXYZ-92BE2D28E13647C499D26CED5C748EFA.woff\",\"id\":462,\"fontclassify\":\"隐藏使用\",\"fontname\":\"汉仪雅酷黑-95w\",\"de"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
+      "body": "{\"userData\":[{\"pageNumber\":null,\"pageSize\":null,\"id\":\"500429\",\"maskId\":\"146125\",\"tmplId\":\"252937\",\"pageNo\":\"1\",\"pageName\":\"正面\",\"detail\":\"{\\\"diyName\\\":\\\"生活服务  综合  简约风\\\",\\\"templateInfo\\\":{\\\"bindingType\\\":\\\"无装订\\\",\\\"bindingHeight\\\":0,\\\"foldNum\\\":0,\\\"diyType\\\":\\\"12\\\",\\\"bleedWidth\\\":1.0,\\\"packageThick\\\":0,\\\"packageWidth\\\":0,\\\"minPage\\\":1,\\\"bleedHeight\\\":1.0,\\\"packageHeight\\\":0,\\\"name\\\":\\\"生活服务  综合  简约风\\\",\\\"width\\\":92,\\\"style\\\":\\\"\\\",\\\"theme\\\":\\\"\\\",\\\"foldType\\\":0,\\\"designModel\\\":\\\"单页模式\\\",\\\"id\\\":252937,\\\"dpi\\\":300,\\\"maxPage\\\":2,\\\"bindingWidth\\\":0,\\\"deleteSelfGroupUuid\\\":true,\\\"height\\\":56},\\\"pageList\\\":{\\\"errDesignFlag\\\":false,\\\"tshirtImagePath\\\":\\\"\\\",\\\"diyDisplayHeight\\\":365.21739130434787,\\\"diyType\\\":\\\"12\\\",\\\"bleedWidth\\\":1.0,\\\"previewImagePath\\\":\\\"MXYZ-NEWMONGOE2043208C71B4BBF96E190A1837A30F0.png\\\",\\\"minPage\\\":0,\\\"bleedHeight\\\":1.0,\\\"pageGroup\\\":true,\\\"diyWorkAreaHeight\\\":365,\\\"templateID\\\":252937,\\\"title\\\":\\\"正面\\\",\\\"UVImagePath\\\":\\\"\\\",\\\"content\\\":{\\\"diyZoom\\\":1,\\\"itemList\\\":[{\\\"maskEnable\\\":false,\\\"zdsc\\\":\\\"false\\\",\\\"isPreview\\\":true,\\\"noCutWidth\\\":\\\"\\\",\\\"media\\\":{\\\"color\\\":16777215,\\\"scopeType\\\":\\\"rect\\\",\\\"isPrimary\\\":true,\\\"mediaType\\\":\\\"shape\\\",\\\"isBG\\\":true,\\\"isFill\\\":true,\\\"appointCmyk\\\":\\\"\\\"},\\\"lowPixelFlag\\\":false,\\\"selectEnabled\\\":true,\\\"uuid\\\":\\\"undefined\\\",\\\"layer\\\":{\\\"alpha\\\":\\\"1\\\"},\\\"isDesignShape\\\":false,\\\"rightType\\\":\\\"\\\",\\\"resouceCategoryId\\\":\\\"\\\",\\\"designableArea\\\":false,\\\"multiUuid\\\":\\\"\\\",\\\"isDesign\\\":true,\\\"deleteState\\\":false,\\\"topEnable\\\":false,\\\"visible\\\":true,\\\"visitLevel\\\":1000,\\\"isDisplay\\\":false,\\\"materialDragType\\\":\\\"\\\",\\\"isComposite\\\":true,\\\"printLocation\\\":{\\\"rotation\\\":0,\\\"x\\\":-0.5,\\\"width\\\":600,\\\"y\\\":-0.5,\\\"height\\\":365.21739130434787},\\\"isEdit\\\":false,\\\"markuuid\\\":\\\"\\\",\\\"pageNumLeftUuid\\\":\\\"\\\",\\\"pageNumRightUuid\\\":\\\"\\\",\\\"location\\\":{\\\"factWidth\\\":10000,\\\"factHeight\\\":10000,\\\"rotation\\\":0,\\\"x\\\":-0.5,\\\"width\\\":600,\\\"y\\\":-0.5,\\\"height\\\":365.21739130434787},\\\"resourceType\\\":1}]},\\\"workAreaHeight\\\":56,\\\"diyDisplayWidth\\\":600,\\\"pageOrder\\\":1,\\\"warnText\\\":false,\\\"diyWorkAreaWidth\\\":600,\\\"designModel\\\":\\\"单页\\\",\\\"id\\\":500429,\\\"workAreaWidth\\\":92,\\\"maxPage\\\":0,\\\"resourceType\\\":\\\"\\\"},\\\"hyId\\\":\\\"\\\"}\",\"design\":null,\"createDate\":\"2026-03-03 11:23:33\",\"o"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/previewCheckForBase64.do",
+      "body": "{\"success\":true,\"message\":\"成功\",\"userData\":1065368}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+      "body": "{\"success\":true,\"message\":\"1#\",\"userData\":[\"\",\"\"]}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+      "body": "{\"data\":\"\",\"status\":\"error\"}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/getImgInfos.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":{\"diyType\":\"print\",\"diyName\":\"1\",\"templateInfo\":{\"bindingHeight\":0,\"foldNum\":0,\"diyType\":\"12\",\"packageThick\":0,\"packageWidth\":0,\"designModelPreviewBack\":\"\",\"finalDimension\":\"undefinedmm\",\"startenhancesize\":\"1\",\"theme\":\"\",\"foldType\":0,\"id\":252937,\"dpi\":300,\"maxPage\":2,\"bindingWidth\":0,\"deleteSelfGroupUuid\":true,\"height\":56,\"bindingType\":\"无装订\",\"saveType\":\"submit\",\"bleedWidth\":1,\"minPage\":1,\"bleedHeight\":1,\"designModelPreview\":\"\",\"printingtype\":\"pdf\",\"designerGoodsId\":\"252438\",\"packageHeight\":0,\"balloonInfor\":\"p0 v6\",\"colorspace\":\"cmyk\",\"name\":\"生活服务  综合  简约风\",\"width\":92,\"handbagpreview\":\"\",\"style\":\"\",\"designModel\":\"单页模式\"},\"newUpgrade\":true,\"pageList\":[{\"errDesignFlag\":false,\"tshirtImagePath\":\"\",\"diyDisplayHeight\":365,\"diyType\":\"12\",\"bleedWidth\":1,\"previewImagePath\":\"MXYZ-NEWMONGOE2043208C71B4BBF96E190A1837A30F0.png\",\"minPage\":0,\"bleedHeight\":1,\"pageGroup\":true,\"diyWorkAreaHeight\":365,\"templateID\":252937,\"title\":\"正面\",\"UVImagePath\":\"\",\"content\":{\"diyZoom\":1,\"itemList\":[{\"maskEnable\":false,\"zdsc\":\"false\",\"isPreview\":true,\"noCutWidth\":\"\",\"media\":{\"color\":16777215,\"scopeType\":\"rect\",\"isPrimary\":true,\"mediaType\":\"shape\",\"isBG\":true,\"isFill\":true,\"appointCmyk\":\"\"},\"lowPixelFlag\":false,\"selectEnabled\":true,\"uuid\":\"undefined\",\"layer\":{\"alpha\":\"1\"},\"isDesignShape\":false,\"rightType\":\"\",\"resouceCategoryId\":\"\",\"designableArea\":false,\"multiUuid\":\"30bc5c0e-5d17-4262-9768-e2fad39f1d77\",\"isDesign\":true,\"deleteState\":false,\"topEnable\":false,\"visible\":true,\"visitLevel\":1000,\"isDisplay\":false,\"materialDragType\":\"\",\"isComposite\":true,\"printLocation\":{\"rotation\":0,\"x\":-0.5,\"width\":600,\"y\":-0.5,\"height\":365},\"isEdit\":false,\"markuuid\":\"\",\"pageNumLeftUuid\":\"\",\"pageNumRightUuid\":\"\",\"location\":{\"factWidth\":10000,\"factHeight\":10000,\"rotation\":0,\"x\":-0.5,\"width\":600,\"y\":-0.5,\"height\":365},\"resourceType\":1},{\"maskEnable\":0,\"zdsc\":\"false\",\"isPreview\":0,\"noCutWidth\":\"\",\"media\":{\"lineSpace\":1.3,\"imgPath\":\"\",\"lineIdType\":\"0\",\"pageNumLeftUuid\":\"\",\"pageNumRightUuid\":\"\",\"mediaType\":\"text\",\"text\":\"P0_V6\",\"charSpace\":\"0\",\"appointCmyk_specialObj\":\"\",\"isBG\":0,\"font\":{\"backgroundColor\":\"\",\"overprintName\":\"false\",\"textDecoration\":\"normal\",\"isHorizontal\":1,\"isBold\":f"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+      "body": "{\"result\":true,\"loginState\":\"timeOut\"}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/checkRedisLoginVerify.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":false}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/userLogin.do",
+      "body": "{\"success\":true,\"message\":\"17606256193\",\"userData\":{\"teamId\":\"\"}}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+      "body": "{\"data\":\"\",\"status\":\"error\"}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+      "body": "{\"success\":true,\"message\":\"1#\",\"userData\":[\"\",\"\"]}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/getImgInfos.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":{\"diyType\":\"print\",\"diyName\":\"1\",\"templateInfo\":{\"bindingHeight\":0,\"foldNum\":0,\"diyType\":\"12\",\"packageThick\":0,\"packageWidth\":0,\"designModelPreviewBack\":\"\",\"finalDimension\":\"undefinedmm\",\"startenhancesize\":\"1\",\"theme\":\"\",\"foldType\":0,\"id\":252937,\"dpi\":300,\"maxPage\":2,\"bindingWidth\":0,\"deleteSelfGroupUuid\":true,\"height\":56,\"bindingType\":\"无装订\",\"saveType\":\"submit\",\"bleedWidth\":1,\"minPage\":1,\"bleedHeight\":1,\"designModelPreview\":\"\",\"printingtype\":\"pdf\",\"designerGoodsId\":\"252438\",\"packageHeight\":0,\"balloonInfor\":\"p0 v6\",\"colorspace\":\"cmyk\",\"name\":\"生活服务  综合  简约风\",\"width\":92,\"handbagpreview\":\"\",\"style\":\"\",\"designModel\":\"单页模式\"},\"newUpgrade\":true,\"pageList\":[{\"errDesignFlag\":false,\"tshirtImagePath\":\"\",\"diyDisplayHeight\":365,\"diyType\":\"12\",\"bleedWidth\":1,\"previewImagePath\":\"MXYZ-NEWMONGOE2043208C71B4BBF96E190A1837A30F0.png\",\"minPage\":0,\"bleedHeight\":1,\"pageGroup\":true,\"diyWorkAreaHeight\":365,\"templateID\":252937,\"title\":\"正面\",\"UVImagePath\":\"\",\"content\":{\"diyZoom\":1,\"itemList\":[{\"maskEnable\":false,\"zdsc\":\"false\",\"isPreview\":true,\"noCutWidth\":\"\",\"media\":{\"color\":16777215,\"scopeType\":\"rect\",\"isPrimary\":true,\"mediaType\":\"shape\",\"isBG\":true,\"isFill\":true,\"appointCmyk\":\"\"},\"lowPixelFlag\":false,\"selectEnabled\":true,\"uuid\":\"undefined\",\"layer\":{\"alpha\":\"1\"},\"isDesignShape\":false,\"rightType\":\"\",\"resouceCategoryId\":\"\",\"designableArea\":false,\"multiUuid\":\"30bc5c0e-5d17-4262-9768-e2fad39f1d77\",\"isDesign\":true,\"deleteState\":false,\"topEnable\":false,\"visible\":true,\"visitLevel\":1000,\"isDisplay\":false,\"materialDragType\":\"\",\"isComposite\":true,\"printLocation\":{\"rotation\":0,\"x\":-0.5,\"width\":600,\"y\":-0.5,\"height\":365},\"isEdit\":false,\"markuuid\":\"\",\"pageNumLeftUuid\":\"\",\"pageNumRightUuid\":\"\",\"location\":{\"factWidth\":10000,\"factHeight\":10000,\"rotation\":0,\"x\":-0.5,\"width\":600,\"y\":-0.5,\"height\":365},\"resourceType\":1},{\"maskEnable\":0,\"zdsc\":\"false\",\"isPreview\":0,\"noCutWidth\":\"\",\"media\":{\"lineSpace\":1.3,\"imgPath\":\"\",\"lineIdType\":\"0\",\"pageNumLeftUuid\":\"\",\"pageNumRightUuid\":\"\",\"mediaType\":\"text\",\"text\":\"P0_V6\",\"charSpace\":\"0\",\"appointCmyk_specialObj\":\"\",\"isBG\":0,\"font\":{\"backgroundColor\":\"\",\"overprintName\":\"false\",\"textDecoration\":\"normal\",\"isHorizontal\":1,\"isBold\":f"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+      "body": ""
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":\"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvkosc8DZyVo9TOoOOdYxpGTjSJqyrBoOLEciY\\nHW+3g9bVdrU1urxparXV5mcDpB0ebhocjjYWQPiAlyK1SgwzC7Y8TXnsbmqh+1U7K3JIXSQc+ajA\\nNnuDgfmCnfJ9S8MY28AjdN8ahrmPBL1S4V/GQSxX9zhmh2LLupdpqheEuQIDAQAB\"}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb//captcha/get.do",
+      "body": "{\"repCode\":\"0000\",\"repMsg\":null,\"repData\":{\"captchaId\":null,\"projectCode\":null,\"captchaType\":null,\"captchaOriginalPath\":null,\"captchaFontType\":null,\"captchaFontSize\":null,\"secretKey\":\"1CGQG0MfGl7ULxsj\",\"originalImageBase64\":\"iVBORw0KGgoAAAANSUhEUgAAATYAAACbCAYAAADoSbctAACAAElEQVR42rS8dXhW17r13SPv2VqnLRaIB+IJcXdXAsESCCGBCHF3TwjumgRCcHd3KK6lLfUWWpx4grb8vns9od3t7t77nPc91/fHuNZac8mz1j3nHHOMKc9rX7+3kj3Gu7FpbOE/TjUTuG0b9/b346dtf+To9jGELPqSIWXHeDt4CnYNLeitAd3VYNbQSr/gWgarReOlnohPvxScB6ZhrZeJpXYmrhpZ+PXPwL9fKu5qiVjrZhI6YS9pM0/iNSaGDWtnsXvNLIpys9i26wBd3a10dd6ivfsOnU/u0trxPd1P79GpHD/uSet6el+O78t1gg4FD1Xo7njE43ZBWwtPBM9aBW0PeN52mx9bb/Oy5R4vH9yl84tPOLxoGp0fn+BZ+10eyzP+GZ7K8551dbDx4C5GZi2mbEUzM9ffZ3LBDvQHxWMzKAM7jXT55mxc1HNeIVe1dX0FZd9Z438P5Tne/bPx6p+LZ7983PsX4KpWhOvAYhxk30m9CIeBeTiqZ+M0MBc39UJcJd1tQCEuku4kz3DQypTzWZKWg+eALHlWGj5qyYIEPNRicewzDst3wrF6OxC7twKwfzMAh9cDsX89GGuB1TsjsBsQja3mJPnuNOx0srDSycBS9h01MnGTOLgPlHeV33fSyFX9pvP/35C4eAzIxkN+21kjG3vNbBy0s+Tbkwl7N4EdoVvZ47WaCQPj8Xh/BOkjZlKY2ihlbg0VRRtoWvwhO5o+YtPSq8wqPkpF+k5KkjdRnr6FktT1grXkJDSQGr2AjJgFlKQspyJrDSVpqynL2CDbdRSmrCJl/EIigysYMySHyRoZ1OiXUGZexGTfUm7cfMqOTx6x6up91txoZ9NXnWz/9gUlx79k6NwNOPml4fxWGEHvJ+CvliP1KEfiKfml+c9hq5WtqmM2mpk4SJ46DczCRe5xVJN6N0D5fjmWNCVfnNQzZF/Jn0zJ50zc+2bg1S8bb7Vcya903DSlfg5MwvIv4Xj8ZQQT+yRQY1LCfOtqppsWUaSbQ4pWHEN7B0rZ8yc3eAb1SUdZHnWSjeMusGnsGZomHGR99GG2jT3GrjGCiCOsGbWdmaF15AdNJztkCgUhUykMmUaWdyVWbwZi9kYo1n3GSx6mSF3JknpUgM2AfBx1lO+LZ8iA0UQFlrN/9Rdc29/Jld0dXNnTzjXBpf3tnDvQztW9cry7hbMHWjm/5TY7UnZwcsEFttYe4LWOP87kiHoD3vNu8Z8nHxK+fhcPdg7mxZY/s25fDA71X6AXNwfThKV4L/wKx+VdmKx6hv7GZ5gsbkbddxYm/cbi3mcStn1jMZTCr6MRha7GWAYPjMBQYKwewWDN8WgapGAXXIyt30iaVs5m25q5VFSXMLehgdYnD2nrvEO7kElLWzNPHnfT2dlOR0dbz1bSO7o7aRE0d3XR0tlFa2e3nH9MV9tjHrc+5kmLgifynCc0K9d1t8n1bXJdJx3t3UJ8HTxpvsdPnQ942trJ05buf47mLl7INdcuX8Ro0FAsdAux1VEIIh57jQQcNZNw0kxTEZsKUqCc/hEUsvk7OCqF7v8C9nKPhVYuVgIHdaVA5gm5KQU1Q4gqTRoRIRftZOz0JmMrW1shXAd5J9cBeXj2z8NXKot/30w8+wrxDhQS1M5liGYc+u+FYPOuFyN7+1IwIJQG/fHstJ7IcZdkTjmncMY1g8P2SWyziWOx8WjS33Ni2B+McHrTG6d+YyQWE7HTTVX9nlK5lErloiaFdEDm//U3/r9A9ZtKZVbr2beTimynmY5j3wSG90um0Wclue9Oxv5PvqQNnUK1kFpZWgNzSzdxYd9tDm36nMUz9zOjYhfTc3dTlrSOymRBympK4pcR5ZtPWfwilpZvEdKrJ9QnnWDvDPLTVlAgzypOXUl52kqqZL8qWUgvvYGC5Drihk9hjEs"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":{\"orderType\":\"p\",\"showName\":\"名片（生产尺寸：92*56 模板ID：252438 印刷格式:PDF CMYK ）\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iASAAMAAAHvUa9seE978.png\",\"previewImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-eAFAlHAAAfO11hFy4973.png\"},{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iAAW1fAAAHvUa9seE352.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"printWidth\":\"92\",\"addInfo\":\"{\\\"colorspace\\\":\\\"cmyk\\\",\\\"webSign\\\":{},\\\"printingtype\\\":\\\"pdf\\\",\\\"workName\\\":\\\"1\\\",\\\"userName\\\":\\\"2\\\",\\\"remarkInfor\\\":\\\"p0 v6\\\"}\",\"producestate\":1,\"checkToken\":\"\",\"printHeight\":\"56\",\"designId\":20423480,\"tbOrderNo\":null,\"isMobile\":\"0\",\"orignType\":999,\"typename\":\"名片\"}}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/tool/queryDesignInfo.do?id=20423480",
+      "body": "{\"success\":true,\"message\":null,\"userData\":[{\"hasAfterProcess\":false,\"personflag\":false,\"page\":0,\"overprintStroke\":false},{\"hasAfterProcess\":false,\"personflag\":false,\"page\":1,\"overprintStroke\":false}]}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
+      "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iASAAMAAAHvUa9seE978.png\",\"previewImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-eAFAlHAAAfO11hFy4973.png\"},{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iAAW1fAAAHvUa9seE352.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20423480,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
+      "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iASAAMAAAHvUa9seE978.png\",\"previewImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-eAFAlHAAAfO11hFy4973.png\"},{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iAAW1fAAAHvUa9seE352.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20423480,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
+      "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iASAAMAAAHvUa9seE978.png\",\"previewImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-eAFAlHAAAfO11hFy4973.png\"},{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iAAW1fAAAHvUa9seE352.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20423480,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
+      "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iASAAMAAAHvUa9seE978.png\",\"previewImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-eAFAlHAAAfO11hFy4973.png\"},{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iAAW1fAAAHvUa9seE352.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20423480,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/tool/imgPreviewSearch.do",
+      "body": "{\"success\":false,\"message\":\"自动核稿发现问题！\",\"userData\":{\"errInfo\":\"{\\\"ErrMaterialsTYEP\\\":\\\"系统自动核稿发现异常！\\\",\\\"ErrMsg\\\":\\\"\\\",\\\"ErrPath\\\":\\\"\\\",\\\"errShotScreens\\\":\\\"\\\",\\\"ErrCode\\\":\\\"ERR_AUTO_CHECK\\\",\\\"ErrDetailMsg\\\":\\\"\\\",\\\"ErrItemUUID\\\":\\\"\\\",\\\"ErrMaterials\\\":\\\"\\\"}\",\"data\":[{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iASAAMAAAHvUa9seE978.png\",\"previewImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-eAFAlHAAAfO11hFy4973.png\"},{\"productImg\":\"printdiy1/M00/B1/00/o4YBAGqsp-iAAW1fAAAHvUa9seE352.png\",\"previewImg\":\"MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png\"}],\"tmplName\":\"名片-新横版常规（92*56）\",\"errMsg\":\"自动核稿发现问题\",\"designId\":20423480,\"isMobile\":\"0\",\"producestate\":2,\"errPage\":\"第1页\"}}"
+    }
+  ],
+  "events": [],
+  "errors": []
+}

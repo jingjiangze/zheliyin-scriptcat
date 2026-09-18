@@ -1,0 +1,566 @@
+{
+  "ts": "2026-09-18T02:56:31.052Z",
+  "stage": "P0-RELOGIN-V7",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "phases": {
+    "ready": true,
+    "pages": [],
+    "activeUrl": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+    "checkPageDump": {
+      "title": "智能设计定制未来",
+      "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "body": "文件 \n设置 \n背景色  重置\n清空画布\n自由绘制\n 核稿 \n  商用无风险 保存  印前核对 分享  印刷\n\n搜索\n\n模板\n\n文字\n\n素材\n\n背景\n\n上传\n\n版式\n\n工具箱\n\n快捷键\n\n帮助\n官方素材\n我的素材\n形状\n线条\n图标和素材\n标志\n花纹\n免抠素材\n标题\n电商\n相框\n版权照片\n版权素材\n节日素材\n返回\n返回\n亮度\n对比度\n色调\n饱和度\n模糊\n负片\n\n像素不足\n\n103%\n网格\n辅助线\n安全线\n预览\n>\n\n常用素材\n\n页面\n图层\n正面\n背面\n常用素材\n相框素材\n矢量素材\n账户登录\n确定",
+      "inputs": [
+        {
+          "id": "pageWidth",
+          "cls": "input",
+          "ph": ""
+        },
+        {
+          "id": "pageHeight",
+          "cls": "input",
+          "ph": ""
+        },
+        {
+          "id": "bleedLine",
+          "cls": "input",
+          "ph": ""
+        },
+        {
+          "id": "",
+          "cls": "",
+          "ph": ""
+        },
+        {
+          "id": "",
+          "cls": "",
+          "ph": "请输入订单号"
+        },
+        {
+          "id": "",
+          "cls": "",
+          "ph": "请输入素材关键字"
+        },
+        {
+          "id": "brValue",
+          "cls": "sliderValue r",
+          "ph": ""
+        },
+        {
+          "id": "coValue",
+          "cls": "sliderValue r",
+          "ph": ""
+        },
+        {
+          "id": "hueValue",
+          "cls": "sliderValue r",
+          "ph": ""
+        },
+        {
+          "id": "saValue",
+          "cls": "sliderValue r",
+          "ph": ""
+        },
+        {
+          "id": "blValue",
+          "cls": "sliderValue r",
+          "ph": ""
+        },
+        {
+          "id": "neValue",
+          "cls": "sliderValue r",
+          "ph": ""
+        },
+        {
+          "id": "",
+          "cls": "",
+          "ph": ""
+        },
+        {
+          "id": "",
+          "cls": "",
+          "ph": ""
+        },
+        {
+          "id": "userAccount",
+          "cls": "",
+          "ph": "请输入注册时的手机号"
+        },
+        {
+          "id": "userPassword",
+          "cls": "",
+          "ph": "请输入密码"
+        },
+        {
+          "id": "copyContent",
+          "cls": "",
+          "ph": ""
+        }
+      ],
+      "btns": [
+        {
+          "tag": "SPAN",
+          "tx": "abcdefghijklmnop",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "印刷尺寸:",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "*",
+          "cls": "unit"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "mm",
+          "cls": "unit"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "出血尺寸:",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "mm",
+          "cls": "unit"
+        },
+        {
+          "tag": "I",
+          "tx": "出血线",
+          "cls": "icon-blood"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "出血线",
+          "cls": ""
+        },
+        {
+          "tag": "I",
+          "tx": "参考线",
+          "cls": "icon-guide-hidden"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "参考线",
+          "cls": ""
+        },
+        {
+          "tag": "I",
+          "tx": "缩略图",
+          "cls": "icon-thum-hidden"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "缩略图",
+          "cls": ""
+        },
+        {
+          "tag": "I",
+          "tx": "改尺寸",
+          "cls": "icon-chicun f14"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "改尺寸",
+          "cls": ""
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "icon-chehui"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "icon-recovery"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "背景色",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "color-item"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "重置",
+          "cls": "resetBack"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon icon-clear"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "清空画布",
+          "cls": ""
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon icon-huabi"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "自由绘制",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "shape-img"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon  icon-draw-rect"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "shape-img"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon  icon-draw-circle"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "shape-img"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon  icon-draw-line"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "shape-img"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon  icon-draw-triangle"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "连续绘制(按shift提示角度)",
+          "cls": ""
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon icon-tupiancaozuo"
+        },
+        {
+          "tag": "A",
+          "tx": "",
+          "cls": "icon icon-search inputorderno"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "customer-info"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "shop-info"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "remark-info"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon icon-tongguo"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon icon-baocun"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon icon-hedui"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "色差检查",
+          "cls": "tipthird hover-tips"
+        },
+        {
+          "tag": "A",
+          "tx": "色差检查",
+          "cls": ""
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "diyicon icon-fenxiang"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "icon-preview"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "icon-template1"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "icon-text1"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "icon-material1"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "icon-bg1"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "icon-upload1"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "icon-format1"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "",
+          "cls": "icon-hold-all1"
+        },
+        {
+          "tag": "I",
+          "tx": "",
+          "cls": "icon-keyboard"
+        },
+        {
+          "tag": "SPAN",
+          "tx": "← ↑ → ↓",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "delete",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "ctrl+c",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "ctrl+v",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "ctrl+x",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "ctrl+l",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "ctrl+alt+2",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "空格+鼠标拖拽",
+          "cls": ""
+        },
+        {
+          "tag": "SPAN",
+          "tx": "alt+s",
+          "cls": ""
+        }
+      ],
+      "reds": [
+        {
+          "cls": "redo disabled",
+          "t": ""
+        },
+        {
+          "cls": "",
+          "t": "像素不足"
+        }
+      ]
+    },
+    "searchHits": [
+      {
+        "r": 0,
+        "clicked": true,
+        "cls": "icon icon-search inputorderno",
+        "tx": ""
+      },
+      {
+        "r": 1,
+        "clicked": true,
+        "cls": "icon icon-search inputorderno",
+        "tx": ""
+      },
+      {
+        "r": 2,
+        "clicked": true,
+        "cls": "icon icon-search inputorderno",
+        "tx": ""
+      },
+      {
+        "r": 3,
+        "clicked": true,
+        "cls": "icon icon-search inputorderno",
+        "tx": ""
+      }
+    ],
+    "finalCheck": {
+      "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "body": "文件 \n设置 \n背景色  重置\n清空画布\n自由绘制\n 核稿 \n  商用无风险 保存  印前核对 分享  印刷\n\n搜索\n\n模板\n\n文字\n\n素材\n\n背景\n\n上传\n\n版式\n\n工具箱\n\n快捷键\n\n帮助\n官方素材\n我的素材\n形状\n线条\n图标和素材\n标志\n花纹\n免抠素材\n标题\n电商\n相框\n版权照片\n版权素材\n节日素材\n返回\n返回\n亮度\n对比度\n色调\n饱和度\n模糊\n负片\n\n像素不足\n\n103%\n网格\n辅助线\n安全线\n预览\n>\n\n常用素材\n\n页面\n图层\n正面\n背面\n常用素材\n相框素材\n矢量素材\n账户登录\n确定",
+      "reds": [
+        {
+          "cls": "redo disabled",
+          "t": ""
+        }
+      ],
+      "layers": []
+    },
+    "saveResp": [
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/previewCheckForBase64.do",
+        "b": "{\"success\":true,\"message\":\"成功\",\"userData\":1065384}"
+      },
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+        "b": "{\"success\":true,\"message\":\"1#\",\"userData\":[\"\",\"\"]}"
+      },
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+        "b": "{\"result\":true,\"loginState\":\"timeOut\"}"
+      },
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "b": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "b": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "b": "{\"success\":false,\"message\":null,\"userData\":null}"
+      },
+      {
+        "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+        "b": "{\"success\":false,\"message\":null,\"userData\":null}"
+      }
+    ]
+  },
+  "resp": [
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":\"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvkosc8DZyVo9TOoOOdYxpGTjSJqyrBoOLEciY\\nHW+3g9bVdrU1urxparXV5mcDpB0ebhocjjYWQPiAlyK1SgwzC7Y8TXnsbmqh+1U7K3JIXSQc+ajA\\nNnuDgfmCnfJ9S8MY28AjdN8ahrmPBL1S4V/GQSxX9zhmh2LLupdpqheEuQIDAQAB\"}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/siteWeb/captcha/get.do",
+      "body": "{\"repCode\":\"0000\",\"repMsg\":null,\"repData\":{\"captchaId\":null,\"projectCode\":null,\"captchaType\":null,\"captchaOriginalPath\":null,\"captchaFontType\":null,\"captchaFontSize\":null,\"secretKey\":\"BepN4bvEjlXfKqZQ\",\"originalImageBase64\":\"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"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
+      "body": "{\"data\":[{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"AD4636D5227B49399987EA16FC0FF3EA\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_01\",\"dictName\":\"姓名\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"01\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"0A6282E80B4945EBA5F45B86FB9AA576\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_16\",\"dictName\":\"姓名2\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"02\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"82DBF6FD13B14175B652C77D7CE79660\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_02\",\"dictName\":\"职务\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"03\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"74704812482841CBBFDF8CBFD9BB020A\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_17\",\"dictName\":\"职务2\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"04\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"1B6A503A48BD4A8D9978905642CE57B0\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_05\",\"dictName\":\"地址\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"05\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"855081911D75404DB448438F425AF375\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_19\",\"dictName\":\"地址2\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"06\",\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"dictId\":\"921AC2FE46EE4D648AF5A9EC4B0E680B\",\"dtabId\":\"D1F76C0E7A9243D4B297C5E3ECE56289\",\"dictCode\":\"文字_04\",\"dictName\":\"公司名称\",\"dictGroup\":null,\"xfield0\":null,\"xfield1\":null,\"xfield2\":null,\"xfield3\":null,\"xfield4\":null,\"xfield5\":null,\"xfield6\":null,\"xfield7\":null,\"xfield8\":null,\"xfield9\":null,\"ordnum\":\"07\""
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
+      "body": "{\"response\":{\"result\":{\"isUse\":1,\"pageNumber\":0,\"sign\":3,\"pageSize\":0,\"imageInfo\":\"assets/resource/imgs/small/MXYZ-ADBA1C98771C4BA3B9B99FB62E4C6F04.jpg\",\"shopUrl\":\"\",\"albumurl\":\"\",\"webStyleId\":3,\"wangWang\":\"\",\"webName\":\"简设计\",\"pageOffset\":0,\"id\":999,\"albumshoplogo\":\"\",\"shopAbb\":\"jsj\"},\"success\":true,\"message\":\"查询成功!\"}}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
+      "body": "{\"userData\":[{\"pageNumber\":null,\"pageSize\":null,\"id\":\"500429\",\"maskId\":\"146125\",\"tmplId\":\"252937\",\"pageNo\":\"1\",\"pageName\":\"正面\",\"detail\":\"{\\\"diyName\\\":\\\"生活服务  综合  简约风\\\",\\\"templateInfo\\\":{\\\"bindingType\\\":\\\"无装订\\\",\\\"bindingHeight\\\":0,\\\"foldNum\\\":0,\\\"diyType\\\":\\\"12\\\",\\\"bleedWidth\\\":1.0,\\\"packageThick\\\":0,\\\"packageWidth\\\":0,\\\"minPage\\\":1,\\\"bleedHeight\\\":1.0,\\\"packageHeight\\\":0,\\\"name\\\":\\\"生活服务  综合  简约风\\\",\\\"width\\\":92,\\\"style\\\":\\\"\\\",\\\"theme\\\":\\\"\\\",\\\"foldType\\\":0,\\\"designModel\\\":\\\"单页模式\\\",\\\"id\\\":252937,\\\"dpi\\\":300,\\\"maxPage\\\":2,\\\"bindingWidth\\\":0,\\\"deleteSelfGroupUuid\\\":true,\\\"height\\\":56},\\\"pageList\\\":{\\\"errDesignFlag\\\":false,\\\"tshirtImagePath\\\":\\\"\\\",\\\"diyDisplayHeight\\\":365.21739130434787,\\\"diyType\\\":\\\"12\\\",\\\"bleedWidth\\\":1.0,\\\"previewImagePath\\\":\\\"MXYZ-NEWMONGOE2043208C71B4BBF96E190A1837A30F0.png\\\",\\\"minPage\\\":0,\\\"bleedHeight\\\":1.0,\\\"pageGroup\\\":true,\\\"diyWorkAreaHeight\\\":365,\\\"templateID\\\":252937,\\\"title\\\":\\\"正面\\\",\\\"UVImagePath\\\":\\\"\\\",\\\"content\\\":{\\\"diyZoom\\\":1,\\\"itemList\\\":[{\\\"maskEnable\\\":false,\\\"zdsc\\\":\\\"false\\\",\\\"isPreview\\\":true,\\\"noCutWidth\\\":\\\"\\\",\\\"media\\\":{\\\"color\\\":16777215,\\\"scopeType\\\":\\\"rect\\\",\\\"isPrimary\\\":true,\\\"mediaType\\\":\\\"shape\\\",\\\"isBG\\\":true,\\\"isFill\\\":true,\\\"appointCmyk\\\":\\\"\\\"},\\\"lowPixelFlag\\\":false,\\\"selectEnabled\\\":true,\\\"uuid\\\":\\\"undefined\\\",\\\"layer\\\":{\\\"alpha\\\":\\\"1\\\"},\\\"isDesignShape\\\":false,\\\"rightType\\\":\\\"\\\",\\\"resouceCategoryId\\\":\\\"\\\",\\\"designableArea\\\":false,\\\"multiUuid\\\":\\\"\\\",\\\"isDesign\\\":true,\\\"deleteState\\\":false,\\\"topEnable\\\":false,\\\"visible\\\":true,\\\"visitLevel\\\":1000,\\\"isDisplay\\\":false,\\\"materialDragType\\\":\\\"\\\",\\\"isComposite\\\":true,\\\"printLocation\\\":{\\\"rotation\\\":0,\\\"x\\\":-0.5,\\\"width\\\":600,\\\"y\\\":-0.5,\\\"height\\\":365.21739130434787},\\\"isEdit\\\":false,\\\"markuuid\\\":\\\"\\\",\\\"pageNumLeftUuid\\\":\\\"\\\",\\\"pageNumRightUuid\\\":\\\"\\\",\\\"location\\\":{\\\"factWidth\\\":10000,\\\"factHeight\\\":10000,\\\"rotation\\\":0,\\\"x\\\":-0.5,\\\"width\\\":600,\\\"y\\\":-0.5,\\\"height\\\":365.21739130434787},\\\"resourceType\\\":1}]},\\\"workAreaHeight\\\":56,\\\"diyDisplayWidth\\\":600,\\\"pageOrder\\\":1,\\\"warnText\\\":false,\\\"diyWorkAreaWidth\\\":600,\\\"designModel\\\":\\\"单页\\\",\\\"id\\\":500429,\\\"workAreaWidth\\\":92,\\\"maxPage\\\":0,\\\"resourceType\\\":\\\"\\\"},\\\"hyId\\\":\\\"\\\"}\",\"design\":null,\"createDate\":\"2026-03-03 11:23:33\",\"owner\":\"1066232010\",\"shadeInfo\":null,\"pageOffset\":null},{\"pageNumber\":null,\"pageSize\":null,\"id\":\"500430\",\"maskId\":\"146125\",\"tmplId\":\"252937\",\"pageNo\":\"2\",\"pageName\":\"背面\",\"detail\":\"{\\\"diyName\\\":\\\"生活服务  综合  简约风\\\",\\\"templateInfo\\\":{\\\"bindingType\\\":\\\"无装订\\\",\\\"bindingHeight\\\":0,\\\"foldNum\\\":0,\\\"diyType\\\":\\\""
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":[{\"fonttype\":1,\"fontpath\":\"MXYZ-698E3EFE9AEC4BC28C56E6C061176B9E.ttf\",\"searchword\":\"BebasNeue Bold\",\"fontpathwoff\":\"MXYZ-666BCF3451ED4753939600AD3755D39E.woff\",\"id\":708,\"fontclassify\":\"隐藏使用\",\"fontname\":\"BebasNeue Bold\",\"defaultimage\":\"MXYZ-04E88B1D84184CCDB4753C00639D7C40.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-AC75CD0AD6954047A57B6198D65D89B2.ttf\",\"searchword\":\"BebasNeue Book\",\"fontpathwoff\":\"MXYZ-D488C00136864263B69FB851CDB0DF36.woff\",\"id\":709,\"fontclassify\":\"隐藏使用\",\"fontname\":\"BebasNeue Book\",\"defaultimage\":\"MXYZ-C8795815F1D043BEA560CC5CDADC557B.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-2F3275BB42644A9CAC89FCC49CFF1CE4.ttf\",\"searchword\":\"方正兰亭黑简体\",\"fontpathwoff\":\"MXYZ-CB05E1A25A0545D7BDD07E7D6F01E473.woff\",\"id\":806,\"fontclassify\":\"比亚迪\",\"fontname\":\"方正兰亭黑简体\",\"defaultimage\":\"MXYZ-0B69967C905444099E6F85E8303F873C.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-3838D4BAF54F4830A289E4E0C4D4F58B.ttf\",\"searchword\":\"方正清刻本悦宋简体\",\"fontpathwoff\":\"MXYZ-81AA82C0A76C4CD784437F21E81AE976.woff\",\"id\":813,\"fontclassify\":\"比亚迪\",\"fontname\":\"方正清刻本悦宋简体\",\"defaultimage\":\"MXYZ-EAC1FF5F1B854A5088261C9213D9D922.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-DBE42A69B61F4FAF8BEC08610C5BF084.ttf\",\"searchword\":\"汉仪书宋体\",\"fontpathwoff\":\"MXYZ-40325393C92A4F40BA0C3C84F869B5DF.woff\",\"id\":327,\"fontclassify\":\"隐藏使用\",\"fontname\":\"汉仪书宋体\",\"defaultimage\":\"MXYZ-3B1D24BFBF1C4DCCA24FC49064A0DDEF.jpg\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-NEWMONGO5415B4341D7D4382AC304826D4754B80.ttf\",\"searchword\":\"方正黑体简体\",\"fontpathwoff\":\"MXYZ-NEWMONGOFAEF85F21A474B82995E1DCE18782C27.woff\",\"id\":248,\"fontclassify\":\"常用\",\"fontname\":\"方正黑体简体\",\"fontimage\":\"MXYZ-29FD1A8CDC8744F781A029696E42C671.png\",\"defaultimage\":\"MXYZ-79B6D58F55E34AE0BDE6305B4180056B.jpg\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-AA21B1BA6FDF4B5083E4838B4287F953.ttf\",\"searchword\":\"阿里普惠Heavy\",\"fontpathwoff\":\"MXYZ-1CD78EC75CD0473FBC282C866A8CC73B.woff\",\"id\":381,\"fontclassify\":\"隐藏使用\",\"fontname\":\"阿里普惠Heavy\",\"defaultimage\":\"MXYZ-4E3EB5EFB7DC4058843E13B8FDA3C333.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-C2BA3E16CC274EF081A03DC5A7670B4D.ttf\",\"searchword\":\"汉仪雅酷黑-95w\",\"fontpathwoff\":\"MXYZ-92BE2D28E13647C499D26CED5C748EFA.woff\",\"id\":462,\"fontclassify\":\"隐藏使用\",\"fontname\":\"汉仪雅酷黑-95w\",\"defaultimage\":\"MXYZ-682974B7E4984498A62DE761A77CFB34.png\"},{\"fonttype\":0,\"fontpath\":\"MXYZ-B5E036BE55AB4101AC2342C4449FA4BF.ttf\",\"searchword\":\"汉仪霹雳体\",\"fontpathwoff\":\"MXYZ-F20B9265B5E84BD7B347529521173451.woff\",\"id\":384,\"fontclassify\":\"隐藏使用\",\"fontname\":\"汉仪霹雳体\",\"defaultimage\":\"MXYZ-5E0AF60F9D0D4E6F9889D0"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/previewCheckForBase64.do",
+      "body": "{\"success\":true,\"message\":\"成功\",\"userData\":1065384}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/checkSensitiveWords.do",
+      "body": "{\"success\":true,\"message\":\"1#\",\"userData\":[\"\",\"\"]}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/IfDiyOrderidExit.do?designId=",
+      "body": "{\"data\":\"\",\"status\":\"error\"}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/getImgInfos.do",
+      "body": "{\"success\":true,\"message\":null,\"userData\":{\"diyType\":\"print\",\"diyName\":\"1\",\"templateInfo\":{\"bindingHeight\":0,\"foldNum\":0,\"diyType\":\"12\",\"packageThick\":0,\"packageWidth\":0,\"designModelPreviewBack\":\"\",\"finalDimension\":\"undefinedmm\",\"startenhancesize\":\"1\",\"theme\":\"\",\"foldType\":0,\"id\":252937,\"dpi\":300,\"maxPage\":2,\"bindingWidth\":0,\"deleteSelfGroupUuid\":true,\"height\":56,\"bindingType\":\"无装订\",\"saveType\":\"submit\",\"bleedWidth\":1,\"minPage\":1,\"bleedHeight\":1,\"designModelPreview\":\"\",\"printingtype\":\"pdf\",\"designerGoodsId\":\"252438\",\"packageHeight\":0,\"balloonInfor\":\"p0 v7\",\"colorspace\":\"cmyk\",\"name\":\"生活服务  综合  简约风\",\"width\":92,\"handbagpreview\":\"\",\"style\":\"\",\"designModel\":\"单页模式\"},\"newUpgrade\":true,\"pageList\":[{\"errDesignFlag\":false,\"tshirtImagePath\":\"\",\"diyDisplayHeight\":365,\"diyType\":\"12\",\"bleedWidth\":1,\"previewImagePath\":\"MXYZ-NEWMONGOE2043208C71B4BBF96E190A1837A30F0.png\",\"minPage\":0,\"bleedHeight\":1,\"pageGroup\":true,\"diyWorkAreaHeight\":365,\"templateID\":252937,\"title\":\"正面\",\"UVImagePath\":\"\",\"content\":{\"diyZoom\":1,\"itemList\":[{\"maskEnable\":false,\"zdsc\":\"false\",\"isPreview\":true,\"noCutWidth\":\"\",\"media\":{\"color\":16777215,\"scopeType\":\"rect\",\"isPrimary\":true,\"mediaType\":\"shape\",\"isBG\":true,\"isFill\":true,\"appointCmyk\":\"\"},\"lowPixelFlag\":false,\"selectEnabled\":true,\"uuid\":\"undefined\",\"layer\":{\"alpha\":\"1\"},\"isDesignShape\":false,\"rightType\":\"\",\"resouceCategoryId\":\"\",\"designableArea\":false,\"multiUuid\":\"02e3ee1f-da39-4b54-a206-459764c46a53\",\"isDesign\":true,\"deleteState\":false,\"topEnable\":false,\"visible\":true,\"visitLevel\":1000,\"isDisplay\":false,\"materialDragType\":\"\",\"isComposite\":true,\"printLocation\":{\"rotation\":0,\"x\":-0.5,\"width\":600,\"y\":-0.5,\"height\":365},\"isEdit\":false,\"markuuid\":\"\",\"pageNumLeftUuid\":\"\",\"pageNumRightUuid\":\"\",\"location\":{\"factWidth\":10000,\"factHeight\":10000,\"rotation\":0,\"x\":-0.5,\"width\":600,\"y\":-0.5,\"height\":365},\"resourceType\":1},{\"maskEnable\":0,\"zdsc\":\"false\",\"isPreview\":0,\"noCutWidth\":\"\",\"media\":{\"lineSpace\":1.3,\"imgPath\":\"\",\"lineIdType\":\"0\",\"pageNumLeftUuid\":\"\",\"pageNumRightUuid\":\"\",\"mediaType\":\"text\",\"text\":\"P0_V7\",\"charSpace\":\"0\",\"appointCmyk_specialObj\":\"\",\"isBG\":0,\"font\":{\"backgroundColor\":\"\",\"overprintName\":\"false\",\"textDecoration\":\"normal\",\"isHorizontal\":1,\"isBold\":false,\"linethrough\":\"false\",\"isItalic\":false,\"pointSize\":24,\"gravity\":\"left\",\"id\":\"556\",\"overline\":\"false\",\"overprintStroke\":false,\"fontColor\":\"#000000\",\"overprintSpotColor\":\"\"},\"appointCmyk\":\"\"},\"lowPixelFlag\":0,\"selectEnabled\":1,\"uuid\":\"683a8912-06d7-4840-90c1-bd88c82d2f72\",\"layer\":{\"alpha\":\"1\"},\"i"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/third/submitUserDesign.do",
+      "body": "{\"result\":true,\"loginState\":\"timeOut\"}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+      "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+      "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+      "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+    },
+    {
+      "status": 200,
+      "u": "https://diy.zheliyin.com/diyWeb/commontool/getShopInfoOrSaveWangWang.do?orderid=&diyTypeNum=12&diyId=",
+      "body": "{\"success\":false,\"message\":null,\"userData\":null}"
+    }
+  ],
+  "pages": [],
+  "events": [],
+  "errors": []
+}
