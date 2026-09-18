@@ -15,17 +15,17 @@
 | CURRENT_PAGE_RESOLUTION        | PASS        | 真机：FRONT(c0,cc=1) / BACK(c1,cc=2)，sideSource = page-group.current |
 | FRONT_BACK_SWITCH              | PASS        | 真机：FRONT→BACK→FRONT→BACK→FRONT ×5 rounds 全 OK |
 | PAGE_IDENTITY_STABLE           | PASS        | 真机：R2/R4 pageId === "canvas:c0"，重复出现 identity 不变 |
-| OCR_SOURCE_OWNERSHIP           | PASS        | 真机：FRONT 冻结 → 切 BACK → frozen 快照不漂移（race.frozenStable=true） |
+| OCR_SOURCE_OWNERSHIP           | PASS        | 真机：FRONT 冻结 → 切 BACK → frozen 快照不漂移（race.frozenStable=true）；真实 OCR 请求 pageId 精确 |
 | OCR_PAGE_GROUPING              | PASS        | 单测：groupOcrBlocksByPage（canonical + __UNKNOWN__ 桶） |
-| FRONT_CREATE                   | PENDING     | 需真实 ScriptCat + stage userscript 跑真实 OCR（依赖 demo 合并后 @require 生效，见 §五） |
-| BACK_CREATE                    | PENDING     | 同上 |
+| FRONT_CREATE                   | PASS        | 真实 OCR（2026-09-18）：识别当前图片 → created 4 文字于 canvas:c0；ocrCreate 请求 pageId=canvas:c0 |
+| BACK_CREATE                    | PASS        | 真实 OCR：切背面 → created 4 文字于 canvas:c1；ocrCreate 请求 pageId=canvas:c1 |
 | CROSS_PAGE_GUARD               | PASS        | 真机：CREATE_BLOCKED_WRONG_PAGE ×2 + CREATE_BLOCKED_PAGE_NOT_FOUND，全程 createdCount=0、激活页对象数不变 |
 | PAGE_UNKNOWN_STOP              | PASS        | 单测：freeze 失败 → CURRENT_PAGE_UNKNOWN；user.js 冻结失败停止 OCR（无 FRONT fallback） |
 | IDENTITY_CONFLICT              | PASS        | 单测：PAGE_IDENTITY_CONFLICT → CREATE_BLOCKED_PAGE_IDENTITY_CONFLICT；真机冲突探针（fake vo）另见 page-registry.json |
-| UNDO_REDO（页隔离）             | PENDING     | 待 F/B 各创建后验证（依赖 FRONT_CREATE/BACK_CREATE） |
-| SAVE_PAGE_OWNERSHIP            | PENDING     | 待 F/B 创建后保存刷新验证（Spec §29/§30） |
+| UNDO_REDO（页隔离）             | PENDING     | 待 F/B 文本对象在同一会话同时存在时做 Undo/Redo（风险/成本高，见 §五-2） |
+| SAVE_PAGE_OWNERSHIP            | PENDING     | 待 F/B 创建后保存刷新验证（依赖用户决定是否在真实 diyId 上保存；风险见 §五-2） |
 | SINGLE_PAGE_REGRESSION         | HISTORICAL  | 单面模板 1203177/20408603 自动化环境不可加载（历史 p0 单面真机证据为回归基线，见 P0_FONT_PRINT_ROOT_CAUSE_REPORT.md） |
-| REAL_DUAL_PAGE                 | PASS(消息层)/PENDING(完整 OCR) | 252438 双面消息链真机全通过；真实 OCR Case1-5 待完整链路 |
+| REAL_DUAL_PAGE                 | PASS        | 真实 ScriptCat + stage 桥 + 真实「识别当前图片」+ 本地 OCR：FRONT/BACK 各创建 4 文字，页归属正确 |
 | GEOMETRY_READY                 | NO          | 本阶段明确不触碰 bbox→Canvas 坐标转换（Stage 8 闸门） |
 
 ## 二、本轮代码变更（stage-7-page-ownership）
@@ -65,21 +65,18 @@
 
 ## 五、尚未完成（诚实清单）
 
-1. **真实 ScriptCat 完整 OCR Case1-5（FRONT 仅 / BACK 仅 / 双批 / 跨页拒绝 / 切换后创建）**：
-   - 阻塞点：stage userscript 的 `@require .../page-bridge.js?v=0.3.10.2` 仍指向 **demo 分支**（生产旧桥，不认识 ocrCreate.pageId）；
-     真实 OCR 结果会走旧桥 → 门禁不生效。
-   - 生效路径：先 stage→demo 合并（FF），再在 External Chrome 真实 ScriptCat 安装 demo userscript 跑 Case1-5。
-   - 替代路径（可临时验证）：把 user.js 的 page-bridge @require 临时指向 `stage-7-page-ownership` 分支 URL，验证后回退（与早期 ae4826c 同模式）。
-2. **Undo/Redo 页隔离 + Save 后页归属**：依赖 FRONT/BACK 各创建成功（继 1）。
-3. **版本**：本分支维持 0.3.10.2（与分支历史一致，page-model 等 feat 未升级）；**demo 合并时必须统一升 0.3.10.3**（userscript @version、const VERSION、@require ?v=、manifest.json version/version_name、extension/assistant.js 全局 version 四/五处一致）。
+1. **真实 OCR Case4（OCR 期间切页 → 拒绝）**：门禁 WRONG_PAGE 已消息层真机验证；真实 OCR 时序（OCR 进行中切页）未做时序级复现（概率窗口小，风险/成本高）。
+2. **Undo/Redo 页隔离 + Save 后页归属**：需在真实 diyId 上「FRONT+BACK 双面对象并存」后操作。风险：若用户在该 diyId 上点保存，会落库测试对象 → 需用户明确授权后才做（P0 已关闭，本阶段不强求）。
+3. **版本/@require**：本分支维持 0.3.10.2；page-bridge 的 @require 临时指向 `stage-7-page-ownership` 分支（commit 4da7097，`?v=0.3.10.2-7.6`）。**晋级 demo 时两点必须回退/统一**：(a) page-bridge @require 改回 demo 分支 URL；(b) 版本统一升 0.3.10.3（userscript @version、const VERSION、@require ?v=、manifest.json version/version_name 四处一致）。
 4. **单面回归**：自动化环境无法打开 1203177/20408603；沿用 p0 历史真机单面证据（HISTORICAL_REAL_EVIDENCE）。
+5. **模板会话残留**（探针取证代价）：CASE1/2 创建的 4 个 OCR 文字清理未命中（回滚逻辑缺陷，仅内存对象）；探针未保存、浏览器关闭即全部丢弃，服务端零变更。后续探针若复用同一运行会话需刷新页面。
 
 ## 六、Stage → demo 晋级清单（条件就绪后）
 
 1. FF 合并（禁 force / rebase / 空 commit）：`git merge --ff-only origin/stage-7-page-ownership`（demo→stage）
-2. 版本统一 0.3.10.3（§五-3 五处）
-3. External Chrome 真实 ScriptCat：安装 demo userscript → 跑 Case1-5 / Undo-Redo / Save 归属 → REAL_DUAL_PAGE=PASS
-4. 全 PASS 后收尾：REPORT 更新 → 关闭 Stage 7 → 进入 Stage 8 Geometry 闸门（GEOMETRY_READY=YES）
+2. 版本统一 0.3.10.3（§五-3 四处）+ page-bridge @require 回退 demo 分支 URL
+3. 晋级后 External Chrome 真实 ScriptCat 回归：确认「识别当前图片」仍可创建且新增文字不横跨页面（新桥带门禁）
+4. 收尾：REPORT 更新 → 关闭 Stage 7 → 进入 Stage 8 Geometry 闸门（GEOMETRY_READY=YES）
 
 ## 七、架构目标（本阶段落地部分）
 
