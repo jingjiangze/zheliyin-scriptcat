@@ -1,0 +1,18 @@
+{
+  "diag": {
+    "hasDraw": "function",
+    "hasAddText": "function",
+    "hasDrawText2": "function",
+    "drawTextStr": "function(a,b,f,d,h,e,g,k,l,t){var q=this;this.deepCopy(E.prototype,u.Textbox.prototype);var A;if(a.gildMaterial||a.duplicateEncoded)A=JSON.parse(JSON.stringify(a)),\na=A.text,b=A.fontSize,f=A.x,d=A.y;var w={};a.markuuid&&",
+    "addTextStr": "function(a){this.drawText2(a,18,0,0,null,null,null,null,null,!0)}",
+    "drawText2Str": "function(a,b,f,d,h,e,\ng,k,l,n){this.deepCopy(E.prototype,u.Textbox.prototype);a=a.replace(/—/g,\"-\");a=a.replace(/•/g,\"·\");var q=new u.Textbox(a,{width:1E3});q.openLineText=!0;q.isLineText=!0;this.setCornerAndBorderSize(q",
+    "callAddErr": null,
+    "callDraw2Err": null,
+    "drawTextErr": null,
+    "canvasStr": "function",
+    "addTextOk": true,
+    "draw2Ok": true,
+    "drawTextOk": true
+  },
+  "ready": true
+}
