@@ -1,8 +1,8 @@
-# P0 FONT PRINT — Root Cause Report（草稿，进行中）
+# P0 FONT PRINT — Root Cause Report
 
-> 状态：P0_FONT_PRINT = **FAIL**（未取得完整闭环证据，不得宣布 PASS）
-> 分支：test | 最新 commit 见 git log
-> 更新：2026-09-18（随 runtime 证据滚动更新）
+> 状态：P0_FONT_PRINT = **PASS（managed 服务端证明）**；真机 REAL 会话最终确认待用户验证
+> 分支：test（含生产修复 9081201） | 更新：2026-09-18（本轮突破）
+> 结论先行：**根因 = OCR 文本对象 `isDisplay=1`（原生对象为 false）。** 置 `isDisplay=0` 后服务端核稿稳定通过。
 
 ---
 
@@ -10,76 +10,82 @@
 
 | # | 事实 | 证据来源 |
 |---|------|---------|
-| F1 | 编辑器正常 → 保存请求发出 → 点击印刷后弹「自动核稿失败提醒」可**稳定复现**（正文文案：生产文件与设计稿不一致…色差大/素材缺失或位移/文字换行或字体字号有误…去检查/标记正常） | r/probes v4/v5 + serial-diff + unlock12 系列 |
-| F2 | 弹层触发**不依赖服务端提交成功**：`submitUserDesign.do` / `saveThirdUserDesign.do` 恒返回 `{"result":true,"loginState":"timeOut"}`，timeOut 下弹层仍出现 | p0-native-vs-manual / serial-diff / relogin-v2~v4 resp |
-| F3 | 该 timeOut 与账号登录**解耦**：`siteWeb/jsj/userLogin.do`（账号 17606256193）返回 success:true，但提交接口仍 timeOut | relogin-v2/v3 resp |
-| F4 | 自动登录可行：`.login-tab .register-area form` + `#userAccount/#userPassword` + `.btn-register`（文本"确定"） | relogin-v4 |
-| F5 | 正确印刷流程 = 先点「核稿」生成核稿图（弹层"点击图片复制…"）→ 关闭 → 点「印刷」→ 填作品名/用户名 → 确定 | 用户确认 + relogin-v4 执行 |
-| F6 | 印刷核稿页面需点「搜索」同步核稿结果；搜索按钮定位：`.icon.icon-search.inputorderno` / `.search-btn`（连点 3~5 次） | 用户确认 + v6/v7 定位 |
-| F7 | 若弹「印刷稿件生成中，请耐心等待…」需确认/关闭后继续 | 用户确认 |
-| F8 | **Manual vs Script 对象 schema 差异（typeof + 值）**：
-- manual（`addText`→`drawText2`）：`topEnable=false(resourceType=1) maskEnable=false lowPixelFlag=false selectEnabled=true isDesign=true isComposite=true isPreview=true isDesignShape=false visitLevel=1000`（boolean 语义，与模板原生 shape 一致）
-- script（`drawText`+entry）：`topEnable=1 resourceType=0 maskEnable=0 lowPixelFlag=0 selectEnabled=1 isDesign=1 isComposite=0 isPreview=0 isDesignShape=0 visitLevel=1`（number 整型，t4 修复补齐）
-- font：manual `mediafontId=248 方正黑体简体 fontSize=18 fill=rgb(0,0,0) lineHeight=1.16`；script `mediafontId=556 思源黑体 Regular fontSize=24 fill=#000000 lineHeight=1.3` | case-font-schema（runtime/reports/p0/manual-vs-script-diff.json）
-| F9 | 印刷提交 payload 序列化中，manual 对象 `uuid:"undefined"`、`lineIdType:"undefined"`（字符串）；script 对象 uuid=真实 | serial-diff（p0-serial-diff.json head） |
-| F10 | 556 思源黑 Regular 在 `findAllFont.do`（287 字体）中合法存在且前端加载生效 | stage-7-3-font-inventory + getFontCss.do |
-| F11 | 自动化环境确认：设计信息层确定 → `submitUserDesign.do` 恒 `loginState:"timeOut"` → 前端 return → **交稿层/核稿同步/红框在自动化环境不可达**。timeOut 为该 merchant 级提交鉴权硬闸门，与账号登录解耦（F3）。runner 已验证到该边界并记录（after-submit-diag） | runner 多轮 + net resp |
+| F1 | 点击印刷后弹「自动核稿失败提醒」可稳定复现（文案：生产文件与设计稿不一致…素材缺失或位移、文字换行或字体字号有误） | runner 多轮 + 服务端 resp |
+| F2 | `submitUserDesign.do` 首发恒 `{"result":true,"loginState":"timeOut"}`；该 timeOut 与账号登录解耦（F3） | net resp |
+| F3 | `userLogin.do` 成功与提交 timeOut 解耦 | relogin-v2~v4 |
+| F4 | 登录浮层自动填充 env 凭据 + 点击「确定」可登录 | ensureLogin 修复后 login-clicked ok:true |
+| F5 | 正确流程 = 先点「核稿」（验证弹层）→ 订单号输 1 → 点「印刷」→ 设计信息作品名/用户名 → 确定 → 交稿 → 搜索同步 | 用户确认 + runner 已验证（hegao-verify ok） |
+| F6 | 印刷核稿页需点「搜索」（`.icon.icon-search.inputorderno`/`.search-btn`）同步核稿结果 | 用户确认 + v6/v7 |
+| F7 | 「印刷稿件生成中」弹层需确认/关闭 | 用户确认 |
+| F8 | Manual(addText) vs Script(drawText) schema 差异（typeof+值）：详见表 2 | case-font-schema + 服务端 getImgInfos 快照 |
+| F9 | 服务端 `getImgInfos.do` 回写：脚本文本对象**未丢失**（uuid=d7c4de10，font id=556 完整存在）→ 排除「对象被删」 | 2026-09-18 getImgInfos capture |
+| F10 | 556 思源黑 Regular 在 findAllFont.do（287 字体）合法 | stage-7-3-font-inventory |
+| F11 | 服务端核稿可直接在 managed 会话验证（imgPreviewSearch.do → producestate/errInfo），无需 REAL 会话；站点侧会在 submit timeOut 后自动重登录（~40s） | 本轮多轮 net resp |
+| F12 | **服务端单变量核稿实验矩阵（font 固定 556, 其余字段脚本默认）**：
+
+| 变量 | 改动 | imgPreviewSearch 判定 |
+|---|---|---|
+| （旧默认） | isDisplay=1 | 9× ERR_AUTO_CHECK（第1页） |
+| resource1 | resourceType 0→1 | 1× ps1 + 8× ERR（FAIL） |
+| composite1 | isComposite 0→1 | 1× ps1 + 7× ERR（FAIL） |
+| preview1 | isPreview 0→1 | 1× ps1 + 6× ERR（FAIL） |
+| display0 | **isDisplay 1→0** | **1× ps3(生成中) + 8× ps1 success（PASS）** |
+| （修复后默认） | isDisplay=0 | 1× ps3 + 8× ps1 success（**PASS**，0 ERR） | | runner --variant=* 前台实验（control-result.json） |
 
 ## 六、环境准入（自动化 vs 真机）
 
-- 自动化可达：编辑器加载、drawText 创建、核稿、订单号输入、印刷、设计信息、确定、提交后登录浮层自动登录、重试印刷、搜索同步、去检查尝试、canvas 红框扫描（--from-check）。
-- 自动化不可达：真实交稿终态、核稿最终结果、错误截图（managed 下变量），suspect 红框（本环境命中背景 rect 属误报）——因 `submitUserDesign.do` 恒 timeOut 阻在交稿入口前。
-- 结论：**REAL/managed 会话对比未完成**，剩余取证需真实会话（CDP 接管或真实进入 URL）。
+- 自动化可达：编辑器、drawText 创建、核稿（验证+重试）、订单号、印刷、设计信息、确定、登录浮层检测、站点自动恢复等待（≤30s）→ 手动登录重建全流程（≤2 次）、交稿、搜索同步、服务端核稿判定（imgPreviewSearch）、去检查、canvas 红框扫描。
+- 自动化不可达（仍未取）：真实交稿终态确认、红框对象级定位（check 页无 canvas，服务端 ErrItemUUID 恒空）。
+- 结论：**managed 会话已足以判定根因与验证修复**；真机 REAL 会话仅剩最终人工确认。
 
-## 六之二、REAL vs MANAGED 会话结果（2026-09-18 收窄范围）
+## 六之二、REAL vs MANAGED 会话结果（2026-09-18）
 
 | 状态 | 值 |
 |---|---|
-| SESSION_SOURCE | MANAGED_PERSISTENT_PROFILE（`--adopt-session` → CDP_NOT_AVAILABLE，无 9222-9231 端点） |
-| REAL_SESSION_RESULT | NOT_ADOPTED（无可调试浏览器；等待用户调试 Chrome 或真实 URL 链） |
-| MANAGED_SESSION_RESULT | submitUserDesign.do → `loginState:"timeOut"`（多轮稳定） |
-| USER_LOGIN | PASS（page 可登录；登录浮层自动填充 env 凭据成功 userLogin.do success:true） |
-| SUBMIT_AUTH | FAIL（timeOut，独立于账号登录——与 USER_LOGIN 分离记录） |
+| SESSION_SOURCE | MANAGED_PERSISTENT_PROFILE（`--adopt-session` → CDP_NOT_AVAILABLE） |
+| REAL_SESSION_RESULT | NOT_ADOPTED（无调试 Chrome） |
+| MANAGED_SESSION_RESULT | 站点自愈后可到达核稿：submit 首发 timeOut → 自动重登录 → 二发成功 → imgPreviewSearch 判定 |
+| USER_LOGIN | PASS（env 凭据自动登录成功） |
+| SUBMIT_AUTH | 首发 timeOut；**站点自动重登录/手动登录后可提交**（不再视为硬闸门） |
+| PROOF_PAGE | **REACHABLE（managed）** |
+| OCR_TEXT_PROOF | **PASS（managed 服务端，修复后）** |
 
-## P0 判定（截至本报告）
+## P0 判定（本节起）
 
-- OCR_TEXT_PROOF / OCR_FONT_PRINT：**FAIL（未达成）**——managed 会话无法取得核稿终态，无法证明或否定「OCR 文本核稿不报错并正常显示」。
-- 生产代码零改动；按「REAL 会话→提交→核稿」优先级推进，通道：```chrome.exe --remote-debugging-port=9222``` → `node runtime/p0/runner.js --adopt-session/--session-parity`。
+- **OCR_TEXT_PROOF = PASS**：服务端核稿 8× `success/producestate:1`，0 次 ERR_AUTO_CHECK，无「自动核稿失败」弹层（修复后）。
+- **ROOT CAUSE 已定（服务端单变量证明）**；生产修复已提交 test（9081201）。
+- 待办：真机（REAL 会话 or 用户实际运行 test 分支脚本）最终确认同判 PASS。
 
-## 二、OBSERVATION（观察，未完全归因）
+## 二、OBSERVATION（已归因）
 
-- 单脚本对象（整型版，id=556）→ 印刷链路一轮**不弹**失败（goto-check）；A+B（manual+script）→ **弹**。暗示触发与对象组合/某个对象特征相关，单对象是否触发不稳定。
-- 自动化的「自动核稿失败提醒」在 search 同步未执行/未成功时出现；用户真机经验：搜索几次即可同步。
-- `checkSensitiveWords.do` 通过（无敏感词），像素/安全线/电话检查未阻断印刷——排除这三项。
-- 交稿弹层含「错字检查结果」（可展开详情），该处即核稿/错字判定落点。
+- 所有「值反向」都被单独排除（resourceType/isComposite/isPreview）；**唯一决定成败的是 isDisplay**。
+- 原生对象（addText/模板 shape）isDisplay=false，脚本置 1 → 生产/设计比对触发 ERR_AUTO_CHECK（第1页）。
+- 服务端 ErrItemUUID/errShotScreens 恒空——服务端不给对象级定位，故必须用单变量实验定位。
 
-## 三、HYPOTHESIS（假设，待验证）
+## 三、HYPOTHESIS（已判定）
 
-- **H1（当前最强）**：脚本 textbox 的 Q() 序列化字段值域（`number 1/0` vs 原生 `boolean true/false`）或值组合（`isComposite:0/isPreview:0` vs 原生 true）导致生产端/核稿端判定「生产文件与设计稿不一致」→ 错字检查/核稿失败 → 印刷时该对象被视为不可生产/缺失。
-- **H2**：manual 对象 `uuid=undefined`（serialized）被认为是无效素材（区别于 F1 的弹层运行）。
-- **H3**：非思源黑导致（用户原始怀疑）——**仅 HYPOTHESIS**，F10 表明 556 合法，暂无支持证据。
-- **H4**：核稿同步未完成即印刷 → 误报（用户经验：点搜索/刷新同步）。若 H4 成立，则「字体消失」可能是核稿比对陈旧，而非对象被删。
+- **H1 → 证实并收窄为 isDisplay**：字段值域 demo 系列其余项均被单独实验排除（H1.1 关）。
+- H2（uuid=undefined 无效素材）**排除**：模板 shape 服务端 uuid 即 "undefined" 且正常通过。
+- H3（字体 556 非法）**排除**：font 固定 556 下 display0 通过。
+- H4（核稿同步时机）排除：同轮多次搜索判定稳定。
 
-## 四、ROOT CAUSE
+## 四、ROOT CAUSE（已确定）
 
-**未确定。** 待真机/自动化取得「红框对象 → 对应 payload 字段」差异后定论。
+**`isDisplay=1`**。脚本 drawText entry 及 post-create 字段将文本对象置 `isDisplay=1`，而原生对象为 `false/0`。服务端核稿将第 1 页判为「生产文件与设计稿不一致」（ERR_AUTO_CHECK）。修复：`extension/src/editor/page-bridge.js` `buildTextMediaEntry` `isDisplay:1 → 0`（v0.3.10.2）。
 
-## 五、追踪的环节（lifecycle）
+## 五、追踪环节（lifecycle）
 
-EDITOR → CANVAS → LAYER → SAVE(saveThirdUserDesign.do) → getImgInfos.do(服务端回写) → PROOF(搜索同步/错字检查) → PRINT(生产文件比对)。
-
-各环节对象：exists/text/font/fontId/resource/schema 均需记录（object-lifecycle.json）。
+EDITOR → CANVAS → 核稿(前端) → SAVE(submitUserDesign.do) → getImgInfos.do(服务端回写 object 完整) → PROOF(imgPreviewSearch.do) → PASS/FAIL 判定。对象全程存在；失败点 = 生产/设计比对（isDisplay）。
 
 ## 六、产物
 
-- runtime/reports/p0/run-summary.json（每次运行）
-- runtime/reports/p0/proof-result.json（搜索同步记录）
-- runtime/reports/p0/suspect-object.json（红框→对象映射）
-- runtime/reports/p0/manual-vs-script-diff.json（schema diff，含 typeof）
-- runtime/p0/runner.js（Fast Runtime Runner，--from-proof/--from-print/--from-check/--case-font-schema）
+- runtime/reports/p0/run-summary.json（含 getImgInfos 服务端快照 + imgPreviewSearch 判定）
+- runtime/reports/p0/control-result.json（单变量实验矩阵，mode=EMPTY_TEMPLATE/MANUAL_TEXT/VARIANT:*）
+- runtime/p0/runner.js（--control-empty/--control-manual/--variant=*；核稿验证重试；登录浮层→站点自愈>手动登录重建）
+- docs/P0_FONT_PRINT_ROOT_CAUSE_REPORT.md（本报告）| docs/SESSION_PARITY_REPORT.md
 
 ## 七、下一步
 
-1. runner 全流程运行，获取 proof-result + suspect-object（红框指向）。
-2. 若 search 同步后仍失败 → 单变量实验（H1 字段逐个 flip，最小集合）。
-3. 根因明确前不修改生产代码；修复后 Save/Reload/Proof/Print + Front/Back/Multi-page 全回归。
+1. 用户以 test 分支（v0.3.10.2）真机跑一遍 OCR→核稿→印刷：确认无「自动核稿失败」且文字正常显示。
+2. 确认后合并 test → demo → main（按项目 git 流程；勿 force push）。
+3. 回归：正反面/多页/Save-Reload/Print 全回归。
