@@ -174,22 +174,53 @@ function groupWordsToLines(words, opts) {
   const o = opts || {};
   // 真机调参（252438，stage-6）：chi_sim 逐字 bbox 同行的字高差异可达 1.5~1.8×（如 张=56px/三=36px），
   // 而行中心 y 差极小（5px）→ 以「中心 y 距」为主，字高相似度放宽（0.5），避免同一视觉行被拆成多行。
+  // Stage 7.8R §十五/§十六/§十八：WORDS→LINE 阶段增加字高比 guard（相对字高差，禁绝对 px）——
+  //   hSizeRatioMax 默认 2.0（= 旧行为零回归；40/20 ratio=2.0 边界处用实验值 1.8/1.9 收紧，
+  //   最终阈值待 Fixture G 真机取证，§十四/§二十）。
   const hTol = o.heightTolRatio != null ? o.heightTolRatio : 0.5;
   const yTolRatio = o.yTolRatio != null ? o.yTolRatio : 0.45;
+  const hSizeRatioMax = o.hSizeRatioMax != null ? o.hSizeRatioMax : 2.0;
   if (!list.length) return [];
   const sorted = list.slice().sort(function (a, b) { return (a.bbox.y - b.bbox.y) || (a.bbox.x - b.bbox.x); });
   const lines = [];
-  sorted.forEach(function (w) {
+  sorted.forEach(function (w, wi) {
     const midY = w.bbox.y + w.bbox.height / 2;
     let placed = null;
+    let mergeEv = null;
+    let best = null; // 「最接近成功」的失败尝试（§十七 Merge Decision Evidence）
     for (let i = 0; i < lines.length; i += 1) {
       const L = lines[i];
       const lMid = L.bbox.y + L.bbox.height / 2;
       const scale = Math.max(w.bbox.height, L.bbox.height);
-      if (Math.abs(midY - lMid) <= Math.max(6, scale * yTolRatio) &&
-          Math.abs(w.bbox.height - L.bbox.height) <= Math.max(6, scale * hTol)) { placed = L; break; }
+      const minH = Math.min(w.bbox.height, L.bbox.height);
+      const ratio = minH > 0 ? scale / minH : null;
+      const lastW = L.words[L.words.length - 1];
+      // §十七 决策证据（数值化；baselineProxy=底部差近似基线差）
+      const ev = {
+        wordIndex: wi,
+        heightA: lastW ? lastW.bbox.height : null,
+        heightB: w.bbox.height,
+        sizeRatio: ratio,
+        centerYDelta: Math.abs(midY - lMid),
+        verticalOverlap: (Math.min(L.bbox.y + L.bbox.height, w.bbox.y + w.bbox.height) - Math.max(L.bbox.y, w.bbox.y)) / (minH > 0 ? minH : 1),
+        horizontalGap: lastW ? (w.bbox.x - (lastW.bbox.x + lastW.bbox.width)) : null,
+        baselineProxy: lastW ? Math.abs((w.bbox.y + w.bbox.height) - (lastW.bbox.y + lastW.bbox.height)) : null,
+        decision: "KEEP_SEPARATE"
+      };
+      const ok = Math.abs(midY - lMid) <= Math.max(6, scale * yTolRatio) &&
+                 Math.abs(w.bbox.height - L.bbox.height) <= Math.max(6, scale * hTol) &&
+                 (ratio == null || ratio <= hSizeRatioMax);
+      if (ok) { placed = L; ev.decision = "MERGE"; mergeEv = ev; break; }
+      if (!best) best = ev;
     }
-    if (!placed) { placed = { words: [], bbox: null, sumC: 0, nC: 0 }; lines.push(placed); }
+    if (!placed) {
+      placed = { words: [], bbox: null, sumC: 0, nC: 0, wordMergeEvidence: [], wordSplitEvidence: [] };
+      lines.push(placed);
+      if (best) placed.wordSplitEvidence.push(best);
+    } else if (mergeEv) {
+      placed.wordMergeEvidence = placed.wordMergeEvidence || [];
+      placed.wordMergeEvidence.push(mergeEv);
+    }
     placed.words.push(w);
     if (!placed.bbox) {
       placed.bbox = { x: w.bbox.x, y: w.bbox.y, width: w.bbox.width, height: w.bbox.height };
@@ -209,7 +240,10 @@ function groupWordsToLines(words, opts) {
       text: joinWordsSmart(words.map(function (w) { return w.text; })),
       bbox: L.bbox,
       confidence: L.nC ? L.sumC / L.nC : null,
-      wordBoxes: words.map(function (w) { return w.bbox; })
+      wordBoxes: words.map(function (w) { return w.bbox; }),
+      // Stage 7.8R §十七：Merge Decision Evidence（WORDS→LINE 阶段）
+      wordMergeEvidence: L.wordMergeEvidence || [],
+      wordSplitEvidence: L.wordSplitEvidence || []
     };
   });
   return applyTessLineText(out, o.tessLines);
