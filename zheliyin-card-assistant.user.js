@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.14
+// @version      0.3.11.15
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,21 +14,21 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.14
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.15
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.15
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -49,7 +49,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.14";
+  const VERSION = "0.3.11.15";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -1231,6 +1231,9 @@
   // 最终仍超差 → CREATE_REJECTED_GEOMETRY_MISMATCH（Phase E 诊断，不删除对象；删除动作留真机取证）。
   async function runGeometryCalibration(itemsList, reply, side) {
     if (typeof compareTextGeometry !== "function" || typeof quadSize !== "function" || typeof quadCenter !== "function" || typeof quadAngle !== "function") return;
+    // 宽度约束修正依赖真实文本测量（浏览器 2d context；无则整体跳过防换行优化）
+    const textMeasurer = (typeof browserTextMeasurer === "function") ? browserTextMeasurer() : null;
+    const withMeasurer = function (f) { return textMeasurer && textMeasurer.available ? textMeasurer.measurer : null; };
     if (typeof GM_getValue === "function" && GM_getValue("zyCalibrate8B", "1") === "0") { ocrLog("GEOMETRY", "calibration disabled by zyCalibrate8B=0"); return; }
     const pending = [];
     (itemsList || []).forEach(function (it) {
@@ -1263,9 +1266,32 @@
         if (Math.abs(dx) > 0.01 || Math.abs(dy) > 0.01) { corr.left = Math.round((geom.left || 0) + dx); corr.top = Math.round((geom.top || 0) + dy); any = true; }
       }
       if (cmp.failures.indexOf("height") >= 0 && typeof geom.fontSize === "number" && it.text) {
-        const fs = geom.fontSize;
-        corr.fontSize = Math.round(Math.min(160, Math.max(8, fs * (tSz.height / Math.max(geom.height || tSz.height, 1e-6)))));
-        corr.height = Math.round(Math.max(14, (geom.textboxHeight || geom.height || 0) + (tSz.height - geom.height)));
+        // A0 真机（2026-09-19）：换行使 box 高度非线性（fs23→h27 / fs39→h45 / fs49→h123），
+        // 纯 fontSize 比例修正会 39↔49↔23 震荡不收敛。对策：fs 取「高度拟合 ∩ 宽度容纳单行」的交集，
+        // 并同步放宽宽度防止换行（fabric textbox 高度自计算，corr.height 无效，不再下发）。
+        const boxW = Math.max(geom.textboxWidth || geom.width || 0, 20);
+        let fsNew = Math.round(Math.min(160, Math.max(8, geom.fontSize * (tSz.height / Math.max(geom.height || tSz.height, 1e-6)))));
+        let fitW = boxW;
+        if (typeof solveTextWidth === "function") {
+          const meas = withMeasurer();
+          const visualAt = function (f) { const m = solveTextWidth(it.text, f, { margin: 0, measurer: meas }); return m ? m.visualWidth : null; };
+          let needAt = visualAt(fsNew);
+          if (needAt != null && needAt > boxW - 2) {
+            // 宽度不够：缓慢降压到能单行容纳（每次尝试测量，最多 12 步）；仍放不下则扩宽
+            for (let k = 0; k < 12 && fsNew > 8; k += 1) {
+              if (needAt <= boxW - 2) break;
+              fsNew = Math.max(8, fsNew - 2);
+              const n2 = visualAt(fsNew);
+              if (n2 == null) break;
+              needAt = n2;
+            }
+          }
+          // 最终按当前 fs 校准宽度（防换行兜底；fabric 会按内容自动重算高度）
+          const finalV = visualAt(fsNew);
+          if (finalV != null) fitW = Math.max(boxW, Math.ceil(finalV + 2));
+        }
+        corr.fontSize = fsNew;
+        corr.width = Math.min(4000, Math.max(20, Math.round(fitW)));
         any = true;
       }
       if (cmp.failures.indexOf("width") >= 0 && typeof geom.textboxWidth === "number") {
