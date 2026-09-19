@@ -380,6 +380,107 @@ function injectUserscript() {
         rec.cleanup = "reload";
         await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
       } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
+    } else if (MODE === "itemlist-lifecycle") {
+      // D2-C1.5：定位 itemList 1→0 的时间点（fresh → ctor → add → render → injectImg → OCR）
+      const rec = { mode: "itemlist-lifecycle", templateId: "1040459", steps: [], experiments: [], errors: [] };
+      out.records.push(rec);
+      // 引用身份采样（页面级 WeakMap id）
+      const idState = (tag) => ev((arg) => {
+        const req = window.requirejs || window.require;
+        const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+        const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+        window.__idMap = window.__idMap || new WeakMap();
+        const idOf = (o) => { if (!o || (typeof o !== "object")) return null; if (!window.__idMap.has(o)) window.__idMap.set(o, window.__idMap.size + 1); return window.__idMap.get(o); };
+        const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+        const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+        const page = PV && PV.pageList && PV.pageList[eIdx];
+        const content = page && page.content;
+        const il = content && Array.isArray(content.itemList) ? content.itemList : null;
+        return {
+          tag: arg.tag,
+          itemListLen: il ? il.length : (content && content.itemList ? "no-arr" : null),
+          ids: { pageList: idOf(PV && PV.pageList), page: idOf(page), content: idOf(content), itemList: idOf(il) },
+          item0Keys: il && il.length && il[0] ? Object.keys(il[0]).slice(0, 10) : null,
+          objLen: d && d.canvas ? d.canvas.getObjects().length : null,
+          regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null,
+          textCount: d && d.canvas ? d.canvas.getObjects().filter((o) => o && typeof o.text === "string").length : null
+        };
+      }, { tag });
+      const capture = async (tag) => { const s = await idState(tag); rec.steps.push(s); return s; };
+      try {
+        const DU = await render();
+        const dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
+        await capture("T0-pageLoaded");
+        // Exp A：纯 fabric 分步
+        const stepA = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          if (!c) return { ok: false };
+          const f = (c.constructor && c.constructor.fabric) || window.fabric;
+          return new Promise((res) => {
+            const im = new Image();
+            im.onload = () => {
+              try {
+                const obj = new f.Image(im); obj.multiUuid = "lc-" + Date.now();
+                window.__lcObj = obj; // 保留引用供后续步骤
+                if (c.requestRenderAll) c.requestRenderAll();
+                res({ ok: true, phase: "ctor-no-add", objLen: c.getObjects().length });
+              } catch (e) { res({ ok: false, err: String(e && e.message || e).slice(0, 120) }); }
+            };
+            im.onerror = () => res({ ok: false, err: "onerror" });
+            im.src = arg.dataUrl;
+          });
+        }, { dataUrl });
+        await capture("T4-ctor");
+        const stepAdd = await ev(() => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          if (!c || !window.__lcObj) return { ok: false };
+          c.add(window.__lcObj);
+          if (c.requestRenderAll) c.requestRenderAll();
+          return { ok: true, objLen: c.getObjects().length };
+        });
+        await capture("T5-add");
+        stepA2 = stepAdd;
+        // 清理 A 注入对象
+        await ev(() => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          if (!c) return;
+          const objs = c.getObjects().filter((o) => o && String(o.multiUuid || "").indexOf("lc-") === 0);
+          objs.forEach((o) => { try { const li = d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.indexOf(o) : -1; if (li >= 0) d.canvasObjInfo.canvasToProductObjArr.splice(li, 1); c.remove(o); } catch (e) {} });
+          window.__lcObj = null;
+        });
+        await capture("T6-afterExpA-clean");
+        // Exp B：现有 injectImg
+        await injectImg(0, dataUrl, "p8l-", { left: 20, top: 20, scaleX: 1, scaleY: 1, w: 500, h: 150 });
+        await capture("T7-afterInjectImg");
+        // Exp C：OCR 链
+        await armDrawTextCap();
+        await capture("T8-beforeOcrClick");
+        const before = await snapIds();
+        const cl = await clickOcr();
+        let last = null, done = false;
+        const t0 = Date.now();
+        for (;;) {
+          const r = await ev(() => { const el = document.querySelector("#zy-native-status"); const st = el ? String(el.textContent || "").trim() : null; return { st: st ? st.slice(0, 160) : null }; });
+          const st = r && r.st;
+          if (st && st !== last) { last = st; rec.status = (rec.status || []).concat([st]); }
+          if (st && /已生成 \d+ 个文字|未识别到文字|失败|滚/.test(st)) { done = true; break; }
+          if (Date.now() - t0 > 120000) break;
+          await SLEEP(900);
+        }
+        await capture("T9-afterOcr");
+        rec.ocrDone = done;
+        rec.cap = await readCap();
+        await rollback("p8l-");
+      } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
     } else if (MODE === "quad") {
       // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
       await armDrawTextCap();
@@ -452,7 +553,7 @@ function injectUserscript() {
     }
   } catch (e) { out.errors.push(String(e && e.message || e).slice(0, 400)); }
   finally { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
-  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : "canvas-88x57-create-failure.json";
+  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : "canvas-88x57-create-failure.json";
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(path.join(REPORT_DIR, name), JSON.stringify(out, null, 2));
   console.log("STAGE-8A2B " + MODE + " done records=" + out.records.length + " errors=" + out.errors.length + " -> " + path.join(REPORT_DIR, name));
