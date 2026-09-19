@@ -106,7 +106,26 @@ C_FIX = NOT_READY（仍需定位可复用的 itemList 初始化/注册原生 API
 C_NATIVE_INIT = UNKNOWN
 ```
 
-## D2-C 静态源码取证（本刀，REAL，native-CanvasDiy.js 402KB）
+## D2-C2 drawItem / setItemListJson 验证（本刀，静态+真机）
+
+**静态（native-CanvasDiy.js）**：
+- `drawItem` 本体在 **ea 模块**（CanvasDiy 仅调用方 1 处）；调用前置步骤 = `content.itemList = content.itemList.concat(f)`（f=真实序列化 item 数组）→ **drawItem 是画布/图层同步器，不是 itemList 建立者**（$16 期望之“drawItem 建立 itemList”与站点实况不符）；
+- **serializer = `ea.setItemListJson(objects, canvas).itemList`**（复制流程；真实对象→product item 列表）。
+
+**真机（1040459 drawitem-probe，REAL）**：
+```
+base itemList=0 obj=8 reg=0 → afterInject (图片注入) itemList=0 obj=9 reg=1
+setItemListJson([注入 image], canvas) → {ok:false reason:"empty serialized"}  ← 对裸 fabric.Image 输出空
+concat 未发生 → afterConcat itemList=0
+drawText → 仍 throw：undefined.media @ checkObjsInProductJson(CanvasDiy.js:190)（g-1=-1 复现一致）
+（drawText 在抛错前已插入 canvas/reg：afterDrawText obj=10 reg=2 txt=1 —— 直调入口无回滚，与 OCR 链路回滚行为不同）
+```
+
+**结论（如实，不跳步）**：
+- `C_NATIVE_SERIALIZER = UNKNOWN/受限`：setItemListJson 对「注入裸图」返回空，无法作为 C-fix 的序列化入口；对**站点原生创建对象**的行为未证（探针输入形态限制）；
+- `drawItem` 意义修正：画布同步器；且若对已存在对象调用，粘贴语义会 add 副本 → 副作用 UNSAFE（未采用）；
+- **C-fix（drawItem / setItemListJson 路线）= NOT_READY**；
+- 提示合规方向：OCR 前图建议改走**站点原生创建对象路径**（站点 addImage/AddItem，产物才被 setItemListJson 认可）或与产品侧对齐「空模板页 itemList 注册契约」——均为契约层决策，待用户裁定（本刀不实现）。
 
 **发现（决定性）**：
 1. CanvasDiy.js **全篇不存在 `content.itemList = [...]` 运行期赋值** → **itemList 完全由「模板数据（服务端模板 JSON）」决定**：252438 模板自带 1 条、1040459 空模板 0 条 —— 「空模板 itemList=0」是**数据事实而非运行期状态丢失**；

@@ -1,0 +1,56 @@
+{
+  "ts": "2026-09-19T07:26:28.117Z",
+  "stage": "STAGE-8A2B-drawitem-probe",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "drawitem-probe",
+  "records": [
+    {
+      "mode": "drawitem-probe",
+      "steps": [
+        {
+          "tag": "base",
+          "itemListLen": 0,
+          "objLen": 8,
+          "regLen": 0,
+          "txt": 0
+        },
+        {
+          "tag": "afterInject",
+          "itemListLen": 0,
+          "objLen": 9,
+          "regLen": 1,
+          "txt": 0
+        },
+        {
+          "tag": "afterConcat",
+          "itemListLen": 0,
+          "objLen": 9,
+          "regLen": 1,
+          "txt": 0
+        },
+        {
+          "tag": "afterDrawText",
+          "itemListLen": 0,
+          "objLen": 10,
+          "regLen": 2,
+          "txt": 1
+        }
+      ],
+      "errors": [],
+      "serialized": {
+        "ok": false,
+        "reason": "empty serialized"
+      },
+      "drawText": {
+        "ok": false,
+        "err": "Cannot read properties of undefined (reading 'media')",
+        "stack": "TypeError: Cannot read properties of undefined (reading 'media')\n    at v.checkObjsInProductJson (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:190:251)\n    at v.drawText (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:416:20)\n    at eval (eval at evaluate (:311:30), <anonymous>:7:21)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
+  ]
+}
