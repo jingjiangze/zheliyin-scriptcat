@@ -21,6 +21,7 @@ const BRANCH = "stage-8a-2-rotation-policy-geometry";
 const BAIDU_AK = process.env.ZY_BAIDU_AK || "";
 const BAIDU_SK = process.env.ZY_BAIDU_SK || "";
 const MODE = process.env.ZY_MODE || "bg";
+const TRANSFORM_ON = process.env.ZY_TRANSFORM !== "0"; // 默认注入 image-transform（A 双轨：0=模拟生产未接线路径）
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const URL_252438 = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
@@ -35,12 +36,14 @@ function injectUserscript() {
     code = code.split(b + "/extension/src/").join(BRANCH + "/extension/src/");
     code = code.replace(new RegExp(b + "\\/zheliyin-card-assistant\\.user\\.js", "g"), BRANCH + "/zheliyin-card-assistant.user.js");
   });
-  const extra = "// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/" + BRANCH + "/extension/src/editor/image-transform.js?v=0.3.11.0\n";
-  const anchor = "extension/src/ocr/ocr-text-safety-gate.js";
-  const ai = code.indexOf(anchor);
-  if (ai < 0) throw new Error("anchor not found");
-  const lineEnd = code.indexOf("\n", ai);
-  code = code.slice(0, lineEnd + 1) + extra + code.slice(lineEnd + 1);
+  if (TRANSFORM_ON) {
+    const extra = "// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/" + BRANCH + "/extension/src/editor/image-transform.js?v=0.3.11.2\n";
+    const anchor = "extension/src/ocr/ocr-text-safety-gate.js";
+    const ai = code.indexOf(anchor);
+    if (ai < 0) throw new Error("anchor not found");
+    const lineEnd = code.indexOf("\n", ai);
+    code = code.slice(0, lineEnd + 1) + extra + code.slice(lineEnd + 1);
+  }
   return code;
 }
 
@@ -92,15 +95,60 @@ function injectUserscript() {
       for (const x of angles) {
         process.env.ZY_BG_ANGLE = String(x.a);
         const bg = await setBg(0, dataUrl);
-        const rec = { mode: "bg", angle: x.a, bg, rd: null };
+        const rec = { mode: "bg", transformLoaded: TRANSFORM_ON, angle: x.a, bg, rd: null };
         out.records.push(rec);
         const r = await runOcrRound("p8b-");
-        rec.rd = r.rd && r.rd.arr ? r.rd.rd : r; // keep simple
+        rec.rd = r.rd && r.rd.arr ? r.rd.rd : r;
         if (r.rd && r.rd.arr) rec.objects = r.rd.arr;
         rec.canvasInfo = (r.rd && r.rd.canvas) || null;
         try { await ev(() => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0]; const c = d && d.canvas; if (c) c.setBackgroundImage(null); }); } catch (e) {}
         await SLEEP(1200);
       }
+    } else if (MODE === "quad") {
+      // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
+      await armDrawTextCap();
+      const quad = [
+        { id: "A-248x493", font: "248", width: 493 },
+        { id: "B-1x493", font: "1", width: 493 },
+        { id: "C-248x200", font: "248", width: 200 },
+        { id: "D-1x200", font: "1", width: 200 }
+      ];
+      for (const q of quad) {
+        const rec = { mode: "quad", case: q.id, font: q.font, width: q.width, result: null, err: null, stack: null };
+        out.records.push(rec);
+        const r = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const diy = d;
+          if (!diy || typeof diy.drawText !== "function") return { skipped: "no drawText" };
+          const entry = {
+            media: { mediaType: "text", text: "大字标题实例文字", font: { pointSize: 59, fontColor: "#000000", isHorizontal: 1, gravity: "left", id: arg.font, isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 }, charSpace: 0, lineSpace: 1.2, lineIdType: 0, isBG: 0, imgPath: "" },
+            location: { x: 20, y: 20, width: arg.width, height: 85, factWidth: arg.width, factHeight: 85, rotation: 0 },
+            printLocation: { x: 20, y: 20, width: arg.width, height: 85, rotation: 0 },
+            layer: { alpha: 1 }, layerNum: 1, isEdit: 1, isDisplay: 0, deleteState: 0, visitLevel: 1,
+            multiUuid: "quad-" + Date.now() + "-" + arg.font + "-" + arg.width, markuuid: "",
+            topEnable: 1, resourceType: 0, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 0, isPreview: 0, isDesignShape: 0
+          };
+          try { diy.drawText(String(entry.media.text), null, null, null, entry, 1); return { ok: true }; }
+          catch (e) { return { ok: false, err: String(e && e.message || e).slice(0, 300), stack: String(e && e.stack || "").slice(0, 500) }; }
+        }, { font: q.font, width: q.width });
+        rec.result = r;
+        rec.canvas = { width: (await ev(() => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const c = vo && vo.totalCanvasArray && vo.totalCanvasArray[0] && vo.totalCanvasArray[0].canvas; return c ? { w: c.width, h: c.height } : null; })) };
+        await rollback("quad-");
+      }
+      // 原生方法源码特征
+      const src = await ev(() => {
+        const req = window.requirejs || window.require;
+        const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+        const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+        let dt = null, ck = null;
+        try { dt = d && d.drawText && String(d.drawText.toString()).slice(0, 1200); } catch (e) {}
+        try { const proto = Object.getPrototypeOf(d); ck = proto && proto.checkObjsInProductJson && String(proto.checkObjsInProductJson.toString()).slice(0, 1500); } catch (e) {}
+        const fontLi = Array.from(document.querySelectorAll(".fontFamily li")).slice(0, 3).map((li) => ({ fontid: li.getAttribute("fontid"), text: String(li.textContent || "").trim().slice(0, 20) }));
+        return { drawTextSrc: dt, checkObjsSrc: ck, fontFamilyLis: fontLi };
+      });
+      out.nativeSrc = src;
     } else if (MODE === "size") {
       const du = await render();
       const dataUrl = typeof du === "string" ? du : du.dataUrl;
