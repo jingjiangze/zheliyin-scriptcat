@@ -1,0 +1,1270 @@
+{
+  "ts": "2026-09-19T11:24:12.691Z",
+  "stage": "STAGE-8B-STEP5",
+  "branch": "stage-8b-ocr-reconstruction-engine",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "cases": [
+    {
+      "id": "A0",
+      "angle": 0,
+      "scale": 1,
+      "steps": [
+        {
+          "image": {
+            "naturalWidth": 1000,
+            "naturalHeight": 300,
+            "width": 1000,
+            "height": 300,
+            "scaleX": 1,
+            "scaleY": 1,
+            "left": 0,
+            "top": 0,
+            "angle": 0,
+            "originX": "left",
+            "originY": "top",
+            "aCoords": {
+              "tl": [
+                0,
+                0
+              ],
+              "tr": [
+                1000,
+                0
+              ],
+              "br": [
+                1000,
+                300
+              ],
+              "bl": [
+                0,
+                300
+              ]
+            }
+          },
+          "canvas": {
+            "width": 871.4999999999999,
+            "height": 530.1624999999999,
+            "viewportTransform": [
+              1.4525,
+              0,
+              0,
+              1.4525,
+              0,
+              0
+            ],
+            "zoom": 1.4525,
+            "retina": 0.800000011920929
+          },
+          "diy": {
+            "currentFactWidth": 600,
+            "currentFactHeight": 365,
+            "currentSize": 1.4525
+          },
+          "registry": 1
+        }
+      ],
+      "rows": [],
+      "hook": {
+        "prep": [
+          {
+            "geo": {
+              "left": 0,
+              "top": 0,
+              "width": 1000,
+              "height": 300,
+              "scaleX": 1,
+              "scaleY": 1,
+              "angle": 0,
+              "canvasWidth": 871.4999999999999,
+              "canvasHeight": 530.1624999999999,
+              "naturalWidth": 1000,
+              "naturalHeight": 300,
+              "aCoords": {
+                "tl": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tr": {
+                  "x": 1000,
+                  "y": 0
+                },
+                "br": {
+                  "x": 1000,
+                  "y": 300
+                },
+                "bl": {
+                  "x": 0,
+                  "y": 300
+                }
+              }
+            },
+            "pageOk": true
+          }
+        ],
+        "msg": [
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "text": "大字标题实例文字",
+                "left": 28,
+                "top": 22.999999999999986,
+                "fontSize": 59,
+                "width": 493,
+                "height": 85,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 32,
+                    "y": 27
+                  },
+                  {
+                    "x": 348,
+                    "y": 27
+                  },
+                  {
+                    "x": 348,
+                    "y": 84
+                  },
+                  {
+                    "x": 32,
+                    "y": 84
+                  }
+                ]
+              },
+              {
+                "blockIndex": 1,
+                "text": "中号正文联系电话与邮",
+                "left": 28,
+                "top": 107,
+                "fontSize": 19,
+                "width": 267,
+                "height": 33,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 32,
+                    "y": 111
+                  },
+                  {
+                    "x": 289,
+                    "y": 111
+                  },
+                  {
+                    "x": 289,
+                    "y": 129
+                  },
+                  {
+                    "x": 32,
+                    "y": 129
+                  }
+                ]
+              },
+              {
+                "blockIndex": 2,
+                "text": "小字页肝版权各注生",
+                "left": 27,
+                "top": 196,
+                "fontSize": 11,
+                "width": 117,
+                "height": 22,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 31,
+                    "y": 200
+                  },
+                  {
+                    "x": 138,
+                    "y": 200
+                  },
+                  {
+                    "x": 138,
+                    "y": 211
+                  },
+                  {
+                    "x": 31,
+                    "y": 211
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "adjust": [
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "corrections": {
+                  "left": -57,
+                  "top": 13,
+                  "fontSize": 39,
+                  "height": 56,
+                  "width": 315
+                }
+              },
+              {
+                "blockIndex": 1,
+                "corrections": {
+                  "left": 27,
+                  "top": 103,
+                  "fontSize": 10,
+                  "height": 17,
+                  "width": 256
+                }
+              },
+              {
+                "blockIndex": 2,
+                "corrections": {
+                  "left": 26,
+                  "top": 194,
+                  "fontSize": 8,
+                  "height": 14,
+                  "width": 106
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "corrections": {
+                  "left": 32,
+                  "top": 33,
+                  "fontSize": 49,
+                  "height": 56
+                }
+              },
+              {
+                "blockIndex": 1,
+                "corrections": {
+                  "left": 32,
+                  "top": 114,
+                  "fontSize": 15,
+                  "height": 17
+                }
+              },
+              {
+                "blockIndex": 2,
+                "corrections": {
+                  "left": 31,
+                  "top": 200
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "corrections": {
+                  "left": 32,
+                  "top": -6,
+                  "fontSize": 23,
+                  "height": 56
+                }
+              },
+              {
+                "blockIndex": 1,
+                "corrections": {
+                  "left": 32,
+                  "top": 111
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "corrections": {
+                  "left": 32,
+                  "top": 42,
+                  "fontSize": 49,
+                  "height": 56
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "corrections": {
+                  "left": 32,
+                  "top": -6,
+                  "fontSize": 23,
+                  "height": 56
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "corrections": {
+                  "left": 32,
+                  "top": 42,
+                  "fontSize": 49,
+                  "height": 56
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "corrections": {
+                  "left": 32,
+                  "top": -6,
+                  "fontSize": 23,
+                  "height": 56
+                }
+              }
+            ]
+          }
+        ],
+        "adjustResult": [
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": -57,
+                      "y": 13
+                    },
+                    {
+                      "x": 259,
+                      "y": 13
+                    },
+                    {
+                      "x": 259,
+                      "y": 58.06999999999999
+                    },
+                    {
+                      "x": -57,
+                      "y": 58.06999999999999
+                    }
+                  ],
+                  "center": {
+                    "x": 101,
+                    "y": 35.535
+                  },
+                  "width": 316,
+                  "height": 45.06999999999999,
+                  "angle": 0,
+                  "left": -57,
+                  "top": 13,
+                  "fontSize": 39,
+                  "textboxWidth": 315,
+                  "textboxHeight": 44.06999999999999
+                }
+              },
+              {
+                "blockIndex": 1,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 27,
+                      "y": 103
+                    },
+                    {
+                      "x": 284,
+                      "y": 103
+                    },
+                    {
+                      "x": 284,
+                      "y": 115.30000000000001
+                    },
+                    {
+                      "x": 27,
+                      "y": 115.30000000000001
+                    }
+                  ],
+                  "center": {
+                    "x": 155.5,
+                    "y": 109.15
+                  },
+                  "width": 257,
+                  "height": 12.300000000000011,
+                  "angle": 0,
+                  "left": 27,
+                  "top": 103,
+                  "fontSize": 10,
+                  "textboxWidth": 256,
+                  "textboxHeight": 11.299999999999999
+                }
+              },
+              {
+                "blockIndex": 2,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 26,
+                      "y": 194
+                    },
+                    {
+                      "x": 133,
+                      "y": 194
+                    },
+                    {
+                      "x": 133,
+                      "y": 204.04000000000002
+                    },
+                    {
+                      "x": 26,
+                      "y": 204.04000000000002
+                    }
+                  ],
+                  "center": {
+                    "x": 79.5,
+                    "y": 199.01999999999998
+                  },
+                  "width": 107,
+                  "height": 10.04000000000002,
+                  "angle": 0,
+                  "left": 26,
+                  "top": 194,
+                  "fontSize": 8,
+                  "textboxWidth": 106,
+                  "textboxHeight": 9.04
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 32,
+                      "y": 32.99999999999999
+                    },
+                    {
+                      "x": 348,
+                      "y": 32.99999999999999
+                    },
+                    {
+                      "x": 348,
+                      "y": 155.81399999999996
+                    },
+                    {
+                      "x": 32,
+                      "y": 155.81399999999996
+                    }
+                  ],
+                  "center": {
+                    "x": 190,
+                    "y": 94.40699999999998
+                  },
+                  "width": 316,
+                  "height": 122.81399999999996,
+                  "angle": 0,
+                  "left": 32,
+                  "top": 33,
+                  "fontSize": 49,
+                  "textboxWidth": 315,
+                  "textboxHeight": 121.81399999999998
+                }
+              },
+              {
+                "blockIndex": 1,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 32,
+                      "y": 114
+                    },
+                    {
+                      "x": 289,
+                      "y": 114
+                    },
+                    {
+                      "x": 289,
+                      "y": 131.95
+                    },
+                    {
+                      "x": 32,
+                      "y": 131.95
+                    }
+                  ],
+                  "center": {
+                    "x": 160.5,
+                    "y": 122.975
+                  },
+                  "width": 257,
+                  "height": 17.94999999999999,
+                  "angle": 0,
+                  "left": 32,
+                  "top": 114,
+                  "fontSize": 15,
+                  "textboxWidth": 256,
+                  "textboxHeight": 16.95
+                }
+              },
+              {
+                "blockIndex": 2,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 31,
+                      "y": 200
+                    },
+                    {
+                      "x": 138,
+                      "y": 200
+                    },
+                    {
+                      "x": 138,
+                      "y": 210.04000000000002
+                    },
+                    {
+                      "x": 31,
+                      "y": 210.04000000000002
+                    }
+                  ],
+                  "center": {
+                    "x": 84.5,
+                    "y": 205.01999999999998
+                  },
+                  "width": 107,
+                  "height": 10.04000000000002,
+                  "angle": 0,
+                  "left": 31,
+                  "top": 200,
+                  "fontSize": 8,
+                  "textboxWidth": 106,
+                  "textboxHeight": 9.04
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 32,
+                      "y": -6
+                    },
+                    {
+                      "x": 348,
+                      "y": -6
+                    },
+                    {
+                      "x": 348,
+                      "y": 20.99
+                    },
+                    {
+                      "x": 32,
+                      "y": 20.99
+                    }
+                  ],
+                  "center": {
+                    "x": 190,
+                    "y": 7.494999999999999
+                  },
+                  "width": 316,
+                  "height": 26.99,
+                  "angle": 0,
+                  "left": 32,
+                  "top": -6,
+                  "fontSize": 23,
+                  "textboxWidth": 315,
+                  "textboxHeight": 25.99
+                }
+              },
+              {
+                "blockIndex": 1,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 32,
+                      "y": 111
+                    },
+                    {
+                      "x": 289,
+                      "y": 111
+                    },
+                    {
+                      "x": 289,
+                      "y": 128.95
+                    },
+                    {
+                      "x": 32,
+                      "y": 128.95
+                    }
+                  ],
+                  "center": {
+                    "x": 160.5,
+                    "y": 119.975
+                  },
+                  "width": 257,
+                  "height": 17.94999999999999,
+                  "angle": 0,
+                  "left": 32,
+                  "top": 111,
+                  "fontSize": 15,
+                  "textboxWidth": 256,
+                  "textboxHeight": 16.95
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 32,
+                      "y": 41.99999999999999
+                    },
+                    {
+                      "x": 348,
+                      "y": 41.99999999999999
+                    },
+                    {
+                      "x": 348,
+                      "y": 164.81399999999996
+                    },
+                    {
+                      "x": 32,
+                      "y": 164.81399999999996
+                    }
+                  ],
+                  "center": {
+                    "x": 190,
+                    "y": 103.40699999999998
+                  },
+                  "width": 316,
+                  "height": 122.81399999999996,
+                  "angle": 0,
+                  "left": 32,
+                  "top": 42,
+                  "fontSize": 49,
+                  "textboxWidth": 315,
+                  "textboxHeight": 121.81399999999998
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 32,
+                      "y": -6
+                    },
+                    {
+                      "x": 348,
+                      "y": -6
+                    },
+                    {
+                      "x": 348,
+                      "y": 20.99
+                    },
+                    {
+                      "x": 32,
+                      "y": 20.99
+                    }
+                  ],
+                  "center": {
+                    "x": 190,
+                    "y": 7.494999999999999
+                  },
+                  "width": 316,
+                  "height": 26.99,
+                  "angle": 0,
+                  "left": 32,
+                  "top": -6,
+                  "fontSize": 23,
+                  "textboxWidth": 315,
+                  "textboxHeight": 25.99
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 32,
+                      "y": 41.99999999999999
+                    },
+                    {
+                      "x": 348,
+                      "y": 41.99999999999999
+                    },
+                    {
+                      "x": 348,
+                      "y": 164.81399999999996
+                    },
+                    {
+                      "x": 32,
+                      "y": 164.81399999999996
+                    }
+                  ],
+                  "center": {
+                    "x": 190,
+                    "y": 103.40699999999998
+                  },
+                  "width": 316,
+                  "height": 122.81399999999996,
+                  "angle": 0,
+                  "left": 32,
+                  "top": 42,
+                  "fontSize": 49,
+                  "textboxWidth": 315,
+                  "textboxHeight": 121.81399999999998
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 32,
+                      "y": -6
+                    },
+                    {
+                      "x": 348,
+                      "y": -6
+                    },
+                    {
+                      "x": 348,
+                      "y": 20.99
+                    },
+                    {
+                      "x": 32,
+                      "y": 20.99
+                    }
+                  ],
+                  "center": {
+                    "x": 190,
+                    "y": 7.494999999999999
+                  },
+                  "width": 316,
+                  "height": 26.99,
+                  "angle": 0,
+                  "left": 32,
+                  "top": -6,
+                  "fontSize": 23,
+                  "textboxWidth": 315,
+                  "textboxHeight": 25.99
+                }
+              }
+            ]
+          }
+        ],
+        "createResult": {
+          "ok": true,
+          "detectedBlocks": 3,
+          "createdCount": 3,
+          "created": [
+            {
+              "blockIndex": 0,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 28,
+                    "y": 23
+                  },
+                  {
+                    "x": 522,
+                    "y": 23
+                  },
+                  {
+                    "x": 522,
+                    "y": 109
+                  },
+                  {
+                    "x": 28,
+                    "y": 109
+                  }
+                ],
+                "center": {
+                  "x": 275,
+                  "y": 66
+                },
+                "width": 494,
+                "height": 86,
+                "angle": 0,
+                "left": 28,
+                "top": 23,
+                "fontSize": 59,
+                "textboxWidth": 493,
+                "textboxHeight": 85
+              },
+              "text": "大字标题实例文字"
+            },
+            {
+              "blockIndex": 1,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 28,
+                    "y": 107
+                  },
+                  {
+                    "x": 296,
+                    "y": 107
+                  },
+                  {
+                    "x": 296,
+                    "y": 141
+                  },
+                  {
+                    "x": 28,
+                    "y": 141
+                  }
+                ],
+                "center": {
+                  "x": 162,
+                  "y": 124
+                },
+                "width": 268,
+                "height": 34,
+                "angle": 0,
+                "left": 28,
+                "top": 107,
+                "fontSize": 19,
+                "textboxWidth": 267,
+                "textboxHeight": 33
+              },
+              "text": "中号正文联系电话与邮"
+            },
+            {
+              "blockIndex": 2,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 27,
+                    "y": 196
+                  },
+                  {
+                    "x": 145,
+                    "y": 196
+                  },
+                  {
+                    "x": 145,
+                    "y": 219
+                  },
+                  {
+                    "x": 27,
+                    "y": 219
+                  }
+                ],
+                "center": {
+                  "x": 86,
+                  "y": 207.5
+                },
+                "width": 118,
+                "height": 23,
+                "angle": 0,
+                "left": 27,
+                "top": 196,
+                "fontSize": 11,
+                "textboxWidth": 117,
+                "textboxHeight": 22
+              },
+              "text": "小字页肝版权各注生"
+            }
+          ]
+        }
+      },
+      "created": [
+        {
+          "id": "24f59d31-0b99-4727-9578-cfecb01d984f",
+          "text": "大字标题实例文字",
+          "zyOcrKey": "zy-ocr-0",
+          "left": 32,
+          "top": -6,
+          "width": 315,
+          "height": 25.99,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 23,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 32,
+              "y": -6
+            },
+            {
+              "x": 348,
+              "y": -6
+            },
+            {
+              "x": 348,
+              "y": 20.99
+            },
+            {
+              "x": 32,
+              "y": 20.99
+            }
+          ],
+          "biz": {
+            "locationX": 32,
+            "locationY": -6,
+            "locationWidth": 315,
+            "locationHeight": 25.99,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "b0e785b2-89b8-4016-a230-ac5116047a81",
+          "text": "中号正文联系电话与邮箱地址",
+          "zyOcrKey": "zy-ocr-1",
+          "left": 32,
+          "top": 111,
+          "width": 256,
+          "height": 16.95,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 15,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 32,
+              "y": 111
+            },
+            {
+              "x": 289,
+              "y": 111
+            },
+            {
+              "x": 289,
+              "y": 128.95
+            },
+            {
+              "x": 32,
+              "y": 128.95
+            }
+          ],
+          "biz": {
+            "locationX": 32,
+            "locationY": 111,
+            "locationWidth": 256,
+            "locationHeight": 16.95,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "ccd4e388-5191-44f4-9a15-7966777478e6",
+          "text": "小字页肝版权各注生",
+          "zyOcrKey": "zy-ocr-2",
+          "left": 31,
+          "top": 200,
+          "width": 106,
+          "height": 9.04,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 8,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 31,
+              "y": 200
+            },
+            {
+              "x": 138,
+              "y": 200
+            },
+            {
+              "x": 138,
+              "y": 210.04000000000002
+            },
+            {
+              "x": 31,
+              "y": 210.04000000000002
+            }
+          ],
+          "biz": {
+            "locationX": 31,
+            "locationY": 200,
+            "locationWidth": 106,
+            "locationHeight": 9.04,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        }
+      ],
+      "compare": [
+        {
+          "blockIndex": 0,
+          "text": "大字标题实例文字",
+          "pass": false,
+          "failures": [
+            "center",
+            "height"
+          ],
+          "errors": {
+            "center": 48.01,
+            "width": 0,
+            "height": 30.01,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 190,
+              "y": 55.5
+            },
+            "size": {
+              "width": 316,
+              "height": 57
+            },
+            "angle": 0
+          },
+          "actual": {
+            "center": {
+              "x": 190,
+              "y": 7.494999999999999
+            },
+            "size": {
+              "width": 316,
+              "height": 26.99
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 1,
+          "text": "中号正文联系电话与邮箱地址",
+          "pass": true,
+          "failures": [],
+          "errors": {
+            "center": 0.03,
+            "width": 0,
+            "height": 0.05,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 160.5,
+              "y": 120
+            },
+            "size": {
+              "width": 257,
+              "height": 18
+            },
+            "angle": 0
+          },
+          "actual": {
+            "center": {
+              "x": 160.5,
+              "y": 119.975
+            },
+            "size": {
+              "width": 257,
+              "height": 17.94999999999999
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 2,
+          "text": "小字页肝版权各注生",
+          "pass": true,
+          "failures": [],
+          "errors": {
+            "center": 0.48,
+            "width": 0,
+            "height": 0.96,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 84.5,
+              "y": 205.5
+            },
+            "size": {
+              "width": 107,
+              "height": 11
+            },
+            "angle": 0
+          },
+          "actual": {
+            "center": {
+              "x": 84.5,
+              "y": 205.01999999999998
+            },
+            "size": {
+              "width": 107,
+              "height": 10.04000000000002
+            },
+            "angle": 0
+          }
+        }
+      ],
+      "errors": [],
+      "bgInjected": {
+        "ok": true,
+        "w": 1000,
+        "h": 300,
+        "nw": 1000,
+        "nh": 300,
+        "left": 0,
+        "top": 0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "ac": null
+      },
+      "bgSnap": {
+        "image": {
+          "naturalWidth": 1000,
+          "naturalHeight": 300,
+          "width": 1000,
+          "height": 300,
+          "scaleX": 1,
+          "scaleY": 1,
+          "left": 0,
+          "top": 0,
+          "angle": 0,
+          "originX": "left",
+          "originY": "top",
+          "aCoords": {
+            "tl": [
+              0,
+              0
+            ],
+            "tr": [
+              1000,
+              0
+            ],
+            "br": [
+              1000,
+              300
+            ],
+            "bl": [
+              0,
+              300
+            ]
+          }
+        },
+        "canvas": {
+          "width": 871.4999999999999,
+          "height": 530.1624999999999,
+          "viewportTransform": [
+            1.4525,
+            0,
+            0,
+            1.4525,
+            0,
+            0
+          ],
+          "zoom": 1.4525,
+          "retina": 0.800000011920929
+        },
+        "diy": {
+          "currentFactWidth": 600,
+          "currentFactHeight": 365,
+          "currentSize": 1.4525
+        },
+        "registry": 1
+      },
+      "beforeObjCount": 9,
+      "status": [
+        "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
+        "几何校验完成：通过 2 个，拒绝 1 个（CREATE_REJECTED_GEOMETRY_MISMATCH）（细节见控制台 zy-ocr GEOMETRY）"
+      ],
+      "done": true,
+      "canvasSnap": {
+        "width": 871.4999999999999,
+        "height": 530.1624999999999,
+        "viewportTransform": [
+          1.4525,
+          0,
+          0,
+          1.4525,
+          0,
+          0
+        ],
+        "zoom": 1.4525,
+        "retina": 0.800000011920929
+      },
+      "passSummary": {
+        "blocks": 3,
+        "pass": 2,
+        "fail": 1
+      },
+      "rollback": {
+        "ok": true,
+        "removed": 3
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=true active=null",
+    "[zy-ocr][PREPARING] kind=background-image 1000x300 dataUrl=29422 chars",
+    "[zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current",
+    "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
+    "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
+    "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+    "[zy-ocr][LOCAL_RECOGNIZING] lines=3 words=25 image=undefinedxundefined",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
+    "[zy-ocr][GROUP] lines=3 y=27,111,200 h=57,18,11",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":3,\"kept\":3,\"dropped\":0}}",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"PASS\",\"reasonCode\":null,\"total\":3,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"PASS\"}}",
+    "[zy-ocr][BUILDING] blocks=3 forcedWrap=0 multiLine=0",
+    "[zy-ocr][SUCCESS] created=3/3 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":3,\"uv4\":3,\"layerMax\":-1}",
+    "[zy-ocr][GEOMETRY] {\"ok\":2,\"rejected\":1,\"rejectedBlocks\":[{\"blockIndex\":0,\"code\":\"CREATE_REJECTED_GEOMETRY_MISMATCH\",\"failures\":\"center|height\"}]}"
+  ]
+}
