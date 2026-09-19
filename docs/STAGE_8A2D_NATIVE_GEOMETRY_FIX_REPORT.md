@@ -106,6 +106,18 @@ C_FIX = NOT_READY（仍需定位可复用的 itemList 初始化/注册原生 API
 C_NATIVE_INIT = UNKNOWN
 ```
 
+## D2-C 静态源码取证（本刀，REAL，native-CanvasDiy.js 402KB）
+
+**发现（决定性）**：
+1. CanvasDiy.js **全篇不存在 `content.itemList = [...]` 运行期赋值** → **itemList 完全由「模板数据（服务端模板 JSON）」决定**：252438 模板自带 1 条、1040459 空模板 0 条 —— 「空模板 itemList=0」是**数据事实而非运行期状态丢失**；
+2. 存在**原生注册机制候选 `ea.drawItem(index, array)`**（粘贴对象路径 L643-644：`b=pageList[w].content.itemList.length; ... ea.drawItem(b,f)`）→ 该函数按 index 将「真实对象数组」注册进 productJson/图层链路，可让 checkObjs 的 g-1 指向有效条目；
+3. 其它 itemList 引用均为读取/过滤（isCupPreview splice 等），无“创建”入口。
+
+**C-fix 设计（STRONG EVIDENCE 方向，待小证后实施）**：
+- OCR 前，若当前页 `ProductVO.itemList.length === 0`：将**现有真实画布对象**经站点序列化（canvasObj→product item schema，同 252438 自带条目结构）→ 调原生 `ea.drawItem(0, [item])` 注册 → 之后 drawText 的 `checkObjs g-1=0` 读到该真实 item.media → 不再越界；
+- **非伪造**（注册的是画布真实图片对象）、**复用原生机制**（drawItem）、不 push({})、不改站点；
+- 待小证：drawItem 精确签名/副作用（是否引起对象重复渲染）、序列化函数名（CanvasDiy 内 createObjProductJsonDetail 或等效）—— 下一刀先做 30 分钟级最小静态验证 + 1040459 单点真机复测后，`C_FIX=READY` 才能落生产。
+
 - 失败点：站点 `CanvasDiy.checkObjsInProductJson` 的 `productPageList[e].content.itemList[g-1].media`
 - 触发条件：**ProductVO.itemList 为空（空模板页）时 drawText 的 productJson 同步未发生**（canvasToProductObjArr 已 push、itemList 未同步 → 两数组不同步）
 - 已排除：font.id（四象限全 PASS）、width（四象限全 PASS）、时序
