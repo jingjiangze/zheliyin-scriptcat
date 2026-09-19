@@ -102,7 +102,7 @@ function injectUserscript() {
     await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
     await SLEEP(1200);
     if (BAIDU_AK && BAIDU_SK) { await ev((a) => { const ai = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak"); const si = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk"); const sb = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save"); if (!ai || !si || !sb) return { ok: false }; ai.value = a.ak; si.value = a.sk; try { sb.click(); } catch (e) {} return { ok: true }; }, { ak: BAIDU_AK, sk: BAIDU_SK }); await SLEEP(3000); }
-    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : (MODE === "drawitem-probe" ? URL_88 : URL_252438));
+    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : ((MODE === "drawitem-probe" || MODE === "native-image-inventory") ? URL_88 : URL_252438));
     // D2-C itemlist-source：页面早期 hook（模板初始化前）追 itemList 构建 + 模板 JSON 响应
     if (MODE === "itemlist-source") {
       await page.addInitScript(() => {
@@ -580,6 +580,122 @@ function injectUserscript() {
         rec.steps.push(await st("afterDrawText"));
         await rollback("p8d-");
       } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
+    } else if (MODE === "native-image-inventory") {
+      // PHASE C1/C2：站点原生「添加图片」path 取证（禁 fabric.Image；Playwright file input 上传真实图片）
+      const rec = { mode: "native-image-inventory", steps: [], ui: null, created: null, serialized: null, errors: [] };
+      out.records.push(rec);
+      try {
+        const DU = await render();
+        const dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
+        // 临时 PNG（真实文件，供上传）
+        const b64 = String(dataUrl).replace(/^data:[^;]+;base64,/, "");
+        const tmpPng = path.join(REPORT_DIR, "native-upload-input.png");
+        fs.writeFileSync(tmpPng, Buffer.from(b64, "base64"));
+        rec.tmpPng = tmpPng;
+        // Step1 基线
+        const base = await ev(() => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const il = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content ? PV.pageList[eIdx].content.itemList : null;
+          const files = Array.from(document.querySelectorAll('input[type="file"]')).map((f, i) => ({ i, accept: f.accept || null, cls: String(f.className || "").slice(0, 60) }));
+          const btns = Array.from(document.querySelectorAll("li,a,button,span,i")).filter((el) => /图片|上传|素材|插图/.test(String(el.textContent || "").trim()) && String(el.textContent || "").trim().length <= 10).slice(0, 8).map((el) => ({ tag: el.tagName, cls: String(el.className || "").slice(0, 60), text: String(el.textContent || "").trim().slice(0, 12) }));
+          const imgs = c ? c.getObjects().map((o) => ({ type: o.type, multiUuid: o.multiUuid || null })) : null;
+          return { fileInputs: files, imageButtons: btns, objLen: c ? c.getObjects().length : null, regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null, itemListLen: il ? il.length : null, objs: imgs };
+        });
+        rec.ui = { fileInputs: base.fileInputs, imageButtons: base.imageButtons };
+        rec.steps.push({ tag: "base", objLen: base.objLen, regLen: base.regLen, itemListLen: base.itemListLen, objs: base.objs });
+        // Step2 找目标 file input（优先带图片语义；否则第一个）
+        let sel = null;
+        const fsel = await ev(() => {
+          const files = Array.from(document.querySelectorAll('input[type="file"]'));
+          if (!files.length) return { found: false };
+          let pick = files[0];
+          for (const f of files) { if (/image|img|pic|upload/i.test(String(f.accept || "") + " " + String(f.className || ""))) { pick = f; break; } }
+          return { found: true, id: pick.id || "", cls: String(pick.className || "").slice(0, 80), counts: files.length };
+        });
+        rec.fileInputPick = fsel;
+        if (fsel && fsel.found) {
+          // 若图片按钮存在先点击展开（采样）
+          if (base.imageButtons && base.imageButtons.length) { try { await ev((t) => { const w = Array.from(document.querySelectorAll("li,a,button,span,i")); const el = w.filter((x) => String(x.textContent || "").trim() === t && String(x.className || "").indexOf("img") >= 0)[0] || w.filter((x) => String(x.textContent || "").trim() === t)[0]; if (el && el.offsetParent) { try { el.click(); } catch (e) {} return true; } return false; }, base.imageButtons[0].text); await SLEEP(1200); } catch (e) {} }
+          const beforeIds = await snapIds();
+          try {
+            await page.setInputFiles('input[type="file"]', tmpPng);
+          } catch (e) { rec.errors.push("setInputFiles:" + String(e && e.message || e).slice(0, 120)); }
+          // 等待对象增加
+          let created = null;
+          const t0 = Date.now();
+          for (;;) {
+            await SLEEP(900);
+            const r = await ev(() => {
+              const req = window.requirejs || window.require;
+              const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+              const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+              const c = d && d.canvas;
+              const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+              const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+              const il = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content ? PV.pageList[eIdx].content.itemList : null;
+              const newObs = c ? c.getObjects().filter((o) => o && String(o.type) === "image").map((o) => ({ multiUuid: o.multiUuid || null, uuid: o.uuid || null })) : [];
+              return { objLen: c ? c.getObjects().length : null, regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null, itemListLen: il ? il.length : null, lastItem: il && il.length ? { keys: Object.keys(il[il.length - 1]).slice(0, 16), loc: il[il.length - 1].location, mediaType: il[il.length - 1].media && il[il.length - 1].media.mediaType } : null, newObs: newObs };
+            });
+            const grew = r.objLen !== null && base.objLen !== null && r.objLen > base.objLen;
+            if (grew || Date.now() - t0 > 30000) { created = r; break; }
+          }
+          rec.steps.push({ tag: "afterUpload", ...created });
+          // Step3 新对象详情 + setItemListJson(native)
+          const detail = await ev((arg) => {
+            const req = window.requirejs || window.require;
+            const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+            const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+            const c = d && d.canvas;
+            const newOne = c ? c.getObjects().filter((o) => o && String(o.type) === "image" && String(o.multiUuid || "").indexOf(arg.prevBase.loggedUuid || "__none__") < 0).slice(-1)[0] || null : null;
+            const o = newOne;
+            const out = { found: !!o };
+            if (o) {
+              const res = {};
+              ["type", "width", "height", "scaleX", "scaleY", "left", "top", "angle", "originX", "originY", "id", "name"].forEach((k) => { try { res[k] = o[k]; } catch (e) {} });
+              res.multiUuid = o.multiUuid || null; res.uuid = o.uuid || null; res.markuuid = o.markuuid || null;
+              try { res.media = { mediaType: o.media && o.media.mediaType, hasMedia: !!o.media }; } catch (e) {}
+              try { res.location = o.location || null; res.printLocation = o.printLocation || null; } catch (e) {}
+              try { res.layer = o.layer || null; res.layerNum = o.layerNum; } catch (e) {}
+              res.bizFields = Object.keys(o).filter((k) => /uuid|markuuid|media|location|print|layer|product|origin|container/i.test(k)).slice(0, 20);
+              out.obj = res;
+            }
+            // serializer on native object
+            let holder = null;
+            if (req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined) {
+              try { Object.keys(req.s.contexts._.defined).forEach((k) => { if (!holder) { const m = req.s.contexts._.defined[k]; if (m && typeof m.setItemListJson === "function") holder = m; } }); } catch (e) {}
+            }
+            if (holder && o) { try { const sr = holder.setItemListJson([o], c); out.serialized = { n: sr && Array.isArray(sr.itemList) ? sr.itemList.length : -1, firstKeys: sr && sr.itemList && sr.itemList[0] ? Object.keys(sr.itemList[0]).slice(0, 14) : null, mediaType: sr && sr.itemList && sr.itemList[0] && sr.itemList[0].media && sr.itemList[0].media.mediaType }; } catch (e) { out.serialized = { err: String(e && e.message || e).slice(0, 120) }; } }
+            else out.serialized = { n: -1, reason: o ? "no holder" : "no object" };
+            return out;
+          }, { prevBase: {} });
+          rec.created = detail;
+          // 清理（删除新增对象）
+          await ev(() => {
+            const req = window.requirejs || window.require;
+            const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+            const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+            const c = d && d.canvas;
+            let removed = 0;
+            if (c) { const before = c.getObjects().length; c.getObjects().slice().forEach((o) => { if (o && String(o.type) === "image") { try { c.remove(o); removed += 1; } catch (e) {} } }); }
+            return { removed, before: rec.steps[rec.steps.length - 1].objLen, events: [] };
+          });
+        } else {
+          rec.uiFound = false;
+        }
+        const after = await ev(() => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          return { objLen: c ? c.getObjects().length : null };
+        });
+        rec.afterCleanup = after;
+      } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
     } else if (MODE === "quad") {
       // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
       await armDrawTextCap();
@@ -652,7 +768,7 @@ function injectUserscript() {
     }
   } catch (e) { out.errors.push(String(e && e.message || e).slice(0, 400)); }
   finally { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
-  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : MODE === "drawitem-probe" ? "drawitem-probe-1040459.json" : "canvas-88x57-create-failure.json";
+  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : MODE === "drawitem-probe" ? "drawitem-probe-1040459.json" : MODE === "native-image-inventory" ? "c-native-inventory-1040459.json" : "canvas-88x57-create-failure.json";
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(path.join(REPORT_DIR, name), JSON.stringify(out, null, 2));
   console.log("STAGE-8A2B " + MODE + " done records=" + out.records.length + " errors=" + out.errors.length + " -> " + path.join(REPORT_DIR, name));
