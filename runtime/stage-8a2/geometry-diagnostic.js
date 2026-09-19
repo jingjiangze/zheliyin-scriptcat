@@ -37,7 +37,7 @@ function injectUserscript() {
     code = code.split(b + "/extension/src/").join(BRANCH + "/extension/src/");
     code = code.replace(new RegExp(b + "\\/zheliyin-card-assistant\\.user\\.js", "g"), BRANCH + "/zheliyin-card-assistant.user.js");
   });
-  if (TRANSFORM_ON) {
+  if (TRANSFORM_ON && code.indexOf("image-transform.js") < 0) {
     const extra = "// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/" + BRANCH + "/extension/src/editor/image-transform.js?v=0.3.11.2\n";
     const anchor = "extension/src/ocr/ocr-text-safety-gate.js";
     const ai = code.indexOf(anchor);
@@ -102,7 +102,7 @@ function injectUserscript() {
     await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
     await SLEEP(1200);
     if (BAIDU_AK && BAIDU_SK) { await ev((a) => { const ai = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak"); const si = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk"); const sb = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save"); if (!ai || !si || !sb) return { ok: false }; ai.value = a.ak; si.value = a.sk; try { sb.click(); } catch (e) {} return { ok: true }; }, { ak: BAIDU_AK, sk: BAIDU_SK }); await SLEEP(3000); }
-    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : ((MODE === "drawitem-probe" || MODE === "native-image-inventory" || MODE === "native-paste-image" || MODE === "drawimg-contract") ? URL_88 : URL_252438));
+    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : ((MODE === "drawitem-probe" || MODE === "native-image-inventory" || MODE === "native-paste-image" || MODE === "drawimg-contract") ? URL_88 : (MODE === "geom" ? ((process.env.ZY_TARGET || "252438") === "88" ? URL_88 : URL_252438) : URL_252438)));
     // D2-C itemlist-source：页面早期 hook（模板初始化前）追 itemList 构建 + 模板 JSON 响应
     if (MODE === "itemlist-source") {
       await page.addInitScript(() => {
@@ -1174,6 +1174,150 @@ function injectUserscript() {
         // cleanup：移除本次新增（native image + text）
         rec.cleanup = await rollback("zw-");
       } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 400)); }
+    } else if (MODE === "geom") {
+      // =====================================================================
+      // Stage 8A-2 Geometry（A/B）统一取证：252438 Golden Baseline + Rotation/Scale 矩阵
+      // 单次运行 = 一个 (angle, scale)。注入真实图片 → OCR（真实 pipeline）→ 读回 textbox，
+      // 记录 expected（buildItemsFromOcr items，= OCR→canvas 期望几何）vs actual（textbox 对象）
+      // 同时捕获 ocrPrepareResult.geometry（geo 契约）与 viewportTransform/zoom/retina/currentFact*。
+      // env: ZY_TARGET=252438|88  ZY_ANGLE=deg  ZY_SCALE=f  ZY_REPEAT=n
+      // =====================================================================
+      const GEOM_ANGLE = Number(process.env.ZY_ANGLE || 0);
+      const GEOM_SCALE = Number(process.env.ZY_SCALE || 1);
+      const GEOM_TARGET = process.env.ZY_TARGET || "252438";
+      const GEOM_REPEAT = Number(process.env.ZY_REPEAT || 1);
+      const GEOM_VIA = process.env.ZY_VIA || "active"; // active | background（OCR prepare 提取路径）
+      const rec = { mode: "geom", target: GEOM_TARGET, angle: GEOM_ANGLE, scale: GEOM_SCALE, via: GEOM_VIA, steps: [], errors: [], rows: [] };
+      out.records.push(rec);
+      try {
+        const DU = await render();
+        const dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
+        rec.duLen = String(dataUrl).length;
+        // 注入指定几何的图片并选中（OCR prepare 优先 active image）
+        for (let rep = 0; rep < GEOM_REPEAT; rep += 1) {
+          const row = { rep, errors: [], steps: [] };
+          rec.rows.push(row);
+          try {
+            const tf = { left: 60, top: 60, scaleX: GEOM_SCALE, scaleY: GEOM_SCALE, angle: GEOM_ANGLE };
+            let inj = null;
+            if (GEOM_VIA === "background") {
+              process.env.ZY_BG_ANGLE = String(GEOM_ANGLE);
+              inj = await setBg(0, dataUrl);
+            } else {
+              inj = await injectImg(0, dataUrl, "g8a2-", tf);
+            }
+            row.inj = inj;
+            // ---- 图片对象 + canvas 全字段（STEP1/2 要求清单）----
+            const imgSnap = await ev((arg) => {
+              const req = window.requirejs || window.require;
+              const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+              const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+              const c = d && d.canvas;
+              const out = { found: false };
+              if (c) {
+                let o = null;
+                if (arg.via === "background") { o = c.backgroundImage && String(c.backgroundImage.type) === "image" ? c.backgroundImage : null; }
+                else {
+                  const imgs = c.getObjects().filter((o2) => o2 && String(o2.multiUuid || "").indexOf("g8a2-") === 0);
+                  o = imgs.length ? imgs[imgs.length - 1] : c.getActiveObject();
+                }
+                if (o) {
+                  out.found = true;
+                  const el = o.getElement ? o.getElement() : null;
+                  out.image = {
+                    type: o.type, naturalWidth: el ? el.naturalWidth : null, naturalHeight: el ? el.naturalHeight : null,
+                    width: o.width, height: o.height, scaleX: o.scaleX, scaleY: o.scaleY,
+                    left: o.left, top: o.top, angle: o.angle, originX: o.originX, originY: o.originY,
+                    fx: o.fx || null, fy: o.fy || null,
+                    aCoords: o.aCoords ? { tl: o.aCoords.tl && [o.aCoords.tl.x, o.aCoords.tl.y], tr: o.aCoords.tr && [o.aCoords.tr.x, o.aCoords.tr.y], br: o.aCoords.br && [o.aCoords.br.x, o.aCoords.br.y], bl: o.aCoords.bl && [o.aCoords.bl.x, o.aCoords.bl.y] } : null,
+                    oCoords: o.oCoords ? { tl: o.oCoords.tl && [o.oCoords.tl.x, o.oCoords.tl.y], tr: o.oCoords.tr && [o.oCoords.tr.x, o.oCoords.tr.y], br: o.oCoords.br && [o.oCoords.br.x, o.oCoords.br.y], bl: o.oCoords.bl && [o.oCoords.bl.x, o.oCoords.bl.y] } : null
+                  };
+                  try { if (c.setActiveObject) c.setActiveObject(o); } catch (e) {}
+                  out.boundingRect = o.getBoundingRect ? (function () { const b = o.getBoundingRect(); return { left: b.left, top: b.top, width: b.width, height: b.height }; })() : null;
+                }
+              }
+              out.canvas = c ? {
+                width: c.width, height: c.height, cssWidth: c.getWidth ? c.getWidth() : null, cssHeight: c.getHeight ? c.getHeight() : null,
+                viewportTransform: c.viewportTransform ? Array.from(c.viewportTransform) : null,
+                zoom: c.getZoom ? c.getZoom() : null,
+                retina: c.getRetinaScaling ? c.getRetinaScaling() : null
+              } : null;
+              out.diy = d ? { currentFactWidth: d.currentFactWidth, currentFactHeight: d.currentFactHeight, currentSize: d.currentSize } : null;
+              out.registry = d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null;
+              return out;
+            }, { via: GEOM_VIA });
+            row.imgSnap = imgSnap;
+            if (!imgSnap.found) { row.errors.push("no image found"); await rollback("g8a2-"); continue; }
+            // ---- arm：捕获 ocrPrepareResult.geometry + ocrCreate items（expected 几何）----
+            await ev(() => {
+              window.__zyGeomCap = { prep: null, items: null, payload: null };
+              const on = (e) => {
+                if (!e.data) return;
+                try {
+                  if (e.data.source === "zy-card-assistant" && e.data.type === "ocrCreate") {
+                    window.__zyGeomCap.payload = e.data;
+                    window.__zyGeomCap.items = (e.data.items || []).map((it) => ({
+                      text: String(it.text || "").slice(0, 16), blockIndex: it.blockIndex,
+                      left: it.left, top: it.top, width: it.width, height: it.height, fontSize: it.fontSize,
+                      angle: it.angle, origin: it.origin, pageId: it.pageId, side: it.side,
+                      diagnostics: it.diagnostics ? { layoutWidth: it.diagnostics.layoutWidth, sourceLineCount: it.diagnostics.sourceLineCount, perLineWidth: (it.diagnostics.perLineWidth || []).slice(0, 4) } : null
+                    }));
+                  }
+                } catch (err) {}
+              };
+              window.addEventListener("message", on);
+              (window.__zyGeomMsgHook || (window.__zyGeomMsgHook = on));
+              return { ok: true };
+            });
+            // 真实 OCR
+            const r = await runOcrRound("g8a2-");
+            row.ocr = { click: r.click, done: r.done, ids: r.ids };
+            // ---- expected（buildItemsFromOcr 产物）----
+            const cap = await ev(() => (window.__zyGeomCap || { items: null, payload: null }));
+            row.expectedItems = cap.items;
+            row.expectedPayloadMeta = cap.payload ? { pageId: cap.payload.pageId, side: cap.payload.side, itemCount: (cap.payload.items || []).length } : null;
+            // ---- actual：由 runOcrRound 内部（rollback 前）捕获的新对象快照 ----
+            row.actual = { arr: (r.rd && r.rd.arr || []).map((o) => ({ id: o.id ? String(o.id).slice(0, 12) : null, text: o.text, left: o.left, top: o.top, width: o.width, height: o.height, fontSize: o.fontSize, angle: o.angle, originX: o.originX, scaleX: o.scaleX, scaleY: o.scaleY, aCoords: o.aCoords, boundingRect: o.boundingRect, biz: o.biz })), canvas: (r.rd && r.rd.canvas) || null };
+            // ---- Transform 反求：以 img 左轴坐标三点映射求 M=[a,b,c,d,tx,ty] ----
+            // source 点（图片局部左上角/右上/中心，乘以 fabric scale 并叠 left/top）→ 由 buildItemsFromOcr 同构公式的 expected 与几何
+            // 实际从 textbox：0° expected=(px-4,py-4, bbox*sx)；旋转 expected=transformCorners AABB
+            const tf2 = await ev((arg) => {
+              const req = window.requirejs || window.require;
+              const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+              const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+              const c = d && d.canvas;
+              if (!c) return null;
+              let o = null;
+              if (arg.via === "background") { o = c.backgroundImage && String(c.backgroundImage.type) === "image" ? c.backgroundImage : null; }
+              else {
+                const imgs = c.getObjects().filter((o2) => o2 && String(o2.multiUuid || "").indexOf("g8a2-") === 0);
+                o = imgs.length ? imgs[imgs.length - 1] : null;
+              }
+              if (!o) return null;
+              return {
+                left: o.left, top: o.top, w: o.width, h: o.height,
+                sx: o.scaleX, sy: o.scaleY, angle: o.angle,
+                cw: c.width, ch: c.height,
+                vt: c.viewportTransform ? Array.from(c.viewportTransform) : null
+              };
+            }, { via: GEOM_VIA });
+            row.tf = tf2;
+            // 期望 O1 = 图片中心（image-local 中心 → canvas）
+            const rad = (GEOM_ANGLE * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
+            if (tf2) {
+              const cx = tf2.left + (tf2.w * tf2.sx) / 2, cy = tf2.top + (tf2.h * tf2.sy) / 2;
+              row.expectedImgCenter = { cx, cy };
+            }
+            if (GEOM_VIA === "background") {
+              await ev(() => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const c = vo && vo.totalCanvasArray && vo.totalCanvasArray[0] && vo.totalCanvasArray[0].canvas; if (c) { try { c.setBackgroundImage(null); if (c.requestRenderAll) c.requestRenderAll(); } catch (e) {} } return { ok: true }; });
+            } else {
+              await rollback("g8a2-");
+            }
+            await SLEEP(900);
+          } catch (e) { row.errors.push(String(e && e.message || e).slice(0, 300)); }
+        }
+        rec.imgBaseline = { angle: GEOM_ANGLE, scale: GEOM_SCALE };
+      } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 400)); }
     } else if (MODE === "quad") {
       // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
       await armDrawTextCap();
@@ -1246,7 +1390,7 @@ function injectUserscript() {
     }
   } catch (e) { out.errors.push(String(e && e.message || e).slice(0, 400)); }
   finally { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
-  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : MODE === "drawitem-probe" ? "drawitem-probe-1040459.json" : MODE === "native-image-inventory" ? "c-native-inventory-1040459.json" : MODE === "native-paste-image" ? "c-native-paste-1040459.json" : MODE === "drawimg-contract" ? "c-native-drawimg-contract-1040459.json" : "canvas-88x57-create-failure.json";
+  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : MODE === "drawitem-probe" ? "drawitem-probe-1040459.json" : MODE === "native-image-inventory" ? "c-native-inventory-1040459.json" : MODE === "native-paste-image" ? "c-native-paste-1040459.json" : MODE === "drawimg-contract" ? "c-native-drawimg-contract-1040459.json" : MODE === "geom" ? ("geom-" + (process.env.ZY_TARGET || "252438") + "-" + (process.env.ZY_VIA || "active") + "-a" + String(process.env.ZY_ANGLE || "0") + "-s" + String(process.env.ZY_SCALE || "1") + (process.env.ZY_TRANSFORM === "0" ? "-off" : "-on") + ".json") : "canvas-88x57-create-failure.json";
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(path.join(REPORT_DIR, name), JSON.stringify(out, null, 2));
   console.log("STAGE-8A2B " + MODE + " done records=" + out.records.length + " errors=" + out.errors.length + " -> " + path.join(REPORT_DIR, name));

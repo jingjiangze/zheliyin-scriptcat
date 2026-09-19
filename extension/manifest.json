@@ -1,8 +1,8 @@
-﻿{
+{
   "manifest_version": 3,
   "name": "折立印名片套版助手",
-  "version": "0.3.11.12",
-  "version_name": "0.3.11.12",
+  "version": "0.3.11.13",
+  "version_name": "0.3.11.13",
   "description": "在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时按原样式补充。支持一键填正反面、AI 辅助识别。",
   "minimum_chrome_version": "102",
   "host_permissions": [
@@ -25,7 +25,7 @@
         "http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*",
         "http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*"
       ],
-      "js": ["gm-shim.js", "src/fields/field-core.js", "src/core/config-core.js", "src/ai/ai-client.js", "src/editor/page-bridge.js", "assistant.js"],
+      "js": ["gm-shim.js", "src/fields/field-core.js", "src/core/config-core.js", "src/ai/ai-client.js", "src/editor/image-transform.js", "src/editor/page-bridge.js", "assistant.js"],
       "run_at": "document_idle",
       "all_frames": true
     }

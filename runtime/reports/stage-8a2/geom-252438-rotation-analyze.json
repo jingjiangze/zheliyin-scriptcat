@@ -1,0 +1,1025 @@
+{
+  "ts": "2026-09-19T09:50:23.550Z",
+  "stage": "8A2-STEP2-ROTATION",
+  "template": "252438",
+  "canvasContract": {
+    "canvas": {
+      "width": 871.4999999999999,
+      "height": 530.1624999999999,
+      "cssWidth": 871.4999999999999,
+      "cssHeight": 530.1624999999999,
+      "viewportTransform": [
+        1.4525,
+        0,
+        0,
+        1.4525,
+        0,
+        0
+      ],
+      "zoom": 1.4525,
+      "retina": 0.800000011920929
+    },
+    "diy": {
+      "currentFactWidth": 600,
+      "currentFactHeight": 365,
+      "currentSize": 1.4525
+    },
+    "image": {
+      "type": "image",
+      "naturalWidth": 1000,
+      "naturalHeight": 300,
+      "width": 1000,
+      "height": 300,
+      "scaleX": 1,
+      "scaleY": 1,
+      "left": 60,
+      "top": 60,
+      "angle": 0,
+      "originX": "left",
+      "originY": "top",
+      "fx": null,
+      "fy": null,
+      "aCoords": {
+        "tl": [
+          60,
+          60
+        ],
+        "tr": [
+          1060,
+          60
+        ],
+        "br": [
+          1060,
+          360
+        ],
+        "bl": [
+          60,
+          360
+        ]
+      },
+      "oCoords": {
+        "tl": [
+          87.14999999999998,
+          87.15
+        ],
+        "tr": [
+          1539.65,
+          87.15
+        ],
+        "br": [
+          1539.65,
+          522.9
+        ],
+        "bl": [
+          87.14999999999998,
+          522.9
+        ]
+      }
+    },
+    "perFile": "geom-252438-a0-s1.json"
+  },
+  "rows": [
+    {
+      "angle": 0,
+      "file": "geom-252438-a0-s1.json",
+      "img": {
+        "left": 60,
+        "top": 60,
+        "w": 1000,
+        "h": 300,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "oCoords": {
+          "tl": [
+            87.14999999999998,
+            87.15
+          ],
+          "tr": [
+            1539.65,
+            87.15
+          ],
+          "br": [
+            1539.65,
+            522.9
+          ],
+          "bl": [
+            87.14999999999998,
+            522.9
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "i": 0,
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 88,
+            "top": 82.99999999999999,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 0
+          },
+          "actual": {
+            "left": 88,
+            "top": 83,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 0,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                88,
+                83
+              ],
+              "br": [
+                582,
+                169
+              ]
+            },
+            "boundingRect": {
+              "left": 127.82,
+              "top": 120.55749999999999,
+              "width": 717.5350000000001,
+              "height": 124.91499999999998
+            },
+            "biz": {
+              "locationX": 88,
+              "locationY": 83,
+              "locationWidth": 493,
+              "locationHeight": 85
+            }
+          },
+          "delta": {
+            "left": 0,
+            "top": 1.4210854715202004e-14,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 1,
+          "text": "中号正文联系电话与邮",
+          "expected": {
+            "left": 88,
+            "top": 167,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 0
+          },
+          "actual": {
+            "left": 88,
+            "top": 167,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 0,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                88,
+                167
+              ],
+              "br": [
+                354,
+                201
+              ]
+            },
+            "boundingRect": {
+              "left": 127.82000000000002,
+              "top": 242.5675,
+              "width": 386.3649999999999,
+              "height": 49.38499999999999
+            },
+            "biz": {
+              "locationX": 88,
+              "locationY": 167,
+              "locationWidth": 265,
+              "locationHeight": 33
+            }
+          },
+          "delta": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 2,
+          "text": "小字页肝版权各注生",
+          "expected": {
+            "left": 87,
+            "top": 256,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 0
+          },
+          "actual": {
+            "left": 87,
+            "top": 256,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 0,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                87,
+                256
+              ],
+              "br": [
+                203,
+                279
+              ]
+            },
+            "boundingRect": {
+              "left": 126.36749999999999,
+              "top": 371.84,
+              "width": 168.48999999999995,
+              "height": 33.40750000000003
+            },
+            "biz": {
+              "locationX": 87,
+              "locationY": 256,
+              "locationWidth": 115,
+              "locationHeight": 22
+            }
+          },
+          "delta": {
+            "left": 0,
+            "top": 0,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        }
+      ]
+    },
+    {
+      "angle": 2,
+      "file": "geom-252438-a2-s1.json",
+      "img": {
+        "left": 60,
+        "top": 60,
+        "w": 1000,
+        "h": 300,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 2,
+        "oCoords": {
+          "tl": [
+            87.1500000000002,
+            87.14999999999998
+          ],
+          "tr": [
+            1538.7651762452365,
+            137.84151896038264
+          ],
+          "br": [
+            1523.5577205571217,
+            573.3260718339536
+          ],
+          "bl": [
+            71.9425443118854,
+            522.634552873571
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "i": 0,
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 94.58845973742822,
+            "top": 70.74196381988077,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 2,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 95,
+            "top": 71,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 2,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                95,
+                71
+              ],
+              "br": [
+                585.6977118310182,
+                174.18796249467772
+              ]
+            },
+            "boundingRect": {
+              "left": 133.62802936940705,
+              "top": 103.1275,
+              "width": 721.4573676957398,
+              "height": 149.88051552351936
+            },
+            "biz": {
+              "locationX": 95,
+              "locationY": 71,
+              "locationWidth": 493,
+              "locationHeight": 85
+            }
+          },
+          "delta": {
+            "left": 0.41154026257177634,
+            "top": 0.2580361801192339,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 1,
+          "text": "中号正文联系电话与邮",
+          "expected": {
+            "left": 93.01798238581569,
+            "top": 154.69079328948482,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 2,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 93,
+            "top": 155,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 2,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                93,
+                155
+              ],
+              "br": [
+                357.65137709919446,
+                198.26255424151452
+              ]
+            },
+            "boundingRect": {
+              "left": 133.35898835534698,
+              "top": 225.1375,
+              "width": 387.85314852588596,
+              "height": 62.838860035799826
+            },
+            "biz": {
+              "locationX": 93,
+              "locationY": 155,
+              "locationWidth": 265,
+              "locationHeight": 33
+            }
+          },
+          "delta": {
+            "left": -0.01798238581568512,
+            "top": 0.3092067105151841,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 2,
+          "text": "小字页肝版权各注生",
+          "expected": {
+            "left": 89.1568328291915,
+            "top": 243.60167739748184,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 2,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 89,
+            "top": 244,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 2,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                89,
+                244
+              ],
+              "br": [
+                204.12664751005758,
+                271.0343306389293
+              ]
+            },
+            "boundingRect": {
+              "left": 128.1065950639112,
+              "top": 354.40999999999997,
+              "width": 169.55326538053623,
+              "height": 39.26736525304477
+            },
+            "biz": {
+              "locationX": 89,
+              "locationY": 244,
+              "locationWidth": 115,
+              "locationHeight": 22
+            }
+          },
+          "delta": {
+            "left": -0.15683282919150088,
+            "top": 0.39832260251816365,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        }
+      ]
+    },
+    {
+      "angle": 5,
+      "file": "geom-252438-a5-s1.json",
+      "img": {
+        "left": 60,
+        "top": 60,
+        "w": 1000,
+        "h": 300,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 5,
+        "oCoords": {
+          "tl": [
+            87.14999999999998,
+            87.14999999999998
+          ],
+          "tr": [
+            1534.1227989782606,
+            213.74371634097344
+          ],
+          "br": [
+            1496.1446840759686,
+            647.8355560344515
+          ],
+          "bl": [
+            49.171885097708014,
+            521.2418396934781
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "i": 0,
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 99.53316031440853,
+            "top": 46.67916452881127,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 5,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 100,
+            "top": 47,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 5,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                100,
+                47
+              ],
+              "br": [
+                584.6247869810237,
+                175.72768095323326
+              ]
+            },
+            "boundingRect": {
+              "left": 134.36294039467623,
+              "top": 68.26750000000001,
+              "width": 725.6916223005844,
+              "height": 186.97695658457127
+            },
+            "biz": {
+              "locationX": 100,
+              "locationY": 47,
+              "locationWidth": 493,
+              "locationHeight": 85
+            }
+          },
+          "delta": {
+            "left": 0.4668396855914665,
+            "top": 0.32083547118872957,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 1,
+          "text": "中号正文联系电话与邮",
+          "expected": {
+            "left": 95.61115189076392,
+            "top": 130.3595191685179,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 5,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 96,
+            "top": 130,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 5,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                96,
+                130
+              ],
+              "br": [
+                358.02449443898394,
+                187.0540473059964
+              ]
+            },
+            "boundingRect": {
+              "left": 135.13581364440685,
+              "top": 188.825,
+              "width": 389.1989508838103,
+              "height": 82.87100371195976
+            },
+            "biz": {
+              "locationX": 96,
+              "locationY": 130,
+              "locationWidth": 265,
+              "locationHeight": 33
+            }
+          },
+          "delta": {
+            "left": 0.38884810923607915,
+            "top": -0.3595191685178918,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 2,
+          "text": "小字页肝版权各注生",
+          "expected": {
+            "left": 87.4681862873642,
+            "top": 218.9336915559356,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 5,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 87,
+            "top": 219,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 5,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                87,
+                219
+              ],
+              "br": [
+                200.55400289544633,
+                252.0225442148385
+              ]
+            },
+            "boundingRect": {
+              "left": 123.4558445241576,
+              "top": 318.0975,
+              "width": 170.76050015732056,
+              "height": 47.96524547205286
+            },
+            "biz": {
+              "locationX": 87,
+              "locationY": 219,
+              "locationWidth": 115,
+              "locationHeight": 22
+            }
+          },
+          "delta": {
+            "left": -0.46818628736420465,
+            "top": 0.06630844406438996,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        }
+      ]
+    },
+    {
+      "angle": 8,
+      "file": "geom-252438-a8-s1.json",
+      "img": {
+        "left": 60,
+        "top": 60,
+        "w": 1000,
+        "h": 300,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 8,
+        "oCoords": {
+          "tl": [
+            87.15000000000009,
+            87.14999999999992
+          ],
+          "tr": [
+            1525.514369847131,
+            289.298929144495
+          ],
+          "br": [
+            1464.8696911037825,
+            720.8082400986343
+          ],
+          "bl": [
+            26.50532125665154,
+            518.6593109541392
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "i": 0,
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 105.7399684923094,
+            "top": 23.06401629547624,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 8,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 106,
+            "top": 23,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 8,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                106,
+                23
+              ],
+              "br": [
+                583.2235392757701,
+                176.91456578604738
+              ]
+            },
+            "boundingRect": {
+              "left": 136.58019209357343,
+              "top": 33.4075,
+              "width": 727.9368066109091,
+              "height": 223.56090680423384
+            },
+            "biz": {
+              "locationX": 106,
+              "locationY": 23,
+              "locationWidth": 493,
+              "locationHeight": 85
+            }
+          },
+          "delta": {
+            "left": 0.2600315076905986,
+            "top": -0.06401629547623955,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 1,
+          "text": "中号正文联系电话与邮",
+          "expected": {
+            "left": 99.47717894910645,
+            "top": 106.24653406976816,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 8,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 99,
+            "top": 106,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 8,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                99,
+                106
+              ],
+              "br": [
+                357.67942085261546,
+                176.6891591925908
+              ]
+            },
+            "boundingRect": {
+              "left": 136.92443640908715,
+              "top": 153.965,
+              "width": 389.47798597024956,
+              "height": 102.67600372723817
+            },
+            "biz": {
+              "locationX": 99,
+              "locationY": 106,
+              "locationWidth": 265,
+              "locationHeight": 33
+            }
+          },
+          "delta": {
+            "left": -0.4771789491064453,
+            "top": -0.24653406976815972,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 2,
+          "text": "小字页肝版权各注生",
+          "expected": {
+            "left": 87.07471660163951,
+            "top": 194.24121908680783,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 8,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 87,
+            "top": 194,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 8,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                87,
+                194
+              ],
+              "br": [
+                198.67011465194065,
+                232.92024529242372
+              ]
+            },
+            "boundingRect": {
+              "left": 121.7180746296766,
+              "top": 281.78499999999997,
+              "width": 171.49969227259055,
+              "height": 56.53165628724548
+            },
+            "biz": {
+              "locationX": 87,
+              "locationY": 194,
+              "locationWidth": 115,
+              "locationHeight": 22
+            }
+          },
+          "delta": {
+            "left": -0.07471660163950844,
+            "top": -0.24121908680783122,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        }
+      ]
+    },
+    {
+      "angle": 10,
+      "file": "geom-252438-a10-s1.json",
+      "img": {
+        "left": 60,
+        "top": 60,
+        "w": 1000,
+        "h": 300,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 10,
+        "oCoords": {
+          "tl": [
+            87.14999999999998,
+            87.15000000000003
+          ],
+          "tr": [
+            1517.5832612502318,
+            339.37397806121635
+          ],
+          "br": [
+            1441.9160678318672,
+            768.503956436286
+          ],
+          "bl": [
+            11.482806581635145,
+            516.2799783750696
+          ]
+        }
+      },
+      "blocks": [
+        {
+          "i": 0,
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 110.57075131630407,
+            "top": 7.60129923137503,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 10,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 111,
+            "top": 8,
+            "width": 493,
+            "height": 85,
+            "fontSize": 59,
+            "angle": 10,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                111,
+                8
+              ],
+              "br": [
+                582.5612867086747,
+                178.47566652651346
+              ]
+            },
+            "boundingRect": {
+              "left": 139.53623788673542,
+              "top": 11.620000000000005,
+              "width": 728.3252931708791,
+              "height": 247.6159056297608
+            },
+            "biz": {
+              "locationX": 111,
+              "locationY": 8,
+              "locationWidth": 493,
+              "locationHeight": 85
+            }
+          },
+          "delta": {
+            "left": 0.4292486836959313,
+            "top": 0.3987007686249697,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 1,
+          "text": "中号正文联系电话与邮",
+          "expected": {
+            "left": 102.75658332129221,
+            "top": 90.32515048440051,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 10,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 103,
+            "top": 90,
+            "width": 265,
+            "height": 33,
+            "fontSize": 19,
+            "angle": 10,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                103,
+                90
+              ],
+              "br": [
+                359.0548242605717,
+                169.67387886181854
+              ]
+            },
+            "boundingRect": {
+              "left": 141.03188474591863,
+              "top": 130.725,
+              "width": 389.070862746643,
+              "height": 115.72630904679141
+            },
+            "biz": {
+              "locationX": 103,
+              "locationY": 90,
+              "locationWidth": 265,
+              "locationHeight": 33
+            }
+          },
+          "delta": {
+            "left": 0.2434166787077885,
+            "top": -0.32515048440050975,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        },
+        {
+          "i": 2,
+          "text": "小字页肝版权各注生",
+          "expected": {
+            "left": 87.53262499959172,
+            "top": 177.79939232482008,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 10,
+            "origin": "left"
+          },
+          "actual": {
+            "left": 88,
+            "top": 178,
+            "width": 115,
+            "height": 22,
+            "fontSize": 11,
+            "angle": 10,
+            "originX": "left",
+            "aCoords": {
+              "tl": [
+                88,
+                178
+              ],
+              "br": [
+                198.24379126307673,
+                220.7937669286447
+              ]
+            },
+            "boundingRect": {
+              "left": 122.01884850459201,
+              "top": 258.54499999999996,
+              "width": 171.73140980043485,
+              "height": 62.15794646385643
+            },
+            "biz": {
+              "locationX": 88,
+              "locationY": 178,
+              "locationWidth": 115,
+              "locationHeight": 22
+            }
+          },
+          "delta": {
+            "left": 0.46737500040828195,
+            "top": 0.20060767517992417,
+            "width": 0,
+            "height": 0,
+            "fontSize": 0,
+            "angle": 0
+          }
+        }
+      ]
+    }
+  ]
+}

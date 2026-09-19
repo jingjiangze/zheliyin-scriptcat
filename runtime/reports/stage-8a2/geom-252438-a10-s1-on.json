@@ -1,0 +1,380 @@
+{
+  "ts": "2026-09-19T09:53:18.834Z",
+  "stage": "STAGE-8A2B-geom",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "geom",
+  "records": [
+    {
+      "mode": "geom",
+      "target": "252438",
+      "angle": 10,
+      "scale": 1,
+      "steps": [],
+      "errors": [],
+      "rows": [
+        {
+          "rep": 0,
+          "errors": [],
+          "steps": [],
+          "inj": {
+            "ok": true,
+            "w": 1000,
+            "h": 300,
+            "nw": 1000,
+            "nh": 300,
+            "sx": 1,
+            "sy": 1,
+            "angle": 10,
+            "left": 60,
+            "top": 60
+          },
+          "imgSnap": {
+            "found": true,
+            "image": {
+              "type": "image",
+              "naturalWidth": 1000,
+              "naturalHeight": 300,
+              "width": 1000,
+              "height": 300,
+              "scaleX": 1,
+              "scaleY": 1,
+              "left": 60,
+              "top": 60,
+              "angle": 10,
+              "originX": "left",
+              "originY": "top",
+              "fx": null,
+              "fy": null,
+              "aCoords": {
+                "tl": [
+                  60,
+                  60.00000000000003
+                ],
+                "tr": [
+                  1044.807753012208,
+                  233.64817766693037
+                ],
+                "br": [
+                  992.7132997121289,
+                  529.0905035705928
+                ],
+                "bl": [
+                  7.905546699920933,
+                  355.44232590366244
+                ]
+              },
+              "oCoords": {
+                "tl": [
+                  87.14999999999998,
+                  87.15000000000003
+                ],
+                "tr": [
+                  1517.5832612502318,
+                  339.37397806121635
+                ],
+                "br": [
+                  1441.9160678318672,
+                  768.503956436286
+                ],
+                "bl": [
+                  11.482806581635145,
+                  516.2799783750696
+                ]
+              }
+            },
+            "boundingRect": {
+              "left": 11.482806581635145,
+              "top": 87.15000000000003,
+              "width": 1506.1004546685967,
+              "height": 681.3539564362859
+            },
+            "canvas": {
+              "width": 871.4999999999999,
+              "height": 530.1624999999999,
+              "cssWidth": 871.4999999999999,
+              "cssHeight": 530.1624999999999,
+              "viewportTransform": [
+                1.4525,
+                0,
+                0,
+                1.4525,
+                0,
+                0
+              ],
+              "zoom": 1.4525,
+              "retina": 0.800000011920929
+            },
+            "diy": {
+              "currentFactWidth": 600,
+              "currentFactHeight": 365,
+              "currentSize": 1.4525
+            },
+            "registry": 2
+          },
+          "ocr": {
+            "click": true,
+            "done": true,
+            "ids": [
+              "196ac692-3d88-4fd8-b6d0-c0838a01cdbc",
+              "aac05d34-4c45-459f-8ed8-6dd6f24a5bb7",
+              "698630b2-ff29-40b5-ad09-9964f7070234"
+            ]
+          },
+          "expectedItems": [
+            {
+              "text": "大字标题实例文字",
+              "blockIndex": 0,
+              "left": 110.57075131630407,
+              "top": 7.60129923137503,
+              "width": 493,
+              "height": 85,
+              "fontSize": 59,
+              "angle": 10,
+              "origin": "left",
+              "pageId": "canvas:c0",
+              "side": "FRONT",
+              "diagnostics": {
+                "layoutWidth": 493,
+                "sourceLineCount": 1,
+                "perLineWidth": [
+                  {
+                    "text": "大字标题实例文字",
+                    "width": 472,
+                    "needsWrap": false
+                  }
+                ]
+              }
+            },
+            {
+              "text": "中号正文联系电话与邮箱地址",
+              "blockIndex": 1,
+              "left": 102.75658332129221,
+              "top": 90.32515048440051,
+              "width": 265,
+              "height": 33,
+              "fontSize": 19,
+              "angle": 10,
+              "origin": "left",
+              "pageId": "canvas:c0",
+              "side": "FRONT",
+              "diagnostics": {
+                "layoutWidth": 265,
+                "sourceLineCount": 1,
+                "perLineWidth": [
+                  {
+                    "text": "中号正文联系电话与邮箱地",
+                    "width": 247,
+                    "needsWrap": false
+                  }
+                ]
+              }
+            },
+            {
+              "text": "小字页肝版权各注生",
+              "blockIndex": 2,
+              "left": 87.53262499959172,
+              "top": 177.79939232482008,
+              "width": 115,
+              "height": 22,
+              "fontSize": 11,
+              "angle": 10,
+              "origin": "left",
+              "pageId": "canvas:c0",
+              "side": "FRONT",
+              "diagnostics": {
+                "layoutWidth": 115,
+                "sourceLineCount": 1,
+                "perLineWidth": [
+                  {
+                    "text": "小字页肝版权各注生",
+                    "width": 99,
+                    "needsWrap": false
+                  }
+                ]
+              }
+            }
+          ],
+          "expectedPayloadMeta": {
+            "pageId": "canvas:c0",
+            "side": "FRONT",
+            "itemCount": 3
+          },
+          "actual": {
+            "arr": [
+              {
+                "id": "196ac692-3d8",
+                "text": "大字标题实例文字",
+                "left": 111,
+                "top": 8,
+                "width": 493,
+                "height": 85,
+                "fontSize": 59,
+                "angle": 10,
+                "originX": "left",
+                "scaleX": 1,
+                "scaleY": 1,
+                "aCoords": {
+                  "tl": [
+                    111,
+                    8
+                  ],
+                  "br": [
+                    582.5612867086747,
+                    178.47566652651346
+                  ]
+                },
+                "boundingRect": {
+                  "left": 139.53623788673542,
+                  "top": 11.620000000000005,
+                  "width": 728.3252931708791,
+                  "height": 247.6159056297608
+                },
+                "biz": {
+                  "locationX": 111,
+                  "locationY": 8,
+                  "locationWidth": 493,
+                  "locationHeight": 85
+                }
+              },
+              {
+                "id": "aac05d34-4c4",
+                "text": "中号正文联系电话与邮箱地址",
+                "left": 103,
+                "top": 90,
+                "width": 265,
+                "height": 33,
+                "fontSize": 19,
+                "angle": 10,
+                "originX": "left",
+                "scaleX": 1,
+                "scaleY": 1,
+                "aCoords": {
+                  "tl": [
+                    103,
+                    90
+                  ],
+                  "br": [
+                    359.0548242605717,
+                    169.67387886181854
+                  ]
+                },
+                "boundingRect": {
+                  "left": 141.03188474591863,
+                  "top": 130.725,
+                  "width": 389.070862746643,
+                  "height": 115.72630904679141
+                },
+                "biz": {
+                  "locationX": 103,
+                  "locationY": 90,
+                  "locationWidth": 265,
+                  "locationHeight": 33
+                }
+              },
+              {
+                "id": "698630b2-ff2",
+                "text": "小字页肝版权各注生",
+                "left": 88,
+                "top": 178,
+                "width": 115,
+                "height": 22,
+                "fontSize": 11,
+                "angle": 10,
+                "originX": "left",
+                "scaleX": 1,
+                "scaleY": 1,
+                "aCoords": {
+                  "tl": [
+                    88,
+                    178
+                  ],
+                  "br": [
+                    198.24379126307673,
+                    220.7937669286447
+                  ]
+                },
+                "boundingRect": {
+                  "left": 122.01884850459201,
+                  "top": 258.54499999999996,
+                  "width": 171.73140980043485,
+                  "height": 62.15794646385643
+                },
+                "biz": {
+                  "locationX": 88,
+                  "locationY": 178,
+                  "locationWidth": 115,
+                  "locationHeight": 22
+                }
+              }
+            ],
+            "canvas": {
+              "width": 871.4999999999999,
+              "height": 530.1624999999999,
+              "ft": [
+                1.4525,
+                0,
+                0,
+                1.4525,
+                0,
+                0
+              ],
+              "zoom": 1.4525,
+              "retina": 0.800000011920929
+            }
+          },
+          "tf": {
+            "left": 60,
+            "top": 60,
+            "w": 1000,
+            "h": 300,
+            "sx": 1,
+            "sy": 1,
+            "angle": 10,
+            "cw": 871.4999999999999,
+            "ch": 530.1624999999999,
+            "vt": [
+              1.4525,
+              0,
+              0,
+              1.4525,
+              0,
+              0
+            ]
+          },
+          "expectedImgCenter": {
+            "cx": 560,
+            "cy": 210
+          }
+        }
+      ],
+      "duLen": 29422,
+      "status": [
+        "正在等待编辑器加载…",
+        "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
+        "已生成 3 个文字（可双击编辑）"
+      ],
+      "imgBaseline": {
+        "angle": 10,
+        "scale": 1
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=10 bg=false active=image",
+    "[zy-ocr][PREPARING] kind=active-image 1000x300 dataUrl=29422 chars",
+    "[zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current",
+    "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
+    "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
+    "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+    "[zy-ocr][LOCAL_RECOGNIZING] lines=3 words=25 image=undefinedxundefined",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
+    "[zy-ocr][GROUP] lines=3 y=27,111,200 h=57,18,11",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":3,\"kept\":3,\"dropped\":0}}",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"PASS\",\"reasonCode\":null,\"total\":3,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"PASS\"}}",
+    "[zy-ocr][BUILDING] blocks=3 forcedWrap=0 multiLine=0",
+    "[zy-ocr][SUCCESS] created=3/3 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":3,\"uv4\":3,\"layerMax\":-1}"
+  ]
+}
