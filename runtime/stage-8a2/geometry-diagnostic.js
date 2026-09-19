@@ -81,7 +81,7 @@ function injectUserscript() {
     await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
     await SLEEP(1200);
     if (BAIDU_AK && BAIDU_SK) { await ev((a) => { const ai = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak"); const si = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk"); const sb = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save"); if (!ai || !si || !sb) return { ok: false }; ai.value = a.ak; si.value = a.sk; try { sb.click(); } catch (e) {} return { ok: true }; }, { ak: BAIDU_AK, sk: BAIDU_SK }); await SLEEP(3000); }
-    const URL = MODE === "fail" ? URL_88 : URL_252438;
+    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : URL_252438;
     await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     const w = await waitUntil(canvasReady(), "ready", 150000);
@@ -103,6 +103,69 @@ function injectUserscript() {
         rec.canvasInfo = (r.rd && r.rd.canvas) || null;
         try { await ev(() => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0]; const c = d && d.canvas; if (c) c.setBackgroundImage(null); }); } catch (e) {}
         await SLEEP(1200);
+      }
+    } else if (MODE === "ctrig") {
+      // D1：C Trigger Audit —— 1040459 完整 OCR 链路 + product itemList/画布三列采样 + 时序对照（delay0 vs delay8s）
+      await armDrawTextCap();
+      const DU = await render();
+      const dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
+      for (const delay of [0, 8000]) {
+        const rec = { mode: "ctrig", delayMs: delay, img: null, samples: [], rd: null, cap: null, errors: [] };
+        out.records.push(rec);
+        try {
+          rec.img = await injectImg(0, dataUrl, "p8t-", { left: 20, top: 20, scaleX: 1, scaleY: 1 });
+          // 周期性采样（页面世界找 product pageList）
+          const sampler = setInterval(async () => {
+            const s = await ev(() => {
+              const req = window.requirejs || window.require;
+              const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+              const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+              const c = d && d.canvas;
+              // 找 pageList 持有者
+              let holder = null;
+              const cands = [window, vo, vo && vo.totalCanvasArray && vo.totalCanvasArray[0], window.p, (function () { try { return vo && vo.totalCanvasArray && vo.totalCanvasArray[0] && vo.totalCanvasArray[0].canvasObjInfo; } catch (e) { return null; } })()];
+              for (const cand of cands) { if (cand && Array.isArray(cand.pageList)) { holder = cand; break; } }
+              let itemList = null, itemListLen = null, g = null;
+              if (holder && holder.pageList && Array.isArray(holder.pageList)) {
+                const eIdx = holder.currentCanvasNum != null ? Math.max(0, holder.currentCanvasNum - 1) : 0;
+                const page = holder.pageList[eIdx] || null;
+                itemList = (page && page.content && Array.isArray(page.content.itemList)) ? page.content.itemList : null;
+                if (itemList) { itemListLen = itemList.length; g = itemList.length >= 1 ? itemList[itemList.length - 1] : null; }
+              }
+              return {
+                t: Date.now(), cc: vo && vo.currentCanvasNum,
+                pageListLen: holder && holder.pageList ? holder.pageList.length : null,
+                itemListLen, itemListLastOk: !!(itemList && itemList.length && itemList[itemList.length - 1]),
+                objLen: c ? c.getObjects().length : null,
+                regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null
+              };
+            });
+            rec.samples.push(s);
+          }, 600);
+          if (delay) await SLEEP(delay);
+          const before = await snapIds();
+          const cl = await clickOcr();
+          if (!cl.clicked) { rec.errors.push("btn"); clearInterval(sampler); continue; }
+          let last = null, done = false;
+          const t0 = Date.now();
+          for (;;) {
+            const r = await ev(() => { const el = document.querySelector("#zy-native-status"); const st = el ? String(el.textContent || "").trim() : null; return { st: st ? st.slice(0, 160) : null }; });
+            const st = r && r.st;
+            if (st && st !== last) { last = st; rec.status = (rec.status || []).concat([st]); }
+            if (st && /已生成 \d+ 个文字|未识别到文字|失败|滚/.test(st)) { done = true; break; }
+            if (Date.now() - t0 > 120000) break;
+            await SLEEP(900);
+          }
+          clearInterval(sampler);
+          const after = await snapIds();
+          rec.ids = (after || []).filter((id) => (before || []).indexOf(id) < 0);
+          const rd = await readNew(rec.ids);
+          rec.created = rd.arr || [];
+          rec.canvasInfo = rd.canvas || null;
+          rec.cap = await readCap();
+          await rollback("p8t-");
+          rec.done = done;
+        } catch (e) { clearInterval(sampler); rec.errors.push(String(e && e.message || e).slice(0, 200)); }
       }
     } else if (MODE === "quad") {
       // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
