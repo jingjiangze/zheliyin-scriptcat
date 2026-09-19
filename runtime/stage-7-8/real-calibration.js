@@ -103,28 +103,27 @@ const MATRIX = {
     const existing = c.getObjects().filter((o) => o && String(o.type) === "image" && String(o.multiUuid || "").indexOf(arg.tag) === 0);
     if (existing.length) { existing.forEach((o) => { try { const li = d.canvasObjInfo.canvasToProductObjArr.indexOf(o); if (li >= 0) d.canvasObjInfo.canvasToProductObjArr.splice(li, 1); c.remove(o); } catch (e) {} }); }
     if (!f || !f.Image) return { ok: false, reason: "no fabric.Image" };
+    // 直接用 HTMLImageElement + new fabric.Image(imgEl)（绕过 fromURL 解析差异，尺寸天然就绪）
     const inject = () => new Promise((resolve) => {
       try {
-        f.Image.fromURL(arg.dataUrl, (im) => {
+        const imgEl = new Image();
+        imgEl.onload = function () {
           try {
-            if (!im) { resolve({ ok: false, reason: "fromURL null" }); return; }
-            const el = im._element || (im.getElement && im.getElement()) || null;
-            const nw = el ? (el.naturalWidth || el.width || 0) : 0;
-            const nh = el ? (el.naturalHeight || el.height || 0) : 0;
-            // 尺寸兜底：fabric 未同步尺寸时按 element 自然尺寸设置（避免 ocrPrepare 图片尺寸无效）
-            if (!(im.width > 0) && nw > 0) { try { im.set({ width: nw, height: nh }); } catch (e) {} }
+            const im = new f.Image(imgEl);
             im.set({ left: 20, top: 20, scaleX: 1, scaleY: 1 });
             im.multiUuid = arg.tag + Date.now();
             c.add(im);
             try { if (d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr) d.canvasObjInfo.canvasToProductObjArr.push(im); } catch (e) {}
             try { c.setActiveObject(im); } catch (e) {}
             if (c.requestRenderAll) c.requestRenderAll();
-            const firstImg = c.getObjects().find((o) => o && String(o.type) === "image");
-            const fe = firstImg ? (firstImg._element || (firstImg.getElement && firstImg.getElement()) || null) : null;
-            resolve({ ok: true, uuid: im.multiUuid, n: c.getObjects().length,
-              img: { width: im.width, height: im.height, nw: nw, nh: nh, node: el ? el.nodeName : null, first: firstImg ? { w: firstImg.width, h: firstImg.height, fnw: fe ? fe.naturalWidth : null } : null } });
+            const imgs = c.getObjects().filter((o) => o && String(o.type) === "image");
+            const first = imgs[imgs.length - 1] || null;
+            resolve({ ok: true, uuid: im.multiUuid, n: c.getObjects().length, imgCount: imgs.length,
+              img: { width: im.width, height: im.height, nw: imgEl.naturalWidth, nh: imgEl.naturalHeight, first: first ? { w: first.width, h: first.height } : null } });
           } catch (e) { resolve({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); }
-        }, { crossOrigin: "anonymous" });
+        };
+        imgEl.onerror = function () { resolve({ ok: false, reason: "imgEl onerror" }); };
+        imgEl.src = arg.dataUrl;
       } catch (e) { resolve({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); }
     });
     return await inject();
@@ -176,11 +175,12 @@ const MATRIX = {
 
   const runRound = async (caseId, idx) => {
     const rec = { caseId, idx, spec: null, render: null, imgInjected: null, click: null, statusFlow: [], createdDelta: 0, createdTexts: [], display: [], quality6: null, provider: null, ocrLines: null, safetyBlocks: 0, assert: {} };
+    const consoleStart = out.console.length; // 本轮新增 console 起点（避免跨轮污染）
     if (caseId.indexOf("fix") === 0) rec.spec = FIX[caseId.replace("fix", "")];
     if (caseId.indexOf("mtx") === 0) rec.spec = MATRIX[caseId.replace("mtx", "")];
     if (rec.spec) {
-      rec.render = await renderFixtureDataUrl(rec.spec);
-      rec.imgInjected = await ensureImageOnPage(idx, rec.render.dataUrl, "p8r-img-");
+      rec.render = await renderFixtureDataUrl(rec.spec); // 返回 dataUrl 字符串（ev 直接 resolve）
+      rec.imgInjected = await ensureImageOnPage(idx, typeof rec.render === "string" ? rec.render : (rec.render && rec.render.dataUrl), "p8r-img-");
     }
     const before = await canvasTexts(idx);
     const cur = await getCurrentPageByMessage();
@@ -205,9 +205,9 @@ const MATRIX = {
     rec.createdDelta = (rec.after.n || 0) - (before.n || 0);
     rec.createdTexts = (rec.after.texts || []).slice(-rec.createdDelta);
     rec.display = (rec.after.display || []).filter((d) => d.isDisplay !== undefined);
-    // 捕获 OCR 诊断（console [zy-ocr] DIAG：quality6 / provider / 识别行数 / SAFETY_GATE）
-    rec.console = (out.console || []).slice();
-    rec.provider = /baidu-general/.test(JSON.stringify(rec.console)) ? "baidu" : (/local/.test(JSON.stringify(rec.console)) ? "local" : "unknown");
+    // 捕获 OCR 诊断（console [zy-ocr] DIAG：quality6 / provider / 识别行数 / SAFETY_GATE）——仅本轮新增
+    rec.console = out.console.slice(consoleStart);
+    rec.provider = /BAIDU_RECOGNIZING/.test(JSON.stringify(rec.console)) ? "baidu" : (/LOCAL_RECOGNIZING|local-fallback/.test(JSON.stringify(rec.console)) ? "local" : "unknown");
     rec.quality6 = (function () {
       const m = JSON.stringify(rec.console).match(/"quality6":\{[^}]+\}/);
       return m ? m[0] : null;
