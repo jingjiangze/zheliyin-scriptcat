@@ -325,7 +325,9 @@ function compareTextGeometry(target, actual, opts) {
     heightFail = sizeA.height < lo || sizeA.height > hi;
   }
   const geometry = {
-    pass: centerError <= centerTol && cornerError <= cornerTol && angleError <= angleTol,
+    // §24/证据：cornerError≈center+尺寸耦合（含 margin 布局盒 vs bbox），尺寸由 typography 负责；
+    // geometry 只判定位置/方向（center/angle）。cornerError 继续输出作诊断。
+    pass: centerError <= centerTol && angleError <= angleTol,
     centerError: Math.round(centerError * 1000) / 1000,
     cornerError: Math.round(cornerError * 1000) / 1000,
     angleError: Math.round(angleError * 1000) / 1000,
@@ -342,7 +344,6 @@ function compareTextGeometry(target, actual, opts) {
   const failures = [];
   if (!geometry.pass) {
     if (centerError > centerTol) failures.push("center");
-    if (cornerError > cornerTol) failures.push("corner");
     if (angleError > angleTol) failures.push("angle");
   }
   if (!typography.pass) {
