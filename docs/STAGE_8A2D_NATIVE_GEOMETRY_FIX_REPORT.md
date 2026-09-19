@@ -80,9 +80,31 @@ T6~T9:          （runner 中断未采集；OCR 段未执行——HYPOTHESIS 未
 ```
 
 **结论（本刀）**：
-- **纯 `new fabric.Image + canvas.add` 不清零 itemList（1 保持）** → 「注入即 1→0」假设被否定（CONFIRMED 该环节无重置）；
-- 1→0 的真正触发点仍 **UNKNOWN（HYPOTHESIS：倾向于 OCR 流程环节；或跨会话状态）** —— 需重跑补齐 T6-T9 时间线 + ids 身份采集（runner 中断点先修复）；
-- C_ROOT_CAUSE 未锁定 → C_FIX=NOT_READY（未满足 §14 成功标准）。
+- **纯 `new fabric.Image + canvas.add` 不清零 itemList** → 「注入即 1→0」假设被否定（CONFIRMED 该环节无重置）；
+- 待重跑补齐 T6-T9（runner 曾中断）。
+
+## D2-C1.5R 三实验补证（本刀，REAL，三实验各自 fresh）
+
+```
+A 纯 fabric： A0 itemList=0（id=4） → ctor 0 → add 0（obj 8→9）     全程 0
+B injectImg： B0 0 → 注入 0（obj 8→9 reg 0→1）→ B+3s 稳定 0         全程 0
+C OCR 链：    C0 0 → 注入 0 → click 0 → drawText throw（undefined.media）→ 0
+experiments 一致性：A0/B0/C0 的 ProductVO.itemList 均为 0、itemListId 恒=4
+diy deviceState: canvasObjInfo 无 productPageList/productJson.pageList（diyIl=null）
+```
+
+**最终根因（更新结论，覆盖旧「fresh=1 / 1→0」叙述）**：
+
+1. **1040459 空模板 ProductVO.itemList 恒为 0（三 fresh 一致，id 恒同）**；此前 Case D 观测的 itemList=1 属**跨会话不稳定状态**（模板初始化偶发），非稳定事实 → **「1→0 转换」不存在**；
+2. drawText 在 itemList=0 时进入 checkObjsInProductJson → g=0 → g-1=-1 → undefined.media（每次稳定复现）；
+3. 根因定性：**NATIVE_EMPTY_PAGE_CONTRACT** —— 空模板页 itemList 无预置条目 + drawText 路径不注册 productItem + checkObjs 越界读取；
+4. 252438 成功=其 itemList≥1（模板自带条目，g-1≥0）；「更新产品 itemList 的机制」=模板加载期原生初始化（drawText 不参与）。
+
+```
+C_ROOT_CAUSE = CONFIRMED（NATIVE_EMPTY_PAGE：checkObjs g-1=-1 于 itemList=0）
+C_FIX = NOT_READY（仍需定位可复用的 itemList 初始化/注册原生 API）
+C_NATIVE_INIT = UNKNOWN
+```
 
 - 失败点：站点 `CanvasDiy.checkObjsInProductJson` 的 `productPageList[e].content.itemList[g-1].media`
 - 触发条件：**ProductVO.itemList 为空（空模板页）时 drawText 的 productJson 同步未发生**（canvasToProductObjArr 已 push、itemList 未同步 → 两数组不同步）
