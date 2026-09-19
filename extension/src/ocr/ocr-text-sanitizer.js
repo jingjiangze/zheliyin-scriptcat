@@ -86,10 +86,14 @@ function codePointsOf(str) {
 //   keepBlocked:      true → BLOCKED 字符原样保留（§十一 真机单变量探测用，仍进 blocked[]）
 function sanitizeOcrText(text, opts) {
   var o = opts || {};
-  var raw = String(text == null ? "" : text);
+  // Stage 7.8R §二：rawText 永远原样保存（OCR 原始结果），normalization 只作用于 workingText，
+  // 绝不允许 NFKC 覆盖 rawText（否则证据/重处理链路丢失原始 Unicode）。
+  var originalText = String(text == null ? "" : text);
+  var rawText = originalText;
+  var working = originalText;
   if (o.normalizeUnicode) {
     try {
-      raw = raw.normalize("NFKC");
+      working = working.normalize("NFKC");
     } catch (e) { /* NFKC 失败则退化为原串 */ }
   }
   var removed = 0;
@@ -97,7 +101,7 @@ function sanitizeOcrText(text, opts) {
   var blocked = [];
   var reasonParts = [];
   var safeText = "";
-  var cps = codePointsOf(raw);
+  var cps = codePointsOf(working);
   for (var i = 0; i < cps.length; i += 1) {
     var ch = cps[i];
     // 换行规范化：\r\n / \r → \n（§十六 换行规范化，先于控制字符）
@@ -128,9 +132,9 @@ function sanitizeOcrText(text, opts) {
   reasonParts.forEach(function (r) { counts[r] = (counts[r] || 0) + 1; });
   var reason = Object.keys(counts).map(function (k) { return k + "\u00d7" + counts[k]; }).join(", ");
   return {
-    rawText: raw,                    // 注意：normalizeUnicode 时 rawText 为 NFKC 后串（原始输入在诊断留档）
+    rawText: rawText,                  // Stage 7.8R §二：永远 = OCR 原始输入（normalizeUnicode 不覆盖）
     safeText: safeText,
-    changed: safeText !== String(text == null ? "" : text),
+    changed: safeText !== originalText,
     removed: removed,
     normalized: normalized,
     blocked: blocked,

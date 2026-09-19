@@ -76,6 +76,16 @@ t("nfkc.enabled-works", nfkc.safeText === "1张三2", JSON.stringify(nfkc.safeTe
 const nfkcOff = sanitizeOcrText("①张三②");
 t("nfkc.off-by-default", nfkcOff.safeText === "①张三②", JSON.stringify(nfkcOff.safeText));
 
+// ---- Stage 7.8R §二：rawText 永不被 NFKC 覆盖（regression）----
+const fwNfkc = sanitizeOcrText("ＡＢＣ１２３", { normalizeUnicode: true });
+t("r2.rawText-preserved", fwNfkc.rawText === "ＡＢＣ１２３", JSON.stringify(fwNfkc.rawText));
+t("r2.rawText-vs-safeText", fwNfkc.rawText !== fwNfkc.safeText, JSON.stringify({ raw: fwNfkc.rawText, safe: fwNfkc.safeText }));
+t("r2.safeText-normalized", fwNfkc.safeText === "ABC123", JSON.stringify(fwNfkc.safeText));
+t("r2.original-code-points", Array.from(fwNfkc.rawText).map((ch) => ch.codePointAt(0)).join(",") === [0xff21, 0xff22, 0xff23, 0xff11, 0xff12, 0xff13].join(","), JSON.stringify(Array.from(fwNfkc.rawText).map((ch) => ch.codePointAt(0))));
+const nfkcMixed = sanitizeOcrText("张三①②", { normalizeUnicode: true });
+t("r2.rawText-mixed-cjk", nfkcMixed.rawText === "张三①②" && nfkcMixed.safeText === "张三12", JSON.stringify({ raw: nfkcMixed.rawText, safe: nfkcMixed.safeText }));
+t("r2.changed-vs-original", nfkcMixed.changed === true);
+
 // ---- classifyChar 分级 ----
 t("classify.zero-width", classifyChar("\u200b").level === "BLOCKED", JSON.stringify(classifyChar("\u200b")));
 t("classify.fullwidth", classifyChar("Ａ").level === "NORMALIZABLE" && classifyChar("Ａ").to === "A", JSON.stringify(classifyChar("Ａ")));
