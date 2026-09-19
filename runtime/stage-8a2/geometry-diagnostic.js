@@ -276,6 +276,110 @@ function injectUserscript() {
         rec.ocrCap = await readCap();
         await rollback("p8g-");
       } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
+    } else if (MODE === "native-add-text") {
+      // Case D：1040459 原生“新增文字”按钮 → itemList 初始化机制取证（§D2-C1）
+      const rec = { mode: "native-add-text", templateId: FIX_URL.indexOf("1040459") >= 0 ? "1040459" : "other", button: null, before: null, timeline: [], mutations: [], createdObject: null, after: null, nativeMechanism: null, conclusion: null, errors: [] };
+      out.records.push(rec);
+      const readState = (tag) => ev((arg) => {
+        const req = window.requirejs || window.require;
+        const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+        const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+        const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+        const c = d && d.canvas;
+        const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+        const page = PV && PV.pageList && PV.pageList[eIdx];
+        const il = page && page.content ? page.content.itemList : null;
+        const objs = c ? c.getObjects() : [];
+        const textObjs = objs.filter((o) => o && typeof o.text === "string").map((o) => ({ t: String(o.text).slice(0, 12), uuid: String(o.uuid || o.multiUuid || "").slice(0, 16), l: o.left, tp: o.top, w: o.width, h: o.height, fs: o.fontSize }));
+        const sig = il && Array.isArray(il) ? il.slice(0, 3).map((it) => (it ? Object.keys(it).slice(0, 12).join(",") : "null")) : null;
+        return { tag: arg.tag,
+          cc: vo && vo.currentCanvasNum, pvCc: PV ? PV.currentCanvasNum : null,
+          itemListLen: il && Array.isArray(il) ? il.length : (il ? "no-arr" : null),
+          regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null,
+          objLen: objs.length, sig: sig, textObjs: textObjs.slice(-3) };
+      }, { tag });
+      // 临时 wrapper：仅对目标 itemList 的 push/splice 捕获（含 stack）
+      const armItemListWatch = () => ev(() => {
+        const req = window.requirejs || window.require;
+        const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+        const il = PV && PV.pageList && PV.pageList[0] && PV.pageList[0].content ? PV.pageList[0].content.itemList : null;
+        if (!il || !Array.isArray(il)) return { ok: false, reason: "no itemList" };
+        window.__ilWatch = [];
+        ["push", "splice", "unshift"].forEach((m) => {
+          const orig = Array.prototype[m];
+          Array.prototype[m] = function () {
+            if (this === il) {
+              try { window.__ilWatch.push({ t: Date.now(), m, args: arguments.length, stack: new Error().stack ? String(new Error().stack).split("\n").slice(1, 8).map((s) => s.trim().slice(0, 140)) : null, argKeys: arguments[0] ? Object.keys(arguments[0]).slice(0, 16) : null }); } catch (e) {}
+            }
+            return orig.apply(this, arguments);
+          };
+        });
+        return { ok: true };
+      });
+      const restoreArrayProto = () => ev(() => {
+        // 恢复：重载页面即可（本流程末尾 reload）；此处仅记录
+        return { ok: true };
+      });
+      try {
+        // 按钮定位（§3）
+        rec.button = await ev(() => {
+          const cands = [];
+          const all = Array.from(document.querySelectorAll("button,a,div,span,li,i,[class*='text'],[class*='font'],[class*='add']"));
+          const kws = ["文字", "添加文字", "新增文字", "文本"];
+          for (const el of all) {
+            if (!el.offsetParent) continue;
+            const txt = String(el.textContent || "").trim();
+            if (txt.length > 0 && txt.length <= 8 && kws.some((k) => txt.indexOf(k) >= 0)) {
+              const r = el.getBoundingClientRect();
+              cands.push({ tag: el.tagName, cls: String(el.className || "").slice(0, 60), id: el.id || null, text: txt, aria: el.getAttribute("aria-label"), title: el.getAttribute("title"), x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.width), h: Math.round(r.height) });
+              if (cands.length >= 6) break;
+            }
+          }
+          return { found: cands.length > 0, cands };
+        });
+        await armItemListWatch();
+        rec.before = await readState("before");
+        // 点击候选按钮（优先文本恰为“添加文字/新增文字/文字”且尺寸小的）
+        if (rec.button.found) {
+          const target = await ev((arg) => {
+            const kws = ["添加文字", "新增文字", "文字", "文本"];
+            const all = Array.from(document.querySelectorAll("button,a,div,span,li,i,[class*='text'],[class*='font'],[class*='add']"));
+            let hit = null;
+            for (const el of all) {
+              if (!el.offsetParent) continue;
+              const txt = String(el.textContent || "").trim();
+              if (txt.length > 0 && txt.length <= 8 && kws.some((k) => txt === k || txt.indexOf(k) === 0)) { hit = el; break; }
+            }
+            if (!hit) return { clicked: false };
+            try { hit.click(); } catch (e) { return { clicked: false, err: String(e && e.message || e).slice(0, 80) }; }
+            return { clicked: true, tag: hit.tagName, cls: String(hit.className || "").slice(0, 60), text: String(hit.textContent || "").trim().slice(0, 8) };
+          }, {});
+          rec.clicked = target;
+          // 时间线采样（§6）
+          for (const ms of [0, 50, 100, 250, 500, 1000, 2000, 5000]) {
+            if (ms) await SLEEP(ms - (rec.timeline.length ? rec.timeline[rec.timeline.length - 1].ms : 0));
+            rec.timeline.push(Object.assign({ ms }, await readState("t" + ms)));
+          }
+        } else {
+          rec.timeline.push(Object.assign({ ms: 0 }, await readState("no-btn")));
+        }
+        rec.mutations = await ev(() => (window.__ilWatch || []).slice());
+        // 新建 textbox 识别（点击后新增的 text 对象）
+        const afterState = await readState("after");
+        rec.after = afterState;
+        rec.createdObject = (rec.after.textObjs || []).filter((o) => !(rec.before.textObjs || []).some((b) => b.uuid && b.uuid === o.uuid));
+        const ilNow = rec.after.itemListLen;
+        rec.nativeMechanism = { mutation: rec.mutations, itemListAfter: ilNow, conclusion: null };
+        if (rec.mutations && rec.mutations.length) {
+          rec.nativeMechanism.conclusion = "itemList 被 push/splice 写入（stack 见 mutations）";
+        } else if (ilNow > 0 && rec.before.itemListLen === 0) {
+          rec.nativeMechanism.conclusion = "itemList 0→" + ilNow + " 但未走 push/splice wrapper（可能是下标写或原生从别处重建）";
+        }
+        rec.conclusion = (rec.mutations && rec.mutations.length) ? "C_NATIVE_INIT=CONFIRMED(见 stack)" : ((ilNow > 0 && rec.before.itemListLen === 0) ? "C_NATIVE_INIT=STRONG_EVIDENCE(长度变化但写入点未捕获)" : (rec.mutations && !rec.mutations.length && ilNow === 0 ? "C_NATIVE_INIT=UNKNOWN(itemList 未变化)" : "C_NATIVE_INIT=UNKNOWN"));
+        // 清理：reload fresh（§11）
+        rec.cleanup = "reload";
+        await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+      } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
     } else if (MODE === "quad") {
       // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
       await armDrawTextCap();
@@ -348,7 +452,7 @@ function injectUserscript() {
     }
   } catch (e) { out.errors.push(String(e && e.message || e).slice(0, 400)); }
   finally { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
-  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : "canvas-88x57-create-failure.json";
+  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : "canvas-88x57-create-failure.json";
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(path.join(REPORT_DIR, name), JSON.stringify(out, null, 2));
   console.log("STAGE-8A2B " + MODE + " done records=" + out.records.length + " errors=" + out.errors.length + " -> " + path.join(REPORT_DIR, name));
