@@ -101,7 +101,11 @@ function injectUserscript() {
       });
     });
     return { found, canvas: { width: c.width, height: c.height, viewportTransform: c.viewportTransform ? Array.from(c.viewportTransform) : null, zoom: c.getZoom ? c.getZoom() : null, retina: c.getRetinaScaling ? c.getRetinaScaling() : null } };
-  }, { ids });
+    }, { ids });
+  const attachCanvas = (rec) => {
+    if (rec && rec.found) { const cv = rec.canvas || {}; rec.found.forEach((o) => { o._canvasW = cv.width; o._canvasH = cv.height; o._viewport = cv.viewportTransform; o._zoom = cv.zoom; o._retina = cv.retina; }); }
+    return rec;
+  };
   const renderSz = () => ev((arg) => {
     const cv = document.createElement("canvas");
     cv.width = arg.w; cv.height = arg.h;
@@ -230,7 +234,10 @@ function injectUserscript() {
         }
         const after = await objectSnapshot();
         rec.createdIds = (after.ids || []).filter((id) => (before.ids || []).indexOf(id) < 0);
-        rec.created = (await readTextboxes(rec.createdIds)).found || [];
+        const ctb = await readTextboxes(rec.createdIds);
+        attachCanvas(ctb);
+        rec.created = (ctb.found || []);
+        rec.canvasInfo = ctb.canvas || null;
         rec.prepare = (function () { const m = out.console.slice(-40).join("\n").match(/\[zy-ocr\]\[PREPARING\] ([^\n]*)/); return m ? m[1].slice(0, 200) : null; })();
         const cTail = out.console.slice(-40).join("\n");
         rec.provider = /BAIDU_RECOGNIZING/.test(cTail) ? "baidu" : (/LOCAL_RECOGNIZING/.test(cTail) ? "local" : "unknown");
@@ -245,15 +252,16 @@ function injectUserscript() {
           if (!first) return "NO_TEXTBOX";
           const cw = first._canvasW, ch = first._canvasH;
           const b = first.boundingRect;
-          if (!b) return "UNKNOWN";
+          if (!b || !cw) return "UNKNOWN";
           const overflow = { left: b.left < 0, top: b.top < 0, right: b.right > cw, bottom: b.bottom > ch };
           const overflowAmount = Math.max(overflow.left ? -b.left : 0, overflow.top ? -b.top : 0, overflow.right ? b.right - cw : 0, overflow.bottom ? b.bottom - ch : 0);
           const sizeRatio = cw > 0 ? b.width / cw : 0;
-          let cls = [];
-          if (overflow.left || overflow.top || overflow.right || overflow.bottom) cls.push(overflowAmount > cw * 0.5 ? "POSITION_OVERFLOW(major)" : "POSITION_OVERFLOW");
-          if (sizeRatio > 0.5 || (first.scaledW && first.scaledW > cw * 1.2)) cls.push("SIZE_OVERFLOW");
+          const cls = [];
+          if (overflow.left || overflow.top || overflow.right || overflow.bottom) cls.push((overflowAmount > cw * 0.5 ? "POSITION_OVERFLOW(major)" : "POSITION_OVERFLOW") + "(amt=" + Math.round(overflowAmount) + ")");
+          if (sizeRatio > 0.5 || (first.scaledW && first.scaledW > cw * 1.2)) cls.push("SIZE_OVERFLOW(w/canvas=" + Math.round(sizeRatio * 100) + "%)");
           if (first.visible === false || first.opacity === 0) cls.push("OBJECT_HIDDEN");
-          if (!cls.length) cls.push(b.right <= cw && b.bottom <= ch && b.left >= 0 && b.top >= 0 ? "IN_CANVAS" : "UNKNOWN");
+          if (first.angle && Math.abs(first.angle) > 0.5 && first.originX === "center") cls.push("ORIGIN_CENTER(rotated)");
+          if (!cls.length) cls.push((b.right <= cw && b.bottom <= ch && b.left >= 0 && b.top >= 0) ? "IN_CANVAS" : "UNKNOWN");
           return cls.join("+");
         })();
         // 数值链（A-9）：用注入的 tf 与回读实际对比（离线复算关键步）
