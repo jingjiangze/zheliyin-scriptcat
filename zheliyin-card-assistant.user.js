@@ -1103,12 +1103,13 @@
       let lineHSum = 0;
       (b.lines || []).forEach((l) => { if (l && l.bbox && l.bbox.height > 0) lineHSum += l.bbox.height; });
       const avgLineH = (b.lines && b.lines.length && lineHSum > 0) ? lineHSum / b.lines.length : bh;
-      const fs = Math.max(10, Math.min(160, Math.round((avgLineH * sy) / FONT_HEIGHT_RATIO)));
+      // fs 下限 8 = 与站点原生 CheckTextBox 的最小字号保护对齐（真机 0.10 档 drawText 将 <8 抬到 8）
+      const fs = Math.max(8, Math.min(160, Math.round((avgLineH * sy) / FONT_HEIGHT_RATIO)));
       // §11/§12：textbox layoutWidth —— 优先真实文本测量（字号标定+字符宽度估计+安全余量），
       // 宽度 = clamp(max(60, 视觉宽, 最长行估计宽+margin), ≤4000)，OCR 原始单行不得因宽度不足再换行
       const textLines = srcText.split("\n").filter((t) => t !== "");
       const layout = (typeof estimateTextLayout === "function")
-        ? estimateTextLayout(textLines, fs, { minWidth: Math.max(60, bw + 8), maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)) })
+        ? estimateTextLayout(textLines, fs, { minWidth: Math.max(60, bw + 8), maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)), visualWidth: bw })
         : { layoutWidth: Math.max(60, bw + 8), perLine: textLines.map((t) => ({ text: t, estimatedWidth: 0, needsWrap: false })), forcedWrapDetected: false, estimatedFinalLineCount: textLines.length };
       if (layout.forcedWrapDetected) forcedWrapTotal += 1;
       if (textLines.length > 1) multiLineTotal += 1;

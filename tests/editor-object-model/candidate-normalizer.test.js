@@ -190,6 +190,16 @@ t("layout-narrow-forced-wrap", layoutNarrow.forcedWrapDetected === true && layou
 // 多行 3 行 → 正常不换行时 estimatedFinalLineCount = 3
 const layout3 = estimateTextLayout(["张三", "销售经理", "电话：13800138000"], 32, { minWidth: 60, maxWidth: 4000, margin: 12 });
 t("layout-3-lines", layout3.estimatedFinalLineCount === 3 && !layout3.forcedWrapDetected, JSON.stringify(layout3));
+// ---- Stage 8A-2 B（Text Scale）：visualWidth 视觉优先 —— 低 scale 时字符估算宽（fs 钳制膨胀）不得把 textbox 撑宽 ----
+// B 场景：图片 scale=0.25，OCR bbox 视觉宽 small（bw=130），fs 被钳=15 → 字符估算 8字×15=120；视觉 floor=130+margin 略大 → 取 visualWidth
+const layoutVs0 = estimateTextLayout(["大字标题实例文字"], 15, { minWidth: 138, maxWidth: 4000, margin: 10, visualWidth: 130 });
+t("b-visual-floor-dominant", layoutVs0.layoutWidth >= 130 && layoutVs0.layoutWidth <= 148 && !layoutVs0.forcedWrapDetected, JSON.stringify(layoutVs0));
+// B 场景：低 scale 时视觉宽很小（bw=25），fs 被钳大（15）→ 字符估算 8×15=120+margin 远超视觉；有 visualWidth 时应以视觉为准，不换行兜底
+const layoutVs1 = estimateTextLayout(["大字标题实例文字"], 15, { minWidth: 33, maxWidth: 4000, margin: 10, visualWidth: 25 });
+t("b-visual-follow-when-estimate-inflated", layoutVs1.layoutWidth >= 33 && layoutVs1.layoutWidth <= 140 && layoutVs1.forcedWrapDetected === false, JSON.stringify(layoutVs1));
+// B 回归：visualWidth 未传时行为与旧版完全一致（minWidth + 字符估算宽）
+const layoutVs2 = estimateTextLayout(["大字标题实例文字"], 15, { minWidth: 138, maxWidth: 4000, margin: 10 });
+t("b-legacy-no-visualWidth", layoutVs2.layoutWidth === 138 && !layoutVs2.forcedWrapDetected, JSON.stringify(layoutVs2));
 
 // ---- Stage 6.2 §五~§九/§十/§十一：TextBlock 拆分优先回归 ----
 // 1) 真实名片布局（§十一 样本）：姓名/职位/电话 紧邻 → 1 block；公司名跨空白行 → 独立；

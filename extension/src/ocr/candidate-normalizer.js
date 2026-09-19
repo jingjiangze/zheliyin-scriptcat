@@ -530,6 +530,8 @@ function estimateTextWidth(text, fontSize, opts) {
 // 返回：
 //   { layoutWidth, perLine:[{text, estimatedWidth, needsWrap}], forcedWrapDetected, estimatedFinalLineCount }
 // layoutWidth = clamp(max(60, 最长行估计宽 + margin, minWidth), 60, maxWidth)
+// Stage 8A-2 B（Text Scale）：新增 visualWidth 选项 —— 以 OCR 视觉宽（bbox×displayScale）为主导下限，
+//   防「字符估算宽（随钳制 fontSize 膨胀）把 textbox 撑宽」；防换行硬约束仍以估算宽兜底。
 // forcedWrapDetected：存在 needsWrap=true 的逻辑行（即单行在给定 maxWidth 下仍放不下）。
 function estimateTextLayout(textLines, fontSize, opts) {
   const o = opts || {};
@@ -537,6 +539,7 @@ function estimateTextLayout(textLines, fontSize, opts) {
   const margin = o.margin != null ? o.margin : Math.max(12, fs * 0.4);
   const minWidth = o.minWidth != null ? o.minWidth : 60;
   const maxWidth = o.maxWidth != null ? o.maxWidth : 4000;
+  const vw = o.visualWidth != null ? o.visualWidth : null; // OCR bbox 视觉宽（已×displayScale）
   const lines = (Array.isArray(textLines) ? textLines : []).map(function (l) { return String(l || ""); });
   const perLine = lines.map(function (text) {
     return { text: text, estimatedWidth: estimateTextWidth(text, fs) };
@@ -544,8 +547,21 @@ function estimateTextLayout(textLines, fontSize, opts) {
     return p.text !== "";
   });
   const wMax = perLine.reduce(function (m, p) { return Math.max(m, p.estimatedWidth); }, 0);
-  let layoutWidth = Math.min(Math.max(minWidth, wMax + margin, 60), maxWidth);
+  // Stage 8A-2 B（Text Scale）：视觉宽优先 —— layoutWidth 尽量贴近 OCR 视觉宽（vw），
+  //   不被「fs 钳制导致膨胀的字符估算宽」主导；仅当视觉宽放不下最长字符行（§11 防换行硬约束）
+  //   才扩展。无 vw 时回退旧逻辑（minWidth 与估算宽取大），保持既有行为。
+  let layoutWidth;
+  if (vw != null) {
+    layoutWidth = Math.min(Math.max(vw + margin, minWidth, 60), maxWidth);
+  } else {
+    layoutWidth = Math.min(Math.max(minWidth, wMax + margin, 60), maxWidth);
+  }
   let forcedWrapDetected = false;
+  const wNeeded = wMax + margin;
+  if (wNeeded > layoutWidth) {
+    // 视觉/基准宽放不下时：§11 防换行兜底抬升（不超过 maxWidth）
+    layoutWidth = Math.min(Math.max(layoutWidth, wNeeded), maxWidth);
+  }
   perLine.forEach(function (p) {
     p.needsWrap = p.estimatedWidth + margin > layoutWidth;
     if (p.needsWrap) forcedWrapDetected = true;
