@@ -26,7 +26,13 @@ const SCENARIOS = [
   { id: "S1-sel-base", scaleX: 1, scaleY: 1, angle: 0, left: 20, top: 20 },
   { id: "S2-sel-rot8", scaleX: 1, scaleY: 1, angle: 8, left: 200, top: 100 },
   { id: "S3-sel-scale0_5", scaleX: 0.5, scaleY: 0.5, angle: 0, left: 20, top: 20 },
-  { id: "S4-sel-rot2-scale2", scaleX: 2, scaleY: 2, angle: 2, left: 50, top: 50 }
+  { id: "S4-sel-rot2-scale2", scaleX: 2, scaleY: 2, angle: 2, left: 50, top: 50 },
+  // Stage 8A-1B：Background Rotation 角度序列（同一张图；GROUP h = OCR 行高代理证据）
+  { id: "B1-rot0", scaleX: 1, scaleY: 1, angle: 0, left: 30, top: 30 },
+  { id: "B2-rot2", scaleX: 1, scaleY: 1, angle: 2, left: 30, top: 30 },
+  { id: "B3-rot5", scaleX: 1, scaleY: 1, angle: 5, left: 30, top: 30 },
+  { id: "B4-rot8", scaleX: 1, scaleY: 1, angle: 8, left: 30, top: 30 },
+  { id: "B5-rot10", scaleX: 1, scaleY: 1, angle: 10, left: 30, top: 30 }
 ];
 const SZ_ROWS = [
   { t: "大字标题实例文字", y: 30, s: 40 },
@@ -242,6 +248,8 @@ function injectUserscript() {
         const cTail = out.console.slice(-40).join("\n");
         rec.provider = /BAIDU_RECOGNIZING/.test(cTail) ? "baidu" : (/LOCAL_RECOGNIZING/.test(cTail) ? "local" : "unknown");
         rec.done = done;
+        // 8A-1B 证据：LOCAL GROUP 行高（OCR bbox 高度代理）随角度
+        rec.groupHeights = (function () { const m = cTail.match(/\[GROUP\] lines=\d+ y=[^\n]* h=([^\n]*)/); return m ? m[1] : null; })();
         // overflow 分类（§九）
         const cv = rec.created.length ? rec.created[0] : null;
         if (cv && cv.boundingRect && cv.canvasWidthOk === undefined) {
@@ -287,7 +295,7 @@ function injectUserscript() {
     try { page && await page.close(); } catch (e) {}
     try { browser && await browser.close(); } catch (e) {}
   }
-  const sceneOut = out.scenarios.map((s) => ({ id: s.id, tf: s.tf, injected: s.injected && { nw: s.injected.nw, nh: s.injected.nh, scaleX: s.injected.scaleX, scaleY: s.injected.scaleY, angle: s.injected.angle, left: s.injected.left, top: s.injected.top }, done: s.done || null, status: s.status || null, provider: s.provider, prepare: s.prepare, createdIds: s.createdIds, created: s.created, classification: s.classification, numericChain: s.numericChain, errors: s.errors }));
+  const sceneOut = out.scenarios.map((s) => ({ id: s.id, tf: s.tf, injected: s.injected && { nw: s.injected.nw, nh: s.injected.nh, scaleX: s.injected.scaleX, scaleY: s.injected.scaleY, angle: s.injected.angle, left: s.injected.left, top: s.injected.top }, done: s.done || null, status: s.status || null, provider: s.provider, prepare: s.prepare, groupHeights: s.groupHeights, createdIds: s.createdIds, created: s.created, classification: s.classification, numericChain: s.numericChain, errors: s.errors }));
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(path.join(REPORT_DIR, "selected-image-overflow.json"), JSON.stringify({ generatedAt: new Date().toISOString(), branch: BRANCH, pageInfo: out.pageInfo, install: out.install, scenarios: sceneOut, errors: out.errors, consoleTail: out.console.slice(-20) }, null, 2));
   console.log("STAGE-8A1A done scenarios=" + sceneOut.length + " errors=" + out.errors.length + " -> " + REPORT_DIR);

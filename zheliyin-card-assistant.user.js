@@ -1139,6 +1139,19 @@
       if (!angle) {
         return Object.assign({}, base, { left: px - 4, top: py - 4, width: layout.layoutWidth, fontSize: fs, height: boxHeight });
       }
+      // Stage 8A-1（WRONG_ORIGIN fix）：旋转文本不再用 center/origin 定位（left 语义错位，§二十九 四角→AABB）。
+      // 源 bbox 四角（source px，绕图片中心 w/2,h/2 并乘 scale）→ AABB 左上，originX 恒为 'left'，
+      // textbox 自带 angle 渲染旋转。矩阵 x'=cos*sx*x − sin*sy*y + tx；tx = cx − cos*sx*w/2 + sin*sy*h/2。
+      // image-transform.js 缺省时回退原 center 计算（保持行为）。
+      const corners = (typeof transformCorners === "function")
+        ? transformCorners({ left: b.bbox.x, top: b.bbox.y, width: b.bbox.width, height: b.bbox.height },
+          [cos * sx, sin * sx, -sin * sy, cos * sy, cx - cos * sx * (w / 2) + sin * sy * (h / 2), cy - sin * sx * (w / 2) - cos * sy * (h / 2)])
+        : null;
+      if (corners) {
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        corners.forEach((p) => { minX = Math.min(minX, p.x); minY = Math.min(minY, p.y); maxX = Math.max(maxX, p.x); maxY = Math.max(maxY, p.y); });
+        return Object.assign({}, base, { left: minX, top: minY, angle: angle, origin: "left", width: layout.layoutWidth, fontSize: fs, height: boxHeight });
+      }
       const ucx = (b.bbox.x + b.bbox.width / 2) / w - 0.5;
       const ucy = (b.bbox.y + b.bbox.height / 2) / h - 0.5;
       const dcx = ucx * w * sx, dcy = ucy * h * sy;
