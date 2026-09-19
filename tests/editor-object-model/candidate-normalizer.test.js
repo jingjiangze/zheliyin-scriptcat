@@ -235,12 +235,12 @@ t("s62-blank-line-separates", groupLinesToBlocks([
   { text: "姓名", bbox: { x: 40, y: 20, width: 80, height: 36 } },
   { text: "电话", bbox: { x: 40, y: 130, width: 120, height: 36 } }
 ]).length === 2, "gap 74/36=2.06 应拆分");
-// 7) 标题大字 + 正文小字：尺寸比 ≤ 2.0 允许合并（§六-4），>2.0 分离（既有 blkBigSmall 覆盖）
+// 7) 标题大字 + 正文小字：Stage 7.8R §十四 校准默认 sizeRatioMax=1.3 → 60/40=1.5 应拆（宁拆勿合）
 const blkTitleBody = groupLinesToBlocks([
   { text: "大标题", bbox: { x: 30, y: 20, width: 120, height: 60 } },
   { text: "正文小字", bbox: { x: 30, y: 86, width: 160, height: 40 } }
 ]);
-t("s62-title-body-ratio150-merge", blkTitleBody.length === 1 && blkTitleBody[0].lineCount === 2, JSON.stringify(blkTitleBody.map((b) => b.text)));
+t("s62-title-body-ratio150-splits", blkTitleBody.length === 2, JSON.stringify(blkTitleBody.map((b) => b.text)));
 // 8) 左边界宽容度：轻微缩进（偏移 ≤ 0.5×行高中位）仍算同块
 const blkIndent = groupLinesToBlocks([
   { text: "张三", bbox: { x: 50, y: 20, width: 120, height: 40 } },

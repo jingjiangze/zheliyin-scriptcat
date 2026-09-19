@@ -290,8 +290,10 @@ function groupLinesToBlocks(lines, opts) {
   // §八 初始参数（保守、拆分优先）；真机样本对比后按数据微调
   const gapRatioMax = o.gapRatioMax != null ? o.gapRatioMax : 1.25;
   // Stage 7.8 §二十/§二十二：Size Ratio Guard —— 明显大小不同禁止合并（宁可多拆，§二十七）。
-  // 默认 1.5（较旧 2.0 收紧）；1.10~1.50 实验经 opts.sizeRatioMax 覆盖（兼容旧 opts.heightRatioMax）。
-  const sizeRatioMax = (o.sizeRatioMax != null) ? o.sizeRatioMax : ((o.heightRatioMax != null) ? o.heightRatioMax : 1.5);
+  // Stage 7.8R §十四 校准（benchmark runtime/stage-7-8/size-ratio-benchmark.json）：
+  //   1.2/1.3 → 0 FM / 0 FS；1.4/1.5 → 2 FM（B32_24、B28_20 被误并）。
+  //   默认 1.3（= 旧 1.5 收紧；1.10~1.50 实验仍经 opts.sizeRatioMax / 兼容 heightRatioMax）。
+  const sizeRatioMax = (o.sizeRatioMax != null) ? o.sizeRatioMax : ((o.heightRatioMax != null) ? o.heightRatioMax : 1.3);
   const overlapRatioMin = o.overlapRatioMin != null ? o.overlapRatioMin : 0.5;
   const leftAlignTolRatio = o.leftAlignTolRatio != null ? o.leftAlignTolRatio : 0.5;
   const maxGapPxOverride = o.maxGapPx != null ? o.maxGapPx : null; // null → 1.5 × medianLineHeight

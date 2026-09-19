@@ -23,12 +23,10 @@ t("mixed.two-blocks", mixed.length === 2, JSON.stringify(texts(mixed)));
 t("mixed.title-standalone", mixed[0].text === "公司名称" && mixed[0].lineCount === 1, JSON.stringify(texts(mixed)));
 t("mixed.body-merged", mixed[1].text === "张三\n13800138000" && mixed[1].lineCount === 2, JSON.stringify(texts(mixed)));
 
-// ---- 同字号/接近字号（ratio 1.44 ≤ 1.5）→ 合并 ----
-const same = groupLinesToBlocks([
-  L("标题", 10, 10, 120, 26),
-  L("正文小字", 10, 46, 120, 18)
-]);
-t("close.merged", same.length === 1, JSON.stringify(texts(same)));
+// ---- 同字号/接近字号（ratio 1.44 ≤ 1.5 旧默认曾合并；Stage 7.8R §十四 校准默认 1.3 → 拆）----
+// 26/18=1.44 > 1.3 → 「宁拆勿合」（§二十七）：明显不同字号不合并
+const close = groupLinesToBlocks([L("标题", 10, 10, 120, 26), L("正文小字", 10, 46, 120, 18)]);
+t("close.splits-at-1.3", close.length === 2, JSON.stringify(texts(close)));
 
 // ---- sizeRatioMax 实验旋钮（§二十二 1.10~1.50）----
 const knob14 = groupLinesToBlocks([L("标题", 10, 10, 120, 26), L("正文小字", 10, 46, 120, 18)], { sizeRatioMax: 1.4 });
@@ -38,10 +36,12 @@ t("knob.16-merges", knob16.length === 1, JSON.stringify(texts(knob16)));
 const knobCompat = groupLinesToBlocks([L("标题", 10, 10, 120, 26), L("正文小字", 10, 46, 120, 18)], { heightRatioMax: 1.3 });
 t("knob.legacy-heightRatioMax-opts", knobCompat.length === 2, JSON.stringify(texts(knobCompat)));
 
-// ---- Fixture G 风格：同一水平线 y 重叠、强 x 覆盖 → 允许合并（§二十四 同排续接）----
-// 大 30px @(0,0,40,30)；小 20px @(0,8,30,20)：left-align 一致、x 覆盖 30/30=1.0 ≥ 0.85、baseline 差 0.1 → 合并
+// ---- Fixture G 风格：同一水平线 y 重叠、强 x 覆盖 —— 但 30/20=1.5 > 默认 1.3 → 拆（§二十七 宁拆勿合）----
+// （§二十四 vertical-overlap guard 仍生效：显式 sizeRatioMax=1.6 时该组合可合并）
 const rowCont = groupLinesToBlocks([L("大", 0, 0, 40, 30), L("小", 0, 8, 30, 20)]);
-t("row.overlapping-x-merges", rowCont.length === 1, JSON.stringify(texts(rowCont)));
+t("row.ratio15-splits-at-default", rowCont.length === 2, JSON.stringify(texts(rowCont)));
+const rowCont16 = groupLinesToBlocks([L("大", 0, 0, 40, 30), L("小", 0, 8, 30, 20)], { sizeRatioMax: 1.6 });
+t("row.overlapping-x-merges-at-1.6", rowCont16.length === 1, JSON.stringify(texts(rowCont16)));
 // 侧边小标签：x 重叠 < 0.85×minW → vertical-overlap 拆开（标题 + 右侧小标签，§二十三/§二十四）
 const rowLabel = groupLinesToBlocks([L("大标题", 0, 0, 120, 30), L("小标签", 108, 5, 20, 20)]);
 t("row.label-splits", rowLabel.length === 2, JSON.stringify(texts(rowLabel)));

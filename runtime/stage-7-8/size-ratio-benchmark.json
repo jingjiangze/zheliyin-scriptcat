@@ -1,0 +1,434 @@
+{
+  "generatedAt": "2026-09-19T00:12:15.277Z",
+  "ratios": [
+    1.1,
+    1.2,
+    1.3,
+    1.4,
+    1.5
+  ],
+  "samples": [
+    {
+      "id": "B40_16",
+      "desc": "40/16 上下近距",
+      "expectBlocks": 2
+    },
+    {
+      "id": "B40_20",
+      "desc": "40/20 上下近距",
+      "expectBlocks": 2
+    },
+    {
+      "id": "B40_24",
+      "desc": "40/24 上下近距",
+      "expectBlocks": 2
+    },
+    {
+      "id": "B32_20",
+      "desc": "32/20 上下近距",
+      "expectBlocks": 2
+    },
+    {
+      "id": "B32_24",
+      "desc": "32/24 上下近距",
+      "expectBlocks": 2
+    },
+    {
+      "id": "B28_20",
+      "desc": "28/20 上下近距",
+      "expectBlocks": 2
+    },
+    {
+      "id": "B24_20",
+      "desc": "24/20 上下近距（相近，应合一）",
+      "expectBlocks": 1
+    },
+    {
+      "id": "SAME_36",
+      "desc": "同字号 36/36（对照，应合一）",
+      "expectBlocks": 1
+    },
+    {
+      "id": "NEAR_21_20",
+      "desc": "20/21（§十八 视觉同字号，应合一）",
+      "expectBlocks": 1
+    },
+    {
+      "id": "ROW_40_16",
+      "desc": "同行大字40+小字16（word 层已拆；block 层不得并回）",
+      "expectBlocks": 2
+    },
+    {
+      "id": "TITLE_SUB",
+      "desc": "标题36+副标题16（§二十三 baseline 拆）",
+      "expectBlocks": 2
+    }
+  ],
+  "rows": [
+    {
+      "ratio": 1.1,
+      "bySample": {
+        "B40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        },
+        "B40_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        },
+        "B40_24": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        },
+        "B32_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        },
+        "B32_24": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        },
+        "B28_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        },
+        "B24_20": {
+          "expect": 1,
+          "actual": 2,
+          "verdict": "FALSE_SPLIT",
+          "sizeRatioMax": 1.1
+        },
+        "SAME_36": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        },
+        "NEAR_21_20": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        },
+        "ROW_40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        },
+        "TITLE_SUB": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.1
+        }
+      },
+      "falseMerge": 0,
+      "falseSplit": 1
+    },
+    {
+      "ratio": 1.2,
+      "bySample": {
+        "B40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "B40_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "B40_24": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "B32_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "B32_24": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "B28_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "B24_20": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "SAME_36": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "NEAR_21_20": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "ROW_40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        },
+        "TITLE_SUB": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.2
+        }
+      },
+      "falseMerge": 0,
+      "falseSplit": 0
+    },
+    {
+      "ratio": 1.3,
+      "bySample": {
+        "B40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "B40_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "B40_24": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "B32_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "B32_24": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "B28_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "B24_20": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "SAME_36": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "NEAR_21_20": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "ROW_40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        },
+        "TITLE_SUB": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.3
+        }
+      },
+      "falseMerge": 0,
+      "falseSplit": 0
+    },
+    {
+      "ratio": 1.4,
+      "bySample": {
+        "B40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.4
+        },
+        "B40_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.4
+        },
+        "B40_24": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.4
+        },
+        "B32_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.4
+        },
+        "B32_24": {
+          "expect": 2,
+          "actual": 1,
+          "verdict": "FALSE_MERGE",
+          "sizeRatioMax": 1.4
+        },
+        "B28_20": {
+          "expect": 2,
+          "actual": 1,
+          "verdict": "FALSE_MERGE",
+          "sizeRatioMax": 1.4
+        },
+        "B24_20": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.4
+        },
+        "SAME_36": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.4
+        },
+        "NEAR_21_20": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.4
+        },
+        "ROW_40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.4
+        },
+        "TITLE_SUB": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.4
+        }
+      },
+      "falseMerge": 2,
+      "falseSplit": 0
+    },
+    {
+      "ratio": 1.5,
+      "bySample": {
+        "B40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.5
+        },
+        "B40_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.5
+        },
+        "B40_24": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.5
+        },
+        "B32_20": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.5
+        },
+        "B32_24": {
+          "expect": 2,
+          "actual": 1,
+          "verdict": "FALSE_MERGE",
+          "sizeRatioMax": 1.5
+        },
+        "B28_20": {
+          "expect": 2,
+          "actual": 1,
+          "verdict": "FALSE_MERGE",
+          "sizeRatioMax": 1.5
+        },
+        "B24_20": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.5
+        },
+        "SAME_36": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.5
+        },
+        "NEAR_21_20": {
+          "expect": 1,
+          "actual": 1,
+          "verdict": "OK",
+          "sizeRatioMax": 1.5
+        },
+        "ROW_40_16": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.5
+        },
+        "TITLE_SUB": {
+          "expect": 2,
+          "actual": 2,
+          "verdict": "OK",
+          "sizeRatioMax": 1.5
+        }
+      },
+      "falseMerge": 2,
+      "falseSplit": 0
+    }
+  ]
+}
