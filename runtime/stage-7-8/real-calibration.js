@@ -142,8 +142,14 @@ const MATRIX = {
     try { if (vo && vo.totalCanvasArray && vo.totalCanvasArray[0] && vo.totalCanvasArray[0].canvas.requestRenderAll) vo.totalCanvasArray[0].canvas.requestRenderAll(); } catch (e) {}
     return { ok: true, removed, remaining };
   }, tag);
-  const clickOcrBtn = () => ev(() => {
-    const q = ["#zy-native-ocr-btn", "[data-zy-role=ocr]", ".zy-native-ocr-btn"];
+  const switchMode = (val) => ev((arg) => {
+    const sel = document.querySelector("#zy-ocr-mode-native") || document.querySelector("#zy-ocr-mode");
+    if (!sel) return { ok: false, reason: "no mode select" };
+    sel.value = arg.val;
+    try { sel.dispatchEvent(new Event("change", { bubbles: true })); } catch (e) { return { ok: false, reason: String(e && e.message || e).slice(0, 60) }; }
+    return { ok: true, val: arg.val };
+  }, { val });
+  const clickOcrBtn = () => ev(() => {    const q = ["#zy-native-ocr-btn", "[data-zy-role=ocr]", ".zy-native-ocr-btn"];
     for (const sel of q) { const el = document.querySelector(sel); if (el && el.offsetParent) { try { el.click(); return { clicked: true, via: sel }; } catch (e) { return { clicked: false, err: String(e).slice(0, 80) }; } } }
     const all = Array.from(document.querySelectorAll("button, a, span, div"));
     for (const el of all) { if (!el.offsetParent) continue; const t = String(el.textContent || "").trim(); if (t.indexOf("识别当前图片") >= 0 && t.length <= 12) { try { el.click(); return { clicked: true, via: "text" }; } catch (e) { return { clicked: false, err: String(e).slice(0, 80) }; } } }
@@ -178,6 +184,8 @@ const MATRIX = {
     const consoleStart = out.console.length; // 本轮新增 console 起点（避免跨轮污染）
     if (caseId.indexOf("fix") === 0) rec.spec = FIX[caseId.replace("fix", "")];
     if (caseId.indexOf("mtx") === 0) rec.spec = MATRIX[caseId.replace("mtx", "")];
+    if (caseId.indexOf("dual") === 0) rec.spec = FIX.A; // 双面轮复用 Fixture A 图（页归属回归 §二十八）
+    if (caseId === "localA") { rec.spec = FIX.A; rec.modeSwitch = await switchMode("local"); } // 仅本地路径验证（§二十七 第五轮 Local）
     if (rec.spec) {
       rec.render = await renderFixtureDataUrl(rec.spec); // 返回 dataUrl 字符串（ev 直接 resolve）
       rec.imgInjected = await ensureImageOnPage(idx, typeof rec.render === "string" ? rec.render : (rec.render && rec.render.dataUrl), "p8r-img-");

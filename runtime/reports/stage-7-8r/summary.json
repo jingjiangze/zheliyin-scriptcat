@@ -1,0 +1,735 @@
+{
+  "generatedAt": "2026-09-19T00:44:25.191Z",
+  "runCount": 9,
+  "runFiles": [
+    {
+      "file": "real-calibration-1789777210142.json",
+      "ts": "2026-09-19T00:16:45.198Z",
+      "ready": true,
+      "baiduKeySet": true,
+      "baiduInject": {
+        "err": "Error: page.evaluate: ReferenceError: GM_setValue is not defined\n    at eval (eval at evaluate (:311:30), <anonymous>:2:9)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anon"
+      },
+      "bridge": "canvas:c0"
+    },
+    {
+      "file": "real-calibration-1789777551101.json",
+      "ts": "2026-09-19T00:22:27.497Z",
+      "ready": true,
+      "baiduKeySet": true,
+      "baiduInject": {
+        "triggered": true,
+        "ak": true,
+        "sk": true
+      },
+      "bridge": "canvas:c0"
+    },
+    {
+      "file": "real-calibration-1789777801833.json",
+      "ts": "2026-09-19T00:26:39.678Z",
+      "ready": true,
+      "baiduKeySet": true,
+      "baiduInject": {
+        "triggered": true,
+        "ak": true,
+        "sk": true
+      },
+      "bridge": "canvas:c0"
+    },
+    {
+      "file": "real-calibration-1789777897212.json",
+      "ts": "2026-09-19T00:31:13.646Z",
+      "ready": true,
+      "baiduKeySet": true,
+      "baiduInject": {
+        "triggered": true,
+        "ak": true,
+        "sk": true
+      },
+      "bridge": "canvas:c0"
+    },
+    {
+      "file": "real-calibration-1789778003703.json",
+      "ts": "2026-09-19T00:32:57.355Z",
+      "ready": true,
+      "baiduKeySet": true,
+      "baiduInject": {
+        "triggered": true,
+        "ak": true,
+        "sk": true
+      },
+      "bridge": "canvas:c0"
+    },
+    {
+      "file": "real-calibration-1789778078012.json",
+      "ts": "2026-09-19T00:34:10.396Z",
+      "ready": true,
+      "baiduKeySet": true,
+      "baiduInject": {
+        "triggered": true,
+        "ak": true,
+        "sk": true
+      },
+      "bridge": "canvas:c0"
+    },
+    {
+      "file": "real-calibration-1789778490550.json",
+      "ts": "2026-09-19T00:35:01.392Z",
+      "ready": true,
+      "baiduKeySet": true,
+      "baiduInject": {
+        "triggered": true,
+        "ak": true,
+        "sk": true
+      },
+      "bridge": "canvas:c0"
+    },
+    {
+      "file": "real-calibration-1789778541129.json",
+      "ts": "2026-09-19T00:41:49.850Z",
+      "ready": true,
+      "baiduKeySet": true,
+      "baiduInject": {
+        "triggered": true,
+        "ak": true,
+        "sk": true
+      },
+      "bridge": "canvas:c0"
+    },
+    {
+      "file": "real-calibration-1789778630876.json",
+      "ts": "2026-09-19T00:43:27.342Z",
+      "ready": true,
+      "baiduKeySet": true,
+      "baiduInject": {
+        "triggered": true,
+        "ak": true,
+        "sk": true
+      },
+      "bridge": "canvas:c0"
+    }
+  ],
+  "rounds": [
+    {
+      "caseId": "fixA",
+      "provider": "unknown",
+      "modeSwitch": null,
+      "status": "",
+      "createdDelta": 0,
+      "texts": [],
+      "display": [],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": null,
+      "localLines": null
+    },
+    {
+      "caseId": "fixA",
+      "provider": "unknown",
+      "modeSwitch": null,
+      "status": "",
+      "createdDelta": 0,
+      "texts": [],
+      "display": [],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": null,
+      "localLines": null
+    },
+    {
+      "caseId": "fixA",
+      "provider": "unknown",
+      "modeSwitch": null,
+      "status": "",
+      "createdDelta": 0,
+      "texts": [],
+      "display": [],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": null,
+      "localLines": null
+    },
+    {
+      "caseId": "fixA",
+      "provider": "unknown",
+      "modeSwitch": null,
+      "status": "已生成 3 个文字（可双击编辑）",
+      "createdDelta": 3,
+      "texts": [
+        "武汉高端科技有限公司\n张三",
+        "13800138000",
+        "市场部经理"
+      ],
+      "display": [
+        {
+          "t": "武汉高端科技有限公司",
+          "isDisplay": 0
+        },
+        {
+          "t": "1380013800",
+          "isDisplay": 0
+        },
+        {
+          "t": "市场部经理",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 4,
+      "localLines": null
+    },
+    {
+      "caseId": "fixG",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 2 个文字（可双击编辑）",
+      "createdDelta": 2,
+      "texts": [
+        "优惠",
+        "全场五折"
+      ],
+      "display": [
+        {
+          "t": "优惠",
+          "isDisplay": 0
+        },
+        {
+          "t": "全场五折",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 2,
+      "localLines": null
+    },
+    {
+      "caseId": "fixH",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 2 个文字（可双击编辑）",
+      "createdDelta": 2,
+      "texts": [
+        "年度盛典",
+        "诚邀莅临指导"
+      ],
+      "display": [
+        {
+          "t": "优惠",
+          "isDisplay": 0
+        },
+        {
+          "t": "全场五折",
+          "isDisplay": 0
+        },
+        {
+          "t": "年度盛典",
+          "isDisplay": 0
+        },
+        {
+          "t": "诚邀莅临指导",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 2,
+      "localLines": null
+    },
+    {
+      "caseId": "fixI",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 2 个文字（可双击编辑）",
+      "createdDelta": 2,
+      "texts": [
+        "★至尊会员专属★",
+        "◆●▲品质保证"
+      ],
+      "display": [
+        {
+          "t": "优惠",
+          "isDisplay": 0
+        },
+        {
+          "t": "全场五折",
+          "isDisplay": 0
+        },
+        {
+          "t": "年度盛典",
+          "isDisplay": 0
+        },
+        {
+          "t": "诚邀莅临指导",
+          "isDisplay": 0
+        },
+        {
+          "t": "★至尊会员专属★",
+          "isDisplay": 0
+        },
+        {
+          "t": "◆●▲品质保证",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 2,
+      "localLines": null
+    },
+    {
+      "caseId": "fixJ",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 2 个文字（可双击编辑）",
+      "createdDelta": 2,
+      "texts": [
+        "联系电话：138001380",
+        "网址：www.examp|e"
+      ],
+      "display": [
+        {
+          "t": "优惠",
+          "isDisplay": 0
+        },
+        {
+          "t": "全场五折",
+          "isDisplay": 0
+        },
+        {
+          "t": "年度盛典",
+          "isDisplay": 0
+        },
+        {
+          "t": "诚邀莅临指导",
+          "isDisplay": 0
+        },
+        {
+          "t": "★至尊会员专属★",
+          "isDisplay": 0
+        },
+        {
+          "t": "◆●▲品质保证",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 2,
+      "localLines": null
+    },
+    {
+      "caseId": "fixM",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 2 个文字（可双击编辑）",
+      "createdDelta": 2,
+      "texts": [
+        "联系人：赵六",
+        "电话：13600001111"
+      ],
+      "display": [
+        {
+          "t": "优惠",
+          "isDisplay": 0
+        },
+        {
+          "t": "全场五折",
+          "isDisplay": 0
+        },
+        {
+          "t": "年度盛典",
+          "isDisplay": 0
+        },
+        {
+          "t": "诚邀莅临指导",
+          "isDisplay": 0
+        },
+        {
+          "t": "★至尊会员专属★",
+          "isDisplay": 0
+        },
+        {
+          "t": "◆●▲品质保证",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 2,
+      "localLines": null
+    },
+    {
+      "caseId": "mtxA",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 2 个文字（可双击编辑）",
+      "createdDelta": 2,
+      "texts": [
+        "你好，世界。你好！你好？",
+        "你好、你好；你好：()"
+      ],
+      "display": [
+        {
+          "t": "你好，世界。你好！你",
+          "isDisplay": 0
+        },
+        {
+          "t": "你好、你好；你好：(",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 2,
+      "localLines": null
+    },
+    {
+      "caseId": "mtxC",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 2 个文字（可双击编辑）",
+      "createdDelta": 2,
+      "texts": [
+        "《设计》「引号」『重点』",
+        "破折号…省略·间隔"
+      ],
+      "display": [
+        {
+          "t": "你好，世界。你好！你",
+          "isDisplay": 0
+        },
+        {
+          "t": "你好、你好；你好：(",
+          "isDisplay": 0
+        },
+        {
+          "t": "《设计》「引号」『重",
+          "isDisplay": 0
+        },
+        {
+          "t": "破折号…省略·间隔",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 2,
+      "localLines": null
+    },
+    {
+      "caseId": "mtxO",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 2 个文字（可双击编辑）",
+      "createdDelta": 2,
+      "texts": [
+        "ABC123",
+        "张三abc"
+      ],
+      "display": [
+        {
+          "t": "你好，世界。你好！你",
+          "isDisplay": 0
+        },
+        {
+          "t": "你好、你好；你好：(",
+          "isDisplay": 0
+        },
+        {
+          "t": "《设计》「引号」『重",
+          "isDisplay": 0
+        },
+        {
+          "t": "破折号…省略·间隔",
+          "isDisplay": 0
+        },
+        {
+          "t": "ABC123",
+          "isDisplay": 0
+        },
+        {
+          "t": "张三abc",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 2,
+      "localLines": null
+    },
+    {
+      "caseId": "mtxQ",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 1 个文字（可双击编辑）",
+      "createdDelta": 1,
+      "texts": [
+        "VIP送服务"
+      ],
+      "display": [
+        {
+          "t": "你好，世界。你好！你",
+          "isDisplay": 0
+        },
+        {
+          "t": "你好、你好；你好：(",
+          "isDisplay": 0
+        },
+        {
+          "t": "《设计》「引号」『重",
+          "isDisplay": 0
+        },
+        {
+          "t": "破折号…省略·间隔",
+          "isDisplay": 0
+        },
+        {
+          "t": "ABC123",
+          "isDisplay": 0
+        },
+        {
+          "t": "张三abc",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 1,
+      "localLines": null
+    },
+    {
+      "caseId": "mtxR",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 1 个文字（可双击编辑）",
+      "createdDelta": 1,
+      "texts": [
+        "联系：赵六"
+      ],
+      "display": [
+        {
+          "t": "你好，世界。你好！你",
+          "isDisplay": 0
+        },
+        {
+          "t": "你好、你好；你好：(",
+          "isDisplay": 0
+        },
+        {
+          "t": "《设计》「引号」『重",
+          "isDisplay": 0
+        },
+        {
+          "t": "破折号…省略·间隔",
+          "isDisplay": 0
+        },
+        {
+          "t": "ABC123",
+          "isDisplay": 0
+        },
+        {
+          "t": "张三abc",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 1,
+      "localLines": null
+    },
+    {
+      "caseId": "mtxT",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 1 个文字（可双击编辑）",
+      "createdDelta": 1,
+      "texts": [
+        "名片"
+      ],
+      "display": [
+        {
+          "t": "你好，世界。你好！你",
+          "isDisplay": 0
+        },
+        {
+          "t": "你好、你好；你好：(",
+          "isDisplay": 0
+        },
+        {
+          "t": "《设计》「引号」『重",
+          "isDisplay": 0
+        },
+        {
+          "t": "破折号…省略·间隔",
+          "isDisplay": 0
+        },
+        {
+          "t": "ABC123",
+          "isDisplay": 0
+        },
+        {
+          "t": "张三abc",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 1,
+      "localLines": null
+    },
+    {
+      "caseId": "dualFRONT",
+      "provider": "unknown",
+      "modeSwitch": null,
+      "status": "",
+      "createdDelta": 0,
+      "texts": [],
+      "display": [],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": null,
+      "localLines": null
+    },
+    {
+      "caseId": "dualBACK",
+      "provider": "unknown",
+      "modeSwitch": null,
+      "status": "",
+      "createdDelta": 0,
+      "texts": [],
+      "display": [],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": null,
+      "localLines": null
+    },
+    {
+      "caseId": "dualFRONT",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 3 个文字（可双击编辑）",
+      "createdDelta": 3,
+      "texts": [
+        "武汉高端科技有限公司\n张三",
+        "13800138000",
+        "市场部经理"
+      ],
+      "display": [
+        {
+          "t": "武汉高端科技有限公司",
+          "isDisplay": 0
+        },
+        {
+          "t": "1380013800",
+          "isDisplay": 0
+        },
+        {
+          "t": "市场部经理",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 4,
+      "localLines": null
+    },
+    {
+      "caseId": "dualBACK",
+      "provider": "baidu",
+      "modeSwitch": null,
+      "status": "已生成 3 个文字（可双击编辑）",
+      "createdDelta": 3,
+      "texts": [
+        "武汉高端科技有限公司\n张三",
+        "13800138000",
+        "市场部经理"
+      ],
+      "display": [
+        {
+          "t": "武汉高端科技有限公司",
+          "isDisplay": 0
+        },
+        {
+          "t": "1380013800",
+          "isDisplay": 0
+        },
+        {
+          "t": "市场部经理",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": 4,
+      "localLines": null
+    },
+    {
+      "caseId": "localA",
+      "provider": "local",
+      "modeSwitch": "local",
+      "status": "已生成 3 个文字（可双击编辑）",
+      "createdDelta": 3,
+      "texts": [
+        "武汉高端科技有限公司\n张三",
+        "13800138000",
+        "市场部经理"
+      ],
+      "display": [
+        {
+          "t": "武汉高端科技有限公司",
+          "isDisplay": 0
+        },
+        {
+          "t": "1380013800",
+          "isDisplay": 0
+        },
+        {
+          "t": "市场部经理",
+          "isDisplay": 0
+        }
+      ],
+      "owned": true,
+      "p0": true,
+      "q6": null,
+      "baiduLines": null,
+      "localLines": 4
+    }
+  ],
+  "result": {
+    "baiduRounds": 13,
+    "localRounds": 1,
+    "createdOk": 15,
+    "allOwned": true,
+    "allP0IsDisplaySafe": true,
+    "mixedSizeSplit": {
+      "G": true,
+      "H": true
+    },
+    "localFallbackPath": true,
+    "dualPage": {
+      "FRONT": true,
+      "BACK": true
+    }
+  }
+}

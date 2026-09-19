@@ -1,0 +1,148 @@
+{
+  "ts": "2026-09-19T00:35:01.392Z",
+  "stage": "STAGE-7.8R-REAL-CALIBRATION",
+  "branch": "stage-7-8-ocr-quality-calibration",
+  "baiduKeySet": true,
+  "cases": [
+    "dualFRONT",
+    "dualBACK"
+  ],
+  "rounds": [
+    {
+      "caseId": "dualFRONT",
+      "idx": 0,
+      "spec": null,
+      "render": null,
+      "imgInjected": null,
+      "click": {
+        "clicked": true,
+        "via": "#zy-native-ocr-btn"
+      },
+      "statusFlow": [
+        {
+          "t": "0s",
+          "s": "正在准备图片…"
+        },
+        {
+          "t": "13s",
+          "s": "未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+        }
+      ],
+      "createdDelta": 0,
+      "createdTexts": [],
+      "display": [],
+      "quality6": null,
+      "provider": "unknown",
+      "ocrLines": null,
+      "safetyBlocks": 0,
+      "assert": {
+        "done": false,
+        "createdDelta": 0,
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "pageOwned": true,
+        "hasText": false,
+        "p0IsDisplaySafe": true
+      },
+      "current": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT"
+      },
+      "after": {
+        "n": 9,
+        "texts": [],
+        "display": []
+      },
+      "console": [
+        "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
+        "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+      ]
+    },
+    {
+      "caseId": "dualBACK",
+      "idx": 1,
+      "spec": null,
+      "render": null,
+      "imgInjected": null,
+      "click": {
+        "clicked": true,
+        "via": "#zy-native-ocr-btn"
+      },
+      "statusFlow": [
+        {
+          "t": "0s",
+          "s": "正在准备图片…"
+        },
+        {
+          "t": "13s",
+          "s": "未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+        }
+      ],
+      "createdDelta": 0,
+      "createdTexts": [],
+      "display": [],
+      "quality6": null,
+      "provider": "unknown",
+      "ocrLines": null,
+      "safetyBlocks": 0,
+      "assert": {
+        "done": false,
+        "createdDelta": 0,
+        "pageId": "canvas:c1",
+        "side": "BACK",
+        "pageOwned": true,
+        "hasText": false,
+        "p0IsDisplaySafe": true
+      },
+      "current": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c1",
+        "side": "BACK"
+      },
+      "after": {
+        "n": 9,
+        "texts": [],
+        "display": []
+      },
+      "console": [
+        "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
+        "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+      ]
+    }
+  ],
+  "errors": [],
+  "scriptAt": "D:\\zheliyin-scriptcat\\zheliyin-card-assistant.user.js",
+  "install": "ok",
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
+    "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图",
+    "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
+    "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+  ],
+  "ready": true,
+  "bridge": {
+    "ok": true,
+    "code": "OK",
+    "pageId": "canvas:c0",
+    "side": "FRONT"
+  },
+  "baiduInject": {
+    "triggered": true,
+    "ak": true,
+    "sk": true
+  },
+  "verdict": {
+    "roundsDone": 2,
+    "finished": 0,
+    "createdOk": 0,
+    "baiduSeen": false,
+    "pageOwnedAll": true,
+    "p0IsDisplaySafeAll": true
+  },
+  "RESULT": "BLOCKED"
+}
