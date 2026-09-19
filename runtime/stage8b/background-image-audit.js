@@ -90,6 +90,8 @@ function compareQuad(target, actual) {
   const render = () => ev((arg) => { const cv = document.createElement("canvas"); cv.width = arg.w; cv.height = arg.h; const ctx = cv.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, arg.w, arg.h); ctx.fillStyle = "#000"; ctx.textBaseline = "top"; (arg.rows || []).forEach((r) => { ctx.font = r.s + "px SimHei, sans-serif"; ctx.fillText(r.t, 30, r.y); }); return cv.toDataURL("image/png"); }, { w: SZ_W, h: SZ_H, rows: SZ_ROWS });
   // 背景图注入（含 scale/angle），并先清活动选择（确保 ocrPrepare 命中 background route）
   const setBg = (ci, dataUrl, tf) => ev((arg) => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const d = (vo && vo.totalCanvasArray && vo.totalCanvasArray[arg.ci]) || null; const c = d && d.canvas; if (!c) return { ok: false, reason: "no canvas" }; try { if (c.discardActiveObject) c.discardActiveObject(); } catch (e) {} const f = (c.constructor && c.constructor.fabric) || window.fabric; return new Promise((res) => { const im = new Image(); im.onload = () => { try { const bg = new f.Image(im); bg.set({ scaleX: arg.tf.scaleX || 1, scaleY: arg.tf.scaleY || 1, angle: arg.tf.angle || 0, left: 0, top: 0 }); c.setBackgroundImage(bg, () => { try { c.setCoords && c.setCoords(); if (c.requestRenderAll) c.requestRenderAll(); } catch (e) {} res({ ok: true, w: bg.width, h: bg.height, nw: im.naturalWidth, nh: im.naturalHeight, left: bg.left, top: bg.top, scaleX: bg.scaleX, scaleY: bg.scaleY, angle: bg.angle, ac: bg.aCoords ? { tl: [bg.aCoords.tl.x, bg.aCoords.tl.y], tr: [bg.aCoords.tr.x, bg.aCoords.tr.y], br: [bg.aCoords.br.x, bg.aCoords.br.y], bl: [bg.aCoords.bl.x, bg.aCoords.bl.y] } : null }); }); } catch (e) { res({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); } }; im.onerror = () => res({ ok: false, reason: "onerror" }); im.src = arg.dataUrl; }); }, { ci, dataUrl, tf });
+  // active/first route 注入：直接 canvas.add 普通图片对象（选中以命中 active-image；不选中命中 first-image）
+  const injectImg = (ci, dataUrl, tf, opts) => ev((arg) => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const d = (vo && vo.totalCanvasArray && vo.totalCanvasArray[arg.ci]) || null; const c = d && d.canvas; if (!c) return { ok: false, reason: "no canvas" }; const f = (c.constructor && c.constructor.fabric) || window.fabric; return new Promise((res) => { const im = new Image(); im.onload = () => { try { const obj = new f.Image(im); obj.set({ left: arg.tf.left || 0, top: arg.tf.top || 0, scaleX: arg.tf.scaleX || 1, scaleY: arg.tf.scaleY || 1, angle: arg.tf.angle || 0 }); obj.multiUuid = arg.tag + Date.now(); c.add(obj); if (arg.selectOnAdd) { try { c.setActiveObject(obj); } catch (e) {} } if (d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr) d.canvasObjInfo.canvasToProductObjArr.push(obj); if (c.requestRenderAll) c.requestRenderAll(); res({ ok: true, left: obj.left, top: obj.top, scaleX: obj.scaleX, scaleY: obj.scaleY, angle: obj.angle, w: obj.width, h: obj.height, nw: im.naturalWidth, nh: im.naturalHeight }); } catch (e) { res({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); } }; im.onerror = () => res({ ok: false, reason: "onerror" }); im.src = arg.dataUrl; }); }, { ci, dataUrl, tf, tag: opts && opts.tag, selectOnAdd: opts && opts.selectOnAdd });
   const bgSnap = () => ev(() => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0]; const c = d && d.canvas; if (!c) return null; try { c.setCoords && c.setCoords(); } catch (e) {} const bg = c.backgroundImage || null; let image = null; if (bg && String(bg.type) === "image") { const el = bg.getElement ? bg.getElement() : null; image = { naturalWidth: el ? el.naturalWidth : null, naturalHeight: el ? el.naturalHeight : null, width: bg.width, height: bg.height, scaleX: bg.scaleX, scaleY: bg.scaleY, left: bg.left, top: bg.top, angle: bg.angle, originX: bg.originX, originY: bg.originY, aCoords: bg.aCoords ? { tl: [bg.aCoords.tl.x, bg.aCoords.tl.y], tr: [bg.aCoords.tr.x, bg.aCoords.tr.y], br: [bg.aCoords.br.x, bg.aCoords.br.y], bl: [bg.aCoords.bl.x, bg.aCoords.bl.y] } : null }; }
     return { image, canvas: { width: c.width, height: c.height, viewportTransform: c.viewportTransform ? Array.from(c.viewportTransform) : null, zoom: c.getZoom ? c.getZoom() : null, retina: c.getRetinaScaling ? c.getRetinaScaling() : null }, diy: { currentFactWidth: d.currentFactWidth, currentFactHeight: d.currentFactHeight, currentSize: d.currentSize }, registry: d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null }; });
   const clickOcr = () => ev(() => { const q = ["#zy-native-ocr-btn", "[data-zy-role=ocr]", ".zy-native-ocr-btn"]; for (const s of q) { const el = document.querySelector(s); if (el && el.offsetParent) { try { el.click(); return { clicked: true }; } catch (e) {} } } const all = Array.from(document.querySelectorAll("button,a,span,div")); for (const el of all) { if (!el.offsetParent) continue; if (String(el.textContent || "").trim().indexOf("识别当前图片") === 0) { try { el.click(); return { clicked: true }; } catch (e) {} } } return { clicked: false }; });
@@ -141,16 +143,23 @@ function compareQuad(target, actual) {
     const dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
 
     const cases = process.env.ZY_CASES ? process.env.ZY_CASES.split(",") : CASE_DEFS.map((c) => c.id);
+    const ROUTE = process.env.ZY_ROUTE || "background"; // background | active | first
     for (const cid of cases) {
-      const def = CASE_DEFS.find((c) => c.id === cid) || { id: cid, angle: 0, scale: 1 };
-      const rec = { id: def.id, angle: def.angle, scale: def.scale, steps: [], rows: [], hook: null, created: null, compare: [], errors: [] };
+      let def = CASE_DEFS.find((c) => c.id === cid) || { id: cid, angle: 0, scale: 1 };
+      const parsed = /^(\d+(?:\.\d+)?)x(\d+(?:\.\d+)?)$/.exec(cid);
+      if (parsed) def = { id: cid, angle: parseFloat(parsed[1]), scale: parseFloat(parsed[2]) };
+      const rec = { id: def.id, route: ROUTE, angle: def.angle, scale: def.scale, steps: [], rows: [], hook: null, created: null, compare: [], errors: [] };
       out.cases.push(rec);
       try {
-        const bg = await setBg(0, dataUrl, { angle: def.angle, scaleX: def.scale, scaleY: def.scale });
-        rec.bgInjected = bg;
+        if (ROUTE === "background") {
+          rec.imgInjected = await setBg(0, dataUrl, { angle: def.angle, scaleX: def.scale, scaleY: def.scale });
+        } else {
+          const injected = await injectImg(0, dataUrl, { left: 60, top: 60, angle: def.angle, scaleX: def.scale, scaleY: def.scale }, { tag: "b8r-", selectOnAdd: ROUTE === "active" });
+          rec.imgInjected = injected;
+        }
         await SLEEP(1500);
         const snap = await bgSnap();
-        rec.bgSnap = snap;
+        rec.imgSnap = snap;
         await armHook();
         rec.steps.push(await bgSnap());
         const before = await snapObjs();
