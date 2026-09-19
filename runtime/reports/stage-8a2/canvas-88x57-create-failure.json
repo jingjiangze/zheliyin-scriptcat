@@ -1,0 +1,156 @@
+{
+  "ts": "2026-09-19T05:03:57.141Z",
+  "stage": "STAGE-8A2B-fail",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "fail",
+  "records": [
+    {
+      "mode": "fail",
+      "url": "https://diy.zheliyin.com/diyWeb/third/1040459/5368967/999/thirdDiyAdd.do",
+      "img": {
+        "ok": true,
+        "w": 1000,
+        "h": 300,
+        "nw": 1000,
+        "nh": 300,
+        "sx": 1,
+        "sy": 1,
+        "angle": 0,
+        "left": 20,
+        "top": 20
+      },
+      "rd": {
+        "click": true,
+        "done": true,
+        "ids": [
+          "944a83ec-8142-41ba-bfbd-51213ab81a3e"
+        ]
+      },
+      "cap": [
+        {
+          "kind": "throw",
+          "text": "大字标题实例文字",
+          "err": "Cannot read properties of undefined (reading 'media')",
+          "stack": "TypeError: Cannot read properties of undefined (reading 'media')\n    at v.checkObjsInProductJson (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:190:251)\n    at v.drawText (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:416:20)\n    at diy.drawText (eval at evaluate (:311:30), <anonymous>:1:545)\n    at <anonymous>:111:21",
+          "entry": {
+            "location": {
+              "x": 48,
+              "y": 43,
+              "width": 493,
+              "height": 85,
+              "factWidth": 493,
+              "factHeight": 85,
+              "rotation": 0
+            },
+            "printLocation": {
+              "x": 48,
+              "y": 43,
+              "width": 493,
+              "height": 85,
+              "rotation": 0
+            },
+            "media": {
+              "mediaType": "text",
+              "text": "大字标题实例文字",
+              "font": {
+                "pointSize": 59,
+                "fontColor": "#000000",
+                "isHorizontal": 1,
+                "gravity": "left",
+                "id": "248",
+                "isItalic": 0,
+                "textDecoration": "",
+                "linethrough": 0,
+                "overline": 0,
+                "isBold": 0,
+                "overprintStroke": 0
+              },
+              "charSpace": 0,
+              "lineSpace": 1.2,
+              "lineIdType": 0,
+              "isBG": 0,
+              "imgPath": ""
+            }
+          },
+          "layer": 1
+        }
+      ],
+      "status": [
+        "正在等待编辑器加载…",
+        "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
+        "生成失败：未创建文字（第 0 个失败，已回滚）"
+      ],
+      "objects": [
+        {
+          "id": "944a83ec-8142-41ba-bfbd-51213ab81a3e",
+          "text": "大字标题实例文字",
+          "left": 48,
+          "top": 43,
+          "width": 493,
+          "height": 85,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 59,
+          "angle": 0,
+          "originX": "left",
+          "visible": true,
+          "opacity": 1,
+          "aCoords": {
+            "tl": [
+              48,
+              43
+            ],
+            "br": [
+              542,
+              129
+            ]
+          },
+          "boundingRect": {
+            "left": 36.2580121703854,
+            "top": 32.481135902636915,
+            "width": 373.15537525354966,
+            "height": 64.96227180527384
+          },
+          "biz": {
+            "locationX": 48,
+            "locationY": 43,
+            "locationWidth": 493,
+            "locationHeight": 85
+          }
+        }
+      ],
+      "canvasInfo": {
+        "width": 453.22515212981745,
+        "height": 744.8,
+        "ft": [
+          0.7553752535496957,
+          0,
+          0,
+          0.7553752535496957,
+          0,
+          0
+        ],
+        "zoom": 0.7553752535496957,
+        "retina": 0.800000011920929
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][CANVAS_READY] w=453.22515212981745x744.8 objs=9 bg=false active=image",
+    "[zy-ocr][PREPARING] kind=active-image 1000x300 dataUrl=29422 chars",
+    "[zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current",
+    "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
+    "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
+    "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+    "[zy-ocr][LOCAL_RECOGNIZING] lines=3 words=25 image=undefinedxundefined",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
+    "[zy-ocr][GROUP] lines=3 y=27,111,200 h=57,18,11",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":3,\"kept\":3,\"dropped\":0}}",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"PASS\",\"reasonCode\":null,\"total\":3,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"PASS\"}}",
+    "[zy-ocr][BUILDING] blocks=3 forcedWrap=0 multiLine=0",
+    "[zy-ocr][ERROR] ocrCreate failed created=0 detected=3 failedIdx=0 msg="
+  ]
+}
