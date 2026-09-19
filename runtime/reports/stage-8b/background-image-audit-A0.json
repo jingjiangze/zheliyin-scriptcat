@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-19T12:10:14.351Z",
+  "ts": "2026-09-19T13:49:36.429Z",
   "stage": "STAGE-8B-STEP5",
   "branch": "stage-8b-ocr-reconstruction-engine",
   "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
@@ -227,17 +227,14 @@
                 "blockIndex": 0,
                 "corrections": {
                   "left": 23,
-                  "top": 25,
-                  "fontSize": 39,
-                  "width": 334
+                  "top": 25
                 }
               },
               {
                 "blockIndex": 1,
                 "corrections": {
                   "left": 26,
-                  "top": 106,
-                  "width": 270
+                  "top": 106
                 }
               },
               {
@@ -245,6 +242,7 @@
                 "corrections": {
                   "left": 72,
                   "top": 197,
+                  "fontSize": 10,
                   "width": 60
                 }
               },
@@ -252,81 +250,18 @@
                 "blockIndex": 3,
                 "corrections": {
                   "left": 26,
-                  "top": 194,
-                  "fontSize": 12,
-                  "width": 117
+                  "top": 194
                 }
               }
             ]
           },
           {
             "items": [
-              {
-                "blockIndex": 0,
-                "corrections": {
-                  "left": 23,
-                  "top": 33,
-                  "fontSize": 40,
-                  "width": 334
-                }
-              },
-              {
-                "blockIndex": 1,
-                "corrections": {
-                  "left": 26,
-                  "top": 112,
-                  "fontSize": 21,
-                  "width": 270
-                }
-              },
               {
                 "blockIndex": 2,
                 "corrections": {
                   "left": 72,
-                  "top": 202,
-                  "fontSize": 12,
-                  "width": 60
-                }
-              },
-              {
-                "blockIndex": 3,
-                "corrections": {
-                  "left": 26,
-                  "top": 199,
-                  "fontSize": 11,
-                  "width": 117
-                }
-              }
-            ]
-          },
-          {
-            "items": [
-              {
-                "blockIndex": 0,
-                "corrections": {
-                  "fontSize": 41,
-                  "width": 334
-                }
-              },
-              {
-                "blockIndex": 1,
-                "corrections": {
-                  "left": 26,
-                  "top": 97,
-                  "width": 270
-                }
-              },
-              {
-                "blockIndex": 2,
-                "corrections": {
-                  "fontSize": 13,
-                  "width": 60
-                }
-              },
-              {
-                "blockIndex": 3,
-                "corrections": {
-                  "width": 117
+                  "top": 202
                 }
               }
             ]
@@ -351,25 +286,25 @@
                     },
                     {
                       "x": 358,
-                      "y": 70.07
+                      "y": 86
                     },
                     {
                       "x": 23,
-                      "y": 70.07
+                      "y": 86
                     }
                   ],
                   "center": {
                     "x": 190.5,
-                    "y": 47.535
+                    "y": 55.5
                   },
                   "width": 335,
-                  "height": 45.06999999999999,
+                  "height": 61,
                   "angle": 0,
                   "left": 23,
                   "top": 25,
-                  "fontSize": 39,
+                  "fontSize": 40,
                   "textboxWidth": 334,
-                  "textboxHeight": 44.06999999999999,
+                  "textboxHeight": 60,
                   "lineHeight": 1.2,
                   "renderedLineCount": 1
                 }
@@ -390,25 +325,25 @@
                     },
                     {
                       "x": 297,
-                      "y": 129.6
+                      "y": 141
                     },
                     {
                       "x": 26,
-                      "y": 129.6
+                      "y": 141
                     }
                   ],
                   "center": {
                     "x": 161.5,
-                    "y": 117.80000000000001
+                    "y": 123.5
                   },
                   "width": 271,
-                  "height": 23.599999999999994,
+                  "height": 35,
                   "angle": 0,
                   "left": 26,
                   "top": 106,
                   "fontSize": 20,
                   "textboxWidth": 270,
-                  "textboxHeight": 22.599999999999998,
+                  "textboxHeight": 34,
                   "lineHeight": 1.2,
                   "renderedLineCount": 1
                 }
@@ -429,25 +364,25 @@
                     },
                     {
                       "x": 133,
-                      "y": 210.43
+                      "y": 209.3
                     },
                     {
                       "x": 72,
-                      "y": 210.43
+                      "y": 209.3
                     }
                   ],
                   "center": {
                     "x": 102.5,
-                    "y": 203.71500000000003
+                    "y": 203.14999999999998
                   },
                   "width": 61,
-                  "height": 13.430000000000007,
+                  "height": 12.300000000000011,
                   "angle": 0,
                   "left": 72,
                   "top": 197,
-                  "fontSize": 11,
+                  "fontSize": 10,
                   "textboxWidth": 60,
-                  "textboxHeight": 12.43,
+                  "textboxHeight": 11.299999999999999,
                   "lineHeight": 1.2,
                   "renderedLineCount": 1
                 }
@@ -468,345 +403,68 @@
                     },
                     {
                       "x": 144,
-                      "y": 208.56
+                      "y": 220
                     },
                     {
                       "x": 26,
-                      "y": 208.56
+                      "y": 220
                     }
                   ],
                   "center": {
                     "x": 85,
-                    "y": 201.27999999999997
+                    "y": 207
                   },
                   "width": 118,
-                  "height": 14.560000000000002,
+                  "height": 26,
                   "angle": 0,
                   "left": 26,
                   "top": 194,
-                  "fontSize": 12,
-                  "textboxWidth": 117,
-                  "textboxHeight": 13.559999999999999,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 1
-                }
-              }
-            ]
-          },
-          {
-            "items": [
-              {
-                "blockIndex": 0,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 23,
-                      "y": 33
-                    },
-                    {
-                      "x": 358,
-                      "y": 33
-                    },
-                    {
-                      "x": 358,
-                      "y": 79.19999999999999
-                    },
-                    {
-                      "x": 23,
-                      "y": 79.19999999999999
-                    }
-                  ],
-                  "center": {
-                    "x": 190.5,
-                    "y": 56.099999999999994
-                  },
-                  "width": 335,
-                  "height": 46.19999999999999,
-                  "angle": 0,
-                  "left": 23,
-                  "top": 33,
-                  "fontSize": 40,
-                  "textboxWidth": 334,
-                  "textboxHeight": 45.199999999999996,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 1
-                }
-              },
-              {
-                "blockIndex": 1,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 26,
-                      "y": 112.00000000000001
-                    },
-                    {
-                      "x": 297,
-                      "y": 112.00000000000001
-                    },
-                    {
-                      "x": 297,
-                      "y": 165.20600000000002
-                    },
-                    {
-                      "x": 26,
-                      "y": 165.20600000000002
-                    }
-                  ],
-                  "center": {
-                    "x": 161.5,
-                    "y": 138.603
-                  },
-                  "width": 271,
-                  "height": 53.206,
-                  "angle": 0,
-                  "left": 26,
-                  "top": 112,
-                  "fontSize": 21,
-                  "textboxWidth": 270,
-                  "textboxHeight": 52.20599999999999,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 2
-                }
-              },
-              {
-                "blockIndex": 2,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 72,
-                      "y": 202
-                    },
-                    {
-                      "x": 133,
-                      "y": 202
-                    },
-                    {
-                      "x": 133,
-                      "y": 216.56
-                    },
-                    {
-                      "x": 72,
-                      "y": 216.56
-                    }
-                  ],
-                  "center": {
-                    "x": 102.5,
-                    "y": 209.27999999999997
-                  },
-                  "width": 61,
-                  "height": 14.560000000000002,
-                  "angle": 0,
-                  "left": 72,
-                  "top": 202,
-                  "fontSize": 12,
-                  "textboxWidth": 60,
-                  "textboxHeight": 13.559999999999999,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 1
-                }
-              },
-              {
-                "blockIndex": 3,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 26,
-                      "y": 199
-                    },
-                    {
-                      "x": 144,
-                      "y": 199
-                    },
-                    {
-                      "x": 144,
-                      "y": 212.43
-                    },
-                    {
-                      "x": 26,
-                      "y": 212.43
-                    }
-                  ],
-                  "center": {
-                    "x": 85,
-                    "y": 205.71500000000003
-                  },
-                  "width": 118,
-                  "height": 13.430000000000007,
-                  "angle": 0,
-                  "left": 26,
-                  "top": 199,
-                  "fontSize": 11,
-                  "textboxWidth": 117,
-                  "textboxHeight": 12.43,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 1
-                }
-              }
-            ]
-          },
-          {
-            "items": [
-              {
-                "blockIndex": 0,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 23,
-                      "y": 33
-                    },
-                    {
-                      "x": 358,
-                      "y": 33
-                    },
-                    {
-                      "x": 358,
-                      "y": 80.32999999999998
-                    },
-                    {
-                      "x": 23,
-                      "y": 80.32999999999998
-                    }
-                  ],
-                  "center": {
-                    "x": 190.5,
-                    "y": 56.66499999999999
-                  },
-                  "width": 335,
-                  "height": 47.329999999999984,
-                  "angle": 0,
-                  "left": 23,
-                  "top": 33,
-                  "fontSize": 41,
-                  "textboxWidth": 334,
-                  "textboxHeight": 46.32999999999999,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 1
-                }
-              },
-              {
-                "blockIndex": 1,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 26,
-                      "y": 97
-                    },
-                    {
-                      "x": 297,
-                      "y": 97
-                    },
-                    {
-                      "x": 297,
-                      "y": 150.206
-                    },
-                    {
-                      "x": 26,
-                      "y": 150.206
-                    }
-                  ],
-                  "center": {
-                    "x": 161.5,
-                    "y": 123.60300000000001
-                  },
-                  "width": 271,
-                  "height": 53.20599999999999,
-                  "angle": 0,
-                  "left": 26,
-                  "top": 97,
-                  "fontSize": 21,
-                  "textboxWidth": 270,
-                  "textboxHeight": 52.20599999999999,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 2
-                }
-              },
-              {
-                "blockIndex": 2,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 72,
-                      "y": 202
-                    },
-                    {
-                      "x": 133,
-                      "y": 202
-                    },
-                    {
-                      "x": 133,
-                      "y": 217.69
-                    },
-                    {
-                      "x": 72,
-                      "y": 217.69
-                    }
-                  ],
-                  "center": {
-                    "x": 102.5,
-                    "y": 209.84500000000003
-                  },
-                  "width": 61,
-                  "height": 15.689999999999998,
-                  "angle": 0,
-                  "left": 72,
-                  "top": 202,
                   "fontSize": 13,
-                  "textboxWidth": 60,
-                  "textboxHeight": 14.689999999999998,
+                  "textboxWidth": 117,
+                  "textboxHeight": 25,
                   "lineHeight": 1.2,
                   "renderedLineCount": 1
                 }
-              },
+              }
+            ]
+          },
+          {
+            "items": [
               {
-                "blockIndex": 3,
+                "blockIndex": 2,
                 "ok": true,
                 "error": null,
                 "geometry": {
                   "quad": [
                     {
-                      "x": 26,
-                      "y": 199
+                      "x": 72,
+                      "y": 202
                     },
                     {
-                      "x": 144,
-                      "y": 199
+                      "x": 133,
+                      "y": 202
                     },
                     {
-                      "x": 144,
-                      "y": 212.43
+                      "x": 133,
+                      "y": 214.3
                     },
                     {
-                      "x": 26,
-                      "y": 212.43
+                      "x": 72,
+                      "y": 214.3
                     }
                   ],
                   "center": {
-                    "x": 85,
-                    "y": 205.71500000000003
+                    "x": 102.5,
+                    "y": 208.14999999999998
                   },
-                  "width": 118,
-                  "height": 13.430000000000007,
+                  "width": 61,
+                  "height": 12.300000000000011,
                   "angle": 0,
-                  "left": 26,
-                  "top": 199,
-                  "fontSize": 11,
-                  "textboxWidth": 117,
-                  "textboxHeight": 12.43,
+                  "left": 72,
+                  "top": 202,
+                  "fontSize": 10,
+                  "textboxWidth": 60,
+                  "textboxHeight": 11.299999999999999,
                   "lineHeight": 1.2,
                   "renderedLineCount": 1
                 }
@@ -976,95 +634,136 @@
       },
       "created": [
         {
-          "id": "6536c753-e2fa-4a0b-9a52-a25f0cceca5a",
+          "id": "150ebc21-711f-4e00-859d-dd8599f1cefc",
           "text": "大字标题实例文字",
           "zyOcrKey": "zy-ocr-0",
           "left": 23,
-          "top": 33,
+          "top": 25,
           "width": 334,
-          "height": 46.32999999999999,
+          "height": 60,
           "scaleX": 1,
           "scaleY": 1,
-          "fontSize": 41,
+          "fontSize": 40,
           "angle": 0,
           "originX": "left",
           "quad": [
             {
               "x": 23,
-              "y": 33
+              "y": 25
             },
             {
               "x": 358,
-              "y": 33
+              "y": 25
             },
             {
               "x": 358,
-              "y": 80.32999999999998
+              "y": 86
             },
             {
               "x": 23,
-              "y": 80.32999999999998
+              "y": 86
             }
           ],
           "biz": {
             "locationX": 23,
-            "locationY": 33,
+            "locationY": 25,
             "locationWidth": 334,
-            "locationHeight": 46.32999999999999,
+            "locationHeight": 60,
             "locationRotation": 0,
             "loc": null,
             "pointSize": null
           }
         },
         {
-          "id": "c37877bd-e259-4640-a2c5-2164bb451ae0",
+          "id": "31af37da-64b8-4bc9-a5a3-2232e14fb0e8",
           "text": "中号正文联系电话与邮箱地址",
           "zyOcrKey": "zy-ocr-1",
           "left": 26,
-          "top": 97,
+          "top": 106,
           "width": 270,
-          "height": 52.20599999999999,
+          "height": 34,
           "scaleX": 1,
           "scaleY": 1,
-          "fontSize": 21,
+          "fontSize": 20,
           "angle": 0,
           "originX": "left",
           "quad": [
             {
               "x": 26,
-              "y": 97
+              "y": 106
             },
             {
               "x": 297,
-              "y": 97
+              "y": 106
             },
             {
               "x": 297,
-              "y": 150.206
+              "y": 141
             },
             {
               "x": 26,
-              "y": 150.206
+              "y": 141
             }
           ],
           "biz": {
             "locationX": 26,
-            "locationY": 97,
+            "locationY": 106,
             "locationWidth": 270,
-            "locationHeight": 52.20599999999999,
+            "locationHeight": 34,
             "locationRotation": 0,
             "loc": null,
             "pointSize": null
           }
         },
         {
-          "id": "8ff55d3f-22bf-4d52-9fa7-7cc9116f867e",
+          "id": "94d6df68-5948-4da0-9c93-2089e7218a0f",
           "text": "权",
           "zyOcrKey": "zy-ocr-2",
           "left": 72,
           "top": 202,
           "width": 60,
-          "height": 14.689999999999998,
+          "height": 11.299999999999999,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 10,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 72,
+              "y": 202
+            },
+            {
+              "x": 133,
+              "y": 202
+            },
+            {
+              "x": 133,
+              "y": 214.3
+            },
+            {
+              "x": 72,
+              "y": 214.3
+            }
+          ],
+          "biz": {
+            "locationX": 72,
+            "locationY": 202,
+            "locationWidth": 60,
+            "locationHeight": 11.299999999999999,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "666791b9-d7ac-4e34-ac99-c2b81bd16a7c",
+          "text": "小字页脚版备注行",
+          "zyOcrKey": "zy-ocr-3",
+          "left": 26,
+          "top": 194,
+          "width": 117,
+          "height": 25,
           "scaleX": 1,
           "scaleY": 1,
           "fontSize": 13,
@@ -1072,68 +771,27 @@
           "originX": "left",
           "quad": [
             {
-              "x": 72,
-              "y": 202
-            },
-            {
-              "x": 133,
-              "y": 202
-            },
-            {
-              "x": 133,
-              "y": 217.69
-            },
-            {
-              "x": 72,
-              "y": 217.69
-            }
-          ],
-          "biz": {
-            "locationX": 72,
-            "locationY": 202,
-            "locationWidth": 60,
-            "locationHeight": 14.689999999999998,
-            "locationRotation": 0,
-            "loc": null,
-            "pointSize": null
-          }
-        },
-        {
-          "id": "8de904c5-33ed-40ba-9b30-6ec6ec303f66",
-          "text": "小字页脚版备注行",
-          "zyOcrKey": "zy-ocr-3",
-          "left": 26,
-          "top": 199,
-          "width": 117,
-          "height": 12.43,
-          "scaleX": 1,
-          "scaleY": 1,
-          "fontSize": 11,
-          "angle": 0,
-          "originX": "left",
-          "quad": [
-            {
               "x": 26,
-              "y": 199
+              "y": 194
             },
             {
               "x": 144,
-              "y": 199
+              "y": 194
             },
             {
               "x": 144,
-              "y": 212.43
+              "y": 220
             },
             {
               "x": 26,
-              "y": 212.43
+              "y": 220
             }
           ],
           "biz": {
             "locationX": 26,
-            "locationY": 199,
+            "locationY": 194,
             "locationWidth": 117,
-            "locationHeight": 12.43,
+            "locationHeight": 25,
             "locationRotation": 0,
             "loc": null,
             "pointSize": null
@@ -1150,9 +808,9 @@
             "height"
           ],
           "errors": {
-            "center": 1.16,
+            "center": 0,
             "width": 18,
-            "height": 9.67,
+            "height": 4,
             "angle": 0
           },
           "expected": {
@@ -1169,11 +827,11 @@
           "actual": {
             "center": {
               "x": 190.5,
-              "y": 56.66499999999999
+              "y": 55.5
             },
             "size": {
               "width": 335,
-              "height": 47.329999999999984
+              "height": 61
             },
             "angle": 0
           }
@@ -1183,13 +841,12 @@
           "text": "中号正文联系电话与邮箱地址",
           "pass": false,
           "failures": [
-            "width",
-            "height"
+            "width"
           ],
           "errors": {
-            "center": 0.51,
+            "center": 0.5,
             "width": 13,
-            "height": 20.21,
+            "height": 2,
             "angle": 0
           },
           "expected": {
@@ -1206,11 +863,11 @@
           "actual": {
             "center": {
               "x": 161.5,
-              "y": 123.60300000000001
+              "y": 123.5
             },
             "size": {
               "width": 271,
-              "height": 53.20599999999999
+              "height": 35
             },
             "angle": 0
           }
@@ -1224,9 +881,9 @@
             "height"
           ],
           "errors": {
-            "center": 1.35,
+            "center": 0.35,
             "width": 50,
-            "height": 7.31,
+            "height": 10.7,
             "angle": 0
           },
           "expected": {
@@ -1243,11 +900,11 @@
           "actual": {
             "center": {
               "x": 102.5,
-              "y": 209.84500000000003
+              "y": 208.14999999999998
             },
             "size": {
               "width": 61,
-              "height": 15.689999999999998
+              "height": 12.300000000000011
             },
             "angle": 0
           }
@@ -1257,12 +914,13 @@
           "text": "小字页脚版备注行",
           "pass": false,
           "failures": [
-            "width"
+            "width",
+            "height"
           ],
           "errors": {
-            "center": 0.93,
+            "center": 0.71,
             "width": 11,
-            "height": 2.43,
+            "height": 15,
             "angle": 0
           },
           "expected": {
@@ -1279,11 +937,11 @@
           "actual": {
             "center": {
               "x": 85,
-              "y": 205.71500000000003
+              "y": 207
             },
             "size": {
               "width": 118,
-              "height": 13.430000000000007
+              "height": 26
             },
             "angle": 0
           }
@@ -1359,7 +1017,7 @@
       "beforeObjCount": 9,
       "status": [
         "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
-        "几何校验完成：通过 0 个，拒绝 4 个（STYLE_MISMATCH|WRAP|STYLE_MISMATCH|STYLE_MISMATCH）（细节见控制台 zy-ocr GEOMETRY）"
+        "几何校验完成：通过 0 个，拒绝 4 个（STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH）（细节见控制台 zy-ocr GEOMETRY）"
       ],
       "done": true,
       "canvasSnap": {
@@ -1404,6 +1062,6 @@
     "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"WARN\",\"reasonCode\":\"WARN\",\"total\":4,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"WARN\"}}",
     "[zy-ocr][BUILDING] blocks=4 forcedWrap=0 multiLine=0",
     "[zy-ocr][SUCCESS] created=4/4 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":4,\"uv4\":4,\"layerMax\":-1}",
-    "[zy-ocr][GEOMETRY] {\"ok\":0,\"rejected\":4,\"rejectedBlocks\":[{\"blockIndex\":0,\"code\":\"CALIBRATION_MODEL_FAILURE\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner|width|height\",\"status\":\"GEOMETRY_TYPOGRAPHY_FAIL\"},{\"blockIndex\":1,\"code\":\"CALIBRATION_MODEL_FAILURE\",\"category\":\"WRAP\",\"failures\":\"corner|wrap|width|height\",\"status\":\"GEOMETRY_TYPOGRAPHY_FAIL\"},{\"blockIndex\":2,\"code\":\"CALIBRATION_MODEL_FAILURE"
+    "[zy-ocr][GEOMETRY] {\"ok\":0,\"rejected\":4,\"noted\":0,\"rejectedBlocks\":[{\"blockIndex\":0,\"code\":\"CREATE_REJECTED_NO_CORRECTION\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner\"},{\"blockIndex\":1,\"code\":\"CREATE_REJECTED_NO_CORRECTION\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner\"},{\"blockIndex\":3,\"code\":\"CREATE_REJECTED_NO_CORRECTION\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner\"},{\"blockIndex\":2,\"cod"
   ]
 }
