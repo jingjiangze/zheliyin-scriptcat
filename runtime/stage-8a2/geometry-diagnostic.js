@@ -102,7 +102,7 @@ function injectUserscript() {
     await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
     await SLEEP(1200);
     if (BAIDU_AK && BAIDU_SK) { await ev((a) => { const ai = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak"); const si = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk"); const sb = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save"); if (!ai || !si || !sb) return { ok: false }; ai.value = a.ak; si.value = a.sk; try { sb.click(); } catch (e) {} return { ok: true }; }, { ak: BAIDU_AK, sk: BAIDU_SK }); await SLEEP(3000); }
-    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : ((MODE === "drawitem-probe" || MODE === "native-image-inventory") ? URL_88 : URL_252438));
+    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : ((MODE === "drawitem-probe" || MODE === "native-image-inventory" || MODE === "native-paste-image") ? URL_88 : URL_252438));
     // D2-C itemlist-source：页面早期 hook（模板初始化前）追 itemList 构建 + 模板 JSON 响应
     if (MODE === "itemlist-source") {
       await page.addInitScript(() => {
@@ -738,6 +738,123 @@ function injectUserscript() {
         });
         rec.afterCleanup = after;
       } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
+    } else if (MODE === "native-paste-image") {
+      // PHASE C2（v4）：站点原生「Ctrl+V 粘贴图片」路径 —— 系统剪贴板 SetImage + 真实按键
+      const cp = require("child_process");
+      const rec = { mode: "native-paste-image", steps: [], errors: [] };
+      out.records.push(rec);
+      try {
+        const DU = await render();
+        const dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
+        const b64 = String(dataUrl).replace(/^data:[^;]+;base64,/, "");
+        const tmpPng = path.join(REPORT_DIR, "native-paste-input.png");
+        fs.writeFileSync(tmpPng, Buffer.from(b64, "base64"));
+        const base = await ev(() => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const il = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content ? PV.pageList[eIdx].content.itemList : null;
+          return { objLen: c ? c.getObjects().length : null, regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null, itemListLen: il ? il.length : null };
+        });
+        rec.steps.push({ tag: "base", ...base });
+        // 系统剪贴板设置图片
+        let clipErr = null;
+        try {
+          const ps = "Add-Type -AssemblyName System.Windows.Forms,System.Drawing; $i=[System.Drawing.Image]::FromFile('" + tmpPng.replace(/'/g, "''") + "'); [System.Windows.Forms.Clipboard]::SetImage($i); Start-Sleep -Milliseconds 300";
+          cp.execFileSync("powershell", ["-NoProfile", "-Sta", "-Command", ps], { timeout: 30000, stdio: ["ignore", "pipe", "pipe"] });
+        } catch (e) { clipErr = String(e && e.message || e).slice(0, 200); }
+        rec.clipboardSet = clipErr ? { ok: false, err: clipErr } : { ok: true };
+        if (!clipErr) {
+          await page.bringToFront().catch(() => {});
+          await ev(() => { const c = document.querySelector("canvas"); if (c) { try { c.focus(); } catch (e) {} } return document.activeElement ? document.activeElement.tagName : null; });
+          await page.keyboard.press("Control+v").catch(() => {});
+        }
+        // poll
+        let created = null;
+        const t0 = Date.now();
+        for (;;) {
+          await SLEEP(900);
+          const r = await ev(() => {
+            const req = window.requirejs || window.require;
+            const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+            const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+            const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+            const c = d && d.canvas;
+            const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+            const il = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content ? PV.pageList[eIdx].content.itemList : null;
+            const imgs = c ? c.getObjects().filter((o) => o && String(o.type) === "image").map((o) => ({ type: o.type, multiUuid: o.multiUuid || null, uuid: o.uuid || null })) : [];
+            return { objLen: c ? c.getObjects().length : null, regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null, itemListLen: il ? il.length : null, imgs: imgs, lastItem: il && il.length ? { keys: Object.keys(il[il.length - 1]).slice(0, 14), mediaType: il[il.length - 1].media && il[il.length - 1].media.mediaType } : null };
+          });
+          const grew = r.objLen !== null && base.objLen !== null && r.objLen > base.objLen;
+          if (grew || Date.now() - t0 > 30000) { created = r; break; }
+        }
+        rec.steps.push({ tag: "afterPaste", objLen: created && created.objLen, regLen: created && created.regLen, itemListLen: created && created.itemListLen, imgs: created && created.imgs, grew: !!(created && created.objLen !== null && base.objLen !== null && created.objLen > base.objLen) });
+        // 详情 + setItemListJson(native) + drawText
+        const detail = await ev(() => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          const out = {};
+          const o = c ? c.getObjects().filter((x) => x && String(x.type) === "image").slice(-1)[0] || null : null;
+          out.found = !!o;
+          if (o) {
+            const res = {};
+            ["type", "width", "height", "scaleX", "scaleY", "left", "top", "angle", "originX", "originY", "id", "name", "src", "element"].forEach((k) => { try { res[k] = (k === "src" ? String(o.src || "").slice(0, 40) : o[k]); } catch (e) {} });
+            res.multiUuid = o.multiUuid || null; res.uuid = o.uuid || null; res.markuuid = o.markuuid || null;
+            try { res.media = { mediaType: o.media && o.media.mediaType, hasMedia: !!o.media }; } catch (e) {}
+            try { res.location = !!o.location; res.printLocation = !!o.printLocation; } catch (e) {}
+            try { res.layer = !!o.layer; res.layerNum = o.layerNum; } catch (e) {}
+            res.bizFields = Object.keys(o).filter((k) => /uuid|markuuid|media|location|print|layer|container|resourceType/i.test(k)).slice(0, 18);
+            out.obj = res;
+          }
+          // setItemListJson on native pasted object
+          let holder = null;
+          if (req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined) {
+            try { Object.keys(req.s.contexts._.defined).forEach((k) => { if (!holder) { const m = req.s.contexts._.defined[k]; if (m && typeof m.setItemListJson === "function") holder = { k: k, m: m }; } }); } catch (e) {}
+          }
+          if (holder && o) { try { const sr = holder.m.setItemListJson([o], c); out.serialized = { n: sr && Array.isArray(sr.itemList) ? sr.itemList.length : -1, firstKeys: sr && sr.itemList && sr.itemList[0] ? Object.keys(sr.itemList[0]).slice(0, 12) : null, mediaType: sr && sr.itemList && sr.itemList[0] && sr.itemList[0].media && sr.itemList[0].media.mediaType, locType: sr && sr.itemList && sr.itemList[0] && typeof sr.itemList[0].location }; } catch (e) { out.serialized = { err: String(e && e.message || e).slice(0, 160) }; } }
+          else out.serialized = { n: -1, reason: o ? "no holder" : "no object" };
+          // drawText on paste-empty page
+          const eIdx2 = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const il2 = PV && PV.pageList && PV.pageList[eIdx2] && PV.pageList[eIdx2].content ? PV.pageList[eIdx2].content.itemList : null;
+          const diy = d;
+          let dt = null;
+          if (diy && typeof diy.drawText === "function") {
+            const entry = { media: { mediaType: "text", text: "粘贴验证ZW", font: { pointSize: 30, fontColor: "#000000", isHorizontal: 1, gravity: "left", id: "1", isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 }, charSpace: 0, lineSpace: 1.2, lineIdType: 0, isBG: 0, imgPath: "" }, location: { x: 40, y: 40, width: 120, height: 40, factWidth: 120, factHeight: 40, rotation: 0 }, printLocation: { x: 40, y: 40, width: 120, height: 40, rotation: 0 }, layer: { alpha: 1 }, layerNum: 1, isEdit: 1, isDisplay: 0, deleteState: 0, visitLevel: 1, multiUuid: "dp-" + Date.now(), markuuid: "", topEnable: 1, resourceType: 0, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 0, isPreview: 0, isDesignShape: 0 };
+            try { diy.drawText(String(entry.media.text), null, null, null, entry, 1); dt = { ok: true, itemListBefore: il2 ? il2.length : 0 }; } catch (e) { dt = { ok: false, err: String(e && e.message || e).slice(0, 200), itemListBefore: il2 ? il2.length : 0 }; }
+          }
+          out.drawText = dt;
+          return out;
+        });
+        rec.created = detail;
+        // 清理新增（仅图片）
+        await ev((a) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          let removed = 0;
+          if (c) {
+            const imgs = c.getObjects().filter((o) => o && String(o.type) === "image");
+            const target = Math.max(0, imgs.length - (a.cur - a.base));
+            while (imgs.length > target) { const o = imgs.pop(); try { c.remove(o); removed += 1; } catch (e) {} }
+          }
+          return { removed: removed };
+        }, { cur: rec.steps[rec.steps.length - 1].objLen != null ? rec.steps[rec.steps.length - 1].objLen : base.objLen, base: base.objLen });
+        const after = await ev(() => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          return { objLen: c ? c.getObjects().length : null };
+        });
+        rec.afterCleanup = after;
+      } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
     } else if (MODE === "quad") {
       // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
       await armDrawTextCap();
@@ -810,7 +927,7 @@ function injectUserscript() {
     }
   } catch (e) { out.errors.push(String(e && e.message || e).slice(0, 400)); }
   finally { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
-  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : MODE === "drawitem-probe" ? "drawitem-probe-1040459.json" : MODE === "native-image-inventory" ? "c-native-inventory-1040459.json" : "canvas-88x57-create-failure.json";
+  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : MODE === "drawitem-probe" ? "drawitem-probe-1040459.json" : MODE === "native-image-inventory" ? "c-native-inventory-1040459.json" : MODE === "native-paste-image" ? "c-native-paste-1040459.json" : "canvas-88x57-create-failure.json";
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(path.join(REPORT_DIR, name), JSON.stringify(out, null, 2));
   console.log("STAGE-8A2B " + MODE + " done records=" + out.records.length + " errors=" + out.errors.length + " -> " + path.join(REPORT_DIR, name));
