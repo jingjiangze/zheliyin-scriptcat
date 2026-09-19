@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-19T13:52:58.296Z",
+  "ts": "2026-09-19T13:55:53.297Z",
   "stage": "STAGE-8B-STEP5",
   "branch": "stage-8b-ocr-reconstruction-engine",
   "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
@@ -755,34 +755,6 @@
                 "corrections": {
                   "left": 712,
                   "top": 285,
-                  "width": 60
-                }
-              }
-            ]
-          },
-          {
-            "items": [
-              {
-                "blockIndex": 4,
-                "corrections": {
-                  "width": 698
-                }
-              },
-              {
-                "blockIndex": 7,
-                "corrections": {
-                  "width": 138
-                }
-              },
-              {
-                "blockIndex": 9,
-                "corrections": {
-                  "width": 127
-                }
-              },
-              {
-                "blockIndex": 11,
-                "corrections": {
                   "width": 60
                 }
               }
@@ -1655,166 +1627,6 @@
                 }
               }
             ]
-          },
-          {
-            "items": [
-              {
-                "blockIndex": 4,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 4,
-                      "y": 110.99999999999999
-                    },
-                    {
-                      "x": 703,
-                      "y": 110.99999999999999
-                    },
-                    {
-                      "x": 703,
-                      "y": 292.79999999999995
-                    },
-                    {
-                      "x": 4,
-                      "y": 292.79999999999995
-                    }
-                  ],
-                  "center": {
-                    "x": 353.5,
-                    "y": 201.89999999999998
-                  },
-                  "width": 699,
-                  "height": 181.79999999999995,
-                  "angle": 0,
-                  "left": 4,
-                  "top": 111,
-                  "fontSize": 160,
-                  "textboxWidth": 698,
-                  "textboxHeight": 180.79999999999998,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 1
-                }
-              },
-              {
-                "blockIndex": 7,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 652,
-                      "y": 239
-                    },
-                    {
-                      "x": 791,
-                      "y": 239
-                    },
-                    {
-                      "x": 791,
-                      "y": 249.04000000000002
-                    },
-                    {
-                      "x": 652,
-                      "y": 249.04000000000002
-                    }
-                  ],
-                  "center": {
-                    "x": 721.5,
-                    "y": 244.01999999999998
-                  },
-                  "width": 139,
-                  "height": 10.04000000000002,
-                  "angle": 0,
-                  "left": 652,
-                  "top": 239,
-                  "fontSize": 8,
-                  "textboxWidth": 138,
-                  "textboxHeight": 9.04,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 1
-                }
-              },
-              {
-                "blockIndex": 9,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 241,
-                      "y": 267
-                    },
-                    {
-                      "x": 369,
-                      "y": 267
-                    },
-                    {
-                      "x": 369,
-                      "y": 278.16999999999996
-                    },
-                    {
-                      "x": 241,
-                      "y": 278.16999999999996
-                    }
-                  ],
-                  "center": {
-                    "x": 305,
-                    "y": 272.585
-                  },
-                  "width": 128,
-                  "height": 11.169999999999959,
-                  "angle": 0,
-                  "left": 241,
-                  "top": 267,
-                  "fontSize": 9,
-                  "textboxWidth": 127,
-                  "textboxHeight": 10.169999999999998,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 1
-                }
-              },
-              {
-                "blockIndex": 11,
-                "ok": true,
-                "error": null,
-                "geometry": {
-                  "quad": [
-                    {
-                      "x": 712,
-                      "y": 285
-                    },
-                    {
-                      "x": 773,
-                      "y": 285
-                    },
-                    {
-                      "x": 773,
-                      "y": 295.03999999999996
-                    },
-                    {
-                      "x": 712,
-                      "y": 295.03999999999996
-                    }
-                  ],
-                  "center": {
-                    "x": 742.5,
-                    "y": 290.02
-                  },
-                  "width": 61,
-                  "height": 10.039999999999964,
-                  "angle": 0,
-                  "left": 712,
-                  "top": 285,
-                  "fontSize": 8,
-                  "textboxWidth": 60,
-                  "textboxHeight": 9.04,
-                  "lineHeight": 1.2,
-                  "renderedLineCount": 1
-                }
-              }
-            ]
           }
         ],
         "createResult": {
@@ -2473,7 +2285,7 @@
       },
       "created": [
         {
-          "id": "9ff45b85-1f86-4898-99d8-955d549c4dcf",
+          "id": "a631960e-4ecd-4da8-8aaf-3361728688b1",
           "text": "轿 CO 天 住 出 sre",
           "zyOcrKey": "zy-ocr-0",
           "left": -19,
@@ -2514,7 +2326,7 @@
           }
         },
         {
-          "id": "3a6ba373-a2a0-49e3-a893-3eb18e21078e",
+          "id": "d27dd2f8-8317-4fd4-9a48-aa70f490e410",
           "text": "轿 CO 天 住 出 sre",
           "zyOcrKey": "zy-ocr-1",
           "left": 254,
@@ -2555,7 +2367,7 @@
           }
         },
         {
-          "id": "2a46f6c2-051d-4d51-a2e8-b63f67291fff",
+          "id": "447fcd01-5c3a-4e6a-85e8-e0bff90349d5",
           "text": "Telephone: +86",
           "zyOcrKey": "zy-ocr-2",
           "left": 256,
@@ -2596,7 +2408,7 @@
           }
         },
         {
-          "id": "f43213af-9da2-4e06-a350-ab9786afa34f",
+          "id": "5b788b33-189e-40e5-8464-c38639a6a6a1",
           "text": "多阅梧册回佛山盛盈包装制品限",
           "zyOcrKey": "zy-ocr-3",
           "left": 27,
@@ -2637,7 +2449,7 @@
           }
         },
         {
-          "id": "a75257f3-d86e-4625-8ea9-a361bb74d626",
+          "id": "30dce4e8-eae0-4f20-b472-f7a1b3482d03",
           "text": "回有",
           "zyOcrKey": "zy-ocr-4",
           "left": 4,
@@ -2678,7 +2490,7 @@
           }
         },
         {
-          "id": "c59fa6cf-58de-4f26-a474-9c261bca00ed",
+          "id": "242dfb89-7d98-49f5-8c27-b70c3be11d7d",
           "text": "人",
           "zyOcrKey": "zy-ocr-5",
           "left": 670,
@@ -2719,7 +2531,7 @@
           }
         },
         {
-          "id": "b90b98f4-fad6-4e08-92d5-f6d51566eb74",
+          "id": "289e6d74-5717-41bc-8fca-2db2db0ca208",
           "text": "公",
           "zyOcrKey": "zy-ocr-6",
           "left": 693,
@@ -2760,7 +2572,7 @@
           }
         },
         {
-          "id": "4d27988d-db73-4645-b2e1-70aabe1140c6",
+          "id": "b02b4c64-d94f-4fbe-833f-3a2b7493f5da",
           "text": "多 佛山 盛 盈 包装 制品",
           "zyOcrKey": "zy-ocr-7",
           "left": 652,
@@ -2801,7 +2613,7 @@
           }
         },
         {
-          "id": "f1542b25-27d5-4ee0-a6bb-295977f808b6",
+          "id": "a423ba0b-1a18-4b96-8818-e5bc78c71901",
           "text": "器洛0757-8880985",
           "zyOcrKey": "zy-ocr-8",
           "left": 71,
@@ -2842,7 +2654,7 @@
           }
         },
         {
-          "id": "b8af5cc1-ce6a-454b-9f2c-47fc5321e819",
+          "id": "26df86af-a740-42c6-8507-5af57806b54e",
           "text": "器 洛 Tel.: 0757",
           "zyOcrKey": "zy-ocr-9",
           "left": 241,
@@ -2883,7 +2695,7 @@
           }
         },
         {
-          "id": "3d5b3c9f-188a-4176-ab54-e85309b95586",
+          "id": "3be723a3-524a-4256-92d9-a254e8eda129",
           "text": "过广东省佛山市高区杨和镇阳西",
           "zyOcrKey": "zy-ocr-10",
           "left": 272,
@@ -2924,7 +2736,7 @@
           }
         },
         {
-          "id": "9981c78c-ea4d-4522-80c2-4e00f63c477d",
+          "id": "cfeeb4cb-d634-4883-b73e-bd9f0474913f",
           "text": "道和",
           "zyOcrKey": "zy-ocr-11",
           "left": 712,
@@ -2965,7 +2777,7 @@
           }
         },
         {
-          "id": "ac050465-4f28-4920-819f-12f9376bc237",
+          "id": "fac1c451-afc6-4a29-a15a-783066b9080f",
           "text": "眉吉生由",
           "zyOcrKey": "zy-ocr-12",
           "left": 26,
@@ -3006,7 +2818,7 @@
           }
         },
         {
-          "id": "0c8fc0b3-d9c8-4638-8b08-df6e61773e5e",
+          "id": "27a14ccc-92de-4271-bb25-402e09618cdd",
           "text": "佛山朱盛通生物科技有限公司",
           "zyOcrKey": "zy-ocr-13",
           "left": 273,
@@ -3047,7 +2859,7 @@
           }
         },
         {
-          "id": "f8f198c8-b3a0-4433-9621-4b0e9cd3f0fc",
+          "id": "597e5524-3402-4dc6-b0fb-f591a2ba8c96",
           "text": "让 和 刘 地 址 :广东 ",
           "zyOcrKey": "zy-ocr-14",
           "left": 3,
@@ -3088,7 +2900,7 @@
           }
         },
         {
-          "id": "d3156fc8-3bf3-4632-9597-df608f1813e2",
+          "id": "1a68891e-e9c5-47db-bd50-25f16c63133d",
           "text": "地人佛市高明区志和镇和咒号车",
           "zyOcrKey": "zy-ocr-15",
           "left": 278,
@@ -3129,7 +2941,7 @@
           }
         },
         {
-          "id": "69709b89-ca75-40d4-bf5c-3101426ea7b2",
+          "id": "fb466672-a194-4453-b28d-440edb00a23e",
           "text": ":",
           "zyOcrKey": "zy-ocr-16",
           "left": 103,
@@ -3870,7 +3682,7 @@
       "beforeObjCount": 9,
       "status": [
         "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
-        "几何校验完成：通过 0 个，拒绝 17 个（STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STY"
+        "几何校验完成：通过 13 个，保留 4 个（STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
       ],
       "done": true,
       "canvasSnap": {
@@ -3915,7 +3727,7 @@
     "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"WARN\",\"reasonCode\":\"WARN\",\"total\":19,\"text\":\"PASS\",\"block\":\"WARN\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"WARN\"}}",
     "[zy-ocr][BUILDING] blocks=17 forcedWrap=0 multiLine=1",
     "[zy-ocr][SUCCESS] created=17/17 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":17,\"uv4\":17,\"layerMax\":-1}",
-    "[zy-ocr][GEOMETRY] {\"ok\":0,\"rejected\":17,\"noted\":0,\"rejectedBlocks\":[{\"blockIndex\":0,\"code\":\"CREATE_REJECTED_NO_CORRECTION\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner\"},{\"blockIndex\":1,\"code\":\"CREATE_REJECTED_NO_CORRECTION\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner\"},{\"blockIndex\":2,\"code\":\"CREATE_REJECTED_NO_CORRECTION\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner\"},{\"blockIndex\":3,\"co"
+    "[zy-ocr][GEOMETRY] {\"ok\":13,\"rejected\":0,\"noted\":4,\"rejectedBlocks\":[],\"notes\":[{\"blockIndex\":4,\"status\":\"TYPOGRAPHY_FAIL\",\"failures\":\"width\",\"category\":\"STYLE_MISMATCH\"},{\"blockIndex\":7,\"status\":\"TYPOGRAPHY_FAIL\",\"failures\":\"width\",\"category\":\"STYLE_MISMATCH\"},{\"blockIndex\":9,\"status\":\"TYPOGRAPHY_FAIL\",\"failures\":\"width\",\"category\":\"STYLE_MISMATCH\"},{\"blockIndex\":11,\"status\":\"TYPOGRAPHY_FAIL\",\"fa"
   ],
   "bgFile": "D:\\zheliyin-scriptcat\\runtime\\stage8b\\assets\\real-card-shengying.png"
 }

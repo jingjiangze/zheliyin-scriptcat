@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-19T13:52:28.288Z",
+  "ts": "2026-09-19T13:55:22.418Z",
   "stage": "STAGE-8B-STEP5",
   "branch": "stage-8b-ocr-reconstruction-engine",
   "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
@@ -634,7 +634,7 @@
       },
       "created": [
         {
-          "id": "62e7cdbf-9fb5-4354-8aa3-d63fc5b0d6c1",
+          "id": "7990b419-f2df-421c-b5bc-ee9abd7b4546",
           "text": "大字标题实例文字",
           "zyOcrKey": "zy-ocr-0",
           "left": 23,
@@ -675,7 +675,7 @@
           }
         },
         {
-          "id": "b1c8f533-ff6a-4817-9d98-9a790f42cd4f",
+          "id": "cc0bb3ed-76ba-4619-bbf5-3708ad4c977d",
           "text": "中号正文联系电话与邮箱地址",
           "zyOcrKey": "zy-ocr-1",
           "left": 26,
@@ -716,7 +716,7 @@
           }
         },
         {
-          "id": "5d94d600-0bc1-458c-a35b-faea4f615b23",
+          "id": "33d53b03-be9c-4f75-a434-325a56144c7a",
           "text": "权",
           "zyOcrKey": "zy-ocr-2",
           "left": 72,
@@ -757,7 +757,7 @@
           }
         },
         {
-          "id": "f3d65c67-4634-4ee1-858d-640bdcd75b55",
+          "id": "47140b83-8f5a-496b-a8e7-962032307f5f",
           "text": "小字页脚版备注行",
           "zyOcrKey": "zy-ocr-3",
           "left": 26,
@@ -1017,7 +1017,7 @@
       "beforeObjCount": 9,
       "status": [
         "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
-        "几何校验完成：通过 0 个，拒绝 4 个（STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH）（细节见控制台 zy-ocr GEOMETRY）"
+        "几何校验完成：通过 4 个（细节见控制台 zy-ocr GEOMETRY）"
       ],
       "done": true,
       "canvasSnap": {
@@ -1062,6 +1062,6 @@
     "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"WARN\",\"reasonCode\":\"WARN\",\"total\":4,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"WARN\"}}",
     "[zy-ocr][BUILDING] blocks=4 forcedWrap=0 multiLine=0",
     "[zy-ocr][SUCCESS] created=4/4 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":4,\"uv4\":4,\"layerMax\":-1}",
-    "[zy-ocr][GEOMETRY] {\"ok\":0,\"rejected\":4,\"noted\":0,\"rejectedBlocks\":[{\"blockIndex\":0,\"code\":\"CREATE_REJECTED_NO_CORRECTION\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner\"},{\"blockIndex\":1,\"code\":\"CREATE_REJECTED_NO_CORRECTION\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner\"},{\"blockIndex\":3,\"code\":\"CREATE_REJECTED_NO_CORRECTION\",\"category\":\"STYLE_MISMATCH\",\"failures\":\"corner\"},{\"blockIndex\":2,\"cod"
+    "[zy-ocr][GEOMETRY] {\"ok\":4,\"rejected\":0,\"noted\":0,\"rejectedBlocks\":[],\"notes\":[]}"
   ]
 }
