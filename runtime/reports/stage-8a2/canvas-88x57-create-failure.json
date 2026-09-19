@@ -1,156 +1,86 @@
 {
-  "ts": "2026-09-19T05:03:57.141Z",
-  "stage": "STAGE-8A2B-fail",
+  "ts": "2026-09-19T05:31:36.996Z",
+  "stage": "STAGE-8A2B-quad",
   "branch": "stage-8a-2-rotation-policy-geometry",
-  "mode": "fail",
+  "mode": "quad",
   "records": [
     {
-      "mode": "fail",
-      "url": "https://diy.zheliyin.com/diyWeb/third/1040459/5368967/999/thirdDiyAdd.do",
-      "img": {
-        "ok": true,
-        "w": 1000,
-        "h": 300,
-        "nw": 1000,
-        "nh": 300,
-        "sx": 1,
-        "sy": 1,
-        "angle": 0,
-        "left": 20,
-        "top": 20
+      "mode": "quad",
+      "case": "A-248x493",
+      "font": "248",
+      "width": 493,
+      "result": {
+        "ok": true
       },
-      "rd": {
-        "click": true,
-        "done": true,
-        "ids": [
-          "944a83ec-8142-41ba-bfbd-51213ab81a3e"
-        ]
+      "err": null,
+      "stack": null,
+      "canvas": {
+        "width": {
+          "w": 871.4999999999999,
+          "h": 530.1624999999999
+        }
+      }
+    },
+    {
+      "mode": "quad",
+      "case": "B-1x493",
+      "font": "1",
+      "width": 493,
+      "result": {
+        "ok": true
       },
-      "cap": [
-        {
-          "kind": "throw",
-          "text": "大字标题实例文字",
-          "err": "Cannot read properties of undefined (reading 'media')",
-          "stack": "TypeError: Cannot read properties of undefined (reading 'media')\n    at v.checkObjsInProductJson (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:190:251)\n    at v.drawText (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:416:20)\n    at diy.drawText (eval at evaluate (:311:30), <anonymous>:1:545)\n    at <anonymous>:111:21",
-          "entry": {
-            "location": {
-              "x": 48,
-              "y": 43,
-              "width": 493,
-              "height": 85,
-              "factWidth": 493,
-              "factHeight": 85,
-              "rotation": 0
-            },
-            "printLocation": {
-              "x": 48,
-              "y": 43,
-              "width": 493,
-              "height": 85,
-              "rotation": 0
-            },
-            "media": {
-              "mediaType": "text",
-              "text": "大字标题实例文字",
-              "font": {
-                "pointSize": 59,
-                "fontColor": "#000000",
-                "isHorizontal": 1,
-                "gravity": "left",
-                "id": "248",
-                "isItalic": 0,
-                "textDecoration": "",
-                "linethrough": 0,
-                "overline": 0,
-                "isBold": 0,
-                "overprintStroke": 0
-              },
-              "charSpace": 0,
-              "lineSpace": 1.2,
-              "lineIdType": 0,
-              "isBG": 0,
-              "imgPath": ""
-            }
-          },
-          "layer": 1
+      "err": null,
+      "stack": null,
+      "canvas": {
+        "width": {
+          "w": 871.4999999999999,
+          "h": 530.1624999999999
         }
-      ],
-      "status": [
-        "正在等待编辑器加载…",
-        "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
-        "生成失败：未创建文字（第 0 个失败，已回滚）"
-      ],
-      "objects": [
-        {
-          "id": "944a83ec-8142-41ba-bfbd-51213ab81a3e",
-          "text": "大字标题实例文字",
-          "left": 48,
-          "top": 43,
-          "width": 493,
-          "height": 85,
-          "scaleX": 1,
-          "scaleY": 1,
-          "fontSize": 59,
-          "angle": 0,
-          "originX": "left",
-          "visible": true,
-          "opacity": 1,
-          "aCoords": {
-            "tl": [
-              48,
-              43
-            ],
-            "br": [
-              542,
-              129
-            ]
-          },
-          "boundingRect": {
-            "left": 36.2580121703854,
-            "top": 32.481135902636915,
-            "width": 373.15537525354966,
-            "height": 64.96227180527384
-          },
-          "biz": {
-            "locationX": 48,
-            "locationY": 43,
-            "locationWidth": 493,
-            "locationHeight": 85
-          }
+      }
+    },
+    {
+      "mode": "quad",
+      "case": "C-248x200",
+      "font": "248",
+      "width": 200,
+      "result": {
+        "ok": true
+      },
+      "err": null,
+      "stack": null,
+      "canvas": {
+        "width": {
+          "w": 871.4999999999999,
+          "h": 530.1624999999999
         }
-      ],
-      "canvasInfo": {
-        "width": 453.22515212981745,
-        "height": 744.8,
-        "ft": [
-          0.7553752535496957,
-          0,
-          0,
-          0.7553752535496957,
-          0,
-          0
-        ],
-        "zoom": 0.7553752535496957,
-        "retina": 0.800000011920929
+      }
+    },
+    {
+      "mode": "quad",
+      "case": "D-1x200",
+      "font": "1",
+      "width": 200,
+      "result": {
+        "ok": true
+      },
+      "err": null,
+      "stack": null,
+      "canvas": {
+        "width": {
+          "w": 871.4999999999999,
+          "h": 530.1624999999999
+        }
       }
     }
   ],
   "errors": [],
   "console": [
     "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-    "[zy-ocr][CANVAS_READY] w=453.22515212981745x744.8 objs=9 bg=false active=image",
-    "[zy-ocr][PREPARING] kind=active-image 1000x300 dataUrl=29422 chars",
-    "[zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current",
-    "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
-    "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
-    "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
-    "[zy-ocr][LOCAL_RECOGNIZING] lines=3 words=25 image=undefinedxundefined",
-    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
-    "[zy-ocr][GROUP] lines=3 y=27,111,200 h=57,18,11",
-    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":3,\"kept\":3,\"dropped\":0}}",
-    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"PASS\",\"reasonCode\":null,\"total\":3,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"PASS\"}}",
-    "[zy-ocr][BUILDING] blocks=3 forcedWrap=0 multiLine=0",
-    "[zy-ocr][ERROR] ocrCreate failed created=0 detected=3 failedIdx=0 msg="
-  ]
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
+  ],
+  "nativeSrc": {
+    "drawTextSrc": "function (t, fs, l, tp, entry, ln) { let r; try { r = orig(t, fs, l, tp, entry, ln); window.__d8cap.push({ kind: \"ok\", text: String(t || \"\").slice(0, 14), entry: entry ? { media: entry.media, location: entry.location, printLocation: entry.printLocation, layerNum: entry.layerNum, isDisplay: entry.isDisplay } : null, layer: ln, args: [fs, l, tp] }); } catch (e) { window.__d8cap.push({ kind: \"throw\", text: String(t || \"\").slice(0, 14), err: String(e && e.message || e).slice(0, 400), stack: String(e && e.stack || \"\").slice(0, 800), entry: entry ? { location: entry.location, printLocation: entry.printLocation, media: entry.media } : null, layer: ln }); throw e; } return r; }",
+    "checkObjsSrc": "function(a,b){if(a){if(\"1\"==a.format){var f=!0;La.push(a)}else f=!1;var d=this,h=this.canvasObjInfo.canvasToProductObjArr.length,\ne=n.currentCanvasNum-1,g=p.pageList[e].content.itemList.length,k=!1,l=!1;a&&(p.templateInfo.radius&&\"THIRD\"==c(\"#platform\").val()&&\"16\"==c(\"#diyTypeNumPc\").val()||\"16\"==c(\"#diyTypeNumCup\").val())&&this.setSize(.5);p.pageList[e].content.itemList[g-1].media.mediaType==m.PACKING_BOX_IMAGE&&(g=p.pageList[e].content.itemList.length-1,p.pageList[e].content.itemList[g-1].media.isFixedDepth&&(g=p.pageList[e].content.itemList.length-2),p.pageList[e].content.itemList[g-1].media.isFixedDepth_Box&&(g=p.pageList[e].content.itemList.length-\n2));if(h==g&&0==g)requirejs([\"SimpleCommandManager\",\"CloseLoadingCommand\"],function(a,b){a.getInstance().excute(new b)});else{if(ca&&((e=a.strokeShapeData)&&0<Number(e.strokeWidth)&&\"in\"!=e.strokeShape&&\"out\"!=e.strokeShape&&(a.checkProductObj.containerCenterPoint=a.checkProductObj.getCenterPoint(),d.setContainerStroke(e.strokeWidth,e.strokeColor,!0,a.checkProductObj)),h==g)){c(\"#checkOperate\").val(\"true\");resetCheckOperate&&clearInterval(resetCheckOperate);d.canvasDrawComplete=!0;c(\".load-page\")&&\n(d.reSetGroup(!1,!1,!0),c(\".load-page\").hide());return}if(h==g&&(a.dragObj||b&&b.dragObj))d.canvasDrawComplete=!0,d.reSetGroup(!1,!1,!0);else if(h==g){var t=this.canvasObjInfo.canvasToProductObjArr;a={};b=[];var q,A;for(A in t){(h=t[A])&&this.canvas.remove(h);if(void 0==h.layerNum)a[Number(A)]=h;else if(h.layerNum||!h.mediaIsBG)a[N",
+    "fontFamilyLis": []
+  }
 }
