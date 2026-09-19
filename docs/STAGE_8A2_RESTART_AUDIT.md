@@ -57,3 +57,12 @@ ZY_MODE=native-image-inventory：1040459 fresh → 定位站点原生「图片/�
 ## 8. C 阻塞判定
 
 依据规格 §二十二第十五条「缺少不可获得的第三方运行条件时才停止」：素材插入 UI 未命中的是**自动化交互路径**，仍有静态定位回调方案，**未达停止条件** → 下一刀继续静态定位，非终点。
+
+## 9. PHASE C2 v4/v5 粘贴路径取证（2026-09-19，用户提供入口）
+
+- v4：WinForms `Clipboard.SetImage`（位图）成功 → `Ctrl+V` → 1040459 `obj 8→8、reg 0→0、itemList 0→0`，无 image 对象；
+- v5：**`navigator.clipboard.write(ClipboardItem{image/png})` 写入成功**（method=clipboard-api）→ `Ctrl+V` → 同样未产生对象（drawText 复现 undefined.media，itemList=0）；
+- 两次 `afterCleanup objLen=9`（比 base 多 1，非 image 类型），来源未知但非图片；
+- **判定**：粘贴路径的「真实系统剪贴板图片 → 站点 paste 处理器取图」环节，在**当前自动化浏览器环境不可靠激活**（透明剪贴板交互/焦点语义为第三方运行条件）→ `C_NATIVE_IMAGE_OBJECT = UNKNOWN`；
+- **建议（需人工 1 次辅助）**：真人在 1040459 编辑器内**手动粘贴一张图**（或素材库插入）一次 → 由已装探针（setItemListJson/drawItem 已在 require defined 可见）即时捕获 native image object 全字段 + itemList/reg 变化 → 完成 C3 契约与 C4 验证。此步为「第三方运行条件」，规格允许暂停请求。
+- 备选（自动、仍合规）：静态定位 uploader 模块 `uploadSuccess` 回调（下一刀）。
