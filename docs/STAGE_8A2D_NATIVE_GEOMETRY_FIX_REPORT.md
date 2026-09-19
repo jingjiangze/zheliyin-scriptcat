@@ -58,6 +58,18 @@ itemKeys:   maskEnable/isPreview/media/layer/uuid/multiUuid/…（item schema �
 **待补（D2-C1 Case D，下一步）**：点击编辑器原生「新增文字」按钮（不经助手），观察空页 itemList 是否/如何被初始化 → 定位应复用的原生注册机制。
 **当前 C-fix 方案 = UNKNOWN（未满足 §9 验收：未找到可复用原生注册函数前不实施，禁 itemList.push({})/吞异常）**。
 
+## D2-C1 Case D 结果（本刀，REAL，native-add-text-1040459.json）
+
+```
+按钮: #mText「文字」（LI.toggle 工具栏项）—— click 仅切换模式，不创建对象
+timeline(0~5s): itemListLen=1 obj=9 reg=1 全程不变；mutations=[]；created=[]
+before: itemListLen=1（sig=完整 item schema）  ← fresh 加载后 itemList 非空！
+```
+
+**结论**：
+- 原生「文字」按钮非一键新增（需再点画布）→ 未捕获 itemList 写入机制 → **C_NATIVE_INIT = UNKNOWN**；
+- **新矛盾线索**：本次 fresh 加载 1040459 itemList=1，而 D1 失败快照 itemList=0 —— 差异环节位于**注入图之后**（D1 流程：注入图→OCR；本次：未注入）→ 疑点：注入裸 fabric.Image（未注册 productItem）可能触发 productJson/itemList 重置或不同步 → **下一步优先取证：注入图前后 itemList 变化**（若确认，C-fix 方向=注入图需同步注册或改用编辑器原生上传路径）。
+
 - 失败点：站点 `CanvasDiy.checkObjsInProductJson` 的 `productPageList[e].content.itemList[g-1].media`
 - 触发条件：**ProductVO.itemList 为空（空模板页）时 drawText 的 productJson 同步未发生**（canvasToProductObjArr 已 push、itemList 未同步 → 两数组不同步）
 - 已排除：font.id（四象限全 PASS）、width（四象限全 PASS）、时序

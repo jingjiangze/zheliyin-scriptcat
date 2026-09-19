@@ -1,0 +1,182 @@
+{
+  "ts": "2026-09-19T06:02:46.935Z",
+  "stage": "STAGE-8A2B-native-add-text",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "native-add-text",
+  "records": [
+    {
+      "mode": "native-add-text",
+      "templateId": "1040459",
+      "button": {
+        "found": true,
+        "cands": [
+          {
+            "tag": "LI",
+            "cls": "",
+            "id": "mText",
+            "text": "文字",
+            "aria": null,
+            "title": null,
+            "x": 0,
+            "y": 181,
+            "w": 55,
+            "h": 65
+          },
+          {
+            "tag": "DIV",
+            "cls": "zy-title",
+            "id": null,
+            "text": "图片文字识别",
+            "aria": null,
+            "title": null,
+            "x": 1377,
+            "y": 13,
+            "w": 84,
+            "h": 20
+          }
+        ]
+      },
+      "before": {
+        "tag": "before",
+        "cc": 1,
+        "itemListLen": 1,
+        "regLen": 1,
+        "objLen": 9,
+        "sig": [
+          "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+        ],
+        "textObjs": []
+      },
+      "timeline": [
+        {
+          "ms": 0,
+          "tag": "t0",
+          "cc": 1,
+          "itemListLen": 1,
+          "regLen": 1,
+          "objLen": 9,
+          "sig": [
+            "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+          ],
+          "textObjs": []
+        },
+        {
+          "ms": 50,
+          "tag": "t50",
+          "cc": 1,
+          "itemListLen": 1,
+          "regLen": 1,
+          "objLen": 9,
+          "sig": [
+            "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+          ],
+          "textObjs": []
+        },
+        {
+          "ms": 100,
+          "tag": "t100",
+          "cc": 1,
+          "itemListLen": 1,
+          "regLen": 1,
+          "objLen": 9,
+          "sig": [
+            "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+          ],
+          "textObjs": []
+        },
+        {
+          "ms": 250,
+          "tag": "t250",
+          "cc": 1,
+          "itemListLen": 1,
+          "regLen": 1,
+          "objLen": 9,
+          "sig": [
+            "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+          ],
+          "textObjs": []
+        },
+        {
+          "ms": 500,
+          "tag": "t500",
+          "cc": 1,
+          "itemListLen": 1,
+          "regLen": 1,
+          "objLen": 9,
+          "sig": [
+            "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+          ],
+          "textObjs": []
+        },
+        {
+          "ms": 1000,
+          "tag": "t1000",
+          "cc": 1,
+          "itemListLen": 1,
+          "regLen": 1,
+          "objLen": 9,
+          "sig": [
+            "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+          ],
+          "textObjs": []
+        },
+        {
+          "ms": 2000,
+          "tag": "t2000",
+          "cc": 1,
+          "itemListLen": 1,
+          "regLen": 1,
+          "objLen": 9,
+          "sig": [
+            "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+          ],
+          "textObjs": []
+        },
+        {
+          "ms": 5000,
+          "tag": "t5000",
+          "cc": 1,
+          "itemListLen": 1,
+          "regLen": 1,
+          "objLen": 9,
+          "sig": [
+            "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+          ],
+          "textObjs": []
+        }
+      ],
+      "mutations": [],
+      "createdObject": [],
+      "after": {
+        "tag": "after",
+        "cc": 1,
+        "itemListLen": 1,
+        "regLen": 1,
+        "objLen": 9,
+        "sig": [
+          "maskEnable,isPreview,noCutWidth,media,lowPixelFlag,selectEnabled,uuid,layer,isDesignShape,rightType,resouceCategoryId,designableArea"
+        ],
+        "textObjs": []
+      },
+      "nativeMechanism": {
+        "mutation": [],
+        "itemListAfter": 1,
+        "conclusion": null
+      },
+      "conclusion": "C_NATIVE_INIT=UNKNOWN",
+      "errors": [],
+      "clicked": {
+        "clicked": true,
+        "tag": "LI",
+        "cls": "active",
+        "text": "文字"
+      },
+      "cleanup": "reload"
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
+  ]
+}
