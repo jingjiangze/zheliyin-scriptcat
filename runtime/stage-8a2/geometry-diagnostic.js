@@ -26,6 +26,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const URL_252438 = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const URL_88 = "https://diy.zheliyin.com/diyWeb/third/1040459/5368967/999/thirdDiyAdd.do";
+const FIX_URL = process.env.ZY_FIX_URL || URL_88;
 
 const SZ_ROWS = [ { t: "大字标题实例文字", y: 30, s: 40 }, { t: "中号正文联系电话与邮箱地址", y: 110, s: 20 }, { t: "小字页脚版权备注行", y: 200, s: 12 } ];
 const SZ_W = 1000, SZ_H = 300;
@@ -101,7 +102,7 @@ function injectUserscript() {
     await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
     await SLEEP(1200);
     if (BAIDU_AK && BAIDU_SK) { await ev((a) => { const ai = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak"); const si = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk"); const sb = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save"); if (!ai || !si || !sb) return { ok: false }; ai.value = a.ak; si.value = a.sk; try { sb.click(); } catch (e) {} return { ok: true }; }, { ak: BAIDU_AK, sk: BAIDU_SK }); await SLEEP(3000); }
-    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : URL_252438;
+    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : URL_252438);
     await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     const w = await waitUntil(canvasReady(), "ready", 150000);
@@ -187,6 +188,94 @@ function injectUserscript() {
           rec.done = done;
         } catch (e) { clearInterval(sampler); rec.errors.push(String(e && e.message || e).slice(0, 200)); }
       }
+    } else if (MODE === "reg") {
+      // D2-C：原生 itemList 注册机制取证（clean page）—— 临时 wrapper 抓 itemList.push/splice 调用栈（诊断后恢复）
+      const URL = FIX_URL; // env ZY_FIX_URL
+      const armItemListCap = () => ev(() => {
+        const req = window.requirejs || window.require;
+        const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+        const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+        window.__ilcap = [];
+        const wrap = (arr) => {
+          if (!arr || arr.__zyWrapped) return arr;
+          ["push", "splice", "unshift"].forEach((m) => {
+            const orig = arr[m];
+            if (typeof orig !== "function") return;
+            arr[m] = function () {
+              try { window.__ilcap.push({ m, len: arguments.length, stack: new Error().stack ? String(new Error().stack).split("\n").slice(1, 8).map((s) => s.trim().slice(0, 120)) : null }); } catch (e) {}
+              return orig.apply(this, arguments);
+            };
+          });
+          arr.__zyWrapped = true;
+          return arr;
+        };
+        const pageList = PV && PV.pageList;
+        if (pageList && Array.isArray(pageList)) pageList.forEach((pg) => wrap(pg.content && pg.content.itemList));
+        return { ok: true, found: !!(pageList && Array.isArray(pageList)), mod: !!PV };
+      });
+      const readRegState = () => ev(() => {
+        const req = window.requirejs || window.require;
+        const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+        const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+        const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+        const c = d && d.canvas;
+        const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+        const il = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content ? PV.pageList[eIdx].content.itemList : null;
+        return {
+          cc: vo && vo.currentCanvasNum, pvCc: PV ? PV.currentCanvasNum : null,
+          itemListLen: il && Array.isArray(il) ? il.length : (il ? "no-arr" : null),
+          itemLastOk: !!(il && Array.isArray(il) && il.length && il[il.length - 1]),
+          objLen: c ? c.getObjects().length : null,
+          regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null,
+          itemKeys: il && Array.isArray(il) && il.length ? Object.keys(il[0]).slice(0, 20) : null
+        };
+      });
+      const rec = { mode: "reg", url: URL, armIl: null, directDraw: null, directState: null, ocrCap: null, ocrState: null, errors: [] };
+      out.records.push(rec);
+      try {
+        await armItemListCap();
+        rec.armIl = "ok";
+        rec.preState = await readRegState();
+        // A. 直接 drawText（不注入图；空模板直接建文字）
+        const du = await render();
+        const dd = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const diy = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          if (!diy || typeof diy.drawText !== "function") return { skipped: "no drawText" };
+          const entry = { media: { mediaType: "text", text: "测试文字AB", font: { pointSize: 30, fontColor: "#000000", isHorizontal: 1, gravity: "left", id: "1", isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 }, charSpace: 0, lineSpace: 1.2, lineIdType: 0, isBG: 0, imgPath: "" }, location: { x: 40, y: 40, width: 120, height: 40, factWidth: 120, factHeight: 40, rotation: 0 }, printLocation: { x: 40, y: 40, width: 120, height: 40, rotation: 0 }, layer: { alpha: 1 }, layerNum: 1, isEdit: 1, isDisplay: 0, deleteState: 0, visitLevel: 1, multiUuid: "reg-" + Date.now(), markuuid: "", topEnable: 1, resourceType: 0, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 0, isPreview: 0, isDesignShape: 0 };
+          try { diy.drawText(String(entry.media.text), null, null, null, entry, 1); return { ok: true }; }
+          catch (e) { return { ok: false, err: String(e && e.message || e).slice(0, 200) }; }
+        }, {});
+        rec.directDraw = dd;
+        rec.directState = await readRegState();
+        rec.ilCap = await ev(() => (window.__ilcap || []).slice());
+        await rollback("reg-");
+        // B. OCR 完整链路
+        const du2 = await render();
+        const dataUrl2 = typeof du2 === "string" ? du2 : du2.dataUrl;
+        rec.ocrImg = await injectImg(0, dataUrl2, "p8g-", { left: 20, top: 20, scaleX: 1, scaleY: 1 });
+        await armDrawTextCap();
+        window.__ilcap = [];
+        rec.ocrPre = await readRegState();
+        const before = await snapIds();
+        const cl = await clickOcr();
+        let last = null, done = false;
+        const t0 = Date.now();
+        for (;;) {
+          const r = await ev(() => { const el = document.querySelector("#zy-native-status"); const st = el ? String(el.textContent || "").trim() : null; return { st: st ? st.slice(0, 160) : null }; });
+          const st = r && r.st;
+          if (st && st !== last) { last = st; rec.status = (rec.status || []).concat([st]); }
+          if (st && /已生成 \d+ 个文字|未识别到文字|失败|滚/.test(st)) { done = true; break; }
+          if (Date.now() - t0 > 120000) break;
+          await SLEEP(900);
+        }
+        rec.ocrDone = done;
+        rec.ocrAfter = await readRegState();
+        rec.ocrIlCap = await ev(() => (window.__ilcap || []).slice());
+        rec.ocrCap = await readCap();
+        await rollback("p8g-");
+      } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
     } else if (MODE === "quad") {
       // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
       await armDrawTextCap();
