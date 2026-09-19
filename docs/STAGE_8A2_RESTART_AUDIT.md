@@ -46,3 +46,14 @@
 ## 6. 下一刀（PHASE C1/C2）
 
 ZY_MODE=native-image-inventory：1040459 fresh → 定位站点原生「图片/上传」入口（DOM/工具栏/file input）→ Playwright setInputFiles 真实图片 → 记录 canvas 对象全字段/注册/itemList/undo/网络 非敏摘要 → 与裸 fabric.Image 字段级 diff（C3 契约）。
+
+## 7. PHASE C1/C2 取证结果（2026-09-19）
+
+- 站点原生上传：**上传动作成功**（12 个 file input；data:image/blob 素材缩略图出现 = uploader 完成）；**素材插入画布未达成**（三版交互：单击/双击/「插入」按钮均未产生 canvas image，1040459 模板 `objLen 8`（全为 line）→ 8、itemList 0→0、reg 0→0）；
+- 静态（CanvasDiy.js）：无独立 add-image 高层函数；图片入画布统一 `fabric.Image.fromURL + canvas.add` 模式；上传成功回调位于**素材/uploader 模块**（webuploader 组件，需 static locate `uploadSuccess` 回调）；
+- **C_NATIVE_IMAGE_OBJECT = UNKNOWN（未获得原生 image object）**；`setItemListJson(native)` 依赖上行 → UNKNOWN；
+- 下一刀：static locate webuploader `uploadSuccess` 回调（require defined 扫 `picker/upload` 注册点）→ 复用该原生回调（合规）以站点方式加图 → 完成 C3/C4。
+
+## 8. C 阻塞判定
+
+依据规格 §二十二第十五条「缺少不可获得的第三方运行条件时才停止」：素材插入 UI 未命中的是**自动化交互路径**，仍有静态定位回调方案，**未达停止条件** → 下一刀继续静态定位，非终点。
