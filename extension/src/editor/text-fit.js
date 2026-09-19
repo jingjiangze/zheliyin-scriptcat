@@ -227,22 +227,72 @@ function quadBounds(quad) {
 function angNorm(a) { return ((a + 180) % 360 + 360) % 360 - 180; }
 function distP(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
 
+// ---- solveFontSizeByWidth：以 advance 宽度匹配求解字大小 ---- 
+// Stage 8B STEP 5（字体度量证据，2026-09-19）：OCR bbox 高 ≈ 引擎 padding/合并产物，
+// 与 fontBox（SimHei 1.00fs / sans 1.45fs）与 raster ink（≈0.93fs）均不一致（0.65~1.03 漂移）；
+// 而 OCR bbox 宽 × 字数 ÷ 单字前进量的解法在控制组三行全部命中源字号（40/20/12）。
+// → 生产主算法：fs 使 measureText.advanceWidth ≈ OCR 目标视觉宽（=bbox.width×displayScale）。
+function solveFontSizeByWidth(text, targetWidth, opts) {
+  const o = opts || {};
+  const measurer = o.measurer || emptyTextMeasurer();
+  const font = o.fontFamily || "sans-serif";
+  const lo = o.min != null ? o.min : 8, hi = o.max != null ? o.max : 160;
+  const widthTol = o.widthTol != null ? o.widthTol : 3;
+  if (!text || !(targetWidth > 0)) return null;
+  const advanceAt = function (fs) { const m = measurer.measureLine(text, fs, font); return m ? m.advanceWidth : null; };
+  let a = lo, b = hi, exact = lo, bestErr = Infinity, iters = 0;
+  for (; iters < 48; iters += 1) {
+    const mid = (a + b) / 2;
+    const w = advanceAt(mid);
+    if (w == null) break;
+    const err = Math.abs(w - targetWidth);
+    if (err < bestErr) { bestErr = err; exact = mid; }
+    if (err <= widthTol) { exact = mid; bestErr = err; break; }
+    if (w < targetWidth) a = mid; else b = mid;
+    if (b - a < 0.05) break;
+  }
+  const w0 = advanceAt(exact);
+  if (w0 != null && w0 > 0) {
+    const fs2 = Math.min(hi, Math.max(lo, exact * (targetWidth / w0)));
+    const err2 = Math.abs((advanceAt(fs2) || targetWidth + 99) - targetWidth);
+    if (err2 < bestErr) { exact = fs2; bestErr = err2; }
+  }
+  const measured = measurer.measureLine(text, exact, font);
+  return {
+    fontSize: Math.round(exact),
+    fontSizeExact: Math.round(exact * 1000) / 1000,
+    widthError: measured ? Math.abs(measured.advanceWidth - targetWidth) : null,
+    targetWidth: targetWidth,
+    iterations: iters + 1,
+    advanceWidth: measured ? measured.advanceWidth : null,
+    visualWidth: measured ? measured.visualWidth : null,
+    measured: measured
+  };
+}
+
+// ---- compareTextGeometry：期望 quad vs 创建后 aCoords quad ---- 
+// quad 顺序 [tl,tr,br,bl]（同 image-space）。
+// Stage 8B STEP 6（§15 拆分）：输出分两类 ——
+//   geometry  = {centerError, cornerError, angleError, aabbError}（阻断性：超阈值 = GEOMETRY_FAIL）
+//   typography = {widthError, heightError, wrapDetected, fontMismatch}（建议性：超阈值 = TYPOGRAPHY_FAIL）
+// status ∈ PASS | GEOMETRY_FAIL | TYPOGRAPHY_FAIL | GEOMETRY_TYPOGRAPHY_FAIL
+// wrapDetected 由调用方给 renderedLineCount/targetLineCount 判定（单行 OCR 渲染成多行）。
 function compareTextGeometry(target, actual, opts) {
   const o = opts || {};
   if (!target || !actual || target.length < 4 || actual.length < 4) {
-    return { pass: false, score: 0, failures: ["missing-quad"], centerError: Infinity, widthError: Infinity, heightError: Infinity, angleError: Infinity, cornerError: Infinity, aabbError: Infinity };
+    return { status: "NO_QUAD", pass: false, score: 0, failures: ["missing-quad"], geometry: { pass: false, centerError: Infinity, cornerError: Infinity, angleError: Infinity, aabbError: Infinity }, typography: { pass: false, widthError: Infinity, heightError: Infinity, wrapDetected: false, fontMismatch: !!o.fontMismatch } };
   }
   const centerTol = o.centerTol != null ? o.centerTol : 2;
+  const cornerTol = o.cornerTol != null ? o.cornerTol : 3;
+  const angleTol = o.angleTol != null ? o.angleTol : 0.5;
   const widthTol = o.widthTol != null ? o.widthTol : 3;
   const heightTol = o.heightTol != null ? o.heightTol : 3;
-  const angleTol = o.angleTol != null ? o.angleTol : 0.5;
   const centerTarget = quadCenter(target), centerActual = quadCenter(actual);
   const sizeT = quadSize(target), sizeA = quadSize(actual);
   const centerError = distP(centerTarget, centerActual);
   const widthError = Math.abs(sizeT.width - sizeA.width);
   const heightError = Math.abs(sizeT.height - sizeA.height);
   const angleError = Math.abs(angNorm(quadAngle(target) - quadAngle(actual)));
-  // cornerError：对齐中心后 4 角平均距离
   let cornerSum = 0;
   for (let i = 0; i < 4; i += 1) {
     cornerSum += distP(
@@ -258,30 +308,51 @@ function compareTextGeometry(target, actual, opts) {
     const dy = Math.max(0, Math.max(p.top - (q.top + q.height), q.top - (p.top + p.height)));
     return Math.hypot(dx, dy);
   }
-  const failures = [];
-  if (centerError > centerTol) failures.push("center");
-  if (widthError > widthTol) failures.push("width");
-  if (heightError > heightTol) failures.push("height");
-  if (angleError > angleTol) failures.push("angle");
-  // score：1 − 归一化加权误差（每个维度以 tol 为满刻度）
-  const score = Math.max(0, Math.min(1, 1 - (
-    (centerError / centerTol + widthError / widthTol + heightError / heightTol + angleError / angleTol) / 4
-  )));
-  return {
-    pass: failures.length === 0,
-    score: Math.round(score * 10000) / 10000,
-    failures: failures,
+  const renderedLineCount = o.renderedLineCount;
+  const targetLineCount = o.targetLineCount != null ? o.targetLineCount : 1;
+  const wrapDetected = renderedLineCount != null && renderedLineCount > targetLineCount;
+  const fontMismatch = !!o.fontMismatch;
+  const geometry = {
+    pass: centerError <= centerTol && cornerError <= cornerTol && angleError <= angleTol,
     centerError: Math.round(centerError * 1000) / 1000,
+    cornerError: Math.round(cornerError * 1000) / 1000,
+    angleError: Math.round(angleError * 1000) / 1000,
+    aabbError: Math.round(aabbError * 1000) / 1000
+  };
+  const typography = {
+    pass: !wrapDetected && widthError <= widthTol && heightError <= heightTol,
     widthError: Math.round(widthError * 1000) / 1000,
     heightError: Math.round(heightError * 1000) / 1000,
-    angleError: Math.round(angleError * 1000) / 1000,
-    cornerError: Math.round(cornerError * 1000) / 1000,
-    aabbError: Math.round(aabbError * 1000) / 1000
+    wrapDetected: wrapDetected,
+    fontMismatch: fontMismatch
+  };
+  const failures = [];
+  if (!geometry.pass) {
+    if (centerError > centerTol) failures.push("center");
+    if (cornerError > cornerTol) failures.push("corner");
+    if (angleError > angleTol) failures.push("angle");
+  }
+  if (!typography.pass) {
+    if (wrapDetected) failures.push("wrap");
+    if (widthError > widthTol) failures.push("width");
+    if (heightError > heightTol) failures.push("height");
+  }
+  const status = geometry.pass ? (typography.pass ? "PASS" : "TYPOGRAPHY_FAIL") : (typography.pass ? "GEOMETRY_FAIL" : "GEOMETRY_TYPOGRAPHY_FAIL");
+  const score = Math.max(0, Math.min(1, 1 - (
+    (centerError / centerTol + cornerError / cornerTol + angleError / angleTol + (wrapDetected ? 1 : 0) + widthError / widthTol + heightError / heightTol) / 6
+  )));
+  return {
+    status: status,
+    pass: status === "PASS",
+    score: Math.round(score * 10000) / 10000,
+    failures: failures,
+    geometry: geometry,
+    typography: typography
   };
 }
 
 if (typeof module !== "undefined" && module.exports) module.exports = {
   createTextMeasurer, emptyTextMeasurer, browserTextMeasurer, syntheticTextMeasurer,
-  solveFontSize, solveTextWidth, fitTextObject,
+  solveFontSize, solveFontSizeByWidth, solveTextWidth, fitTextObject,
   compareTextGeometry, quadCenter, quadSize, quadAngle, quadBounds, angNorm, distP
 };

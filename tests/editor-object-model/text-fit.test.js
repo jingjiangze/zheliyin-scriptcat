@@ -67,29 +67,61 @@ const r30 = (Math.PI * 30) / 180, c30 = Math.cos(r30), s30 = Math.sin(r30);
 const QR = QT.map(function (p) { const dx = p.x - 150, dy = p.y - 120; return { x: 150 + dx * c30 - dy * s30, y: 120 + dx * s30 + dy * c30 }; });
 t("d.angle30", near(quadAngle(QR), 30, 1e-6), "", quadAngle(QR));
 
-// ================= E: compareTextGeometry =================
+// ================= E: compareTextGeometry（STEP 6 拆分：geometry vs typography） =================
 const e1 = compareTextGeometry(QT, QT.map(function (p) { return { x: p.x + 1, y: p.y }; }), {});
-t("e.shift1-pass", e1.pass === true && near(e1.centerError, 1, 1e-9) && near(e1.widthError, 0, 1e-9) && near(e1.angleError, 0, 1e-9), "", e1);
-// score = 1 − (1/2+0+0+0)/4 = 0.875
-t("e.shift1-score", near(e1.score, 0.875, 1e-4), "", e1.score);
+t("e.shift1-pass", e1.status === "PASS" && e1.geometry.pass === true && near(e1.geometry.centerError, 1, 1e-9) && near(e1.typography.widthError, 0, 1e-9) && near(e1.geometry.angleError, 0, 1e-9), "", e1);
+// score = 1 − (1/2+0+0+0+0+0)/6 = 1 − 1/12 = 0.9167
+t("e.shift1-score", near(e1.score, 0.9167, 1e-3), "", e1.score);
 const e2 = compareTextGeometry(QT, QT.map(function (p) { return { x: p.x + 3, y: p.y }; }), {});
-t("e.shift3-fail-center", e2.pass === false && e2.failures.indexOf("center") >= 0 && near(e2.centerError, 3, 1e-9), "", e2);
-// 旋转 1° → angle fail：
+t("e.shift3-geometry-fail", e2.status === "GEOMETRY_FAIL" && e2.geometry.pass === false && e2.failures.indexOf("center") >= 0 && near(e2.geometry.centerError, 3, 1e-9), "", e2);
+// 旋转 1° → angle fail（GEOMETRY_FAIL）
 const e3 = compareTextGeometry(QT, QT.map(function (p) {
   const dx = p.x - 150, dy = p.y - 120;
   const r1 = Math.PI / 180;
   return { x: 150 + dx * Math.cos(r1) - dy * Math.sin(r1), y: 120 + dx * Math.sin(r1) + dy * Math.cos(r1) };
 }), {});
-t("e.rot1-fail-angle", e3.pass === false && e3.failures.indexOf("angle") >= 0 && near(e3.angleError, 1, 1e-6), "", e3);
+t("e.rot1-angle-fail", e3.status === "GEOMETRY_FAIL" && e3.failures.indexOf("angle") >= 0 && near(e3.geometry.angleError, 1, 1e-6), "", e3);
 // 目标与实测都是 30° 旋转 quad → pass（旋转一致）
 const e4 = compareTextGeometry(QR, QR.slice(), {});
-t("e.rot30-pass", e4.pass === true && near(e4.angleError, 0, 1e-6), "", e4);
-// 缩放宽度 +10 → width fail
-const e5 = compareTextGeometry(QT, QT.map(function (p, i) { return i === 0 || i === 3 ? { x: p.x, y: p.y } : { x: p.x + 10, y: p.y }; }), {});
-t("e.width10-fail", e5.pass === false && e5.failures.indexOf("width") >= 0, "", e5);
+t("e.rot30-pass", e4.status === "PASS" && near(e4.geometry.angleError, 0, 1e-6), "", e4);
+// 宽度 +5（中心不动，角位移 2.5 ≤ cornerTol=3）→ typography width fail（GEOMETRY 仍过）
+const e5 = compareTextGeometry(QT, QT.map(function (p, i) { return (i === 0 || i === 3) ? { x: p.x - 2.5, y: p.y } : { x: p.x + 2.5, y: p.y }; }), {});
+t("e.width5-typography-fail", e5.status === "TYPOGRAPHY_FAIL" && e5.geometry.pass === true && e5.typography.widthError > 3, "", e5);
+// 高度 +5（中心不动）→ TYPOGRAPHY_FAIL（geometry 过）
+const e5b = compareTextGeometry(QT, QT.map(function (p, i) { return (i === 0 || i === 1) ? { x: p.x, y: p.y - 2.5 } : { x: p.x, y: p.y + 2.5 }; }), {});
+t("e.height5-typography-fail", e5b.status === "TYPOGRAPHY_FAIL" && e5b.geometry.pass === true, "", e5b);
 // 阈值可配（centerTol=5 时 shift3 通过）
 const e6 = compareTextGeometry(QT, QT.map(function (p) { return { x: p.x + 3, y: p.y }; }), { centerTol: 5 });
-t("e.tol-config", e6.pass === true, "", e6);
+t("e.tol-config", e6.status === "PASS", "", e6);
+
+// ================= H: wrap / fontMismatch / cornerTol =================
+const H1 = compareTextGeometry(QT, QT.slice(), { renderedLineCount: 2, targetLineCount: 1 });
+t("h.wrap-detected", H1.status === "TYPOGRAPHY_FAIL" && H1.typography.wrapDetected === true && H1.failures.indexOf("wrap") >= 0, "", H1);
+const H2 = compareTextGeometry(QT, QT.slice(), { renderedLineCount: 1, targetLineCount: 1 });
+t("h.no-wrap-pass", H2.status === "PASS" && H2.typography.wrapDetected === false, "", H2);
+const H3 = compareTextGeometry(QT, QT.slice(), { renderedLineCount: 1, targetLineCount: 1, fontMismatch: true });
+t("h.font-mismatch-flag", H3.typography.fontMismatch === true && H3.status === "PASS", "", H3); // 仅标记不阻断
+// cornerTol 放大且 centerTol 同步放大 → PASS（几何各维度都在容差内）
+const H4 = compareTextGeometry(QT, QT.map(function (p) { return { x: p.x, y: p.y + 8 }; }), { centerTol: 8, cornerTol: 8, renderedLineCount: 1, targetLineCount: 1 });
+t("h.corner-tol-high-pass", H4.status === "PASS", "", H4);
+
+// ================= I: solveFontSizeByWidth（advance 宽度求解，STEP 5 主算法） =================
+// SimHei 模型：CJK 1.0fs。"大字标题实例文字" 8 字 → advance=8fs；目标宽 316 → fs≈39.5→40
+const i1 = it.solveFontSizeByWidth("大字标题实例文字", 316, O);
+t("i.width-fs40", i1 && i1.fontSize === 40 && i1.widthError <= 3, "", i1);
+// 12 字 267 → 20.54 → round 21
+const i2 = it.solveFontSizeByWidth("中号正文联系电话与邮箱地址", 267, O);
+t("i.width-fs21", i2 && i2.fontSize === 21, "", i2);
+// "销售经理" 4 字 64 → 16
+const i3 = it.solveFontSizeByWidth("销售经理", 64, O);
+t("i.width-fs16", i3 && i3.fontSize === 16, "", i3);
+// 混合（数字/字母 0.55fs）"A1b x" 12 字? 用 "ABCDE" 5 字 27.5 → fs=... target 55 → 55/2.75=20
+const i4 = it.solveFontSizeByWidth("ABCDE", 55, O);
+t("i.width-latin-fs20", i4 && i4.fontSize === 20, "", i4);
+const iNull = it.solveFontSizeByWidth("", 100, O);
+t("i.width-empty-null", iNull === null, "");
+const iNull2 = it.solveFontSizeByWidth("王", 0, O);
+t("i.width-zero-null", iNull2 === null, "");
 
 // ================= F: angNorm =================
 t("f.angnorm", near(angNorm(350), -10, 1e-9), "", angNorm(350));
