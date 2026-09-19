@@ -623,11 +623,29 @@ function injectUserscript() {
           if (base.imageButtons && base.imageButtons.length) { try { await ev((t) => { const w = Array.from(document.querySelectorAll("li,a,button,span,i")); const el = w.filter((x) => String(x.textContent || "").trim() === t && String(x.className || "").indexOf("img") >= 0)[0] || w.filter((x) => String(x.textContent || "").trim() === t)[0]; if (el && el.offsetParent) { try { el.click(); } catch (e) {} return true; } return false; }, base.imageButtons[0].text); await SLEEP(1200); } catch (e) {} }
           const beforeIds = await snapIds();
           try {
-            await page.setInputFiles('input[type="file"]', tmpPng);
+            await page.setInputFiles('#select_btn_1, input[type="file"].selectbtn', tmpPng);
           } catch (e) { rec.errors.push("setInputFiles:" + String(e && e.message || e).slice(0, 120)); }
+          // 上传后等待素材出现并点击插入
+          let clickedMat = false;
+          const t1 = Date.now();
+          while (Date.now() - t1 < 12000) {
+            await SLEEP(1200);
+            const m = await ev(() => {
+              const fileInputs = Array.from(document.querySelectorAll('input[type="file"]'));
+              // 素材缩略图候选项
+              const cand = Array.from(document.querySelectorAll("img")).filter((im) => { const src = String(im.src || ""); return im.offsetParent && (src.indexOf("temp") >= 0 || src.indexOf("upload") >= 0 || src.indexOf("blob:") === 0 || src.indexOf("data:image") === 0); }).slice(0, 6).map((im) => ({ src: String(im.src).slice(0, 90), cls: String(im.className || "").slice(0, 50) }));
+              // 「上传成功」素材列表项（webuploader 新增）
+              const ups = Array.from(document.querySelectorAll(".uploader-list li,.file-item,.webuploader-container li,li[class*=file]")).filter((el) => el.offsetParent).slice(0, 4).map((el) => String(el.className || "").slice(0, 60));
+              return { cand: cand, ups: ups, num: cand.length + ups.length };
+            });
+            if (m && m.num > 0) { clickedMat = true; rec.material = m; break; }
+          }
+          rec.clickedMaterial = clickedMat;
+          if (!clickedMat) { try { await ev(() => { const q = document.querySelector('#select_btn_1, input[type="file"].selectbtn'); if (q) { try { q.click && q.click(); } catch (e) {} } return !!q; }); } catch (e) {} }
           // 等待对象增加
           let created = null;
           const t0 = Date.now();
+          let inserted = false;
           for (;;) {
             await SLEEP(900);
             const r = await ev(() => {
@@ -638,13 +656,28 @@ function injectUserscript() {
               const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
               const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
               const il = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content ? PV.pageList[eIdx].content.itemList : null;
-              const newObs = c ? c.getObjects().filter((o) => o && String(o.type) === "image").map((o) => ({ multiUuid: o.multiUuid || null, uuid: o.uuid || null })) : [];
-              return { objLen: c ? c.getObjects().length : null, regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null, itemListLen: il ? il.length : null, lastItem: il && il.length ? { keys: Object.keys(il[il.length - 1]).slice(0, 16), loc: il[il.length - 1].location, mediaType: il[il.length - 1].media && il[il.length - 1].media.mediaType } : null, newObs: newObs };
+              // 若尚未插入：上传成功后通常需要点一次画布或点素材项
+              return { objLen: c ? c.getObjects().length : null, regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null, itemListLen: il ? il.length : null, lastItem: il && il.length ? { keys: Object.keys(il[il.length - 1]).slice(0, 16), mediaType: il[il.length - 1].media && il[il.length - 1].media.mediaType, hasLocation: !!il[il.length - 1].location } : null, activeText: String(document.body.textContent || "").slice(0, 200) };
             });
             const grew = r.objLen !== null && base.objLen !== null && r.objLen > base.objLen;
-            if (grew || Date.now() - t0 > 30000) { created = r; break; }
+            if (!grew && !inserted && clickedMat && Date.now() - t0 > 6000) {
+              // 点击素材项插入
+              inserted = await ev(() => {
+                const hits = [];
+                const imgs = Array.from(document.querySelectorAll("img")).filter((im) => { const src = String(im.src || ""); return im.offsetParent && (src.indexOf("temp") >= 0 || src.indexOf("upload") >= 0 || src.indexOf("blob:") === 0 || src.indexOf("data:image") === 0); });
+                const pool = imgs.slice(0, 4);
+                for (const im of pool) {
+                  const el = im.closest("li,div,span,a") || im;
+                  try { el.click(); hits.push(1); } catch (e) {}
+                }
+                return hits.length;
+              });
+              rec.insertClick = inserted;
+            }
+            if (grew || Date.now() - t0 > 36000) { created = r; break; }
           }
-          rec.steps.push({ tag: "afterUpload", ...created });
+          rec.steps.push({ tag: "afterUpload", objLen: created && created.objLen, regLen: created && created.regLen, itemListLen: created && created.itemListLen, tookMs: Date.now() - t0, insertClick: inserted, grew: !!(created && created.objLen !== null && base.objLen !== null && created.objLen > base.objLen) });
+          rec.createdRaw = created;
           // Step3 新对象详情 + setItemListJson(native)
           const detail = await ev((arg) => {
             const req = window.requirejs || window.require;
@@ -674,16 +707,20 @@ function injectUserscript() {
             return out;
           }, { prevBase: {} });
           rec.created = detail;
-          // 清理（删除新增对象）
-          await ev(() => {
+          // 清理（仅移除本次新增对象数；模板既有对象不删）
+          await ev((a) => {
             const req = window.requirejs || window.require;
             const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
             const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
             const c = d && d.canvas;
             let removed = 0;
-            if (c) { const before = c.getObjects().length; c.getObjects().slice().forEach((o) => { if (o && String(o.type) === "image") { try { c.remove(o); removed += 1; } catch (e) {} } }); }
-            return { removed, before: rec.steps[rec.steps.length - 1].objLen, events: [] };
-          });
+            if (c) {
+              const imgs = c.getObjects().filter((o) => o && String(o.type) === "image");
+              const target = Math.max(0, imgs.length - (a.curObjLen - a.baseObjLen));
+              while (imgs.length > target) { const o = imgs.pop(); try { c.remove(o); removed += 1; } catch (e) {} }
+            }
+            return { removed: removed };
+          }, { curObjLen: (rec.steps[rec.steps.length - 1] && rec.steps[rec.steps.length - 1].objLen != null ? rec.steps[rec.steps.length - 1].objLen : base.objLen), baseObjLen: base.objLen });
         } else {
           rec.uiFound = false;
         }
