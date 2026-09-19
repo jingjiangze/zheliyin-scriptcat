@@ -661,7 +661,7 @@ function injectUserscript() {
             });
             const grew = r.objLen !== null && base.objLen !== null && r.objLen > base.objLen;
             if (!grew && !inserted && clickedMat && Date.now() - t0 > 6000) {
-              // 点击素材项插入
+              // 点击素材项插入（先单击、再双击+找「插入」按钮）
               inserted = await ev(() => {
                 const hits = [];
                 const imgs = Array.from(document.querySelectorAll("img")).filter((im) => { const src = String(im.src || ""); return im.offsetParent && (src.indexOf("temp") >= 0 || src.indexOf("upload") >= 0 || src.indexOf("blob:") === 0 || src.indexOf("data:image") === 0); });
@@ -670,6 +670,11 @@ function injectUserscript() {
                   const el = im.closest("li,div,span,a") || im;
                   try { el.click(); hits.push(1); } catch (e) {}
                 }
+                // 双击首个素材项
+                if (pool.length) { try { const e0 = pool[0].closest("li,div,span,a") || pool[0]; e0.dispatchEvent(new MouseEvent("dblclick", { bubbles: true })); hits.push(2); } catch (e) {} }
+                // 找「插入/使用/确定」按钮
+                const ins = Array.from(document.querySelectorAll("button,a,span,li,div")).filter((el) => el.offsetParent && /^(插入|使用|确定|完成)$/.test(String(el.textContent || "").trim())).slice(0, 3);
+                for (const el of ins) { try { const t = el.closest("button,a,li") || el; t.click(); hits.push(3); } catch (e) {} }
                 return hits.length;
               });
               rec.insertClick = inserted;
