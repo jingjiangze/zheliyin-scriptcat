@@ -106,6 +106,7 @@ function injectUserscript() {
     // D2-C itemlist-source：页面早期 hook（模板初始化前）追 itemList 构建 + 模板 JSON 响应
     if (MODE === "itemlist-source") {
       await page.addInitScript(() => {
+        if (!/diy\.zheliyin\.com/.test(String(location ? location.hostname : ""))) return;
         window.__arrCap = { enabled: true, recs: [], ids: new WeakMap(), seq: 0 };
         const cap = (m, args, arr) => {
           if (!window.__arrCap.enabled) return;
