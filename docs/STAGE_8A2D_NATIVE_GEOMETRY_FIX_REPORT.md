@@ -70,6 +70,20 @@ before: itemListLen=1（sig=完整 item schema）  ← fresh 加载后 itemList 
 - 原生「文字」按钮非一键新增（需再点画布）→ 未捕获 itemList 写入机制 → **C_NATIVE_INIT = UNKNOWN**；
 - **新矛盾线索**：本次 fresh 加载 1040459 itemList=1，而 D1 失败快照 itemList=0 —— 差异环节位于**注入图之后**（D1 流程：注入图→OCR；本次：未注入）→ 疑点：注入裸 fabric.Image（未注册 productItem）可能触发 productJson/itemList 重置或不同步 → **下一步优先取证：注入图前后 itemList 变化**（若确认，C-fix 方向=注入图需同步注册或改用编辑器原生上传路径）。
 
+## D2-C1.5 itemList-lifecycle（本刀，部分 REAL / HYPOTHESIS）
+
+```
+T0 fresh:     itemList=1  obj=9  reg=1  txt=0
+T4 ctor(no-add): itemList=1  obj=9  reg=1
+T5 canvas.add:  itemList=1  obj=10 reg=1   ← 纯 fabric add 不改变 itemList
+T6~T9:          （runner 中断未采集；OCR 段未执行——HYPOTHESIS 未闭合）
+```
+
+**结论（本刀）**：
+- **纯 `new fabric.Image + canvas.add` 不清零 itemList（1 保持）** → 「注入即 1→0」假设被否定（CONFIRMED 该环节无重置）；
+- 1→0 的真正触发点仍 **UNKNOWN（HYPOTHESIS：倾向于 OCR 流程环节；或跨会话状态）** —— 需重跑补齐 T6-T9 时间线 + ids 身份采集（runner 中断点先修复）；
+- C_ROOT_CAUSE 未锁定 → C_FIX=NOT_READY（未满足 §14 成功标准）。
+
 - 失败点：站点 `CanvasDiy.checkObjsInProductJson` 的 `productPageList[e].content.itemList[g-1].media`
 - 触发条件：**ProductVO.itemList 为空（空模板页）时 drawText 的 productJson 同步未发生**（canvasToProductObjArr 已 push、itemList 未同步 → 两数组不同步）
 - 已排除：font.id（四象限全 PASS）、width（四象限全 PASS）、时序
