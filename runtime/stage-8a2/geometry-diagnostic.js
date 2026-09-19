@@ -102,7 +102,7 @@ function injectUserscript() {
     await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
     await SLEEP(1200);
     if (BAIDU_AK && BAIDU_SK) { await ev((a) => { const ai = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak"); const si = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk"); const sb = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save"); if (!ai || !si || !sb) return { ok: false }; ai.value = a.ak; si.value = a.sk; try { sb.click(); } catch (e) {} return { ok: true }; }, { ak: BAIDU_AK, sk: BAIDU_SK }); await SLEEP(3000); }
-    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : URL_252438);
+    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : (MODE === "drawitem-probe" ? URL_88 : URL_252438));
     // D2-C itemlist-source：页面早期 hook（模板初始化前）追 itemList 构建 + 模板 JSON 响应
     if (MODE === "itemlist-source") {
       await page.addInitScript(() => {
@@ -517,6 +517,69 @@ function injectUserscript() {
         C.cap = await readCap();
         await rollback("p8l-");
       } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 400)); }
+    } else if (MODE === "drawitem-probe") {
+      // D2-C2：验证「真实对象序列化 setItemListJson → concat（Paste 等价）→ itemList=1 → drawText」链路（页面世界诊断）
+      const rec = { mode: "drawitem-probe", steps: [], errors: [] };
+      out.records.push(rec);
+      const st = (tag) => ev((arg) => {
+        const req = window.requirejs || window.require;
+        const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+        const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+        const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+        const c = d && d.canvas;
+        const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+        const il = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content ? PV.pageList[eIdx].content.itemList : null;
+        return { tag: arg.tag, itemListLen: il ? il.length : null, objLen: c ? c.getObjects().length : null, regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null, txt: c ? c.getObjects().filter((o) => o && typeof o.text === "string").length : null };
+      }, { tag });
+      try {
+        const DU = await render();
+        const dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
+        rec.steps.push(await st("base"));
+        await injectImg(0, dataUrl, "p8d-", { left: 20, top: 20, scaleX: 1, scaleY: 1, w: 500, h: 150 });
+        rec.steps.push(await st("afterInject"));
+        // 序列化 + concat（Paste 等价；诊断用）
+        const ser = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+          const ea = (function () { try { return req.s.contexts._.defined[arg.mod] || (window[arg.mod]); } catch (e) { return null; } })();
+          // 找 ea：包含 setItemListJson 的模块
+          let holder = null;
+          if (req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined) {
+            try { Object.keys(req.s.contexts._.defined).forEach((k) => { if (!holder) { const m = req.s.contexts._.defined[k]; if (m && typeof m.setItemListJson === "function") holder = m; } }); } catch (e) {}
+          }
+          const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const page = PV && PV.pageList && PV.pageList[eIdx];
+          const content = page && page.content;
+          const imgObj = c ? c.getObjects().filter((o) => o && String(o.type) === "image" && String(o.multiUuid || "").indexOf("p8d-") === 0)[0] : null;
+          if (!holder) return { ok: false, reason: "no setItemListJson holder" };
+          if (!content || !imgObj) return { ok: false, reason: "no content or image" };
+          try {
+            const res = holder.setItemListJson([imgObj], c);
+            const items = res && Array.isArray(res.itemList) ? res.itemList : null;
+            if (!items || !items.length) return { ok: false, reason: "empty serialized" };
+            content.itemList = (Array.isArray(content.itemList) ? content.itemList : []).concat(items);
+            return { ok: true, nItems: items.length, keys: Object.keys(items[0]).slice(0, 14), mediaType: items[0].media && items[0].media.mediaType, hasLocation: !!items[0].location, hasLayer: !!items[0].layer, itemObjLen: Object.keys(items[0]).length };
+          } catch (e) { return { ok: false, reason: String(e && e.message || e).slice(0, 200) }; }
+        }, {});
+        rec.serialized = ser;
+        rec.steps.push(await st("afterConcat"));
+        // drawText（与四象限相同 payload）
+        const dt = await ev(() => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const diy = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          if (!diy || typeof diy.drawText !== "function") return { skipped: "no drawText" };
+          const entry = { media: { mediaType: "text", text: "验证文字AB", font: { pointSize: 30, fontColor: "#000000", isHorizontal: 1, gravity: "left", id: "1", isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 }, charSpace: 0, lineSpace: 1.2, lineIdType: 0, isBG: 0, imgPath: "" }, location: { x: 40, y: 40, width: 120, height: 40, factWidth: 120, factHeight: 40, rotation: 0 }, printLocation: { x: 40, y: 40, width: 120, height: 40, rotation: 0 }, layer: { alpha: 1 }, layerNum: 1, isEdit: 1, isDisplay: 0, deleteState: 0, visitLevel: 1, multiUuid: "dp-" + Date.now(), markuuid: "", topEnable: 1, resourceType: 0, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 0, isPreview: 0, isDesignShape: 0 };
+          try { diy.drawText(String(entry.media.text), null, null, null, entry, 1); return { ok: true }; }
+          catch (e) { return { ok: false, err: String(e && e.message || e).slice(0, 300), stack: String(e && e.stack || "").slice(0, 500) }; }
+        });
+        rec.drawText = dt;
+        rec.steps.push(await st("afterDrawText"));
+        await rollback("p8d-");
+      } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
     } else if (MODE === "quad") {
       // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
       await armDrawTextCap();
@@ -589,7 +652,7 @@ function injectUserscript() {
     }
   } catch (e) { out.errors.push(String(e && e.message || e).slice(0, 400)); }
   finally { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
-  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : "canvas-88x57-create-failure.json";
+  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : MODE === "drawitem-probe" ? "drawitem-probe-1040459.json" : "canvas-88x57-create-failure.json";
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(path.join(REPORT_DIR, name), JSON.stringify(out, null, 2));
   console.log("STAGE-8A2B " + MODE + " done records=" + out.records.length + " errors=" + out.errors.length + " -> " + path.join(REPORT_DIR, name));
