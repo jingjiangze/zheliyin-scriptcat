@@ -95,6 +95,18 @@ t("e.tol-config", e6.pass === true, "", e6);
 t("f.angnorm", near(angNorm(350), -10, 1e-9), "", angNorm(350));
 t("f.angnorm2", near(angNorm(-190), 170, 1e-9), "", angNorm(-190));
 
+// ================= G: 行盒优先（lineBox，v0.3.11.16） =================
+// provider 带 fontBoundingBox：visualHeight=行盒高(1.45fs)。目标 57 → fs≈39.3→39
+// （glyph ink 路径会解得 fs≈57，宽 8 字需 456px > boxW → 换行——A0 块 0 根因）。
+const synFB = it.createTextMeasurer({ measureText: function (t, f) { const m = /^([\d.]+)px/.exec(f || ""); const fs = m ? parseFloat(m[1]) : 16; return { width: fs, actualBoundingBoxAscent: fs * 0.8, actualBoundingBoxDescent: fs * 0.2, fontBoundingBoxAscent: fs * 1.1, fontBoundingBoxDescent: fs * 0.35 }; } });
+const g1 = solveFontSize("王", { height: 57 }, { measurer: synFB });
+t("g.linebox-solve-fs39", g1 && g1.fontSize === 39, "", g1);
+const g2 = solveFontSize("王", { height: 57 }, { measurer: synFB, fontFamily: "x" });
+t("g.linebox-height-error", g2 && g2.heightError <= 2, "", g2);
+// 无 fontBoundingBox（合成模型）回落 glyph ink：视觉高=fs，求解 identity
+const g3 = solveFontSize("王", { height: 24 }, O);
+t("g.ink-fallback-fs24", g3 && g3.fontSize === 24, "", g3);
+
 // ================= 汇总 =================
 console.log("text-fit.test: " + results.length + " checks, " + failures.length + " failures");
 results.forEach(function (r) { console.log("  " + r); });

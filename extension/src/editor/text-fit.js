@@ -15,7 +15,9 @@
 
 // ---- 测字器抽象：measureGlyph / measureLine 统一返回 ink 几何 ----
 // provider.measureText(text, fontString) → {width, actualBoundingBoxLeft/Right/Ascent/Descent,…}
-function createTextMeasurer(provider) {
+function createTextMeasurer(provider, opts) {
+  const o = opts || {};
+  const lineBox = o.lineBox !== false; // 默认行盒优先（fontBoundingBox），无则回落 glyph ink
   const measureOne = function (text, fs, fontFamily) {
     const fontString = (fs + "px ") + (fontFamily || "sans-serif");
     let m = null;
@@ -26,12 +28,21 @@ function createTextMeasurer(provider) {
     const right = typeof m.actualBoundingBoxRight === "number" ? m.actualBoundingBoxRight : width;
     const ascent = typeof m.actualBoundingBoxAscent === "number" ? m.actualBoundingBoxAscent : fs * 0.8;
     const descent = typeof m.actualBoundingBoxDescent === "number" ? m.actualBoundingBoxDescent : fs * 0.2;
+    // Stage 8B STEP 7（真机根因，2026-09-19）：OCR 行 bbox 高 = 行盒高（如 SimHei 40px→行盒≈57），
+    // 与 glyph ink（≈0.8+0.2=fs）不同。fontSize 求解必须以「行盒高」为目标，
+    // 否则按 ink 求得的 fs 虚高 → 宽度容纳不下 → 换行（A0 块 0 高度差 11.93px 根因）。
+    const fAsc = typeof m.fontBoundingBoxAscent === "number" ? m.fontBoundingBoxAscent : 0;
+    const fDesc = typeof m.fontBoundingBoxDescent === "number" ? m.fontBoundingBoxDescent : 0;
+    const inkHeight = ascent + descent;
+    const lineHeight = (fAsc + fDesc) > 0 ? (fAsc + fDesc) : inkHeight;
     return {
       text: text, fontSize: fs, font: fontString,
       advanceWidth: width,
       left: left, right: right, ascent: ascent, descent: descent,
-      visualWidth: right - left,          // ink 宽度
-      visualHeight: ascent + descent       // ink 高度（ascent + descent）
+      visualWidth: right - left,           // ink 宽度
+      visualHeight: lineBox ? lineHeight : inkHeight, // 行盒高（lineBox）或 glyph ink 高
+      inkHeight: inkHeight,
+      lineHeight: lineHeight
     };
   };
   return {
@@ -55,7 +66,9 @@ function browserTextMeasurer() {
         actualBoundingBoxLeft: m.actualBoundingBoxLeft,
         actualBoundingBoxRight: m.actualBoundingBoxRight,
         actualBoundingBoxAscent: m.actualBoundingBoxAscent,
-        actualBoundingBoxDescent: m.actualBoundingBoxDescent
+        actualBoundingBoxDescent: m.actualBoundingBoxDescent,
+        fontBoundingBoxAscent: m.fontBoundingBoxAscent,
+        fontBoundingBoxDescent: m.fontBoundingBoxDescent
       };
     }
   } : null;
