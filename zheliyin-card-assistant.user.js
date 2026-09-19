@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.16
+// @version      0.3.11.17
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,21 +14,21 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.16
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.16
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.17
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -49,7 +49,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.16";
+  const VERSION = "0.3.11.17";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -1009,6 +1009,8 @@
       }
       ocrLog("PREPARING", "kind=" + prep.kind + " " + prep.width + "x" + prep.height + " dataUrl=" + prep.dataUrl.length + " chars");
       ocrTarget = { kind: prep.kind, geo: prep.geometry };
+      // Stage 8B STEP 5：真实模板字体（StyleCandidate 来源 1，禁止硬编码"思源黑体 Regular"）
+      ocrTarget.fontStyle = prep.templateFont || null;
       // Stage 7.6（Page Ownership §13/§14/§15）：冻结 OCR Source Page —— 图片与页面同帧捕获（ocrPrepare.page），
       // 若缺省则回退 getCurrentPage；自此刻起用户如何切页，OCR 结果仍属于 sourcePageId。
       // 无法可靠识别页面 → 停止 OCR（CURRENT_PAGE_UNKNOWN），严禁静默默认 FRONT。
@@ -1087,6 +1089,11 @@
     const angle = geo.angle || 0;
     const rad = (angle * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
     const cx = left + (w * sx) / 2, cy = top + (h * sy) / 2;
+    // Stage 8B STEP 5：一次性度量器 + StyleCandidate（模板真实字体优先，禁止硬编码"思源黑体 Regular"）
+    const fontFamilyCandidate = (ocrTarget && ocrTarget.fontStyle && ocrTarget.fontStyle.fontFamily) || null;
+    const fontMeas8b = (typeof browserTextMeasurer === "function") ? browserTextMeasurer() : null;
+    const fontMeas8bAvailable = !!(fontMeas8b && fontMeas8b.available);
+    const measureFamily = fontFamilyCandidate || "sans-serif";
     // 输出指标（§22）：forced wrapped 逻辑行数、多行 block 数
     let forcedWrapTotal = 0, multiLineTotal = 0;
     const items = (blocks || []).filter((b) => b && b.bbox && typeof b.bbox.x === "number" && b.bbox.width > 0).map((b, bi) => {
@@ -1125,18 +1132,25 @@
         } catch (eGeo) { targetQuad = null; imageRuntimeState = null; }
       }
       const bw = b.bbox.width * sx, bh = b.bbox.height * sy;
-      // §10：视觉字高 → fontSize 标定（取 block 内行高均值；多行 block 以行高为基准而非整块高度）
+      // §10（legacy 诊断保留）：avgLineH（行高均值）仅作诊断与 fallback。
       let lineHSum = 0;
       (b.lines || []).forEach((l) => { if (l && l.bbox && l.bbox.height > 0) lineHSum += l.bbox.height; });
       const avgLineH = (b.lines && b.lines.length && lineHSum > 0) ? lineHSum / b.lines.length : bh;
-      // fs 下限 8 = 与站点原生 CheckTextBox 的最小字号保护对齐（真机 0.10 档 drawText 将 <8 抬到 8）
-      const fs = Math.max(8, Math.min(160, Math.round((avgLineH * sy) / FONT_HEIGHT_RATIO)));
+      // Stage 8B STEP 5（主算法）：fontSize = advanceWidth 宽度匹配（OCR bbox 宽×scale 为目标）。
+      // font-metrics-audit 依据：OCR 行高 ≈ 引擎 padding 产物（SimHei fontBox=1.00fs 但 OCR 报 1.43×fs），
+      // 高度不可作字号主求解；宽/字数/单字前进量组合在控制组三行命中源字号（40/20/12）。
+      let fs = null, fsSource = "none", zy8bAdvance = null;
+      if (fontMeas8bAvailable && typeof solveFontSizeByWidth === "function") {
+        const sw = solveFontSizeByWidth(srcText, Math.max(8, bw), { measurer: fontMeas8b.measurer, fontFamily: measureFamily });
+        if (sw && sw.fontSize > 0) { fs = Math.min(160, Math.max(8, sw.fontSize)); fsSource = "advance-width"; zy8bAdvance = sw.advanceWidth || null; }
+      }
+      if (!fs) { fs = Math.max(8, Math.min(160, Math.round((avgLineH * sy) / FONT_HEIGHT_RATIO))); fsSource = "legacy-height-ratio"; }
       // §11/§12：textbox layoutWidth —— 优先真实文本测量（字号标定+字符宽度估计+安全余量），
       // 宽度 = clamp(max(60, 视觉宽, 最长行估计宽+margin), ≤4000)，OCR 原始单行不得因宽度不足再换行
       const textLines = srcText.split("\n").filter((t) => t !== "");
       const layout = (typeof estimateTextLayout === "function")
-        ? estimateTextLayout(textLines, fs, { minWidth: Math.max(60, bw + 8), maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)), visualWidth: bw })
-        : { layoutWidth: Math.max(60, bw + 8), perLine: textLines.map((t) => ({ text: t, estimatedWidth: 0, needsWrap: false })), forcedWrapDetected: false, estimatedFinalLineCount: textLines.length };
+        ? estimateTextLayout(textLines, fs, { minWidth: Math.max(60, bw + 8, zy8bAdvance != null ? zy8bAdvance + Math.max(10, Math.round(fs * 0.35)) : 0), maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)), visualWidth: bw })
+        : { layoutWidth: Math.max(60, bw + 8, zy8bAdvance != null ? zy8bAdvance + Math.max(10, Math.round(fs * 0.35)) : 0), perLine: textLines.map((t) => ({ text: t, estimatedWidth: 0, needsWrap: false })), forcedWrapDetected: false, estimatedFinalLineCount: textLines.length };
       if (layout.forcedWrapDetected) forcedWrapTotal += 1;
       if (textLines.length > 1) multiLineTotal += 1;
       // §18：换行诊断字段（sourceLineCount = OCR 原始逻辑行；forcedWrapDetected = 存在源单行放不下）
@@ -1155,13 +1169,18 @@
         sizeCluster: b.sizeCluster || null,
         sizeRatio: b.sizeRatio != null ? b.sizeRatio : null,
         estimatedTextHeight: b.estimatedTextHeight != null ? b.estimatedTextHeight : null,
-        safetyGate: (b.safety && b.safety.status) ? b.safety.status : null // Stage 7.8R §八：SAFE / BLOCK
+        safetyGate: (b.safety && b.safety.status) ? b.safety.status : null, // Stage 7.8R §八：SAFE / BLOCK
+        // Stage 8B STEP 5：字号求解来源 / 样式候选（真实模板字体优先）
+        fsSource: fsSource,
+        fontFamilyUsed: measureFamily,
+        fontFamilySource: fontFamilyCandidate ? "template" : "fallback",
+        legacyAvgLineH: avgLineH
       };
       // §14：几何模型 —— 水平文本 left/top；θ≠0 旋转文本 center/angle（保留 P5 rotation 行为，零变化）
       const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
-      const base = { text: srcText, blockIndex: bi, fontFamily: "思源黑体 Regular", diagnostics: diagnostics, pageId: srcPageId, side: srcSide };
+      const base = { text: srcText, blockIndex: bi, fontFamily: fontFamilyCandidate || "sans-serif", diagnostics: diagnostics, pageId: srcPageId, side: srcSide, zy8bFontMismatch: !fontFamilyCandidate };
       if (targetQuad) { base.zy8bTargetQuad = targetQuad; base.zy8bImageRuntime = imageRuntimeState; } // Stage 8B STEP 4：目标几何附到 item
       // §13：textbox height 须容纳 lineCount×lineHeight（禁止只用单行 OCR bbox.height）
       const boxHeight = Math.round(textLines.length * fs * FONT_LINE_HEIGHT + 8);
@@ -1239,7 +1258,7 @@
     (itemsList || []).forEach(function (it) {
       const created = (reply && reply.created ? reply.created : []).find(function (c) { return c && c.blockIndex === it.blockIndex; });
       if (!it.zy8bTargetQuad || !created || !created.geometry || !created.geometry.quad) return;
-      pending.push({ blockIndex: it.blockIndex, item: it, geom: created.geometry, round: 0, done: false, compare: null });
+      pending.push({ blockIndex: it.blockIndex, item: it, geom: created.geometry, round: 0, done: false, compare: null, large: 0 });
     });
     if (!pending.length) return;
     const ZY_OK = [], ZY_REJECT = [];
@@ -1256,75 +1275,81 @@
       });
     };
     const correctionsFor = function (it, geom, cmp) {
+      // Stage 8B STEP 5/6（§11/§12/§十四）：calibration 职责收敛 —— 只做小误差修正；
+      // 换行（WRAP）只加宽不缩字号；字大小只 ±1 小步；需要大跳变 → 归类 CALIBRATION_MODEL_FAILURE。
       const corr = {}, tq = it.zy8bTargetQuad;
-      let any = false;
+      let any = false, large = false;
       const tSz = quadSize(tq), tCtr = quadCenter(tq), tAng = quadAngle(tq);
       const aCtr = (geom.center && typeof geom.center.x === "number") ? geom.center : quadCenter(geom.quad);
       const aAng = (typeof geom.angle === "number") ? geom.angle : quadAngle(geom.quad);
       if (cmp.failures.indexOf("center") >= 0) {
         const dx = tCtr.x - aCtr.x, dy = tCtr.y - aCtr.y;
-        if (Math.abs(dx) > 0.01 || Math.abs(dy) > 0.01) { corr.left = Math.round((geom.left || 0) + dx); corr.top = Math.round((geom.top || 0) + dy); any = true; }
+        if (Math.abs(dx) > 0.01 || Math.abs(dy) > 0.01) {
+          const cl = Math.round((geom.left || 0) + dx), ct = Math.round((geom.top || 0) + dy);
+          corr.left = cl; corr.top = ct; any = true;
+          if (Math.abs(dx) > 2 || Math.abs(dy) > 2) large = true;
+        }
       }
-      if (cmp.failures.indexOf("height") >= 0 && typeof geom.fontSize === "number" && it.text) {
-        // A0 真机（2026-09-19）：换行使 box 高度非线性（fs23→h27 / fs39→h45 / fs49→h123），
-        // 纯 fontSize 比例修正会 39↔49↔23 震荡不收敛。对策：fs 取「高度拟合 ∩ 宽度容纳单行」的交集，
-        // 并同步放宽宽度防止换行（fabric textbox 高度自计算，corr.height 无效，不再下发）。
-        const boxW = Math.max(geom.textboxWidth || geom.width || 0, 20);
-        let fsNew = Math.round(Math.min(160, Math.max(8, geom.fontSize * (tSz.height / Math.max(geom.height || tSz.height, 1e-6)))));
-        // Stage 8B STEP 7（真机根因）：以「行盒高」为目标用浏览器实测求 fs（OCR 行 bbox 高=行盒高，
-        // 而非 glyph ink）；实测失败回落比例修正。
-        if (typeof solveFontSize === "function" && it.text) {
-          const measS = withMeasurer();
-          if (measS) {
-            const sl = solveFontSize(it.text, { height: tSz.height }, { measurer: measS, fontFamily: it.fontFamily || "思源黑体 Regular" });
-            if (sl && sl.fontSize > 0) fsNew = Math.min(160, Math.max(8, sl.fontSize));
-          }
+      if (cmp.typography.wrapDetected && typeof geom.textboxWidth === "number" && it.text) {
+        // §12 硬规则：单行 OCR 渲染成多行 → 只加宽（用真实 advance），绝不缩字号
+        const measW = withMeasurer();
+        let needW = geom.textboxWidth + (tSz.width - geom.width) + 8;
+        if (typeof solveTextWidth === "function" && measW) {
+          const mw = solveTextWidth(it.text, geom.fontSize || 14, { margin: 0, measurer: measW, fontFamily: it.fontFamily || "sans-serif" });
+          if (mw) needW = Math.max(needW, Math.ceil(mw.advanceWidth + 4));
         }
-        let fitW = boxW;
-        if (typeof solveTextWidth === "function") {
-          const meas = withMeasurer();
-          const visualAt = function (f) { const m = solveTextWidth(it.text, f, { margin: 0, measurer: meas }); return m ? m.visualWidth : null; };
-          let needAt = visualAt(fsNew);
-          if (needAt != null && needAt > boxW - 2) {
-            // 宽度不够：缓慢降压到能单行容纳（每次尝试测量，最多 12 步）；仍放不下则扩宽
-            for (let k = 0; k < 12 && fsNew > 8; k += 1) {
-              if (needAt <= boxW - 2) break;
-              fsNew = Math.max(8, fsNew - 2);
-              const n2 = visualAt(fsNew);
-              if (n2 == null) break;
-              needAt = n2;
-            }
-          }
-          // 最终按当前 fs 校准宽度（防换行兜底；fabric 会按内容自动重算高度）
-          const finalV = visualAt(fsNew);
-          if (finalV != null) fitW = Math.max(boxW, Math.ceil(finalV + 2));
-        }
+        corr.width = Math.min(4000, Math.max(20, Math.round(needW)));
+        any = true;
+      }
+      if (cmp.failures.indexOf("height") >= 0 && typeof geom.fontSize === "number" && it.text && !cmp.typography.wrapDetected) {
+        // 无换行的小高度差：字号 ±1 小步（STEP E：1~3 次小修正内收敛）
+        const fsCur = geom.fontSize;
+        const step = tSz.height > geom.height ? 1 : -1;
+        const fsNew = Math.min(160, Math.max(8, fsCur + step));
         corr.fontSize = fsNew;
-        corr.width = Math.min(4000, Math.max(20, Math.round(fitW)));
+        if (Math.abs(fsNew - fsCur) > 1) large = true;
+        // 同步用 advance 兜底宽度（防 fs 变化导致 wrap）
+        const measW2 = withMeasurer();
+        if (typeof solveTextWidth === "function" && measW2) {
+          const mw = solveTextWidth(it.text, fsNew, { margin: 0, measurer: measW2, fontFamily: it.fontFamily || "sans-serif" });
+          if (mw) corr.width = Math.min(4000, Math.max(geom.textboxWidth || 20, Math.ceil(mw.advanceWidth + 4)));
+        }
         any = true;
       }
       if (cmp.failures.indexOf("width") >= 0 && typeof geom.textboxWidth === "number") {
-        corr.width = Math.min(4000, Math.max(20, Math.round(geom.textboxWidth + (tSz.width - geom.width))));
+        // 宽度只在仍小于内容时微增（目标宽度由 Phase 1 advance 决定；此处仅为 wrap/精度兜底）
+        const needW = Math.max(geom.textboxWidth, Math.ceil(geom.width + (tSz.width - geom.width)));
+        corr.width = Math.min(4000, Math.max(20, needW));
         any = true;
       }
       if (cmp.failures.indexOf("angle") >= 0) {
         const delta = ((tAng - aAng + 180) % 360 + 360) % 360 - 180;
         const next = ((geom.angle || 0) + delta + 180) % 360 - 180;
-        if (Math.abs(delta) < 45 && Math.abs(delta) > 0.05) { corr.angle = Math.round(next * 1000) / 1000; any = true; }
+        if (Math.abs(delta) < 45 && Math.abs(delta) > 0.05) { corr.angle = Math.round(next * 1000) / 1000; any = true; if (Math.abs(delta) > 0.5) large = true; }
       }
+      corr.__large = large;
       return any ? corr : null;
     };
-    for (let round = 0; round < 8; round += 1) {
+    const CATEGORY = function (p) {
+      if (p.compare && p.compare.typography.wrapDetected) return "WRAP";
+      if (p.compare && p.compare.typography.fontMismatch) return "STYLE_MISMATCH";
+      if (p.compare && !p.compare.geometry.pass) return (p.compare.failures || []).indexOf("center") >= 0 || (p.compare.failures || []).indexOf("angle") >= 0 ? "IMAGE_TRANSFORM" : "FONT_MODEL";
+      return "FONT_MODEL";
+    };
+    // STEP E：只允许 ≤3 轮小修正；转大 → CALIBRATION_MODEL_FAILURE（分类诊断，不再盲调）
+    for (let round = 0; round < 4; round += 1) {
       const need = [];
       pending.forEach(function (p) {
         if (p.done) return;
-        const cmp = compareTextGeometry(p.item.zy8bTargetQuad, p.geom.quad, { centerTol: 2, widthTol: 3, heightTol: 3, angleTol: 0.5 });
+        const cmp = compareTextGeometry(p.item.zy8bTargetQuad, p.geom.quad, { centerTol: 2, cornerTol: 3, widthTol: 3, heightTol: 3, angleTol: 0.5, renderedLineCount: p.geom.renderedLineCount != null ? p.geom.renderedLineCount : null, targetLineCount: (p.item.diagnostics && p.item.diagnostics.sourceLineCount) || 1, fontMismatch: !!p.item.zy8bFontMismatch });
         p.compare = cmp;
         if (cmp.pass) { p.done = true; ZY_OK.push(p.blockIndex); return; }
-        if (p.round >= 7) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_GEOMETRY_MISMATCH", failures: (cmp.failures || []).join("|") }); return; }
+        if (p.round >= 3) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: (cmp.failures || []).join("|"), status: cmp.status }); return; }
         const corr = correctionsFor(p.item, p.geom, cmp);
-        if (!corr) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_NO_CORRECTION", failures: (cmp.failures || []).join("|") }); return; }
+        if (!corr) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_NO_CORRECTION", category: CATEGORY(p), failures: (cmp.failures || []).join("|") }); return; }
         p.round += 1;
+        if (corr.__large) p.large += 1;
+        delete corr.__large;
         need.push({ blockIndex: p.blockIndex, corrections: corr });
       });
       if (!need.length) break;
@@ -1336,10 +1361,10 @@
         if (p && r.ok && r.geometry && r.geometry.quad) p.geom = r.geometry;
       });
     }
-    pending.forEach(function (p) { if (!p.done) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_GEOMETRY_MISMATCH", failures: p.compare ? (p.compare.failures || []).join("|") : "no-compare" }); } });
+    pending.forEach(function (p) { if (!p.done) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: p.compare ? (p.compare.failures || []).join("|") : "no-compare", status: p.compare ? p.compare.status : null }); } });
     if (ZY_OK.length || ZY_REJECT.length) {
-      const summary = { ok: ZY_OK.length, rejected: ZY_REJECT.length, rejectedBlocks: ZY_REJECT.map(function (r) { return { blockIndex: r.blockIndex, code: r.code, failures: r.failures }; }) };
-      setStatus("几何校验完成：通过 " + ZY_OK.length + " 个" + (ZY_REJECT.length ? "，拒绝 " + ZY_REJECT.length + " 个（CREATE_REJECTED_GEOMETRY_MISMATCH）" : "") + "（细节见控制台 zy-ocr GEOMETRY）");
+      const summary = { ok: ZY_OK.length, rejected: ZY_REJECT.length, rejectedBlocks: ZY_REJECT.map(function (r) { return { blockIndex: r.blockIndex, code: r.code, category: r.category, failures: r.failures, status: r.status }; }) };
+      setStatus("几何校验完成：通过 " + ZY_OK.length + " 个" + (ZY_REJECT.length ? "，拒绝 " + ZY_REJECT.length + " 个（" + ZY_REJECT.map(function (r) { return r.category; }).join("|") + "）" : "") + "（细节见控制台 zy-ocr GEOMETRY）");
       ocrLog("GEOMETRY", JSON.stringify(summary));
     }
   }

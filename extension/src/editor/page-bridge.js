@@ -601,13 +601,26 @@ function pageBridge() {
         const width = (d(quad[0], quad[1]) + d(quad[2], quad[3])) / 2;
         const height = (d(quad[0], quad[3]) + d(quad[1], quad[2])) / 2;
         const angle = (Math.atan2(quad[1].y - quad[0].y, quad[1].x - quad[0].x) * 180) / Math.PI;
+        // Stage 8B STEP 6（§12）：渲染行数 —— 单行 OCR 不得渲染成多行（WRAP_DETECTED）
+        let renderedLineCount = null;
+        try {
+          if (obj._textLines && obj._textLines.length) renderedLineCount = obj._textLines.length;
+          else {
+            const lh = (typeof obj.lineHeight === "number" && obj.lineHeight > 0) ? obj.lineHeight : 1.16;
+            const fsN = obj.fontSize || 16;
+            const perLine = fsN * lh;
+            renderedLineCount = Math.max(1, Math.round(height / Math.max(perLine, 1e-6)));
+          }
+        } catch (eR) { renderedLineCount = null; }
         return {
           quad: quad, center: { x: cx, y: cy }, width: width, height: height, angle: angle,
           left: typeof obj.left === "number" ? obj.left : null,
           top: typeof obj.top === "number" ? obj.top : null,
           fontSize: typeof obj.fontSize === "number" ? obj.fontSize : null,
           textboxWidth: typeof obj.width === "number" ? obj.width : null,
-          textboxHeight: typeof obj.height === "number" ? obj.height : null
+          textboxHeight: typeof obj.height === "number" ? obj.height : null,
+          lineHeight: typeof obj.lineHeight === "number" ? obj.lineHeight : null,
+          renderedLineCount: renderedLineCount
         };
       } catch (eM) { return null; }
     }
@@ -713,12 +726,38 @@ function pageBridge() {
       if (!resolution || resolution.status !== "ok" || !resolution.canvas) return { ok: false, code: "CURRENT_PAGE_UNKNOWN", currentPage: resolution || null, message: "当前编辑页面无法识别，无法准备 OCR 目标图（CURRENT_PAGE_UNKNOWN）" };
       const canvas = resolution.canvas;
       if (!canvas) return { ok: false, code: "CANVAS_NOT_READY", message: "画布未就绪，请等待模板加载完成" };
+      // Stage 8B STEP 5（§3/§4）：真实模板字体采样 —— StyleCandidate 来源 1（当前模板真实 textbox）。
+      // 禁止硬编码"思源黑体 Regular"；模板无文字对象时为 null（调用方走 fallback 并标记 fontMismatch）。
+      const templateFont = sampleTemplateFont(canvas);
       const active = canvas.getActiveObject ? canvas.getActiveObject() : null;
-      if (active && String(active.type) === "image") return extractImagePayload(active, "active-image", canvas);
-      if (canvas.backgroundImage && String(canvas.backgroundImage.type) === "image") return extractImagePayload(canvas.backgroundImage, "background-image", canvas);
+      if (active && String(active.type) === "image") return Object.assign(extractImagePayload(active, "active-image", canvas), { templateFont: templateFont });
+      if (canvas.backgroundImage && String(canvas.backgroundImage.type) === "image") return Object.assign(extractImagePayload(canvas.backgroundImage, "background-image", canvas), { templateFont: templateFont });
       const first = canvas.getObjects().find(function (o) { return o && String(o.type) === "image"; });
-      if (first) return extractImagePayload(first, "first-image", canvas);
+      if (first) return Object.assign(extractImagePayload(first, "first-image", canvas), { templateFont: templateFont });
       return { ok: false, code: "IMAGE_UNAVAILABLE", message: "未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图" };
+    }
+    // Stage 8B STEP 5（§3）：真实模板字体采样 —— 多数派 fontFamily + 代表性样式
+    function sampleTemplateFont(canvas) {
+      try {
+        const counts = {};
+        let best = null, bestN = 0, sample = null;
+        (canvas.getObjects() || []).forEach(function (o) {
+          if (!o || typeof o.text !== "string" || !String(o.text || "").trim()) return;
+          const fm = String(o.fontFamily || "").trim();
+          if (!fm) return;
+          counts[fm] = (counts[fm] || 0) + 1;
+          if (counts[fm] > bestN) { bestN = counts[fm]; best = fm; sample = o; }
+        });
+        if (!best) return null;
+        return {
+          fontFamily: best,
+          fontWeight: sample.fontWeight != null ? sample.fontWeight : null,
+          fontStyle: sample.fontStyle != null ? sample.fontStyle : null,
+          lineHeight: sample.lineHeight != null ? sample.lineHeight : null,
+          fontSizeSample: sample.fontSize != null ? sample.fontSize : null,
+          count: bestN
+        };
+      } catch (e) { return null; }
     }
     function findCanvasForSide(side) {
       const CanvasObjVO = getLoadedModule("CanvasObjVO") || window.CanvasObjVO;

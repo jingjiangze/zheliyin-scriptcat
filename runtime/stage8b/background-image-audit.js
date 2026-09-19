@@ -87,7 +87,7 @@ function compareQuad(target, actual) {
   const ev = (fn, arg) => (arg === undefined ? page.evaluate(fn) : page.evaluate(fn, arg)).catch((e) => ({ err: String(e || "").slice(0, 200) }));
   const waitUntil = async (fnEval, desc, t0, poll) => { const t1 = Date.now(); while (Date.now() - t1 < t0) { const r = await ev(fnEval); if (r && r.ok) return { ok: true, ms: Date.now() - t1 }; await SLEEP(poll || 1500); } return { ok: false, desc }; };
   const canvasReady = () => () => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const d = (vo && vo.totalCanvasArray && vo.totalCanvasArray[0]) || null; return { ok: !!(d && d.canvas && typeof d.drawText === "function") }; };
-  const render = () => ev((arg) => { const cv = document.createElement("canvas"); cv.width = arg.w; cv.height = arg.h; const ctx = cv.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, arg.w, arg.h); ctx.fillStyle = "#000"; ctx.textBaseline = "top"; (arg.rows || []).forEach((r) => { ctx.font = r.s + "px SimHei, sans-serif"; ctx.fillText(r.t, 30, r.y); }); return cv.toDataURL("image/png"); }, { w: SZ_W, h: SZ_H, rows: SZ_ROWS });
+  const render = () => ev((arg) => { const cv = document.createElement("canvas"); cv.width = arg.w; cv.height = arg.h; const ctx = cv.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, arg.w, arg.h); ctx.fillStyle = "#000"; ctx.textBaseline = "top"; ctx.font = arg.weight + " " + arg.style + " " + arg.rows[0].s + "px " + arg.family; const lh = arg.lineHeight; (arg.rows || []).forEach((r) => { if (lh) ctx.lineHeight = lh; ctx.font = arg.weight + " " + arg.style + " " + r.s + "px " + arg.family; ctx.fillText(r.t, 30, r.y); }); return cv.toDataURL("image/png"); }, { w: SZ_W, h: SZ_H, rows: SZ_ROWS, family: (process.env.TEST_FONT_FAMILY || "SimHei, sans-serif"), weight: (process.env.TEST_FONT_WEIGHT || "normal"), style: (process.env.TEST_FONT_STYLE || "normal"), lineHeight: (process.env.TEST_LINE_HEIGHT ? Number(process.env.TEST_LINE_HEIGHT) : null) });
   // 背景图注入（含 scale/angle），并先清活动选择（确保 ocrPrepare 命中 background route）
   const setBg = (ci, dataUrl, tf) => ev((arg) => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const d = (vo && vo.totalCanvasArray && vo.totalCanvasArray[arg.ci]) || null; const c = d && d.canvas; if (!c) return { ok: false, reason: "no canvas" }; try { if (c.discardActiveObject) c.discardActiveObject(); } catch (e) {} const f = (c.constructor && c.constructor.fabric) || window.fabric; return new Promise((res) => { const im = new Image(); im.onload = () => { try { const bg = new f.Image(im); bg.set({ scaleX: arg.tf.scaleX || 1, scaleY: arg.tf.scaleY || 1, angle: arg.tf.angle || 0, left: 0, top: 0 }); c.setBackgroundImage(bg, () => { try { c.setCoords && c.setCoords(); if (c.requestRenderAll) c.requestRenderAll(); } catch (e) {} res({ ok: true, w: bg.width, h: bg.height, nw: im.naturalWidth, nh: im.naturalHeight, left: bg.left, top: bg.top, scaleX: bg.scaleX, scaleY: bg.scaleY, angle: bg.angle, ac: bg.aCoords ? { tl: [bg.aCoords.tl.x, bg.aCoords.tl.y], tr: [bg.aCoords.tr.x, bg.aCoords.tr.y], br: [bg.aCoords.br.x, bg.aCoords.br.y], bl: [bg.aCoords.bl.x, bg.aCoords.bl.y] } : null }); }); } catch (e) { res({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); } }; im.onerror = () => res({ ok: false, reason: "onerror" }); im.src = arg.dataUrl; }); }, { ci, dataUrl, tf });
   // active/first route 注入：直接 canvas.add 普通图片对象（选中以命中 active-image；不选中命中 first-image）
@@ -140,7 +140,17 @@ function compareQuad(target, actual) {
     if (!(w && w.ok)) throw new Error("editor not ready");
     await SLEEP(4000);
     const DU = await render();
-    const dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
+    let dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
+    // ZY_BG_FILE：注入外部真实图片（如用户上传的名片）为背景图 —— 优先 background 路由验证
+    const bgFile = process.env.ZY_BG_FILE;
+    if (bgFile) {
+      const fp = path.join(ROOT, bgFile);
+      if (fs.existsSync(fp)) {
+        dataUrl = "data:image/png;base64," + fs.readFileSync(fp).toString("base64");
+        out.bgFile = fp;
+        console.log("using real bg file: " + fp + " dataUrl " + dataUrl.length + " chars");
+      } else { out.errors.push("ZY_BG_FILE missing: " + fp); }
+    }
 
     const cases = process.env.ZY_CASES ? process.env.ZY_CASES.split(",") : CASE_DEFS.map((c) => c.id);
     const ROUTE = process.env.ZY_ROUTE || "background"; // background | active | first
