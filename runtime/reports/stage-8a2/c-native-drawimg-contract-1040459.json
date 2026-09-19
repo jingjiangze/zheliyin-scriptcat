@@ -1,0 +1,427 @@
+{
+  "ts": "2026-09-19T08:46:02.452Z",
+  "stage": "STAGE-8A2B-drawimg-contract",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "drawimg-contract",
+  "records": [
+    {
+      "mode": "drawimg-contract",
+      "url": "https://diy.zheliyin.com/diyWeb/third/1040459/5368967/999/thirdDiyAdd.do",
+      "steps": [
+        {
+          "tag": "base",
+          "objLen": 8,
+          "regLen": 0,
+          "itemListLen": 0,
+          "itemListKeys": null,
+          "pdmKey": "ItemDataModel",
+          "pdmSig": {
+            "n": 4,
+            "src": "other"
+          },
+          "pdmAll": [
+            {
+              "k": "ItemDataModel",
+              "n": 4,
+              "sigIdx": -1
+            }
+          ],
+          "objs": [
+            {
+              "type": "line",
+              "m": null,
+              "inReg": false
+            },
+            {
+              "type": "line",
+              "m": null,
+              "inReg": false
+            },
+            {
+              "type": "line",
+              "m": null,
+              "inReg": false
+            },
+            {
+              "type": "line",
+              "m": null,
+              "inReg": false
+            },
+            {
+              "type": "line",
+              "m": null,
+              "inReg": false
+            },
+            {
+              "type": "line",
+              "m": null,
+              "inReg": false
+            },
+            {
+              "type": "line",
+              "m": null,
+              "inReg": false
+            },
+            {
+              "type": "line",
+              "m": null,
+              "inReg": false
+            }
+          ],
+          "canvas": {
+            "w": 453.22515212981745,
+            "h": 744.8
+          },
+          "diyMethods": [
+            "drawImg",
+            "drawText",
+            "drawAndReturnImg",
+            "drawCurvedImg"
+          ]
+        },
+        {
+          "tag": "drawImg-2arg-call",
+          "thrown": null
+        },
+        {
+          "tag": "drawImg-after",
+          "objLen": 9,
+          "regLen": 1,
+          "itemListLen": 0,
+          "imageCount": 1
+        },
+        {
+          "tag": "setItemListJson",
+          "ilBefore": 0,
+          "ilAfter": 1,
+          "it0MediaType": "image",
+          "pdmKey": "ProductDataModel",
+          "how": "ProductDataModel"
+        },
+        {
+          "tag": "bare-vs-native",
+          "bareOnly": {
+            "ilAfter": 0,
+            "types": [],
+            "size": 0
+          },
+          "bareWithFields": {
+            "ilAfter": 1,
+            "types": [
+              "image"
+            ],
+            "it0Keys": [
+              "layer",
+              "isEdit",
+              "rightsMaterial",
+              "gildMaterial",
+              "media",
+              "topEnable",
+              "resourceType",
+              "maskEnable",
+              "isDisplay",
+              "printLocation",
+              "lowPixelFlag",
+              "visible",
+              "deleteState",
+              "location"
+            ]
+          }
+        },
+        {
+          "tag": "drawText-after-native+serialize",
+          "ilBefore": 1,
+          "ilAfter": 1,
+          "drawTextOk": true
+        }
+      ],
+      "errors": [],
+      "duLen": 29422,
+      "base": {
+        "objLen": 8,
+        "regLen": 0,
+        "itemListLen": 0,
+        "itemListKeys": null,
+        "pdmKey": "ItemDataModel",
+        "pdmSig": {
+          "n": 4,
+          "src": "other"
+        },
+        "pdmAll": [
+          {
+            "k": "ItemDataModel",
+            "n": 4,
+            "sigIdx": -1
+          }
+        ],
+        "objs": [
+          {
+            "type": "line",
+            "m": null,
+            "inReg": false
+          },
+          {
+            "type": "line",
+            "m": null,
+            "inReg": false
+          },
+          {
+            "type": "line",
+            "m": null,
+            "inReg": false
+          },
+          {
+            "type": "line",
+            "m": null,
+            "inReg": false
+          },
+          {
+            "type": "line",
+            "m": null,
+            "inReg": false
+          },
+          {
+            "type": "line",
+            "m": null,
+            "inReg": false
+          },
+          {
+            "type": "line",
+            "m": null,
+            "inReg": false
+          },
+          {
+            "type": "line",
+            "m": null,
+            "inReg": false
+          }
+        ],
+        "canvas": {
+          "w": 453.22515212981745,
+          "h": 744.8
+        },
+        "diyMethods": [
+          "drawImg",
+          "drawText",
+          "drawAndReturnImg",
+          "drawCurvedImg"
+        ]
+      },
+      "exp1": {
+        "call": {
+          "before": {
+            "objLen": 8,
+            "regLen": 0
+          },
+          "thrown": null
+        },
+        "after": {
+          "objLen": 9,
+          "regLen": 1,
+          "itemListLen": 0,
+          "images": [
+            {
+              "type": "image",
+              "width": 127,
+              "height": 38.1,
+              "scaleX": 1,
+              "scaleY": 1,
+              "left": 40,
+              "top": 40,
+              "angle": 0,
+              "originX": "left",
+              "originY": "top",
+              "uuid": "06684998-1ea5-455a-b51f-3f8f8832bc81",
+              "multiUuid": "4656e0f5-babc-493e-be80-abf8bcc2ec69",
+              "markuuid": null,
+              "mediaMediaType": "image",
+              "mediaImgPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAEsCAYAAA",
+              "layerAlpha": "1.00",
+              "isEdit": true,
+              "mediaIsBG": false,
+              "protoVisible": true,
+              "isqrcode": "0",
+              "noCutWidth": 127,
+              "bigPicWidth": 1000,
+              "lockUniScaling": false,
+              "inReg": true,
+              "inRegIdx": 0,
+              "hasMedia": false
+            }
+          ],
+          "regTop": [
+            {
+              "type": "image",
+              "uid": "06684998-1ea5-455a-b51f-3f8f8832bc81"
+            }
+          ]
+        }
+      },
+      "nativeImage": {
+        "type": "image",
+        "width": 127,
+        "height": 38.1,
+        "scaleX": 1,
+        "scaleY": 1,
+        "left": 40,
+        "top": 40,
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "uuid": "06684998-1ea5-455a-b51f-3f8f8832bc81",
+        "multiUuid": "4656e0f5-babc-493e-be80-abf8bcc2ec69",
+        "markuuid": null,
+        "mediaMediaType": "image",
+        "mediaImgPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAEsCAYAAA",
+        "layerAlpha": "1.00",
+        "isEdit": true,
+        "mediaIsBG": false,
+        "protoVisible": true,
+        "isqrcode": "0",
+        "noCutWidth": 127,
+        "bigPicWidth": 1000,
+        "lockUniScaling": false,
+        "inReg": true,
+        "inRegIdx": 0,
+        "hasMedia": false
+      },
+      "exp2": {
+        "pdm": true,
+        "pdmKey": "ProductDataModel",
+        "how": "ProductDataModel",
+        "d": true,
+        "ilBefore": 0,
+        "ilAfter": 1,
+        "it0": {
+          "keys": [
+            "layer",
+            "isEdit",
+            "rightsMaterial",
+            "gildMaterial",
+            "media",
+            "topEnable",
+            "resourceType",
+            "maskEnable",
+            "isDisplay",
+            "printLocation",
+            "lowPixelFlag",
+            "visible",
+            "deleteState",
+            "location",
+            "visitLevel",
+            "selectEnabled",
+            "isDesign",
+            "isComposite",
+            "isPreview",
+            "isDesignShape",
+            "noCutWidth",
+            "markuuid",
+            "resouceCategoryId",
+            "materialDragType",
+            "rightType",
+            "zdsc",
+            "uuid",
+            "multiUuid",
+            "designableArea",
+            "pageNumLeftUuid"
+          ],
+          "mediaType": "image",
+          "isBG": false,
+          "imgPathPrefix": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gA",
+          "locKeys": [
+            "x",
+            "y",
+            "width",
+            "height",
+            "factWidth",
+            "factHeight",
+            "rotation"
+          ],
+          "plKeys": [
+            "x",
+            "y",
+            "width",
+            "height",
+            "rotation"
+          ],
+          "layerKeys": [
+            "alpha"
+          ],
+          "uuid": "06684998-1ea5-455a-b51f-3f8f8832bc81",
+          "isEdit": true,
+          "visible": true
+        },
+        "retType": "string",
+        "retIsString": "{\"diyType\":\"print\",\"version\":200,\"templateInfo\":{\"bindingTyp"
+      },
+      "exp3": {
+        "removed": 1,
+        "returned": true,
+        "bareSer": {
+          "pdm": true,
+          "bareFound": true,
+          "bareOnly": {
+            "ilAfter": 0,
+            "types": [],
+            "size": 0
+          },
+          "bareWithFields": {
+            "ilAfter": 1,
+            "types": [
+              "image"
+            ],
+            "it0Keys": [
+              "layer",
+              "isEdit",
+              "rightsMaterial",
+              "gildMaterial",
+              "media",
+              "topEnable",
+              "resourceType",
+              "maskEnable",
+              "isDisplay",
+              "printLocation",
+              "lowPixelFlag",
+              "visible",
+              "deleteState",
+              "location"
+            ]
+          }
+        }
+      },
+      "exp4": {
+        "pdm": true,
+        "d": true,
+        "imgTrigger": {
+          "ok": true,
+          "thrown": null
+        },
+        "poll": {
+          "imgs": 1,
+          "reg": 1
+        },
+        "after": {
+          "ilBefore": 1,
+          "ilAfter": 1,
+          "il0": {
+            "mediaType": "image",
+            "isImage": true
+          },
+          "drawText": {
+            "ok": true
+          },
+          "afterObjLen": 10
+        }
+      },
+      "cleanup": {
+        "ok": true,
+        "removed": 1
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
+  ]
+}

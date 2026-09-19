@@ -102,7 +102,7 @@ function injectUserscript() {
     await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
     await SLEEP(1200);
     if (BAIDU_AK && BAIDU_SK) { await ev((a) => { const ai = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak"); const si = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk"); const sb = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save"); if (!ai || !si || !sb) return { ok: false }; ai.value = a.ak; si.value = a.sk; try { sb.click(); } catch (e) {} return { ok: true }; }, { ak: BAIDU_AK, sk: BAIDU_SK }); await SLEEP(3000); }
-    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : ((MODE === "drawitem-probe" || MODE === "native-image-inventory" || MODE === "native-paste-image") ? URL_88 : URL_252438));
+    const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : ((MODE === "drawitem-probe" || MODE === "native-image-inventory" || MODE === "native-paste-image" || MODE === "drawimg-contract") ? URL_88 : URL_252438));
     // D2-C itemlist-source：页面早期 hook（模板初始化前）追 itemList 构建 + 模板 JSON 响应
     if (MODE === "itemlist-source") {
       await page.addInitScript(() => {
@@ -878,6 +878,302 @@ function injectUserscript() {
         });
         rec.afterCleanup = after;
       } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 300)); }
+    } else if (MODE === "drawimg-contract") {
+      // =====================================================================
+      // Stage 8A-2 C3-C4：drawImg/ua/setItemListJson 契约对拍（1040459 空 itemList）
+      // 静态依据（save-scan）：
+      //   CanvasDiy.drawImg(a,b,f,d,h) -> ua(a,b,f,d,h,e,g)  （@144191 / @137532）
+      //     f=undefined（新增图片路径）: mediaMediaType=IAMGE, mediaImgPath=a,
+      //       canvas.add+renderAll, canvasToProductObjArr.push, uuid=C(), 尾部 checkObjsInProductJson(undefined)（if(a) 跳过→不抛）
+      //     f=item（已存 item 路径）:  P.createObjProductJsonDetail(l,f,e.canvas), mediaImgPath=a
+      //   ProductDataModel.setItemListJson(a,d,m): a=objects(被 g.getObjects() 过滤结果覆盖), d=pageIdx, m=canvasDiy
+      //     -> filter mediaMediaType -> Q(location/printLocation) -> R(json) -> p.content.itemList[index]=e
+      //   checkObjsInProductJson(a): if(a){ itemList[g-1].media ... }  g=0 且 a truthy => undefined.media
+      // =====================================================================
+      const rec = { mode: "drawimg-contract", url: URL, steps: [], errors: [] };
+      out.records.push(rec);
+      try {
+        const DU = await render();
+        const dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
+        rec.duLen = String(dataUrl).length;
+        // 基线快照 + 找 ProductDataModel holder + 暴露 helper
+        const base = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const PV = (function () { try { const m = req.s.contexts._.defined.ProductVO; if (m && Array.isArray(m.pageList)) return m; } catch (e) {} try { const m = req.s.contexts._.defined.CanvasObjVO; if (m && m.pageList && Array.isArray(m.pageList)) return m; } catch (e) {} return null; })() || (window.ProductVO || null);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const il = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content ? PV.pageList[eIdx].content.itemList : null;
+          let pdm = null, pdmKey = null, pdmAll = [];
+          if (req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined) {
+            try { Object.keys(req.s.contexts._.defined).forEach((k) => { const m = req.s.contexts._.defined[k]; if (m && typeof m.setItemListJson === "function") { pdmAll.push({ k, n: m.setItemListJson.length, sigIdx: String(m.setItemListJson).indexOf("getCurrentCanvas().unActiveGroup") }); if (!pdm) { pdm = m; pdmKey = k; } } }); } catch (e) {}
+          }
+          const pdmSig = pdm ? { n: pdm.setItemListJson.length, src: String(pdm.setItemListJson).indexOf("getCurrentCanvas().unActiveGroup") >= 0 ? "native-shape" : "other" } : null;
+          const objs = c ? c.getObjects().map((o) => ({ type: o.type, m: o.mediaMediaType || null, inReg: d.canvasObjInfo.canvasToProductObjArr.indexOf(o) >= 0 })) : null;
+          return {
+            objLen: c ? c.getObjects().length : null,
+            regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null,
+            itemListLen: il ? il.length : null,
+            itemListKeys: il && il.length ? Object.keys(il[0]).slice(0, 16) : null,
+            cc: PV ? PV.currentCanvasNum : null,
+            pdmKey, pdmSig, pdmAll, objs,
+            canvas: { w: c ? c.width : null, h: c ? c.height : null },
+            diyMethods: d ? ["drawImg", "drawText", "drawAndReturnImg", "drawCurvedImg"].filter((m) => typeof d[m] === "function") : null
+          };
+        });
+        rec.base = base;
+        rec.steps.push({ tag: "base", ...base });
+        if (!base.objLen || !base.pdmKey) throw new Error("precondition missing: objLen=" + base.objLen + " pdmKey=" + base.pdmKey);
+
+        // ============ Exp1: drawImg(url, pos) 第三参 undefined（photoupload 增量路径） ============
+        const callA = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const before = { objLen: d.canvas.getObjects().length, regLen: d.canvasObjInfo.canvasToProductObjArr.length };
+          let thrown = null, r = null;
+          try {
+            r = d.drawImg(arg.dataUrl, arg.pos);
+          } catch (e) { thrown = String(e && e.message || e).slice(0, 200); }
+          return { before, thrown, returned: r };
+        }, { dataUrl, pos: { x: 40, y: 40, factWidth: 140, factHeight: 42, isqrcode: "0", nothing: 1 } });
+        rec.exp1 = { call: callA };
+        rec.steps.push({ tag: "drawImg-2arg-call", thrown: callA.thrown });
+
+        // poll：等待 canvas 对象 / 注册数组增长（fromURL 异步）
+        let exp1After = null;
+        const t0 = Date.now();
+        const snap1 = () => ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const PV = (function () { try { const m = req.s.contexts._.defined.ProductVO; if (m && Array.isArray(m.pageList)) return m; } catch (e) {} return null; })() || (window.ProductVO || null);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const il = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content ? PV.pageList[eIdx].content.itemList : null;
+          const newOnes = c ? c.getObjects().filter((o) => o && String(o.type) === "image").map((o) => {
+            const res = { type: o.type, width: o.width, height: o.height, scaleX: o.scaleX, scaleY: o.scaleY, left: o.left, top: o.top, angle: o.angle, originX: o.originX, originY: o.originY, uuid: o.uuid || null, multiUuid: o.multiUuid || null, markuuid: o.markuuid || null, mediaMediaType: o.mediaMediaType || null, mediaImgPath: String(o.mediaImgPath || "").slice(0, 60), layerAlpha: o.layerAlpha, isEdit: o.isEdit, mediaIsBG: o.mediaIsBG, protoVisible: o.protoVisible, isqrcode: o.isqrcode, noCutWidth: o.noCutWidth, bigPicWidth: o.bigPicWidth, lockUniScaling: o.lockUniScaling, inReg: d.canvasObjInfo.canvasToProductObjArr.indexOf(o) >= 0, inRegIdx: d.canvasObjInfo.canvasToProductObjArr.indexOf(o), hasMedia: !!o.media };
+            return res;
+          }) : [];
+          return {
+            objLen: c ? c.getObjects().length : null,
+            regLen: d.canvasObjInfo.canvasToProductObjArr.length,
+            itemListLen: il ? il.length : null,
+            images: newOnes,
+            regTop: d.canvasObjInfo.canvasToProductObjArr.slice(0, 3).map((o) => ({ type: o.type, uid: o.uuid || o.multiUuid || null }))
+          };
+        });
+        for (;;) {
+          await SLEEP(900);
+          exp1After = await snap1();
+          const grew = exp1After.objLen > base.objLen || exp1After.regLen > base.regLen;
+          if (grew || Date.now() - t0 > 30000) break;
+        }
+        rec.exp1.after = exp1After;
+        rec.steps.push({ tag: "drawImg-after", objLen: exp1After.objLen, regLen: exp1After.regLen, itemListLen: exp1After.itemListLen, imageCount: exp1After.images ? exp1After.images.length : 0 });
+        const nativeImg = exp1After.images && exp1After.images.length ? exp1After.images[exp1After.images.length - 1] : null;
+        rec.nativeImage = nativeImg;
+
+        // ============ Exp2: ProductDataModel.getInstance().setItemListJson(objects, pageIdx, canvasDiy) ============
+        const ser = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const PV = (function () { try { const m = req.s.contexts._.defined.ProductVO; if (m && Array.isArray(m.pageList)) return m; } catch (e) {} return null; })() || (window.ProductVO || null);
+          // ProductDataModel：原型方法在实例上（getInstance()）
+          let pdm = null, pdmKey = null, how = null;
+          if (req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined) {
+            try {
+              Object.keys(req.s.contexts._.defined).forEach((k) => {
+                const m = req.s.contexts._.defined[k];
+                if (!m) return;
+                const isPdm = /ProductDataModel/i.test(k);
+                const probe = typeof m.getInstance === "function" ? m.getInstance() : null;
+                const inst = probe || m;
+                const fn = inst && typeof inst.setItemListJson === "function" ? inst.setItemListJson : (m && typeof m.setItemListJson === "function" ? m.setItemListJson : null);
+                if (fn && fn.length === 3) { pdm = inst; pdmKey = k; how = isPdm ? "ProductDataModel" : "module-len3"; }
+              });
+            } catch (e) {}
+          }
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const ilBefore = PV && PV.pageList && PV.pageList[eIdx] && PV.pageList[eIdx].content && Array.isArray(PV.pageList[eIdx].content.itemList) ? PV.pageList[eIdx].content.itemList.length : null;
+          const out = { pdm: !!pdm, pdmKey, how, d: !!d, ilBefore };
+          if (pdm && d) {
+            try {
+              const ret = pdm.setItemListJson(d.canvasObjInfo.canvasToProductObjArr, eIdx, d);
+              const il = PV.pageList[eIdx].content.itemList;
+              out.ilAfter = Array.isArray(il) ? il.length : null;
+              out.it0 = il && il.length ? {
+                keys: Object.keys(il[0]).slice(0, 30),
+                mediaType: il[0].media && il[0].media.mediaType,
+                isBG: il[0].media && il[0].media.isBG,
+                imgPathPrefix: il[0].media && typeof il[0].media.imgPath === "string" ? il[0].media.imgPath.slice(0, 50) : null,
+                locKeys: il[0].location ? Object.keys(il[0].location) : null,
+                plKeys: il[0].printLocation ? Object.keys(il[0].printLocation) : null,
+                layerKeys: il[0].layer ? Object.keys(il[0].layer) : null,
+                uuid: il[0].uuid || null,
+                isEdit: il[0].isEdit,
+                visible: il[0].visible
+              } : null;
+              out.retType = typeof ret;
+              out.retIsString = typeof ret === "string" ? ret.slice(0, 60) : null;
+            } catch (e) { out.serErr = String(e && e.message || e).slice(0, 200); }
+          } else { out.serErr = "missing pdm/d"; }
+          return out;
+        });
+        rec.exp2 = ser;
+        rec.steps.push({ tag: "setItemListJson", ilBefore: ser.ilBefore, ilAfter: ser.ilAfter, serErr: ser.serErr, it0MediaType: ser.it0 && ser.it0.mediaType, pdmKey: ser.pdmKey, how: ser.how });
+
+        // ============ Exp3: bare fabric.Image vs native（H_NATIVE_IMAGE_SERIALIZER 对拍） ============
+        // 阶段 A：锁定/清理 native image，注入 bare fabric image（无任何 native 业务字段），挂完成标志
+        const bareExp = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          // 清理上一次 native image（保留画布其余 8 个 line）
+          let removed = 0;
+          if (c) { const imgs = c.getObjects().filter((o) => o && String(o.type) === "image" && o.mediaImgPath === arg.dataUrl); imgs.forEach((o) => { try { const li = d.canvasObjInfo.canvasToProductObjArr.indexOf(o); if (li >= 0) d.canvasObjInfo.canvasToProductObjArr.splice(li, 1); c.remove(o); removed += 1; } catch (e) {} }); }
+          const out = { removed };
+          const f = (c && c.constructor && c.constructor.fabric) || window.fabric;
+          if (!f || !c) { out.err = "no fabric/canvas"; return out; }
+          window.__zyBareDone = false;
+          try {
+            const im = new Image();
+            im.onload = () => {
+              try {
+                // serialized 前先尝试裸序列化 —— 但 setItemListJson 同步内联执行，geo 需有效
+                const o = new f.Image(im);
+                o.set({ left: 60, top: 60, width: im.naturalWidth, height: im.naturalHeight, scaleX: 0.2, scaleY: 0.2, originX: "left", originY: "top" });
+                o.multiUuid = "bare-" + Date.now();
+                o.zyBare = true;
+                c.add(o);
+                // fabric.Image 无 mediaMediaType/mediaImgPath/layerAlpha/isEdit 等 business fields（保持裸）
+                try { c.setActiveObject(o); } catch (e) {}
+                window.__zyBare = o;
+                window.__zyBareDone = true;
+              } catch (e) { out.bareErr = String(e && e.message || e).slice(0, 160); window.__zyBareDone = true; }
+            };
+            im.onerror = () => { out.bareErr = "onerror"; window.__zyBareDone = true; };
+            im.src = arg.dataUrl;
+          } catch (e) { out.bareErr = String(e && e.message || e).slice(0, 160); window.__zyBareDone = true; }
+          out.returned = true;
+          return out;
+        }, { dataUrl });
+        rec.exp3 = bareExp;
+        // poll：等待 bare image 完成注入
+        const t3 = Date.now();
+        for (;;) {
+          await SLEEP(600);
+          const done = await ev(() => window.__zyBareDone === true);
+          if (done || Date.now() - t3 > 15000) break;
+        }
+        // 阶段 B：bare → setItemListJson（bare image 在 canvas 上但无 native 字段）→ 记录；
+        //        再给 bare image 补 native 字段 → setItemListJson → 记录（对照）
+        const bareSer = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const PV = (function () { try { const m = req.s.contexts._.defined.ProductVO; if (m && Array.isArray(m.pageList)) return m; } catch (e) {} return null; })() || (window.ProductVO || null);
+          let pdm = null;
+          if (req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined) {
+            try { Object.keys(req.s.contexts._.defined).forEach((k) => { const m = req.s.contexts._.defined[k]; if (!m) return; const inst = typeof m.getInstance === "function" ? m.getInstance() : m; const fn = inst && typeof inst.setItemListJson === "function" ? inst.setItemListJson : null; if (fn && fn.length === 3 && !pdm) pdm = inst; }); } catch (e) {}
+          }
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const out = { pdm: !!pdm };
+          const bare = c ? c.getObjects().filter((o) => o && o.zyBare).slice(-1)[0] || null : null;
+          out.bareFound = !!bare;
+          if (!bare || !pdm || !d) return out;
+          // A) bare（无 native 字段）→ serializer 应跳过（无 mediaMediaType）
+          try { pdm.setItemListJson(d.canvasObjInfo.canvasToProductObjArr, eIdx, d); } catch (e) { out.serErrA = String(e && e.message || e).slice(0, 160); }
+          let ilA = null;
+          try { ilA = PV.pageList[eIdx].content.itemList; } catch (e) {}
+          out.bareOnly = { ilAfter: Array.isArray(ilA) ? ilA.length : null, types: Array.isArray(ilA) ? ilA.map((i) => i.media && i.media.mediaType) : null, size: Array.isArray(ilA) ? ilA.length : null };
+          // B) bare + native 业务字段（模拟 drawImg 注入的字段）→ serializer 应识别
+          bare.mediaMediaType = "image"; bare.mediaImgPath = arg.dataUrl; bare.layerAlpha = "1.00"; bare.isEdit = 1; bare.mediaIsBG = 0; bare.protoVisible = 1; bare.noCutWidth = bare.width; try { bare.bigPicWidth = bare.getWidth(); } catch (e) {} bare.lockUniScaling = 0;
+          try { pdm.setItemListJson(d.canvasObjInfo.canvasToProductObjArr, eIdx, d); } catch (e) { out.serErrB = String(e && e.message || e).slice(0, 160); }
+          let ilB = null;
+          try { ilB = PV.pageList[eIdx].content.itemList; } catch (e) {}
+          out.bareWithFields = { ilAfter: Array.isArray(ilB) ? ilB.length : null, types: Array.isArray(ilB) ? ilB.map((i) => i.media && i.media.mediaType) : null, it0Keys: ilB && ilB.length ? Object.keys(ilB[0]).slice(0, 14) : null };
+          // 实验后移除 bare image（保持画布干净供 Exp4）
+          try { const li = d.canvasObjInfo.canvasToProductObjArr.indexOf(bare); if (li >= 0) d.canvasObjInfo.canvasToProductObjArr.splice(li, 1); c.remove(bare); } catch (e) {}
+          delete window.__zyBare; window.__zyBareDone = false;
+          return out;
+        }, { dataUrl });
+        rec.exp3.bareSer = bareSer;
+        rec.steps.push({ tag: "bare-vs-native", bareOnly: bareSer.bareOnly, bareWithFields: bareSer.bareWithFields, serErrA: bareSer.serErrA, serErrB: bareSer.serErrB });
+        // 重新注入一次 native image（供 Exp4），若 Exp3 阶段 B 已移除 bare 则重试 drawImg
+        const dtExp = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const PV = (function () { try { const m = req.s.contexts._.defined.ProductVO; if (m && Array.isArray(m.pageList)) return m; } catch (e) {} return null; })() || (window.ProductVO || null);
+          let pdm = null;
+          if (req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined) {
+            try { Object.keys(req.s.contexts._.defined).forEach((k) => { const m = req.s.contexts._.defined[k]; if (!m) return; const inst = typeof m.getInstance === "function" ? m.getInstance() : m; const fn = inst && typeof inst.setItemListJson === "function" ? inst.setItemListJson : null; if (fn && fn.length === 3 && !pdm) pdm = inst; }); } catch (e) {}
+          }
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const out = { pdm: !!pdm, d: !!d };
+          // 清理 bare image
+          if (c) { c.getObjects().filter((o) => o && String(o.multiUuid || "").indexOf("bare-") === 0).forEach((o) => { try { const li = d.canvasObjInfo.canvasToProductObjArr.indexOf(o); if (li >= 0) d.canvasObjInfo.canvasToProductObjArr.splice(li, 1); c.remove(o); } catch (e) {} }); }
+          // 再 drawImg(2 参) 创建 native image -> poll 在外部，这里先触发并标记
+          let imgTrigger = { ok: false, thrown: null };
+          try { d.drawImg(arg.dataUrl, { x: 40, y: 40, factWidth: 140, factHeight: 42, isqrcode: "0" }); imgTrigger.ok = true; } catch (e) { imgTrigger.thrown = String(e && e.message || e).slice(0, 160); }
+          out.imgTrigger = imgTrigger;
+          return out;
+        }, { dataUrl });
+        rec.exp4 = dtExp;
+        // poll 等待 image 出现
+        let poll4 = null;
+        const t4 = Date.now();
+        for (;;) {
+          await SLEEP(900);
+          poll4 = await ev(() => {
+            const req = window.requirejs || window.require;
+            const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+            const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+            const c = d && d.canvas;
+            const imgs = c ? c.getObjects().filter((o) => o && String(o.type) === "image") : [];
+            return { imgs: imgs.length, reg: d.canvasObjInfo.canvasToProductObjArr.length };
+          });
+          if (poll4.imgs >= 1 || Date.now() - t4 > 30000) break;
+        }
+        rec.exp4.poll = poll4;
+        // 执行 setItemListJson + drawText
+        const dt2 = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const PV = (function () { try { const m = req.s.contexts._.defined.ProductVO; if (m && Array.isArray(m.pageList)) return m; } catch (e) {} return null; })() || (window.ProductVO || null);
+          let pdm = null;
+          if (req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined) {
+            try { Object.keys(req.s.contexts._.defined).forEach((k) => { if (!pdm) { const m = req.s.contexts._.defined[k]; if (m && typeof m.setItemListJson === "function") pdm = m; } }); } catch (e) {}
+          }
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+          const ilBefore = PV.pageList[eIdx].content.itemList.length;
+          const out = { ilBefore };
+          try { if (pdm && d) pdm.setItemListJson(d.canvasObjInfo.canvasToProductObjArr, eIdx, d); } catch (e) { out.serErr = String(e && e.message || e).slice(0, 160); }
+          const ilAfter = PV.pageList[eIdx].content.itemList.length;
+          out.ilAfter = ilAfter;
+          out.il0 = ilAfter ? { mediaType: PV.pageList[eIdx].content.itemList[0].media && PV.pageList[eIdx].content.itemList[0].media.mediaType, isImage: PV.pageList[eIdx].content.itemList[0].media && PV.pageList[eIdx].content.itemList[0].media.mediaType === "image" } : null;
+          // drawText（生产同款签名 entry truthy）
+          const entry = { media: { mediaType: "text", text: "闭环验证ZW", font: { pointSize: 30, fontColor: "#000000", isHorizontal: 1, gravity: "left", id: "1", isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 }, charSpace: 0, lineSpace: 1.2, lineIdType: 0, isBG: 0, imgPath: "" }, location: { x: 40, y: 120, width: 120, height: 40, factWidth: 120, factHeight: 40, rotation: 0 }, printLocation: { x: 40, y: 120, width: 120, height: 40, rotation: 0 }, layer: { alpha: 1 }, layerNum: 1, isEdit: 1, isDisplay: 0, deleteState: 0, visitLevel: 1, multiUuid: "zw-" + Date.now(), markuuid: "", topEnable: 1, resourceType: 0, maskEnable: 0, lowPixelFlag: 0, selectEnabled: 1, isDesign: 1, isComposite: 0, isPreview: 0, isDesignShape: 0 };
+          try {
+            d.drawText(String(entry.media.text), null, null, null, entry, 1);
+            out.drawText = { ok: true };
+            try { out.afterObjLen = d.canvas.getObjects().length; } catch (e) {}
+          } catch (e) { out.drawText = { ok: false, err: String(e && e.message || e).slice(0, 240) }; }
+          return out;
+        });
+        rec.exp4.after = dt2;
+        rec.steps.push({ tag: "drawText-after-native+serialize", ilBefore: dt2.ilBefore, ilAfter: dt2.ilAfter, drawTextOk: dt2.drawText && dt2.drawText.ok, drawTextErr: dt2.drawText && dt2.drawText.err });
+
+        // cleanup：移除本次新增（native image + text）
+        rec.cleanup = await rollback("zw-");
+      } catch (e) { rec.errors.push(String(e && e.message || e).slice(0, 400)); }
     } else if (MODE === "quad") {
       // C 四象限：页面世界直接调 diy.drawText，font.id × width 组合（同一模板 1040459）
       await armDrawTextCap();
@@ -950,7 +1246,7 @@ function injectUserscript() {
     }
   } catch (e) { out.errors.push(String(e && e.message || e).slice(0, 400)); }
   finally { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
-  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : MODE === "drawitem-probe" ? "drawitem-probe-1040459.json" : MODE === "native-image-inventory" ? "c-native-inventory-1040459.json" : MODE === "native-paste-image" ? "c-native-paste-1040459.json" : "canvas-88x57-create-failure.json";
+  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : MODE === "drawitem-probe" ? "drawitem-probe-1040459.json" : MODE === "native-image-inventory" ? "c-native-inventory-1040459.json" : MODE === "native-paste-image" ? "c-native-paste-1040459.json" : MODE === "drawimg-contract" ? "c-native-drawimg-contract-1040459.json" : "canvas-88x57-create-failure.json";
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(path.join(REPORT_DIR, name), JSON.stringify(out, null, 2));
   console.log("STAGE-8A2B " + MODE + " done records=" + out.records.length + " errors=" + out.errors.length + " -> " + path.join(REPORT_DIR, name));

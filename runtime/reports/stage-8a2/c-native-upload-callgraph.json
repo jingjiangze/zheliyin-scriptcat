@@ -1,0 +1,98 @@
+{
+  "ts": "2026-09-19T08:48:59.495Z",
+  "stage": "8A2-C3",
+  "subject": "photoupload -> CurrentCanvas.drawImg -> CanvasDiy.drawImg -> ua -> fabric.Image.fromURL -> native business fields -> canvas.add -> canvasToProductObjArr -> uuid -> checkObjsInProductJson",
+  "sources": [
+    "runtime/downloads/save-scan/photoupload.js-v20260707017",
+    "runtime/downloads/save-scan/CanvasDiy.js-v20260707017 (drawImg @144191, ua @137532)",
+    "runtime/downloads/save-scan/LoadFromProductJsonCommand.js-v20260707017"
+  ],
+  "chain": [
+    {
+      "step": 1,
+      "file": "photoupload.js",
+      "code": "l.drawImg(\"assets/resource/imgs/large/\"+b.filePath, f)",
+      "args": {
+        "a": "image URL",
+        "b": "{x:currentFactWidth/4, y:currentFactHeight/4, factWidth, factHeight, isqrcode}"
+      },
+      "note": "第三参 undefined = 新增图片路径（Case A）"
+    },
+    {
+      "step": 2,
+      "file": "CanvasDiy.js drawImg",
+      "func": "function(a,b,f,d,h)",
+      "args": {
+        "a": "imageUrl",
+        "b": "position/config",
+        "f": "product item(optional)",
+        "d": "layer",
+        "h": "container/group(optional)"
+      },
+      "note": "本质：URL 预处理(enhancesize/radius) 后转发 ua"
+    },
+    {
+      "step": 3,
+      "file": "CanvasDiy.js ua",
+      "func": "ua(a,b,f,d,h,e,g) @137532",
+      "branchF": "void 0 != f : P.createObjProductJsonDetail(l,f,e.canvas); l.mediaImgPath=a （已存 item 加载路径）",
+      "branchNoF": "l.mediaMediaType=m.IAMGE; l.mediaImgPath=a; (b 位置/角度/scale); l.layerAlpha; l.isEdit=1; l.mediaIsBG=0; l.protoVisible; e.canvas.add(l).renderAll(); l.setCoords(); canvasToProductObjArr.push(l); l.uuid=C(); ",
+      "note": "f=undefined 分支 = photoupload 新增图片路径（真机已实证）"
+    },
+    {
+      "step": 4,
+      "file": "ua 尾部",
+      "code": "0==q && (f || (e.CheckImgPixel(l), z.getInstance().save()), ... : e.checkObjsInProductJson(f))",
+      "note": "f=undefined → checkObjsInProductJson(undefined) → 函数体 if(a) 短路，不抛 undefined.media（真机实证 exp1.thrown=null）"
+    },
+    {
+      "step": 5,
+      "file": "CanvasDiy.js checkObjsInProductJson @97265",
+      "func": "function(a,b){ if(a){ ... p.pageList[e].content.itemList[g-1].media ... } }",
+      "note": "a falsy 整块跳过；a truthy 且 itemList.length=0 → itemList[-1].media → undefined.media throw（= C 根因最小触发）"
+    },
+    {
+      "step": 6,
+      "file": "LoadFromProductJsonCommand.js",
+      "code": "d.drawImg(f,null,a,k.i$6)",
+      "note": "加载路径：第三参 = product item，第四参 = layer —— 与用户规格一致"
+    }
+  ],
+  "verifiedOnDevice": {
+    "run": "c-native-drawimg-contract-1040459.json",
+    "exp1": {
+      "objLen": "8 -> 9",
+      "regLen": "0 -> 1",
+      "itemListLen": "0（drawImg 不写 itemList）",
+      "thrown": null
+    },
+    "nativeImageFields": {
+      "type": "image",
+      "width": 127,
+      "height": 38.1,
+      "scaleX": 1,
+      "scaleY": 1,
+      "left": 40,
+      "top": 40,
+      "angle": 0,
+      "originX": "left",
+      "originY": "top",
+      "uuid": "06684998-1ea5-455a-b51f-3f8f8832bc81",
+      "multiUuid": "4656e0f5-babc-493e-be80-abf8bcc2ec69",
+      "markuuid": null,
+      "mediaMediaType": "image",
+      "mediaImgPath": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAEsCAYAAA",
+      "layerAlpha": "1.00",
+      "isEdit": true,
+      "mediaIsBG": false,
+      "protoVisible": true,
+      "isqrcode": "0",
+      "noCutWidth": 127,
+      "bigPicWidth": 1000,
+      "lockUniScaling": false,
+      "inReg": true,
+      "inRegIdx": 0,
+      "hasMedia": false
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "ts": "2026-09-19T08:48:59.495Z",
+  "stage": "8A2-C3",
+  "subject": "ItemDataModel.drawItem(index, items, position) 语义判定",
+  "verdict": "DRAWITEM_SIDE_EFFECT = UNSAFE（不用于 C-fix）",
+  "site": "ItemDataModel.js-v20260707017 @63447 drawItem:function(a,h,A)",
+  "behavior": "从 itemList 重建 canvas：重设 canvasToProductObjArr.layerNum → 依 mediaType 分派 drawImg/drawText/drawCurvedImg/drawContainer...（a=startIndex, h=items, A='bottom'）",
+  "keyEvidence": "调用现场均为 `itemList.concat(...)` 后 `ea.drawItem(itemList.length, items)` —— drawItem 是 itemList→canvas 渲染器，不是 canvas→itemList 建立者",
+  "unsafeReasons": [
+    "会重建全部对象 layerNum",
+    "触发字体加载 + async 分派",
+    "依赖 itemList 已先 concat（会对空 itemList 直接 0 长度）",
+    "部分分支走 network/本地 SVG 转换"
+  ],
+  "role": "C-fix 不使用 drawItem；只用 drawImg(+setItemListJson)（Route A）"
+}
