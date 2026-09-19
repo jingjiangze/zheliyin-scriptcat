@@ -103,12 +103,60 @@ function injectUserscript() {
     await SLEEP(1200);
     if (BAIDU_AK && BAIDU_SK) { await ev((a) => { const ai = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak"); const si = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk"); const sb = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save"); if (!ai || !si || !sb) return { ok: false }; ai.value = a.ak; si.value = a.sk; try { sb.click(); } catch (e) {} return { ok: true }; }, { ak: BAIDU_AK, sk: BAIDU_SK }); await SLEEP(3000); }
     const URL = (MODE === "fail" || MODE === "ctrig") ? URL_88 : (MODE === "reg" ? FIX_URL : URL_252438);
+    // D2-C itemlist-source：页面早期 hook（模板初始化前）追 itemList 构建 + 模板 JSON 响应
+    if (MODE === "itemlist-source") {
+      await page.addInitScript(() => {
+        window.__arrCap = { enabled: true, recs: [], ids: new WeakMap(), seq: 0 };
+        const cap = (m, args, arr) => {
+          if (!window.__arrCap.enabled) return;
+          if (window.__arrCap.recs.length >= 300) return;
+          let id = window.__arrCap.ids.get(arr);
+          if (!id) { id = ++window.__arrCap.seq; window.__arrCap.ids.set(arr, id); }
+          window.__arrCap.recs.push({ t: Date.now(), m, arrId: id, len: arr ? arr.length : -1, arg0Keys: args && args[0] && typeof args[0] === "object" ? Object.keys(args[0]).slice(0, 10) : null, stackTop: new Error().stack ? String(new Error().stack).split("\n").slice(2, 7).map((s) => s.trim().slice(0, 140)) : null });
+        };
+        ["push", "splice", "unshift", "pop"].forEach((m) => {
+          const orig = Array.prototype[m];
+          Array.prototype[m] = function () { cap(m, arguments, this); return orig.apply(this, arguments); };
+        });
+        // 模板 JSON 响应（含 itemList 的接口）
+        window.__tplJson = { hits: [] };
+        const seen = (url, txt) => { if (window.__tplJson.hits.length < 10 && String(txt || "").indexOf("itemList") >= 0) { window.__tplJson.hits.push({ url: String(url).slice(0, 160), len: String(txt || "").length, head: String(txt || "").slice(0, 120) }); } };
+        const of = window.fetch ? window.fetch.bind(window) : null;
+        if (of) { window.fetch = function (u, o) { const p = of(u, o); p.then((r) => { try { r.clone().text().then((t) => seen(u, t)).catch(() => {}); } catch (e) {} }).catch(() => {}); return p; }; }
+        const oX = window.XMLHttpRequest;
+        if (oX) { const np = oX.prototype.open, ns = oX.prototype.send; oX.prototype.open = function (m, u) { this.__u = u; return np.apply(this, arguments); }; oX.prototype.send = function (b) { this.addEventListener("load", () => { try { seen(this.__u, this.responseText); } catch (e) {} }); return ns.apply(this, arguments); }; }
+      });
+    }
     await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     const w = await waitUntil(canvasReady(), "ready", 150000);
     if (!(w && w.ok)) throw new Error("editor not ready");
     await SLEEP(4000);
 
+    if (MODE === "itemlist-source") {
+      // D2-C：匹配 itemList 构建记录 + 模板 JSON 来源
+      const rec = await ev(() => {
+        const req = window.requirejs || window.require;
+        const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+        const PV = (function () { try { return req.s.contexts._.defined.ProductVO; } catch (e) { return null; } })() || (window.ProductVO || null);
+        const eIdx = PV && PV.currentCanvasNum != null ? Math.max(0, PV.currentCanvasNum - 1) : 0;
+        const page = PV && PV.pageList && PV.pageList[eIdx];
+        const il = page && page.content && Array.isArray(page.content.itemList) ? page.content.itemList : null;
+        const cap = window.__arrCap || { recs: [] };
+        let itemListId = null;
+        if (il && cap.ids) { itemListId = cap.ids.get(il) || null; }
+        return {
+          itemListLen: il ? il.length : null,
+          itemListArrId: itemListId,
+          matchedRecs: itemListId ? cap.recs.filter((r) => r.arrId === itemListId) : [],
+          sampleRecs: cap.recs.slice(0, 40),
+          tplJson: (window.__tplJson && window.__tplJson.hits) || [],
+          pvCc: PV ? PV.currentCanvasNum : null
+        };
+      });
+      out.records.push(rec);
+      out.special = "itemlist-source";
+    }
     if (MODE === "bg") {
       const du = await render();
       const dataUrl = typeof du === "string" ? du : du.dataUrl;
@@ -540,7 +588,7 @@ function injectUserscript() {
     }
   } catch (e) { out.errors.push(String(e && e.message || e).slice(0, 400)); }
   finally { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
-  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : "canvas-88x57-create-failure.json";
+  const name = MODE === "bg" ? "background-position.json" : MODE === "size" ? "direct-image-scale.json" : MODE === "native-add-text" ? "native-add-text-1040459.json" : MODE === "itemlist-lifecycle" ? "itemlist-lifecycle-1040459.json" : MODE === "itemlist-source" ? "itemlist-source-1040459.json" : "canvas-88x57-create-failure.json";
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   fs.writeFileSync(path.join(REPORT_DIR, name), JSON.stringify(out, null, 2));
   console.log("STAGE-8A2B " + MODE + " done records=" + out.records.length + " errors=" + out.errors.length + " -> " + path.join(REPORT_DIR, name));
