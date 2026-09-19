@@ -1086,6 +1086,12 @@
     const items = (blocks || []).filter((b) => b && b.bbox && typeof b.bbox.x === "number" && b.bbox.width > 0).map((b, bi) => {
       // Stage 7.8 §十三：safeText 真正送 DIY（rawText 仅证据/诊断/重处理）；
       // 仅含被 BLOCKED 移除字符的空块直接剔除，不创建空 textbox（§三十三 special-character 门）。
+      // Stage 7.8R §八：Text Safety Gate BLOCK（残留异常字符/空 safeText）同样剔除，不创建。
+      const safety = b.safety || null;
+      if (safety && safety.status === "BLOCK") {
+        ocrLog("SAFETY_GATE", "block " + bi + " status=BLOCK issues=" + (safety.issues || []).join("|"));
+        return null;
+      }
       const srcText = (b.safeText != null && String(b.safeText).trim() !== "") ? String(b.safeText) : String(b.text || "");
       if (!srcText.trim()) return null;
       const bw = b.bbox.width * sx, bh = b.bbox.height * sy;
@@ -1117,7 +1123,8 @@
         blockedCount: (b.sanitize && b.sanitize.blockedCount) || 0,
         sizeCluster: b.sizeCluster || null,
         sizeRatio: b.sizeRatio != null ? b.sizeRatio : null,
-        estimatedTextHeight: b.estimatedTextHeight != null ? b.estimatedTextHeight : null
+        estimatedTextHeight: b.estimatedTextHeight != null ? b.estimatedTextHeight : null,
+        safetyGate: (b.safety && b.safety.status) ? b.safety.status : null // Stage 7.8R §八：SAFE / BLOCK
       };
       // §14：几何模型 —— 水平文本 left/top；θ≠0 旋转文本 center/angle（保留 P5 rotation 行为，零变化）
       const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;

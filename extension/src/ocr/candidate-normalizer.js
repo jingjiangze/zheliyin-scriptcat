@@ -445,6 +445,7 @@ function buildTextBlocks(candidates, opts) {
   const medH = medianN(blocks.map(function (b) { return b.lineHeightMedian; }));
   const sanitize = (typeof sanitizeOcrText === "function") ? sanitizeOcrText : null;
   const classify = (typeof classifySize === "function") ? classifySize : null;
+  const safety = (typeof assessTextSafety === "function") ? assessTextSafety : null; // Stage 7.8R §八：Text Safety Gate
   const imageH = imageSize && typeof imageSize.height === "number" ? imageSize.height : null;
   return blocks.map(function (b) {
     const txt = String(b.text || "");
@@ -455,6 +456,8 @@ function buildTextBlocks(candidates, opts) {
     b.rawText = txt;                            // §十三：原始文本（证据/重处理）
     b.safeText = (sr && typeof sr.safeText === "string") ? sr.safeText : txt; // §十三：送 DIY 的安全文本
     b.sanitize = sr ? { changed: !!sr.changed, removed: sr.removed, normalized: sr.normalized, blockedCount: (sr.blocked || []).length, reason: sr.reason || "" } : null;
+    // Stage 7.8R §八：Text Safety Gate（Sanitizer 之后兜底；依赖缺失时降级 null，不破坏既有结构）
+    b.safety = safety ? safety({ text: txt, rawText: txt, safeText: b.safeText }, { blockedCount: (b.sanitize && b.sanitize.blockedCount) || 0 }) : null;
     b.bboxHeight = b.bbox ? b.bbox.height : null;    // §十七：bbox 高度
     b.estimatedTextHeight = (b.lineHeightMedian != null && b.lineHeightMedian > 0) ? b.lineHeightMedian : (b.bbox ? b.bbox.height : null); // §十七：估算字高（行高中位）
     if (sc) {                                     // §十八/§十九：相对字号信号 + numeric proxy
