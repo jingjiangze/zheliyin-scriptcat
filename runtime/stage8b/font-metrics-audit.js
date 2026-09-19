@@ -37,6 +37,7 @@ const SAMPLES = [
 (async () => {
   const out = { ts: new Date().toISOString(), stage: "STAGE-8B-FONT-METRICS", url: URL_252438, templateFonts: null, calibration: [], errors: [] };
   let browser = null, page = null;
+  let fonts = [], realFont = null;
   const ev = (fn, arg) => (arg === undefined ? page.evaluate(fn) : page.evaluate(fn, arg)).catch((e) => ({ err: String(e || "").slice(0, 200) }));
   const waitUntil = async (fnEval, desc, t0, poll) => { const t1 = Date.now(); while (Date.now() - t1 < t0) { const r = await ev(fnEval); if (r && r.ok) return { ok: true, ms: Date.now() - t1 }; await SLEEP(poll || 1500); } return { ok: false, desc }; };
   const canvasReady = () => () => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const d = (vo && vo.totalCanvasArray && vo.totalCanvasArray[0]) || null; return { ok: !!(d && d.canvas && typeof d.drawText === "function") }; };
@@ -87,8 +88,8 @@ const SAMPLES = [
     });
 
     // PART 2 候选字体：真实模板字体回填到 siyuan 槽 + 保留 SimHei/sans-serif 对照
-    const realFont = out.templateFonts && out.templateFonts.ok && out.templateFonts.fontCounts ? Object.keys(out.templateFonts.fontCounts).sort((a, b) => (out.templateFonts.fontCounts[b] - out.templateFonts.fontCounts[a]))[0] : null;
-    const fonts = ["SimHei"].concat(realFont ? [realFont] : []).concat(["sans-serif"]);
+    realFont = out.templateFonts && out.templateFonts.ok && out.templateFonts.fontCounts ? Object.keys(out.templateFonts.fontCounts).sort((a, b) => (out.templateFonts.fontCounts[b] - out.templateFonts.fontCounts[a]))[0] : null;
+    fonts = ["SimHei"].concat(realFont ? [realFont] : []).concat(["sans-serif"]);
 
     // ================= PART 2：字体度量校正（measureText + raster ink） =================
     out.calibration = await ev((arg) => {
