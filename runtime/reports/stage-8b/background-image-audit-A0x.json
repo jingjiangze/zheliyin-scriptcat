@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-19T13:50:07.122Z",
+  "ts": "2026-09-19T13:52:58.296Z",
   "stage": "STAGE-8B-STEP5",
   "branch": "stage-8b-ocr-reconstruction-engine",
   "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
@@ -2473,7 +2473,7 @@
       },
       "created": [
         {
-          "id": "9600f390-d857-4319-a37c-9a52d58ec8c7",
+          "id": "9ff45b85-1f86-4898-99d8-955d549c4dcf",
           "text": "轿 CO 天 住 出 sre",
           "zyOcrKey": "zy-ocr-0",
           "left": -19,
@@ -2514,7 +2514,7 @@
           }
         },
         {
-          "id": "6ac7c737-d158-486e-8361-a89591411c8c",
+          "id": "3a6ba373-a2a0-49e3-a893-3eb18e21078e",
           "text": "轿 CO 天 住 出 sre",
           "zyOcrKey": "zy-ocr-1",
           "left": 254,
@@ -2555,7 +2555,7 @@
           }
         },
         {
-          "id": "ca45c436-ec02-4c94-8bc6-bc23e1a267e7",
+          "id": "2a46f6c2-051d-4d51-a2e8-b63f67291fff",
           "text": "Telephone: +86",
           "zyOcrKey": "zy-ocr-2",
           "left": 256,
@@ -2596,7 +2596,7 @@
           }
         },
         {
-          "id": "ebe5cd02-0337-4b1f-9420-fff458876438",
+          "id": "f43213af-9da2-4e06-a350-ab9786afa34f",
           "text": "多阅梧册回佛山盛盈包装制品限",
           "zyOcrKey": "zy-ocr-3",
           "left": 27,
@@ -2637,7 +2637,7 @@
           }
         },
         {
-          "id": "67d6b2d0-597e-4381-b7b6-6f3b8580fb3d",
+          "id": "a75257f3-d86e-4625-8ea9-a361bb74d626",
           "text": "回有",
           "zyOcrKey": "zy-ocr-4",
           "left": 4,
@@ -2678,7 +2678,7 @@
           }
         },
         {
-          "id": "e698ab54-7854-4ade-ad8e-75501b22a124",
+          "id": "c59fa6cf-58de-4f26-a474-9c261bca00ed",
           "text": "人",
           "zyOcrKey": "zy-ocr-5",
           "left": 670,
@@ -2719,7 +2719,7 @@
           }
         },
         {
-          "id": "75d0af4a-9c01-4633-afe1-c36a423325f5",
+          "id": "b90b98f4-fad6-4e08-92d5-f6d51566eb74",
           "text": "公",
           "zyOcrKey": "zy-ocr-6",
           "left": 693,
@@ -2760,7 +2760,7 @@
           }
         },
         {
-          "id": "a37dd6b5-e77d-40e0-8d5f-ee3898fb0106",
+          "id": "4d27988d-db73-4645-b2e1-70aabe1140c6",
           "text": "多 佛山 盛 盈 包装 制品",
           "zyOcrKey": "zy-ocr-7",
           "left": 652,
@@ -2801,7 +2801,7 @@
           }
         },
         {
-          "id": "630976d2-9d50-4c06-b5d9-fcd36b23a11d",
+          "id": "f1542b25-27d5-4ee0-a6bb-295977f808b6",
           "text": "器洛0757-8880985",
           "zyOcrKey": "zy-ocr-8",
           "left": 71,
@@ -2842,7 +2842,7 @@
           }
         },
         {
-          "id": "810e429d-2004-4c14-843e-2c853f186501",
+          "id": "b8af5cc1-ce6a-454b-9f2c-47fc5321e819",
           "text": "器 洛 Tel.: 0757",
           "zyOcrKey": "zy-ocr-9",
           "left": 241,
@@ -2883,7 +2883,7 @@
           }
         },
         {
-          "id": "e04769d9-f35a-47fb-ac48-f92024997ab6",
+          "id": "3d5b3c9f-188a-4176-ab54-e85309b95586",
           "text": "过广东省佛山市高区杨和镇阳西",
           "zyOcrKey": "zy-ocr-10",
           "left": 272,
@@ -2924,7 +2924,7 @@
           }
         },
         {
-          "id": "6d307798-6c6d-45ab-ba18-93c1a3e009b8",
+          "id": "9981c78c-ea4d-4522-80c2-4e00f63c477d",
           "text": "道和",
           "zyOcrKey": "zy-ocr-11",
           "left": 712,
@@ -2965,7 +2965,7 @@
           }
         },
         {
-          "id": "fc89dde9-21ad-4dca-8aca-224819e3b741",
+          "id": "ac050465-4f28-4920-819f-12f9376bc237",
           "text": "眉吉生由",
           "zyOcrKey": "zy-ocr-12",
           "left": 26,
@@ -3006,7 +3006,7 @@
           }
         },
         {
-          "id": "b029b7c9-7b4a-4201-91f0-236d6282a0e2",
+          "id": "0c8fc0b3-d9c8-4638-8b08-df6e61773e5e",
           "text": "佛山朱盛通生物科技有限公司",
           "zyOcrKey": "zy-ocr-13",
           "left": 273,
@@ -3047,7 +3047,7 @@
           }
         },
         {
-          "id": "7a293e7a-20a6-46d0-8afb-7c7fb967e4f5",
+          "id": "f8f198c8-b3a0-4433-9621-4b0e9cd3f0fc",
           "text": "让 和 刘 地 址 :广东 ",
           "zyOcrKey": "zy-ocr-14",
           "left": 3,
@@ -3088,7 +3088,7 @@
           }
         },
         {
-          "id": "9273a29a-8735-4a0e-9fa7-82faebb653bc",
+          "id": "d3156fc8-3bf3-4632-9597-df608f1813e2",
           "text": "地人佛市高明区志和镇和咒号车",
           "zyOcrKey": "zy-ocr-15",
           "left": 278,
@@ -3129,7 +3129,7 @@
           }
         },
         {
-          "id": "76a2a748-7bc9-4a03-9bc4-21e75bb851b1",
+          "id": "69709b89-ca75-40d4-bf5c-3101426ea7b2",
           "text": ":",
           "zyOcrKey": "zy-ocr-16",
           "left": 103,

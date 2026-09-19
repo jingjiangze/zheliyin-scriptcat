@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-19T13:49:36.429Z",
+  "ts": "2026-09-19T13:52:28.288Z",
   "stage": "STAGE-8B-STEP5",
   "branch": "stage-8b-ocr-reconstruction-engine",
   "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
@@ -634,7 +634,7 @@
       },
       "created": [
         {
-          "id": "150ebc21-711f-4e00-859d-dd8599f1cefc",
+          "id": "62e7cdbf-9fb5-4354-8aa3-d63fc5b0d6c1",
           "text": "大字标题实例文字",
           "zyOcrKey": "zy-ocr-0",
           "left": 23,
@@ -675,7 +675,7 @@
           }
         },
         {
-          "id": "31af37da-64b8-4bc9-a5a3-2232e14fb0e8",
+          "id": "b1c8f533-ff6a-4817-9d98-9a790f42cd4f",
           "text": "中号正文联系电话与邮箱地址",
           "zyOcrKey": "zy-ocr-1",
           "left": 26,
@@ -716,7 +716,7 @@
           }
         },
         {
-          "id": "94d6df68-5948-4da0-9c93-2089e7218a0f",
+          "id": "5d94d600-0bc1-458c-a35b-faea4f615b23",
           "text": "权",
           "zyOcrKey": "zy-ocr-2",
           "left": 72,
@@ -757,7 +757,7 @@
           }
         },
         {
-          "id": "666791b9-d7ac-4e34-ac99-c2b81bd16a7c",
+          "id": "f3d65c67-4634-4ee1-858d-640bdcd75b55",
           "text": "小字页脚版备注行",
           "zyOcrKey": "zy-ocr-3",
           "left": 26,
