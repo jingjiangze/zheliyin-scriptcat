@@ -49,6 +49,13 @@ function injectUserscript() {
   code = code.replace(/stage-8a-ocr-audit\/zheliyin-card-assistant\.user\.js/g, BRANCH + "/zheliyin-card-assistant.user.js");
   code = code.replace(/test\/zheliyin-card-assistant\.user\.js/g, BRANCH + "/zheliyin-card-assistant.user.js");
   code = code.replace(/demo\/zheliyin-card-assistant\.user\.js/g, BRANCH + "/zheliyin-card-assistant.user.js");
+  // 追加 image-transform.js（Stage 8A-1 旋转 AABB 全局依赖）
+  const extra = "// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/" + BRANCH + "/extension/src/editor/image-transform.js?v=0.3.11.0\n";
+  const anchor = "extension/src/editor/page-bridge.js";
+  const ai = code.indexOf(anchor);
+  if (ai < 0) throw new Error("anchor page-bridge not found");
+  const lineEnd = code.indexOf("\n", ai);
+  code = code.slice(0, lineEnd + 1) + extra + code.slice(lineEnd + 1);
   return code;
 }
 
