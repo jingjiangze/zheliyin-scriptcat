@@ -31,6 +31,16 @@ const FIXTURES = [
   { id: "fx-a-92x56", url: "https://diy.zheliyin.com/diyWeb/third/1065075/2114747/999/thirdDiyAdd.do", note: "Fixture A 92×56（规格 §四）" },
   { id: "fx-b-88_5x57", url: "https://diy.zheliyin.com/diyWeb/third/1040459/5368967/999/thirdDiyAdd.do", note: "Fixture B 88.5×57（规格 §四）" }
 ];
+// Stage 8A-0 第二轮：注入实尺图（SZ=已知像素高），实证 A~F（§五十）
+const INJECT_IMG = process.env.ZY_INJECT_IMG === "1";
+const URL_ONLY = process.env.ZY_URL_ONLY || "";
+const ACTIVE_FIXTURES = URL_ONLY ? FIXTURES.filter((f) => f.id === URL_ONLY) : FIXTURES;
+const SZ_ROWS = [
+  { t: "大字标题实例文字", y: 30, s: 40 },
+  { t: "中号正文联系电话与邮箱地址", y: 110, s: 20 },
+  { t: "小字页脚版权备注行", y: 200, s: 12 }
+];
+const SZ_W = 1200, SZ_H = 260;
 
 function injectUserscript() {
   let code = fs.readFileSync(USERSCRIPT_PATH, "utf8");
@@ -116,8 +126,49 @@ function injectUserscript() {
     const d = (vo && vo.totalCanvasArray && vo.totalCanvasArray[0]) || null;
     const c = d && d.canvas;
     if (!c) return { n: -1, texts: [] };
-    return { n: c.getObjects().length, texts: c.getObjects().filter((o) => o && typeof o.text === "string").map((o) => String(o.text || "").slice(0, 14)) };
+    const ts = [];
+    c.getObjects().filter((o) => o && typeof o.text === "string").forEach((o) => {
+      ts.push({ t: String(o.text || "").slice(0, 14), fontSize: o.fontSize, width: o.width, height: o.height, scaleX: o.scaleX, scaleY: o.scaleY, left: o.left, top: o.top });
+    });
+    return { n: c.getObjects().length, texts: ts };
   });
+  // 实尺图渲染（指定字号，源图已知像素高）→ 注入 fabric.Image（§五十 A~F 实证用）
+  const renderSz = () => ev((arg) => {
+    const cv = document.createElement("canvas");
+    cv.width = arg.w; cv.height = arg.h;
+    const ctx = cv.getContext("2d");
+    ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, arg.w, arg.h);
+    ctx.fillStyle = "#000000"; ctx.textBaseline = "top";
+    (arg.rows || []).forEach((r) => { ctx.font = r.s + "px SimHei, sans-serif"; ctx.fillText(r.t, 30, r.y); });
+    return cv.toDataURL("image/png");
+  }, { w: SZ_W, h: SZ_H, rows: SZ_ROWS });
+  const ensureImageOnPage = (canvasIndex, dataUrl, tag) => ev((arg) => {
+    const req = window.requirejs || window.require;
+    const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+    const d = (vo && vo.totalCanvasArray && vo.totalCanvasArray[arg.canvasIndex]) || null;
+    const c = d && d.canvas;
+    if (!c) return { ok: false, reason: "no canvas" };
+    const f = (c.constructor && c.constructor.fabric) || window.fabric;
+    return new Promise((resolve) => {
+      try {
+        const imgEl = new Image();
+        imgEl.onload = function () {
+          try {
+            const im = new f.Image(imgEl);
+            im.set({ left: 20, top: 20, scaleX: 1, scaleY: 1 });
+            im.multiUuid = arg.tag + Date.now();
+            c.add(im);
+            try { if (d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr) d.canvasObjInfo.canvasToProductObjArr.push(im); } catch (e) {}
+            try { c.setActiveObject(im); } catch (e) {}
+            if (c.requestRenderAll) c.requestRenderAll();
+            resolve({ ok: true, width: im.width, height: im.height, nw: imgEl.naturalWidth, nh: imgEl.naturalHeight });
+          } catch (e) { resolve({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); }
+        };
+        imgEl.onerror = function () { resolve({ ok: false, reason: "imgEl onerror" }); };
+        imgEl.src = arg.dataUrl;
+      } catch (e) { resolve({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); }
+    });
+  }, { canvasIndex, dataUrl, tag });
   const rollbackAll = (tag) => ev((arg) => {
     const req = window.requirejs || window.require;
     const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
@@ -173,7 +224,7 @@ function injectUserscript() {
       await sleep(3000);
     } else { out.baiduInject = { skipped: "no ZY_BAIDU_AK/ZY_BAIDU_SK" }; }
 
-    for (const fx of FIXTURES) {
+    for (const fx of ACTIVE_FIXTURES) {
       const rec = { id: fx.id, url: fx.url, note: fx.note, pageAudit: null, pageInfo: null, ocr: null, errors: [] };
       out.fixtures.push(rec);
       try {
@@ -187,6 +238,13 @@ function injectUserscript() {
         await sleep(4000);
         rec.pageAudit = await auditPage();
         rec.pageInfo = await getCurrentPage();
+        // 第二轮（A~F 实证）：注入已知像素尺寸实尺图
+        if (INJECT_IMG) {
+          const du = await renderSz();
+          rec.szImg = { dataUrlLen: String(du || "").length };
+          rec.szInjected = await ensureImageOnPage(0, typeof du === "string" ? du : (du && du.dataUrl), "p8x-");
+          await sleep(1500);
+        }
         const before = await canvasInfo();
         const cl = await clickOcrBtn();
         rec.click = cl;

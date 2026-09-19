@@ -56,20 +56,29 @@
 已确认的 REAL：1040459 画布 = **453.2×744.8（竖版）**，与 92×56 类（横版 871.5×530.2）画布几何不同
 → CanvasGeometry 必须按实际画布读取，禁止硬编码（§二十八/§三十八）。
 
-## 四、「小字放大」根因定位（§五十 A~F）
+## 四、「小字放大」根因定位（§五十 A~F）+ 实尺图实证（第二轮）
 
-| 环节 | 现状 | 类型 |
+**实证方法**：注入已知尺寸实尺图（1200×260，字号 40/20/12，SimHei）→ OCR → 回读创建对象
+（`runtime/reports/stage-8a0/ocr-provider-route.json`；Local fallback 轮次，百度 key 本轮未注入 → auth-error fallback 本身亦为 REAL 证据）。
+
+| 源图字号(视觉) | LOCAL OCR 行高(bbox) | 创建 fontSize | 创建后 width×height | 备注 |
+| --- | --- | --- | --- | --- |
+| 40（大字标题） | 57 | **59** | 493×85 | fontSize≈行高÷0.969 ⇒ **1.475× 视觉放大** |
+| 20（中号正文） | 18 | **19** | 265×33 | ≈1:1 |
+| 12（小字页脚） | 11 | **11** | 115×22 | ≈1:1 |
+
+| 环节 | 判定 | 证据 |
 | --- | --- | --- |
-| A. OCR bbox height 是否大错 | **UNKNOWN**（需挂载已知实尺图 + source text bbox 对照；下一轮注入审计） | UNKNOWN |
-| B. TextBlock bbox height | = OCR bbox 原值（buildTextBlocks 不改 height；`bboxHeight=bbox.height`、`estimatedTextHeight=lineHeightMedian`） | CODE FACT |
-| C. buildItemsFromOcr 是否改 height | 不改 bbox height；textbox height=`lineCount*fs*1.3+8`（由 fs 推算）——**fs 是放大主嫌疑** | CODE FACT |
-| D. fontSize 是否二次放大 | `fs=round(avgLineH*sy/0.969)` clamp 10..160 —— **单一映射点**；0.969 为历史近似标定（IDEA：sy 语义=图片显示 scaleY=fabric scaleX/Y，注入图为 1；真实背景图可能≠1）| CODE FACT；放大是否发生=INFERENCE(待 A 实证) |
-| E. Native drawText 是否再缩放 | ocrCreate 不传 scaleX/Y（fabric new 默认 1）→ 无二次缩放 | CODE FACT |
-| F. scaleX/scaleY 默认非 1 | 默认 1（无 scale 字段）| CODE FACT |
+| A. OCR bbox 高度是否大错 | **无错**（小字 11≈12、中字 18≈20；大字 57≈40×1.42 为行盒含 descent，OCR 正常） | REAL |
+| B. TextBlock bbox height | = OCR bbox 原值（buildTextBlocks 不改 height） | CODE FACT |
+| C. buildItemsFromOcr 是否改 height | 不改 bbox；textbox height=`lineCount*fs*1.3+8` | CODE FACT |
+| D. fontSize 公式 | **实证 `fs=avgLineH×scaleY÷0.969`（scaleY=1 时 fs≈行高/0.969）**；合成输入下大字放大 1.475×、小字 ≈1:1 —— 与用户「小字放大几倍」**方向相反** ⇒ 用户场景的病根不在公式本身，而在**真实模板的画布↔图片 scale 链（CanvasGeometry）**：当背景图 scaleY≠1 或画布单位↔渲染像素比例 ≠1 时放大倍数被放大 | REAL + INFERENCE |
+| E. Native drawText 是否再缩放 | ocrCreate 无 scale 字段 → fabric 默认 1 | CODE FACT |
+| F. scaleX/scaleY 默认 | 创建对象 scaleX/Y=1（REAL 回读） | REAL |
 
-主嫌疑（INFERENCE）：D —— `avgLineH*sy/0.969` 中 sy（图片显示 scale）与 0.969 系数的组合，
-加上 Editor fontSize 单位 → 渲染高度映射未校准；**结论需 A（OCR bbox 真值）与 Typography 实测（Stage 8A）共同确认**，
-禁止在 8A-0 直接改 fontSize/scaleY（§六十二-1）。
+**结论**：合成实尺图下**小字未放大（11≈12）**，放大发生在大字（1.475×）；用户「小字放大几倍」
+需真实模板背景图（含 scaleY/canvas 映射）场景复现 —— 交由 **Stage 8A TypographyCalibration + CanvasGeometry** 校准，
+不在此阶段改 fontSize/scaleY（§六十二）。本轮顺带获得 REAL 证据：**Local fallback 在真实 URL 正常触发且 quality6=PASS**。
 
 ## 五、与后续阶段交接
 

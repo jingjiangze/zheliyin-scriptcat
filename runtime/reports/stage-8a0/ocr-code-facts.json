@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-19T02:59:45.282Z",
+  "generatedAt": "2026-09-19T03:03:15.988Z",
   "codeFacts": {
     "handleOcrImage": "user.js：点击识别 → waitForCanvasReady → waitForOcrTarget(ocrPrepare 消息) → img{dataUrl,width,height}=prep；ocrTarget.geo=prep.geometry；runBaiduOcr / runLocalOcr 共用 img",
     "ocrPrepare_build": "page-bridge.js buildOcrPrepare：当前编辑页画布 → active image → backgroundImage → first image（find type==='image'）→ 无则 IMAGE_UNAVAILABLE",

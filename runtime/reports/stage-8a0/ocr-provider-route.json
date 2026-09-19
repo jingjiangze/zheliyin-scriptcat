@@ -1,72 +1,66 @@
 {
-  "generatedAt": "2026-09-19T02:59:45.282Z",
+  "generatedAt": "2026-09-19T03:03:15.988Z",
   "fixtures": [
     {
       "id": "ctl-252438",
       "ocr": {
-        "done": false,
-        "createdDelta": 0,
-        "createdTexts": [],
-        "provider": "unknown",
-        "preparing": null,
+        "done": true,
+        "createdDelta": 3,
+        "createdTexts": [
+          {
+            "t": "大字标题实例文字",
+            "fontSize": 59,
+            "width": 493,
+            "height": 85,
+            "scaleX": 1,
+            "scaleY": 1,
+            "left": 48,
+            "top": 43
+          },
+          {
+            "t": "中号正文联系电话与邮箱地址",
+            "fontSize": 19,
+            "width": 265,
+            "height": 33,
+            "scaleX": 1,
+            "scaleY": 1,
+            "left": 48,
+            "top": 127
+          },
+          {
+            "t": "小字页肝版权各注生",
+            "fontSize": 11,
+            "width": 115,
+            "height": 22,
+            "scaleX": 1,
+            "scaleY": 1,
+            "left": 47,
+            "top": 216
+          }
+        ],
+        "provider": "local",
+        "preparing": "kind=active-image 1200x260 dataUrl=29794 chars",
         "baiduLines": null,
-        "sourcePage": null,
-        "quality6": null,
+        "sourcePage": {
+          "pageId": "canvas:c0",
+          "side": "FRONT"
+        },
+        "quality6": "\"quality6\":{\"overall\":\"PASS\",\"reasonCode\":null,\"total\":3,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"PASS\"}",
         "consoleTail": [
           "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
-          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
-        ]
-      }
-    },
-    {
-      "id": "fx-a-92x56",
-      "ocr": {
-        "done": false,
-        "createdDelta": 0,
-        "createdTexts": [],
-        "provider": "unknown",
-        "preparing": null,
-        "baiduLines": null,
-        "sourcePage": null,
-        "quality6": null,
-        "consoleTail": [
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
-          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图",
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=8 bg=false active=null",
-          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
-        ]
-      }
-    },
-    {
-      "id": "fx-b-88_5x57",
-      "ocr": {
-        "done": false,
-        "createdDelta": 0,
-        "createdTexts": [],
-        "provider": "unknown",
-        "preparing": null,
-        "baiduLines": null,
-        "sourcePage": null,
-        "quality6": null,
-        "consoleTail": [
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
-          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图",
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=8 bg=false active=null",
-          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图",
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
-          "[zy-ocr][CANVAS_READY] w=453.22515212981745x744.8 objs=8 bg=false active=null",
-          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=10 bg=false active=image",
+          "[zy-ocr][PREPARING] kind=active-image 1200x260 dataUrl=29794 chars",
+          "[zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current",
+          "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
+          "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
+          "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+          "[zy-ocr][LOCAL_RECOGNIZING] lines=3 words=25 image=undefinedxundefined",
+          "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
+          "[zy-ocr][GROUP] lines=3 y=27,111,200 h=57,18,11",
+          "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":3,\"kept\":3,\"dropped\":0}}",
+          "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"PASS\",\"reasonCode\":null,\"total\":3,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"PASS\"}}",
+          "[zy-ocr][BUILDING] blocks=3 forcedWrap=0 multiLine=0",
+          "[zy-ocr][SUCCESS] created=3/3 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":3,\"uv4\":3,\"layerMax\":-1}"
         ]
       }
     }

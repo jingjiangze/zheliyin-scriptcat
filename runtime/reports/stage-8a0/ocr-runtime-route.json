@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-19T02:58:11.594Z",
+  "generatedAt": "2026-09-19T03:02:25.301Z",
   "install": "ok",
   "baiduInject": {
     "skipped": "inputs not found"
@@ -8,7 +8,7 @@
     {
       "id": "ctl-252438",
       "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
-      "accessible": null,
+      "accessible": true,
       "pageInfo": {
         "ok": true,
         "code": "OK",
@@ -20,43 +20,7 @@
         "clicked": true,
         "via": "#zy-native-ocr-btn"
       },
-      "finalStatus": null,
-      "errors": []
-    },
-    {
-      "id": "fx-a-92x56",
-      "url": "https://diy.zheliyin.com/diyWeb/third/1065075/2114747/999/thirdDiyAdd.do",
-      "accessible": null,
-      "pageInfo": {
-        "ok": true,
-        "code": "OK",
-        "pageId": "canvas:c0",
-        "side": "FRONT",
-        "cc": 1
-      },
-      "click": {
-        "clicked": true,
-        "via": "#zy-native-ocr-btn"
-      },
-      "finalStatus": null,
-      "errors": []
-    },
-    {
-      "id": "fx-b-88_5x57",
-      "url": "https://diy.zheliyin.com/diyWeb/third/1040459/5368967/999/thirdDiyAdd.do",
-      "accessible": null,
-      "pageInfo": {
-        "ok": true,
-        "code": "OK",
-        "pageId": "canvas:c0",
-        "side": "FRONT",
-        "cc": 1
-      },
-      "click": {
-        "clicked": true,
-        "via": "#zy-native-ocr-btn"
-      },
-      "finalStatus": null,
+      "finalStatus": "已生成 3 个文字（可双击编辑）",
       "errors": []
     }
   ],
