@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.13
+// @version      0.3.11.14
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,19 +14,21 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.13
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.13
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.14
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.14
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -47,7 +49,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.13";
+  const VERSION = "0.3.11.14";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -1098,6 +1100,30 @@
       }
       const srcText = (b.safeText != null && String(b.safeText).trim() !== "") ? String(b.safeText) : String(b.text || "");
       if (!srcText.trim()) return null;
+      // Stage 8B STEP 4（Phase A）：唯一几何合同 —— 用 aCoords 真值建立 source→canvas 仿射，
+      // 把 OCR 块四角映射为目标 quad（Phase B compare / Phase C 校正 / Phase E gate 唯一基准）。
+      // 旧版页面桥（无 aCoords）或未加载 image-space/text-fit 时整体降级旧路径，行为不变。
+      let targetQuad = null, imageRuntimeState = null;
+      if (geo.aCoords && typeof buildImageTransform === "function" && typeof mapRectToCanvas === "function" && typeof validateQuadInsideCanvas === "function") {
+        try {
+          const imgT = buildImageTransform({ naturalWidth: geo.naturalWidth, naturalHeight: geo.naturalHeight, width: w, height: h, aCoords: geo.aCoords });
+          if (imgT) {
+            const mq = mapRectToCanvas({ x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height }, imgT);
+            if (mq && Array.isArray(mq.corners) && mq.corners.length === 4) {
+              targetQuad = mq.corners;
+              imageRuntimeState = { basis: "aCoords", naturalWidth: geo.naturalWidth, naturalHeight: geo.naturalHeight, objectWidth: w, objectHeight: h, sourceWidth: geo.naturalWidth, sourceHeight: geo.naturalHeight };
+              // Phase E 前置门禁（坐标合同 §5 F6/§7）：中心出界或越界>20% → 该块禁创建（GEOMETRY_INVALID）
+              if ((geo.canvasWidth > 0) && (geo.canvasHeight > 0)) {
+                const gq = validateQuadInsideCanvas(targetQuad, geo.canvasWidth, geo.canvasHeight, { tolerance: 0.2 });
+                if (!gq.valid) {
+                  ocrLog("GEOMETRY_GATE", "block " + bi + " " + (gq.reason || "invalid") + "（禁创建，目标越界）");
+                  return null;
+                }
+              }
+            }
+          }
+        } catch (eGeo) { targetQuad = null; imageRuntimeState = null; }
+      }
       const bw = b.bbox.width * sx, bh = b.bbox.height * sy;
       // §10：视觉字高 → fontSize 标定（取 block 内行高均值；多行 block 以行高为基准而非整块高度）
       let lineHSum = 0;
@@ -1136,6 +1162,7 @@
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
       const base = { text: srcText, blockIndex: bi, fontFamily: "思源黑体 Regular", diagnostics: diagnostics, pageId: srcPageId, side: srcSide };
+      if (targetQuad) { base.zy8bTargetQuad = targetQuad; base.zy8bImageRuntime = imageRuntimeState; } // Stage 8B STEP 4：目标几何附到 item
       // §13：textbox height 须容纳 lineCount×lineHeight（禁止只用单行 OCR bbox.height）
       const boxHeight = Math.round(textLines.length * fs * FONT_LINE_HEIGHT + 8);
       if (!angle) {
@@ -1184,6 +1211,8 @@
         if (e.data.ok) {
           setStatus("已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）");
           ocrLog("SUCCESS", "created=" + (e.data.created || []).length + "/" + (e.data.detectedBlocks || 0) + " editorInteg=" + JSON.stringify({ undo: !!integ.nativeUndoFound, savePre: !!integ.undoSavePre, savePost: !!integ.undoSavePost, ident: integ.identityApplied, uv4: integ.uv4Total, layerMax: integ.layerMax }));
+          // Stage 8B STEP 4（Phase B/C/E）：创建后几何闭环校正（不阻塞终态回复，异步进行）
+          runGeometryCalibration(items, e.data, srcSide);
         } else {
           setStatus("生成失败：" + (e.data.message || "未创建文字") + (e.data.failedBlockIndex != null ? "（第 " + e.data.failedBlockIndex + " 个失败，已回滚）" : ""));
           ocrLog("ERROR", "ocrCreate failed created=" + (e.data.created || []).length + " detected=" + (e.data.detectedBlocks || 0) + " failedIdx=" + (e.data.failedBlockIndex != null ? e.data.failedBlockIndex : "n/a") + " msg=" + String(e.data.message || "").slice(0, 120));
@@ -1195,6 +1224,89 @@
     window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, items: items }, location.origin);
     // 事务结束：释放 ocrTarget，避免下次识别串用旧目标
     ocrTarget = null;
+  }
+
+  // Stage 8B STEP 4（Phase B/C/E）：创建后几何闭环校正 —— compare(targetQuad vs 实测 aCoords) →
+  // 修正（高→fontSize、宽→textbox width、center→left/top、angle→双旋转核对）→ 重测，≤8 轮；
+  // 最终仍超差 → CREATE_REJECTED_GEOMETRY_MISMATCH（Phase E 诊断，不删除对象；删除动作留真机取证）。
+  async function runGeometryCalibration(itemsList, reply, side) {
+    if (typeof compareTextGeometry !== "function" || typeof quadSize !== "function" || typeof quadCenter !== "function" || typeof quadAngle !== "function") return;
+    if (typeof GM_getValue === "function" && GM_getValue("zyCalibrate8B", "1") === "0") { ocrLog("GEOMETRY", "calibration disabled by zyCalibrate8B=0"); return; }
+    const pending = [];
+    (itemsList || []).forEach(function (it) {
+      const created = (reply && reply.created ? reply.created : []).find(function (c) { return c && c.blockIndex === it.blockIndex; });
+      if (!it.zy8bTargetQuad || !created || !created.geometry || !created.geometry.quad) return;
+      pending.push({ blockIndex: it.blockIndex, item: it, geom: created.geometry, round: 0, done: false, compare: null });
+    });
+    if (!pending.length) return;
+    const ZY_OK = [], ZY_REJECT = [];
+    const waitAdjOnce = function () {
+      return new Promise(function (resolve) {
+        let done = false;
+        const to = setTimeout(function () { if (!done) { done = true; cleanup(); resolve(null); } }, 10000);
+        const onAdj = function (e2) {
+          if (!e2.data || e2.data.source !== "zy-card-assistant-page" || e2.data.type !== "ocrAdjustResult") return;
+          if (done) return; done = true; clearTimeout(to); cleanup(); resolve(e2.data);
+        };
+        const cleanup = function () { window.removeEventListener("message", onAdj); };
+        window.addEventListener("message", onAdj);
+      });
+    };
+    const correctionsFor = function (it, geom, cmp) {
+      const corr = {}, tq = it.zy8bTargetQuad;
+      let any = false;
+      const tSz = quadSize(tq), tCtr = quadCenter(tq), tAng = quadAngle(tq);
+      const aCtr = (geom.center && typeof geom.center.x === "number") ? geom.center : quadCenter(geom.quad);
+      const aAng = (typeof geom.angle === "number") ? geom.angle : quadAngle(geom.quad);
+      if (cmp.failures.indexOf("center") >= 0) {
+        const dx = tCtr.x - aCtr.x, dy = tCtr.y - aCtr.y;
+        if (Math.abs(dx) > 0.01 || Math.abs(dy) > 0.01) { corr.left = Math.round((geom.left || 0) + dx); corr.top = Math.round((geom.top || 0) + dy); any = true; }
+      }
+      if (cmp.failures.indexOf("height") >= 0 && typeof geom.fontSize === "number" && it.text) {
+        const fs = geom.fontSize;
+        corr.fontSize = Math.round(Math.min(160, Math.max(8, fs * (tSz.height / Math.max(geom.height || tSz.height, 1e-6)))));
+        corr.height = Math.round(Math.max(14, (geom.textboxHeight || geom.height || 0) + (tSz.height - geom.height)));
+        any = true;
+      }
+      if (cmp.failures.indexOf("width") >= 0 && typeof geom.textboxWidth === "number") {
+        corr.width = Math.min(4000, Math.max(20, Math.round(geom.textboxWidth + (tSz.width - geom.width))));
+        any = true;
+      }
+      if (cmp.failures.indexOf("angle") >= 0) {
+        const delta = ((tAng - aAng + 180) % 360 + 360) % 360 - 180;
+        const next = ((geom.angle || 0) + delta + 180) % 360 - 180;
+        if (Math.abs(delta) < 45 && Math.abs(delta) > 0.05) { corr.angle = Math.round(next * 1000) / 1000; any = true; }
+      }
+      return any ? corr : null;
+    };
+    for (let round = 0; round < 8; round += 1) {
+      const need = [];
+      pending.forEach(function (p) {
+        if (p.done) return;
+        const cmp = compareTextGeometry(p.item.zy8bTargetQuad, p.geom.quad, { centerTol: 2, widthTol: 3, heightTol: 3, angleTol: 0.5 });
+        p.compare = cmp;
+        if (cmp.pass) { p.done = true; ZY_OK.push(p.blockIndex); return; }
+        if (p.round >= 7) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_GEOMETRY_MISMATCH", failures: (cmp.failures || []).join("|") }); return; }
+        const corr = correctionsFor(p.item, p.geom, cmp);
+        if (!corr) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_NO_CORRECTION", failures: (cmp.failures || []).join("|") }); return; }
+        p.round += 1;
+        need.push({ blockIndex: p.blockIndex, corrections: corr });
+      });
+      if (!need.length) break;
+      window.postMessage({ source: "zy-card-assistant", type: "ocrAdjust", side: side || "front", items: need }, location.origin);
+      const rep = await waitAdjOnce();
+      if (!rep || !rep.items) break;
+      rep.items.forEach(function (r) {
+        const p = pending.find(function (x) { return x.blockIndex === r.blockIndex; });
+        if (p && r.ok && r.geometry && r.geometry.quad) p.geom = r.geometry;
+      });
+    }
+    pending.forEach(function (p) { if (!p.done) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_GEOMETRY_MISMATCH", failures: p.compare ? (p.compare.failures || []).join("|") : "no-compare" }); } });
+    if (ZY_OK.length || ZY_REJECT.length) {
+      const summary = { ok: ZY_OK.length, rejected: ZY_REJECT.length, rejectedBlocks: ZY_REJECT.map(function (r) { return { blockIndex: r.blockIndex, code: r.code, failures: r.failures }; }) };
+      setStatus("几何校验完成：通过 " + ZY_OK.length + " 个" + (ZY_REJECT.length ? "，拒绝 " + ZY_REJECT.length + " 个（CREATE_REJECTED_GEOMETRY_MISMATCH）" : "") + "（细节见控制台 zy-ocr GEOMETRY）");
+      ocrLog("GEOMETRY", JSON.stringify(summary));
+    }
   }
 
   function readSideTextFromPanel() {
