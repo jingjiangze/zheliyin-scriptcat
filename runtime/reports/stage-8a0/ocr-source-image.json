@@ -1,0 +1,62 @@
+{
+  "generatedAt": "2026-09-19T02:58:11.594Z",
+  "fixtures": [
+    {
+      "id": "ctl-252438",
+      "pageAudit": {
+        "ok": true,
+        "currentCanvasNum": 1,
+        "pages": [
+          {
+            "canvasIndex": 0,
+            "pageId": null,
+            "side": "FRONT",
+            "canvasWidth": 871.4999999999999,
+            "canvasHeight": 530.1624999999999,
+            "objectCount": 9,
+            "images": [],
+            "backgroundImage": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "fx-a-92x56",
+      "pageAudit": {
+        "ok": true,
+        "currentCanvasNum": 1,
+        "pages": [
+          {
+            "canvasIndex": 0,
+            "pageId": null,
+            "side": "FRONT",
+            "canvasWidth": 871.4999999999999,
+            "canvasHeight": 530.1624999999999,
+            "objectCount": 8,
+            "images": [],
+            "backgroundImage": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "fx-b-88_5x57",
+      "pageAudit": {
+        "ok": true,
+        "currentCanvasNum": 1,
+        "pages": [
+          {
+            "canvasIndex": 0,
+            "pageId": null,
+            "side": "FRONT",
+            "canvasWidth": 453.22515212981745,
+            "canvasHeight": 744.8,
+            "objectCount": 8,
+            "images": [],
+            "backgroundImage": null
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "generatedAt": "2026-09-19T02:58:11.594Z",
+  "install": "ok",
+  "baiduInject": {
+    "skipped": "inputs not found"
+  },
+  "fixtures": [
+    {
+      "id": "ctl-252438",
+      "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "accessible": null,
+      "pageInfo": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "cc": 1
+      },
+      "click": {
+        "clicked": true,
+        "via": "#zy-native-ocr-btn"
+      },
+      "finalStatus": null,
+      "errors": []
+    },
+    {
+      "id": "fx-a-92x56",
+      "url": "https://diy.zheliyin.com/diyWeb/third/1065075/2114747/999/thirdDiyAdd.do",
+      "accessible": null,
+      "pageInfo": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "cc": 1
+      },
+      "click": {
+        "clicked": true,
+        "via": "#zy-native-ocr-btn"
+      },
+      "finalStatus": null,
+      "errors": []
+    },
+    {
+      "id": "fx-b-88_5x57",
+      "url": "https://diy.zheliyin.com/diyWeb/third/1040459/5368967/999/thirdDiyAdd.do",
+      "accessible": null,
+      "pageInfo": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "cc": 1
+      },
+      "click": {
+        "clicked": true,
+        "via": "#zy-native-ocr-btn"
+      },
+      "finalStatus": null,
+      "errors": []
+    }
+  ],
+  "errors": []
+}

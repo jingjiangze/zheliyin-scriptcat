@@ -1,0 +1,75 @@
+{
+  "generatedAt": "2026-09-19T02:59:45.282Z",
+  "fixtures": [
+    {
+      "id": "ctl-252438",
+      "ocr": {
+        "done": false,
+        "createdDelta": 0,
+        "createdTexts": [],
+        "provider": "unknown",
+        "preparing": null,
+        "baiduLines": null,
+        "sourcePage": null,
+        "quality6": null,
+        "consoleTail": [
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
+          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+        ]
+      }
+    },
+    {
+      "id": "fx-a-92x56",
+      "ocr": {
+        "done": false,
+        "createdDelta": 0,
+        "createdTexts": [],
+        "provider": "unknown",
+        "preparing": null,
+        "baiduLines": null,
+        "sourcePage": null,
+        "quality6": null,
+        "consoleTail": [
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
+          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图",
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=8 bg=false active=null",
+          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+        ]
+      }
+    },
+    {
+      "id": "fx-b-88_5x57",
+      "ocr": {
+        "done": false,
+        "createdDelta": 0,
+        "createdTexts": [],
+        "provider": "unknown",
+        "preparing": null,
+        "baiduLines": null,
+        "sourcePage": null,
+        "quality6": null,
+        "consoleTail": [
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=9 bg=false active=null",
+          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图",
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][CANVAS_READY] w=871.4999999999999x530.1624999999999 objs=8 bg=false active=null",
+          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图",
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+          "[zy-ocr][CANVAS_READY] w=453.22515212981745x744.8 objs=8 bg=false active=null",
+          "[zy-ocr][ERROR] ocrPrepare: IMAGE_UNAVAILABLE - 未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图"
+        ]
+      }
+    }
+  ],
+  "codeFactsRef": "see ocr-code-facts.json"
+}
