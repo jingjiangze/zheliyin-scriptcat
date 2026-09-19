@@ -760,16 +760,39 @@ function injectUserscript() {
           return { objLen: c ? c.getObjects().length : null, regLen: d && d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr ? d.canvasObjInfo.canvasToProductObjArr.length : null, itemListLen: il ? il.length : null };
         });
         rec.steps.push({ tag: "base", ...base });
-        // 系统剪贴板设置图片
+        // 剪贴板设置：优先 navigator.clipboard.write(ClipboardItem PNG)，失败回退 WinForms SetImage 位图
         let clipErr = null;
+        let clipMethod = "none";
         try {
-          const ps = "Add-Type -AssemblyName System.Windows.Forms,System.Drawing; $i=[System.Drawing.Image]::FromFile('" + tmpPng.replace(/'/g, "''") + "'); [System.Windows.Forms.Clipboard]::SetImage($i); Start-Sleep -Milliseconds 300";
-          cp.execFileSync("powershell", ["-NoProfile", "-Sta", "-Command", ps], { timeout: 30000, stdio: ["ignore", "pipe", "pipe"] });
-        } catch (e) { clipErr = String(e && e.message || e).slice(0, 200); }
-        rec.clipboardSet = clipErr ? { ok: false, err: clipErr } : { ok: true };
-        if (!clipErr) {
+          const viaApi = await ev(() => {
+            const b64 = document.querySelector("body").dataset._z;
+            return { ok: true };
+          }).catch(() => ({ ok: false }));
+        } catch (e) {}
+        try {
+          const pngB64 = b64; // eslint-disable-line no-use-before-define
+          const okApi = await page.evaluate((dataB64) => {
+            const bin = atob(dataB64);
+            const arr = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i += 1) arr[i] = bin.charCodeAt(i);
+            const blob = new Blob([arr], { type: "image/png" });
+            return navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
+              .then(() => true).catch((e) => String(e && e.name || e));
+          }, b64).catch((e) => String(e && e.message || e));
+          if (okApi === true) { clipMethod = "clipboard-api"; } else { clipErr = "api:" + String(okApi).slice(0, 80); }
+        } catch (e) { clipErr = String(e && e.message || e).slice(0, 120); }
+        if (clipMethod === "none") {
+          try {
+            const ps = "Add-Type -AssemblyName System.Windows.Forms,System.Drawing; $i=[System.Drawing.Image]::FromFile('" + tmpPng.replace(/'/g, "''") + "'); [System.Windows.Forms.Clipboard]::SetImage($i); Start-Sleep -Milliseconds 300";
+            cp.execFileSync("powershell", ["-NoProfile", "-Sta", "-Command", ps], { timeout: 30000, stdio: ["ignore", "pipe", "pipe"] });
+            clipMethod = "win-forms";
+            clipErr = null;
+          } catch (e2) { clipErr = String(e2 && e2.message || e2).slice(0, 200); }
+        }
+        rec.clipboardSet = { ok: clipMethod !== "none", method: clipMethod, err: clipErr };
+        if (clipMethod !== "none") {
           await page.bringToFront().catch(() => {});
-          await ev(() => { const c = document.querySelector("canvas"); if (c) { try { c.focus(); } catch (e) {} } return document.activeElement ? document.activeElement.tagName : null; });
+          await ev(() => { const c = document.querySelector("canvas"); if (c) { try { c.focus(); } catch (e) {} } if (document.body) { try { document.body.focus(); } catch (e) {} } return document.activeElement ? document.activeElement.tagName : null; });
           await page.keyboard.press("Control+v").catch(() => {});
         }
         // poll
