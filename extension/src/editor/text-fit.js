@@ -290,8 +290,6 @@ function compareTextGeometry(target, actual, opts) {
   const centerTarget = quadCenter(target), centerActual = quadCenter(actual);
   const sizeT = quadSize(target), sizeA = quadSize(actual);
   const centerError = distP(centerTarget, centerActual);
-  const widthError = Math.abs(sizeT.width - sizeA.width);
-  const heightError = Math.abs(sizeT.height - sizeA.height);
   const angleError = Math.abs(angNorm(quadAngle(target) - quadAngle(actual)));
   let cornerSum = 0;
   for (let i = 0; i < 4; i += 1) {
@@ -312,6 +310,20 @@ function compareTextGeometry(target, actual, opts) {
   const targetLineCount = o.targetLineCount != null ? o.targetLineCount : 1;
   const wrapDetected = renderedLineCount != null && renderedLineCount > targetLineCount;
   const fontMismatch = !!o.fontMismatch;
+  // §10/§24：typography.width 比较「渲染 advance」而非含 margin 的布局盒（advanceOverride）；
+  // typography.height 用「字号视觉 sanity 模型」（§5 证据：OCR bbox 高=padding 产物，正比比较无意义）。
+  const advanceOverride = typeof o.advanceOverride === "number" ? o.advanceOverride : null;
+  const widthError = advanceOverride != null
+    ? Math.abs(sizeT.width - advanceOverride)
+    : Math.abs(sizeT.width - sizeA.width);
+  const fsInfo = typeof o.fontSize === "number" ? o.fontSize : null;
+  const heightDelta = sizeA.height - sizeT.height;
+  let heightFail = false;
+  if (fsInfo) {
+    const lo = fsInfo * 0.6;
+    const hi = fsInfo * targetLineCount * 2.0;
+    heightFail = sizeA.height < lo || sizeA.height > hi;
+  }
   const geometry = {
     pass: centerError <= centerTol && cornerError <= cornerTol && angleError <= angleTol,
     centerError: Math.round(centerError * 1000) / 1000,
@@ -320,9 +332,10 @@ function compareTextGeometry(target, actual, opts) {
     aabbError: Math.round(aabbError * 1000) / 1000
   };
   const typography = {
-    pass: !wrapDetected && widthError <= widthTol && heightError <= heightTol,
+    pass: !wrapDetected && widthError <= widthTol && !heightFail,
     widthError: Math.round(widthError * 1000) / 1000,
-    heightError: Math.round(heightError * 1000) / 1000,
+    heightFail: heightFail,
+    heightDelta: Math.round(heightDelta * 1000) / 1000,
     wrapDetected: wrapDetected,
     fontMismatch: fontMismatch
   };
@@ -335,11 +348,11 @@ function compareTextGeometry(target, actual, opts) {
   if (!typography.pass) {
     if (wrapDetected) failures.push("wrap");
     if (widthError > widthTol) failures.push("width");
-    if (heightError > heightTol) failures.push("height");
+    if (heightFail) failures.push("height");
   }
   const status = geometry.pass ? (typography.pass ? "PASS" : "TYPOGRAPHY_FAIL") : (typography.pass ? "GEOMETRY_FAIL" : "GEOMETRY_TYPOGRAPHY_FAIL");
   const score = Math.max(0, Math.min(1, 1 - (
-    (centerError / centerTol + cornerError / cornerTol + angleError / angleTol + (wrapDetected ? 1 : 0) + widthError / widthTol + heightError / heightTol) / 6
+    (centerError / centerTol + cornerError / cornerTol + angleError / angleTol + (wrapDetected ? 1 : 0) + widthError / widthTol + (heightFail ? 1 : 0)) / 6
   )));
   return {
     status: status,

@@ -87,9 +87,12 @@ t("e.rot30-pass", e4.status === "PASS" && near(e4.geometry.angleError, 0, 1e-6),
 // 宽度 +5（中心不动，角位移 2.5 ≤ cornerTol=3）→ typography width fail（GEOMETRY 仍过）
 const e5 = compareTextGeometry(QT, QT.map(function (p, i) { return (i === 0 || i === 3) ? { x: p.x - 2.5, y: p.y } : { x: p.x + 2.5, y: p.y }; }), {});
 t("e.width5-typography-fail", e5.status === "TYPOGRAPHY_FAIL" && e5.geometry.pass === true && e5.typography.widthError > 3, "", e5);
-// 高度 +5（中心不动）→ TYPOGRAPHY_FAIL（geometry 过）
-const e5b = compareTextGeometry(QT, QT.map(function (p, i) { return (i === 0 || i === 1) ? { x: p.x, y: p.y - 2.5 } : { x: p.x, y: p.y + 2.5 }; }), {});
-t("e.height5-typography-fail", e5b.status === "TYPOGRAPHY_FAIL" && e5b.geometry.pass === true, "", e5b);
+// 高度 +5（中心不动）但 fontSize=20（sanity hi=40 < 45）→ TYPOGRAPHY_FAIL（geometry 过）
+const e5b = compareTextGeometry(QT, QT.map(function (p, i) { return (i === 0 || i === 1) ? { x: p.x, y: p.y - 2.5 } : { x: p.x, y: p.y + 2.5 }; }), { fontSize: 20 });
+t("e.height5-typography-fail", e5b.status === "TYPOGRAPHY_FAIL" && e5b.geometry.pass === true && e5b.failures.indexOf("height") >= 0, "", e5b);
+// 同 quad 但 fontSize 与 box 匹配（fs=40 → sanity [24,80] ≥ 45）→ PASS（§10/§24 sanity 模型）
+const e5c = compareTextGeometry(QT, QT.map(function (p, i) { return (i === 0 || i === 1) ? { x: p.x, y: p.y - 2.5 } : { x: p.x, y: p.y + 2.5 }; }), { fontSize: 40 });
+t("e.height-sanity-pass", e5c.status === "PASS", "", e5c);
 // 阈值可配（centerTol=5 时 shift3 通过）
 const e6 = compareTextGeometry(QT, QT.map(function (p) { return { x: p.x + 3, y: p.y }; }), { centerTol: 5 });
 t("e.tol-config", e6.status === "PASS", "", e6);

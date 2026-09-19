@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.17
+// @version      0.3.11.18
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,21 +14,21 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.17
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.17
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.18
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.18
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -49,7 +49,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.17";
+  const VERSION = "0.3.11.18";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -1182,6 +1182,7 @@
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
       const base = { text: srcText, blockIndex: bi, fontFamily: fontFamilyCandidate || "sans-serif", diagnostics: diagnostics, pageId: srcPageId, side: srcSide, zy8bFontMismatch: !fontFamilyCandidate };
       if (targetQuad) { base.zy8bTargetQuad = targetQuad; base.zy8bImageRuntime = imageRuntimeState; } // Stage 8B STEP 4：目标几何附到 item
+      if (zy8bAdvance != null) base.zy8bAdvance = zy8bAdvance; // Stage 8B STEP 5：渲染 advance（typography 宽度比较基准）
       // §13：textbox height 须容纳 lineCount×lineHeight（禁止只用单行 OCR bbox.height）
       const boxHeight = Math.round(textLines.length * fs * FONT_LINE_HEIGHT + 8);
       if (!angle) {
@@ -1336,14 +1337,20 @@
       if (p.compare && !p.compare.geometry.pass) return (p.compare.failures || []).indexOf("center") >= 0 || (p.compare.failures || []).indexOf("angle") >= 0 ? "IMAGE_TRANSFORM" : "FONT_MODEL";
       return "FONT_MODEL";
     };
-    // STEP E：只允许 ≤3 轮小修正；转大 → CALIBRATION_MODEL_FAILURE（分类诊断，不再盲调）
+    // STEP E：只允许 ≤3 轮小修正；仅「几何失败 / 仍换行」才拒绝；typography 差异 → 保留对象并备注（§15/§19/§24）
+    const ZY_NOTES = [];
     for (let round = 0; round < 4; round += 1) {
       const need = [];
       pending.forEach(function (p) {
         if (p.done) return;
-        const cmp = compareTextGeometry(p.item.zy8bTargetQuad, p.geom.quad, { centerTol: 2, cornerTol: 3, widthTol: 3, heightTol: 3, angleTol: 0.5, renderedLineCount: p.geom.renderedLineCount != null ? p.geom.renderedLineCount : null, targetLineCount: (p.item.diagnostics && p.item.diagnostics.sourceLineCount) || 1, fontMismatch: !!p.item.zy8bFontMismatch });
+        const cmp = compareTextGeometry(p.item.zy8bTargetQuad, p.geom.quad, { centerTol: 2, cornerTol: 3, widthTol: 3, angleTol: 0.5, renderedLineCount: p.geom.renderedLineCount != null ? p.geom.renderedLineCount : null, targetLineCount: (p.item.diagnostics && p.item.diagnostics.sourceLineCount) || 1, fontMismatch: !!p.item.zy8bFontMismatch, advanceOverride: p.item.zy8bAdvance != null ? p.item.zy8bAdvance : null, fontSize: p.geom.fontSize != null ? p.geom.fontSize : null });
         p.compare = cmp;
         if (cmp.pass) { p.done = true; ZY_OK.push(p.blockIndex); return; }
+        if (cmp.geometry.pass && !cmp.typography.wrapDetected) {
+          // 视觉几何正确、无换行 → 对象保留；typography 差异仅记录（字体不匹配属 StyleResolver 范畴）
+          p.done = true; ZY_NOTES.push({ blockIndex: p.blockIndex, status: cmp.status, failures: (cmp.failures || []).join("|"), category: CATEGORY(p) });
+          return;
+        }
         if (p.round >= 3) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: (cmp.failures || []).join("|"), status: cmp.status }); return; }
         const corr = correctionsFor(p.item, p.geom, cmp);
         if (!corr) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_NO_CORRECTION", category: CATEGORY(p), failures: (cmp.failures || []).join("|") }); return; }
@@ -1361,10 +1368,10 @@
         if (p && r.ok && r.geometry && r.geometry.quad) p.geom = r.geometry;
       });
     }
-    pending.forEach(function (p) { if (!p.done) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: p.compare ? (p.compare.failures || []).join("|") : "no-compare", status: p.compare ? p.compare.status : null }); } });
-    if (ZY_OK.length || ZY_REJECT.length) {
-      const summary = { ok: ZY_OK.length, rejected: ZY_REJECT.length, rejectedBlocks: ZY_REJECT.map(function (r) { return { blockIndex: r.blockIndex, code: r.code, category: r.category, failures: r.failures, status: r.status }; }) };
-      setStatus("几何校验完成：通过 " + ZY_OK.length + " 个" + (ZY_REJECT.length ? "，拒绝 " + ZY_REJECT.length + " 个（" + ZY_REJECT.map(function (r) { return r.category; }).join("|") + "）" : "") + "（细节见控制台 zy-ocr GEOMETRY）");
+    pending.forEach(function (p) { if (!p.done) { p.done = true; if (p.compare && p.compare.geometry.pass && !p.compare.typography.wrapDetected) { ZY_NOTES.push({ blockIndex: p.blockIndex, status: p.compare.status, failures: (p.compare.failures || []).join("|"), category: CATEGORY(p) }); } else { ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: p.compare ? (p.compare.failures || []).join("|") : "no-compare", status: p.compare ? p.compare.status : null }); } } });
+    if (ZY_OK.length || ZY_REJECT.length || ZY_NOTES.length) {
+      const summary = { ok: ZY_OK.length, rejected: ZY_REJECT.length, noted: ZY_NOTES.length, rejectedBlocks: ZY_REJECT.map(function (r) { return { blockIndex: r.blockIndex, code: r.code, category: r.category, failures: r.failures, status: r.status }; }), notes: ZY_NOTES };
+      setStatus("几何校验完成：通过 " + ZY_OK.length + " 个" + (ZY_NOTES.length ? "，保留 " + ZY_NOTES.length + " 个（" + ZY_NOTES.map(function (n) { return n.category; }).join("|") + "，仅备注）" : "") + (ZY_REJECT.length ? "，拒绝 " + ZY_REJECT.length + " 个（" + ZY_REJECT.map(function (r) { return r.category; }).join("|") + "）" : "") + "（细节见控制台 zy-ocr GEOMETRY）");
       ocrLog("GEOMETRY", JSON.stringify(summary));
     }
   }
