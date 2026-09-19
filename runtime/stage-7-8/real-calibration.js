@@ -103,21 +103,31 @@ const MATRIX = {
     const existing = c.getObjects().filter((o) => o && String(o.type) === "image" && String(o.multiUuid || "").indexOf(arg.tag) === 0);
     if (existing.length) { existing.forEach((o) => { try { const li = d.canvasObjInfo.canvasToProductObjArr.indexOf(o); if (li >= 0) d.canvasObjInfo.canvasToProductObjArr.splice(li, 1); c.remove(o); } catch (e) {} }); }
     if (!f || !f.Image) return { ok: false, reason: "no fabric.Image" };
-    return await new Promise((resolve) => {
+    const inject = () => new Promise((resolve) => {
       try {
         f.Image.fromURL(arg.dataUrl, (im) => {
           try {
             if (!im) { resolve({ ok: false, reason: "fromURL null" }); return; }
+            const el = im._element || (im.getElement && im.getElement()) || null;
+            const nw = el ? (el.naturalWidth || el.width || 0) : 0;
+            const nh = el ? (el.naturalHeight || el.height || 0) : 0;
+            // 尺寸兜底：fabric 未同步尺寸时按 element 自然尺寸设置（避免 ocrPrepare 图片尺寸无效）
+            if (!(im.width > 0) && nw > 0) { try { im.set({ width: nw, height: nh }); } catch (e) {} }
             im.set({ left: 20, top: 20, scaleX: 1, scaleY: 1 });
             im.multiUuid = arg.tag + Date.now();
             c.add(im);
             try { if (d.canvasObjInfo && d.canvasObjInfo.canvasToProductObjArr) d.canvasObjInfo.canvasToProductObjArr.push(im); } catch (e) {}
+            try { c.setActiveObject(im); } catch (e) {}
             if (c.requestRenderAll) c.requestRenderAll();
-            resolve({ ok: true, uuid: im.multiUuid, n: c.getObjects().length });
+            const firstImg = c.getObjects().find((o) => o && String(o.type) === "image");
+            const fe = firstImg ? (firstImg._element || (firstImg.getElement && firstImg.getElement()) || null) : null;
+            resolve({ ok: true, uuid: im.multiUuid, n: c.getObjects().length,
+              img: { width: im.width, height: im.height, nw: nw, nh: nh, node: el ? el.nodeName : null, first: firstImg ? { w: firstImg.width, h: firstImg.height, fnw: fe ? fe.naturalWidth : null } : null } });
           } catch (e) { resolve({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); }
         }, { crossOrigin: "anonymous" });
       } catch (e) { resolve({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); }
     });
+    return await inject();
   }, { canvasIndex, dataUrl, tag });
   const rollbackAllInjected = (tag) => ev((arg) => {
     const req = window.requirejs || window.require;
@@ -243,14 +253,19 @@ const MATRIX = {
     await sleep(3000);
     const probeCur = await getCurrentPageByMessage();
     out.bridge = probeCur;
-    // 百度凭据运行时注入（env → GM 旧明文键，loadBaiduConfig 自动迁移加密；禁硬编码）
+    // 百度凭据运行时注入（env → native 面板 DOM 表单 → 脚本 saveBaiduConfigPlain 加密落库；禁硬编码）
     if (BAIDU_AK && BAIDU_SK) {
       out.baiduInject = await ev((arg) => {
-        GM_setValue("zyBaiduAk", arg.ak); GM_setValue("zyBaiduSk", arg.sk);
-        GM_setValue("zyOcrMode", "auto");
-        return { ak: !!arg.ak, sk: !!arg.sk, mode: GM_getValue("zyOcrMode", "") };
+        const akIn = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak");
+        const skIn = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk");
+        const saveBtn = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save");
+        if (!akIn || !skIn || !saveBtn) return { skipped: "inputs not found", akIn: !!akIn, skIn: !!skIn, saveBtn: !!saveBtn };
+        akIn.value = arg.ak;
+        skIn.value = arg.sk;
+        try { saveBtn.click(); } catch (e) { return { skipped: "click err: " + String(e && e.message || e).slice(0, 80) }; }
+        return { triggered: true, ak: !!arg.ak, sk: !!arg.sk };
       }, { ak: BAIDU_AK, sk: BAIDU_SK });
-      await sleep(2500);
+      await sleep(3000);
     } else {
       out.baiduInject = { skipped: "no ZY_BAIDU_AK/ZY_BAIDU_SK" };
     }
