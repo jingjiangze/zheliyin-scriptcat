@@ -38,6 +38,26 @@ C_TRIGGER = CONFIRMED
 对照（推断，252438 早年成功路径）：其 itemList 非空 → g-1 ≥ 0 → 读取既有对象 .media → 成功
 ```
 
+## D2-C 原生注册机制取证（本刀，REAL）
+
+252438 clean-page 对照（直接 drawText + OCR 链，itemList push/splice 临时 wrapper）：
+
+```
+pre:       itemListLen=1（模板自带 1 条 schema 完整条目） objLen=9  regLen=1
+directDraw: ok → objLen=10  regLen=2  itemListLen 仍=1
+ilCap:      []（drawText 路径从未触发 itemList.push/splice/unshift）
+ocrIlCap:   []（OCR→drawText 路径同样不写 itemList）
+itemKeys:   maskEnable/isPreview/media/layer/uuid/multiUuid/…（item schema 全字段）
+```
+
+**机制结论（STRONG EVIDENCE）**：
+1. `checkObjsInProductJson` 读取的是 `itemList[g-1]`（g=itemList.length），即**上一个已存在条目**；
+2. **drawText 自身从不向 itemList 写入新条目**；itemList 由**模板加载期原生初始化**填充；
+3. 252438 模板自带 1 条 → g-1=0 有效 → 成功；1040459 空页 itemList=0 → g-1=-1 → 失败。
+
+**待补（D2-C1 Case D，下一步）**：点击编辑器原生「新增文字」按钮（不经助手），观察空页 itemList 是否/如何被初始化 → 定位应复用的原生注册机制。
+**当前 C-fix 方案 = UNKNOWN（未满足 §9 验收：未找到可复用原生注册函数前不实施，禁 itemList.push({})/吞异常）**。
+
 - 失败点：站点 `CanvasDiy.checkObjsInProductJson` 的 `productPageList[e].content.itemList[g-1].media`
 - 触发条件：**ProductVO.itemList 为空（空模板页）时 drawText 的 productJson 同步未发生**（canvasToProductObjArr 已 push、itemList 未同步 → 两数组不同步）
 - 已排除：font.id（四象限全 PASS）、width（四象限全 PASS）、时序

@@ -1,0 +1,97 @@
+{
+  "ts": "2026-09-19T05:55:33.629Z",
+  "stage": "STAGE-8A2B-reg",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "reg",
+  "records": [
+    {
+      "mode": "reg",
+      "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "armIl": "ok",
+      "directDraw": {
+        "ok": true
+      },
+      "directState": {
+        "cc": 1,
+        "itemListLen": 1,
+        "itemLastOk": true,
+        "objLen": 10,
+        "regLen": 2,
+        "itemKeys": [
+          "maskEnable",
+          "isPreview",
+          "noCutWidth",
+          "media",
+          "lowPixelFlag",
+          "selectEnabled",
+          "uuid",
+          "layer",
+          "isDesignShape",
+          "rightType",
+          "resouceCategoryId",
+          "designableArea",
+          "multiUuid",
+          "isDesign",
+          "deleteState",
+          "topEnable",
+          "visible",
+          "visitLevel",
+          "isDisplay",
+          "materialDragType"
+        ]
+      },
+      "ocrCap": null,
+      "ocrState": null,
+      "errors": [
+        "window is not defined"
+      ],
+      "preState": {
+        "cc": 1,
+        "itemListLen": 1,
+        "itemLastOk": true,
+        "objLen": 9,
+        "regLen": 1,
+        "itemKeys": [
+          "maskEnable",
+          "isPreview",
+          "noCutWidth",
+          "media",
+          "lowPixelFlag",
+          "selectEnabled",
+          "uuid",
+          "layer",
+          "isDesignShape",
+          "rightType",
+          "resouceCategoryId",
+          "designableArea",
+          "multiUuid",
+          "isDesign",
+          "deleteState",
+          "topEnable",
+          "visible",
+          "visitLevel",
+          "isDisplay",
+          "materialDragType"
+        ]
+      },
+      "ilCap": [],
+      "ocrImg": {
+        "ok": true,
+        "w": 1000,
+        "h": 300,
+        "nw": 1000,
+        "nh": 300,
+        "sx": 1,
+        "sy": 1,
+        "angle": 0,
+        "left": 20,
+        "top": 20
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
+  ]
+}
