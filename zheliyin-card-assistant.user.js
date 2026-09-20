@@ -1499,6 +1499,7 @@
       // Stage 8B STEP 5/6（§11/§12/§十四）：calibration 职责收敛 —— 只做小误差修正；
       // 换行（WRAP）只加宽不缩字号；字大小只 ±1 小步；需要大跳变 → 归类 CALIBRATION_MODEL_FAILURE。
       const corr = {}, tq = it.zy8bTargetQuad;
+      let any = false, large = false;
       // P4-D §7/§8：Source Ink Height vs Editor Actual Ink Height —— ±1 小步（禁外框高/OCR bbox 高；§10 字号未收敛不修 position）
       if (p.ink && p.srcInkH > 0 && typeof geom.fontSize === "number" && it.text && !cmp.typography.wrapDetected) {
         const pGap = Math.round(((p.ink.inkHeight - p.srcInkH) * 100)) / 100;
@@ -1517,7 +1518,6 @@
           return corr; // 只调字号（+防换行宽度），不动 center/angle
         }
       }
-      let any = false, large = false;
       const tSz = quadSize(tq), tCtr = quadCenter(tq), tAng = quadAngle(tq);
       const aCtr = (geom.center && typeof geom.center.x === "number") ? geom.center : quadCenter(geom.quad);
       const aAng = (typeof geom.angle === "number") ? geom.angle : quadAngle(geom.quad);
@@ -1586,7 +1586,7 @@
         // P4-D §7：ink gap 显著时先修字号（±1），不得被 cmp.pass/几何通过短路（§10 字号优先于 position）
         const pInkGapPre = (p.ink && p.srcInkH > 0 && typeof p.geom.fontSize === "number" && !cmp.typography.wrapDetected) ? Math.round(((p.ink.inkHeight - p.srcInkH) * 100)) / 100 : null;
         if (pInkGapPre != null && Math.abs(pInkGapPre) > 1.5) {
-          if (p.round >= 3) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: "FONT_MODEL", failures: "height-ink", status: cmp.status, cal: p.cal }); return; }
+          if (p.round >= 3) { p.done = true; ZY_NOTES.push({ blockIndex: p.blockIndex, status: cmp.status, failures: "height-ink", category: "FONT_MODEL", code: "CALIBRATION_MODEL_FAILURE", cal: p.cal }); return; } // P4-D §14：4 轮不收敛 → 保留对象并备案（禁全局 multiplier）
           const corrPre = correctionsFor(p, p.geom, cmp);
           if (corrPre) { p.round += 1; if (corrPre.__large) { p.large += 1; delete corrPre.__large; } need.push({ blockIndex: p.blockIndex, corrections: corrPre }); }
           return;

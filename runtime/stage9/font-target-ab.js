@@ -337,6 +337,8 @@ function pageWorldPayloadFor(cond) {
               fontFamily: ob.fontFamily, fontSize: ob.fontSize,
               scriptType: diag.sizeCluster || null, sizeBucket: null,
               targetSource: diag.targetSource || null,
+              sourceInkHeight: diag.sourceInkHeight != null ? Math.round(diag.sourceInkHeight * 100) / 100 : null,
+              fontSizeSource: diag.fsSource || null,
               ocrBBoxTargetWidth: ocrBBox ? ocrBBox.width : null,
               imageInkTargetWidth: inkTgt,
               inkFallback: !!diag.inkFallback, inkReason: diag.inkReason || null,
