@@ -250,8 +250,10 @@ function validateBlockSet(list, imageSize, context) {
       warns.push(R.W_GIANT_COVER);
     }
   }
+  // 逐块 blocked（TINY/GIANT/单字符噪点等）只剔除那块，不阻断整组（8D §十九：accepted=N blocked=M 允许）；
+  // 仅 set 级 suspect（碎片≥FRAGMENT_RATIO 或强重叠≥OVERLAP 或单块覆盖≥SINGLE_COVER）才整体阻断。
   var suspect = setSuspectReasons.length > 0;
-  var ok = !suspect && blocked.length === 0;
+  var ok = !suspect;
   // 8D §十七 Readiness Score（诊断用；放行仍由硬门决定）
   var dims = {
     textQuality: blocked.length ? 0.3 : 1,

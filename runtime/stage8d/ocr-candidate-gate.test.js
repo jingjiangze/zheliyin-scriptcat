@@ -132,5 +132,18 @@ t("validateBlock 正常", () => {
   assert.ok(r.ok);
 });
 
+// §十九：逐块剔除非 set-suspect → ok 仍 true，validated 不含被剔块
+t("BLOCK_SET 单块 TINY 剔除不阻断整组", () => {
+  const list = [
+    cand({ text: "佛山盛盈包装", bbox: { x: 60, y: 60, width: 300, height: 40 } }),
+    cand({ text: "公", bbox: { x: 500, y: 200, width: 60, height: 1 } }) // TINY_BOX
+  ];
+  const r = G.validateBlockSet(list, IMG);
+  assert.ok(r.ok && !r.suspect, JSON.stringify(r.setSuspectReasons));
+  assert.strictEqual(r.validated.length, 1);
+  assert.strictEqual(r.blocked.length, 1);
+  assert.ok(r.blocked[0].reasons.includes(R.TINY_BOX));
+});
+
 console.log("ocr-candidate-gate.test: pass=" + passed + " fail=" + failed);
 process.exit(failed ? 1 : 0);
