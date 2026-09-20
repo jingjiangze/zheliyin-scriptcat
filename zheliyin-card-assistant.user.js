@@ -1221,7 +1221,7 @@
     // 8D §十六：状态链 —— gate 已过（candidate 层）标记 OCR_VALIDATED；进入 mapping 标记 RECONSTRUCTION_READY
     // Stage 9 P4-B §四/§五：ImageInk typography target 预取（只读；flag OFF 时零额外请求；失败显式 fallback）
     const inkByBlock = {};
-    if (STAGE9_FONT_INK_TARGET && workBlocks.length && typeof bridgeCall === "function") {
+    if (workBlocks.length && typeof bridgeCall === "function") {
       try {
         const inkRes = await bridgeCall("inkMeasure", 8000, { items: workBlocks.map(function (b, i) { return { blockIndex: i, bbox: { x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height } }; }) });
         if (inkRes && inkRes.ok && Array.isArray(inkRes.items)) inkRes.items.forEach(function (r) { if (r && r.blockIndex != null) inkByBlock[r.blockIndex] = r; });
@@ -1274,7 +1274,11 @@
         : { width: bw, source: "OCR_BBOX", fallback: false, reason: "RESOLVER_UNAVAILABLE" };
       if (tRes && tRes.source === "IMAGE_INK") ocrLog("FONT_TARGET", "block=" + bi + " source=IMAGE_INK ocrBBox=" + Math.round(b.bbox.width) + " imageInk=" + Math.round((inkM && inkM.inkWidth) || 0) + " target=" + Math.round(tRes.width) + " fallback=0");
       else if (tRes && tRes.fallback && STAGE9_FONT_INK_TARGET) ocrLog("FONT_TARGET", "block=" + bi + " source=" + tRes.source + " ocrBBox=" + Math.round(b.bbox.width) + " imageInk=" + (inkM && inkM.ok ? Math.round(inkM.inkWidth) : "null") + " fallback=1 reason=" + String(tRes.reason || "UNKNOWN"));
-      // §10（legacy 诊断保留）：avgLineH（行高均值）仅作诊断与 fallback。
+      // Stage 9 P4-D：fontSize height-first —— 源图墨迹行高 ×sy → canvas 像素（Source Ink Height）；
+		// 宽度不再决定字号；宽度只管 textbox width / 防换行（§2/§5）。
+		const sourceInkHeight = (inkM && inkM.ok && typeof inkM.inkHeight === 'number' && inkM.inkHeight > 0) ? Math.round((inkM.inkHeight * sy) * 100) / 100 : null;
+		const sourceInkWidth = (inkM && inkM.ok && typeof inkM.inkWidth === 'number' && inkM.inkWidth > 0) ? Math.round((inkM.inkWidth * sx) * 100) / 100 : null;
+		      // §10（legacy 诊断保留）：avgLineH（行高均值）仅作诊断与 fallback。
       let lineHSum = 0;
       (b.lines || []).forEach((l) => { if (l && l.bbox && l.bbox.height > 0) lineHSum += l.bbox.height; });
       const avgLineH = (b.lines && b.lines.length && lineHSum > 0) ? lineHSum / b.lines.length : bh;
@@ -1283,7 +1287,7 @@
       // 叠加 gate Readiness Score（quality<0.5 → 该块不创建）。8B 定案保持：advance 命中源字号。
       let fs = null, fsSource = "none", zy8bAdvance = null, fusion8d = null;
       if (fontMeas8bAvailable && typeof solveFontSizeFusion === "function") {
-        fusion8d = solveFontSizeFusion({ text: srcText, targetVisualWidth: Math.max(8, tRes.width), inkHeight: null, ocrHeight: bh, fontFamily: measureFamily, measurer: fontMeas8b.measurer, quality: currentGateScore != null ? currentGateScore : 0.9 });
+        fusion8d = solveFontSizeFusion({ text: srcText, targetVisualWidth: Math.max(8, tRes.width), inkHeight: sourceInkHeight, ocrHeight: bh, fontFamily: measureFamily, measurer: fontMeas8b.measurer, quality: currentGateScore != null ? currentGateScore : 0.9 });
         if (fusion8d && fusion8d.ok && fusion8d.fontSize > 0) {
           fs = Math.min(160, Math.max(8, fusion8d.fontSize));
           fsSource = fusion8d.reason || "fusion";
@@ -1318,6 +1322,8 @@
         targetWidth: tRes ? Math.round(tRes.width * 100) / 100 : null,
         ocrBBoxTargetWidth: Math.round(bw * 100) / 100,
         imageInkTargetWidth: (inkM && inkM.ok) ? (Math.round(inkM.inkWidth * sx * 100) / 100) : null,
+			sourceInkHeight: sourceInkHeight, // P4-D：fontSize 高度证据（canvas px）
+			sourceInkWidth: sourceInkWidth, // P4-D：宽度证据（canvas px）
         inkFallback: !!(tRes && tRes.fallback),
         inkReason: (inkM && !inkM.ok) ? inkM.reason : null,
         perLineWidth: layout.perLine.map((p) => ({ text: String(p.text).slice(0, 12), width: p.estimatedWidth, needsWrap: !!(p.needsWrap) })),
