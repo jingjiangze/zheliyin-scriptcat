@@ -17,6 +17,7 @@
 const path = require("path");
 const fs = require("fs");
 const { chromium } = require("../../node_modules/playwright");
+const crypto = require("crypto");
 const ROOT = path.join(__dirname, "..", "..");
 const SC_DIR = path.join(ROOT, "runtime", "vendor", "scriptcat");
 const PROFILE = process.env.P0_PROFILE || path.join(ROOT, "runtime", "browser", "profile-usc3");
@@ -121,6 +122,65 @@ function pageWorldPayloadFor(cond) {
   }
   parts.push(norm);
   return parts.join("\n;\n");
+}
+
+// ---- Stage 9 Commit 2：Golden Material Fixture（素材图 == OCR 输入 == Canvas 背景，同一张图）----
+function fingerprintImageNode(dataUrl) {
+  const s = String(dataUrl || "");
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i += 1) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; }
+  return "img-" + h.toString(16) + "-" + s.length;
+}
+// 页面侧：背景图几何 + imageTransform 证据（复用 image-space buildImageTransform；只读）
+async function collectBgGeometry(page) {
+  return page.evaluate(() => {
+    const req = window.requirejs || window.require;
+    const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+    const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+    const c = d && d.canvas;
+    const bg = c && c.backgroundImage;
+    const ac = bg && bg.aCoords;
+    let transform = null;
+    if (typeof buildImageTransform === "function" && bg && ac && typeof bg.naturalWidth !== "undefined") {
+      try {
+        const t = buildImageTransform({ naturalWidth: bg.naturalWidth, naturalHeight: bg.naturalHeight, width: bg.width, height: bg.height, aCoords: ac });
+        if (t) transform = { m: t.m, a: t.a, cx: t.cx, cy: t.cy, scaleX: t.scaleX, scaleY: t.scaleY, k: t.k };
+      } catch (e) { transform = { err: String(e && e.message || e).slice(0, 80) }; }
+    }
+    return {
+      canvasWidth: c ? c.width : null,
+      canvasHeight: c ? c.height : null,
+      bgWidth: bg ? bg.width : null,
+      bgHeight: bg ? bg.height : null,
+      naturalWidth: (bg && (bg.naturalWidth || (bg._originalElement && bg._originalElement.naturalWidth))) || null,
+      naturalHeight: (bg && (bg.naturalHeight || (bg._originalElement && bg._originalElement.naturalHeight))) || null,
+      aCoords: ac ? { tl: [ac.tl.x, ac.tl.y], tr: [ac.tr.x, ac.tr.y], br: [ac.br.x, ac.br.y], bl: [ac.bl.x, ac.bl.y] } : null,
+      transformFn: typeof buildImageTransform === "function",
+      imageTransform: transform
+    };
+  }).catch(() => null);
+}
+// 页面侧：解码级像素指纹（16×16 灰度混合哈希）——同一图片（含重编码）必等；不同图片必不等
+async function imageHashEqual(page, dataUrlA, dataUrlB) {
+  return page.evaluate((arg) => new Promise((resolve) => {
+    const tiny = (dataUrl) => new Promise((res) => {
+      const im = new Image();
+      im.onload = () => {
+        try {
+          const cv = document.createElement("canvas"); cv.width = 16; cv.height = 16;
+          const g = cv.getContext("2d", { willReadFrequently: true });
+          g.drawImage(im, 0, 0, 16, 16);
+          const d = g.getImageData(0, 0, 16, 16).data;
+          let h = 0x811c9dc5;
+          for (let i = 0; i < d.length; i += 4) { const v = (d[i] * 33 + d[i + 1] * 17 + d[i + 2] * 7) >>> 0; h ^= v; h = Math.imul(h, 0x01000193) >>> 0; }
+          res(h.toString(16));
+        } catch (e) { res(null); }
+      };
+      im.onerror = () => res(null);
+      im.src = dataUrl;
+    });
+    Promise.all([tiny(arg.a), tiny(arg.b)]).then((hh) => resolve({ hashA: hh[0], hashB: hh[1], sameImage: !!(hh[0] && hh[0] === hh[1]) }));
+  }), { a: dataUrlA, b: dataUrlB }).catch(() => ({ hashA: null, hashB: null, sameImage: null }));
 }
 
 (async () => {
@@ -303,10 +363,16 @@ function pageWorldPayloadFor(cond) {
           rec.steps.push({ step: "current-page", pageId: rec.pageId, code: cp && cp.code });
           const bg = await setBg();
           rec.steps.push({ step: "bg-inject", ok: !!(bg && bg.ok) });
+          // Stage 9 Commit 2：Golden Material —— OCR 输入 == Canvas 背景（同图校验）
+          const gDataUrl = "data:image/png;base64," + fs.readFileSync(CARD).toString("base64");
+          rec.golden = { sourceFile: path.basename(CARD), sourceSha256: crypto.createHash("sha256").update(fs.readFileSync(CARD)).digest("hex"), injectedFp: fingerprintImageNode(gDataUrl), bg: await collectBgGeometry(page) };
           if (!(bg && bg.ok)) { rec.errors.push("BG_INJECT_FAIL"); continue; }
           const prep = await bridgeCall("ocrPrepare", {}, "ocrPrepareResult", 15000).catch(() => null);
           rec.steps.push({ step: "ocr-prepare", ok: !!(prep && prep.ok && prep.dataUrl), kind: (prep && prep.kind) || null });
           if (!(prep && prep.ok && prep.dataUrl)) { rec.errors.push("OCR_PREPARE_FAIL"); continue; }
+          const gCheck = await imageHashEqual(page, prep.dataUrl, gDataUrl);
+          if (rec.golden) { rec.golden.ocrFp = fingerprintImageNode(prep.dataUrl); rec.golden.ocrImgHash = gCheck.hashA; rec.golden.bgImgHash = gCheck.hashB; rec.golden.sameImage = gCheck.sameImage; }
+          if (gCheck.sameImage === false) { rec.errors.push("GOLDEN_IMAGE_MISMATCH"); continue; } // Commit 2 §：不同图 → STOP（禁继续校准）
           const extRes = await baiduRecognizeExternal(prep.dataUrl, cond.baidu);
           rec.steps.push({ step: "baidu-external", ok: !!(extRes && !extRes.error), candidates: (extRes && extRes.candidates || []).length, meta: (extRes && extRes.meta && extRes.meta.mode) || null });
           if (!extRes || extRes.error) { rec.errors.push("BAIDU_EXTERNAL_FAIL: " + String((extRes && extRes.error && extRes.error.errorCode) || "?")); continue; }
