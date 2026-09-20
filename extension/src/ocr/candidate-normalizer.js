@@ -300,6 +300,10 @@ function groupLinesToBlocks(lines, opts) {
   const overlapRatioMin = o.overlapRatioMin != null ? o.overlapRatioMin : 0.5;
   const leftAlignTolRatio = o.leftAlignTolRatio != null ? o.leftAlignTolRatio : 0.5;
   const maxGapPxOverride = o.maxGapPx != null ? o.maxGapPx : null; // null → 1.5 × medianLineHeight
+  // Stage 8D P4（LINE→BLOCK）：非重叠堆叠分支的行中心基线门禁。
+  // 离线实验（33 行 fixture + 合成多行正文）：正常段距行中心差≈mH+gap → baselineDelta 1.2~1.5；
+  // 链式巨型块（B5/B6）= 1.87/2.69。默认 1.6 = 正常段落保留、链式吸入拒绝的最小分隔点。
+  const baselineDeltaMax = o.baselineDeltaMax != null ? o.baselineDeltaMax : 1.6;
   // Stage 7.8 §二十四：Vertical Overlap Guard —— y 带重叠超出阈值时视为同排续接，要求强横向覆盖。
   const vOverlapMergeMax = o.vOverlapMergeMax != null ? o.vOverlapMergeMax : 0.5;
   const vOverlapXMin = o.vOverlapXMin != null ? o.vOverlapXMin : 0.85;
@@ -392,6 +396,9 @@ function groupLinesToBlocks(lines, opts) {
         }
         // §二十三 baseline 记录（正常堆叠不设门禁，仅供 Fixture 分析）
         if (m.baselineDelta == null) m.baselineDelta = Math.abs((L.bbox.y + L.bbox.height / 2) - (blk.yStart + blk.yEnd) / 2) / Math.max(blk.mH, L.bbox.height);
+        // Stage 8D P4（真实名片取证 mergeAudit B5/B6）：非重叠 gap 分支此前完全无 baseline 门禁，
+        // baselineDelta 1.87/2.69（行中心差近乎两倍行高）仍被链式吸入 → 增加 baselineDeltaMax 硬门。
+        if (baselineDeltaMax != null && m.baselineDelta > baselineDeltaMax) failed.push("baseline-delta");
       }
     }
     if (!failed.length) { m.decision = "MERGE"; return { ok: true, m: m, failed: [] }; }
