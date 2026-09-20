@@ -1,0 +1,23 @@
+{
+  "ts": "2026-09-20T04:50:43.439Z",
+  "stage": "STAGE-9-P0F-JSJ-LOGIN",
+  "branch": "stage-9-altq-baidu-reconstruction",
+  "url": "https://diy.zheliyin.com/siteWeb/jsj/index.do",
+  "errors": [],
+  "loginInitially": {
+    "hasLoginBtn": true,
+    "headText": "模板中心\n设计工具\n功能介绍\n登录\n 热门推荐\n在线模板\n印刷物料\n影像生活\n其他类\n图片工具\n 智能抠图\n 证件照\n PSD转换\n 电子画册\n 台历核稿\n 照片书核稿\n 格式转换\n 图片超分\n其他\n\n更新日志\n\n意见反馈\n\n模板需求\n\n登"
+  },
+  "loginResolved": true,
+  "loginWaitMs": 12019,
+  "menuAfterLogin": {
+    "bodyHead": "模板中心\n设计工具\n功能介绍\n设计师平台\n 岳绘播qy\n 热门推荐\n个人中心\n我的设计\n我的团队\n我的素材\n在线模板\n印刷物料\n影像生活\n其他类\n图片工具\n 智能抠图\n 证件照\n PSD转换\n 电子画册\n 台历核稿\n 照片书核稿\n 格式转换\n 图片超分\n其他\n个人设置\n更新日志\n意见反馈\n模板需求",
+    "ocrLinks": [],
+    "toolLinks": [
+      {
+        "text": "个人设置",
+        "href": "javascript:void(0)"
+      }
+    ]
+  }
+}
