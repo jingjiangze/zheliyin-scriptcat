@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-20T00:41:52.576Z",
+  "generatedAt": "2026-09-20T00:44:31.115Z",
   "userscriptVersion": "0.3.11.21",
-  "moduleCount": 16,
+  "moduleCount": 17,
   "modules": [
     {
       "id": "field-core",
@@ -51,6 +51,13 @@
       "path": "extension/src/editor/text-fit.js",
       "version": "0.3.11.21",
       "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.21"
+    },
+    {
+      "id": "text-fit-fusion",
+      "branch": "test",
+      "path": "extension/src/editor/text-fit-fusion.js",
+      "version": "0.3.11.21",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.21"
     },
     {
       "id": "baidu-provider",

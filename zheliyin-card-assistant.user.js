@@ -21,6 +21,7 @@
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.21
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.21
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.21
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.21
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.21
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.21
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.21
@@ -1083,6 +1084,7 @@
   // 状态语义：OCR_DETECTED（原始）→ OCR_VALIDATED（gate 通过）→ RECONSTRUCTION_READY（buildItems）
   // → RECONSTRUCTION_CREATED（native 创建）→ RECONSTRUCTION_VERIFIED（ink/geometry 验证）。
   // 纯函数缺失（@require 未加载/旧版）时安全降级：全部放行（与原行为一致，不误伤）。
+  let currentGateScore = 0.9; // 最近一次 gate 的 Readiness Score（供 buildItemsFromOcr 的字号融合使用）
   function runCandidateGate(candList, size) {
     if (typeof validateBlockSet !== "function") return { ok: true, validated: candList, blocked: [], suspect: false, setSuspectReasons: [], degraded: true };
     const g = validateBlockSet(candList, size, { imageSize: size });
@@ -1158,15 +1160,25 @@
       let lineHSum = 0;
       (b.lines || []).forEach((l) => { if (l && l.bbox && l.bbox.height > 0) lineHSum += l.bbox.height; });
       const avgLineH = (b.lines && b.lines.length && lineHSum > 0) ? lineHSum / b.lines.length : bh;
-      // Stage 8B STEP 5（主算法）：fontSize = advanceWidth 宽度匹配（OCR bbox 宽×scale 为目标）。
-      // font-metrics-audit 依据：OCR 行高 ≈ 引擎 padding 产物（SimHei fontBox=1.00fs 但 OCR 报 1.43×fs），
-      // 高度不可作字号主求解；宽/字数/单字前进量组合在控制组三行命中源字号（40/20/12）。
-      let fs = null, fsSource = "none", zy8bAdvance = null;
-      if (fontMeas8bAvailable && typeof solveFontSizeByWidth === "function") {
-        const sw = solveFontSizeByWidth(srcText, Math.max(8, bw), { measurer: fontMeas8b.measurer, fontFamily: measureFamily });
-        if (sw && sw.fontSize > 0) { fs = Math.min(160, Math.max(8, sw.fontSize)); fsSource = "advance-width"; zy8bAdvance = sw.advanceWidth || null; }
+      // Stage 8D §十三~§十五（Typography Evidence Fusion）：不再让 width 单一指标独裁字号。
+      // 融合 advance width（主）、ink height（有则交叉校验）、OCR bbox height（仅 sanity）；
+      // 叠加 gate Readiness Score（quality<0.5 → 该块不创建）。8B 定案保持：advance 命中源字号。
+      let fs = null, fsSource = "none", zy8bAdvance = null, fusion8d = null;
+      if (fontMeas8bAvailable && typeof solveFontSizeFusion === "function") {
+        fusion8d = solveFontSizeFusion({ text: srcText, targetVisualWidth: Math.max(8, bw), inkHeight: null, ocrHeight: bh, fontFamily: measureFamily, measurer: fontMeas8b.measurer, quality: currentGateScore != null ? currentGateScore : 0.9 });
+        if (fusion8d && fusion8d.ok && fusion8d.fontSize > 0) {
+          fs = Math.min(160, Math.max(8, fusion8d.fontSize));
+          fsSource = fusion8d.reason || "fusion";
+          zy8bAdvance = (fusion8d.sources && fusion8d.sources.advance && fusion8d.sources.advance.advanceWidth) || null;
+        } else if (fusion8d && !fusion8d.ok) {
+          ocrLog("FUSION8D", "block " + bi + " reject reason=" + String(fusion8d.reason || "") + " quality=" + (currentGateScore != null ? Math.round(currentGateScore * 100) / 100 : "n/a"));
+        }
       }
       if (!fs) { fs = Math.max(8, Math.min(160, Math.round((avgLineH * sy) / FONT_HEIGHT_RATIO))); fsSource = "legacy-height-ratio"; }
+      // 8D §十二：bbox 三层分离（ocrBBox / textVisualTarget / textLayoutTarget）—— 诊断与下游用
+      const bboxSep = (typeof bboxSeparation === "function")
+        ? bboxSeparation({ x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height }, sx)
+        : null;
       // §11/§12：textbox layoutWidth —— 优先真实文本测量（字号标定+字符宽度估计+安全余量），
       // 宽度 = clamp(max(60, 视觉宽, 最长行估计宽+margin), ≤4000)，OCR 原始单行不得因宽度不足再换行
       const textLines = srcText.split("\n").filter((t) => t !== "");
@@ -1196,7 +1208,10 @@
         fsSource: fsSource,
         fontFamilyUsed: measureFamily,
         fontFamilySource: fontFamilyCandidate ? "template" : "fallback",
-        legacyAvgLineH: avgLineH
+        legacyAvgLineH: avgLineH,
+        // Stage 8D：融合证据（§十四）与 bbox 三层分离（§十二）
+        fusion8d: fusion8d ? { reason: fusion8d.reason, confidence: fusion8d.confidence, quality: currentGateScore != null ? Math.round(currentGateScore * 100) / 100 : null, warnings: (fusion8d.warnings || []).slice(0, 4) } : null,
+        bboxSeparation8d: bboxSep ? { visualWidth: bboxSep.textVisualTarget.width, ocrBoxH: Math.round(bboxSep.ocrBBox.height * 100) / 100, layoutW: null } : null
       };
       // §14：几何模型 —— 水平文本 left/top；θ≠0 旋转文本 center/angle（保留 P5 rotation 行为，零变化）
       const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;
