@@ -1479,7 +1479,7 @@
     (itemsList || []).forEach(function (it) {
       const created = (reply && reply.created ? reply.created : []).find(function (c) { return c && c.blockIndex === it.blockIndex; });
       if (!it.zy8bTargetQuad || !created || !created.geometry || !created.geometry.quad) return;
-      pending.push({ blockIndex: it.blockIndex, item: it, geom: created.geometry, round: 0, done: false, compare: null, large: 0 });
+      pending.push({ blockIndex: it.blockIndex, item: it, geom: created.geometry, round: 0, done: false, compare: null, large: 0, srcInkH: (it.diagnostics && typeof it.diagnostics.sourceInkHeight === "number") ? it.diagnostics.sourceInkHeight : null, ink: (created && created.ink) || null, cal: [] });
     });
     if (!pending.length) return;
     const ZY_OK = [], ZY_REJECT = [];
@@ -1495,10 +1495,28 @@
         window.addEventListener("message", onAdj);
       });
     };
-    const correctionsFor = function (it, geom, cmp) {
+    const correctionsFor = function (p, geom, cmp) { const it = p.item;
       // Stage 8B STEP 5/6（§11/§12/§十四）：calibration 职责收敛 —— 只做小误差修正；
       // 换行（WRAP）只加宽不缩字号；字大小只 ±1 小步；需要大跳变 → 归类 CALIBRATION_MODEL_FAILURE。
       const corr = {}, tq = it.zy8bTargetQuad;
+      // P4-D §7/§8：Source Ink Height vs Editor Actual Ink Height —— ±1 小步（禁外框高/OCR bbox 高；§10 字号未收敛不修 position）
+      if (p.ink && p.srcInkH > 0 && typeof geom.fontSize === "number" && it.text && !cmp.typography.wrapDetected) {
+        const pGap = Math.round(((p.ink.inkHeight - p.srcInkH) * 100)) / 100;
+        if (Math.abs(pGap) > 1.5) {
+          const fsCur = geom.fontSize;
+          const fsNew = Math.min(160, Math.max(10, fsCur + (pGap > 0 ? -1 : 1)));
+          corr.fontSize = fsNew; any = true;
+          p.cal.push({ round: (p.round || 0) + 1, sourceInkHeight: p.srcInkH, editorInkHeightBefore: p.ink.inkHeight, fontSizeBefore: fsCur, fontSizeAfter: fsNew, heightErrorBefore: pGap, heightRatio: Math.round((p.ink.inkHeight / p.srcInkH) * 1000) / 1000, annotation: pGap > 0 ? "editor-too-large" : "editor-too-small" });
+          if (Math.abs(pGap) > 2) large = true;
+          const measW2 = withMeasurer();
+          if (typeof solveTextWidth === "function" && measW2) {
+            const mw = solveTextWidth(it.text, fsNew, { margin: 0, measurer: measW2, fontFamily: it.fontFamily || "sans-serif" });
+            if (mw) corr.width = Math.min(4000, Math.max(geom.textboxWidth || 20, Math.ceil(mw.advanceWidth + 4)));
+          }
+          corr.__large = large;
+          return corr; // 只调字号（+防换行宽度），不动 center/angle
+        }
+      }
       let any = false, large = false;
       const tSz = quadSize(tq), tCtr = quadCenter(tq), tAng = quadAngle(tq);
       const aCtr = (geom.center && typeof geom.center.x === "number") ? geom.center : quadCenter(geom.quad);
@@ -1522,7 +1540,7 @@
         corr.width = Math.min(4000, Math.max(20, Math.round(needW)));
         any = true;
       }
-      if (cmp.failures.indexOf("height") >= 0 && typeof geom.fontSize === "number" && it.text && !cmp.typography.wrapDetected) {
+      if (cmp.failures.indexOf("height") >= 0 && typeof geom.fontSize === "number" && it.text && !cmp.typography.wrapDetected && !(p.ink && p.srcInkH > 0)) { // P4-D：ink 证据时 fontSize 由 Actual Ink 校准（§8）
         // 无换行的小高度差：字号 ±1 小步（STEP E：1~3 次小修正内收敛）
         const fsCur = geom.fontSize;
         const step = tSz.height > geom.height ? 1 : -1;
@@ -1565,14 +1583,22 @@
         if (p.done) return;
         const cmp = compareTextGeometry(p.item.zy8bTargetQuad, p.geom.quad, { centerTol: 2, cornerTol: 3, widthTol: 3, angleTol: 0.5, renderedLineCount: p.geom.renderedLineCount != null ? p.geom.renderedLineCount : null, targetLineCount: (p.item.diagnostics && p.item.diagnostics.sourceLineCount) || 1, fontMismatch: !!p.item.zy8bFontMismatch, advanceOverride: p.item.zy8bAdvance != null ? p.item.zy8bAdvance : null, fontSize: p.geom.fontSize != null ? p.geom.fontSize : null });
         p.compare = cmp;
+        // P4-D §7：ink gap 显著时先修字号（±1），不得被 cmp.pass/几何通过短路（§10 字号优先于 position）
+        const pInkGapPre = (p.ink && p.srcInkH > 0 && typeof p.geom.fontSize === "number" && !cmp.typography.wrapDetected) ? Math.round(((p.ink.inkHeight - p.srcInkH) * 100)) / 100 : null;
+        if (pInkGapPre != null && Math.abs(pInkGapPre) > 1.5) {
+          if (p.round >= 3) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: "FONT_MODEL", failures: "height-ink", status: cmp.status, cal: p.cal }); return; }
+          const corrPre = correctionsFor(p, p.geom, cmp);
+          if (corrPre) { p.round += 1; if (corrPre.__large) { p.large += 1; delete corrPre.__large; } need.push({ blockIndex: p.blockIndex, corrections: corrPre }); }
+          return;
+        }
         if (cmp.pass) { p.done = true; ZY_OK.push(p.blockIndex); return; }
-        if (cmp.geometry.pass && !cmp.typography.wrapDetected) {
+        if (cmp.geometry.pass && !cmp.typography.wrapDetected && !(p.ink && p.srcInkH > 0 && Math.abs(p.ink.inkHeight - p.srcInkH) > 1.5)) { // P4-D：ink gap 未收敛不得提前备注
           // 视觉几何正确、无换行 → 对象保留；typography 差异仅记录（字体不匹配属 StyleResolver 范畴）
           p.done = true; ZY_NOTES.push({ blockIndex: p.blockIndex, status: cmp.status, failures: (cmp.failures || []).join("|"), category: CATEGORY(p) });
           return;
         }
         if (p.round >= 3) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: (cmp.failures || []).join("|"), status: cmp.status }); return; }
-        const corr = correctionsFor(p.item, p.geom, cmp);
+        const corr = correctionsFor(p, p.geom, cmp);
         if (!corr) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_NO_CORRECTION", category: CATEGORY(p), failures: (cmp.failures || []).join("|") }); return; }
         p.round += 1;
         if (corr.__large) p.large += 1;
@@ -1586,8 +1612,14 @@
       rep.items.forEach(function (r) {
         const p = pending.find(function (x) { return x.blockIndex === r.blockIndex; });
         if (p && r.ok && r.geometry && r.geometry.quad) p.geom = r.geometry;
+        if (p && r.ok && r.ink) { p.ink = r.ink; if (p.cal.length) p.cal[p.cal.length - 1].editorInkHeightAfter = r.ink.inkHeight != null ? r.ink.inkHeight : null; } // P4-D：校准后 Actual Ink 回填
       });
     }
+    // P4-D §9：校准证据导出（window 隔离变量，供 runner readNew 取证）
+    try {
+      const withCal = pending.filter(function (x) { return x.cal && x.cal.length; }).map(function (x) { return { blockIndex: x.blockIndex, sourceInkHeight: x.srcInkH, rounds: x.cal.length, steps: x.cal, finalFontSize: (x.geom && typeof x.geom.fontSize === "number") ? x.geom.fontSize : null, finalEditorInkHeight: (x.ink && typeof x.ink.inkHeight === "number") ? x.ink.inkHeight : null, heightErrorAfter: (x.ink && x.srcInkH > 0 && typeof x.ink.inkHeight === "number") ? Math.round((x.ink.inkHeight - x.srcInkH) * 100) / 100 : null }; });
+      if (withCal.length) window.__zyStage9CalibrationEvidence = (window.__zyStage9CalibrationEvidence || []).concat(withCal);
+    } catch (eCalEv) {}
     pending.forEach(function (p) { if (!p.done) { p.done = true; if (p.compare && p.compare.geometry.pass && !p.compare.typography.wrapDetected) { ZY_NOTES.push({ blockIndex: p.blockIndex, status: p.compare.status, failures: (p.compare.failures || []).join("|"), category: CATEGORY(p) }); } else { ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: p.compare ? (p.compare.failures || []).join("|") : "no-compare", status: p.compare ? p.compare.status : null }); } } });
     if (ZY_OK.length || ZY_REJECT.length || ZY_NOTES.length) {
       const summary = { ok: ZY_OK.length, rejected: ZY_REJECT.length, noted: ZY_NOTES.length, rejectedBlocks: ZY_REJECT.map(function (r) { return { blockIndex: r.blockIndex, code: r.code, category: r.category, failures: r.failures, status: r.status }; }), notes: ZY_NOTES };

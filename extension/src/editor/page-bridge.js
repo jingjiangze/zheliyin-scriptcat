@@ -21,6 +21,15 @@ function pageBridge() {
     const BRIDGE_SOURCE_IN_PAGE = "zy-card-assistant";
     const PAGE_SOURCE_IN_PAGE = "zy-card-assistant-page";
     window.addEventListener("message", function (event) {
+
+    // Stage 9 P4-D：Editor Actual Ink 测量（复用 ink-measure/measureFabricObjectInk；不可用返回 null，行为不变）
+    function measureFabInkFor(obj) {
+      try {
+        if (!window.__zy8dInk || typeof window.__zy8dInk.measureFabricObjectInk !== 'function' || !obj) return null;
+        var r = window.__zy8dInk.measureFabricObjectInk(obj);
+        return (r && r.ok && typeof r.inkHeight === 'number') ? { inkWidth: r.inkWidth, inkHeight: r.inkHeight, lineCount: r.lineCount != null ? r.lineCount : null, method: r.method || null } : null;
+      } catch (e) { return null; }
+    }
       if (event.source !== window || !event.data || event.data.source !== BRIDGE_SOURCE_IN_PAGE) return;
       if (event.data.type === "probe") {
         post("probeResult", buildProbeResult());
@@ -233,7 +242,7 @@ function pageBridge() {
               obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxMir) : ("zy-ocr-" + bIdxMir);
               obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxMir, objectUuid: obj.uuid || obj.multiUuid || obj.markuuid || null };
               const gObj = measureObjectGeometry(canvas, obj);
-              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gObj });
+              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, ink: measureFabInkFor(obj), geometry: gObj });
               batch.push(obj);
             } catch (e2) {
               // §16 事务：第一个失败即终止，全量回滚本批已建对象，恢复创建前状态（created=0）
@@ -334,6 +343,7 @@ function pageBridge() {
             found.set(cfg);
             if (adj.syncBusiness !== false) syncBusinessFieldsFromObject(found);
             res.geometry = measureObjectGeometry(canvasAdj, found);
+            res.ink = measureFabInkFor(found); // P4-D：Editor Actual Ink（fontSize 校准依据）
             res.ok = true;
           } catch (eAdj) { res.error = String(eAdj && eAdj.message || eAdj).slice(0, 120); }
           resultsAdj.push(res);

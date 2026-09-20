@@ -263,7 +263,7 @@ function pageWorldPayloadFor(cond) {
           diag: o.zyOcrDiagnostics || null
         });
       }
-      return { arr };
+      return { arr, calib: (window.__zyStage9CalibrationEvidence || []) }; // P4-D：Actual Ink 校准证据
     }, { ids });
     const rollback = () => page.evaluate(() => {
       const req = window.requirejs || window.require;
@@ -322,6 +322,7 @@ function pageWorldPayloadFor(cond) {
           const createdIds = (after || []).filter((id) => (before || []).indexOf(id) < 0);
           const rd = await readNew(createdIds);
           rec.steps.push({ step: "read", objects: (rd && rd.arr || []).length });
+          rec.calibration = (rd && rd.calib) || []; // P4-D §9
           if ((rd && rd.arr && rd.arr.length) > 0) rec.pipeline = "FULL_REAL_PIPELINE";
           else { rec.errors.push("NO_OBJECTS_CREATED"); continue; }
           for (const ob of (rd && rd.arr) || []) {
