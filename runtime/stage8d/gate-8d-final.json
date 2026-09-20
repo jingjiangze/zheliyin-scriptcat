@@ -1,0 +1,95 @@
+{
+  "gate": "GATE-8D",
+  "name": "Stage 8D OCR Quality Reconstruction Final Gate",
+  "generatedAt": "2026-09-20",
+  "branch": "stage-8d-ocr-quality-reconstruction",
+  "productionCommit": "5f11d6b",
+  "evidenceHead": "24f73d8",
+  "testBranch": "5f11d6b",
+  "version": "0.3.11.32",
+  "verdicts": {
+    "GATE-8D-OCR-QUALITY": "PASS",
+    "GATE-8D-TEXT-FIT": "PASS",
+    "GATE-8D-REAL-IMAGE": "PASS_WITH_NOTES"
+  },
+  "overall": "PARTIAL_READY",
+  "overallNote": "管线证据链（WORD→LINE→BLOCK→GATE→CREATE→GEOMETRY→INK 三层）READY 且零行为回归；字段级重建（姓名/职位/邮箱成块）NOT READY —— 归 Stage 9（OCR 词级质量/去噪），如实记录不作伪",
+  "metrics": {
+    "runs": {
+      "v16": { "commitNote": "P3 基线", "created": 7, "rollback": 7, "rawWords": 97 },
+      "v17": { "commitNote": "P3 后", "created": 8, "rollback": 8, "rawWords": 97 },
+      "v18": { "commitNote": "P4 修复验证", "created": 9, "rollback": 9, "rawWords": 97 },
+      "v19": { "commitNote": "P4 PASS", "created": 10, "rollback": 10, "blocks": 25, "rejected": 0, "noted": 10 },
+      "v20": { "commitNote": "P5-1 诊断层", "created": 10, "rollback": 10, "blocks": 25, "rejected": 0, "noted": 10 },
+      "v21": { "commitNote": "P6-1 ink 三层", "created": 10, "rollback": 10, "inkOk": "10/10", "rawWords": 97 },
+      "v22": { "commitNote": "P7 overlay", "created": 10, "rollback": 10, "inkOk": "10/10", "rawWords": 97 }
+    },
+    "v22Geometry": {
+      "centerErrorAvgPx": 0.24,
+      "centerErrorMaxPx": 0.59,
+      "angleErrorAvgDeg": 0,
+      "compareFail": { "blocks": 10, "fail": 10, "pattern": "width,height（STYLE_MISMATCH 仅备注，保留不拒绝）" }
+    },
+    "v22Pipeline": {
+      "rawWords": 97,
+      "normalizedLines": 33,
+      "gateAcceptedBlocks": 25,
+      "createdBlocks": 10,
+      "rejected": 0,
+      "inkRowsOk": 10,
+      "usedFont": "方正黑体简体（模板真实字体 FONT_REAL_TEMPLATE）",
+      "inkWiderThanTarget": 0,
+      "overlay": { "raw": "real-card-ocr-raw.png", "filtered": "real-card-ocr-filtered.png", "reconstructed": "real-card-ocr-reconstructed.png" }
+    }
+  },
+  "gateDetail": {
+    "OCR-QUALITY": {
+      "passItems": [
+        "WORD→LINE=33（P3 yTol=min 修复）",
+        "LINE→BLOCK：3+ 行巨型块=0；回册…/多 与 器/洛/Tel 拆分（P4 baselineDeltaMax=1.6 + 重叠门 0.38）",
+        "Gate 单测 24/24；块层二次 gate 后 created/rejected/noted 稳定",
+        "诊断字段齐全：fontProvision/specialStyle/orientation/fusion8d/ocrBBox8d/ink 三层",
+        "单测全绿：gate24+fusion8+normalizer-p3-4+line-blocks-p4-4+font-source12+ink15 = 67"
+      ],
+      "honestNotes": [
+        "本地 tesseract 对 QR 密集卡：33 归一化行中约 19 行为 QR 噪点（P7 filtered 图证）",
+        "created 文本含碎片/误识（如 回册佛山盛包装制品限、Telephone: +86 截断）——引擎真实质量",
+        "orientation：无行级 rotation 输入信号 → 如实 UNKNOWN/NONE，不伪造"
+      ]
+    },
+    "TEXT-FIT": {
+      "passItems": [
+        "fusion 字号求解保持 8B 定案（advance 主）；回册佛山盛包装制品限 fs=41 vs 源图 40px 级匹配",
+        "P6-1 ink 三层 Source(ocrBBox8d)/Target(text-fit)/Actual(rendered ink) 已建立，10/10 实测，method=FABRIC_OBJECT_LINES",
+        "无 INK_WIDER_THAN_TARGET（ink 均不溢出 textbox）",
+        "几何 center avg 0.24px / angle 0.0（亚像素合同保持）"
+      ],
+      "honestNotes": [
+        "compare width/height 全 FAIL = 设计行为：layoutWidth 保留 OCR 视觉宽+margin 防强制换行（ink 68/422 vs target 120/506）；STYLE_MISMATCH=10 仅备注，不拒绝不删除",
+        "字号/宽度模型未经 P6 证据触发调整 —— audit 结论无溢出、无证据要求改动，fusion 未改（遵守 §二十一）"
+      ]
+    },
+    "REAL-IMAGE": {
+      "passItems": [
+        "真实名片（佛山盛盈包装 895×577）E2E v16→v22 七轮 page-world 单实例注入",
+        "overlay 三视图 raw(97 words)/filtered(33 lines)/reconstructed(10 textboxes) 落盘 PNG",
+        "created=10/rejected=0/rollback=10 稳定；ink 10/10"
+      ],
+      "honestNotes": [
+        "字段级验收（如实）：公司名块存在但识别误（回册佛山盛包装制品限）；手机 'Telephone: +86' 截断；姓名/职位/邮箱未形成可读块；QR 噪点未完全过滤",
+        "字段级重建 = NOT READY → Stage 9"
+      ]
+    }
+  },
+  "p0p7Trail": {
+    "P0": "执行链修复（RAW 日志 slice 崩点 ×2 / fusion measurer 接口 / 单实例注入）",
+    "P1": "ocr-candidate-gate.js（单 block 校验/尺寸门/block-set 检测）",
+    "P2": "text-fit-fusion.js（advance 优先多证据字号求解）",
+    "P3": "WORD→LINE yTol=min（20→33 行）",
+    "P4": "LINE→BLOCK 链式合并加固（v19 验证）",
+    "P5-1": "font-source.js 四层 resolver + specialStyle + orientation 接线（v20 零回归）",
+    "P6-1": "ink-measure.js 像素级 alpha bbox + Source/Target/Actual（v21 零回归，v0.3.11.32）",
+    "P7": "overlay 三视图 + E2E 验收（v22）"
+  },
+  "demoPromotion": "NOT_PROMOTED（Stage 8D Gate 前 8 项 PASS + 字段级重建归 Stage 9，demo 保持不晋升）"
+}
