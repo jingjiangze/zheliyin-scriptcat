@@ -1,0 +1,467 @@
+{
+  "ts": "2026-09-20T15:50:54.098Z",
+  "stage": "STAGE-9-V11-IMAGE-CONTAINMENT",
+  "version": "0.3.11.47",
+  "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": false,
+  "note": "只读审计 + 受控 create-measure 对比（创建后立即清理恢复）；containment 一律 inverse(imageTransform) 在 IMAGE_PIXEL 系判定",
+  "scenarios": [
+    {
+      "case": "S1-inside",
+      "verdict": "CONTAINED",
+      "reason": "all-corners-and-aabb-inside",
+      "passed": true,
+      "evidence": {
+        "outsideCount": 0,
+        "aabbImage": {
+          "left": 250,
+          "top": 150,
+          "width": 300,
+          "height": 64
+        },
+        "margin": 0
+      },
+      "ocrBBox": {
+        "x": 250,
+        "y": 150,
+        "width": 300,
+        "height": 64
+      },
+      "targetQuad": [
+        {
+          "x": 135.35,
+          "y": 83.76
+        },
+        {
+          "x": 310.82,
+          "y": 83.76
+        },
+        {
+          "x": 310.82,
+          "y": 121.19
+        },
+        {
+          "x": 135.35,
+          "y": 121.19
+        }
+      ],
+      "requestedGeometry": {
+        "left": 135.35,
+        "top": 83.76,
+        "width": 175.47,
+        "height": 37.43,
+        "angle": 0
+      }
+    },
+    {
+      "case": "S2-outside",
+      "verdict": "OUT_OF_IMAGE",
+      "reason": "no-overlap",
+      "passed": true,
+      "evidence": {
+        "outsideCount": 4,
+        "aabbImage": {
+          "left": 1463,
+          "top": 1038,
+          "width": 160,
+          "height": 40
+        },
+        "margin": 0
+      },
+      "ocrBBox": {
+        "x": 1463,
+        "y": 1038,
+        "width": 160,
+        "height": 40
+      }
+    },
+    {
+      "case": "S3-partial-repair",
+      "verdict": "NEEDS_REPAIR",
+      "reason": "partial-outside",
+      "passed": true,
+      "evidence": {
+        "outsideCount": 2,
+        "aabbImage": {
+          "left": 943,
+          "top": 40,
+          "width": 260,
+          "height": 60
+        },
+        "margin": 0
+      },
+      "repair": {
+        "imageShift": {
+          "x": -140,
+          "y": 0
+        },
+        "afterVerdict": "CONTAINED"
+      }
+    },
+    {
+      "case": "S4-rotated-center-contained",
+      "verdict": "CONTAINED",
+      "reason": "all-corners-and-aabb-inside",
+      "passed": true,
+      "evidence": {
+        "outsideCount": 0,
+        "aabbImage": {
+          "left": 451.5,
+          "top": 299,
+          "width": 160,
+          "height": 40
+        },
+        "margin": 0
+      },
+      "canvasAABB": {
+        "left": 223.93,
+        "top": 194.71,
+        "right": 316.67,
+        "bottom": 261.77
+      }
+    },
+    {
+      "case": "S4-rotated-corner-outside",
+      "verdict": "OUT_OF_IMAGE",
+      "reason": "no-overlap",
+      "passed": true,
+      "evidence": {
+        "outsideCount": 4,
+        "aabbImage": {
+          "left": 943,
+          "top": -160,
+          "width": 60,
+          "height": 25
+        },
+        "margin": 0
+      },
+      "ocrBBox": {
+        "x": 943,
+        "y": -160,
+        "width": 60,
+        "height": 25
+      }
+    },
+    {
+      "case": "S5-create-measure-placement",
+      "verdict": "CREATED",
+      "created": {
+        "ok": true,
+        "identityMethod": "OBJECT_DELTA",
+        "requested": {
+          "left": 164.596383,
+          "top": 113.005973,
+          "width": 152.073176,
+          "height": 29.244842,
+          "angle": 0,
+          "center": {
+            "x": 240.632972,
+            "y": 127.628393
+          }
+        },
+        "actual": {
+          "aCoordsBB": {
+            "left": 164.6,
+            "top": 113.01,
+            "right": 348.32,
+            "bottom": 136.61
+          },
+          "aCoordsCenter": {
+            "x": 256.455758,
+            "y": 124.80597300000001
+          },
+          "fontSize": 20
+        },
+        "placementError": {
+          "centerError": 16.07,
+          "topLeftError": {
+            "x": 0,
+            "y": 0
+          },
+          "sizeError": {
+            "w": 31.65,
+            "h": 5.64
+          }
+        },
+        "nativeReturnObject": false,
+        "cleaned": true
+      },
+      "containmentVerdict": "CONTAINED",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "audit": {
+    "image": {
+      "objectCount": 9,
+      "index": 0,
+      "left": -10.872666059389815,
+      "top": -3.9733936666319494,
+      "width": 621.7453321187796,
+      "height": 373.16417863761177,
+      "scaleX": 1,
+      "scaleY": 1,
+      "naturalWidth": 1063,
+      "naturalHeight": 638,
+      "angle": 0
+    },
+    "effectiveScale": {
+      "effectiveScaleX": 0.584897,
+      "effectiveScaleY": 0.584897
+    },
+    "sourceScaleObjectProps": {
+      "scaleX": 1,
+      "scaleY": 1
+    },
+    "textboxCount": 7,
+    "toolFields": {
+      "buildImageTransform": "function",
+      "isQuadInsideImage": "function",
+      "repairQuadCentered": "function",
+      "quadTextGeometry": "function",
+      "effectiveScaleOf": "function"
+    },
+    "scenarios": [
+      {
+        "case": "S1-inside",
+        "verdict": "CONTAINED",
+        "reason": "all-corners-and-aabb-inside",
+        "passed": true,
+        "evidence": {
+          "outsideCount": 0,
+          "aabbImage": {
+            "left": 250,
+            "top": 150,
+            "width": 300,
+            "height": 64
+          },
+          "margin": 0
+        },
+        "ocrBBox": {
+          "x": 250,
+          "y": 150,
+          "width": 300,
+          "height": 64
+        },
+        "targetQuad": [
+          {
+            "x": 135.35,
+            "y": 83.76
+          },
+          {
+            "x": 310.82,
+            "y": 83.76
+          },
+          {
+            "x": 310.82,
+            "y": 121.19
+          },
+          {
+            "x": 135.35,
+            "y": 121.19
+          }
+        ],
+        "requestedGeometry": {
+          "left": 135.35,
+          "top": 83.76,
+          "width": 175.47,
+          "height": 37.43,
+          "angle": 0
+        }
+      },
+      {
+        "case": "S2-outside",
+        "verdict": "OUT_OF_IMAGE",
+        "reason": "no-overlap",
+        "passed": true,
+        "evidence": {
+          "outsideCount": 4,
+          "aabbImage": {
+            "left": 1463,
+            "top": 1038,
+            "width": 160,
+            "height": 40
+          },
+          "margin": 0
+        },
+        "ocrBBox": {
+          "x": 1463,
+          "y": 1038,
+          "width": 160,
+          "height": 40
+        }
+      },
+      {
+        "case": "S3-partial-repair",
+        "verdict": "NEEDS_REPAIR",
+        "reason": "partial-outside",
+        "passed": true,
+        "evidence": {
+          "outsideCount": 2,
+          "aabbImage": {
+            "left": 943,
+            "top": 40,
+            "width": 260,
+            "height": 60
+          },
+          "margin": 0
+        },
+        "repair": {
+          "imageShift": {
+            "x": -140,
+            "y": 0
+          },
+          "afterVerdict": "CONTAINED"
+        }
+      },
+      {
+        "case": "S4-rotated-center-contained",
+        "verdict": "CONTAINED",
+        "reason": "all-corners-and-aabb-inside",
+        "passed": true,
+        "evidence": {
+          "outsideCount": 0,
+          "aabbImage": {
+            "left": 451.5,
+            "top": 299,
+            "width": 160,
+            "height": 40
+          },
+          "margin": 0
+        },
+        "canvasAABB": {
+          "left": 223.93,
+          "top": 194.71,
+          "right": 316.67,
+          "bottom": 261.77
+        }
+      },
+      {
+        "case": "S4-rotated-corner-outside",
+        "verdict": "OUT_OF_IMAGE",
+        "reason": "no-overlap",
+        "passed": true,
+        "evidence": {
+          "outsideCount": 4,
+          "aabbImage": {
+            "left": 943,
+            "top": -160,
+            "width": 60,
+            "height": 25
+          },
+          "margin": 0
+        },
+        "ocrBBox": {
+          "x": 943,
+          "y": -160,
+          "width": 60,
+          "height": 25
+        }
+      },
+      {
+        "case": "S5-create-measure-placement",
+        "verdict": "CREATED",
+        "created": {
+          "ok": true,
+          "identityMethod": "OBJECT_DELTA",
+          "requested": {
+            "left": 164.596383,
+            "top": 113.005973,
+            "width": 152.073176,
+            "height": 29.244842,
+            "angle": 0,
+            "center": {
+              "x": 240.632972,
+              "y": 127.628393
+            }
+          },
+          "actual": {
+            "aCoordsBB": {
+              "left": 164.6,
+              "top": 113.01,
+              "right": 348.32,
+              "bottom": 136.61
+            },
+            "aCoordsCenter": {
+              "x": 256.455758,
+              "y": 124.80597300000001
+            },
+            "fontSize": 20
+          },
+          "placementError": {
+            "centerError": 16.07,
+            "topLeftError": {
+              "x": 0,
+              "y": 0
+            },
+            "sizeError": {
+              "w": 31.65,
+              "h": 5.64
+            }
+          },
+          "nativeReturnObject": false,
+          "cleaned": true
+        },
+        "containmentVerdict": "CONTAINED",
+        "passed": true
+      }
+    ],
+    "imageTransform": {
+      "affine": [
+        0.584897,
+        0,
+        0,
+        0.584897,
+        -10.872666,
+        -3.973394
+      ]
+    },
+    "rotatedEffectiveScale": {
+      "effectiveScaleX": 0.584897,
+      "effectiveScaleY": 0.584897
+    }
+  },
+  "image": {
+    "objectCount": 9,
+    "index": 0,
+    "left": -10.872666059389815,
+    "top": -3.9733936666319494,
+    "width": 621.7453321187796,
+    "height": 373.16417863761177,
+    "scaleX": 1,
+    "scaleY": 1,
+    "naturalWidth": 1063,
+    "naturalHeight": 638,
+    "angle": 0
+  },
+  "effectiveScale": {
+    "effectiveScaleX": 0.584897,
+    "effectiveScaleY": 0.584897
+  },
+  "sourceScaleObjectProps": {
+    "scaleX": 1,
+    "scaleY": 1
+  },
+  "textboxCount": 7,
+  "toolFields": {
+    "buildImageTransform": "function",
+    "isQuadInsideImage": "function",
+    "repairQuadCentered": "function",
+    "quadTextGeometry": "function",
+    "effectiveScaleOf": "function"
+  },
+  "imageTransform": {
+    "affine": [
+      0.584897,
+      0,
+      0,
+      0.584897,
+      -10.872666,
+      -3.973394
+    ]
+  },
+  "finalState": {
+    "objectCount": 25,
+    "zyLeftovers": 0
+  }
+}
