@@ -65,6 +65,10 @@ function pageBridge() {
         // 旧调用（无 pageId）保留兼容：走下方既有 Current Page Resolver（Stage 7.1 行为）。
         const sourcePageId = event.data.pageId || null;
         const sourceSide = event.data.side || null;
+        // Stage 9 V4 P1（§三/§四）：OCR Transaction Identity —— transactionId/imageFingerprint 从调用方冻结，
+        // 随对象 key / 对象身份 / 回复逐级透传（正反面各自独立 Session，禁跨页共享）。
+        const txId = event.data.transactionId || null;
+        const txFp = event.data.imageFingerprint || null;
         if (sourcePageId) {
           const inv = buildPageInventory();
           const known = inv.ok && (inv.pages || []).some(function (p) { return p.pageId === sourcePageId; });
@@ -141,7 +145,11 @@ function pageBridge() {
                   if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{12,}$/.test(obj.multiUuid)) editorInteg2.uv4Total += 1;
                   try { if (it.diagnostics) obj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
                   // Stage 8B STEP 4（Phase B/C）：测量本对象真实几何 + 业务字段初始同步 + 定位 key
-                  obj.zyOcrKey = "zy-ocr-" + (it.blockIndex != null ? it.blockIndex : idx);
+                  // Stage 9 V4 P1（§六）：key 升级 zy-ocr-{transactionId}-{blockIndex}，杜绝正反 blockIndex 碰撞；
+                  //   对象同时挂 zyOcrObjectId（transactionId/pageId/blockId/objectUuid 完整身份）。
+                  const bIdxNat = it.blockIndex != null ? it.blockIndex : idx;
+                  obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat) : ("zy-ocr-" + bIdxNat);
+                  obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat, objectUuid: obj.uuid || obj.multiUuid || null };
                   const gNat = measureObjectGeometry(diy.canvas, obj);
                   syncBusinessFieldsFromObject(obj);
                   createdNat.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: diy.canvas.getObjects().indexOf(obj), uuid: obj ? (obj.uuid || obj.multiUuid || null) : null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gNat });
@@ -179,6 +187,7 @@ function pageBridge() {
             failedBlockIndex: failedBlockIndex,
             error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
             pageId: sourcePageId, side: sourceSide,
+            transactionId: txId, imageFingerprint: txFp,
             editorIntegration: editorInteg2
           });
           return;
@@ -219,7 +228,10 @@ function pageBridge() {
               try { if (mirrorEditorObjectModel(canvas, obj)) editorInteg.identityApplied += 1; } catch (eMirror) { console.warn("[zy-ocr][ocrCreate] mirror err=" + String(eMirror && eMirror.message || eMirror).slice(0, 120)); }
               if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{20,}$/.test(obj.multiUuid)) editorInteg.uv4Total += 1;
               // Stage 8B STEP 4（Phase B/C）：测量本对象真实几何 + 定位 key（供 ocrAdjust 校正）
-              obj.zyOcrKey = "zy-ocr-" + (it.blockIndex != null ? it.blockIndex : idx);
+              // Stage 9 V4 P1（§六）：key 升级 zy-ocr-{transactionId}-{blockIndex} + 对象完整身份
+              const bIdxMir = it.blockIndex != null ? it.blockIndex : idx;
+              obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxMir) : ("zy-ocr-" + bIdxMir);
+              obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxMir, objectUuid: obj.uuid || obj.multiUuid || obj.markuuid || null };
               const gObj = measureObjectGeometry(canvas, obj);
               created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gObj });
               batch.push(obj);
@@ -256,21 +268,57 @@ function pageBridge() {
           failedBlockIndex: failedBlockIndex,
           error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
           pageId: sourcePageId, side: sourceSide,
+          transactionId: txId, imageFingerprint: txFp,
           editorIntegration: editorInteg
         });
         return;
       }
       if (event.data.type === "ocrAdjust") {
-        // Stage 8B STEP 4（Phase C）：创建后几何自动闭环校正 —— 按 blockIndex 定位本批 OCR 对象
-        // （zyOcrKey），应用 fontSize/width/height/left/top/angle 修正，重新实测并同步业务字段。
+        // Stage 8B STEP 4（Phase C）：创建后几何自动闭环校正 —— 按定位 key（zyOcrKey）定位本批 OCR 对象，
+        // 应用 fontSize/width/height/left/top/angle 修正，重新实测并同步业务字段。
         // 只操作本批创建的 zyOcrKey 对象；无对象时报错不抛异常。
-        const canvasAdj = findCanvasForSide(event.data.side || "front");
+        // Stage 9 V4 P1（§四/§五）：Adjust 同样强制 Page Ownership —— 携带 pageId 的校准请求：
+        //   resolvePageInfo(pageId) → 当前页必须仍为 source page（canvas === source page canvas），
+        //   current.pageId !== request.pageId → PAGE_IDENTITY_CHANGED → 整批 STOP（禁止自动找另一个画布）；
+        //   key 按 transactionId 限定（zy-ocr-{txId}-{blockIndex}），杜绝正反 blockIndex 碰撞。
+        // 旧调用（无 pageId/transactionId）保留兼容：走 findCanvasForSide + 旧 key（仅旧探针/测试路径）。
+        const adjPageId = event.data.pageId || null;
+        const adjTxId = event.data.transactionId || null;
+        const adjFp = event.data.imageFingerprint || null;
         const itemsAdj = Array.isArray(event.data.items) ? event.data.items : [];
+        let canvasAdj = null;
+        if (adjPageId) {
+          const invAdj = buildPageInventory();
+          const knownAdj = invAdj.ok && (invAdj.pages || []).some(function (p) { return p.pageId === adjPageId; });
+          if (!knownAdj) {
+            post("ocrAdjustResult", { ok: false, code: "ADJUST_BLOCKED_PAGE_NOT_FOUND", message: "校准请求属于未知页面（" + adjPageId + "），已停止校准（禁止跨页自动找画布）。", items: [], pageId: adjPageId, transactionId: adjTxId, imageFingerprint: adjFp });
+            return;
+          }
+          const curAdj = buildCurrentPageInfo();
+          const gateAdj = validatePageOwnership(adjPageId, curAdj);
+          if (!gateAdj.ok) {
+            // §五：current.pageId !== request.pageId → PAGE_IDENTITY_CHANGED → STOP
+            const codeAdj = gateAdj.code === "CREATE_BLOCKED_WRONG_PAGE" ? "PAGE_IDENTITY_CHANGED" : String(gateAdj.code || "ADJUST_BLOCKED").replace(/^CREATE_BLOCKED_/, "ADJUST_BLOCKED_");
+            post("ocrAdjustResult", { ok: false, code: codeAdj, message: "校准期间页面已变化或无法验证（" + gateAdj.reason + "），已停止校准（" + codeAdj + "）。请重新识别当前页。", items: [], pageId: adjPageId, transactionId: adjTxId, imageFingerprint: adjFp, activePageId: (curAdj && curAdj.pageId) || null });
+            return;
+          }
+          // 仅允许「当前编辑页面」画布（gate 已保证 === source page canvas），禁止 findCanvasForSide 跨页寻找
+          const resoAdj = resolveCurrentEditorPage();
+          canvasAdj = (resoAdj && resoAdj.canvas) || null;
+          if (!canvasAdj) {
+            post("ocrAdjustResult", { ok: false, code: "ADJUST_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止校准。", items: [], pageId: adjPageId, transactionId: adjTxId, imageFingerprint: adjFp });
+            return;
+          }
+        } else {
+          // 旧调用（无 pageId）：side 定位（仅旧探针/测试兼容）
+          canvasAdj = findCanvasForSide(event.data.side || "front");
+        }
         const resultsAdj = [];
         itemsAdj.forEach(function (adj) {
           const res = { blockIndex: adj.blockIndex, ok: false, error: null, geometry: null };
           try {
-            const key = "zy-ocr-" + (adj.blockIndex != null ? adj.blockIndex : -1);
+            const idxAdj = adj.blockIndex != null ? adj.blockIndex : -1;
+            const key = adjTxId ? ("zy-ocr-" + adjTxId + "-" + idxAdj) : ("zy-ocr-" + idxAdj);
             const objsAdj = canvasAdj ? canvasAdj.getObjects() : [];
             let found = null;
             for (let i = objsAdj.length - 1; i >= 0; i -= 1) { if (objsAdj[i] && objsAdj[i].zyOcrKey === key) { found = objsAdj[i]; break; } }
@@ -291,7 +339,7 @@ function pageBridge() {
           resultsAdj.push(res);
         });
         if (canvasAdj && canvasAdj.requestRenderAll) canvasAdj.requestRenderAll();
-        post("ocrAdjustResult", { ok: true, items: resultsAdj });
+        post("ocrAdjustResult", { ok: true, items: resultsAdj, pageId: adjPageId, transactionId: adjTxId, imageFingerprint: adjFp });
         return;
       }
       if (event.data.type === "getCanvasInfo") {

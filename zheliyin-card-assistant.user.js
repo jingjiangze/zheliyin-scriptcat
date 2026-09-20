@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.36
+// @version      0.3.11.37
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,27 +14,28 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.36
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.36
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.37
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.37
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -55,7 +56,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.36";
+  const VERSION = "0.3.11.37";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -890,7 +891,7 @@
         textType: STAGE9_NATIVE_OCR_MODE, // 手写体优先；空/失败自动回退印刷体
         pageId: (img && img.pageId) || null,
         transactionId: (img && img.transactionId) || null,
-        imageFingerprint: null
+        imageFingerprint: (img && img.imageFingerprint) || null
       });
       if (!(native && native.ok)) {
         ocrLog("TRUTH", "native unavailable " + String((native && native.error && native.error.errorCode) || "?"));
@@ -1080,8 +1081,13 @@
       ocrTarget.pageId = srcPage.pageId;
       ocrTarget.side = (srcPage.side === "FRONT" || srcPage.side === "BACK") ? srcPage.side : "UNKNOWN";
       ocrTarget.pageSource = srcPage.sideSource || null;
-      ocrLog("SOURCE_PAGE", "pageId=" + srcPage.pageId + " side=" + srcPage.side + " source=" + (srcPage.sideSource || "n/a"));
-      const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height };
+      // Stage 9 V4 P1（§三）：冻结 OCR Transaction Identity —— pageId/side/canvasId/imageFingerprint 一次锁定，
+      // 正反面各自独立 Session；图片指纹由 dataUrl 计算（同图同帧 → 同指纹）。
+      ocrTarget.transaction = (typeof createTransaction === "function")
+        ? createTransaction({ pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, dataUrl: prep.dataUrl, imageWidth: prep.width, imageHeight: prep.height })
+        : null;
+      ocrLog("SOURCE_PAGE", "pageId=" + srcPage.pageId + " side=" + srcPage.side + " source=" + (srcPage.sideSource || "n/a") + " tx=" + (ocrTarget.transaction && ocrTarget.transaction.transactionId || "n/a") + " fp=" + (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint || "n/a"));
+      const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height, pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, transactionId: (ocrTarget.transaction && ocrTarget.transaction.transactionId) || null, imageFingerprint: (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint) || null };
       const mode = getOcrMode();
       if (mode === "baidu") {
         // Stage 7.2：manual baidu → 仅 Cloud（无本地 fallback，§8.1）
@@ -1158,6 +1164,10 @@
     // 由 page-bridge 在创建前做 Ownership 硬门禁（Stage 7.7）。
     const srcPageId = (ocrTarget && ocrTarget.pageId) || null;
     const srcSide = (ocrTarget && ocrTarget.side) || null;
+    // Stage 9 V4 P1（§三/§七）：本次事务身份（随 item 与 ocrCreate/ocrAdjust 消息逐级透传）
+    const srcTxId = (ocrTarget && ocrTarget.transaction && ocrTarget.transaction.transactionId) || null;
+    const srcTxFp = (ocrTarget && ocrTarget.transaction && ocrTarget.transaction.imageFingerprint) || null;
+    const srcTxCanvas = (ocrTarget && ocrTarget.transaction && ocrTarget.transaction.canvasId) || null;
     const w = geo.width, h = geo.height, sx = geo.scaleX || 1, sy = geo.scaleY || 1;
     // 背景图 left/top 可能缺失：ocrPrepare 已在页面世界用画布居中兜底（§13）
     const left = geo.left, top = geo.top;
@@ -1304,7 +1314,7 @@
       const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
-      const base = { text: srcText, blockIndex: bi, fontFamily: fontFamilyCandidate || "sans-serif", diagnostics: diagnostics, pageId: srcPageId, side: srcSide, zy8bFontMismatch: !fontFamilyCandidate };
+      const base = { text: srcText, blockIndex: bi, fontFamily: fontFamilyCandidate || "sans-serif", diagnostics: diagnostics, pageId: srcPageId, side: srcSide, transactionId: srcTxId, imageFingerprint: srcTxFp, canvasId: srcTxCanvas, zy8bFontMismatch: !fontFamilyCandidate };
       if (targetQuad) { base.zy8bTargetQuad = targetQuad; base.zy8bImageRuntime = imageRuntimeState; } // Stage 8B STEP 4：目标几何附到 item
       if (zy8bAdvance != null) base.zy8bAdvance = zy8bAdvance; // Stage 8B STEP 5：渲染 advance（typography 宽度比较基准）
       // §13：textbox height 须容纳 lineCount×lineHeight（禁止只用单行 OCR bbox.height）
@@ -1365,7 +1375,7 @@
     };
     const fallbackTimer = setTimeout(() => { window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
     window.addEventListener("message", on);
-    window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, items: items }, location.origin);
+    window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, transactionId: srcTxId, imageFingerprint: srcTxFp, items: items }, location.origin);
     // 事务结束：释放 ocrTarget，避免下次识别串用旧目标
     ocrTarget = null;
   }
@@ -1375,6 +1385,12 @@
   // 最终仍超差 → CREATE_REJECTED_GEOMETRY_MISMATCH（Phase E 诊断，不删除对象；删除动作留真机取证）。
   async function runGeometryCalibration(itemsList, reply, side) {
     if (typeof compareTextGeometry !== "function" || typeof quadSize !== "function" || typeof quadCenter !== "function" || typeof quadAngle !== "function") return;
+    // Stage 9 V4 P1（§四/§五）：校准消息携带事务身份（pageId/transactionId/imageFingerprint），
+    // page-bridge 据此做 Adjust Page Ownership 门禁（PAGE_IDENTITY_CHANGED → 整批 STOP，防正反串页）。
+    const txFirst = (itemsList && itemsList[0]) || null;
+    const txCalPageId = (txFirst && txFirst.pageId) || null;
+    const txCalId = (txFirst && txFirst.transactionId) || null;
+    const txCalFp = (txFirst && txFirst.imageFingerprint) || null;
     // 宽度约束修正依赖真实文本测量（浏览器 2d context；无则整体跳过防换行优化）
     const textMeasurer = (typeof browserTextMeasurer === "function") ? browserTextMeasurer() : null;
     const withMeasurer = function (f) { return textMeasurer && textMeasurer.available ? textMeasurer.measurer : null; };
@@ -1484,7 +1500,7 @@
         need.push({ blockIndex: p.blockIndex, corrections: corr });
       });
       if (!need.length) break;
-      window.postMessage({ source: "zy-card-assistant", type: "ocrAdjust", side: side || "front", items: need }, location.origin);
+      window.postMessage({ source: "zy-card-assistant", type: "ocrAdjust", side: side || "front", pageId: txCalPageId, transactionId: txCalId, imageFingerprint: txCalFp, items: need }, location.origin);
       const rep = await waitAdjOnce();
       if (!rep || !rep.items) break;
       rep.items.forEach(function (r) {
