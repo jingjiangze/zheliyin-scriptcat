@@ -142,5 +142,51 @@ t("ocrCalibrate: 校准期间切页 → PAGE_IDENTITY_CHANGED 整批 STOP，两�
   assert.strictEqual(F.backA.text, "反面旧", "反面未被修改");
 });
 
+// ---- Commit 5：正反面双向校准隔离（§49：front OCR → back OCR → front OCR again，对象不受对方影响）----
+t("isolation: front→back→front 三阶段全流程，正反对象数量/UUID/内容互不影响", () => {
+  const F = freshCal();
+  const uuidsF = { a: F.frontA.uuid, b: F.frontB.uuid };
+  const uuidB = { a: F.backA.uuid };
+  F.win.postMessage = function (d) { F.win._posted = d; };
+
+  // 阶段① front OCR（页 c0）：2 行校准 frontA/frontB
+  F.dispatch("ocrCalibrate", { pageId: "canvas:c0", transactionId: "t-front", imageFingerprint: "img-f1", items: [
+    { blockIndex: 0, text: "佛山盛盈包装制品有限公司", top: 18, left: 8, fontSize: 18 },
+    { blockIndex: 1, text: "Tel.:0757-88809856", top: 58, left: 10, fontSize: 13 }
+  ] });
+  let r = F.post();
+  assert.strictEqual(r.ok, true);
+  assert.strictEqual(F.frontA.text, "佛山盛盈包装制品有限公司");
+  assert.strictEqual(F.backA.text, "反面旧", "①back 零触碰");
+
+  // 阶段② 切到反面 OCR（c1）：back 校准
+  F.win.CanvasObjVO.currentCanvasNum = 2;
+  F.dispatch("ocrCalibrate", { pageId: "canvas:c1", transactionId: "t-back", imageFingerprint: "img-b1", items: [
+    { blockIndex: 0, text: "诚信经营", top: 22, left: 12, fontSize: 14 }
+  ] });
+  r = F.post();
+  assert.strictEqual(r.ok, true);
+  assert.strictEqual(F.backA.text, "诚信经营");
+  assert.strictEqual(F.frontA.text, "佛山盛盈包装制品有限公司", "②front 不被 back 触碰");
+  assert.strictEqual(F.backA.uuid, uuidB.a, "②back 对象 UUID 不变");
+
+  // 阶段③ 切回正面再次 front OCR（c0，新事务）：front 更新，back 仍不变
+  F.win.CanvasObjVO.currentCanvasNum = 1;
+  F.dispatch("ocrCalibrate", { pageId: "canvas:c0", transactionId: "t-front2", imageFingerprint: "img-f1b", items: [
+    { blockIndex: 0, text: "佛山盛盈包装制品有限公司", top: 18, left: 8, fontSize: 19 },
+    { blockIndex: 1, text: "Tel.:0757-88809857", top: 58, left: 10, fontSize: 13 }
+  ] });
+  r = F.post();
+  assert.strictEqual(r.ok, true);
+  assert.strictEqual(F.frontA.fontSize, 19, "③front 再次校准生效");
+  assert.strictEqual(F.frontB.text, "Tel.:0757-88809857");
+  assert.strictEqual(F.backA.text, "诚信经营", "③back 不被 front 触碰");
+  assert.strictEqual(F.frontCanvas.getObjects().length, 2, "全程无复制（front 恒 2 对象）");
+  assert.strictEqual(F.backCanvas.getObjects().length, 1, "back 恒 1 对象");
+  assert.strictEqual(F.frontA.uuid, uuidsF.a, "③frontA UUID 不变");
+  assert.strictEqual(F.frontB.uuid, uuidsF.b, "③frontB UUID 不变");
+  assert.strictEqual(F.backA.uuid, uuidB.a, "③backA UUID 不变");
+});
+
 console.log("recognition-mode.test: pass=" + passed + " fail=" + failed);
 process.exit(failed ? 1 : 0);
