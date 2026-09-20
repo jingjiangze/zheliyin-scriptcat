@@ -380,7 +380,9 @@ function groupLinesToBlocks(lines, opts) {
           m.baselineDelta = Math.abs((L.bbox.y + L.bbox.height / 2) - (blk.yStart + blk.yEnd) / 2) / Math.max(blk.mH, L.bbox.height);
           if (m.verticalOverlap > vOverlapMergeMax) {
             if (overlap < vOverlapXMin * minW) failed.push("vertical-overlap");
-            else if (m.baselineDelta > 0.5) failed.push("baseline-offset");
+            // Stage 8D P4（v18 真机 mergeAudit「回册/多」bd=0.45 擦边）：同排续接基线门 0.5→0.38
+            // （真实同行续接 bd≈0.1~0.25；0.4~0.5 为相邻不同行 bbox padding 交叠）
+            else if (m.baselineDelta > 0.38) failed.push("baseline-offset");
           } else if (!xOk) failed.push("horizontal-overlap");
         } else if (!xOk) {
           failed.push("horizontal-overlap");
