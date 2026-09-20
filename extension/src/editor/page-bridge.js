@@ -342,6 +342,113 @@ function pageBridge() {
         post("ocrAdjustResult", { ok: true, items: resultsAdj, pageId: adjPageId, transactionId: adjTxId, imageFingerprint: adjFp });
         return;
       }
+      if (event.data.type === "getTextInventory") {
+        // Stage 9 V4 §21/§22：只读 —— 当前编辑页文字对象清单（ExistingTextObjectSnapshot），
+        // 供 Recognition Mode Resolver（NEW/CALIBRATION/RETRY）判定；不改画布。
+        const resoInv = resolveCurrentEditorPage();
+        if (!resoInv || resoInv.status !== "ok" || !resoInv.canvas) {
+          post("getTextInventoryResult", { ok: false, code: "CURRENT_PAGE_UNKNOWN", pageId: null, items: [] });
+          return;
+        }
+        const invItems = getTextObjects(resoInv.canvas).map(function (o) {
+          const cx = typeof o.left === "number" ? o.left + (typeof o.width === "number" ? o.width / 2 : 0) : null;
+          const cy = typeof o.top === "number" ? o.top + (typeof o.height === "number" ? o.height / 2 : 0) : null;
+          return {
+            objectUuid: o.uuid || o.multiUuid || o.markuuid || null,
+            text: String(o.text != null ? o.text : ""),
+            left: typeof o.left === "number" ? o.left : null,
+            top: typeof o.top === "number" ? o.top : null,
+            width: typeof o.width === "number" ? o.width : null,
+            height: typeof o.height === "number" ? o.height : null,
+            fontSize: typeof o.fontSize === "number" ? o.fontSize : null,
+            fontFamily: o.fontFamily != null ? String(o.fontFamily) : null,
+            fontWeight: o.fontWeight != null ? String(o.fontWeight) : null,
+            fontStyle: o.fontStyle != null ? String(o.fontStyle) : null,
+            angle: typeof o.angle === "number" ? o.angle : 0,
+            center: (cx != null && cy != null) ? { x: cx, y: cy } : null
+          };
+        });
+        post("getTextInventoryResult", { ok: true, code: "OK", pageId: (function () { const cInv = buildCurrentPageInfo(); return (cInv && cInv.pageId) || resoInv.pageId; })(), side: resoInv.side, items: invItems });
+        return;
+      }
+      if (event.data.type === "ocrCalibrate") {
+        // Stage 9 V4 §二十/§二十四：CALIBRATION_RECOGNITION / RECOGNITION_RETRY —— 更新现有 textbox，
+        // 不创建重复对象。错误行为：删除 A 重建 B（禁止）——保持 object identity，只改 text/样式/几何。
+        // 匹配策略（§23，文字只作 hint）：pageId + 阅读顺序（top 排序）一对一定位；
+        //   existing 不足 → 仅补齐缺失行（新建），多余不复制。
+        // 所有权（§四/§五）：与 ocrAdjust 同硬门禁 —— PAGE_IDENTITY_CHANGED → 整批 STOP。
+        const calPageId = event.data.pageId || null;
+        const calTxId = event.data.transactionId || null;
+        const calFp = event.data.imageFingerprint || null;
+        const calItems = Array.isArray(event.data.items) ? event.data.items : [];
+        if (!calPageId) {
+          post("ocrCalibrateResult", { ok: false, code: "CALIBRATE_BLOCKED_NO_PAGE", message: "校准请求缺少 pageId，已停止。", items: [], pageId: null, transactionId: calTxId, imageFingerprint: calFp });
+          return;
+        }
+        const invCal = buildPageInventory();
+        const knownCal = invCal.ok && (invCal.pages || []).some(function (p) { return p.pageId === calPageId; });
+        if (!knownCal) {
+          post("ocrCalibrateResult", { ok: false, code: "CALIBRATE_BLOCKED_PAGE_NOT_FOUND", message: "校准请求属于未知页面（" + calPageId + "），已停止（禁止跨页自动找画布）。", items: [], pageId: calPageId, transactionId: calTxId, imageFingerprint: calFp });
+          return;
+        }
+        const curCal = buildCurrentPageInfo();
+        const gateCal = validatePageOwnership(calPageId, curCal);
+        if (!gateCal.ok) {
+          const codeCal = gateCal.code === "CREATE_BLOCKED_WRONG_PAGE" ? "PAGE_IDENTITY_CHANGED" : String(gateCal.code || "CALIBRATE_BLOCKED").replace(/^CREATE_BLOCKED_/, "CALIBRATE_BLOCKED_");
+          post("ocrCalibrateResult", { ok: false, code: codeCal, message: "校准期间页面已变化或无法验证（" + gateCal.reason + "），已停止校准（" + codeCal + "）。", items: [], pageId: calPageId, transactionId: calTxId, imageFingerprint: calFp, activePageId: (curCal && curCal.pageId) || null });
+          return;
+        }
+        const resoCal = resolveCurrentEditorPage();
+        const canvasCal = (resoCal && resoCal.canvas) || null;
+        if (!canvasCal) {
+          post("ocrCalibrateResult", { ok: false, code: "CALIBRATE_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止校准。", items: [], pageId: calPageId, transactionId: calTxId, imageFingerprint: calFp });
+          return;
+        }
+        // 阅读序对象池（top 升序；对 zyOcrKey 助手对象与模板对象一视同仁）
+        const poolCal = getTextObjects(canvasCal).sort(function (a, b) { return (Number(a.top || 0) - Number(b.top || 0)) || (Number(a.left || 0) - Number(b.left || 0)); });
+        const itemsSorted = calItems.slice().sort(function (a, b) { return (Number(a.top != null ? a.top : 0) - Number(b.top != null ? b.top : 0)) || (Number(a.left != null ? a.left : 0) - Number(b.left != null ? b.left : 0)); });
+        const calOut = [];
+        const createdOut = [];
+        itemsSorted.forEach(function (it, i) {
+          try {
+            const target = poolCal[i] || null;
+            const text = String(it.text != null ? it.text : "");
+            const cfg = {};
+            if (typeof it.fontSize === "number" && it.fontSize >= 8 && it.fontSize <= 160) cfg.fontSize = it.fontSize;
+            if (typeof it.width === "number" && it.width >= 20) cfg.width = it.width;
+            if (typeof it.height === "number" && it.height >= 14) cfg.height = it.height;
+            if (typeof it.left === "number" && isFinite(it.left)) cfg.left = it.left;
+            if (typeof it.top === "number" && isFinite(it.top)) cfg.top = it.top;
+            if (typeof it.angle === "number" && isFinite(it.angle)) cfg.angle = it.angle;
+            if (it.fontFamily) cfg.fontFamily = it.fontFamily;
+            if (it.fontWeight) cfg.fontWeight = it.fontWeight;
+            if (it.fontStyle) cfg.fontStyle = it.fontStyle;
+            if (target) {
+              setObjectText(target, text);
+              target.set(cfg);
+              if (it.diagnostics) { try { target.zyOcrDiagnostics = it.diagnostics; } catch (eDiagC) {} }
+              const effTxC = it.transactionId || calTxId;
+              try { if (effTxC) target.zyOcrObjectId = { transactionId: effTxC, pageId: calPageId, blockId: it.blockIndex != null ? it.blockIndex : i, objectUuid: target.uuid || target.multiUuid || null }; } catch (eOid) {}
+              try { if (effTxC) target.zyOcrKey = "zy-ocr-" + effTxC + "-" + (it.blockIndex != null ? it.blockIndex : i); } catch (eKeyC) {}
+              syncBusinessFieldsFromObject(target);
+              calOut.push({ blockIndex: it.blockIndex != null ? it.blockIndex : i, objectUuid: target.uuid || target.multiUuid || null, text: String(text).slice(0, 16), updated: true, geometry: measureObjectGeometry(canvasCal, target) });
+            } else {
+              // 池外新建（缺失行补齐；不复制已有内容）
+              const obj = createTextObject(canvasCal, text, null, i, null);
+              if (!obj) return;
+              obj.set(cfg);
+              setObjectText(obj, text);
+              const effTxN = it.transactionId || calTxId;
+              try { if (effTxN) { obj.zyOcrKey = "zy-ocr-" + effTxN + "-" + (it.blockIndex != null ? it.blockIndex : i); obj.zyOcrObjectId = { transactionId: effTxN, pageId: calPageId, blockId: it.blockIndex != null ? it.blockIndex : i, objectUuid: obj.uuid || obj.multiUuid || null }; } } catch (eOidC) {}
+              syncBusinessFieldsFromObject(obj);
+              createdOut.push({ blockIndex: it.blockIndex != null ? it.blockIndex : i, objectUuid: obj.uuid || obj.multiUuid || null, text: String(text).slice(0, 16), geometry: measureObjectGeometry(canvasCal, obj) });
+            }
+          } catch (eCal) { calOut.push({ blockIndex: it.blockIndex != null ? it.blockIndex : i, updated: false, error: String(eCal && eCal.message || eCal).slice(0, 120) }); }
+        });
+        if (canvasCal.requestRenderAll) canvasCal.requestRenderAll();
+        post("ocrCalibrateResult", { ok: true, calibrated: calOut, created: createdOut, pageId: calPageId, side: event.data.side || null, transactionId: calTxId, imageFingerprint: calFp });
+        return;
+      }
       if (event.data.type === "getCanvasInfo") {
         // Stage 5.5B P1：只读画布自检 —— 隔离世界读不到页面 world 的 requirejs 注册表，
         // 由页面世界回传画布状态（供 waitForCanvasReady / 诊断）。

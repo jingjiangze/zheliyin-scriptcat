@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.38
+// @version      0.3.11.39
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,28 +14,29 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.38
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.38
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.39
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.39
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -56,7 +57,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.38";
+  const VERSION = "0.3.11.39";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -663,6 +664,7 @@
   let ocrRunning = false;
   let ocrEngineCache = null;
   let ocrTarget = null; // 本次 OCR 事务的目标图片 {obj, kind}，供重建时复用同一几何
+  const stage9TxByPage = {}; // Stage 9 V4 §26：每页最近事务（pageId → {imageFingerprint, ts}），供 RETRY 判定
 
   // §55 错误分类：给用户可操作的中文提示，而不是静默失败
   const OCR_ERR = {
@@ -683,7 +685,7 @@
   // 注：仅用于只读查询（probe/getCanvasInfo/ocrPrepare/getCurrentPage）；apply/ocrCreate 走既有专用 listener，避免双响应。
   // Stage 7.6：getCurrentPage —— 供 OCR Source Page 冻结（图片与页面同帧的权威来源）。
   function bridgeCall(type, timeoutMs) {
-    const replyMap = { probe: "probeResult", getCanvasInfo: "getCanvasInfoResult", ocrPrepare: "ocrPrepareResult", getCurrentPage: "getCurrentPageResult" };
+    const replyMap = { probe: "probeResult", getCanvasInfo: "getCanvasInfoResult", ocrPrepare: "ocrPrepareResult", getCurrentPage: "getCurrentPageResult", getTextInventory: "getTextInventoryResult" };
     const replyType = replyMap[type] || (type + "Result");
     return new Promise((resolve) => {
       const on = (e) => {
@@ -872,7 +874,7 @@
     if (!gate8d.ok) { ocrRunning = false; setStatus("OCR 候选质量门阻断（" + String(gate8d.reason || "invalid-result") + "），未生成文字"); ocrLog("GATE8D", "block-set suspect: " + (gate8d.setSuspectReasons || []).join("|")); return; }
     const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(gate8d.validated) : (gate8d.validated || []).map(oneLineBlock);
     const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate）
-    buildItemsFromOcr(tb.blocks, img, diag);
+    await buildItemsFromOcr(tb.blocks, img, diag);
   }
 
   // ---- Stage 9 V3：Native OCR = 绝对文字真值（§一/§九十 feature gate zyStage9NativeTruth）----
@@ -1003,7 +1005,7 @@
               : (gate8d.validated || []).map(oneLineBlock);
             ocrLog("TRACE8D", "blocks=" + (blocks || []).length);
             const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate；OFF 时原样）
-            buildItemsFromOcr(tb.blocks, img, diag);
+            buildItemsFromOcr(tb.blocks, img, diag).catch((eBuild) => { ocrRunning = false; setStatus("识别异常：" + String(eBuild && eBuild.message || eBuild).slice(0, 100)); ocrLog("ERROR", "buildItemsFromOcr: " + String(eBuild && eBuild.stack || (eBuild && eBuild.message || eBuild)).slice(0, 300)); });
           } catch (e) {
             ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse8d: " + String(e && (e.stack || (e.message ? "msg:" + e.message : e)) || e).slice(0, 600));
             emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "exception" }));
@@ -1088,6 +1090,8 @@
       ocrTarget.transaction = (typeof createTransaction === "function")
         ? createTransaction({ pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, dataUrl: prep.dataUrl, imageWidth: prep.width, imageHeight: prep.height })
         : null;
+      // §26：记录本页最近事务（同图重识别 → RECOGNITION_RETRY 判定）
+      if (ocrTarget.transaction) stage9TxByPage[srcPage.pageId] = { pageId: srcPage.pageId, imageFingerprint: ocrTarget.transaction.imageFingerprint, ts: Date.now() };
       ocrLog("SOURCE_PAGE", "pageId=" + srcPage.pageId + " side=" + srcPage.side + " source=" + (srcPage.sideSource || "n/a") + " tx=" + (ocrTarget.transaction && ocrTarget.transaction.transactionId || "n/a") + " fp=" + (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint || "n/a"));
       const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height, pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, transactionId: (ocrTarget.transaction && ocrTarget.transaction.transactionId) || null, imageFingerprint: (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint) || null };
       const mode = getOcrMode();
@@ -1155,7 +1159,7 @@
     return { ok: true, validated: g.validated || [], blocked: g.blocked || [], suspect: false, setSuspectReasons: [], aggregate: g.aggregate || null, score: g.score || null };
   }
 
-  function buildItemsFromOcr(blocks, img, diag) {
+  async function buildItemsFromOcr(blocks, img, diag) {
     // Stage 6.1：消费 TextBlock（1 TextBlock = 1 textbox，§8 硬规则）。
     // block 结构：{text(含\n), bbox, center, confidence, wordBoxes, lineBoxes, lineCount, coordinateSpace}
     // 几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）。P3：只消费统一候选边界。
@@ -1170,6 +1174,18 @@
     const srcTxId = (ocrTarget && ocrTarget.transaction && ocrTarget.transaction.transactionId) || null;
     const srcTxFp = (ocrTarget && ocrTarget.transaction && ocrTarget.transaction.imageFingerprint) || null;
     const srcTxCanvas = (ocrTarget && ocrTarget.transaction && ocrTarget.transaction.canvasId) || null;
+    // Stage 9 V4 §17~§28：Recognition Mode 路由（zyStage9Calibration=1 启用，默认开启——画布已有文字 → 校准而非复制）
+    let recRoute = null;
+    const calFlag = (typeof GM_getValue === "function") ? GM_getValue("zyStage9Calibration", "1") : "1";
+    if (calFlag === "1" && srcPageId && srcTxFp && typeof resolveRecognitionMode === "function") {
+      try {
+        const invRes = await bridgeCall("getTextInventory", 2500);
+        const existingTextObjects = (invRes && invRes.ok && Array.isArray(invRes.items)) ? invRes.items : [];
+        const prevTx = stage9TxByPage[srcPageId] ? [stage9TxByPage[srcPageId]] : [];
+        recRoute = resolveRecognitionMode({ pageId: srcPageId, imageFingerprint: srcTxFp, existingTextObjects: existingTextObjects, previousTransactions: prevTx });
+        if (recRoute) ocrLog("ROUTING", "mode=" + recRoute.mode + " existing=" + existingTextObjects.length + " sameImage=" + recRoute.sameImage + " reasons=" + ((recRoute.reasons || []).join("|") || "n/a"));
+      } catch (eRoute) { ocrLog("ROUTING", "resolver exception " + String(eRoute && eRoute.message || eRoute).slice(0, 120)); recRoute = null; }
+    }
     const w = geo.width, h = geo.height, sx = geo.scaleX || 1, sy = geo.scaleY || 1;
     // 背景图 left/top 可能缺失：ocrPrepare 已在页面世界用画布居中兜底（§13）
     const left = geo.left, top = geo.top;
@@ -1358,6 +1374,14 @@
     }
     setStatus("识别到 " + items.length + " 个文字区域，正在生成（BUILDING）…");
     ocrLog("BUILDING", "blocks=" + items.length + " forcedWrap=" + forcedWrapTotal + " multiLine=" + multiLineTotal);
+    // Stage 9 V4 §十九~§二十：路由 —— NEW_RECOGNITION 走创建；CALIBRATION/RETRY 走更新现有对象
+    if (recRoute && recRoute.mode !== "NEW_RECOGNITION") {
+      setStatus("画布已有 " + recRoute.existingCount + " 个文字，按「" + (recRoute.mode === "RECOGNITION_RETRY" ? "同图重识别" : "校准识别") + "」更新现有对象（不重复创建）…");
+      sendCalibration(items, recRoute, srcPageId, srcSide, srcTxId, srcTxFp);
+      // 事务结束：释放 ocrTarget，避免下次识别串用旧目标
+      ocrTarget = null;
+      return;
+    }
     // P0（真机 BUILDING 卡死）：页面桥异常时兜底，10 秒内未收到 ocrCreateResult 即走出死等状态
     const on = (e) => {
       if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "ocrCreateResult") {
@@ -1380,6 +1404,27 @@
     window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, transactionId: srcTxId, imageFingerprint: srcTxFp, items: items }, location.origin);
     // 事务结束：释放 ocrTarget，避免下次识别串用旧目标
     ocrTarget = null;
+  }
+
+  // Stage 9 V4 §二十/§二十六：校准识别/同图重识别 → 通知页面桥更新现有 textbox（不重复创建）
+  // 只在该事务的 pageId 上生效；page-bridge 侧 ocrCalibrate 有同款 Page Ownership 硬门禁（PAGE_IDENTITY_CHANGED STOP）。
+  function sendCalibration(itemsRes, route, pageId, side, txId, txFp) {
+    ocrLog("ROUTING", "calibrate mode=" + route.mode + " items=" + itemsRes.length + " pageId=" + pageId);
+    const onCal = (e) => {
+      if (e.data && e.data.source === PAGE_SOURCE && e.data.type === "ocrCalibrateResult") {
+        clearTimeout(tCal); window.removeEventListener("message", onCal); ocrRunning = false;
+        if (e.data.ok) {
+          setStatus("已校准 " + (e.data.calibrated || []).length + " 个文字" + ((e.data.created || []).length ? "，新建 " + e.data.created.length + " 个" : "") + "（未重复创建）");
+          ocrLog("SUCCESS", "calibrate ok calibrated=" + (e.data.calibrated || []).length + " created=" + (e.data.created || []).length + " pageId=" + e.data.pageId + " tx=" + e.data.transactionId);
+        } else {
+          setStatus("校准失败：" + (e.data.message || e.data.code || "未知"));
+          ocrLog("ERROR", "calibrate failed code=" + (e.data.code || "?") + " msg=" + String(e.data.message || "").slice(0, 120));
+        }
+      }
+    };
+    const tCal = setTimeout(() => { window.removeEventListener("message", onCal); ocrRunning = false; setStatus("校准超时（页面桥未确认）：请查看浏览器控制台（错误码 ocrCalibrate-reply-timeout）。"); ocrLog("ERROR", "ocrCalibrate reply timeout"); }, 10000);
+    window.addEventListener("message", onCal);
+    window.postMessage({ source: BRIDGE_SOURCE, type: "ocrCalibrate", pageId: pageId, side: side, transactionId: txId, imageFingerprint: txFp, items: itemsRes }, location.origin);
   }
 
   // Stage 8B STEP 4（Phase B/C/E）：创建后几何闭环校正 —— compare(targetQuad vs 实测 aCoords) →
