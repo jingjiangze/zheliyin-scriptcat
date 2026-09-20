@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.22
+// @version      0.3.11.23
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,23 +14,23 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.22
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.22
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.23
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.23
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -51,7 +51,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.22";
+  const VERSION = "0.3.11.23";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -849,6 +849,8 @@
     }
     const cloudKept = (cloudQa.kept && cloudQa.kept.length) ? cloudQa.kept : res.candidates;
     ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " kept=" + cloudKept.length + " elapsed=" + res.meta.elapsed + "ms");
+    // Stage 8D §十九取证：cloud raw candidates 证据（行级 bbox）
+    ocrLog("RAW_CAND8D", res.candidates.map((c) => String(c.text || "").slice(0, 10) + "@" + JSON.stringify({ x: Math.round((c.bbox && (c.bbox.x0 != null ? c.bbox.x0 : c.bbox.x)) || 0), y: Math.round((c.bbox && (c.bbox.y0 != null ? c.bbox.y0 : c.bbox.y)) || 0), w: Math.round((c.bbox && (c.bbox.x1 != null ? Math.abs(c.bbox.x1 - c.bbox.x0) : c.bbox.width)) || 0), h: Math.round((c.bbox && (c.bbox.y1 != null ? Math.abs(c.bbox.y1 - c.bbox.y0) : c.bbox.height)) || 0) })).join("|")).slice(0, 4000);
     // Stage 7.8 §三十二/§四十一：六维质量门分级诊断（仅记录，不改 fallback 决策 ——
     // §三十四 特殊符号不直接判 OCR 失败，由 sanitizer 清洗负责）
     const cloudBundle = (typeof bundleOcrQuality === "function")
@@ -907,6 +909,8 @@
               return;
             }
             ocrLog("LOCAL_RECOGNIZING", "lines=" + (r.lines || []).length + " words=" + (r.words || []).length + " image=" + r.w + "x" + r.h);
+            // Stage 8D §十九取证：raw words 证据（含 bbox/置信度）—— 供 raw→normalized→accepted→blocked 统计与行聚类审计
+            ocrLog("RAW_WORDS8D", (r.words || []).map((wo) => String(wo.text || "").slice(0, 8) + "@" + JSON.stringify({ x: Math.round((wo.bbox && (wo.bbox.x0 != null ? wo.bbox.x0 : wo.bbox.x)) || 0), y: Math.round((wo.bbox && (wo.bbox.y0 != null ? wo.bbox.y0 : wo.bbox.y)) || 0), w: Math.round((wo.bbox && (wo.bbox.x1 != null ? Math.abs(wo.bbox.x1 - wo.bbox.x0) : wo.bbox.width)) || 0), h: Math.round((wo.bbox && (wo.bbox.y1 != null ? Math.abs(wo.bbox.y1 - wo.bbox.y0) : wo.bbox.height)) || 0) }) + (typeof wo.confidence === "number" ? ":" + Math.round(wo.confidence * 100) : "")).join("|")).slice(0, 4000);
             emitOcrDiag(Object.assign({}, diag, { reason: null }));
             const size = { width: r.w || img.width, height: r.h || img.height };
             let unified = null;
@@ -1120,7 +1124,18 @@
     const measureFamily = fontFamilyCandidate || "sans-serif";
     // 输出指标（§22）：forced wrapped 逻辑行数、多行 block 数
     let forcedWrapTotal = 0, multiLineTotal = 0;
-    const items = (blocks || []).filter((b) => b && b.bbox && typeof b.bbox.x === "number" && b.bbox.width > 0).map((b, bi) => {
+    // Stage 8D §十八兜底：TextBlock 层（合并后）二次质量门 —— 合并可能产生 GIANT/TINY 异常块，
+    // 必须在进入 Native 前拦截（禁止用 outer 尺寸失真块直接创建）。
+    let workBlocks = (blocks || []).filter((b) => b && b.bbox && typeof b.bbox.x === "number" && b.bbox.width > 0);
+    if (typeof validateBlockSet === "function" && workBlocks.length && geo.naturalWidth > 0) {
+      const bg = validateBlockSet(workBlocks, { width: geo.naturalWidth, height: geo.naturalHeight }, { imageSize: { width: geo.naturalWidth, height: geo.naturalHeight } });
+      if (bg.blocked && bg.blocked.length) ocrLog("GATE8D-BLOCK", "block-layer blocked=" + bg.blocked.map((b) => b.index + ":" + ((b.reasons || []).join("|")) + ":" + String(b.text || "")).join(","));
+      if (bg.suspect) ocrLog("GATE8D-BLOCK", "block-layer set-suspect " + (bg.setSuspectReasons || []).join("|"));
+      workBlocks = bg.validated || [];
+      if (!workBlocks.length) { ocrRunning = false; setStatus("候选文字块经质量门后无有效块，未生成文字"); ocrLog("GATE8D-BLOCK", "all blocked, nothing to create"); return; }
+    }
+    // 8D §十六：状态链 —— gate 已过（candidate 层）标记 OCR_VALIDATED；进入 mapping 标记 RECONSTRUCTION_READY
+    const items = workBlocks.map((b, bi) => {
       // Stage 7.8 §十三：safeText 真正送 DIY（rawText 仅证据/诊断/重处理）；
       // 仅含被 BLOCKED 移除字符的空块直接剔除，不创建空 textbox（§三十三 special-character 门）。
       // Stage 7.8R §八：Text Safety Gate BLOCK（残留异常字符/空 safeText）同样剔除，不创建。
@@ -1211,7 +1226,9 @@
         legacyAvgLineH: avgLineH,
         // Stage 8D：融合证据（§十四）与 bbox 三层分离（§十二）
         fusion8d: fusion8d ? { reason: fusion8d.reason, confidence: fusion8d.confidence, quality: currentGateScore != null ? Math.round(currentGateScore * 100) / 100 : null, warnings: (fusion8d.warnings || []).slice(0, 4) } : null,
-        bboxSeparation8d: bboxSep ? { visualWidth: bboxSep.textVisualTarget.width, ocrBoxH: Math.round(bboxSep.ocrBBox.height * 100) / 100, layoutW: null } : null
+        bboxSeparation8d: bboxSep ? { visualWidth: bboxSep.textVisualTarget.width, ocrBoxH: Math.round(bboxSep.ocrBBox.height * 100) / 100, layoutW: null } : null,
+        // 8D §十六：状态链（gate 已过 → READY；创建后由 calibration/ink 推进 CREATED/VERIFIED）
+        status8d: "RECONSTRUCTION_READY"
       };
       // §14：几何模型 —— 水平文本 left/top；θ≠0 旋转文本 center/angle（保留 P5 rotation 行为，零变化）
       const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;
