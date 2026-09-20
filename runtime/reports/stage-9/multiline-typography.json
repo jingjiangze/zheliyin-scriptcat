@@ -1,0 +1,795 @@
+{
+  "ts": "2026-09-20T16:12:41.953Z",
+  "stage": "STAGE-9-V12-MULTILINE-TYPOGRAPHY",
+  "version": "0.3.11.48",
+  "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": false,
+  "scenarios": [
+    {
+      "case": "A-perline-median",
+      "passed": true,
+      "evidence": {
+        "perLineInkHeights": [
+          57,
+          57,
+          57
+        ],
+        "medianInkHeight": 57,
+        "medianFs": 34,
+        "wholeBlockInkHeight": 210,
+        "wholeBlockFs": 127,
+        "effectiveScaleY": 0.584897
+      }
+    },
+    {
+      "case": "C-synthesize-one-textbox",
+      "passed": true,
+      "evidence": {
+        "synthesized": {
+          "left": 63.736774,
+          "top": 107.97586,
+          "width": 203,
+          "height": 137,
+          "angle": 0,
+          "maxLineWidth": 198.958506,
+          "evidence": {
+            "lineQuads": 3,
+            "union": {
+              "left": 63.736774,
+              "top": 107.97586,
+              "width": 198.958506,
+              "height": 119.412537
+            },
+            "commonAngle": {
+              "angle": 0,
+              "maxDeviation": 0
+            },
+            "lineGaps": [
+              14.926567,
+              14.926567
+            ],
+            "sourceLineCount": 3,
+            "fontSize": 34,
+            "lineHeightRatio": 1.3,
+            "basis": "canvas-line-quads"
+          }
+        }
+      }
+    },
+    {
+      "case": "D-create-measure-multiline",
+      "passed": true,
+      "created": {
+        "ok": true,
+        "identityMethod": "OBJECT_DELTA",
+        "requested": {
+          "left": 63.736774,
+          "top": 107.97586,
+          "fontSize": 34,
+          "sourceLineCount": 2
+        },
+        "actual": {
+          "aCoordsBB": {
+            "left": 63.74,
+            "top": 107.98,
+            "right": 303.74,
+            "bottom": 193.5
+          },
+          "fontSize": 34,
+          "renderedLineCount": 2,
+          "ink": {
+            "inkWidth": 234,
+            "inkHeight": 72,
+            "lineCount": 2,
+            "method": "FABRIC_OBJECT_LINES"
+          }
+        },
+        "errors": {
+          "fontSizeError": 0,
+          "centerError": 31.7,
+          "lineMismatch": false
+        },
+        "cleaned": true
+      }
+    },
+    {
+      "case": "F-native-min-font",
+      "passed": true,
+      "evidence": [
+        {
+          "fontSizeRequested": 2,
+          "fontSizeActual": 2,
+          "renderedLineCount": 1,
+          "inkHeight": 2,
+          "inkMethod": "FABRIC_OBJECT_LINES",
+          "rendered": true
+        },
+        {
+          "fontSizeRequested": 6,
+          "fontSizeActual": 6,
+          "renderedLineCount": 1,
+          "inkHeight": 6,
+          "inkMethod": "FABRIC_OBJECT_LINES",
+          "rendered": true
+        },
+        {
+          "fontSizeRequested": 20,
+          "fontSizeActual": 20,
+          "renderedLineCount": 1,
+          "inkHeight": 18,
+          "inkMethod": "FABRIC_OBJECT_LINES",
+          "rendered": true
+        }
+      ]
+    },
+    {
+      "case": "E-text-to-image-audit",
+      "passed": true,
+      "verdict": "TEXT_TO_IMAGE_UNKNOWN_NO_MODULE_HIT",
+      "moduleHits": 0,
+      "uiHits": 36,
+      "evidence": {
+        "layers": {
+          "L1_UI": {
+            "hits": [
+              "正在合成图片...",
+              " 对于外部用户自己上传的素材，若作商业用途，需要自行确认是否有版权，世纪开元不承",
+              "素材",
+              "素材格式：",
+              "标题素材",
+              "组合素材",
+              "官方素材",
+              "我的素材"
+            ]
+          },
+          "L2_Event": {
+            "eventTypes": [
+              "added",
+              "removed",
+              "mousedown",
+              "mousedown:before",
+              "mouseup",
+              "mousedblclick"
+            ]
+          },
+          "L3_Network": {
+            "batchSaveKeepMaterial": true,
+            "evidence": "Commit 2 已有批保存接口证据（native 素材保存能力）"
+          },
+          "L4_Module": {
+            "hits": [],
+            "hitCount": 0
+          },
+          "L5_Object": {
+            "imageObjectCount": 9,
+            "textObjectCount": 7
+          }
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "audit": {
+    "image": {
+      "objectCount": 9,
+      "left": -10.872666059389815,
+      "top": -3.9733936666319494,
+      "width": 621.7453321187796,
+      "height": 373.16417863761177,
+      "scaleX": 1,
+      "scaleY": 1,
+      "naturalWidth": 1063,
+      "naturalHeight": 638,
+      "angle": 0
+    },
+    "effectiveScale": {
+      "effectiveScaleX": 0.584897,
+      "effectiveScaleY": 0.584897
+    },
+    "perLineInk": [
+      {
+        "line": 0,
+        "bbox": {
+          "x": 106,
+          "y": 179,
+          "width": 340,
+          "height": 57
+        },
+        "inkHeight": 57,
+        "inkWidth": 340,
+        "reason": "OK"
+      },
+      {
+        "line": 1,
+        "bbox": {
+          "x": 106,
+          "y": 255,
+          "width": 298,
+          "height": 57
+        },
+        "inkHeight": 57,
+        "inkWidth": 298,
+        "reason": "OK"
+      },
+      {
+        "line": 2,
+        "bbox": {
+          "x": 106,
+          "y": 332,
+          "width": 361,
+          "height": 57
+        },
+        "inkHeight": 57,
+        "inkWidth": 361,
+        "reason": "OK"
+      }
+    ],
+    "medianEvidence": {
+      "perLineInkHeights": [
+        57,
+        57,
+        57
+      ],
+      "medianInkHeight": 57,
+      "medianCanvasPx": 33.34,
+      "wholeBlockInkHeight": 210,
+      "wholeBlockCanvasPx": 122.83,
+      "wholeBlockFs": 127,
+      "medianFs": 34,
+      "effectiveScaleY": 0.584897
+    },
+    "multiline": {
+      "lineQuads": [
+        {
+          "quad": [
+            {
+              "x": 63.74,
+              "y": 107.98
+            },
+            {
+              "x": 250.26,
+              "y": 107.98
+            },
+            {
+              "x": 250.26,
+              "y": 137.83
+            },
+            {
+              "x": 63.74,
+              "y": 137.83
+            }
+          ],
+          "containment": "CONTAINED"
+        },
+        {
+          "quad": [
+            {
+              "x": 63.74,
+              "y": 152.76
+            },
+            {
+              "x": 225.39,
+              "y": 152.76
+            },
+            {
+              "x": 225.39,
+              "y": 182.61
+            },
+            {
+              "x": 63.74,
+              "y": 182.61
+            }
+          ],
+          "containment": "CONTAINED"
+        },
+        {
+          "quad": [
+            {
+              "x": 63.74,
+              "y": 197.54
+            },
+            {
+              "x": 262.7,
+              "y": 197.54
+            },
+            {
+              "x": 262.7,
+              "y": 227.39
+            },
+            {
+              "x": 63.74,
+              "y": 227.39
+            }
+          ],
+          "containment": "CONTAINED"
+        }
+      ],
+      "synthesized": {
+        "left": 63.736774,
+        "top": 107.97586,
+        "width": 203,
+        "height": 137,
+        "angle": 0,
+        "maxLineWidth": 198.958506,
+        "lineSpacingEstimate": 14.926567,
+        "evidence": {
+          "lineQuads": 3,
+          "union": {
+            "left": 63.736774,
+            "top": 107.97586,
+            "width": 198.958506,
+            "height": 119.412537
+          },
+          "commonAngle": {
+            "angle": 0,
+            "maxDeviation": 0
+          },
+          "lineGaps": [
+            14.926567,
+            14.926567
+          ],
+          "sourceLineCount": 3,
+          "fontSize": 34,
+          "lineHeightRatio": 1.3,
+          "basis": "canvas-line-quads"
+        }
+      }
+    },
+    "createMeasure": {
+      "ok": true,
+      "identityMethod": "OBJECT_DELTA",
+      "requested": {
+        "left": 63.736774,
+        "top": 107.97586,
+        "fontSize": 34,
+        "sourceLineCount": 2
+      },
+      "actual": {
+        "aCoordsBB": {
+          "left": 63.74,
+          "top": 107.98,
+          "right": 303.74,
+          "bottom": 193.5
+        },
+        "fontSize": 34,
+        "renderedLineCount": 2,
+        "ink": {
+          "inkWidth": 234,
+          "inkHeight": 72,
+          "lineCount": 2,
+          "method": "FABRIC_OBJECT_LINES"
+        }
+      },
+      "errors": {
+        "fontSizeError": 0,
+        "centerError": 31.7,
+        "lineMismatch": false
+      },
+      "cleaned": true
+    },
+    "minFont": [
+      {
+        "fontSizeRequested": 2,
+        "fontSizeActual": 2,
+        "renderedLineCount": 1,
+        "inkHeight": 2,
+        "inkMethod": "FABRIC_OBJECT_LINES",
+        "rendered": true
+      },
+      {
+        "fontSizeRequested": 6,
+        "fontSizeActual": 6,
+        "renderedLineCount": 1,
+        "inkHeight": 6,
+        "inkMethod": "FABRIC_OBJECT_LINES",
+        "rendered": true
+      },
+      {
+        "fontSizeRequested": 20,
+        "fontSizeActual": 20,
+        "renderedLineCount": 1,
+        "inkHeight": 18,
+        "inkMethod": "FABRIC_OBJECT_LINES",
+        "rendered": true
+      }
+    ],
+    "textToImage": {
+      "layers": {
+        "L1_UI": {
+          "hits": [
+            "正在合成图片...",
+            " 对于外部用户自己上传的素材，若作商业用途，需要自行确认是否有版权，世纪开元不承",
+            "素材",
+            "素材格式：",
+            "标题素材",
+            "组合素材",
+            "官方素材",
+            "我的素材"
+          ]
+        },
+        "L2_Event": {
+          "eventTypes": [
+            "added",
+            "removed",
+            "mousedown",
+            "mousedown:before",
+            "mouseup",
+            "mousedblclick"
+          ]
+        },
+        "L3_Network": {
+          "batchSaveKeepMaterial": true,
+          "evidence": "Commit 2 已有批保存接口证据（native 素材保存能力）"
+        },
+        "L4_Module": {
+          "hits": [],
+          "hitCount": 0
+        },
+        "L5_Object": {
+          "imageObjectCount": 9,
+          "textObjectCount": 7
+        }
+      }
+    },
+    "toolFields": {
+      "buildImageTransform": "function",
+      "synthesizeTextLayout": "function",
+      "measureFabricObjectInk": "function",
+      "resolveLines": "function"
+    },
+    "scenarios": [
+      {
+        "case": "A-perline-median",
+        "passed": true,
+        "evidence": {
+          "perLineInkHeights": [
+            57,
+            57,
+            57
+          ],
+          "medianInkHeight": 57,
+          "medianFs": 34,
+          "wholeBlockInkHeight": 210,
+          "wholeBlockFs": 127,
+          "effectiveScaleY": 0.584897
+        }
+      },
+      {
+        "case": "C-synthesize-one-textbox",
+        "passed": true,
+        "evidence": {
+          "synthesized": {
+            "left": 63.736774,
+            "top": 107.97586,
+            "width": 203,
+            "height": 137,
+            "angle": 0,
+            "maxLineWidth": 198.958506,
+            "evidence": {
+              "lineQuads": 3,
+              "union": {
+                "left": 63.736774,
+                "top": 107.97586,
+                "width": 198.958506,
+                "height": 119.412537
+              },
+              "commonAngle": {
+                "angle": 0,
+                "maxDeviation": 0
+              },
+              "lineGaps": [
+                14.926567,
+                14.926567
+              ],
+              "sourceLineCount": 3,
+              "fontSize": 34,
+              "lineHeightRatio": 1.3,
+              "basis": "canvas-line-quads"
+            }
+          }
+        }
+      },
+      {
+        "case": "D-create-measure-multiline",
+        "passed": true,
+        "created": {
+          "ok": true,
+          "identityMethod": "OBJECT_DELTA",
+          "requested": {
+            "left": 63.736774,
+            "top": 107.97586,
+            "fontSize": 34,
+            "sourceLineCount": 2
+          },
+          "actual": {
+            "aCoordsBB": {
+              "left": 63.74,
+              "top": 107.98,
+              "right": 303.74,
+              "bottom": 193.5
+            },
+            "fontSize": 34,
+            "renderedLineCount": 2,
+            "ink": {
+              "inkWidth": 234,
+              "inkHeight": 72,
+              "lineCount": 2,
+              "method": "FABRIC_OBJECT_LINES"
+            }
+          },
+          "errors": {
+            "fontSizeError": 0,
+            "centerError": 31.7,
+            "lineMismatch": false
+          },
+          "cleaned": true
+        }
+      },
+      {
+        "case": "F-native-min-font",
+        "passed": true,
+        "evidence": [
+          {
+            "fontSizeRequested": 2,
+            "fontSizeActual": 2,
+            "renderedLineCount": 1,
+            "inkHeight": 2,
+            "inkMethod": "FABRIC_OBJECT_LINES",
+            "rendered": true
+          },
+          {
+            "fontSizeRequested": 6,
+            "fontSizeActual": 6,
+            "renderedLineCount": 1,
+            "inkHeight": 6,
+            "inkMethod": "FABRIC_OBJECT_LINES",
+            "rendered": true
+          },
+          {
+            "fontSizeRequested": 20,
+            "fontSizeActual": 20,
+            "renderedLineCount": 1,
+            "inkHeight": 18,
+            "inkMethod": "FABRIC_OBJECT_LINES",
+            "rendered": true
+          }
+        ]
+      },
+      {
+        "case": "E-text-to-image-audit",
+        "passed": true,
+        "verdict": "TEXT_TO_IMAGE_UNKNOWN_NO_MODULE_HIT",
+        "moduleHits": 0,
+        "uiHits": 36,
+        "evidence": {
+          "layers": {
+            "L1_UI": {
+              "hits": [
+                "正在合成图片...",
+                " 对于外部用户自己上传的素材，若作商业用途，需要自行确认是否有版权，世纪开元不承",
+                "素材",
+                "素材格式：",
+                "标题素材",
+                "组合素材",
+                "官方素材",
+                "我的素材"
+              ]
+            },
+            "L2_Event": {
+              "eventTypes": [
+                "added",
+                "removed",
+                "mousedown",
+                "mousedown:before",
+                "mouseup",
+                "mousedblclick"
+              ]
+            },
+            "L3_Network": {
+              "batchSaveKeepMaterial": true,
+              "evidence": "Commit 2 已有批保存接口证据（native 素材保存能力）"
+            },
+            "L4_Module": {
+              "hits": [],
+              "hitCount": 0
+            },
+            "L5_Object": {
+              "imageObjectCount": 9,
+              "textObjectCount": 7
+            }
+          }
+        }
+      }
+    ],
+    "textToImageInterface": "TEXT_TO_IMAGE_UNKNOWN_NO_MODULE_HIT"
+  },
+  "image": {
+    "objectCount": 9,
+    "left": -10.872666059389815,
+    "top": -3.9733936666319494,
+    "width": 621.7453321187796,
+    "height": 373.16417863761177,
+    "scaleX": 1,
+    "scaleY": 1,
+    "naturalWidth": 1063,
+    "naturalHeight": 638,
+    "angle": 0
+  },
+  "effectiveScale": {
+    "effectiveScaleX": 0.584897,
+    "effectiveScaleY": 0.584897
+  },
+  "medianEvidence": {
+    "perLineInkHeights": [
+      57,
+      57,
+      57
+    ],
+    "medianInkHeight": 57,
+    "medianCanvasPx": 33.34,
+    "wholeBlockInkHeight": 210,
+    "wholeBlockCanvasPx": 122.83,
+    "wholeBlockFs": 127,
+    "medianFs": 34,
+    "effectiveScaleY": 0.584897
+  },
+  "multiline": {
+    "lineQuads": [
+      {
+        "quad": [
+          {
+            "x": 63.74,
+            "y": 107.98
+          },
+          {
+            "x": 250.26,
+            "y": 107.98
+          },
+          {
+            "x": 250.26,
+            "y": 137.83
+          },
+          {
+            "x": 63.74,
+            "y": 137.83
+          }
+        ],
+        "containment": "CONTAINED"
+      },
+      {
+        "quad": [
+          {
+            "x": 63.74,
+            "y": 152.76
+          },
+          {
+            "x": 225.39,
+            "y": 152.76
+          },
+          {
+            "x": 225.39,
+            "y": 182.61
+          },
+          {
+            "x": 63.74,
+            "y": 182.61
+          }
+        ],
+        "containment": "CONTAINED"
+      },
+      {
+        "quad": [
+          {
+            "x": 63.74,
+            "y": 197.54
+          },
+          {
+            "x": 262.7,
+            "y": 197.54
+          },
+          {
+            "x": 262.7,
+            "y": 227.39
+          },
+          {
+            "x": 63.74,
+            "y": 227.39
+          }
+        ],
+        "containment": "CONTAINED"
+      }
+    ],
+    "synthesized": {
+      "left": 63.736774,
+      "top": 107.97586,
+      "width": 203,
+      "height": 137,
+      "angle": 0,
+      "maxLineWidth": 198.958506,
+      "lineSpacingEstimate": 14.926567,
+      "evidence": {
+        "lineQuads": 3,
+        "union": {
+          "left": 63.736774,
+          "top": 107.97586,
+          "width": 198.958506,
+          "height": 119.412537
+        },
+        "commonAngle": {
+          "angle": 0,
+          "maxDeviation": 0
+        },
+        "lineGaps": [
+          14.926567,
+          14.926567
+        ],
+        "sourceLineCount": 3,
+        "fontSize": 34,
+        "lineHeightRatio": 1.3,
+        "basis": "canvas-line-quads"
+      }
+    }
+  },
+  "createMeasure": {
+    "ok": true,
+    "identityMethod": "OBJECT_DELTA",
+    "requested": {
+      "left": 63.736774,
+      "top": 107.97586,
+      "fontSize": 34,
+      "sourceLineCount": 2
+    },
+    "actual": {
+      "aCoordsBB": {
+        "left": 63.74,
+        "top": 107.98,
+        "right": 303.74,
+        "bottom": 193.5
+      },
+      "fontSize": 34,
+      "renderedLineCount": 2,
+      "ink": {
+        "inkWidth": 234,
+        "inkHeight": 72,
+        "lineCount": 2,
+        "method": "FABRIC_OBJECT_LINES"
+      }
+    },
+    "errors": {
+      "fontSizeError": 0,
+      "centerError": 31.7,
+      "lineMismatch": false
+    },
+    "cleaned": true
+  },
+  "minFont": [
+    {
+      "fontSizeRequested": 2,
+      "fontSizeActual": 2,
+      "renderedLineCount": 1,
+      "inkHeight": 2,
+      "inkMethod": "FABRIC_OBJECT_LINES",
+      "rendered": true
+    },
+    {
+      "fontSizeRequested": 6,
+      "fontSizeActual": 6,
+      "renderedLineCount": 1,
+      "inkHeight": 6,
+      "inkMethod": "FABRIC_OBJECT_LINES",
+      "rendered": true
+    },
+    {
+      "fontSizeRequested": 20,
+      "fontSizeActual": 20,
+      "renderedLineCount": 1,
+      "inkHeight": 18,
+      "inkMethod": "FABRIC_OBJECT_LINES",
+      "rendered": true
+    }
+  ],
+  "textToImageInterface": "TEXT_TO_IMAGE_UNKNOWN_NO_MODULE_HIT",
+  "finalState": {
+    "objectCount": 25
+  }
+}

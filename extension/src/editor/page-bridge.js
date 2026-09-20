@@ -501,7 +501,7 @@ function pageBridge() {
           const x1 = Math.min(iwM - 1, Math.ceil((bb.x || 0) + (bb.width || 0)));
           const y1 = Math.min(ihM - 1, Math.ceil((bb.y || 0) + (bb.height || 0)));
           const ws = x1 - x0, hs = y1 - y0;
-          const base = { blockIndex: it.blockIndex != null ? it.blockIndex : null };
+          const base = { blockIndex: it.blockIndex != null ? it.blockIndex : null, lineIndex: it.lineIndex != null ? it.lineIndex : null };
           if (ws < 2 || hs < 2 || x1 < x0 || y1 < y0) return Object.assign(base, { ok: false, reason: "NO_REGION", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
           const hist = new Array(256).fill(0); let sum = 0, total = 0;
           for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) { const g = grayM[y * iwM + x]; hist[g] += 1; total += 1; sum += g; }

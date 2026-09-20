@@ -102,6 +102,11 @@ const H1 = compareTextGeometry(QT, QT.slice(), { renderedLineCount: 2, targetLin
 t("h.wrap-detected", H1.status === "TYPOGRAPHY_FAIL" && H1.typography.wrapDetected === true && H1.failures.indexOf("wrap") >= 0, "", H1);
 const H2 = compareTextGeometry(QT, QT.slice(), { renderedLineCount: 1, targetLineCount: 1 });
 t("h.no-wrap-pass", H2.status === "PASS" && H2.typography.wrapDetected === false, "", H2);
+// Stage 9 Commit 8 D：rendered < source（行折叠）→ 不得 PASS（须调整 width/fontSize/lineHeight）
+const H5 = compareTextGeometry(QT, QT.slice(), { renderedLineCount: 1, targetLineCount: 3 });
+t("h.collapse-detected", H5.status === "TYPOGRAPHY_FAIL" && H5.typography.pass === false && H5.typography.wrapDetected === false && H5.failures.indexOf("collapse") >= 0, "c8", H5);
+const H6 = compareTextGeometry(QT, QT.slice(), { renderedLineCount: 2, targetLineCount: 2 });
+t("h.line-match-pass", H6.status === "PASS" && H6.typography.pass === true && H6.failures.indexOf("collapse") < 0 && H6.failures.indexOf("wrap") < 0, "c8", H6);
 const H3 = compareTextGeometry(QT, QT.slice(), { renderedLineCount: 1, targetLineCount: 1, fontMismatch: true });
 t("h.font-mismatch-flag", H3.typography.fontMismatch === true && H3.status === "PASS", "", H3); // 仅标记不阻断
 // cornerTol 放大且 centerTol 同步放大 → PASS（几何各维度都在容差内）
