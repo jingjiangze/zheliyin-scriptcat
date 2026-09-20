@@ -1586,6 +1586,14 @@
         // P4-D §7：ink gap 显著时先修字号（±1），不得被 cmp.pass/几何通过短路（§10 字号优先于 position）
         const pInkGapPre = (p.ink && p.srcInkH > 0 && typeof p.geom.fontSize === "number" && !cmp.typography.wrapDetected) ? Math.round(((p.ink.inkHeight - p.srcInkH) * 100)) / 100 : null;
         if (pInkGapPre != null && Math.abs(pInkGapPre) > 1.5) {
+          // P4-D 二期：测量精度感知停止 —— fontSize ±1 后实测 ink 高度不再变化 → MEASUREMENT_PLATEAU（禁误判 CALIBRATION_MODEL_FAILURE）
+          const lastStep = (p.cal && p.cal.length) ? p.cal[p.cal.length - 1] : null;
+          if (lastStep && lastStep.editorInkHeightAfter != null && p.ink && typeof p.ink.inkHeight === "number" && Math.abs(p.ink.inkHeight - lastStep.editorInkHeightAfter) <= 0.5 && p.round >= 2) {
+            p.done = true;
+            p.cal[p.cal.length - 1].measurementPlateau = true;
+            ZY_NOTES.push({ blockIndex: p.blockIndex, status: cmp.status, failures: "height-ink", category: "FONT_MODEL", code: "MEASUREMENT_PLATEAU", plateauInkHeight: p.ink.inkHeight });
+            return;
+          }
           if (p.round >= 3) { p.done = true; ZY_NOTES.push({ blockIndex: p.blockIndex, status: cmp.status, failures: "height-ink", category: "FONT_MODEL", code: "CALIBRATION_MODEL_FAILURE", cal: p.cal }); return; } // P4-D §14：4 轮不收敛 → 保留对象并备案（禁全局 multiplier）
           const corrPre = correctionsFor(p, p.geom, cmp);
           if (corrPre) { p.round += 1; if (corrPre.__large) { p.large += 1; delete corrPre.__large; } need.push({ blockIndex: p.blockIndex, corrections: corrPre }); }
