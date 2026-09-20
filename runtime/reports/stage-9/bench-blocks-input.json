@@ -1,0 +1,252 @@
+[
+  {
+    "blockIndex": 0,
+    "text": "出",
+    "ocrBBox": {
+      "x": 397,
+      "y": 23,
+      "w": 121,
+      "h": 101.57
+    },
+    "source": {
+      "width": 33,
+      "height": 127
+    },
+    "target": {
+      "width": 120,
+      "height": 124,
+      "fontSize": 89
+    },
+    "editorInk": {
+      "inkWidth": 68,
+      "inkHeight": 81
+    },
+    "fontSize": 89,
+    "usedFont": "方正黑体简体"
+  },
+  {
+    "blockIndex": 1,
+    "text": "天住",
+    "ocrBBox": {
+      "x": 270,
+      "y": 40,
+      "w": 190,
+      "h": 42.81
+    },
+    "source": {
+      "width": 176,
+      "height": 53
+    },
+    "target": {
+      "width": 189,
+      "height": 56,
+      "fontSize": 37
+    },
+    "editorInk": {
+      "inkWidth": 71,
+      "inkHeight": 34
+    },
+    "fontSize": 37,
+    "usedFont": "方正黑体简体"
+  },
+  {
+    "blockIndex": 2,
+    "text": "轿 CO 天 住 出 sre",
+    "ocrBBox": {
+      "x": 447,
+      "y": 49,
+      "w": 206,
+      "h": 24.72999999999999
+    },
+    "source": {
+      "width": 112,
+      "height": 30
+    },
+    "target": {
+      "width": 205,
+      "height": 35,
+      "fontSize": 21
+    },
+    "editorInk": {
+      "inkWidth": 184,
+      "inkHeight": 20
+    },
+    "fontSize": 21,
+    "usedFont": "方正黑体简体"
+  },
+  {
+    "blockIndex": 3,
+    "text": "轿 CO 天 住 出 sre",
+    "ocrBBox": {
+      "x": -152,
+      "y": 62,
+      "w": 529,
+      "h": 63.150000000000006
+    },
+    "source": {
+      "width": 191,
+      "height": 79
+    },
+    "target": {
+      "width": 528,
+      "height": 80,
+      "fontSize": 55
+    },
+    "editorInk": {
+      "inkWidth": 480,
+      "inkHeight": 51
+    },
+    "fontSize": 55,
+    "usedFont": "方正黑体简体"
+  },
+  {
+    "blockIndex": 4,
+    "text": "Telephone: +86",
+    "ocrBBox": {
+      "x": 249,
+      "y": 113,
+      "w": 407,
+      "h": 32.639999999999986
+    },
+    "source": {
+      "width": 360,
+      "height": 40
+    },
+    "target": {
+      "width": 406,
+      "height": 44,
+      "fontSize": 28
+    },
+    "editorInk": {
+      "inkWidth": 373,
+      "inkHeight": 26
+    },
+    "fontSize": 28,
+    "usedFont": "方正黑体简体"
+  },
+  {
+    "blockIndex": 5,
+    "text": "阅梧回盈\n器洛明",
+    "ocrBBox": {
+      "x": 61,
+      "y": 120,
+      "w": 507,
+      "h": 267.00199999999995
+    },
+    "source": {
+      "width": 469,
+      "height": 153
+    },
+    "target": {
+      "width": 506,
+      "height": 286,
+      "fontSize": 107
+    },
+    "editorInk": {
+      "inkWidth": 422,
+      "inkHeight": 226
+    },
+    "fontSize": 107,
+    "usedFont": "方正黑体简体"
+  },
+  {
+    "blockIndex": 6,
+    "text": "回册佛山盛包装制品限",
+    "ocrBBox": {
+      "x": 25,
+      "y": 190,
+      "w": 702,
+      "h": 47.329999999999984
+    },
+    "source": {
+      "width": 687,
+      "height": 59
+    },
+    "target": {
+      "width": 701,
+      "height": 61,
+      "fontSize": 41
+    },
+    "editorInk": {
+      "inkWidth": 405,
+      "inkHeight": 39
+    },
+    "fontSize": 41,
+    "usedFont": "方正黑体简体"
+  },
+  {
+    "blockIndex": 9,
+    "text": "多",
+    "ocrBBox": {
+      "x": 26,
+      "y": 219,
+      "w": 181,
+      "h": 41.68000000000001
+    },
+    "source": {
+      "width": 167,
+      "height": 52
+    },
+    "target": {
+      "width": 180,
+      "height": 55,
+      "fontSize": 36
+    },
+    "editorInk": {
+      "inkWidth": 30,
+      "inkHeight": 33
+    },
+    "fontSize": 36,
+    "usedFont": "方正黑体简体"
+  },
+  {
+    "blockIndex": 11,
+    "text": "器 洛 Tel.: 0757",
+    "ocrBBox": {
+      "x": 24,
+      "y": 222.00000000000003,
+      "w": 794,
+      "h": 132.758
+    },
+    "source": {
+      "width": 286,
+      "height": 75
+    },
+    "target": {
+      "width": 793,
+      "height": 146,
+      "fontSize": 53
+    },
+    "editorInk": {
+      "inkWidth": 715,
+      "inkHeight": 112
+    },
+    "fontSize": 53,
+    "usedFont": "方正黑体简体"
+  },
+  {
+    "blockIndex": 15,
+    "text": "由",
+    "ocrBBox": {
+      "x": 167,
+      "y": 319,
+      "w": 61,
+      "h": 23.600000000000023
+    },
+    "source": {
+      "width": 23,
+      "height": 28
+    },
+    "target": {
+      "width": 60,
+      "height": 34,
+      "fontSize": 20
+    },
+    "editorInk": {
+      "inkWidth": 16,
+      "inkHeight": 17
+    },
+    "fontSize": 20,
+    "usedFont": "方正黑体简体"
+  }
+]
