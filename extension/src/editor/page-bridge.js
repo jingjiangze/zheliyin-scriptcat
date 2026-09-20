@@ -371,6 +371,75 @@ function pageBridge() {
         post("getTextInventoryResult", { ok: true, code: "OK", pageId: (function () { const cInv = buildCurrentPageInfo(); return (cInv && cInv.pageId) || resoInv.pageId; })(), side: resoInv.side, items: invItems });
         return;
       }
+      if (event.data.type === "inkMeasure") {
+        // Stage 9 P4-B §四/§五：只读 —— 对源图各 OCR block 区域测量「局部 Otsu 少数类前景墨迹 bbox」。
+        // 注：页桥以 toString 注入为自包含字符串，无法引用沙箱 @require 模块；此处内联实现与
+        // extension/src/editor/image-ink-target.js 同构（node 单测以模块为真源）。
+        // 只读不改画布；失败显式 reason（NO_REGION/NO_INK/NO_IMAGE_SOURCE/CROSS_ORIGIN_IMAGE），禁伪造 inkWidth。
+        const resoM = resolveCurrentEditorPage();
+        if (!resoM || resoM.status !== "ok" || !resoM.canvas) { post("inkMeasureResult", { ok: false, reason: "CURRENT_PAGE_UNKNOWN", items: [] }); return; }
+        const canvasM = resoM.canvas;
+        const activeM = canvasM.getActiveObject ? canvasM.getActiveObject() : null;
+        const targetM = (activeM && String(activeM.type) === "image") ? activeM
+          : ((canvasM.backgroundImage && String(canvasM.backgroundImage.type) === "image") ? canvasM.backgroundImage
+            : ((canvasM.getObjects && canvasM.getObjects().find ? canvasM.getObjects().find(function (o) { return o && String(o.type) === "image"; }) : null) || null));
+        if (!targetM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SOURCE", items: [] }); return; }
+        const elM = (targetM._element) || (targetM.getElement && targetM.getElement());
+        if (!elM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_ELEMENT", items: [] }); return; }
+        const iwM = elM.naturalWidth || elM.width || targetM.width;
+        const ihM = elM.naturalHeight || elM.height || targetM.height;
+        if (!iwM || !ihM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SIZE", items: [] }); return; }
+        const cvM = document.createElement("canvas"); cvM.width = iwM; cvM.height = ihM;
+        const c2M = cvM.getContext && cvM.getContext("2d");
+        if (!c2M) { post("inkMeasureResult", { ok: false, reason: "NO_CANVAS_CTX", items: [] }); return; }
+        let dM = null;
+        try { c2M.drawImage(elM, 0, 0); dM = c2M.getImageData(0, 0, iwM, ihM).data; } catch (e) { dM = null; }
+        if (!dM) { post("inkMeasureResult", { ok: false, reason: "CROSS_ORIGIN_IMAGE", items: [] }); return; }
+        const grayM = new Uint8Array(iwM * ihM);
+        for (let iM = 0; iM < iwM * ihM; iM += 1) { const jM = iM * 4; grayM[iM] = Math.round(0.299 * dM[jM] + 0.587 * dM[jM + 1] + 0.114 * dM[jM + 2]); }
+        const reqInk = Array.isArray(event.data.items) ? event.data.items : [];
+        const itemsM = reqInk.map(function (it) {
+          const bb = it.bbox || {};
+          const x0 = Math.max(0, Math.floor(bb.x || 0)), y0 = Math.max(0, Math.floor(bb.y || 0));
+          const x1 = Math.min(iwM - 1, Math.ceil((bb.x || 0) + (bb.width || 0)));
+          const y1 = Math.min(ihM - 1, Math.ceil((bb.y || 0) + (bb.height || 0)));
+          const ws = x1 - x0, hs = y1 - y0;
+          const base = { blockIndex: it.blockIndex != null ? it.blockIndex : null };
+          if (ws < 2 || hs < 2 || x1 < x0 || y1 < y0) return Object.assign(base, { ok: false, reason: "NO_REGION", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          const hist = new Array(256).fill(0); let sum = 0, total = 0;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) { const g = grayM[y * iwM + x]; hist[g] += 1; total += 1; sum += g; }
+          if (total < 16) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          let sumB = 0, wB = 0, maxVar = 0, th = 128, found = false;
+          for (let t = 0; t < 256; t += 1) {
+            wB += hist[t]; if (wB === 0) continue;
+            const wF = total - wB; if (wF === 0) break;
+            sumB += t * hist[t];
+            const mB = sumB / wB, mF = (sum - sumB) / wF;
+            const v = wB * wF * (mB - mF) * (mB - mF);
+            if (v > maxVar) { maxVar = v; th = t; found = true; }
+          }
+          if (!found) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          let dark = 0;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) if (grayM[y * iwM + x] <= th) dark += 1;
+          const takeDark = dark <= total - dark;
+          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, cnt = 0;
+          for (let y = y0; y < y1; y += 1) {
+            for (let x = x0; x < x1; x += 1) {
+              const g = grayM[y * iwM + x];
+              const fg = takeDark ? (g <= th) : (g > th);
+              if (!fg) continue;
+              cnt += 1;
+              if (x < minX) minX = x; if (x > maxX) maxX = x;
+              if (y < minY) minY = y; if (y > maxY) maxY = y;
+            }
+          }
+          if (!(cnt >= 6 && maxX >= minX && maxY >= minY) || !isFinite(minX)) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          const inkW = maxX - minX + 1, inkH = maxY - minY + 1;
+          return Object.assign(base, { ok: true, reason: "OK", inkWidth: inkW, inkHeight: inkH, inkBox: { x: minX, y: minY, width: inkW, height: inkH }, coverage: Math.round((cnt / total) * 10000) / 10000 });
+        });
+        post("inkMeasureResult", { ok: true, reason: "OK", imageWidth: iwM, imageHeight: ihM, items: itemsM });
+        return;
+      }
       if (event.data.type === "ocrCalibrate") {
         // Stage 9 V4 §二十/§二十四：CALIBRATION_RECOGNITION / RECOGNITION_RETRY —— 更新现有 textbox，
         // 不创建重复对象。错误行为：删除 A 重建 B（禁止）——保持 object identity，只改 text/样式/几何。
