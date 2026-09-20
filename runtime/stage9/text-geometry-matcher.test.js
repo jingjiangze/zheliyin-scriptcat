@@ -18,16 +18,16 @@ t("优先级1: 跨 page 隔离", () => {
   assert.strictEqual(r.unmatchedBaidu.length, 1);
 });
 // §十八：exact text
-t("优先级2: exact text → EXACT_TEXT + textSource=ALT_Q", () => {
+t("优先级2: exact text → EXACT_TEXT + textSource=NATIVE_OCR", () => {
   const r = M.matchTextGeometry([AT("吴健湘", 0)], [L("b0", "吴健湘", 0)], { pageId: "p1" });
   assert.strictEqual(r.regions.length, 1);
   const rg = r.regions[0];
   assert.strictEqual(rg.text, "吴健湘");
-  assert.strictEqual(rg.textSource, "ALT_Q");
+  assert.strictEqual(rg.textSource, "NATIVE_OCR"); // Stage 9 V3 §九：文字真值语义
   assert.strictEqual(rg.geometrySource, "BAIDU");
   assert.strictEqual(rg.match.method, "EXACT_TEXT");
   assert.strictEqual(rg.match.score, 1);
-  assert.strictEqual(rg.textEvidence.altqRawText, "吴健湘");
+  assert.strictEqual(rg.textEvidence.nativeRawText, "吴健湘");
   assert.strictEqual(rg.geometryEvidence.baiduId, "b0");
 });
 // §十九：text 完全不同 → position/order 匹配，text 恒为 AltQ
@@ -88,7 +88,7 @@ t("region 字段完整", () => {
   const r = M.matchTextGeometry([AT("吴健湘", 0)], [L("b0", "吴健湘", 0)], { pageId: "p1" });
   const rg = r.regions[0];
   assert.ok(rg.id.length > 2);
-  assert.ok(rg.textEvidence.altqId);
+  assert.ok(rg.textEvidence.nativeId);
   assert.strictEqual(typeof rg.match.ambiguous, "boolean");
   assert.strictEqual(typeof rg.match.score, "number");
 });

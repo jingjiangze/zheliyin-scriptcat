@@ -105,9 +105,9 @@ function mkRegion(a, l, score, method, ambiguousFlag) {
   var r = {
     id: "tr-" + (a.id != null ? a.id : "a") + "-" + (l.id != null ? l.id : "l"),
     text: a.rawText,
-    textSource: "ALT_Q",
+    textSource: "NATIVE_OCR", // Stage 9 V3 §九：文字真值语义统一为 NATIVE_OCR（原 ALT_Q 残留已废弃）
     geometrySource: "BAIDU",
-    textEvidence: { altqId: a.id, altqRawText: a.rawText, altqMatchText: a.matchText },
+    textEvidence: { nativeId: a.id, nativeRawText: a.rawText, nativeMatchText: a.matchText },
     geometryEvidence: { baiduId: l.id, bbox: l.bbox, confidence: l.confidence },
     match: { score: score, method: method, ambiguous: !!ambiguousFlag },
     pageId: null

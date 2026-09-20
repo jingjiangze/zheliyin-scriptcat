@@ -48,13 +48,12 @@ function buildFormData(dataUrl, opts) {
   return fd;
 }
 
-// 解析响应行（<br/> 分隔，HTML 实体容忍）
+// 解析响应行（<br/> 分隔；§六 stage9-v3：rawText 绝对原样，禁止 trim/归一/改标点/删内部空格）
 function parseNativeText(html) {
   if (html == null) return [];
-  var s = String(html);
-  return s
+  return String(html)
     .split(/<br\s*\/?\s*>/i)
-    .map(function (x) { return String(x).trim(); })
+    .map(function (x) { return String(x); })
     .filter(function (x) { return x !== ""; });
 }
 

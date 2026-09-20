@@ -24,13 +24,12 @@ t("recognize: success → texts 行解析 + bbox=null + provider/source", async 
   assert.strictEqual(r.meta.method, "POST");
   assert.strictEqual(r.meta.responseType, "json");
 });
-// §二十 硬规则：final text === rawText（Provider 不修改文字）
-t("rawText 保真（不归一化不修正）", async () => {
+// §六（Stage9 V3）：rawText 绝对原样——禁止 trim/归一/改标点；只做 <br/> 行边界
+t("rawText 保真（§六：禁 trim，空格原样保留）", async () => {
   const body = JSON.stringify({ success: true, message: "0", userData: " 佛山盛盈包装制品有限公司 <br/> Tel.:0757-88809856 " });
   const r = await N.recognize("data:image/png;base64,AAAA", { fetch: mockFetch(200, body) });
-  // 按 <br/> 拆分 + trim 首尾空白；字符内容原样保留（不变大小写/标点/顺序）
-  assert.strictEqual(r.texts[0].rawText, "佛山盛盈包装制品有限公司");
-  assert.strictEqual(r.texts[1].rawText, "Tel.:0757-88809856");
+  assert.strictEqual(r.texts[0].rawText, " 佛山盛盈包装制品有限公司 ");
+  assert.strictEqual(r.texts[1].rawText, " Tel.:0757-88809856 ");
   assert.strictEqual(r.texts.length, 2);
 });
 // success=false → OCR_FAILED
@@ -75,7 +74,8 @@ t("recognize: userData 空 → ok=true texts=[]", async () => {
 // 单测辅助函数
 t("parseNativeText / buildFormData 细节", () => {
   assert.deepStrictEqual(N.parseNativeText("a<br/>b<br>c<br />d"), ["a", "b", "c", "d"]);
-  assert.deepStrictEqual(N.parseNativeText("  "), []);
+  assert.deepStrictEqual(N.parseNativeText("  x "), ["  x "]); // §六：原样保留，不 trim
+  assert.deepStrictEqual(N.parseNativeText(""), []);
   assert.strictEqual(N.buildFormData(null), null);
 });
 

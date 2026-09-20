@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.32
+// @version      0.3.11.33
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,25 +14,27 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.32
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.32
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.33
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.33
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -53,7 +55,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.32";
+  const VERSION = "0.3.11.33";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -868,7 +870,36 @@
     const gate8d = runCandidateGate(lineCandidates, { width: img.width, height: img.height });
     if (!gate8d.ok) { ocrRunning = false; setStatus("OCR 候选质量门阻断（" + String(gate8d.reason || "invalid-result") + "），未生成文字"); ocrLog("GATE8D", "block-set suspect: " + (gate8d.setSuspectReasons || []).join("|")); return; }
     const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(gate8d.validated) : (gate8d.validated || []).map(oneLineBlock);
-    buildItemsFromOcr(blocks, img, diag);
+    const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate）
+    buildItemsFromOcr(tb.blocks, img, diag);
+  }
+
+  // ---- Stage 9 V3：Native OCR = 绝对文字真值（§一/§九十 feature gate zyStage9NativeTruth）----
+  // 规则：最终 textbox.text 必须来自 nativeOcr.texts[].rawText（原样，禁 trim/禁 sanitize）。
+  // 本刀只做 Text Truth 接线（§五十九）：不及 Font/Position/Vertical/ImageInk；Geometry 沿用候选块。
+  const STAGE9_NATIVE_TRUTH = GM_getValue("zyStage9NativeTruth", "0") === "1";
+  async function maybeApplyNativeTruth(blocks, img, diag) {
+    if (!STAGE9_NATIVE_TRUTH || typeof recognize !== "function" || typeof applyNativeTextTruth !== "function") {
+      return { blocks: blocks || [], mode: "OFF", skipped: true };
+    }
+    try {
+      const native = await recognize(img.dataUrl, {
+        pageId: (img && img.pageId) || null,
+        transactionId: (img && img.transactionId) || null,
+        imageFingerprint: null,
+        textType: "1"
+      });
+      if (!(native && native.ok)) {
+        ocrLog("TRUTH", "native unavailable " + String((native && native.error && native.error.errorCode) || "?"));
+        return { blocks: blocks || [], mode: "OFF", skipped: true, reason: "unavailable" };
+      }
+      const applied = applyNativeTextTruth(blocks || [], native);
+      ocrLog("TRUTH", "native lines=" + native.texts.length + " kept=" + applied.kept.length + " droppedLegacy=" + applied.legacyDropped.length + " unmatchedNative=" + applied.unmatchedNative.length + " valid=" + applied.gate.allTextTruthValid + (applied.gate.failureCode ? " fail=" + applied.gate.failureCode : ""));
+      return { blocks: applied.kept, mode: "NATIVE_TRUTH", native: native, applied: applied };
+    } catch (e) {
+      ocrLog("TRUTH", "exception " + String(e && (e.message || e) || "").slice(0, 160));
+      return { blocks: blocks || [], mode: "OFF", skipped: true };
+    }
   }
 
   // 本地 Tesseract 执行器（manual local / auto 下 Cloud 失败后的 local-fallback 共用，§8.1）
@@ -965,7 +996,8 @@
               ? buildTextBlocks(gate8d.validated)
               : (gate8d.validated || []).map(oneLineBlock);
             ocrLog("TRACE8D", "blocks=" + (blocks || []).length);
-            buildItemsFromOcr(blocks, img, diag);
+            const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate；OFF 时原样）
+            buildItemsFromOcr(tb.blocks, img, diag);
           } catch (e) {
             ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse8d: " + String(e && (e.stack || (e.message ? "msg:" + e.message : e)) || e).slice(0, 600));
             emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "exception" }));
@@ -1161,7 +1193,11 @@
         ocrLog("SAFETY_GATE", "block " + bi + " status=BLOCK issues=" + (safety.issues || []).join("|"));
         return null;
       }
-      const srcText = (b.safeText != null && String(b.safeText).trim() !== "") ? String(b.safeText) : String(b.text || "");
+      // Stage 9 V3（§六/二十）：NATIVE_OCR 块的最终文字 = rawText 绝对原样（禁 trim/sanitize/归一）；
+      // 其余块保持 Legacy（safeText→text）供回归对比（§五十八）。
+      const srcText = (b.textSource === "NATIVE_OCR" && b.rawText != null)
+        ? String(b.rawText)
+        : ((b.safeText != null && String(b.safeText).trim() !== "") ? String(b.safeText) : String(b.text || ""));
       if (!srcText.trim()) return null;
       // Stage 8B STEP 4（Phase A）：唯一几何合同 —— 用 aCoords 真值建立 source→canvas 仿射，
       // 把 OCR 块四角映射为目标 quad（Phase B compare / Phase C 校正 / Phase E gate 唯一基准）。
@@ -1238,6 +1274,8 @@
         safetyGate: (b.safety && b.safety.status) ? b.safety.status : null, // Stage 7.8R §八：SAFE / BLOCK
         // Stage 8B STEP 5：字号求解来源 / 样式候选（真实模板字体优先）
         fsSource: fsSource,
+        textSource: b.textSource || "LEGACY_OCR", // Stage 9 V3：NATIVE_OCR = 绝对文字真值
+        textTruth: b.textTruth || null,
         fontFamilyUsed: measureFamily,
         fontFamilySource: fontFamilyCandidate ? "template" : "fallback",
         legacyAvgLineH: avgLineH,
