@@ -56,3 +56,23 @@
 
 - Stage 9 单测 95/95；text-fit-fusion 8/8；tests/editor-object-model text-fit ALL PASS；node --check ×5 OK。
 - 既有 stage-8d 17 项历史失败（candidate-normalizer 10 / merge-guard 2 / merge-golden-word 2 / textblock-fields 3）未触及、未修复（按 Stage 9 约束），与本轮改动无关。
+
+## 五、P4-D 二期：measurement plateau（commit 4f3899f，已同步 test）
+
+**改动**：runGeometryCalibration 新增最小停止条件 —— fontSize ±1 后实测 ink 高度不再变化（|Δ|≤0.5px）且已有 ≥1 步 → `MEASUREMENT_PLATEAU`，立即停止并保留对象（取代误判 CALIBRATION_MODEL_FAILURE/无意义反复调字号）。未新建 loop，仍 ≤4 轮。
+
+**A1 真机结果（p4d-plateau-a1.json，FULL_REAL_PIPELINE）**
+
+| 字段 | 客户经理 | Tel.: 0757-88809856 |
+|---|---|---|
+| fontSize | 55（unchanged） | **36**（35→36 后 ink 30 不再变化 → 停止；此前版本会继续到 37） |
+| fontSizeSource | ink-height-primary | ink-height-primary |
+| sourceInkHeight | 53 | 34 |
+| editorInkHeight | 52 | 30 |
+| heightError | -1 | -4 |
+| calibrationRounds | 0 | 1（plateau 提前停） |
+| measurementPlateau | - | **true** |
+| editorInkWidth≈advanceWidth | 218≈220 | 329≈329.4（width 与 advance 自洽） |
+| wrap | 1（false） | 1（false） |
+
+结论：CJK 主块保持收敛不回退旧 43；英文/数字行在测量平台点停止，不再无意义 ±1 反复调整；对象保留、无拒绝。
