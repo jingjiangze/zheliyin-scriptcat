@@ -56,6 +56,38 @@ function injectUserscript() {
   return code;
 }
 
+// ---- Stage 8D：页面 world 注入通道（ZY_PAGE_WORLD=1）----
+// 原因：清空 profile 后 ScriptCat 的 userScripts 注入通路失效（chrome.userScripts API 不可用），
+// 安装成功但脚本不注入。自建通道：addInitScript 在页面 world 预注入
+// [GM shim] + [@require 模块内联] + [userscript 主体]，与原沙箱（同作用域共享）语义一致。
+// 差异诚实记录：GM_xmlhttpRequest→fetch（OCR 引擎 CDN 因 CORS 可下载；Baidu 云端因 CORS 不可用 → 自动走本地 OCR）。
+const GM_SHIM_SOURCE = [
+  "try{window.__ZY8D_PAGE_WORLD__=true;",
+  "if(typeof window.GM_getValue==='undefined'){window.GM_getValue=function(k,d){try{var v=localStorage.getItem('zy8dshim:'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}};}",
+  "if(typeof window.GM_setValue==='undefined'){window.GM_setValue=function(k,v){try{localStorage.setItem('zy8dshim:'+k,JSON.stringify(v));}catch(e){}};window.GM_deleteValue=function(k){try{localStorage.removeItem('zy8dshim:'+k);}catch(e){}};}",
+  "if(typeof window.GM_xmlhttpRequest==='undefined'){window.GM_xmlhttpRequest=function(o){var u=o.url||'',m=(o.method||'GET');fetch(u,{method:m,headers:(o.headers||{})}).then(function(res){return res.text().then(function(t){return {status:res.status,responseText:t,response:t,readyState:4,finalUrl:u};});}).then(function(r){if(o.onload)try{o.onload(r);}catch(e){};}).catch(function(e){if(o.onerror)try{o.onerror({status:0,error:String(e&&e.message||e)||'fetch-error',responseText:''});}catch(e2){};});return {abort:function(){}};};}",
+  "if(typeof window.GM_addStyle==='undefined'){window.GM_addStyle=function(css){var el=document.createElement('style');el.textContent=css;(document.head||document.documentElement).appendChild(el);return el;};}",
+  "if(typeof window.GM_addElement==='undefined'){window.GM_addElement=function(tag,attrs){var el=document.createElement(tag);for(var k in (attrs||{})){try{el[k]=attrs[k];}catch(e){}};(document.head||document.documentElement).appendChild(el);return el;};}",
+  "if(typeof window.GM_setClipboard==='undefined'){window.GM_setClipboard=function(t){try{navigator.clipboard&&navigator.clipboard.writeText(String(t||''));}catch(e){}};}",
+  "}catch(e){console.error('[zy8d-shim]',e);}"
+].join("\n");
+
+function pageWorldPayload() {
+  const norm = injectUserscript(); // 已含分支归一（@require 指向 BRANCH）
+  const parts = [GM_SHIM_SOURCE];
+  const reqs = [...norm.matchAll(/\/\/ @require\s+(\S+)/g)].map((m) => m[1]);
+  for (const u of reqs) {
+    const mm = /\/extension\/src\/(.+)$/.exec(u);
+    if (!mm) continue;
+    const rel = mm[1].split("?")[0];
+    const fp = path.join(ROOT, "extension", "src", rel);
+    if (fs.existsSync(fp)) parts.push("// ==== @require " + rel + " ====\n" + fs.readFileSync(fp, "utf8"));
+    else console.log("PAGE_WORLD missing module: " + rel);
+  }
+  parts.push(norm);
+  return parts.join("\n;\n");
+}
+
 // runner 侧独立 compare（忠实复刻 text-fit.compareTextGeometry 阈值语义；页面世界无模块可直接引用）
 function quadCenter(q) { let sx = 0, sy = 0; q.forEach((p) => { sx += p.x; sy += p.y; }); return { x: sx / q.length, y: sy / q.length }; }
 function quadSize(q) {
@@ -122,18 +154,26 @@ function compareQuad(target, actual) {
     fs.mkdirSync(REPORT_DIR, { recursive: true });
     browser = await chromium.launchPersistentContext(PROFILE, { channel: "chromium", headless: false, ignoreDefaultArgs: ["--enable-automation", "--disable-extensions"], args: ["--disable-features=DisableLoadExtensionCommandLineSwitch", "--enable-unsafe-extension-debugging", "--disable-extensions-except=" + SC_DIR, "--load-extension=" + SC_DIR], viewport: { width: 1440, height: 900 } });
     browser.on("dialog", (d) => { try { d.accept().catch(() => {}); } catch (e) {} });
-    opts = browser.pages()[0];
-    await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
-    await SLEEP(2000);
-    const all = await adapter.getAllScripts(opts);
-    for (const s of (all || []).filter((x) => /zheliyin|折立印/.test(String(JSON.stringify(x) || "")))) { try { await adapter.removeScript(opts, s.uuid); } catch (e) {} }
-    await adapter.installByCode(opts, { uuid: "zheliyin-8b-step5-" + Date.now(), code: injectUserscript(), upsertBy: "user" });
-    await SLEEP(1400);
-    page = opts;
+    page = browser.pages()[0];
     out.console = [];
-    page.on("console", (m) => { const t = m.text(); if (/\[zy-ocr\]/.test(t)) out.console.push(t.slice(0, 400)); });
-    await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
-    await SLEEP(1200);
+    out.consoleDiag = [];
+    page.on("console", (m) => { const t = m.text(); if (/RAW_WORDS8D/.test(t)) { out.consoleLong = out.consoleLong || []; out.consoleLong.push(t.slice(0, 30000)); } if (/\[zy-ocr\]/.test(t)) out.console.push(t.slice(0, 400)); else if (/(error|uncaught|failed|syntax|reference|typeerror|is not a function|undefined is not)/i.test(t)) out.consoleDiag.push(t.slice(0, 500)); });
+    page.on("pageerror", (e) => { const t = String(e && e.message || e); out.consoleDiag.push("PAGEERROR: " + t.slice(0, 500)); });
+    const USE_PAGE_WORLD = process.env.ZY_PAGE_WORLD === "1";
+    if (USE_PAGE_WORLD) {
+      // Stage 8D：自建页面 world 注入（绕过 ScriptCat 注入链，详见 pageWorldPayload）
+      await page.addInitScript({ content: pageWorldPayload() });
+      out.injectMode = "page-world";
+    } else {
+      opts = page;
+      await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
+      await SLEEP(2000);
+      const all = await adapter.getAllScripts(opts);
+      for (const s of (all || []).filter((x) => /zheliyin|折立印/.test(String(JSON.stringify(x) || "")))) { try { await adapter.removeScript(opts, s.uuid); } catch (e) {} }
+      await adapter.installByCode(opts, { uuid: "zheliyin-8b-step5-" + Date.now(), code: injectUserscript(), upsertBy: "user" });
+      await SLEEP(8000);
+      out.injectMode = "scriptcat";
+    }
     if (BAIDU_AK && BAIDU_SK) { await ev((a) => { const ai = document.querySelector("#zy-baidu-ak-native") || document.querySelector("#zy-baidu-ak"); const si = document.querySelector("#zy-baidu-sk-native") || document.querySelector("#zy-baidu-sk"); const sb = document.querySelector("#zy-baidu-save-native") || document.querySelector("#zy-baidu-save"); if (!ai || !si || !sb) return { ok: false }; ai.value = a.ak; si.value = a.sk; try { sb.click(); } catch (e) {} return { ok: true }; }, { ak: BAIDU_AK, sk: BAIDU_SK }); await SLEEP(3000); }
     await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
@@ -175,7 +215,8 @@ function compareQuad(target, actual) {
         rec.steps.push(await bgSnap());
         const before = await snapObjs();
         rec.beforeObjCount = (before || []).length;
-        const cl = await clickOcr();
+        let cl = await clickOcr();
+        for (let rt = 0; !cl.clicked && rt < 5; rt += 1) { await SLEEP(3000); cl = await clickOcr(); } // 首载慢导致按钮晚渲染 → 重试
         if (!cl.clicked) { rec.errors.push("ocr button"); continue; }
         let last = null, done = false;
         const t0 = Date.now();
