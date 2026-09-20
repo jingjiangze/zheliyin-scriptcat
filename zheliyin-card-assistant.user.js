@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.24
+// @version      0.3.11.25
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,23 +14,23 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.24
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.24
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.25
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.25
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -51,7 +51,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.24";
+  const VERSION = "0.3.11.25";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -930,6 +930,10 @@
             if (unified && unified.length && typeof aggregateLineCandidates === "function") {
               ocrLog("GROUP", "lines=" + unified.length + " y=" + unified.map((l) => Math.round(l.bbox.y || 0)).join(",") + " h=" + unified.map((l) => Math.round(l.bbox.height || 0)).join(","));
             }
+            // Stage 8D 取证打点：unified 第一元素形态（定位 reading 'slice' 崩点）
+            if (unified && unified[0]) {
+              ocrLog("TRACE8D", "unified=" + unified.length + " k0=" + JSON.stringify(Object.keys(unified[0])) + " b0=" + JSON.stringify({ y: unified[0].bbox && unified[0].bbox.y, h: unified[0].bbox && unified[0].bbox.height, t: String(unified[0].text || "").slice(0, 6) }));
+            }
             // Stage 7.3（OCR 稳定化 §二）：本地结果同样过质量门（本地为 fallback 末端，
             // FAIL → 终态报错，不再换路；避免垃圾候选进入画布）
             const localQa = (typeof assessOcrCandidates === "function")
@@ -952,12 +956,14 @@
             }
             const gate8d = runCandidateGate(localKept, { width: size.width || img.width, height: size.height || img.height });
             if (!gate8d.ok) { ocrRunning = false; setStatus("OCR 候选质量门阻断（" + String(gate8d.reason || "invalid-result") + "），未生成文字"); ocrLog("GATE8D", "block-set suspect: " + (gate8d.setSuspectReasons || []).join("|")); return; }
+            ocrLog("TRACE8D", "gate-kept=" + (gate8d.validated || []).length + " score=" + (gate8d.score && gate8d.score.score));
             const blocks = (typeof buildTextBlocks === "function")
               ? buildTextBlocks(gate8d.validated)
               : (gate8d.validated || []).map(oneLineBlock);
+            ocrLog("TRACE8D", "blocks=" + (blocks || []).length);
             buildItemsFromOcr(blocks, img, diag);
           } catch (e) {
-            ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e);
+            ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e + (e && e.stack ? " @ " + String(e.stack).split("\n")[1] || "" : ""));
             emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "exception" }));
           }
         } else if (tries > OCR_TIMEOUT_TRIES) {
@@ -1108,6 +1114,7 @@
     // 几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）。P3：只消费统一候选边界。
     const geo = ocrTarget && ocrTarget.geo;
     if (!geo) { setStatus("OCR 目标已失效，请重新识别"); ocrLog("ERROR", "ocrTarget missing"); ocrRunning = false; return; }
+    ocrLog("TRACE8D", "buildItems blocks=" + (blocks || []).length + " geoAC=" + !!(geo.aCoords) + " measurer=" + (typeof browserTextMeasurer === "function" ? "fn" : "no") + " fusion=" + (typeof solveFontSizeFusion === "function" ? "fn" : "no"));
     // Stage 7.6：source page 归属（ocrTarget 已在 handleOcrImage 冻结）—— 每个 item 携带 pageId/side，
     // 由 page-bridge 在创建前做 Ownership 硬门禁（Stage 7.7）。
     const srcPageId = (ocrTarget && ocrTarget.pageId) || null;
