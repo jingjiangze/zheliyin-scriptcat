@@ -231,6 +231,9 @@ function compareQuad(target, actual) {
         }
         rec.done = done;
         await SLEEP(2000); // 让闭环校正（ocrAdjust）异步完成
+        // Stage 8D 取证：抓取 tesseract 原始输出（完整 words/lines），供 node 完整复现
+        const rawD = await ev(() => { try { const v = window.__zy8dRaw; return v ? JSON.parse(v) : null; } catch (e) { return { __err: String(e).slice(0, 100) }; } }).catch((e) => ({ __err: String(e).slice(0, 100) }));
+        if (rawD && (rawD.w || rawD.l)) rec.rawDump = rawD;
         rec.hook = await readHook();
         // 创建对象（keep zy-ocr keyed）+ 独立 compare vs expected targetQuad
         const after = await snapObjs();
