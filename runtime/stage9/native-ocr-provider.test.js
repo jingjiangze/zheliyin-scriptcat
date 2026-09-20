@@ -79,5 +79,33 @@ t("parseNativeText / buildFormData 细节", () => {
   assert.strictEqual(N.buildFormData(null), null);
 });
 
+// ---- recognizeWithFallback：手写体优先，错误明显回退印刷体 ----
+t("fallback: 主模式成功 → 不回退（modeUsed=primary）", async () => {
+  const calls = [];
+  const f = (u, opt) => { calls.push((opt.body && opt.body.get && opt.body.get("textType")) || null); return mockFetch(200, OK_BODY)(u, opt); };
+  const r = await N.recognizeWithFallback("data:image/png;base64,AAAA", { fetch: f });
+  assert.strictEqual(r.ok, true);
+  assert.strictEqual(r.texts.length, 3);
+  assert.strictEqual(r.meta.modeUsed, "2");
+  assert.strictEqual(r.meta.fallbackUsed, false);
+  assert.deepStrictEqual(calls, ["2"]);
+});
+t("fallback: 主模式空结果 → 回退印刷体（modeUsed=1 fallbackUsed=true）", async () => {
+  const seq = [JSON.stringify({ success: true, message: "0", userData: "" }), OK_BODY];
+  let i = 0;
+  const f = (u, opt) => { const tt = (opt.body && opt.body.get && opt.body.get("textType")) || null; return mockFetch(200, seq[i++])(u, opt); };
+  const r = await N.recognizeWithFallback("data:image/png;base64,AAAA", { fetch: f, textType: "2", fallbackTo: "1" });
+  assert.strictEqual(r.ok, true);
+  assert.strictEqual(r.meta.modeUsed, "1");
+  assert.strictEqual(r.meta.fallbackUsed, true);
+  assert.strictEqual(r.texts.length, 3);
+});
+t("fallback: 主/回退均失败 → ok=false（FALLBACK 路径不抛）", async () => {
+  const f = (u, opt) => mockFetch(200, JSON.stringify({ success: false, message: "x" }))(u, opt);
+  const r = await N.recognizeWithFallback("data:image/png;base64,AAAA", { fetch: f });
+  assert.strictEqual(r.ok, false);
+  assert.strictEqual(r.texts.length, 0);
+});
+
 console.log("native-ocr-provider.test: pass=" + passed + " fail=" + failed);
 process.exit(failed ? 1 : 0);

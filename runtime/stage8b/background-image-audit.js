@@ -29,7 +29,7 @@ const TARGET = process.env.ZY_TARGET || "252438";
 // Stage 9：Native OCR 真机认证/开关（cookie 敏感仅运行时；feature zyStage9NativeTruth）
 const STAGE9_COOKIE = process.env.ZY_STAGE9_COOKIE || "";
 const STAGE9_NATIVE_TRUTH = process.env.ZY_STAGE9_NATIVE_TRUTH === "1";
-const STAGE9_NATIVE_OCR_MODE = process.env.ZY_STAGE9_NATIVE_OCR_MODE || "1"; // textType（取证值 1|2）
+const STAGE9_NATIVE_OCR_MODE = process.env.ZY_STAGE9_NATIVE_OCR_MODE || "2"; // textType：手写体优先（用户实测）
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 // Stage 9：cookie 解析（敏感，仅注入浏览器，绝不落盘报告原值）
 function parseCookies9(raw) {
