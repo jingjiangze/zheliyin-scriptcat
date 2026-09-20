@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.27";
+  const VERSION = "0.3.11.28";
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   // DEFAULT_BASE_URL / DEFAULT_MODEL 已迁移至 config-core（@require 加载，作用域共享，单一来源）

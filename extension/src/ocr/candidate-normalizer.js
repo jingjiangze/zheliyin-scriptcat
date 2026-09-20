@@ -191,9 +191,12 @@ function groupWordsToLines(words, opts) {
     for (let i = 0; i < lines.length; i += 1) {
       const L = lines[i];
       const lMid = L.bbox.y + L.bbox.height / 2;
-      const scale = Math.max(w.bbox.height, L.bbox.height);
-      const minH = Math.min(w.bbox.height, L.bbox.height);
-      const ratio = minH > 0 ? scale / minH : null;
+      // Stage 8D P3（真实名片取证）：容差尺度改用「矮者」min（不再用 max —— 离群高词/极端词高会
+      // 把 y 容差撑大，导致跨视觉行（y 差 30~50px）的碎片词误并进同一行，如 L16 405..453 跨 48px）。
+      const scale = Math.min(w.bbox.height, L.bbox.height);
+      const maxH = Math.max(w.bbox.height, L.bbox.height);
+      const minH = scale;
+      const ratio = minH > 0 ? maxH / minH : null;
       const lastW = L.words[L.words.length - 1];
       // §十七 决策证据（数值化；baselineProxy=底部差近似基线差）
       const ev = {
