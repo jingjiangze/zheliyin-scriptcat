@@ -129,6 +129,33 @@ const subs = (inv) => inv.map((o) => ({ objectUuid: o.objectUuid, text: String(o
     const currentPageId = async () => (await bridgeCall("getCurrentPage", {}, "getCurrentPageResult", 5000));
     const inventory = async () => (await bridgeCall("getTextInventory", {}, "getTextInventoryResult", 5000));
     const setCurrentNum = (n) => page.evaluate((nn) => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); if (vo) vo.currentCanvasNum = nn; try { const w = window; delete w.CurrentCanvas; } catch (e) {} return !!vo; }, n);
+    // 真实 tab 切换（DOM .click()，page-tab-probe 取证：触发 totalCanvasArray 动态 materialize：c0→c0,c1）
+    const switchSide = async (label) => {
+      const r = await page.evaluate((lb) => {
+        const els = document.querySelectorAll(".page-group .pageNum");
+        let best = null, txt = null;
+        for (const el of els) {
+          const s = String(el.textContent || "").trim();
+          if (lb === "back" && /反面|背面/.test(s)) { best = el; txt = s; break; }
+          if (lb === "front" && /正面/.test(s)) { best = el; txt = s; break; }
+        }
+        if (!best) return { ok: false, reason: "no-tab" };
+        best.click();
+        return { ok: true, txt: txt };
+      }, label);
+      if (!(r && r.ok)) { setCurrentNum(label === "back" ? 2 : 1); } // 兜底（探针已证 click 生效，此路仅为异常保底）
+      await SLEEP(1500);
+      return r;
+    };
+    const waitPage = async (want, tries) => {
+      for (let i = 0; i < (tries || 8); i += 1) {
+        const p = await currentPageId();
+        if (p && p.ok && p.pageId === want) return p;
+        if (p && p.pageId === want) return p;
+        await SLEEP(1200);
+      }
+      return currentPageId();
+    };
     const newTx = () => "tx-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 8);
     const calItems = () => [
       { blockIndex: 0, text: "佛山盛盈包装制品有限公司", top: 60, left: 40, width: 320, height: 30, fontSize: 20, fontFamily: "Arial" },
@@ -148,24 +175,26 @@ const subs = (inv) => inv.map((o) => ({ objectUuid: o.objectUuid, text: String(o
     const invFront1 = await inventory();
     out.steps.push({ step: "inv-after-front", items: subs((invFront1 && invFront1.items) || []) });
 
-    // 阶段② 切背面 calibrate（c1）
-    await setCurrentNum(2);
-    const pBack = await currentPageId();
+    // 阶段② 真实切背面（tab click → materialize c1）
+    await switchSide("back");
+    const pBack = await waitPage("canvas:c1");
     out.steps.push({ step: "current-back", pageId: (pBack && pBack.pageId) || null, code: (pBack && pBack.code) || null });
     const r2 = await bridgeCall("ocrCalibrate", { pageId: (pBack && pBack.pageId) || "canvas:c1", transactionId: newTx(), imageFingerprint: "e2e-img-back", items: [{ blockIndex: 0, text: "诚信经营", top: 80, left: 50, width: 160, height: 24, fontSize: 14 }] }, "ocrCalibrateResult", 15000);
     out.steps.push({ step: "back-calibrate", ok: !!(r2 && r2.ok), calibrated: (r2 && (r2.calibrated || []).length), created: (r2 && (r2.created || []).length), code: r2 && r2.code });
     const invBackAfter2 = await inventory();
     out.steps.push({ step: "inv-after-back", items: subs((invBackAfter2 && invBackAfter2.items) || []) });
 
-    // 阶段③ 切回正面，再次 front calibrate → 对比
-    await setCurrentNum(1);
+    // 阶段③ 真实切回正面，再次 front calibrate → 对比
+    await switchSide("front");
+    await waitPage(p0.pageId);
     const r3 = await bridgeCall("ocrCalibrate", { pageId: p0.pageId, transactionId: newTx(), imageFingerprint: "e2e-img-front-2", items: calItems() }, "ocrCalibrateResult", 15000);
     out.steps.push({ step: "front-recalibrate", ok: !!(r3 && r3.ok), calibrated: (r3 && (r3.calibrated || []).length), created: (r3 && (r3.created || []).length), code: r3 && r3.code });
     const invFront2 = await inventory();
     out.steps.push({ step: "inv-after-front2", items: subs((invFront2 && invFront2.items) || []) });
 
-    // 阶段④ 中途切页：切到背面后，用正面 pageId 发校准 → 期望 PAGE_IDENTITY_CHANGED
-    await setCurrentNum(2);
+    // 阶段④ 中途切页：真实切到背面后，用正面 pageId 发校准 → 期望 PAGE_IDENTITY_CHANGED
+    await switchSide("back");
+    await waitPage("canvas:c1");
     const r4 = await bridgeCall("ocrCalibrate", { pageId: p0.pageId, transactionId: newTx(), imageFingerprint: "e2e-img-front-3", items: calItems() }, "ocrCalibrateResult", 10000);
     out.steps.push({ step: "mid-switch-calibrate", ok: !!(r4 && r4.ok), code: (r4 && r4.code) || null, expectStopped: !r4.ok });
     const invAfterSwitch = await inventory();

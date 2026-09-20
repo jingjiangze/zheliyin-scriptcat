@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-20T07:35:59.445Z",
+  "ts": "2026-09-20T07:41:27.114Z",
   "stage": "STAGE-9-V4-E2E-FRONT-BACK-ISOLATION",
   "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
   "image": "real-card-shengying.png",
@@ -74,45 +74,26 @@
     },
     {
       "step": "current-back",
-      "pageId": null,
-      "code": "CURRENT_PAGE_UNKNOWN"
+      "pageId": "canvas:c1",
+      "code": "OK"
     },
     {
       "step": "back-calibrate",
-      "ok": false,
+      "ok": true,
       "calibrated": 0,
-      "created": 0,
-      "code": "CALIBRATE_BLOCKED_PAGE_NOT_FOUND"
+      "created": 1
     },
     {
       "step": "inv-after-back",
       "items": [
         {
           "objectUuid": null,
-          "text": "佛山盛盈包装制品有限公司",
-          "left": 40,
-          "top": 60,
-          "width": 320,
-          "height": 22.599999999999998,
-          "fontSize": 20
-        },
-        {
-          "objectUuid": null,
-          "text": "吴健湘",
-          "left": 40,
-          "top": 110,
-          "width": 120,
-          "height": 18.08,
-          "fontSize": 16
-        },
-        {
-          "objectUuid": null,
-          "text": "Tel.:0757-88809856",
-          "left": 40,
-          "top": 150,
-          "width": 220,
-          "height": 14.689999999999998,
-          "fontSize": 13
+          "text": "诚信经营",
+          "left": 50,
+          "top": 80,
+          "width": 160,
+          "height": 15.819999999999999,
+          "fontSize": 14
         }
       ]
     },
@@ -157,7 +138,7 @@
     {
       "step": "mid-switch-calibrate",
       "ok": false,
-      "code": "CALIBRATE_BLOCKED_PAGE_UNKNOWN",
+      "code": "PAGE_IDENTITY_CHANGED",
       "expectStopped": true
     },
     {
@@ -165,30 +146,12 @@
       "items": [
         {
           "objectUuid": null,
-          "text": "佛山盛盈包装制品有限公司",
-          "left": 40,
-          "top": 60,
-          "width": 320,
-          "height": 22.599999999999998,
-          "fontSize": 20
-        },
-        {
-          "objectUuid": null,
-          "text": "吴健湘",
-          "left": 40,
-          "top": 110,
-          "width": 120,
-          "height": 18.08,
-          "fontSize": 16
-        },
-        {
-          "objectUuid": null,
-          "text": "Tel.:0757-88809856",
-          "left": 40,
-          "top": 150,
-          "width": 220,
-          "height": 14.689999999999998,
-          "fontSize": 13
+          "text": "诚信经营",
+          "left": 50,
+          "top": 80,
+          "width": 160,
+          "height": 15.819999999999999,
+          "fontSize": 14
         }
       ]
     }
@@ -197,7 +160,7 @@
   "acceptance": {
     "frontInvariant": true,
     "backUntouchedDuringFront": true,
-    "midSwitchStopped": false,
-    "pass": false
+    "midSwitchStopped": true,
+    "pass": true
   }
 }
