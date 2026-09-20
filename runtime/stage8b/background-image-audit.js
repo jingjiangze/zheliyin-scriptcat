@@ -26,7 +26,24 @@ const BRANCH = "stage-8d-ocr-quality-reconstruction";
 const BAIDU_AK = process.env.ZY_BAIDU_AK || "";
 const BAIDU_SK = process.env.ZY_BAIDU_SK || "";
 const TARGET = process.env.ZY_TARGET || "252438";
+// Stage 9：Native OCR 真机认证/开关（cookie 敏感仅运行时；feature zyStage9NativeTruth）
+const STAGE9_COOKIE = process.env.ZY_STAGE9_COOKIE || "";
+const STAGE9_NATIVE_TRUTH = process.env.ZY_STAGE9_NATIVE_TRUTH === "1";
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
+// Stage 9：cookie 解析（敏感，仅注入浏览器，绝不落盘报告原值）
+function parseCookies9(raw) {
+  const out = [];
+  String(raw || "").split(";").forEach((part) => {
+    const eq = part.indexOf("=");
+    if (eq <= 0) return;
+    const name = part.slice(0, eq).trim();
+    let value = part.slice(eq + 1).trim();
+    if (!name || !value) return;
+    value = value.replace(/^"|"$/g, "");
+    out.push({ name: name, value: value, domain: ".diy.zheliyin.com", path: "/", expires: -1 });
+  });
+  return out;
+}
 
 const URL = TARGET === "88" || TARGET === "1040459"
   ? "https://diy.zheliyin.com/diyWeb/third/1040459/5368967/999/thirdDiyAdd.do"
@@ -162,6 +179,12 @@ function compareQuad(target, actual) {
     browser = await chromium.launchPersistentContext(PROFILE, { channel: "chromium", headless: false, ignoreDefaultArgs: ["--enable-automation", "--disable-extensions"], args: ["--disable-features=DisableLoadExtensionCommandLineSwitch", "--enable-unsafe-extension-debugging", "--disable-extensions-except=" + SC_DIR, "--load-extension=" + SC_DIR], viewport: { width: 1440, height: 900 } });
     browser.on("dialog", (d) => { try { d.accept().catch(() => {}); } catch (e) {} });
     page = browser.pages()[0];
+    // Stage 9：注入 Native OCR 会话 Cookie（敏感，仅浏览器内存；报告只记录 cookie 名）
+    if (STAGE9_COOKIE) {
+      const cks = parseCookies9(STAGE9_COOKIE);
+      await browser.addCookies(cks);
+      out.stage9cookieNames = cks.map((c) => c.name);
+    }
     out.console = [];
     out.consoleDiag = [];
     page.on("console", (m) => { const t = m.text(); if (/RAW_WORDS8D/.test(t)) { out.consoleLong = out.consoleLong || []; out.consoleLong.push(t.slice(0, 30000)); } if (/\[zy-ocr\]/.test(t)) out.console.push(t.slice(0, 400)); else if (/(error|uncaught|failed|syntax|reference|typeerror|is not a function|undefined is not)/i.test(t)) out.consoleDiag.push(t.slice(0, 500)); });
@@ -194,6 +217,11 @@ function compareQuad(target, actual) {
     if (!(w && w.ok)) throw new Error("editor not ready");
     if (USE_PAGE_WORLD) {
       // 编辑器就绪后单次注入（页面世界；脚本在页面加载完成后执行，行为等同 document-idle）
+      // Stage 9 V3：Native Truth feature 开关（page-world GM shim 读 localStorage zy8dshim:*；值需 JSON 编码，shim 会 JSON.parse）
+      if (STAGE9_NATIVE_TRUTH) {
+        await ev(() => { try { localStorage.setItem("zy8dshim:zyStage9NativeTruth", JSON.stringify("1")); } catch (e) {} return { ok: true }; });
+        out.stage9nativeTruth = true;
+      }
       await page.addScriptTag({ content: pageWorldPayload() });
       await SLEEP(2500);
     }
