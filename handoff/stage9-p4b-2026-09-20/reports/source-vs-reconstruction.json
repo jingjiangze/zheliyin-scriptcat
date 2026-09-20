@@ -1,0 +1,483 @@
+{
+  "ts": "2026-09-20T05:15:52.475Z",
+  "stage": "STAGE-9-P2A-BENCHMARK",
+  "branch": "stage-9-altq-baidu-reconstruction",
+  "baseReport": "real-card-gate-a0-v03211223.json",
+  "blocks": [
+    {
+      "blockIndex": 0,
+      "text": "出",
+      "fontSize": 89,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": 397,
+          "y": 23,
+          "w": 121,
+          "h": 101.57
+        },
+        "center": {
+          "x": 457.5,
+          "y": 73.785
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 385,
+          "y": 36,
+          "w": 145,
+          "h": 101
+        },
+        "center": {
+          "x": 457.5,
+          "y": 86.5
+        },
+        "density": 0.135
+      },
+      "editorInk": {
+        "inkWidth": 68,
+        "inkHeight": 81
+      },
+      "sourceGeometryError": {
+        "center": 12.72,
+        "width": 24,
+        "height": 0.57
+      },
+      "reconstructionError": {
+        "width": 77,
+        "widthPct": 53.1,
+        "height": 20,
+        "heightPct": 19.8
+      }
+    },
+    {
+      "blockIndex": 1,
+      "text": "天住",
+      "fontSize": 37,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": 270,
+          "y": 40,
+          "w": 190,
+          "h": 42.81
+        },
+        "center": {
+          "x": 365,
+          "y": 61.405
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 277,
+          "y": 35,
+          "w": 176,
+          "h": 53
+        },
+        "center": {
+          "x": 365,
+          "y": 61.5
+        },
+        "density": 0.211
+      },
+      "editorInk": {
+        "inkWidth": 71,
+        "inkHeight": 34
+      },
+      "sourceGeometryError": {
+        "center": 0.09,
+        "width": 14,
+        "height": 10.19
+      },
+      "reconstructionError": {
+        "width": 105,
+        "widthPct": 59.7,
+        "height": 19,
+        "heightPct": 35.8
+      }
+    },
+    {
+      "blockIndex": 2,
+      "text": "轿 CO 天 住 出 sre",
+      "fontSize": 21,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": 447,
+          "y": 49,
+          "w": 206,
+          "h": 24.72999999999999
+        },
+        "center": {
+          "x": 550,
+          "y": 61.364999999999995
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 435,
+          "y": 42,
+          "w": 171,
+          "h": 38
+        },
+        "center": {
+          "x": 520.5,
+          "y": 61
+        },
+        "density": 0.155
+      },
+      "editorInk": {
+        "inkWidth": 184,
+        "inkHeight": 20
+      },
+      "sourceGeometryError": {
+        "center": 29.5,
+        "width": 35,
+        "height": 13.27
+      },
+      "reconstructionError": {
+        "width": 13,
+        "widthPct": 7.6,
+        "height": 18,
+        "heightPct": 47.4
+      }
+    },
+    {
+      "blockIndex": 3,
+      "text": "轿 CO 天 住 出 sre",
+      "fontSize": 55,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": -152,
+          "y": 62,
+          "w": 529,
+          "h": 63.150000000000006
+        },
+        "center": {
+          "x": 112.5,
+          "y": 93.575
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 17,
+          "y": 50,
+          "w": 372,
+          "h": 88
+        },
+        "center": {
+          "x": 203,
+          "y": 94
+        },
+        "density": 0.302
+      },
+      "editorInk": {
+        "inkWidth": 480,
+        "inkHeight": 51
+      },
+      "sourceGeometryError": {
+        "center": 90.5,
+        "width": 157,
+        "height": 24.85
+      },
+      "reconstructionError": {
+        "width": 108,
+        "widthPct": 29,
+        "height": 37,
+        "heightPct": 42
+      }
+    },
+    {
+      "blockIndex": 4,
+      "text": "Telephone: +86",
+      "fontSize": 28,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": 249,
+          "y": 113,
+          "w": 407,
+          "h": 32.639999999999986
+        },
+        "center": {
+          "x": 452.5,
+          "y": 129.32
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 272,
+          "y": 109,
+          "w": 360,
+          "h": 40
+        },
+        "center": {
+          "x": 452,
+          "y": 129
+        },
+        "density": 0.117
+      },
+      "editorInk": {
+        "inkWidth": 373,
+        "inkHeight": 26
+      },
+      "sourceGeometryError": {
+        "center": 0.59,
+        "width": 47,
+        "height": 7.36
+      },
+      "reconstructionError": {
+        "width": 13,
+        "widthPct": 3.6,
+        "height": 14,
+        "heightPct": 35
+      }
+    },
+    {
+      "blockIndex": 5,
+      "text": "阅梧回盈\n器洛明",
+      "fontSize": 107,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": 61,
+          "y": 120,
+          "w": 507,
+          "h": 267.00199999999995
+        },
+        "center": {
+          "x": 314.5,
+          "y": 253.50099999999998
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 49,
+          "y": 108,
+          "w": 531,
+          "h": 292
+        },
+        "center": {
+          "x": 314.5,
+          "y": 254
+        },
+        "density": 0.225
+      },
+      "editorInk": {
+        "inkWidth": 422,
+        "inkHeight": 226
+      },
+      "sourceGeometryError": {
+        "center": 0.5,
+        "width": 24,
+        "height": 25
+      },
+      "reconstructionError": {
+        "width": 109,
+        "widthPct": 20.5,
+        "height": 66,
+        "heightPct": 22.6
+      }
+    },
+    {
+      "blockIndex": 6,
+      "text": "回册佛山盛包装制品限",
+      "fontSize": 41,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": 25,
+          "y": 190,
+          "w": 702,
+          "h": 47.329999999999984
+        },
+        "center": {
+          "x": 376,
+          "y": 213.665
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 32,
+          "y": 178,
+          "w": 707,
+          "h": 72
+        },
+        "center": {
+          "x": 385.5,
+          "y": 214
+        },
+        "density": 0.289
+      },
+      "editorInk": {
+        "inkWidth": 405,
+        "inkHeight": 39
+      },
+      "sourceGeometryError": {
+        "center": 9.51,
+        "width": 5,
+        "height": 24.67
+      },
+      "reconstructionError": {
+        "width": 302,
+        "widthPct": 42.7,
+        "height": 33,
+        "heightPct": 45.8
+      }
+    },
+    {
+      "blockIndex": 9,
+      "text": "多",
+      "fontSize": 36,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": 26,
+          "y": 219,
+          "w": 181,
+          "h": 41.68000000000001
+        },
+        "center": {
+          "x": 116.5,
+          "y": 239.84
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 32,
+          "y": 207,
+          "w": 173,
+          "h": 66
+        },
+        "center": {
+          "x": 118.5,
+          "y": 240
+        },
+        "density": 0.425
+      },
+      "editorInk": {
+        "inkWidth": 30,
+        "inkHeight": 33
+      },
+      "sourceGeometryError": {
+        "center": 2.01,
+        "width": 8,
+        "height": 24.32
+      },
+      "reconstructionError": {
+        "width": 143,
+        "widthPct": 82.7,
+        "height": 33,
+        "heightPct": 50
+      }
+    },
+    {
+      "blockIndex": 11,
+      "text": "器 洛 Tel.: 0757",
+      "fontSize": 53,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": 24,
+          "y": 222.00000000000003,
+          "w": 794,
+          "h": 132.758
+        },
+        "center": {
+          "x": 421,
+          "y": 288.379
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 32,
+          "y": 210,
+          "w": 798,
+          "h": 157
+        },
+        "center": {
+          "x": 431,
+          "y": 288.5
+        },
+        "density": 0.241
+      },
+      "editorInk": {
+        "inkWidth": 715,
+        "inkHeight": 112
+      },
+      "sourceGeometryError": {
+        "center": 10,
+        "width": 4,
+        "height": 24.24
+      },
+      "reconstructionError": {
+        "width": 83,
+        "widthPct": 10.4,
+        "height": 45,
+        "heightPct": 28.7
+      }
+    },
+    {
+      "blockIndex": 15,
+      "text": "由",
+      "fontSize": 20,
+      "usedFont": "方正黑体简体",
+      "sourceGeometry": {
+        "bbox": {
+          "x": 167,
+          "y": 319,
+          "w": 61,
+          "h": 23.600000000000023
+        },
+        "center": {
+          "x": 197.5,
+          "y": 330.8
+        }
+      },
+      "imageInk": {
+        "bbox": {
+          "x": 155,
+          "y": 307,
+          "w": 54,
+          "h": 40
+        },
+        "center": {
+          "x": 182,
+          "y": 327
+        },
+        "density": 0.27
+      },
+      "editorInk": {
+        "inkWidth": 16,
+        "inkHeight": 17
+      },
+      "sourceGeometryError": {
+        "center": 15.96,
+        "width": 7,
+        "height": 16.4
+      },
+      "reconstructionError": {
+        "width": 38,
+        "widthPct": 70.4,
+        "height": 23,
+        "heightPct": 57.5
+      }
+    }
+  ],
+  "summary": {
+    "blocks": 10,
+    "withImageInk": 10,
+    "withEditorInk": 10,
+    "sourceCenterMAE": 17.14,
+    "sourceWidthMAE": 32.5,
+    "sourceHeightMAE": 17.09,
+    "reconWidthMAE": 99.1,
+    "reconWidthMAEnt": 379.7,
+    "reconHeightMAE": 30.8,
+    "attribution": "RECONSTRUCTION_PRIMARY"
+  },
+  "errors": [
+    "PAGEERROR: window.closeSocket is not a function"
+  ]
+}

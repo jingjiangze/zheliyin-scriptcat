@@ -1,0 +1,70 @@
+# 05 — Stage 9 File Manifest
+
+格式：PATH | STATUS | ROLE | SOURCE_COMMIT | REQUIRED_FOR_NEXT_TASK
+
+## 生产代码（extension/src）
+
+```
+extension/src/editor/image-ink-target.js       | tracked | ImageInk 局部 Otsu 墨迹测量（纯函数）                 | a37b35f | YES
+extension/src/editor/font-target-source.js     | tracked | resolveTypographyTarget（bbox|image-ink|fallback）    | a37b35f | YES
+extension/src/editor/page-bridge.js            | tracked | 页面桥（含 inkMeasure 只读 + ocrCreate/Adjust/Calibrate 所有权门禁 + getTextInventory） | a37b35f | YES
+extension/src/ocr/transaction-identity.js      | tracked | 事务身份 createTransaction / fingerprint / validate | c531a7a | YES
+extension/src/ocr/recognition-mode.js          | tracked | NEW/CALIBRATION/RETRY 路由                            | 17a91a4 | YES
+extension/src/ocr/text-truth-gate.js           | tracked | Native Text Truth 应用/校验                            | 5e2733a | YES
+extension/src/ocr/native-ocr-provider.js       | tracked | uploadOCR.do 调用（手写体优先+回退）                   | 72e03ae | YES
+extension/src/ocr/baidu-provider.js            | tracked | standard/accurate profiles + 令牌                      | 2c7ce22 | YES
+extension/src/ocr/altq-provider.js             | tracked | AltQ 适配（未用主链，存疑保留）                        | dac3327 | NO
+extension/src/ocr/image-space.js / image-transform.js / text-fit.js / text-fit-fusion.js / ink-measure.js | tracked | 几何/排版/ink 核心（P4-B 未改 solver） | 早期 | YES(读)
+```
+
+## 主脚本 / 清单
+
+```
+zheliyin-card-assistant.user.js                | tracked | 主链（buildItemsFromOcr 接线 P4-B + flags + @require×25） | a37b35f | YES
+extension/manifest.json / assistant.js         | tracked | 版本 0.3.11.40                                        | a37b35f | YES
+runtime/runtime-manifest.json                  | tracked | 由 generate-runtime-manifest.js 生成（25 模块）        | a37b35f | YES
+```
+
+## 单测（runtime/stage9/*.test.js）
+
+```
+runtime/stage9/image-ink-target.test.js        | tracked | ImageInk + TargetResolver 14 例                        | a37b35f | YES
+runtime/stage9/recognition-mode.test.js        | tracked | 路由 + 校准行为 + 正反隔离（9 例）                      | 17a91a4|d96e304 | YES
+runtime/stage9/transaction-identity.test.js    | tracked | 事务身份 + ocrAdjust 门禁（10 例）                      | c531a7a | YES
+runtime/stage9/native-ocr-provider.test.js     | tracked | Native provider + fallback（12 例）                     | 72e03ae | YES
+runtime/stage9/text-truth-gate.test.js         | tracked | Text Truth 校验（10 例）                                | 5e2733a | YES
+runtime/stage9/baidu-profile.test.js           | tracked | 百度 standard/accurate profile（7 例）                  | 2c7ce22 | YES
+runtime/stage9/native-ocr-diff.test.js         | tracked | Native A/B diff（7 例）                                 | b84df1c | YES
+runtime/stage9/altq-provider.test.js           | tracked | AltQ 契约（10 例）                                      | dac3327 | YES
+runtime/stage9/text-geometry-matcher.test.js   | tracked | 几何文本匹配（10 例）                                   | e4e0c21 | YES
+tests/editor-object-model/baidu-provider.test.js | tracked | 百度 provider 行为（ALL PASS）                          | 早期 | YES
+tests/editor-object-model/common-schema.test.js  | tracked | OCR 公共 schema（ALL PASS）                             | 早期 | YES
+```
+
+## 真实机 runner / 取证工具（runtime/stage9/*.js，非测试）
+
+```
+runtime/stage9/e2e-front-back-isolation.js     | tracked | 真机正反隔离 E2E（cookie 范式）                        | 58723fc|ac530ab | YES
+runtime/stage9/page-tab-probe.js               | tracked | DIV.pageNum 切页探针（materialize 取证）                | ac530ab | YES
+runtime/stage9/baidu-geometry-benchmark.js     | tracked | Baidu standard/accurate vs ImageInk 基准                | 3e3cf54 | YES
+runtime/stage9/font-calibration-audit.js       | tracked | P4-A K 系审计（离线）                                   | 391e92e | YES
+runtime/stage9/ink-stats-debug.js              | tracked | 行墨迹分布诊断（全局投影失效取证）                     | 3e3cf54 | NO
+runtime/stage9/img-load-probe.js               | tracked | dataUrl 加载探针                                        | 3e3cf54 | NO
+runtime/stage9/check-pageworld-syntax.js 等旧工具 | tracked | 历史取证（native/ocrtool/altq discovery 等）           | 早期 | NO
+```
+
+## 真机证据报告（runtime/reports/stage-9/，另有副本在 handoff/reports/）
+
+```
+runtime/reports/stage-9/font-calibration-audit.json      | tracked | P4-A 审计（K1-K6 + 分组）                | 391e92e | YES
+runtime/reports/stage-9/baidu-geometry-benchmark.json    | tracked | P2 standard/accurate A/B 原始 location   | 3e3cf54 | YES
+runtime/reports/stage-9/native-ab.json                   | tracked | Native 印刷/手写 A/B + 10 行文本          | 早期   | YES
+runtime/reports/stage-9/source-vs-reconstruction.json    | tracked | v23 四层几何（SOURCE 基准）               | 350ba76 | YES
+runtime/reports/stage-9/e2e-front-back-isolation.json    | tracked | P3 真机双面隔离（ac530ab PASS）           | ac530ab | YES
+```
+
+## Handoff（本目录）
+
+```
+handoff/stage9-p4b-2026-09-20/**               | new     | 本交接包（00-10 + reports 副本）          | (提交中) | YES
+```
