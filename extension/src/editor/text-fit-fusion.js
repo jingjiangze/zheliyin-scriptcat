@@ -25,7 +25,7 @@ var MIN_QUALITY_TO_CREATE = 0.5;   // 质量低于此 → 不创建（8D §十�
 var OK_BOTH_RATIO = 0.15;          // advance/ink 双证据偏差 ≤15% → 一致采用 advance
 var OCR_H_SANITY_LO = 0.4;         // fs 不得低于 ocrHeight*LO（过小 → 异常）
 var OCR_H_SANITY_HI = 2.4;         // fs 不得高于 ocrHeight*HI（过大 → 异常）
-var FS_MIN = 8, FS_MAX = 160;
+var FS_MIN = 10, FS_MAX = 160;
 
 function isFiniteNum(v) { return typeof v === "number" && isFinite(v); }
 
