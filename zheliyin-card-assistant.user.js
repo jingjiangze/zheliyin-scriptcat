@@ -679,11 +679,12 @@
   function ocrLog(stage, msg) {
     console.log("[zy-ocr][" + stage + "] " + msg);
 
+  }
+
   // Stage 9 Commit 1（OCR Pipeline Evidence Audit）：只记录计数/失败码，零行为影响；汇总写 window.__zyOcrPipelineEvidence（runner 取证）。禁止记录文字内容/凭据。
   function pipelineEvidence(rec) {
     try { const cur = window.__zyOcrPipelineEvidence || {}; return (window.__zyOcrPipelineEvidence = Object.assign({}, cur, rec, { updated: Date.now() })); }
     catch (e) { return null; }
-  }
   }
 
   // P1 根因（001-execution）：隔离世界读不到页面 world 的 requirejs 模块注册表（CanvasObjVO），
