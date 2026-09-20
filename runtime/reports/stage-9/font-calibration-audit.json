@@ -1,0 +1,841 @@
+{
+  "ts": "2026-09-20T07:44:46.349Z",
+  "stage": "STAGE-9-V4-FONT-CALIBRATION-AUDIT",
+  "sources": {
+    "blocks": "STAGE-9-P2A-BENCHMARK",
+    "benchmark": "STAGE-9-V4-BAIDU-GEOMETRY-BENCH",
+    "native": "STAGE-9-PRECISION-AB"
+  },
+  "caveats": [
+    "行序不对齐（重建块来自 Baidu/Local 候选，Native 来自站内 uploadOCR top-down）→ K 系以重建块为准，Native 仅作 scriptType 分布对照",
+    "advanceWidth 为浏览器 measureText（usedFont 本地缺失时标 fontFallback）"
+  ],
+  "blocks": [
+    {
+      "blockIndex": 0,
+      "text": "出",
+      "scriptType": "zh",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 89,
+      "sizeBucket": "80+",
+      "ocrBBox": {
+        "width": 121,
+        "height": 102
+      },
+      "imageInk": {
+        "width": 145,
+        "height": 101
+      },
+      "editorInk": {
+        "width": 68,
+        "height": 81
+      },
+      "advanceWidth": 89,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 1.1983471074380165,
+        "K2": 0.4689655172413793,
+        "K3": 0.6137931034482759,
+        "K4": 1.3088235294117647,
+        "K5": 0.9101123595505618,
+        "K6": 1.1348314606741574
+      }
+    },
+    {
+      "blockIndex": 1,
+      "text": "天住",
+      "scriptType": "zh",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 37,
+      "sizeBucket": "30-50",
+      "ocrBBox": {
+        "width": 190,
+        "height": 43
+      },
+      "imageInk": {
+        "width": 176,
+        "height": 53
+      },
+      "editorInk": {
+        "width": 71,
+        "height": 34
+      },
+      "advanceWidth": 74,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 0.9263157894736842,
+        "K2": 0.4034090909090909,
+        "K3": 0.42045454545454547,
+        "K4": 1.0422535211267605,
+        "K5": 0.918918918918919,
+        "K6": 1.4324324324324325
+      }
+    },
+    {
+      "blockIndex": 2,
+      "text": "轿 CO 天 住 出 sre",
+      "scriptType": "mix",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 21,
+      "sizeBucket": "20-30",
+      "ocrBBox": {
+        "width": 206,
+        "height": 25
+      },
+      "imageInk": {
+        "width": 171,
+        "height": 38
+      },
+      "editorInk": {
+        "width": 184,
+        "height": 20
+      },
+      "advanceWidth": 173.63,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 0.8300970873786407,
+        "K2": 1.0760233918128654,
+        "K3": 1.0153801169590644,
+        "K4": 0.9436413043478261,
+        "K5": 0.9523809523809523,
+        "K6": 1.8095238095238095
+      }
+    },
+    {
+      "blockIndex": 3,
+      "text": "轿 CO 天 住 出 sre",
+      "scriptType": "mix",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 55,
+      "sizeBucket": "50-80",
+      "ocrBBox": {
+        "width": 529,
+        "height": 63
+      },
+      "imageInk": {
+        "width": 372,
+        "height": 88
+      },
+      "editorInk": {
+        "width": 480,
+        "height": 51
+      },
+      "advanceWidth": 454.74,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 0.7032136105860114,
+        "K2": 1.2903225806451613,
+        "K3": 1.2224193548387097,
+        "K4": 0.947375,
+        "K5": 0.9272727272727272,
+        "K6": 1.6
+      }
+    },
+    {
+      "blockIndex": 4,
+      "text": "Telephone: +86",
+      "scriptType": "num-en",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 28,
+      "sizeBucket": "20-30",
+      "ocrBBox": {
+        "width": 407,
+        "height": 33
+      },
+      "imageInk": {
+        "width": 360,
+        "height": 40
+      },
+      "editorInk": {
+        "width": 373,
+        "height": 26
+      },
+      "advanceWidth": 194.91,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 0.8845208845208845,
+        "K2": 1.0361111111111112,
+        "K3": 0.5414166666666667,
+        "K4": 0.5225469168900804,
+        "K5": 0.9285714285714286,
+        "K6": 1.4285714285714286
+      }
+    },
+    {
+      "blockIndex": 5,
+      "text": "阅梧回盈\n器洛明",
+      "scriptType": "zh",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 107,
+      "sizeBucket": "80+",
+      "ocrBBox": {
+        "width": 507,
+        "height": 267
+      },
+      "imageInk": {
+        "width": 531,
+        "height": 292
+      },
+      "editorInk": {
+        "width": 422,
+        "height": 226
+      },
+      "advanceWidth": 778.64,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 1.047337278106509,
+        "K2": 0.7947269303201506,
+        "K3": 1.4663653483992467,
+        "K4": 1.8451184834123222,
+        "K5": 2.1121495327102804,
+        "K6": 2.7289719626168223
+      }
+    },
+    {
+      "blockIndex": 6,
+      "text": "回册佛山盛包装制品限",
+      "scriptType": "zh",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 41,
+      "sizeBucket": "30-50",
+      "ocrBBox": {
+        "width": 702,
+        "height": 47
+      },
+      "imageInk": {
+        "width": 707,
+        "height": 72
+      },
+      "editorInk": {
+        "width": 405,
+        "height": 39
+      },
+      "advanceWidth": 410,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 1.0071225071225072,
+        "K2": 0.5728429985855729,
+        "K3": 0.57991513437058,
+        "K4": 1.0123456790123457,
+        "K5": 0.9512195121951219,
+        "K6": 1.7560975609756098
+      }
+    },
+    {
+      "blockIndex": 9,
+      "text": "多",
+      "scriptType": "zh",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 36,
+      "sizeBucket": "30-50",
+      "ocrBBox": {
+        "width": 181,
+        "height": 42
+      },
+      "imageInk": {
+        "width": 173,
+        "height": 66
+      },
+      "editorInk": {
+        "width": 30,
+        "height": 33
+      },
+      "advanceWidth": 36,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 0.9558011049723757,
+        "K2": 0.17341040462427745,
+        "K3": 0.20809248554913296,
+        "K4": 1.2,
+        "K5": 0.9166666666666666,
+        "K6": 1.8333333333333333
+      }
+    },
+    {
+      "blockIndex": 11,
+      "text": "器 洛 Tel.: 0757",
+      "scriptType": "mix",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 53,
+      "sizeBucket": "50-80",
+      "ocrBBox": {
+        "width": 794,
+        "height": 133
+      },
+      "imageInk": {
+        "width": 798,
+        "height": 157
+      },
+      "editorInk": {
+        "width": 715,
+        "height": 112
+      },
+      "advanceWidth": 370.42,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 1.0050377833753148,
+        "K2": 0.8959899749373433,
+        "K3": 0.46418546365914787,
+        "K4": 0.5180699300699301,
+        "K5": 2.1132075471698113,
+        "K6": 2.9622641509433962
+      }
+    },
+    {
+      "blockIndex": 15,
+      "text": "由",
+      "scriptType": "zh",
+      "fontFamily": "方正黑体简体",
+      "fontSize": 20,
+      "sizeBucket": "20-30",
+      "ocrBBox": {
+        "width": 61,
+        "height": 24
+      },
+      "imageInk": {
+        "width": 54,
+        "height": 40
+      },
+      "editorInk": {
+        "width": 16,
+        "height": 17
+      },
+      "advanceWidth": 20,
+      "advanceFontFallback": false,
+      "K": {
+        "K1": 0.8852459016393442,
+        "K2": 0.2962962962962963,
+        "K3": 0.37037037037037035,
+        "K4": 1.25,
+        "K5": 0.85,
+        "K6": 2
+      }
+    }
+  ],
+  "grouped": {
+    "byScriptType": {
+      "zh": {
+        "n": 6,
+        "K1": {
+          "n": 6,
+          "median": 1.0071,
+          "p25": 0.9263,
+          "p75": 1.0473,
+          "mean": 1.0034,
+          "stable": 0.12
+        },
+        "K2": {
+          "n": 6,
+          "median": 0.469,
+          "p25": 0.2963,
+          "p75": 0.5728,
+          "mean": 0.4516,
+          "stable": 0.59
+        },
+        "K3": {
+          "n": 6,
+          "median": 0.5799,
+          "p25": 0.3704,
+          "p75": 0.6138,
+          "mean": 0.6098,
+          "stable": 0.42
+        },
+        "K4": {
+          "n": 6,
+          "median": 1.25,
+          "p25": 1.0423,
+          "p75": 1.3088,
+          "mean": 1.2764,
+          "stable": 0.21
+        },
+        "K5": {
+          "n": 6,
+          "median": 0.9189,
+          "p25": 0.9101,
+          "p75": 0.9512,
+          "mean": 1.1098,
+          "stable": 0.04
+        },
+        "K6": {
+          "n": 6,
+          "median": 1.8333,
+          "p25": 1.4324,
+          "p75": 2,
+          "mean": 1.8143,
+          "stable": 0.31
+        }
+      },
+      "mix": {
+        "n": 3,
+        "K1": {
+          "n": 3,
+          "median": 0.8301,
+          "p25": 0.7032,
+          "p75": 1.005,
+          "mean": 0.8461,
+          "stable": 0.36
+        },
+        "K2": {
+          "n": 3,
+          "median": 1.076,
+          "p25": 0.896,
+          "p75": 1.2903,
+          "mean": 1.0874,
+          "stable": 0.37
+        },
+        "K3": {
+          "n": 3,
+          "median": 1.0154,
+          "p25": 0.4642,
+          "p75": 1.2224,
+          "mean": 0.9007,
+          "stable": 0.75
+        },
+        "K4": {
+          "n": 3,
+          "median": 0.9436,
+          "p25": 0.5181,
+          "p75": 0.9474,
+          "mean": 0.803,
+          "stable": 0.45
+        },
+        "K5": {
+          "n": 3,
+          "median": 0.9524,
+          "p25": 0.9273,
+          "p75": 2.1132,
+          "mean": 1.331,
+          "stable": 1.25
+        },
+        "K6": {
+          "n": 3,
+          "median": 1.8095,
+          "p25": 1.6,
+          "p75": 2.9623,
+          "mean": 2.1239,
+          "stable": 0.75
+        }
+      },
+      "num-en": {
+        "n": 1,
+        "K1": {
+          "n": 1,
+          "median": 0.8845,
+          "p25": 0.8845,
+          "p75": 0.8845,
+          "mean": 0.8845,
+          "stable": 0
+        },
+        "K2": {
+          "n": 1,
+          "median": 1.0361,
+          "p25": 1.0361,
+          "p75": 1.0361,
+          "mean": 1.0361,
+          "stable": 0
+        },
+        "K3": {
+          "n": 1,
+          "median": 0.5414,
+          "p25": 0.5414,
+          "p75": 0.5414,
+          "mean": 0.5414,
+          "stable": 0
+        },
+        "K4": {
+          "n": 1,
+          "median": 0.5225,
+          "p25": 0.5225,
+          "p75": 0.5225,
+          "mean": 0.5225,
+          "stable": 0
+        },
+        "K5": {
+          "n": 1,
+          "median": 0.9286,
+          "p25": 0.9286,
+          "p75": 0.9286,
+          "mean": 0.9286,
+          "stable": 0
+        },
+        "K6": {
+          "n": 1,
+          "median": 1.4286,
+          "p25": 1.4286,
+          "p75": 1.4286,
+          "mean": 1.4286,
+          "stable": 0
+        }
+      }
+    },
+    "bySizeBucket": {
+      "80+": {
+        "n": 2,
+        "K1": {
+          "n": 2,
+          "median": 1.1983,
+          "p25": 1.0473,
+          "p75": 1.1983,
+          "mean": 1.1228,
+          "stable": 0.13
+        },
+        "K2": {
+          "n": 2,
+          "median": 0.7947,
+          "p25": 0.469,
+          "p75": 0.7947,
+          "mean": 0.6318,
+          "stable": 0.41
+        },
+        "K3": {
+          "n": 2,
+          "median": 1.4664,
+          "p25": 0.6138,
+          "p75": 1.4664,
+          "mean": 1.0401,
+          "stable": 0.58
+        },
+        "K4": {
+          "n": 2,
+          "median": 1.8451,
+          "p25": 1.3088,
+          "p75": 1.8451,
+          "mean": 1.577,
+          "stable": 0.29
+        },
+        "K5": {
+          "n": 2,
+          "median": 2.1121,
+          "p25": 0.9101,
+          "p75": 2.1121,
+          "mean": 1.5111,
+          "stable": 0.57
+        },
+        "K6": {
+          "n": 2,
+          "median": 2.729,
+          "p25": 1.1348,
+          "p75": 2.729,
+          "mean": 1.9319,
+          "stable": 0.58
+        }
+      },
+      "30-50": {
+        "n": 3,
+        "K1": {
+          "n": 3,
+          "median": 0.9558,
+          "p25": 0.9263,
+          "p75": 1.0071,
+          "mean": 0.9631,
+          "stable": 0.08
+        },
+        "K2": {
+          "n": 3,
+          "median": 0.4034,
+          "p25": 0.1734,
+          "p75": 0.5728,
+          "mean": 0.3832,
+          "stable": 0.99
+        },
+        "K3": {
+          "n": 3,
+          "median": 0.4205,
+          "p25": 0.2081,
+          "p75": 0.5799,
+          "mean": 0.4028,
+          "stable": 0.88
+        },
+        "K4": {
+          "n": 3,
+          "median": 1.0423,
+          "p25": 1.0123,
+          "p75": 1.2,
+          "mean": 1.0849,
+          "stable": 0.18
+        },
+        "K5": {
+          "n": 3,
+          "median": 0.9189,
+          "p25": 0.9167,
+          "p75": 0.9512,
+          "mean": 0.9289,
+          "stable": 0.04
+        },
+        "K6": {
+          "n": 3,
+          "median": 1.7561,
+          "p25": 1.4324,
+          "p75": 1.8333,
+          "mean": 1.674,
+          "stable": 0.23
+        }
+      },
+      "20-30": {
+        "n": 3,
+        "K1": {
+          "n": 3,
+          "median": 0.8845,
+          "p25": 0.8301,
+          "p75": 0.8852,
+          "mean": 0.8666,
+          "stable": 0.06
+        },
+        "K2": {
+          "n": 3,
+          "median": 1.0361,
+          "p25": 0.2963,
+          "p75": 1.076,
+          "mean": 0.8028,
+          "stable": 0.75
+        },
+        "K3": {
+          "n": 3,
+          "median": 0.5414,
+          "p25": 0.3704,
+          "p75": 1.0154,
+          "mean": 0.6424,
+          "stable": 1.19
+        },
+        "K4": {
+          "n": 3,
+          "median": 0.9436,
+          "p25": 0.5225,
+          "p75": 1.25,
+          "mean": 0.9054,
+          "stable": 0.77
+        },
+        "K5": {
+          "n": 3,
+          "median": 0.9286,
+          "p25": 0.85,
+          "p75": 0.9524,
+          "mean": 0.9103,
+          "stable": 0.11
+        },
+        "K6": {
+          "n": 3,
+          "median": 1.8095,
+          "p25": 1.4286,
+          "p75": 2,
+          "mean": 1.746,
+          "stable": 0.32
+        }
+      },
+      "50-80": {
+        "n": 2,
+        "K1": {
+          "n": 2,
+          "median": 1.005,
+          "p25": 0.7032,
+          "p75": 1.005,
+          "mean": 0.8541,
+          "stable": 0.3
+        },
+        "K2": {
+          "n": 2,
+          "median": 1.2903,
+          "p25": 0.896,
+          "p75": 1.2903,
+          "mean": 1.0932,
+          "stable": 0.31
+        },
+        "K3": {
+          "n": 2,
+          "median": 1.2224,
+          "p25": 0.4642,
+          "p75": 1.2224,
+          "mean": 0.8433,
+          "stable": 0.62
+        },
+        "K4": {
+          "n": 2,
+          "median": 0.9474,
+          "p25": 0.5181,
+          "p75": 0.9474,
+          "mean": 0.7327,
+          "stable": 0.45
+        },
+        "K5": {
+          "n": 2,
+          "median": 2.1132,
+          "p25": 0.9273,
+          "p75": 2.1132,
+          "mean": 1.5202,
+          "stable": 0.56
+        },
+        "K6": {
+          "n": 2,
+          "median": 2.9623,
+          "p25": 1.6,
+          "p75": 2.9623,
+          "mean": 2.2811,
+          "stable": 0.46
+        }
+      }
+    },
+    "byFontFamily": {
+      "方正黑体简体": {
+        "n": 10,
+        "K1": {
+          "n": 10,
+          "median": 0.9558,
+          "p25": 0.8845,
+          "p75": 1.0071,
+          "mean": 0.9443,
+          "stable": 0.13
+        },
+        "K2": {
+          "n": 10,
+          "median": 0.7947,
+          "p25": 0.4034,
+          "p75": 1.0361,
+          "mean": 0.7008,
+          "stable": 0.8
+        },
+        "K3": {
+          "n": 10,
+          "median": 0.5799,
+          "p25": 0.4205,
+          "p75": 1.0154,
+          "mean": 0.6902,
+          "stable": 1.03
+        },
+        "K4": {
+          "n": 10,
+          "median": 1.0423,
+          "p25": 0.9436,
+          "p75": 1.25,
+          "mean": 1.059,
+          "stable": 0.29
+        },
+        "K5": {
+          "n": 10,
+          "median": 0.9286,
+          "p25": 0.9167,
+          "p75": 0.9524,
+          "mean": 1.158,
+          "stable": 0.04
+        },
+        "K6": {
+          "n": 10,
+          "median": 1.8095,
+          "p25": 1.4324,
+          "p75": 2,
+          "mean": 1.8686,
+          "stable": 0.31
+        }
+      }
+    },
+    "overall": {
+      "all": {
+        "n": 10,
+        "K1": {
+          "n": 10,
+          "median": 0.9558,
+          "p25": 0.8845,
+          "p75": 1.0071,
+          "mean": 0.9443,
+          "stable": 0.13
+        },
+        "K2": {
+          "n": 10,
+          "median": 0.7947,
+          "p25": 0.4034,
+          "p75": 1.0361,
+          "mean": 0.7008,
+          "stable": 0.8
+        },
+        "K3": {
+          "n": 10,
+          "median": 0.5799,
+          "p25": 0.4205,
+          "p75": 1.0154,
+          "mean": 0.6902,
+          "stable": 1.03
+        },
+        "K4": {
+          "n": 10,
+          "median": 1.0423,
+          "p25": 0.9436,
+          "p75": 1.25,
+          "mean": 1.059,
+          "stable": 0.29
+        },
+        "K5": {
+          "n": 10,
+          "median": 0.9286,
+          "p25": 0.9167,
+          "p75": 0.9524,
+          "mean": 1.158,
+          "stable": 0.04
+        },
+        "K6": {
+          "n": 10,
+          "median": 1.8095,
+          "p25": 1.4324,
+          "p75": 2,
+          "mean": 1.8686,
+          "stable": 0.31
+        }
+      }
+    }
+  },
+  "nativeScriptTypes": {
+    "zh": 4,
+    "num-en": 3,
+    "mix": 2,
+    "en": 1
+  },
+  "errors": [],
+  "nativeLines": [
+    "吴健湘",
+    "客户经理",
+    "Telephone: +8615913171583",
+    "佛山盛盈包装制品有限公司",
+    "Tel.:0757-88809856",
+    "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
+    "佛山鼎盛通生物科技有限公司",
+    "Tel.: 0757-88809856",
+    "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+    "E-mail:sandy.wu@shengying.ltd"
+  ],
+  "verdict": {
+    "K1": {
+      "median": 0.9558,
+      "spreadRatio": 0.13,
+      "finding": "STABLE",
+      "note": "OCR bbox 是否大于 ImageInk（>1 → location padding 放大字号输入）"
+    },
+    "K2": {
+      "median": 0.7947,
+      "spreadRatio": 0.8,
+      "finding": "UNSTABLE",
+      "note": "EditorInk 相对 ImageInk（>1 → 编辑器渲染偏大；<1 偏小）"
+    },
+    "K3": {
+      "median": 0.5799,
+      "spreadRatio": 1.03,
+      "finding": "UNSTABLE",
+      "note": "Advance 相对 ImageInk（advance-first 是否 over-ink）"
+    },
+    "K4": {
+      "median": 1.0423,
+      "spreadRatio": 0.29,
+      "finding": "UNSTABLE",
+      "note": "Advance 相对 EditorInk（measureText vs 实际墨迹系统偏差）"
+    },
+    "K5": {
+      "median": 0.9286,
+      "spreadRatio": 0.04,
+      "finding": "STABLE",
+      "note": "EditorInkH/fontSize（应≈0.7-1.0；过大/过小=高度模型偏差）"
+    },
+    "K6": {
+      "median": 1.8095,
+      "spreadRatio": 0.31,
+      "finding": "UNSTABLE",
+      "note": "ImageInkH/fontSize"
+    }
+  }
+}
