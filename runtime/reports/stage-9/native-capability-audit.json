@@ -1,0 +1,1646 @@
+{
+    "ts":  "2026-09-20T13:31:33.021Z",
+    "stage":  "STAGE-9-V6-NATIVE-CAPABILITY-AUDIT",
+    "userscriptVersion":  "0.3.11.41",
+    "url":  "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+    "template":  {
+                     "third":  "1234075",
+                     "product":  "2114747",
+                     "detail":  "999"
+                 },
+    "cookiePresent":  true,
+    "note":  "5-layer capability audit (L1 UI / L2 Event / L3 Network / L4 Module-API / L5 Object State); read-only, no destructive probes; UNKNOWN != UNAVAILABLE",
+    "layers":  {
+                   "L4_MODULE":  {
+                                     "moduleCount":  136,
+                                     "moduleNames":  [
+                                                         "CustomerIndexThird",
+                                                         "js/mulitCanvas/v2/design/business/config.js",
+                                                         "jquery",
+                                                         "localforage",
+                                                         "webfontloader",
+                                                         "clipTo",
+                                                         "Turn",
+                                                         "ProductVO",
+                                                         "MasterVO",
+                                                         "MediaTypeInfo",
+                                                         "CheckJsonFont",
+                                                         "CustomerVO",
+                                                         "GlobalEvent",
+                                                         "CreateUUID",
+                                                         "lazyload",
+                                                         "CanvasObjVO",
+                                                         "ParseJsonModel",
+                                                         "fabric",
+                                                         "fontdetect",
+                                                         "Sortable",
+                                                         "webUpload",
+                                                         "UploadImgPublic",
+                                                         "html2canvas",
+                                                         "layer",
+                                                         "jquery.ui",
+                                                         "DesignVO",
+                                                         "minicolors",
+                                                         "CurrentCanvas",
+                                                         "Undo",
+                                                         "JsonObject",
+                                                         "ColorValueConversion",
+                                                         "PageVO",
+                                                         "AllCanvas",
+                                                         "GetChildRelativeCanvasXY",
+                                                         "DesignPageVO",
+                                                         "cropper",
+                                                         "share",
+                                                         "jbase64",
+                                                         "CalculatePartPage",
+                                                         "CurrentCanvasInfo",
+                                                         "CheckIE",
+                                                         "IndexPublic",
+                                                         "ShowDivLocation",
+                                                         "CanvasToolBar",
+                                                         "reqrcode",
+                                                         "Huploadify",
+                                                         "MediaType2Chinese",
+                                                         "SuperSlide",
+                                                         "freewall",
+                                                         "Rulers",
+                                                         "THREE",
+                                                         "jquery.ui.rotatable",
+                                                         "CurvedText",
+                                                         "CheckIput",
+                                                         "CalculationDesignAreaPixel",
+                                                         "Map",
+                                                         "XMLParse",
+                                                         "qrcode",
+                                                         "OrbitControls",
+                                                         "OBJLoader",
+                                                         "CalculationCoordsSize",
+                                                         "CheckTextBox",
+                                                         "ItemDataModel",
+                                                         "MarkId",
+                                                         "qrcode-utf",
+                                                         "GLTFLoader",
+                                                         "GuideLine",
+                                                         "CheckMaskImg",
+                                                         "ProductJsonObjAssignment",
+                                                         "CalcuNewXYInPartPage",
+                                                         "InterFace",
+                                                         "ICommand",
+                                                         "UpdateCanvasThumbnailCommand",
+                                                         "SimpleCommandManager",
+                                                         "UpdateAllLevel",
+                                                         "CheckImgPixel",
+                                                         "Handsontable",
+                                                         "table",
+                                                         "FormatSet",
+                                                         "sundry",
+                                                         "ImgSocket",
+                                                         "MasterRightPannel",
+                                                         "shareEventBind",
+                                                         "TemplateRightPannel",
+                                                         "DeleteCommand",
+                                                         "ProductDataModel",
+                                                         "GroupPropPanel",
+                                                         "DULeftNativePublic",
+                                                         "UnknowPropPannelR",
+                                                         "UnknowPropBar",
+                                                         "CupOneKeyPropPanel",
+                                                         "CupOneKeyPropBar",
+                                                         "ISetTool",
+                                                         "SetCurved",
+                                                         "SetTextColor",
+                                                         "SetPartPageAlign",
+                                                         "SetSize",
+                                                         "SetFont3D",
+                                                         "mousewheel",
+                                                         "TextPropPanel",
+                                                         "GeneralPropPannel",
+                                                         "TextPropBar",
+                                                         "GroupPropBar",
+                                                         "ImagePropPanel",
+                                                         "ColorSet",
+                                                         "DiyLayout",
+                                                         "ImagePropBar",
+                                                         "MaskImgPropBar",
+                                                         "ColorPicker",
+                                                         "CanvasDiy",
+                                                         "MultiCanvasDiy",
+                                                         "AddPageNumPropPanel",
+                                                         "AddPageNumPropBar",
+                                                         "SetSvgColor",
+                                                         "TablePropPanel",
+                                                         "TablePropBar",
+                                                         "SVGPropPanel",
+                                                         "SVGPropBar",
+                                                         "FabricTable",
+                                                         "SetFontWeight",
+                                                         "SetTextDecoration",
+                                                         "xnColorPicker",
+                                                         "BackColorPropPanel",
+                                                         "BackColorPropBar",
+                                                         "EditorBar",
+                                                         "MultiNewPagePublic",
+                                                         "HeadPublic",
+                                                         "CustomerHeadMenuBar",
+                                                         "photoupload",
+                                                         "qrcodeEventBind",
+                                                         "CupImgUpload",
+                                                         "CustomerLeftNavigationBar",
+                                                         "OneKeyCanvasDiy",
+                                                         "LoadFromProductJsonCommand",
+                                                         "CreateLayerThumbnailCommand",
+                                                         "CloseLoadingCommand"
+                                                     ],
+                                     "signature":  {
+                                                       "CanvasDiy":  {
+                                                                         "found":  true,
+                                                                         "type":  "object",
+                                                                         "keys":  [
+                                                                                      "getInstance",
+                                                                                      "CanvasDiy"
+                                                                                  ],
+                                                                         "signatures":  {
+                                                                                            "getInstance":  "function(){void 0===sa\u0026\u0026(sa=new v);return sa}"
+                                                                                        }
+                                                                     },
+                                                       "CanvasObjVO":  {
+                                                                           "found":  true,
+                                                                           "type":  "object",
+                                                                           "keys":  [
+                                                                                        "currentCanvasNum",
+                                                                                        "canvasPagesNum",
+                                                                                        "canvasToProductObjArr",
+                                                                                        "bleedLinesArr",
+                                                                                        "frontImgPathStr",
+                                                                                        "backImgPathStr",
+                                                                                        "svgPathStr",
+                                                                                        "totalCanvasArray",
+                                                                                        "CanvasObjInfo",
+                                                                                        "multiCanvas",
+                                                                                        "canvasPagesBase64Arr",
+                                                                                        "canvasPagesPureBase64Arr",
+                                                                                        "toProductJsonErrorArray",
+                                                                                        "canvasPackingBoxArray",
+                                                                                        "canvasPagesSVGArr",
+                                                                                        "groupObjBaseArr",
+                                                                                        "initialPagesBgArr",
+                                                                                        "undoAndRedo",
+                                                                                        "copyAndRedoCanvas",
+                                                                                        "angsi9",
+                                                                                        "angsi7",
+                                                                                        "angsi14",
+                                                                                        "angsi22",
+                                                                                        "angsi32",
+                                                                                        "angsi46",
+                                                                                        "angsi550",
+                                                                                        "angsi8zhongkong",
+                                                                                        "angsi12zhongkong",
+                                                                                        "angsi14zhongkong",
+                                                                                        "angsi16zhongkong",
+                                                                                        "angsi3",
+                                                                                        "angsi8",
+                                                                                        "angsi12",
+                                                                                        "angsi16",
+                                                                                        "walengbeitao90",
+                                                                                        "baikabeitao90",
+                                                                                        "walengbeitao98",
+                                                                                        "baikabeitao98",
+                                                                                        "angsiKaKou",
+                                                                                        "angsiW90"
+                                                                                    ]
+                                                                       },
+                                                       "CurrentCanvas":  {
+                                                                             "found":  true,
+                                                                             "type":  "object",
+                                                                             "keys":  [
+                                                                                          "getCurrentCanvas",
+                                                                                          "getCanvasFromArray"
+                                                                                      ]
+                                                                         },
+                                                       "Undo":  {
+                                                                    "found":  true,
+                                                                    "type":  "object",
+                                                                    "keys":  [
+                                                                                 "getInstance"
+                                                                             ],
+                                                                    "signatures":  {
+                                                                                       "getInstance":  "function(){void 0===h\u0026\u0026(h=new l);return h}"
+                                                                                   }
+                                                                },
+                                                       "sundry":  {
+                                                                      "found":  true,
+                                                                      "type":  "object",
+                                                                      "keys":  [
+                                                                                   "drafting",
+                                                                                   "varlidateAddPage",
+                                                                                   "guid",
+                                                                                   "fallsShow",
+                                                                                   "isEmpty",
+                                                                                   "download",
+                                                                                   "setShowLayerImg",
+                                                                                   "validatePhoneNum",
+                                                                                   "getCookieUserId",
+                                                                                   "copyUrl2",
+                                                                                   "colorArray",
+                                                                                   "colorBGJbArray",
+                                                                                   "colorBGArray",
+                                                                                   "xnColorBGArray",
+                                                                                   "xnColorArray",
+                                                                                   "xnHabityArray",
+                                                                                   "PICNUM",
+                                                                                   "isEmptyObject",
+                                                                                   "historyUtil",
+                                                                                   "isEmptyArray",
+                                                                                   "pxToMM",
+                                                                                   "mmToPX",
+                                                                                   "historyColor",
+                                                                                   "historyBgJbColor",
+                                                                                   "xnCPHistoryColor",
+                                                                                   "selectFoldType",
+                                                                                   "stopBubble",
+                                                                                   "stopDefault",
+                                                                                   "deleteBlank",
+                                                                                   "deleteDesignBlank",
+                                                                                   "isString",
+                                                                                   "checkInputStr",
+                                                                                   "isNoExistImgForRq",
+                                                                                   "eachImgisExitArray",
+                                                                                   "isCardMarking",
+                                                                                   "isMarkverification",
+                                                                                   "isTextGroup",
+                                                                                   "getBgIndexByProduct",
+                                                                                   "testAndAddArray",
+                                                                                   "autoSaveParaments"
+                                                                               ]
+                                                                  }
+                                                   }
+                                 },
+                   "L1_UI":  {
+                                 "entries":  [
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "改尺寸",
+                                                     "keyword":  "尺寸",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "对齐",
+                                                     "keyword":  "对齐",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "尺寸",
+                                                     "keyword":  "尺寸",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "3D文字",
+                                                     "keyword":  "文字",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "图层",
+                                                     "keyword":  "图层",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "画布对齐",
+                                                     "keyword":  "对齐",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "自动保存中...",
+                                                     "keyword":  "保存",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "保存",
+                                                     "keyword":  "保存",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "导出",
+                                                     "keyword":  "导出",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "文字",
+                                                     "keyword":  "文字",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "文字识别",
+                                                     "keyword":  "识别",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "标题素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "组合素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "官方素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "我的素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "图标和素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "免抠素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "版权素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "节日素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "正面版式",
+                                                     "keyword":  "正面",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "背面版式",
+                                                     "keyword":  "背面",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "表格识别",
+                                                     "keyword":  "识别",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "正面",
+                                                     "keyword":  "正面",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "背面",
+                                                     "keyword":  "背面",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "添加文字",
+                                                     "keyword":  "文字",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "页面",
+                                                     "keyword":  "页面",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "图层",
+                                                     "keyword":  "图层",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "复制还原多版设计删除正面背面",
+                                                     "keyword":  "正面",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "pageNum",
+                                                     "text":  "正面",
+                                                     "keyword":  "正面",
+                                                     "block":  "正面"
+                                                 },
+                                                 {
+                                                     "tag":  "pageNum",
+                                                     "text":  "背面",
+                                                     "keyword":  "背面",
+                                                     "block":  "背面"
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "相框素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "矢量素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "其他素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "上对齐",
+                                                     "keyword":  "对齐",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "下对齐",
+                                                     "keyword":  "对齐",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "左对齐",
+                                                     "keyword":  "对齐",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "右对齐",
+                                                     "keyword":  "对齐",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "两端对齐",
+                                                     "keyword":  "对齐",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "大尺寸名片-横版（112*56）",
+                                                     "keyword":  "尺寸",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "调整尺寸",
+                                                     "keyword":  "尺寸",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "图层顺序",
+                                                     "keyword":  "图层",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "转烫金素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "二维码操作",
+                                                     "keyword":  "二维码",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "二维码烫金",
+                                                     "keyword":  "二维码",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "文字操作",
+                                                     "keyword":  "文字",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "文字转图片",
+                                                     "keyword":  "文字",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "文字烫金",
+                                                     "keyword":  "文字",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "文字变形",
+                                                     "keyword":  "文字",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "取消文字自适应",
+                                                     "keyword":  "文字",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "文字自适应",
+                                                     "keyword":  "文字",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "li",
+                                                     "text":  "重叠素材",
+                                                     "keyword":  "素材",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "暂时保存",
+                                                     "keyword":  "保存",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "button",
+                                                     "text":  "保存",
+                                                     "keyword":  "保存",
+                                                     "block":  null
+                                                 },
+                                                 {
+                                                     "tag":  "a",
+                                                     "text":  "内容无误，导出文件",
+                                                     "keyword":  "导出",
+                                                     "block":  null
+                                                 }
+                                             ],
+                                 "total":  56
+                             },
+                   "L2_EVENT":  {
+                                    "eventModules":  [
+
+                                                     ],
+                                    "contenteditable":  0,
+                                    "keymapGlobal":  "undefined"
+                                },
+                   "L5_OBJECT":  {
+                                     "pages":  1,
+                                     "mergedObjectTypes":  {
+                                                               "image":  9,
+                                                               "textbox":  7,
+                                                               "path":  1,
+                                                               "line":  8
+                                                           },
+                                     "textObjects":  7,
+                                     "pagesWithObjects":  1,
+                                     "registryLenByPage":  [
+                                                               17
+                                                           ]
+                                 },
+                   "L3_NETWORK":  {
+                                      "entries":  [
+                                                      {
+                                                          "method":  "GET",
+                                                          "url":  "https://diy.zheliyin.com/diyWeb/template/batchSaveKeepMaterial.do",
+                                                          "status":  200,
+                                                          "payloadKeys":  [
+
+                                                                          ],
+                                                          "responseKeys":  [
+                                                                               "success",
+                                                                               "message",
+                                                                               "userData"
+                                                                           ]
+                                                      }
+                                                  ],
+                                      "wsCount":  0
+                                  }
+               },
+    "capabilities":  [
+                         {
+                             "area":  "text-create",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  1,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  1,
+                                              "l5":  7
+                                          },
+                             "reason":  "L4-module=1 | L5-object=7 | L1-ui=1"
+                         },
+                         {
+                             "area":  "text-edit",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  2,
+                                              "l5":  7
+                                          },
+                             "reason":  "L4-module=2 | L5-object=7"
+                         },
+                         {
+                             "area":  "ocr",
+                             "status":  "NATIVE_PARTIAL",
+                             "evidence":  {
+                                              "l1":  2,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  0,
+                                              "l5":  1
+                                          },
+                             "reason":  "L5-object=1 | L1-ui=2"
+                         },
+                         {
+                             "area":  "font",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  5,
+                                              "l5":  1
+                                          },
+                             "reason":  "L4-module=5 | L5-object=1"
+                         },
+                         {
+                             "area":  "size",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  7,
+                                              "l5":  1
+                                          },
+                             "reason":  "L4-module=7 | L5-object=1"
+                         },
+                         {
+                             "area":  "position",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  1,
+                                              "l5":  7
+                                          },
+                             "reason":  "L4-module=1 | L5-object=7"
+                         },
+                         {
+                             "area":  "scale",
+                             "status":  "NATIVE_UNKNOWN",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  0,
+                                              "l5":  7
+                                          },
+                             "reason":  "L5-object=7"
+                         },
+                         {
+                             "area":  "rotate",
+                             "status":  "NATIVE_UNKNOWN",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  0,
+                                              "l5":  7
+                                          },
+                             "reason":  "L5-object=7"
+                         },
+                         {
+                             "area":  "side",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  7,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  2,
+                                              "l5":  1
+                                          },
+                             "reason":  "L4-module=2 | L5-object=1 | L1-ui=7"
+                         },
+                         {
+                             "area":  "page",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  2,
+                                              "l5":  1
+                                          },
+                             "reason":  "L4-module=2 | L5-object=1"
+                         },
+                         {
+                             "area":  "save",
+                             "status":  "NATIVE_PARTIAL",
+                             "evidence":  {
+                                              "l1":  4,
+                                              "l2":  0,
+                                              "l3":  1,
+                                              "l4":  0,
+                                              "l5":  1
+                                          },
+                             "reason":  "L5-object=1 | L3-network=1 | L1-ui=4"
+                         },
+                         {
+                             "area":  "undo",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  1,
+                                              "l5":  1
+                                          },
+                             "reason":  "L4-module=1 | L5-object=1"
+                         },
+                         {
+                             "area":  "copy-delete",
+                             "status":  "NATIVE_UNKNOWN",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  0,
+                                              "l5":  1
+                                          },
+                             "reason":  "L5-object=1"
+                         },
+                         {
+                             "area":  "layer",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  3,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  2,
+                                              "l5":  1
+                                          },
+                             "reason":  "L4-module=2 | L5-object=1 | L1-ui=3"
+                         },
+                         {
+                             "area":  "export",
+                             "status":  "NATIVE_PARTIAL",
+                             "evidence":  {
+                                              "l1":  2,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  0,
+                                              "l5":  1
+                                          },
+                             "reason":  "L5-object=1 | L1-ui=2"
+                         },
+                         {
+                             "area":  "shortcut",
+                             "status":  "NATIVE_UNKNOWN",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  0,
+                                              "l5":  1
+                                          },
+                             "reason":  "L5-object=1"
+                         },
+                         {
+                             "area":  "align",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  7,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  1,
+                                              "l5":  1
+                                          },
+                             "reason":  "L4-module=1 | L5-object=1 | L1-ui=7"
+                         },
+                         {
+                             "area":  "material",
+                             "status":  "NATIVE_PARTIAL",
+                             "evidence":  {
+                                              "l1":  15,
+                                              "l2":  0,
+                                              "l3":  1,
+                                              "l4":  0,
+                                              "l5":  1
+                                          },
+                             "reason":  "L5-object=1 | L3-network=1 | L1-ui=15"
+                         },
+                         {
+                             "area":  "qrcode",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  2,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  4,
+                                              "l5":  1
+                                          },
+                             "reason":  "L4-module=4 | L5-object=1 | L1-ui=2"
+                         },
+                         {
+                             "area":  "color",
+                             "status":  "NATIVE_READY",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  9,
+                                              "l5":  1
+                                          },
+                             "reason":  "L4-module=9 | L5-object=1"
+                         },
+                         {
+                             "area":  "canvas-size",
+                             "status":  "NATIVE_UNKNOWN",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  0,
+                                              "l5":  1
+                                          },
+                             "reason":  "L5-object=1"
+                         },
+                         {
+                             "area":  "background",
+                             "status":  "NATIVE_UNKNOWN",
+                             "evidence":  {
+                                              "l1":  0,
+                                              "l2":  0,
+                                              "l3":  0,
+                                              "l4":  0,
+                                              "l5":  1
+                                          },
+                             "reason":  "L5-object=1"
+                         }
+                     ],
+    "gate":  "NATIVE_READY",
+    "pages":  [
+                  {
+                      "pageIndex":  0,
+                      "pageId":  null,
+                      "side":  "FRONT",
+                      "registryLen":  17,
+                      "canvas":  {
+                                     "width":  507.49999999999994,
+                                     "height":  308.72916666666663
+                                 },
+                      "objectCounts":  {
+                                           "image":  9,
+                                           "textbox":  7,
+                                           "path":  1,
+                                           "line":  8
+                                       },
+                      "background":  null,
+                      "anchors":  [
+                                      {
+                                          "index":  0,
+                                          "label":  "山东东方美学美妆工作室",
+                                          "pageId":  null,
+                                          "side":  "FRONT",
+                                          "objectType":  "textbox",
+                                          "isTextBox":  true,
+                                          "identity":  {
+                                                           "uuid":  "c007af49-89ae-4c1d-affa-1a2b872b91ae",
+                                                           "markuuid":  "921AC2FE46EE4D648AF5A9EC4B0E680B",
+                                                           "layerNum":  5,
+                                                           "objectIndex":  5
+                                                       },
+                                          "sourceText":  {
+                                                             "rawText":  "山东东方美学美妆工作室",
+                                                             "textLength":  11,
+                                                             "type":  "TEXT"
+                                                         },
+                                          "geometry":  {
+                                                           "left":  36.817010105103535,
+                                                           "top":  227.81805568477637,
+                                                           "width":  242.45616746899415,
+                                                           "height":  23.96183863348625,
+                                                           "scaleX":  1,
+                                                           "scaleY":  1,
+                                                           "angle":  0,
+                                                           "originX":  "left",
+                                                           "originY":  "top",
+                                                           "aCoords":  {
+                                                                           "tl":  {
+                                                                                      "x":  36.817010105103535,
+                                                                                      "y":  227.81805568477637
+                                                                                  },
+                                                                           "tr":  {
+                                                                                      "x":  280.2731775740977,
+                                                                                      "y":  227.81805568477637
+                                                                                  },
+                                                                           "br":  {
+                                                                                      "x":  280.2731775740977,
+                                                                                      "y":  252.77989431826262
+                                                                                  },
+                                                                           "bl":  {
+                                                                                      "x":  36.817010105103535,
+                                                                                      "y":  252.77989431826262
+                                                                                  },
+                                                                           "center":  {
+                                                                                          "x":  158.54509383960064,
+                                                                                          "y":  240.29897500151952
+                                                                                      },
+                                                                           "visualWidth":  243.45616746899418,
+                                                                           "visualHeight":  24.961838633486252,
+                                                                           "angle":  0
+                                                                       },
+                                                           "center":  {
+                                                                          "x":  158.54509383960064,
+                                                                          "y":  240.29897500151952
+                                                                      },
+                                                           "visualWidth":  243.45616746899418,
+                                                           "visualHeight":  24.961838633486252
+                                                       },
+                                          "editorGeometry":  {
+                                                                 "locationX":  36.817010105103535,
+                                                                 "locationY":  227.81805568477637,
+                                                                 "locationWidth":  242.45616746899415,
+                                                                 "locationHeight":  23.96183863348625,
+                                                                 "locationRotation":  0
+                                                             },
+                                          "style":  {
+                                                        "fontFamily":  "OPPOSans-R",
+                                                        "fontSize":  21.20516693228872,
+                                                        "fontWeight":  "normal",
+                                                        "fontStyle":  "normal",
+                                                        "lineHeight":  1.16,
+                                                        "charSpacing":  20,
+                                                        "textAlign":  "left",
+                                                        "fill":  "#000000",
+                                                        "stroke":  null,
+                                                        "strokeWidth":  1
+                                                    },
+                                          "actualInk":  {
+                                                            "width":  null,
+                                                            "height":  null,
+                                                            "lineCount":  null
+                                                        },
+                                          "flags":  {
+                                                        "visible":  true,
+                                                        "selectable":  true,
+                                                        "evented":  true,
+                                                        "isDesign":  true,
+                                                        "isEdit":  true,
+                                                        "isLineText":  true,
+                                                        "isPreview":  true
+                                                    },
+                                          "consistency":  null
+                                      },
+                                      {
+                                          "index":  1,
+                                          "label":  "Email:dongfang@163.com",
+                                          "pageId":  null,
+                                          "side":  "FRONT",
+                                          "objectType":  "textbox",
+                                          "isTextBox":  true,
+                                          "identity":  {
+                                                           "uuid":  "43b1f973-baea-4a93-9c00-e2457767f734",
+                                                           "markuuid":  "89D569B2B25643ADB48594B0BC1CC923",
+                                                           "layerNum":  6,
+                                                           "objectIndex":  6
+                                                       },
+                                          "sourceText":  {
+                                                             "rawText":  "Email:dongfang@163.com",
+                                                             "textLength":  22,
+                                                             "type":  "TEXT"
+                                                         },
+                                          "geometry":  {
+                                                           "left":  65.23551898883466,
+                                                           "top":  268.0979727938663,
+                                                           "width":  162.59076694614362,
+                                                           "height":  14.639646744951577,
+                                                           "scaleX":  1,
+                                                           "scaleY":  1,
+                                                           "angle":  0,
+                                                           "originX":  "left",
+                                                           "originY":  "top",
+                                                           "aCoords":  {
+                                                                           "tl":  {
+                                                                                      "x":  65.23551898883466,
+                                                                                      "y":  268.0979727938663
+                                                                                  },
+                                                                           "tr":  {
+                                                                                      "x":  228.82628593497827,
+                                                                                      "y":  268.0979727938663
+                                                                                  },
+                                                                           "br":  {
+                                                                                      "x":  228.82628593497827,
+                                                                                      "y":  283.7376195388179
+                                                                                  },
+                                                                           "bl":  {
+                                                                                      "x":  65.23551898883466,
+                                                                                      "y":  283.7376195388179
+                                                                                  },
+                                                                           "center":  {
+                                                                                          "x":  147.03090246190646,
+                                                                                          "y":  275.9177961663421
+                                                                                      },
+                                                                           "visualWidth":  163.59076694614362,
+                                                                           "visualHeight":  15.63964674495162,
+                                                                           "angle":  0
+                                                                       },
+                                                           "center":  {
+                                                                          "x":  147.03090246190646,
+                                                                          "y":  275.9177961663421
+                                                                      },
+                                                           "visualWidth":  163.59076694614362,
+                                                           "visualHeight":  15.63964674495162
+                                                       },
+                                          "editorGeometry":  {
+                                                                 "locationX":  65.23551898883466,
+                                                                 "locationY":  268.0979727938663,
+                                                                 "locationWidth":  162.59076694614362,
+                                                                 "locationHeight":  14.639646744951577,
+                                                                 "locationRotation":  0
+                                                             },
+                                          "style":  {
+                                                        "fontFamily":  "OPPOSans-R",
+                                                        "fontSize":  12.95543959730228,
+                                                        "fontWeight":  "normal",
+                                                        "fontStyle":  "normal",
+                                                        "lineHeight":  1.16,
+                                                        "charSpacing":  0,
+                                                        "textAlign":  "left",
+                                                        "fill":  "#000000",
+                                                        "stroke":  null,
+                                                        "strokeWidth":  1
+                                                    },
+                                          "actualInk":  {
+                                                            "width":  null,
+                                                            "height":  null,
+                                                            "lineCount":  null
+                                                        },
+                                          "flags":  {
+                                                        "visible":  true,
+                                                        "selectable":  true,
+                                                        "evented":  true,
+                                                        "isDesign":  true,
+                                                        "isEdit":  true,
+                                                        "isLineText":  true,
+                                                        "isPreview":  true
+                                                    },
+                                          "consistency":  null
+                                      },
+                                      {
+                                          "index":  2,
+                                          "label":  "Tel:400-8888 8888",
+                                          "pageId":  null,
+                                          "side":  "FRONT",
+                                          "objectType":  "textbox",
+                                          "isTextBox":  true,
+                                          "identity":  {
+                                                           "uuid":  "aef26b97-8719-4b02-b845-ba8375686efd",
+                                                           "markuuid":  "3837BA420FC14364A58C02461CEF9020",
+                                                           "layerNum":  7,
+                                                           "objectIndex":  7
+                                                       },
+                                          "sourceText":  {
+                                                             "rawText":  "Tel:400-8888 8888",
+                                                             "textLength":  17,
+                                                             "type":  "TEXT"
+                                                         },
+                                          "geometry":  {
+                                                           "left":  65.4782911174476,
+                                                           "top":  291.06923284110303,
+                                                           "width":  130.93629622420954,
+                                                           "height":  14.69,
+                                                           "scaleX":  1,
+                                                           "scaleY":  1,
+                                                           "angle":  0,
+                                                           "originX":  "left",
+                                                           "originY":  "top",
+                                                           "aCoords":  {
+                                                                           "tl":  {
+                                                                                      "x":  65.4782911174476,
+                                                                                      "y":  291.06923284110303
+                                                                                  },
+                                                                           "tr":  {
+                                                                                      "x":  197.41458734165712,
+                                                                                      "y":  291.06923284110303
+                                                                                  },
+                                                                           "br":  {
+                                                                                      "x":  197.41458734165712,
+                                                                                      "y":  306.7592328411031
+                                                                                  },
+                                                                           "bl":  {
+                                                                                      "x":  65.4782911174476,
+                                                                                      "y":  306.7592328411031
+                                                                                  },
+                                                                           "center":  {
+                                                                                          "x":  131.44643922955237,
+                                                                                          "y":  298.91423284110306
+                                                                                      },
+                                                                           "visualWidth":  131.9362962242095,
+                                                                           "visualHeight":  15.690000000000055,
+                                                                           "angle":  0
+                                                                       },
+                                                           "center":  {
+                                                                          "x":  131.44643922955237,
+                                                                          "y":  298.91423284110306
+                                                                      },
+                                                           "visualWidth":  131.9362962242095,
+                                                           "visualHeight":  15.690000000000055
+                                                       },
+                                          "editorGeometry":  {
+                                                                 "locationX":  65.4782911174476,
+                                                                 "locationY":  291.06923284110303,
+                                                                 "locationWidth":  130.93629622420954,
+                                                                 "locationHeight":  14.69,
+                                                                 "locationRotation":  0
+                                                             },
+                                          "style":  {
+                                                        "fontFamily":  "OPPOSans-R",
+                                                        "fontSize":  13,
+                                                        "fontWeight":  "normal",
+                                                        "fontStyle":  "normal",
+                                                        "lineHeight":  1.16,
+                                                        "charSpacing":  0,
+                                                        "textAlign":  "left",
+                                                        "fill":  "#000000",
+                                                        "stroke":  null,
+                                                        "strokeWidth":  1
+                                                    },
+                                          "actualInk":  {
+                                                            "width":  null,
+                                                            "height":  null,
+                                                            "lineCount":  null
+                                                        },
+                                          "flags":  {
+                                                        "visible":  true,
+                                                        "selectable":  true,
+                                                        "evented":  true,
+                                                        "isDesign":  true,
+                                                        "isEdit":  true,
+                                                        "isLineText":  true,
+                                                        "isPreview":  true
+                                                    },
+                                          "consistency":  null
+                                      },
+                                      {
+                                          "index":  3,
+                                          "label":  "Add:XX市XX区XX广场A座15层（地铁X号线XX站C口步行300米）",
+                                          "pageId":  null,
+                                          "side":  "FRONT",
+                                          "objectType":  "textbox",
+                                          "isTextBox":  true,
+                                          "identity":  {
+                                                           "uuid":  "ceb2eb08-88bf-42d9-aa28-10aacb480cf9",
+                                                           "markuuid":  "1B6A503A48BD4A8D9978905642CE57B0",
+                                                           "layerNum":  8,
+                                                           "objectIndex":  8
+                                                       },
+                                          "sourceText":  {
+                                                             "rawText":  "Add:XX市XX区XX广场A座15层（地铁X号线XX站C口步行300米）",
+                                                             "textLength":  37,
+                                                             "type":  "TEXT"
+                                                         },
+                                          "geometry":  {
+                                                           "left":  66.26866668380183,
+                                                           "top":  314.09084614338815,
+                                                           "width":  384,
+                                                           "height":  14.69,
+                                                           "scaleX":  1,
+                                                           "scaleY":  1,
+                                                           "angle":  0,
+                                                           "originX":  "left",
+                                                           "originY":  "top",
+                                                           "aCoords":  {
+                                                                           "tl":  {
+                                                                                      "x":  66.26866668380183,
+                                                                                      "y":  314.09084614338815
+                                                                                  },
+                                                                           "tr":  {
+                                                                                      "x":  451.2686666838018,
+                                                                                      "y":  314.09084614338815
+                                                                                  },
+                                                                           "br":  {
+                                                                                      "x":  451.2686666838018,
+                                                                                      "y":  329.7808461433882
+                                                                                  },
+                                                                           "bl":  {
+                                                                                      "x":  66.26866668380183,
+                                                                                      "y":  329.7808461433882
+                                                                                  },
+                                                                           "center":  {
+                                                                                          "x":  258.7686666838018,
+                                                                                          "y":  321.9358461433882
+                                                                                      },
+                                                                           "visualWidth":  385,
+                                                                           "visualHeight":  15.690000000000055,
+                                                                           "angle":  0
+                                                                       },
+                                                           "center":  {
+                                                                          "x":  258.7686666838018,
+                                                                          "y":  321.9358461433882
+                                                                      },
+                                                           "visualWidth":  385,
+                                                           "visualHeight":  15.690000000000055
+                                                       },
+                                          "editorGeometry":  {
+                                                                 "locationX":  66.26866668380183,
+                                                                 "locationY":  314.09084614338815,
+                                                                 "locationWidth":  384,
+                                                                 "locationHeight":  14.69,
+                                                                 "locationRotation":  0
+                                                             },
+                                          "style":  {
+                                                        "fontFamily":  "OPPOSans-R",
+                                                        "fontSize":  13,
+                                                        "fontWeight":  "normal",
+                                                        "fontStyle":  "normal",
+                                                        "lineHeight":  1.16,
+                                                        "charSpacing":  0,
+                                                        "textAlign":  "left",
+                                                        "fill":  "#000000",
+                                                        "stroke":  null,
+                                                        "strokeWidth":  1
+                                                    },
+                                          "actualInk":  {
+                                                            "width":  null,
+                                                            "height":  null,
+                                                            "lineCount":  null
+                                                        },
+                                          "flags":  {
+                                                        "visible":  true,
+                                                        "selectable":  true,
+                                                        "evented":  true,
+                                                        "isDesign":  true,
+                                                        "isEdit":  true,
+                                                        "isLineText":  true,
+                                                        "isPreview":  true
+                                                    },
+                                          "consistency":  null
+                                      },
+                                      {
+                                          "index":  4,
+                                          "label":  "主理人",
+                                          "pageId":  null,
+                                          "side":  "FRONT",
+                                          "objectType":  "textbox",
+                                          "isTextBox":  true,
+                                          "identity":  {
+                                                           "uuid":  "787f128d-98d5-446b-b0dc-e7a856304ce6",
+                                                           "markuuid":  "82DBF6FD13B14175B652C77D7CE79660",
+                                                           "layerNum":  9,
+                                                           "objectIndex":  9
+                                                       },
+                                          "sourceText":  {
+                                                             "rawText":  "主理人",
+                                                             "textLength":  3,
+                                                             "type":  "TEXT"
+                                                         },
+                                          "geometry":  {
+                                                           "left":  36.817010105103506,
+                                                           "top":  106.4997871695657,
+                                                           "width":  49.748025660582265,
+                                                           "height":  18.397724398840783,
+                                                           "scaleX":  1,
+                                                           "scaleY":  1,
+                                                           "angle":  0,
+                                                           "originX":  "left",
+                                                           "originY":  "top",
+                                                           "aCoords":  {
+                                                                           "tl":  {
+                                                                                      "x":  36.817010105103506,
+                                                                                      "y":  106.4997871695657
+                                                                                  },
+                                                                           "tr":  {
+                                                                                      "x":  87.56503576568578,
+                                                                                      "y":  106.4997871695657
+                                                                                  },
+                                                                           "br":  {
+                                                                                      "x":  87.56503576568578,
+                                                                                      "y":  125.89751156840649
+                                                                                  },
+                                                                           "bl":  {
+                                                                                      "x":  36.817010105103506,
+                                                                                      "y":  125.89751156840649
+                                                                                  },
+                                                                           "center":  {
+                                                                                          "x":  62.19102293539464,
+                                                                                          "y":  116.19864936898608
+                                                                                      },
+                                                                           "visualWidth":  50.74802566058227,
+                                                                           "visualHeight":  19.39772439884078,
+                                                                           "angle":  0
+                                                                       },
+                                                           "center":  {
+                                                                          "x":  62.19102293539464,
+                                                                          "y":  116.19864936898608
+                                                                      },
+                                                           "visualWidth":  50.74802566058227,
+                                                           "visualHeight":  19.39772439884078
+                                                       },
+                                          "editorGeometry":  {
+                                                                 "locationX":  36.817010105103506,
+                                                                 "locationY":  106.4997871695657,
+                                                                 "locationWidth":  49.748025660582265,
+                                                                 "locationHeight":  18.397724398840783,
+                                                                 "locationRotation":  0
+                                                             },
+                                          "style":  {
+                                                        "fontFamily":  "OPPOSans-R",
+                                                        "fontSize":  16.28117203437238,
+                                                        "fontWeight":  "normal",
+                                                        "fontStyle":  "normal",
+                                                        "lineHeight":  1.16,
+                                                        "charSpacing":  0,
+                                                        "textAlign":  "left",
+                                                        "fill":  "#000000",
+                                                        "stroke":  null,
+                                                        "strokeWidth":  1
+                                                    },
+                                          "actualInk":  {
+                                                            "width":  null,
+                                                            "height":  null,
+                                                            "lineCount":  null
+                                                        },
+                                          "flags":  {
+                                                        "visible":  true,
+                                                        "selectable":  true,
+                                                        "evented":  true,
+                                                        "isDesign":  true,
+                                                        "isEdit":  true,
+                                                        "isLineText":  true,
+                                                        "isPreview":  true
+                                                    },
+                                          "consistency":  null
+                                      },
+                                      {
+                                          "index":  5,
+                                          "label":  "188 8888 6666",
+                                          "pageId":  null,
+                                          "side":  "FRONT",
+                                          "objectType":  "textbox",
+                                          "isTextBox":  true,
+                                          "identity":  {
+                                                           "uuid":  "9fb100ff-72fe-4fc3-872e-a83c57952888",
+                                                           "markuuid":  "9B5E0D266C674E5A8FD0110F3054B80D",
+                                                           "layerNum":  10,
+                                                           "objectIndex":  10
+                                                       },
+                                          "sourceText":  {
+                                                             "rawText":  "188 8888 6666",
+                                                             "textLength":  13,
+                                                             "type":  "TEXT"
+                                                         },
+                                          "geometry":  {
+                                                           "left":  113.43023192467909,
+                                                           "top":  106.4997871695657,
+                                                           "width":  113.50974740684731,
+                                                           "height":  17.89758342833546,
+                                                           "scaleX":  1,
+                                                           "scaleY":  1,
+                                                           "angle":  0,
+                                                           "originX":  "left",
+                                                           "originY":  "top",
+                                                           "aCoords":  {
+                                                                           "tl":  {
+                                                                                      "x":  113.43023192467909,
+                                                                                      "y":  106.4997871695657
+                                                                                  },
+                                                                           "tr":  {
+                                                                                      "x":  227.9399793315264,
+                                                                                      "y":  106.4997871695657
+                                                                                  },
+                                                                           "br":  {
+                                                                                      "x":  227.9399793315264,
+                                                                                      "y":  125.39737059790116
+                                                                                  },
+                                                                           "bl":  {
+                                                                                      "x":  113.43023192467909,
+                                                                                      "y":  125.39737059790116
+                                                                                  },
+                                                                           "center":  {
+                                                                                          "x":  170.68510562810275,
+                                                                                          "y":  115.94857888373343
+                                                                                      },
+                                                                           "visualWidth":  114.5097474068473,
+                                                                           "visualHeight":  18.89758342833545,
+                                                                           "angle":  0
+                                                                       },
+                                                           "center":  {
+                                                                          "x":  170.68510562810275,
+                                                                          "y":  115.94857888373343
+                                                                      },
+                                                           "visualWidth":  114.5097474068473,
+                                                           "visualHeight":  18.89758342833545
+                                                       },
+                                          "editorGeometry":  {
+                                                                 "locationX":  113.43023192467909,
+                                                                 "locationY":  106.4997871695657,
+                                                                 "locationWidth":  113.50974740684731,
+                                                                 "locationHeight":  17.89758342833546,
+                                                                 "locationRotation":  0
+                                                             },
+                                          "style":  {
+                                                        "fontFamily":  "OPPOSans-R",
+                                                        "fontSize":  15.838569405606602,
+                                                        "fontWeight":  "normal",
+                                                        "fontStyle":  "normal",
+                                                        "lineHeight":  1.16,
+                                                        "charSpacing":  0,
+                                                        "textAlign":  "left",
+                                                        "fill":  "#000000",
+                                                        "stroke":  null,
+                                                        "strokeWidth":  1
+                                                    },
+                                          "actualInk":  {
+                                                            "width":  null,
+                                                            "height":  null,
+                                                            "lineCount":  null
+                                                        },
+                                          "flags":  {
+                                                        "visible":  true,
+                                                        "selectable":  true,
+                                                        "evented":  true,
+                                                        "isDesign":  true,
+                                                        "isEdit":  true,
+                                                        "isLineText":  true,
+                                                        "isPreview":  true
+                                                    },
+                                          "consistency":  null
+                                      },
+                                      {
+                                          "index":  6,
+                                          "label":  "简 小设",
+                                          "pageId":  null,
+                                          "side":  "FRONT",
+                                          "objectType":  "textbox",
+                                          "isTextBox":  true,
+                                          "identity":  {
+                                                           "uuid":  "60d57102-0d70-4f35-8e80-978d95817dab",
+                                                           "markuuid":  "AD4636D5227B49399987EA16FC0FF3EA",
+                                                           "layerNum":  11,
+                                                           "objectIndex":  11
+                                                       },
+                                          "sourceText":  {
+                                                             "rawText":  "简 小设",
+                                                             "textLength":  4,
+                                                             "type":  "TEXT"
+                                                         },
+                                          "geometry":  {
+                                                           "left":  36.81701010510352,
+                                                           "top":  60.40998332559245,
+                                                           "width":  199.22690661591815,
+                                                           "height":  34.78082434831301,
+                                                           "scaleX":  1,
+                                                           "scaleY":  1,
+                                                           "angle":  0,
+                                                           "originX":  "left",
+                                                           "originY":  "top",
+                                                           "aCoords":  {
+                                                                           "tl":  {
+                                                                                      "x":  36.81701010510352,
+                                                                                      "y":  60.40998332559245
+                                                                                  },
+                                                                           "tr":  {
+                                                                                      "x":  237.04391672102167,
+                                                                                      "y":  60.40998332559245
+                                                                                  },
+                                                                           "br":  {
+                                                                                      "x":  237.04391672102167,
+                                                                                      "y":  96.19080767390547
+                                                                                  },
+                                                                           "bl":  {
+                                                                                      "x":  36.81701010510352,
+                                                                                      "y":  96.19080767390547
+                                                                                  },
+                                                                           "center":  {
+                                                                                          "x":  136.9304634130626,
+                                                                                          "y":  78.30039549974896
+                                                                                      },
+                                                                           "visualWidth":  200.22690661591815,
+                                                                           "visualHeight":  35.78082434831302,
+                                                                           "angle":  0
+                                                                       },
+                                                           "center":  {
+                                                                          "x":  136.9304634130626,
+                                                                          "y":  78.30039549974896
+                                                                      },
+                                                           "visualWidth":  200.22690661591815,
+                                                           "visualHeight":  35.78082434831302
+                                                       },
+                                          "editorGeometry":  {
+                                                                 "locationX":  36.81701010510352,
+                                                                 "locationY":  60.40998332559245,
+                                                                 "locationWidth":  199.22690661591815,
+                                                                 "locationHeight":  34.78082434831301,
+                                                                 "locationRotation":  0
+                                                             },
+                                          "style":  {
+                                                        "fontFamily":  "OPPOSans-M",
+                                                        "fontSize":  30.779490573728324,
+                                                        "fontWeight":  "normal",
+                                                        "fontStyle":  "normal",
+                                                        "lineHeight":  1.16,
+                                                        "charSpacing":  0,
+                                                        "textAlign":  "left",
+                                                        "fill":  "#000000",
+                                                        "stroke":  null,
+                                                        "strokeWidth":  1
+                                                    },
+                                          "actualInk":  {
+                                                            "width":  null,
+                                                            "height":  null,
+                                                            "lineCount":  null
+                                                        },
+                                          "flags":  {
+                                                        "visible":  true,
+                                                        "selectable":  true,
+                                                        "evented":  true,
+                                                        "isDesign":  true,
+                                                        "isEdit":  true,
+                                                        "isLineText":  true,
+                                                        "isPreview":  true
+                                                    },
+                                          "consistency":  null
+                                      }
+                                  ],
+                      "summarize":  {
+                                        "total":  7,
+                                        "textbox":  7,
+                                        "withACoords":  7,
+                                        "withLocation":  7,
+                                        "emptyText":  0,
+                                        "consistency":  0
+                                    },
+                      "consistency":  [
+
+                                      ]
+                  }
+              ],
+    "errors":  [
+
+               ],
+    "summary":  {
+                    "ready":  12,
+                    "partial":  4,
+                    "unknown":  6,
+                    "areas":  22
+                },
+    "layerEvidence":  {
+                          "l1_ui":  56,
+                          "l2_event":  0,
+                          "l3_network":  1,
+                          "l4_modules":  136,
+                          "l5_objectTypes":  {
+                                                 "image":  9,
+                                                 "textbox":  7,
+                                                 "path":  1,
+                                                 "line":  8
+                                             },
+                          "l5_textObjects":  7,
+                          "l5_pagesWithObjects":  1
+                      }
+}
