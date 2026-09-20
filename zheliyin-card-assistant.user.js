@@ -678,6 +678,12 @@
 
   function ocrLog(stage, msg) {
     console.log("[zy-ocr][" + stage + "] " + msg);
+
+  // Stage 9 Commit 1（OCR Pipeline Evidence Audit）：只记录计数/失败码，零行为影响；汇总写 window.__zyOcrPipelineEvidence（runner 取证）。禁止记录文字内容/凭据。
+  function pipelineEvidence(rec) {
+    try { const cur = window.__zyOcrPipelineEvidence || {}; return (window.__zyOcrPipelineEvidence = Object.assign({}, cur, rec, { updated: Date.now() })); }
+    catch (e) { return null; }
+  }
   }
 
   // P1 根因（001-execution）：隔离世界读不到页面 world 的 requirejs 模块注册表（CanvasObjVO），
@@ -853,11 +859,13 @@
     emitOcrDiag(Object.assign({}, diag, { reason: null, fallback: false, quality: { ok: cloudQa.ok, code: cloudQa.reasonCode || null, total: cloudQa.total, kept: (cloudQa.kept || []).length, dropped: (cloudQa.dropped || []).length } }));
     if (!cloudQa.ok) {
       ocrLog("QUALITY", "cloud quality fail code=" + (cloudQa.reasonCode || "invalid-result") + " total=" + cloudQa.total + " kept=0 reason=" + String(cloudQa.reason || "").slice(0, 120));
+      pipelineEvidence({ stage: "BAIDU", fail: cloudQa.reasonCode === "empty-result" ? "BAIDU_EMPTY" : "BAIDU_QUALITY_BLOCK", raw: cloudQa.total, qaKept: 0, qaCode: cloudQa.reasonCode || null });
       maybeLocalFallback(img, cloudQa.reasonCode === "empty-result" ? "CLOUD_EMPTY" : "CLOUD_QUALITY_FAIL", cloudQa.reasonCode || "invalid-result", (diag && diag.attempt) || "cloud-primary");
       return;
     }
     const cloudKept = (cloudQa.kept && cloudQa.kept.length) ? cloudQa.kept : res.candidates;
     ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " kept=" + cloudKept.length + " elapsed=" + res.meta.elapsed + "ms" + (res.meta.mode ? " mode=" + res.meta.mode + " (" + (res.meta.profileName || "") + ")" : ""));
+    pipelineEvidence({ stage: "BAIDU", raw: (res.candidates || []).length, mode: BAIDU_OCR_MODE, qaKept: cloudKept.length });
     // Stage 8D §十九取证：cloud raw candidates 证据（行级 bbox）
     ocrLog("RAW_CAND8D", (res.candidates.map((c) => String(c.text || "").slice(0, 10) + "@" + JSON.stringify({ x: Math.round((c.bbox && (c.bbox.x0 != null ? c.bbox.x0 : c.bbox.x)) || 0), y: Math.round((c.bbox && (c.bbox.y0 != null ? c.bbox.y0 : c.bbox.y)) || 0), w: Math.round((c.bbox && (c.bbox.x1 != null ? Math.abs(c.bbox.x1 - c.bbox.x0) : c.bbox.width)) || 0), h: Math.round((c.bbox && (c.bbox.y1 != null ? Math.abs(c.bbox.y1 - c.bbox.y0) : c.bbox.height)) || 0) })).join("|")).slice(0, 4000));
     // Stage 7.8 §三十二/§四十一：六维质量门分级诊断（仅记录，不改 fallback 决策 ——
@@ -873,8 +881,11 @@
     // 锁不在此释放：由 buildItemsFromOcr（ocrCreate 回复/超时/空结果）决定事务终态
     const lineCandidates = unifyCandidates(cloudKept, { width: img.width, height: img.height });
     const gate8d = runCandidateGate(lineCandidates, { width: img.width, height: img.height });
+    pipelineEvidence({ stage: "GATE", unified: lineCandidates.length, gateKept: (gate8d ? gate8d.validated : []).length, ok: !!(gate8d && gate8d.ok), reason: (gate8d && gate8d.reason) || null });
+    pipelineEvidence({ stage: "GATE", fail: "CANDIDATE_GATE_EMPTY", unified: lineCandidates.length });
     if (!gate8d.ok) { ocrRunning = false; setStatus("OCR 候选质量门阻断（" + String(gate8d.reason || "invalid-result") + "），未生成文字"); ocrLog("GATE8D", "block-set suspect: " + (gate8d.setSuspectReasons || []).join("|")); return; }
     const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(gate8d.validated) : (gate8d.validated || []).map(oneLineBlock);
+    pipelineEvidence({ stage: "BLOCKS", blocks: blocks.length });
     const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate）
     await buildItemsFromOcr(tb.blocks, img, diag);
   }
@@ -906,6 +917,7 @@
         return { blocks: blocks || [], mode: "OFF", skipped: true, reason: "unavailable" };
       }
       const applied = applyNativeTextTruth(blocks || [], native);
+      pipelineEvidence({ stage: "NATIVE", nativeLines: native.texts.length, nativeMode: (native.meta && native.meta.modeUsed) || null, nativeFallback: !!(native.meta && native.meta.fallbackUsed), kept: (applied.kept || []).length, legacyDropped: (applied.legacyDropped || []).length, unmatchedNative: (applied.unmatchedNative || []).length, fail: (!(applied.kept || []).length) ? ((applied.gate && applied.gate.allTextTruthValid) ? "NATIVE_UNMATCHED" : ((applied.gate && applied.gate.failureCode) || "NATIVE_EMPTY")) : null });
       ocrLog("TRUTH", "native lines=" + native.texts.length + " mode=" + String((native.meta && native.meta.modeUsed) || "?") + " fb=" + (native.meta && native.meta.fallbackUsed ? 1 : 0) + " kept=" + applied.kept.length + " droppedLegacy=" + applied.legacyDropped.length + " unmatchedNative=" + applied.unmatchedNative.length + " valid=" + applied.gate.allTextTruthValid + (applied.gate.failureCode ? " fail=" + applied.gate.failureCode : ""));
       return { blocks: applied.kept, mode: "NATIVE_TRUTH", native: native, applied: applied };
     } catch (e) {
@@ -1072,6 +1084,7 @@
         return;
       }
       ocrLog("PREPARING", "kind=" + prep.kind + " " + prep.width + "x" + prep.height + " dataUrl=" + prep.dataUrl.length + " chars");
+      pipelineEvidence({ stage: "PREP", ocrStart: new Date().toISOString(), kind: prep.kind, natural: prep.width + "x" + prep.height, sourceImage: prep.fingerprint ? prep.fingerprint : (prep.dataUrl ? "dataUrl:" + prep.dataUrl.length + "chars" : null) });
       ocrTarget = { kind: prep.kind, geo: prep.geometry };
       // Stage 8B STEP 5：真实模板字体（StyleCandidate 来源 1，禁止硬编码"思源黑体 Regular"）
       ocrTarget.fontStyle = prep.templateFont || null;
@@ -1392,6 +1405,7 @@
       const pcx = cx + dcx * cos - dcy * sin, pcy = cy + dcx * sin + dcy * cos;
       return Object.assign({}, base, { left: pcx, top: pcy, angle: angle, origin: "center", width: layout.layoutWidth, fontSize: fs, height: boxHeight });
     }).filter(Boolean); // Stage 7.8：剔除 safeText 为空的块（不创建空 textbox）
+    pipelineEvidence({ stage: "BUILD", blocks: workBlocks.length, items: items.length, fail: items.length ? null : "BUILD_EMPTY" });
     if (!items.length) {
       // 空结果：Cloud Primary 阶段空 → 转 Local FALLBACK；本地（manual/fallback）空 → 终态报错
       if (img && !img._cloudFallbackDone && diag && diag.engine === "cloud" && diag.attempt === "cloud-primary") {
@@ -1423,16 +1437,18 @@
         const integ = e.data.editorIntegration || {};
         if (e.data.ok) {
           setStatus("已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）");
+          pipelineEvidence({ stage: "CREATE", requested: e.data.detectedBlocks || 0, created: (e.data.created || []).length });
           ocrLog("SUCCESS", "created=" + (e.data.created || []).length + "/" + (e.data.detectedBlocks || 0) + " editorInteg=" + JSON.stringify({ undo: !!integ.nativeUndoFound, savePre: !!integ.undoSavePre, savePost: !!integ.undoSavePost, ident: integ.identityApplied, uv4: integ.uv4Total, layerMax: integ.layerMax }));
           // Stage 8B STEP 4（Phase B/C/E）：创建后几何闭环校正（不阻塞终态回复，异步进行）
           runGeometryCalibration(items, e.data, srcSide);
         } else {
+          pipelineEvidence({ stage: "CREATE", fail: "CREATE_FAILED", requested: e.data.detectedBlocks || 0, created: (e.data.created || []).length, failedIdx: e.data.failedBlockIndex != null ? e.data.failedBlockIndex : null });
           setStatus("生成失败：" + (e.data.message || "未创建文字") + (e.data.failedBlockIndex != null ? "（第 " + e.data.failedBlockIndex + " 个失败，已回滚）" : ""));
           ocrLog("ERROR", "ocrCreate failed created=" + (e.data.created || []).length + " detected=" + (e.data.detectedBlocks || 0) + " failedIdx=" + (e.data.failedBlockIndex != null ? e.data.failedBlockIndex : "n/a") + " msg=" + String(e.data.message || "").slice(0, 120));
         }
       }
     };
-    const fallbackTimer = setTimeout(() => { window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
+    const fallbackTimer = setTimeout(() => { pipelineEvidence({ stage: "CREATE", fail: "CREATE_TIMEOUT" }); window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
     window.addEventListener("message", on);
     window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, transactionId: srcTxId, imageFingerprint: srcTxFp, items: items }, location.origin);
     // 事务结束：释放 ocrTarget，避免下次识别串用旧目标

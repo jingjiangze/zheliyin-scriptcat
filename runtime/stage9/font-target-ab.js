@@ -323,6 +323,7 @@ function pageWorldPayloadFor(cond) {
           const rd = await readNew(createdIds);
           rec.steps.push({ step: "read", objects: (rd && rd.arr || []).length });
           rec.calibration = (rd && rd.calib) || []; // P4-D §9
+          rec.pipelineEvidence = await page.evaluate(() => (window.__zyOcrPipelineEvidence || null)).catch(() => null); // Stage9 Commit1 证据审计
           if ((rd && rd.arr && rd.arr.length) > 0) rec.pipeline = "FULL_REAL_PIPELINE";
           else { rec.errors.push("NO_OBJECTS_CREATED"); continue; }
           for (const ob of (rd && rd.arr) || []) {
