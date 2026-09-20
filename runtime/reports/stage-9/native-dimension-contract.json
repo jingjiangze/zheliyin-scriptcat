@@ -1,6 +1,6 @@
 {
-  "ts": "2026-09-20T14:12:48.321Z",
-  "version": "0.3.11.43",
+  "ts": "2026-09-20T14:55:10.939Z",
+  "version": "0.3.11.44",
   "stage": "STAGE-9-V8-NATIVE-DIMENSION-CONTRACT",
   "template": {
     "urlPath": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
@@ -945,17 +945,17 @@
         "source": "native"
       },
       "sourceImage": {
-        "naturalWidthPx": null,
-        "naturalHeightPx": null,
-        "objectWidthPx": null,
-        "objectHeightPx": null,
-        "scaleX": null,
-        "scaleY": null
+        "naturalWidthPx": 1063,
+        "naturalHeightPx": 638,
+        "objectWidthPx": 621.7453321187796,
+        "objectHeightPx": 373.16417863761177,
+        "scaleX": 1,
+        "scaleY": 1
       },
       "viewport": {
-        "widthPx": null,
-        "heightPx": null,
-        "zoom": null,
+        "widthPx": 507.5,
+        "heightPx": 308.7250061035156,
+        "zoom": 0.8458333333333332,
         "scale": null
       },
       "orientation": "landscape",
@@ -996,17 +996,17 @@
         "source": "native"
       },
       "sourceImage": {
-        "naturalWidthPx": null,
-        "naturalHeightPx": null,
-        "objectWidthPx": null,
-        "objectHeightPx": null,
-        "scaleX": null,
-        "scaleY": null
+        "naturalWidthPx": 1063,
+        "naturalHeightPx": 638,
+        "objectWidthPx": 621.7453321187796,
+        "objectHeightPx": 373.16417863761177,
+        "scaleX": 1,
+        "scaleY": 1
       },
       "viewport": {
-        "widthPx": null,
-        "heightPx": null,
-        "zoom": null,
+        "widthPx": 507.5,
+        "heightPx": 308.7250061035156,
+        "zoom": 0.8458333333333332,
         "scale": null
       },
       "orientation": "landscape",
@@ -1047,17 +1047,17 @@
         "source": "native"
       },
       "sourceImage": {
-        "naturalWidthPx": null,
-        "naturalHeightPx": null,
-        "objectWidthPx": null,
-        "objectHeightPx": null,
-        "scaleX": null,
-        "scaleY": null
+        "naturalWidthPx": 1063,
+        "naturalHeightPx": 638,
+        "objectWidthPx": 621.7453321187796,
+        "objectHeightPx": 373.16417863761177,
+        "scaleX": 1,
+        "scaleY": 1
       },
       "viewport": {
-        "widthPx": null,
-        "heightPx": null,
-        "zoom": null,
+        "widthPx": 507.5,
+        "heightPx": 308.7250061035156,
+        "zoom": 0.8458333333333332,
         "scale": null
       },
       "orientation": "landscape",
@@ -1091,7 +1091,7 @@
     "keys": [
       "NATIVE_DIMENSION_CONFIRMED",
       "NATIVE_CONVERSION_SIGNATURE_CONFIRMED",
-      "SINGLE_PAGE_CONFIRMED_AS_OBSERVED",
+      "MULTI_PAGE_STRUCTURE_UNRESOLVED",
       "SOURCE_IMAGE_CONFIRMED",
       "VIEWPORT_SEPARATED",
       "VERTICAL_TEXT_UNRESOLVED_OR_NONE"
@@ -1102,6 +1102,111 @@
     "canvasHeightPx": 308.72916666666663
   },
   "errors": [],
+  "deepPagePath": {
+    "pageListEntries": [
+      {
+        "index": 0,
+        "ownKeys": [
+          "errDesignFlag",
+          "tshirtImagePath",
+          "diyDisplayHeight",
+          "diyType",
+          "bleedWidth",
+          "previewImagePath",
+          "minPage",
+          "bleedHeight",
+          "pageGroup",
+          "diyWorkAreaHeight",
+          "templateID",
+          "title",
+          "content",
+          "workAreaHeight",
+          "diyDisplayWidth",
+          "changeFontId",
+          "pageOrder",
+          "warnText",
+          "diyWorkAreaWidth",
+          "designModel",
+          "id",
+          "workAreaWidth",
+          "maxPage",
+          "resourceType"
+        ],
+        "entry": {
+          "id": "2459103",
+          "title": "正面"
+        }
+      },
+      {
+        "index": 1,
+        "ownKeys": [
+          "errDesignFlag",
+          "tshirtImagePath",
+          "diyDisplayHeight",
+          "diyType",
+          "bleedWidth",
+          "previewImagePath",
+          "minPage",
+          "bleedHeight",
+          "pageGroup",
+          "diyWorkAreaHeight",
+          "templateID",
+          "title",
+          "content",
+          "workAreaHeight",
+          "diyDisplayWidth",
+          "changeFontId",
+          "pageOrder",
+          "warnText",
+          "diyWorkAreaWidth",
+          "designModel",
+          "id",
+          "workAreaWidth",
+          "maxPage",
+          "resourceType"
+        ],
+        "entry": {
+          "id": "2459104",
+          "title": "背面"
+        }
+      }
+    ],
+    "currentCanvasShape": {
+      "type": "object",
+      "ownKeys": [
+        "getCurrentCanvas",
+        "getCanvasFromArray"
+      ],
+      "protoKeys": []
+    },
+    "multiCanvasDiy": {
+      "type": "object",
+      "ownKeys": [
+        "MultiCanvasDiy"
+      ],
+      "protoKeys": []
+    },
+    "pageTabEvidence": [
+      {
+        "tag": "DIV",
+        "text": "正面"
+      },
+      {
+        "tag": "DIV",
+        "text": "背面"
+      }
+    ],
+    "canvasPagesNum": 0,
+    "multiCanvas": true,
+    "pageListLength": 2
+  },
+  "materializationProbe": {
+    "pagesBefore": 1,
+    "pagesAfterBack": 1,
+    "worked": false,
+    "currentCanvasNumAfter": 2,
+    "note": "不以 currentCanvasNum 变化判定切换成功；以第二 Canvas 是否真实 materialize 为准"
+  },
   "frontPageAfterSwitch": {
     "ok": true,
     "pageIndex": 0,
@@ -1235,6 +1340,6 @@
     "errors": [],
     "identityRestored": true,
     "objectCountUnchanged": true,
-    "switchVerified": true
+    "switchVerified": false
   }
 }

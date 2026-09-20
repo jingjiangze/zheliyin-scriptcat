@@ -244,6 +244,31 @@ return {
   objectCount: objs.length, byType: byType, verticalTextCandidates: vertical
 };
 `;
+// ---- ProductVO.pageList[0..1] 深挖 + CurrentCanvas/MultiCanvasDiy 创建路径（只读）----
+const codeDeepPath = `
+const defs = (window.requirejs && window.requirejs.s && window.requirejs.s.contexts && window.requirejs.s.contexts._ && window.requirejs.s.contexts._.defined) || {};
+const CV = defs.CanvasObjVO || window.CanvasObjVO || null;
+const out = { pageListEntries: [], currentCanvasShape: null, multiCanvasDiy: null, pageTabEvidence: [], canvasPagesNum: CV ? CV.canvasPagesNum : null, multiCanvas: CV ? !!CV.multiCanvas : null };
+try {
+  const PV = defs.ProductVO || null;
+  const pl = PV && (PV.pageList || PV.pages || PV.canvasList);
+  if (Array.isArray(pl)) {
+    out.pageListLength = pl.length;
+    pl.slice(0, 2).forEach(function (p, i) {
+      if (!p) return;
+      const entry = {};
+      const KEYS = ["id", "idName", "pageId", "pageName", "title", "width", "height", "mmWidth", "mmHeight", "tWidthMM", "tHeightMM", "side", "front", "back", "canvasNum", "physicalWidth", "physicalHeight", "sizeName", "orientation", "isFront", "isBack", "multiUuid"];
+      KEYS.forEach(function (k) { if (p[k] !== undefined) entry[k] = (typeof p[k] === "object" && p[k] !== null) ? "(obj)" : (typeof p[k] === "function" ? "fn" : String(p[k]).slice(0, 40)); });
+      out.pageListEntries.push({ index: i, ownKeys: Object.keys(p).slice(0, 40), entry: entry });
+    });
+  } else { out.pageListKind = pl ? typeof pl : "absent"; }
+} catch (e) { out.pageListErr = String(e && e.message || e).slice(0, 120); }
+try { const CC = defs.CurrentCanvas || window.CurrentCanvas || null; if (CC) out.currentCanvasShape = { type: typeof CC, ownKeys: Object.getOwnPropertyNames(CC).slice(0, 30), protoKeys: (function () { const pr = Object.getPrototypeOf(CC); return pr && pr !== Object.prototype ? Object.getOwnPropertyNames(pr).slice(0, 30) : []; })() }; } catch (e) {}
+try { const MCD = defs.MultiCanvasDiy || null; if (MCD) out.multiCanvasDiy = { type: typeof MCD, ownKeys: Object.getOwnPropertyNames(MCD).slice(0, 30), protoKeys: (function () { const pr = Object.getPrototypeOf(MCD); return pr && pr !== Object.prototype ? Object.getOwnPropertyNames(pr).slice(0, 30) : []; })() }; } catch (e) {}
+try { document.querySelectorAll(".page-group .pageNum, [class*=pageNum], [class*=pageLi], [class*=pageTab]").forEach(function (el, i) { if (i < 8) out.pageTabEvidence.push({ tag: el.tagName, text: String(el.textContent || "").trim().slice(0, 12) }); }); } catch (e) {}
+return out;
+`;
+
 const waitReadyTick = () => { const req = window.requirejs; const CV = (req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO; return { ok: !!(CV && Array.isArray(CV.totalCanvasArray)) }; };
 
 (async () => {
@@ -285,6 +310,7 @@ const waitReadyTick = () => { const req = window.requirejs; const CV = (req && r
 
     const structure = await pageRun(page, codeStructure);
     out.pageEvidence = structure;
+    out.deepPagePath = await pageRun(page, codeDeepPath);
     const diyInv = await pageRun(page, codeDiyInventory);
     out.dimensionEvidence = { canvasDiyInventory: diyInv };
     const conv = await pageRun(page, codeConversion);
@@ -303,6 +329,11 @@ const waitReadyTick = () => { const req = window.requirejs; const CV = (req && r
     fbStep.attempts.push({ method: "ui-click-back", ok: clickedBack });
     if (!clickedBack) { await page.evaluate("(function(){ " + setCurrentNumCode(2) + " })()").catch(() => {}); fbStep.attempts.push({ method: "native-currentCanvasNum=2", ok: true }); }
     fbStep.switchMethod = clickedBack ? "ui-click-back" : "native-currentCanvasNum=2";
+    // 深挖第二页 materialization：切后重扫 totalCanvasArray 是否有新增 Canvas（不创建对象）
+    const pagesBeforeSwitch = (structure && structure.pageCount) || 0;
+    const structureAfterBack = await pageRun(page, codeStructure);
+    const pagesAfterBack = (structureAfterBack && structureAfterBack.pageCount) || 0;
+    out.materializationProbe = { pagesBefore: pagesBeforeSwitch, pagesAfterBack: pagesAfterBack, worked: pagesAfterBack > pagesBeforeSwitch, currentCanvasNumAfter: structureAfterBack && structureAfterBack.currentCanvasNum, note: "不以 currentCanvasNum 变化判定切换成功；以第二 Canvas 是否真实 materialize 为准" };
     await SLEEP(1800);
     const back = await pageRun(page, collectSideCode);
     // 切回 Front 并验证身份恢复
@@ -314,7 +345,8 @@ const waitReadyTick = () => { const req = window.requirejs; const CV = (req && r
     out.frontPageAfterSwitch = frontAfter;
     fbStep.identityRestored = !!(frontAfter && front.ok && frontAfter.idName === front.idName && frontAfter.currentCanvasNum === front.currentCanvasNum);
     fbStep.objectCountUnchanged = !!(frontAfter && front.ok && frontAfter.objectCount === front.objectCount);
-    fbStep.switchVerified = !!(back && back.ok) && ((back.currentCanvasNum == null) || back.currentCanvasNum !== front.currentCanvasNum || back.idName !== front.idName || back.objectCount !== front.objectCount);
+    // 切换成功必需：第二 Canvas 真实 materialize 且身份不同（禁止仅凭 currentCanvasNum 变化断言）
+    fbStep.switchVerified = !!(out.materializationProbe && out.materializationProbe.worked) && !!(back && back.ok && back.idName !== front.idName);
     out.pageSwitch = fbStep;
     out.backPage = back;
 
@@ -333,13 +365,14 @@ const waitReadyTick = () => { const req = window.requirejs; const CV = (req && r
       else if (conv && !conv.sundryFound) conversion = { status: "NATIVE_CONVERSION_UNAVAILABLE", api: "sundry", confidence: "HIGH", note: "sundry 模块未找到（有反证才可判不可用）" };
       return DC.buildDimensionContract({ physical: physicalMM, canvas: canvas, sourceImage: sourceImg || {}, viewport: vp || {}, pageIdentity: page ? ("canvas:" + (page.idName || "?")) : null, canvasIdentity: page ? (page.idName || null) : null, conversion: conversion, sizeDivergence: null });
     };
+    const vpArg = (sv && sv.viewport) ? { widthPx: sv.viewport.boundingRect ? sv.viewport.boundingRect.width : null, heightPx: sv.viewport.boundingRect ? sv.viewport.boundingRect.height : null, zoom: sv.viewport.zoom } : null;
     out.contracts = {};
-    out.contracts.front = mkContract("front", front, null, null);
-    out.contracts.back = back && back.ok ? mkContract("back", back, null, null) : null;
+    out.contracts.front = mkContract("front", front, sv && sv.sourceImage, vpArg);
+    out.contracts.back = back && back.ok ? mkContract("back", back, sv && sv.sourceImage, vpArg) : null;
 
     // 对比 core contract（结构/页切换后身份恢复）
     const swapped = frontAfter && front.ok && frontAfter.idName === front.idName;
-    out.contracts.frontAfterSwitch = swapped ? mkContract("front-after-switch", frontAfter, null, null) : null;
+    out.contracts.frontAfterSwitch = swapped ? mkContract("front-after-switch", frontAfter, sv && sv.sourceImage, vpArg) : null;
 
     // Verdict（证据型结论）
     const v = [];
@@ -349,8 +382,8 @@ const waitReadyTick = () => { const req = window.requirejs; const CV = (req && r
     if (conv && conv.sundryFound && conv.mmToPX && conv.mmToPX.resolved && conv.pxToMM && conv.pxToMM.resolved) v.push("NATIVE_CONVERSION_SIGNATURE_CONFIRMED");
     else v.push("NATIVE_CONVERSION_SIGNATURE_UNRESOLVED");
     if (structure && structure.pageCount > 1) v.push("MULTI_PAGE_CONFIRMED");
-    else if (structure && structure.multiCanvas && structure.canvasPagesNum && structure.canvasPagesNum > 1) v.push("MULTI_PAGE_DYNAMIC");
-    else v.push("SINGLE_PAGE_CONFIRMED_AS_OBSERVED");
+    else if (out.materializationProbe && out.materializationProbe.worked) v.push("MULTI_PAGE_DYNAMIC");
+    else v.push("MULTI_PAGE_STRUCTURE_UNRESOLVED");
     if (sv && sv.sourceImage && sv.sourceImage.naturalWidthPx != null) v.push("SOURCE_IMAGE_CONFIRMED");
     if (sv && sv.viewport) v.push("VIEWPORT_SEPARATED");
     const vertSeen = (out.verticalTextEvidence.front || []).some((x) => x.angle !== 0 && x.angle != null) || (out.verticalTextEvidence.back || []).some((x) => x.angle !== 0 && x.angle != null);
@@ -362,7 +395,7 @@ const waitReadyTick = () => { const req = window.requirejs; const CV = (req && r
   console.log("[native-dim-contract] report=" + path.join(REPORT_DIR, "native-dimension-contract.json"));
   if (out.verdict) console.log("[native-dim-contract] verdict=" + out.verdict.keys.join(" | "));
   console.log("[native-dim-contract] physical=" + (out.verdict && out.verdict.physicalWidthMM) + "x" + (out.verdict && out.verdict.physicalHeightMM) + "mm canvas=" + (out.verdict && out.verdict.canvasWidthPx) + "x" + (out.verdict && out.verdict.canvasHeightPx) + (out.conversionEvidence ? " conv=" + (out.conversionEvidence.mmToPX && out.conversionEvidence.mmToPX.resolved ? "RESOLVED" : "UNRESOLVED") : ""));
-  console.log("[native-dim-contract] pages=" + (out.pageEvidence ? out.pageEvidence.pageCount : "?") + " canvasPagesNum=" + (out.pageEvidence ? out.pageEvidence.canvasPagesNum : "?") + " switchMethod=" + (out.pageSwitch && out.pageSwitch.switchMethod) + " identityRestored=" + (out.pageSwitch && out.pageSwitch.identityRestored) + " objectCountUnchanged=" + (out.pageSwitch && out.pageSwitch.objectCountUnchanged));
+  console.log("[native-dim-contract] pages=" + (out.pageEvidence ? out.pageEvidence.pageCount : "?") + " canvasPagesNum=" + (out.pageEvidence ? out.pageEvidence.canvasPagesNum : "?") + " switchMethod=" + (out.pageSwitch && out.pageSwitch.switchMethod) + " identityRestored=" + (out.pageSwitch && out.pageSwitch.identityRestored) + " objectCountUnchanged=" + (out.pageSwitch && out.pageSwitch.objectCountUnchanged) + " materialized=" + (out.materializationProbe ? out.materializationProbe.worked : null) + " pList=" + (out.deepPagePath && out.deepPagePath.pageListLength != null ? out.deepPagePath.pageListLength : "?"));
   const errs = out.errors;
   errs.forEach((e) => console.log("[native-dim-contract] ERR " + e));
   process.exit(errs.length ? 1 : 0);
