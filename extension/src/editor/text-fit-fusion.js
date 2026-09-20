@@ -42,13 +42,18 @@ function lineBoxRatio(fontFamily, opts) {
 }
 
 // advance 证据：解字号使文本 advanceWidth ≈ targetVisualWidth（8B §主算法）
+// measurer 接口兼容：createTextMeasurer（measureLine(line,fs,family)/measureGlyph）与原生 measureText(text,fontString)
 function solveByAdvance(text, targetVisualWidth, fontFamily, measurer) {
   if (!(targetVisualWidth > 0) || !measurer) return null;
-  // 二分 + 线性缩放（复用 text-fit solveFontSizeByWidth 语义；此处自包含实现防模块耦合）
+  var measureOf = function (fs) {
+    if (typeof measurer.measureLine === "function") return measurer.measureLine(text, fs, fontFamily);
+    if (typeof measurer.measureText === "function") return measurer.measureText(text, (fs + "px ") + fontFamily);
+    return null;
+  };
   var fs = Math.max(FS_MIN, Math.min(FS_MAX, Math.round(targetVisualWidth / Math.max(1, text.length) * 1.0)));
   var lo = FS_MIN, hi = FS_MAX, best = null, bestErr = Infinity;
   for (var i = 0; i < 40; i += 1) {
-    var m = measurer.measureText(text, (fs + "px ") + fontFamily);
+    var m = measureOf(fs);
     if (!m || !isFiniteNum(m.width)) break;
     var err = Math.abs(m.width - targetVisualWidth);
     if (err < bestErr) { bestErr = err; best = fs; }
@@ -57,8 +62,7 @@ function solveByAdvance(text, targetVisualWidth, fontFamily, measurer) {
     if (hi - lo < 0.05) break;
   }
   if (best == null) return null;
-  // 采样校验：advanceWidth @ best
-  var m2 = measurer.measureText(text, (best + "px ") + fontFamily);
+  var m2 = measureOf(best);
   return { fontSize: Math.max(FS_MIN, Math.min(FS_MAX, Math.round(best))), advanceWidth: m2 ? m2.width : null, err: bestErr };
 }
 

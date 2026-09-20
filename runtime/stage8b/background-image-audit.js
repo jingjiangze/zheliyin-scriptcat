@@ -162,7 +162,13 @@ function compareQuad(target, actual) {
     const USE_PAGE_WORLD = process.env.ZY_PAGE_WORLD === "1";
     if (USE_PAGE_WORLD) {
       // Stage 8D：自建页面 world 注入（绕过 ScriptCat 注入链，详见 pageWorldPayload）
-      await page.addInitScript({ content: pageWorldPayload() });
+      // 先清 ScriptCat 旧脚本，避免与 page-world 注入的脚本共存；（旧实例无 8D 取证逻辑 → rawDump null）
+      opts = page;
+      await opts.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
+      await SLEEP(1800);
+      const allOld = await adapter.getAllScripts(opts) || [];
+      for (const s of allOld.filter((x) => /zheliyin|折立印/.test(String(JSON.stringify(x) || "")))) { try { await adapter.removeScript(opts, s.uuid); } catch (e) {} }
+      // 注入改为编辑器就绪后单次 addScriptTag（不再 addInitScript 每次导航注入 → 避免多实例竞争/rawDump 被覆盖）
       out.injectMode = "page-world";
     } else {
       opts = page;
@@ -179,6 +185,11 @@ function compareQuad(target, actual) {
     await page.reload({ waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
     const w = await waitUntil(canvasReady(), "ready", 150000);
     if (!(w && w.ok)) throw new Error("editor not ready");
+    if (USE_PAGE_WORLD) {
+      // 编辑器就绪后单次注入（页面世界；脚本在页面加载完成后执行，行为等同 document-idle）
+      await page.addScriptTag({ content: pageWorldPayload() });
+      await SLEEP(2500);
+    }
     await SLEEP(4000);
     const DU = await render();
     let dataUrl = typeof DU === "string" ? DU : DU.dataUrl;
