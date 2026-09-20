@@ -139,6 +139,7 @@ function inspectUnit(item, imageSize, context) {
       var c0 = centerOf(b);
       var nearTol = imgH ? imgH * NEARBY_DIST_RATIO : Math.max(w, h) * 3;
       for (var i = 0; i < neighbors.length; i += 1) {
+        if (o.selfIndex != null && i === o.selfIndex) continue;
         var nb = normBox(neighbors[i] && (neighbors[i].bbox || neighbors[i]));
         if (!nb) continue;
         var nc = centerOf(nb);
@@ -196,8 +197,8 @@ function validateBlockSet(list, imageSize, context) {
     if (!it) { blocked.push({ index: i, reasons: [R.EMPTY_TEXT] }); return; }
     var isBlock = !!(Array.isArray(it.lines) || isFiniteNum(it.lineCount));
     var r = isBlock
-      ? validateBlock(it, img, { imageSize: img, neighbors: arr })
-      : validateCandidate(it, img, { imageSize: img, neighbors: arr });
+      ? validateBlock(it, img, { imageSize: img, neighbors: arr, selfIndex: i })
+      : validateCandidate(it, img, { imageSize: img, neighbors: arr, selfIndex: i });
     (r.blockReasons || []).forEach(function (k) { aggregate.blockReasons[k] = (aggregate.blockReasons[k] || 0) + 1; });
     (r.warnReasons || []).forEach(function (k) { aggregate.warnReasons[k] = (aggregate.warnReasons[k] || 0) + 1; });
     if (r.ok) {

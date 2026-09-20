@@ -145,5 +145,15 @@ t("BLOCK_SET 单块 TINY 剔除不阻断整组", () => {
   assert.ok(r.blocked[0].reasons.includes(R.TINY_BOX));
 });
 
+// regression：block-set 的 neighbors 包含自身时，自身不能被当作“附近文字”
+t("BLOCK_SET 单字符自邻居不应绕过 SINGLE_CHAR_NOISE", () => {
+  const r = G.validateBlockSet([
+    cand({ text: "吴", confidence: 0.3, bbox: { x: 800, y: 250, width: 10, height: 10 } })
+  ], IMG);
+  assert.ok(r.ok && !r.suspect);
+  assert.strictEqual(r.blocked.length, 1);
+  assert.ok(r.blocked[0].reasons.includes(R.SINGLE_CHAR_NOISE), JSON.stringify(r.blocked[0]));
+});
+
 console.log("ocr-candidate-gate.test: pass=" + passed + " fail=" + failed);
 process.exit(failed ? 1 : 0);
