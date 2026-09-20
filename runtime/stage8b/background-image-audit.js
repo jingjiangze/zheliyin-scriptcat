@@ -278,6 +278,43 @@ function compareQuad(target, actual) {
           return { blockIndex: it.blockIndex, text: created ? created.text : String(it.text || "").slice(0, 10), usedFont: created ? created.fontFamily : (it.usedFont || null), source: source, target: target, actual: actual ? { ok: actual.ok, inkWidth: actual.inkWidth, inkHeight: actual.inkHeight, fontUsed: actual.fontUsed, fontSize: actual.fontSize, lineCount: actual.lineCount, method: actual.method || null, reason: actual.reason || null } : null, diag: Ink.buildInkDiagnostics({ source: source, target: target, actual: actual }) };
         });
         rec.inkSummary = { rows: rec.inkRows.length, inkOk: rec.inkRows.filter((r) => r.actual && r.actual.ok).length, inkMissing: rec.inkRows.filter((r) => !r.actual || !r.actual.ok).length, widerThanTarget: rec.inkRows.filter((r) => r.diag.flags.indexOf("INK_WIDER_THAN_TARGET") >= 0).length };
+        // Stage 8D P7：三视图 overlay（页面 world 真实 canvas 生成）—— raw=OCR words / filtered=归一化 lines / reconstructed=创建后主画布
+        rec.overlay = await ev((arg) => {
+          const req = window.requirejs || window.require;
+          const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+          const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0];
+          const c = d && d.canvas;
+          const out = { w: arg.w, h: arg.h, views: {} };
+          const W = 1024, H = Math.max(16, Math.round(W * (arg.h / arg.w)));
+          const sx = W / arg.w, sy = H / arg.h;
+          const bgEl = c && c.backgroundImage && c.backgroundImage.getElement ? c.backgroundImage.getElement() : null;
+          const mk = () => { const cv = document.createElement("canvas"); cv.width = W; cv.height = H; const ctx = cv.getContext("2d"); ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, W, H); if (bgEl) { try { ctx.drawImage(bgEl, 0, 0, W, H); } catch (e) {} } return { cv: cv, ctx: ctx }; };
+          const rectOf = (b) => { if (!b) return null; const x0 = (b.x0 != null) ? b.x0 : (b.x != null ? b.x : 0); const y0 = (b.y0 != null) ? b.y0 : (b.y != null ? b.y : 0); const x1 = (b.x1 != null) ? b.x1 : (b.x != null ? b.x + b.width : x0); const y1 = (b.y1 != null) ? b.y1 : (b.y != null ? b.y + b.height : y0); return { x: x0, y: y0, w: Math.max(1, x1 - x0), h: Math.max(1, y1 - y0) }; };
+          try {
+            if (arg.rawDump && Array.isArray(arg.rawDump.w) && arg.rawDump.w.length) {
+              const { cv, ctx } = mk();
+              ctx.strokeStyle = "#16a34a"; ctx.lineWidth = 1; ctx.fillStyle = "#14532d"; ctx.font = "bold 10px sans-serif";
+              arg.rawDump.w.forEach((wd, i) => { const r = rectOf(wd.bbox || {}); if (!r) return; ctx.strokeRect(r.x * sx, r.y * sy, r.w * sx, r.h * sy); ctx.fillText(String(i), r.x * sx, Math.max(8, r.y * sy - 2)); });
+              out.views.raw = cv.toDataURL("image/png"); out.rawWords = arg.rawDump.w.length;
+            }
+            try {
+              if (typeof groupWordsToLines === "function" && typeof unifyCandidates === "function" && arg.rawDump && Array.isArray(arg.rawDump.w)) {
+                const cands = unifyCandidates(arg.rawDump.w, arg.rawDump.size);
+                const lines = groupWordsToLines(cands, {});
+                const { cv, ctx } = mk();
+                ctx.strokeStyle = "#2563eb"; ctx.lineWidth = 1.5; ctx.fillStyle = "#1e3a8a"; ctx.font = "bold 12px sans-serif";
+                (lines || []).forEach((ln, i) => { const r = rectOf(ln.bbox || {}); if (!r) return; ctx.strokeRect(r.x * sx, r.y * sy, r.w * sx, r.h * sy); ctx.fillText(String(i), r.x * sx, Math.max(10, r.y * sy - 3)); });
+                out.views.filtered = cv.toDataURL("image/png"); out.filteredLines = (lines || []).length;
+              }
+            } catch (eF) { out.errFiltered = String(eF && eF.message || eF).slice(0, 120); }
+            if (c && typeof c.toDataURL === "function") {
+              try { if (c.discardActiveObject) c.discardActiveObject(); } catch (e) {}
+              try { c.setCoords && c.setCoords(); if (c.requestRenderAll) c.requestRenderAll(); } catch (e) {}
+              try { out.views.reconstructed = c.toDataURL({ format: "png", multiplier: 1 }); } catch (e4) { try { out.views.reconstructed = c.toDataURL("png"); } catch (e5) {} }
+            }
+          } catch (e) { out.err = String(e && e.message || e).slice(0, 160); }
+          return out;
+        }, { rawDump: rec.rawDump || null, w: 895, h: 577 });
         const rb = await rollback("b8r-"); // b8r- 前缀：同时清理每 case 注入的图片对象 + OCR 文字（防 active/first 路由图片累积）
         rec.rollback = rb;
         // 清背景图
