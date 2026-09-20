@@ -1,0 +1,3108 @@
+{
+  "ts": "2026-09-20T04:36:40.003Z",
+  "stage": "STAGE-9-P0D-ALTQ-DEEP",
+  "branch": "stage-9-altq-baidu-reconstruction",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "net": [
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/common/verify/ase.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/common/verify/verify.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/common/verify/verifyLogin.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/ocrLoad.gif"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/ocrLoad.gif"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/diy3V/erwm.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/eventsource.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/Follow.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/Tips.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/Range.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/Drop.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/Color.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jbase64.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/swiper.min.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/color-thief.umd.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/common/mobileSocket/sockjs.min.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/common/mobileSocket/stomp.min.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jsencrypt.min.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/colorFormat.min.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/ocr.js?v=20260707017"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/ocr.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/require-2.1.11.min.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/qrcodeAddLogo.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/productHandleUtil.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/RefercnceLine.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/utils/heartbeat.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/utils/font.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/reqrcode.js"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/designAi.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/fonts/diy3V/iconfont.woff?t=1585737881463"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/fonts/diyicon/iconfont.woff2?t=1779360481699"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/diy3V/leftIcon.svg"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/diy-icons.png"
+    },
+    {
+      "dir": "req",
+      "method": "POST",
+      "url": "https://diy.zheliyin.com/siteWeb/captcha/get.do"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/diy3V/mainfun.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/diy3V/editfun.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/diy3V/page.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/guide.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/diy3V/help.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/diy3V/pointer.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/jsj/getRASUtilPublicKey.do"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/business/CustomerIndexThird.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/business/config.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/moreCanvas/MultiNewPagePublic.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CustomerHeadMenuBarThird.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasToolBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CustomerLeftNavigationBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/ProductVO.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/MasterVO.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/IndexPublic.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/sundry.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/photoupload.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/DULeftNativePublic.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/CustomerVO.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/jsonmedia/MediaTypeInfo.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckJsonFont.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/Event/GlobalEvent.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/localforage.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CreateUUID.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.lazyload.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/mobileSocket/ImgSocket.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/DiyLayout.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/model/ParseJsonModel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/webfontloader.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/CanvasObjVO.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/UploadImgPublic.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/moreCanvas/MultiCanvasDiy.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/MasterRightPannel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/DesignVO.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/EditorBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/CurrentCanvas.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/ColorValueConversion.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/Undo.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/jsonmedia/JsonObject.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/Sortable.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/CheckTextBox.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/model/ProductDataModel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/PageVO.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/DesignPageVO.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/GetChildRelativeCanvasXY.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/HeadPublic.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/command/UpdateCanvasThumbnailCommand.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/share/share.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/share/shareEventBind.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/AllCanvas.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/html2canvas.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/CalculatePartPage.js?v=20260707017"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/captcha/get.do"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/ShowDivLocation.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/qrcodeEventBind.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CupImgUpload.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckIE.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/table/table.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/CurrentCanvasInfo.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/FormatSet.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckImgPixel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/model/ItemDataModel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/webuploader.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/reqrcode.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/jsonmedia/MediaType2Chinese.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/command/SimpleCommandManager.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/command/DeleteCommand.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/ColorSet.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/TemplateRightPannel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/fabric3.5.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/fontdetect.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckIput.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CalculationDesignAreaPixel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/ImagePropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/GeneralPropPannel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/MaskImgPropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/SVGPropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/GroupPropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/UnknowPropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TablePropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/BackColorPropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/AddPageNumPropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/CupOneKeyPropBar.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CalculationCoordsSize.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/Map.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/XMLParse.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/clipTo.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/turn.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/3D/OrbitControls.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/3D/loaders/OBJLoader.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/MarkId.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/3D/loaders/GLTFLoader.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/interface/InterFace.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/interface/ICommand.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/layer.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.Huploadify.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.SuperSlide.2.1.1.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/GuideLine.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/jsonmedia/ProductJsonObjAssignment.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckMaskImg.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/ColorPicker.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/SetCurved.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CalcuNewXYInPartPage.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/guide-rulers.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetTextColor.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.qrcode.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/utf.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/handsontable.full.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/UpdateAllLevel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/ImagePropPanel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropPanel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/GroupPropPanel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery-ui.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/freewall.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.minicolors.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/cropper.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/SetPartPageAlign.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/SVGPropPanel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/UnknowPropPannelR.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TablePropPanel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/BackColorPropPanel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/AddPageNumPropPanel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/CupOneKeyPropPanel.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/interface/ISetTool.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/three.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/fabric.curvedText.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/SetSize.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetFont3D.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.ui.rotatable.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/svgtools/SetSvgColor.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.mousewheel.min.js?v=20260707017"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/xnColorPicker.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/fabric.table.min.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetFontWeight.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetTextDecoration.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "POST",
+      "url": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do"
+    },
+    {
+      "dir": "req",
+      "method": "POST",
+      "url": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGOFAEF85F21A474B82995E1DCE18782C27.woff"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO07DD9CBBD38443EF84B5D90F9FD3FA8B.woff"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO77EBC5C9ED4041F2A48F67295BA4B78E.woff"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO16194CBF720B4A5996CBF42BB8D4E542.woff"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-86CC43ACB7DA4C84A9EBB8D7D3649A5B.woff"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO5D0BC40868F94EB2B2775372A66B33B9.woff"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-652584115FFF44AC80A86D25B037C3EF.woff"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/pixWarn.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/imgs/large/MXYZ-NEWMONGOE2043208C71B4BBF96E190A1837A30F0.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/imgs/large/MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/command/LoadFromProductJsonCommand.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/OneKeyCanvasDiy.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/command/CreateLayerThumbnailCommand.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/command/CloseLoadingCommand.js?v=20260707017"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/ocrDesign/add.png"
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/layer/icon.png"
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/ocrDesign/add.png"
+    }
+  ],
+  "variants": [
+    {
+      "label": "no-selection",
+      "objsDelta": 0,
+      "netDelta": 0,
+      "netSlice": [
+        "https://diy.zheliyin.com/diyWeb/skins/imgs/layer/icon.png",
+        "https://diy.zheliyin.com/diyWeb/skins/imgs/ocrDesign/add.png"
+      ],
+      "kbCapture": {
+        "listeners": [
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keypress",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "TEXTAREA",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLTextAreaElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "document",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDocument.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/jq"
+          },
+          {
+            "type": "keyup",
+            "target": "document",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDocument.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/jq"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          }
+        ],
+        "captureEvents": [
+          {
+            "t": "keydown",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879012268
+          },
+          {
+            "t": "keyup",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879012294
+          }
+        ]
+      }
+    },
+    {
+      "label": "select-first-text",
+      "objsDelta": 0,
+      "netDelta": 0,
+      "netSlice": [
+        "https://diy.zheliyin.com/diyWeb/skins/imgs/layer/icon.png",
+        "https://diy.zheliyin.com/diyWeb/skins/imgs/ocrDesign/add.png"
+      ],
+      "kbCapture": {
+        "listeners": [
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keypress",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "TEXTAREA",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLTextAreaElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "document",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDocument.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/jq"
+          },
+          {
+            "type": "keyup",
+            "target": "document",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDocument.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/jq"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          }
+        ],
+        "captureEvents": [
+          {
+            "t": "keydown",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879012268
+          },
+          {
+            "t": "keyup",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879012294
+          },
+          {
+            "t": "keydown",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879015730
+          },
+          {
+            "t": "keyup",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879015738
+          }
+        ]
+      }
+    },
+    {
+      "label": "dblclick-text-edit",
+      "objsDelta": 0,
+      "netDelta": 0,
+      "netSlice": [
+        "https://diy.zheliyin.com/diyWeb/skins/imgs/layer/icon.png",
+        "https://diy.zheliyin.com/diyWeb/skins/imgs/ocrDesign/add.png"
+      ],
+      "kbCapture": {
+        "listeners": [
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keyup",
+            "target": "DIV",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keypress",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "TEXTAREA",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLTextAreaElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "document",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDocument.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/jq"
+          },
+          {
+            "type": "keyup",
+            "target": "document",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDocument.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/jq"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keyup",
+            "target": "INPUT",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+          },
+          {
+            "type": "keydown",
+            "target": "SPAN",
+            "name": "",
+            "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+            "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+          }
+        ],
+        "captureEvents": [
+          {
+            "t": "keydown",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879012268
+          },
+          {
+            "t": "keyup",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879012294
+          },
+          {
+            "t": "keydown",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879015730
+          },
+          {
+            "t": "keyup",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879015738
+          },
+          {
+            "t": "keydown",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879019184
+          },
+          {
+            "t": "keyup",
+            "code": "KeyQ",
+            "defaultPrevented": false,
+            "ts": 1789879019191
+          }
+        ]
+      }
+    }
+  ],
+  "uiScan": {
+    "uiHits": [
+      "文字"
+    ],
+    "scriptSrcs": [
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/business/CustomerIndexThird.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/business/config.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/moreCanvas/MultiNewPagePublic.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CustomerHeadMenuBarThird.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasToolBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CustomerLeftNavigationBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/ProductVO.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/MasterVO.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/IndexPublic.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/sundry.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/photoupload.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/DULeftNativePublic.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/CustomerVO.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/jsonmedia/MediaTypeInfo.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckJsonFont.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/Event/GlobalEvent.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/localforage.min.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CreateUUID.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/jquery.lazyload.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/mobileSocket/ImgSocket.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/DiyLayout.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/model/ParseJsonModel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/webfontloader.min.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/CanvasObjVO.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/UploadImgPublic.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/moreCanvas/MultiCanvasDiy.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/MasterRightPannel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/DesignVO.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/EditorBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/CurrentCanvas.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/ColorValueConversion.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/Undo.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/jsonmedia/JsonObject.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/Sortable.min.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/CheckTextBox.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/model/ProductDataModel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/PageVO.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/vo/DesignPageVO.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/GetChildRelativeCanvasXY.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/HeadPublic.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/command/UpdateCanvasThumbnailCommand.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/share/share.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/share/shareEventBind.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/AllCanvas.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/html2canvas.min.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/CalculatePartPage.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/ShowDivLocation.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/qrcodeEventBind.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CupImgUpload.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckIE.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/table/table.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/model/CurrentCanvasInfo.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/FormatSet.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckImgPixel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/model/ItemDataModel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/webuploader.min.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/reqrcode.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/jsonmedia/MediaType2Chinese.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/command/SimpleCommandManager.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/command/DeleteCommand.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/ColorSet.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/TemplateRightPannel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/fabric3.5.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/fontdetect.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckIput.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CalculationDesignAreaPixel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/ImagePropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/GeneralPropPannel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/MaskImgPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/SVGPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/GroupPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/UnknowPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TablePropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/BackColorPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/AddPageNumPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/CupOneKeyPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CalculationCoordsSize.js?v=20260707017"
+    ],
+    "reqKeyHits": [
+      "CupOneKeyPropPanel",
+      "CupOneKeyPropBar",
+      "photoupload",
+      "OneKeyCanvasDiy"
+    ]
+  },
+  "objsBefore": [
+    {
+      "i": 0,
+      "type": "rect",
+      "text": null,
+      "left": 0,
+      "top": 0,
+      "w": 600,
+      "h": 365
+    },
+    {
+      "i": 1,
+      "type": "line",
+      "text": null,
+      "left": 7,
+      "top": 7,
+      "w": 586,
+      "h": 586
+    },
+    {
+      "i": 2,
+      "type": "line",
+      "text": null,
+      "left": 7,
+      "top": 357,
+      "w": 588,
+      "h": 588
+    },
+    {
+      "i": 3,
+      "type": "line",
+      "text": null,
+      "left": 7,
+      "top": 7,
+      "w": 0,
+      "h": 351
+    },
+    {
+      "i": 4,
+      "type": "line",
+      "text": null,
+      "left": 592,
+      "top": 7,
+      "w": 0,
+      "h": 351
+    },
+    {
+      "i": 5,
+      "type": "line",
+      "text": null,
+      "left": 0,
+      "top": 0,
+      "w": 0,
+      "h": 365
+    },
+    {
+      "i": 6,
+      "type": "line",
+      "text": null,
+      "left": 574,
+      "top": 0,
+      "w": 0,
+      "h": 365
+    },
+    {
+      "i": 7,
+      "type": "line",
+      "text": null,
+      "left": 26,
+      "top": 0,
+      "w": 548,
+      "h": 548
+    },
+    {
+      "i": 8,
+      "type": "line",
+      "text": null,
+      "left": 26,
+      "top": 339,
+      "w": 548,
+      "h": 548
+    }
+  ],
+  "kbListeners": {
+    "listeners": [
+      {
+        "type": "keyup",
+        "target": "DIV",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+      },
+      {
+        "type": "keyup",
+        "target": "DIV",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+      },
+      {
+        "type": "keyup",
+        "target": "DIV",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+      },
+      {
+        "type": "keyup",
+        "target": "DIV",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDivElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keypress",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keydown",
+        "target": "TEXTAREA",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLTextAreaElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/"
+      },
+      {
+        "type": "keyup",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keydown",
+        "target": "document",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDocument.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/jq"
+      },
+      {
+        "type": "keyup",
+        "target": "document",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLDocument.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs/jq"
+      },
+      {
+        "type": "keydown",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keydown",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keydown",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keydown",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      },
+      {
+        "type": "keyup",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keyup",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keyup",
+        "target": "INPUT",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLInputElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/lib"
+      },
+      {
+        "type": "keydown",
+        "target": "SPAN",
+        "name": "",
+        "src": "function(e){return typeof x===i||e&&x.event.triggered===e.type?t:x.event.dispatch.apply(f.elem,arguments)}",
+        "stack": "    at Object.add (https://diy.zheliyin.com/diyWeb/js/libs/jquery-1.10.2.min.js?v=20260707017:3:11340) <     at HTMLSpanElement.<anonymous> (https://diy.zheliyin.com/diyWeb/js/libs"
+      }
+    ],
+    "captureEvents": [
+      {
+        "t": "keydown",
+        "code": "KeyQ",
+        "defaultPrevented": false,
+        "ts": 1789879012268
+      },
+      {
+        "t": "keyup",
+        "code": "KeyQ",
+        "defaultPrevented": false,
+        "ts": 1789879012294
+      },
+      {
+        "t": "keydown",
+        "code": "KeyQ",
+        "defaultPrevented": false,
+        "ts": 1789879015730
+      },
+      {
+        "t": "keyup",
+        "code": "KeyQ",
+        "defaultPrevented": false,
+        "ts": 1789879015738
+      },
+      {
+        "t": "keydown",
+        "code": "KeyQ",
+        "defaultPrevented": false,
+        "ts": 1789879019184
+      },
+      {
+        "t": "keyup",
+        "code": "KeyQ",
+        "defaultPrevented": false,
+        "ts": 1789879019191
+      }
+    ]
+  },
+  "objsFinal": [
+    {
+      "i": 0,
+      "type": "rect",
+      "text": null,
+      "left": 0,
+      "top": 0,
+      "w": 600,
+      "h": 365
+    },
+    {
+      "i": 1,
+      "type": "line",
+      "text": null,
+      "left": 7,
+      "top": 7,
+      "w": 586,
+      "h": 586
+    },
+    {
+      "i": 2,
+      "type": "line",
+      "text": null,
+      "left": 7,
+      "top": 357,
+      "w": 588,
+      "h": 588
+    },
+    {
+      "i": 3,
+      "type": "line",
+      "text": null,
+      "left": 7,
+      "top": 7,
+      "w": 0,
+      "h": 351
+    },
+    {
+      "i": 4,
+      "type": "line",
+      "text": null,
+      "left": 592,
+      "top": 7,
+      "w": 0,
+      "h": 351
+    },
+    {
+      "i": 5,
+      "type": "line",
+      "text": null,
+      "left": 0,
+      "top": 0,
+      "w": 0,
+      "h": 365
+    },
+    {
+      "i": 6,
+      "type": "line",
+      "text": null,
+      "left": 574,
+      "top": 0,
+      "w": 0,
+      "h": 365
+    },
+    {
+      "i": 7,
+      "type": "line",
+      "text": null,
+      "left": 26,
+      "top": 0,
+      "w": 548,
+      "h": 548
+    },
+    {
+      "i": 8,
+      "type": "line",
+      "text": null,
+      "left": 26,
+      "top": 339,
+      "w": 548,
+      "h": 548
+    }
+  ]
+}

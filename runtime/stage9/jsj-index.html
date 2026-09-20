@@ -1,0 +1,1478 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- 路径配置 -->
+
+
+
+
+	
+	<title>智能设计定制未来</title>
+
+<meta name="renderer" content="webkit"/>
+<meta http-equiv="keywords" content="智能设计,定制未来,DIY自助设计,个性化定制,在线DIY定制,海量印刷模板,宣传单,折页,画册,卡券,不干胶"/>
+<meta http-equiv="description" content="提供高质量的印刷服务，拥有海量印刷模板供您选择，在线DIY定制设计，使设计变简单，价格公开透明，拥有惠普indigo、海德堡等尖端设备，为您提供高品质的印刷服务。"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link type="image/x-icon" rel="shortcut icon" href="/siteWeb/favicon.ico"/>
+<script>
+/* 以下代码为了统计 ajax请求的访问数  */
+ //声明_czc对象:
+var _czc = _czc || [];
+//绑定这里印的web_id
+_czc.push(["_setAccount", "1256748921"]);
+var siteWeb = siteWeb || {};
+siteWeb.contextPath = '/siteWeb';
+siteWeb.basePath = '/siteWeb/';
+var ver="20260707017";
+
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?d520b29109368bfb557295626af72342";
+	var s = document.getElementsByTagName("script")[0];
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script type="text/javascript" src="/siteWeb/js/libs/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/siteWeb/js/common/globalAjax.js"></script>
+<script type="text/javascript" src="/siteWeb/js/common/globalMessage.js"></script>
+<script type="text/javascript" src="/siteWeb/js/common/commonUtil.js"></script>
+
+    <meta charset="utf-8"/>
+    <title>简设计</title>
+    <link rel="stylesheet" href="/siteWeb/skins/css/jsj/css/element-ui/element-ui.css">
+    <link rel="stylesheet" href="/siteWeb/skins/css/jsj/css/swiper.min.css"/>
+    <link rel="stylesheet" href="/siteWeb/skins/fonts/diyicon/iconfont.css"/>
+    <link rel="stylesheet" href="/siteWeb/skins/css/jsj/css/iconfont.css"/>
+    <link rel="stylesheet" href="/siteWeb/skins/css/jsj/css/template-center.css?v=20260707017"/>
+    <link rel="stylesheet" href="/siteWeb/js/libs/logincheck/style.css?v=20260707017"/>
+    <link rel="stylesheet" href="/siteWeb/js/libs/logincheck/fonts/iconfont.css?v=20260707017"/>
+    <style>
+        #app {
+            display: none;
+        }
+       .calender-h .el-carousel__indicators{
+            visibility: hidden;
+            opacity: 0;
+        }
+        .calender-imgs{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .calender-imgs .taili-preview{
+            position: relative;
+            z-index: 20;
+        }
+        .calender-imgs  .tailiban ,
+        .calender-imgs  .tailihuan{
+            position: absolute;
+        }
+        .calender-imgs   img{
+            max-width: 650px;
+            max-height: 350px;
+        }
+        /*214*144*/
+        .calender-imgs  .tailiban-1 {
+            transform: scale(1.224);
+            top: 31px;
+            right: 164px;
+            z-index: 10;
+        }
+        .calender-imgs  .tailihuan-1{
+            top: -10px;
+            width: 62%;
+            z-index: 20;
+        }
+        /*244*194*/
+        .calender-imgs  .tailiban-2 {
+            transform: scale(1.206);
+            top: 37px;
+            right: 196px;
+            z-index: 10;
+        }
+        .calender-imgs  .tailihuan-2{
+            top: -8px;
+            width: 52%;
+            z-index: 20;
+        }
+        /*154*204*/
+        .calender-imgs  .tailiban-3 {
+           transform: scale(1.158);
+            top: 26px;
+            right: 263px;
+            z-index: 10;
+        }
+        .calender-imgs  .tailihuan-3{
+            top: -10px;
+            width: 30%;
+            z-index: 20;
+        }
+        /*244*144*/
+        .calender-imgs  .tailiban-4 {
+            transform: scale(1.21);
+            top: 37px;
+            right: 126px;
+            z-index: 10;
+        }
+        .calender-imgs  .tailihuan-4{
+            top: -10px;
+            width: 70%;
+            z-index: 20;
+        }
+        /*264*144*/
+        .calender-imgs  .tailiban-5 {
+            transform: scale(1.127);
+            top: 22px;
+            right: 106px;
+            z-index: 10;
+        }
+        .calender-imgs  .tailihuan-5{
+            top: -10px;
+            width: 75%;
+            z-index: 20;
+        }
+        .calender-h{
+            width: 100%;
+        }
+        .vue-waterfall-easy-container {
+            width: 100% !important;
+        }
+        .vue-waterfall-easy-container .tab-hover a{
+            top: 12px;
+            left: 15px;
+        }
+        .vue-waterfall-easy-container .vue-waterfall-easy-scroll {
+            padding-right: 0px;
+        }
+        .vue-waterfall-easy-container .vue-waterfall-easy a.img-inner-box{
+            left: 50% !important;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2) !important;
+            padding: 5px;
+        }
+        .vue-waterfall-easy-container .vue-waterfall-easy a.img-wraper > img {
+            width: 95% !important;
+            border: 1px solid #f5f5f5;
+        }
+        .vue-waterfall-easy-container .over{
+            display: none;
+        }
+        .img-box:hover .img-info{
+            box-shadow: none;
+        }
+        .img-box .img-info .some-info:first-child {
+            color: #0265FE;font-size: 18px;font-weight: 600;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;max-width: 100%;
+        }
+        .img-box:hover .tab-hover {
+            opacity: 0;
+        }
+        .goods-hover-header .btn:hover {
+            color: #0265FE;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="/siteWeb/skins/css/jsj/css/verify.css">
+</head>
+
+<body>
+<div id="app">
+    <el-container class="tem-layout">
+        <!--头部-->
+        <el-header class="tem-header" height="72px">
+            <div class="logo">
+                <img src="/siteWeb/skins/imgs/jsj/logo.png" @click="tmplCenter()" style="width: 100px"/>
+            </div>
+            <el-menu :default-active="topActiveMenu" mode="horizontal">
+                <el-menu-item index="tempCenter" @click.native.prevent="tmplCenter()">模板中心</el-menu-item>
+                <el-menu-item index="designTool" @click="entDesignTool('designTool')">设计工具</el-menu-item>
+               
+                
+                <el-menu-item index="functionIntro" @click="goToHelp">功能介绍</el-menu-item>
+                <el-menu-item v-if="isDesigner" index="receivingOrders" @click="receivingOrders('0')">设计师平台
+                </el-menu-item>
+                <el-menu-item v-if="isOpenShop" index="designerDesigns" @click="designerDesigns()"  class="jump-designer">
+                </el-menu-item>
+            </el-menu>
+            <div v-show="isNotHomePage" style="width: 30%">
+                <el-popover
+                        v-show="showImgSearch"
+                        class="search-box"
+                        popper-class="tem-search-img"
+                        placement="bottom-start"
+                        trigger="manual"
+                        v-model="showImgSearch">
+                    <template slot="reference">
+                        <el-input readonly>
+                            <el-button slot="append" icon="el-icon-camera"></el-button>
+                        </el-input>
+                        <div class="search-img" v-show="searchImgShow">
+                            <img :src="previewImg"/>
+                            <el-link class="tem-delete-btn" :underline="false" icon="el-icon-error"  @click="searchImgShow=false"></el-link>
+                        </div>
+                    </template>
+                    <el-upload
+                            drag
+                            ref="upload"
+                            action="/siteWeb/jsj/getSimilarImgTempListImg.do"
+                            accept=".png,.jpg"
+                            :auto-upload="false"
+                            :data="upLoadData"
+                            :show-file-list="false"
+                            :on-change="uploadPreviewFunction"
+                            :before-upload="beforeUpload"
+                            :on-success="successResave"
+                    >
+                        <el-link slot="tip" :underline="false" icon="el-icon-close" @click="showImgSearch=false"></el-link>
+                        <el-button size="small" type="primary">点击上传</el-button>
+                        <div class="text-large">点击或将将文件拖到此处上传</div>
+                        <div class="text-small text-secondary">只能上传jpg/png文件，且不超过3MB</div>
+                    </el-upload>
+                </el-popover>
+                <el-autocomplete
+                        v-if="!showImgSearch"
+                        class="search-box"
+                        popper-class="tem-autocomplete"
+                        v-model="searchVal"
+                        @select="searchTempByKeyWords"
+                        :fetch-suggestions="querySearch"
+                        
+                        @keyup.enter.native = "searchKeyWords"
+                        placeholder="请输入搜索内容（例如美容）" >
+                    <template slot-scope="{ item }" >
+                        <div v-show="localSearchHistory.length >0 &&  item.showIndex == 0" class="recent-search"
+                             @click.stop>
+                            <span>最近"搜索：</span>
+                            <el-link :underline="false" v-for="(item,key) in localSearchHistory"
+                                     @click.stop="searchTempByKeyWords(item)">{{item}}
+                            </el-link>
+                        </div>
+                        <div class="recom-search">
+                            <div>
+                                <el-tag v-if="item.showIndex==0" effect="dark" type="danger" size="mini">{{item.showIndex +
+                                    1}}
+                                </el-tag>
+                                <el-tag v-else-if="item.showIndex==1" effect="dark" type="warning" size="mini">
+                                    {{item.showIndex + 1}}
+                                </el-tag>
+                                <el-tag v-else-if="item.showIndex==2" effect="dark" type="success" size="mini">
+                                    {{item.showIndex + 1}}
+                                </el-tag>
+                                <el-tag v-else effect="dark" type="info" size="mini">{{item.showIndex + 1}}</el-tag>
+                                {{ item.value }}
+                            </div>
+                            <span class="text-secondary">{{ item.resCount }}个结果</span>
+                        </div>
+                    </template>
+                    <template slot="append">
+                        <el-link :underline="false" class="el-icon-camera" v-show="isTemplate" @click="showImgSearchFun()"></el-link>
+                        <el-button icon="el-icon-search" @click.stop="searchKeyWords">搜索</el-button>
+                    </template>
+                </el-autocomplete>
+            </div>
+            
+            <el-dropdown class="user">
+                <div>
+                    <el-avatar v-if="logined" :src="useravatar"></el-avatar>
+                    <span v-if="logined" class="user-name">{{userName}}<i class="el-icon-caret-bottom"></i></span>
+                    <span v-if="!logined" class="user-name" @click="showLogin();">登录</span>
+                    
+                </div>
+                <el-dropdown-menu slot="dropdown">
+                    <template v-if="logined">
+                        
+                        
+                        <el-dropdown-item v-if="isDesigner" @click.native="receivingOrders('1')">进入工作台</el-dropdown-item>
+                        <el-dropdown-item @click.native="userLogOut">退出登录</el-dropdown-item>
+                    </template>
+                    
+            </el-dropdown>
+        </el-header>
+        <el-container>
+            <!--左侧菜单-->
+            <el-aside class="tem-aside">
+                <el-menu :default-active="sideActiveMenu" active-text-color="#1b68db" unique-opened="true">
+                    <el-menu-item index="hot" >
+                        <a href="/siteWeb/jsj/main/hot.do" target="mainFrame" style="display: inline-block;width: 100%;">
+                            <svg class="svg-icon" aria-hidden="true">
+                                <use xlink:href="#svg-icon-redu-black"></use>
+                            </svg>
+                            热门推荐</a>
+                    </el-menu-item>
+                    <el-menu-item-group v-if="logined">
+                        <template slot="title">个人中心</template>
+                        <el-submenu index="myDesign" @click.native.stop="changeLeftMenu(event)">
+                            <template slot="title" >
+                                <svg class="svg-icon" aria-hidden="true">
+                                    <use xlink:href="#svg-icon-sheji-black" style="font-size: 20px"></use>
+                                </svg>我的设计
+                            </template>
+                            <el-menu-item index="userDesign" style="padding-top:0px; " title="印刷设计">
+                                <a href="/siteWeb//userCenterJsj/userDesign.do" target="mainFrame"
+                                   style="display: inline-block;width: 100%;">
+                                    <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                        <use xlink:href="#svg-icon-print"></use>
+                                    </svg>
+                                    印刷设计</a>
+                            </el-menu-item>
+                            <el-menu-item index="userDDIYDesign" title="影像设计">
+                                <a href="/siteWeb//userCenterJsj/userDDIYDesign.do" target="mainFrame"
+                                   style="display: inline-block;width: 100%;">
+                                    <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                        <use xlink:href="#svg-icon-zhaopianshu"></use>
+                                    </svg>
+                                    影像设计</a>
+                            </el-menu-item>
+                            <el-menu-item v-if="!isDesigner" index="kefuOrderDesign" title="订单管理">
+                                <a href="/siteWeb//userCenterJsj/kefuOrderDesign.do" target="mainFrame"
+                                   style="display: inline-block;width: 100%;">
+                                    <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                        <use xlink:href="#svg-icon-feedback"></use>
+                                    </svg>
+                                    订单管理</a>
+                            </el-menu-item>
+                        </el-submenu>
+                        <el-menu-item v-if="isDesigner" index="userEcharts" style="display: none">
+                            <a href="/siteWeb//userCenterJsj/userEcharts.do" target="mainFrame"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" >
+                                    <use xlink:href="#svg-icon-a-zu52"></use>
+                                </svg>
+                                我的数据</a>
+                        </el-menu-item>
+                        <template  v-if="logined">
+                            <el-submenu index="myTeam" @click.native.stop="changeLeftMenu(event)">
+                                <template slot="title" >
+                                    <svg class="svg-icon" aria-hidden="true" >
+                                        <use xlink:href="#svg-icon-a-tuandui1-black"></use>
+                                    </svg>我的团队
+                                </template>
+                                <template v-if="inTeam == '1'" >
+                                    <el-menu-item index="userTeamMembers" style="padding-top:0px; " title="团队成员">
+                                        <a href="/siteWeb//userCenterJsj/userTeamMembers.do" target="mainFrame"
+                                           style="display: inline-block;width: 100%;">
+                                            <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                                <use xlink:href="#svg-icon-team"></use>
+                                            </svg>
+                                            团队成员</a>
+                                    </el-menu-item>
+                                    <el-menu-item index="team-template" title="团队模板">
+                                        <a href="/siteWeb//userCenterJsj/team-template.do" target="mainFrame"
+                                           style="display: inline-block;width: 100%;">
+                                            <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                                <use xlink:href="#svg-icon-template"></use>
+                                            </svg>
+                                            团队模板</a>
+                                    </el-menu-item>
+                                    <el-menu-item index="team-material" title="团队素材">
+                                        <a href="/siteWeb//userCenterJsj/team-material.do" target="mainFrame"
+                                           style="display: inline-block;width: 100%;">
+                                            <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                                <use xlink:href="#svg-icon-material"></use>
+                                            </svg>
+                                            团队素材</a>
+                                    </el-menu-item>
+                                </template>
+                                <template v-else>
+                                    <el-menu-item index="userTeamCreation" title="创建团队">
+                                        <a href="/siteWeb//userCenterJsj/userTeamCreation.do" target="mainFrame"
+                                           style="display: inline-block;width: 100%;">
+                                            <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                                <use xlink:href="#svg-icon-team-add"></use>
+                                            </svg>
+                                            创建团队</a>
+                                    </el-menu-item>
+                                </template>
+                            </el-submenu>
+                        </template>
+
+                        <el-submenu index="myMaterial" @click.native.stop="changeLeftMenu(event)">
+                            <template slot="title"  >
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                    <use xlink:href="#svg-icon-tupiankongjian-black"></use>
+                                </svg>我的素材
+                            </template>
+                            <el-menu-item index="user-material" style="padding-top:0px; " title="个人素材">
+                                <a href="/siteWeb//userCenterJsj/user-material.do" target="mainFrame"
+                                   style="display: inline-block;width: 100%;">
+                                    <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                        <use xlink:href="#svg-icon-picture"></use>
+                                    </svg>
+                                    个人素材</a>
+                            </el-menu-item>
+                            <el-menu-item index="userCollect" title="常用素材">
+                                <a href="/siteWeb//userCenterJsj/userCollect.do" target="mainFrame"
+                                   style="display: inline-block;width: 100%;">
+                                    <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                        <use xlink:href="#svg-icon-star"></use>
+                                    </svg>
+                                    常用素材</a>
+                            </el-menu-item>
+                        </el-submenu>
+                    </el-menu-item-group>
+
+                    <el-menu-item-group >
+                        <template slot="title">在线模板</template>
+                        <template index="userMaterial" class="team-items" v-for="(menuItem,menuIndex) in menuData"
+                                 :key="menuIndex">
+                            <el-submenu :index="menuItem.title" @click.native.stop="changeLeftMenu(event)" >
+                                <template slot="title" >
+                                    <template v-if="menuItem.title == '印刷物料'">
+                                        <svg class="svg-icon" aria-hidden="true" style="color: #287cfc;font-size: 20px;">
+                                            <use xlink:href="#svg-icon-a-zu55-black"></use>
+                                        </svg>{{menuItem.title}}
+                                    </template>
+                                    <template v-if="menuItem.title == '影像生活'">
+                                        <svg class="svg-icon" aria-hidden="true" style="color: #287cfc;font-size: 20px;" >
+                                            <use xlink:href="#svg-icon-yingxiangdaiban-black"></use>
+                                        </svg>{{menuItem.title}}
+                                    </template>
+                                    
+                                    <template v-if="menuItem.title == '其他类'">
+                                        <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                            <use xlink:href="#svg-icon-a-zu53-black"></use>
+                                        </svg>{{menuItem.title}}
+                                    </template>
+                                </template>
+                                <template :index="leftItem.productname+menuItem.title"
+                                          v-for="(leftItem,leftIndex) in menuItem.leftmenuDetailList" :key="leftIndex">
+                                    <el-menu-item :index="leftItem.productname+menuItem.title"
+                                                  v-if="leftItem.productname == '查看更多'">
+                                        <a :href="'/siteWeb/jsj/more/'+leftItem.parentid+'.do'"
+                                           target="mainFrame" style="display: inline-block;width: 100%;"><span
+                                                class="more">查看更多&gt;</span></a>
+                                    </el-menu-item>
+                                    <el-menu-item :index="leftItem.productname+menuItem.title" v-else>
+                                        <a v-if="menuItem.title.indexOf('影像') != -1 && leftItem.name.indexOf('照片书') != -1" href="javascript:void(0)"
+                                           @click="goToDDIYList(leftItem.name);"
+                                           style="display: inline-block;width: 100%;">
+                                            <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                                <use xlink:href="#svg-icon-yingxiang"></use>
+                                            </svg>
+                                            {{leftItem.name}}</a>
+                                        <a v-if="menuItem.title.indexOf('影像') != -1 && leftItem.name.indexOf('台历') != -1" href="javascript:void(0)"
+                                           @click="goToDDIYList(leftItem.name);"
+                                           style="display: inline-block;width: 100%;">
+                                            <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                                <use xlink:href="#svg-icon-calendar"></use>
+                                            </svg>
+                                            {{leftItem.name}}</a>
+                                        <a v-if="menuItem.title.indexOf('影像') == -1  && leftItem.productname.indexOf('套系模版') == -1" :href="'/siteWeb/jsj/template/'+leftItem.producttype+'.do'"
+                                           target="mainFrame"
+                                           style="display: inline-block;width: 100%;">
+                                            <svg class="svg-icon" aria-hidden="true">
+                                                <use :xlink:href="leftItem.classtype"></use>
+                                            </svg>
+                                            {{leftItem.productname}}</a>
+                                        <a v-if="leftItem.productname == '套系模版'" :href="'/siteWeb/jsj/more/series.do'"
+                                           target="mainFrame"
+                                           style="display: inline-block;width: 100%;">
+                                            <svg class="svg-icon" aria-hidden="true">
+                                                <use xlink:href="#svg-icon-series"></use>
+                                            </svg>
+                                            {{leftItem.productname}}</a>
+                                    </el-menu-item>
+                                </template>
+                            </el-submenu>
+                        </template>
+                    </el-menu-item-group>
+
+                    
+                    <el-menu-item-group >
+                        <template slot="title">图片工具</template>
+                        <el-menu-item index="tool" >
+                            <a href="javascript:void(0)" @click="goToMattingPage();"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                    <use xlink:href="#svg-icon-koutumobang"></use>
+                                </svg>
+                                智能抠图</a>
+                        </el-menu-item>
+                        <el-menu-item index="IDPhoto">
+                            <a href="javascript:void(0)" @click="goToIDPhotoDesignTool();"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                    <use xlink:href="#svg-icon-zhengjianzhao"></use>
+                                </svg>
+                                证件照</a>
+                        </el-menu-item>
+                        <el-menu-item index="PSD"  >
+                            <a href="javascript:void(0)" @click="goToPsdAnalysis();"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                    <use xlink:href="#svg-icon-Adobepsd"></use>
+                                </svg>
+                                PSD转换</a>
+                        </el-menu-item>
+                        <el-menu-item index="huace"  >
+                            <a href="javascript:void(0)" @click="goTohuace();"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                    <use xlink:href="#svg-icon-huace"></use>
+                                </svg>
+                                电子画册</a>
+                        </el-menu-item>
+                        <el-menu-item index="calendar" >
+                            <a href="javascript:void(0)" @click="goToCalendar();"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                    <use xlink:href="#svg-icon-calendar"></use>
+                                </svg>
+                                台历核稿</a>
+                        </el-menu-item>
+                        <el-menu-item index="photoBook" >
+                            <a href="javascript:void(0)" @click="goToPhotoBook();"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                    <use xlink:href="#svg-icon-zhaopianshu"></use>
+                                </svg>
+                                照片书核稿</a>
+                        </el-menu-item>
+                        <el-menu-item index="img2svg"  >
+                            <a href="javascript:void(0)" @click="goImg2svg();"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                    <use xlink:href="#svg-icon-geshizhuanhuan-xuanzhong"></use>
+                                </svg>
+                                格式转换</a>
+                        </el-menu-item>
+                        <el-menu-item index="superResolutionImage"  >
+                            <a href="javascript:void(0)" @click="goSuperResolutionImage();"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc">
+                                    <use xlink:href="#svg-icon-fenbianshuai"></use>
+                                </svg>
+                                图片超分</a>
+                        </el-menu-item>
+                    </el-menu-item-group>
+                    
+                    
+                    <el-menu-item-group >
+                        <template slot="title">其他</template>
+                        <el-menu-item index="designer" v-if="logined" >
+                            <a href="javascript:void(0)" @click="goSettings();"
+                               style="display: inline-block;width: 100%;">
+                                <svg class="svg-icon" aria-hidden="true" style="color: #287cfc;font-size: 18px">
+                                    <use xlink:href="#svg-icon-peizhi"></use>
+                                </svg>个人设置</a>
+                        </el-menu-item>
+                        
+                    </el-menu-item-group>
+                </el-menu>
+
+            </el-aside>
+
+            <!--右侧内容-->
+            <iframe src="/siteWeb/jsj/main/hot.do" width="100%" frameborder="0" name="mainFrame" id="mainFrame"
+                    scrolling="auto"></iframe>
+
+            <!--返回顶部-->
+            <div class="tem-backtop">
+                
+                
+                <div class="tem-backtop-item" @click="showHistory();">
+                    <svg class="svg-icon" aria-hidden="true">
+                        <use xlink:href="#svg-icon-gengxinrizhi"></use>
+                    </svg>
+                    <p>更新日志</p>
+                </div>
+                <div class="tem-backtop-item" @click="toFeedback()">
+                    <svg class="svg-icon" aria-hidden="true">
+                        <use xlink:href="#svg-icon-feedback"></use>
+                    </svg>
+                    <p>意见反馈</p>
+                </div>
+                <div class="tem-backtop-item" @click="toDemand()">
+                    <svg class="svg-icon" aria-hidden="true">
+                        <use xlink:href="#svg-icon-demand"></use>
+                    </svg>
+                    <p>模板需求</p>
+                </div>
+                <div v-if="isPrintTmpl" class="tem-backtop-item" @click="copyPrintTmplLink()">
+                    <svg class="svg-icon" aria-hidden="true">
+                        <use xlink:href="#svg-icon-link"></use>
+                    </svg>
+                    <p>模板链接</p>
+                </div>
+                <div v-if="isPrintTmpl && isProductType == '05' " class="tem-backtop-item" @click="createDesignPreview()">
+                    <svg class="svg-icon" aria-hidden="true">
+                        <use xlink:href="#svg-icon-shejitu"></use>
+                    </svg>
+                    <p>设计方案</p>
+                </div>
+            </div>
+        </el-container>
+    </el-container>
+    <!--登录-->
+    <el-dialog
+            :visible.sync="loginVisible"
+            :close-on-click-modal = "false"
+            :close-on-press-escape = "false"
+            width="410px"   id="loginWin">
+        <div class="login-header" >
+            <div>
+                <span
+                        :class="isLogin?'text-primary':''"
+                        @click="isLogin=true">
+                    登录
+                </span>
+            </div>
+        </div>
+        
+        <form class="el-form login-form" style="">
+            <div class="el-form-item">
+                <div class="el-form-item__content">
+                    <div class="el-input">
+                        <input type="text" autocomplete="off" placeholder="请输入手机号" class="el-input__inner" v-model="userAccount" id="userAccount">
+                    </div>
+                </div>
+            </div>
+            <div class="el-form-item">
+            <div class="el-form-item__content">
+                <div class="el-input el-input--suffix">
+                <input :type="passw" autocomplete="off" placeholder="请输入密码" class="el-input__inner" v-model="userPassword" id="userPassword">
+                <span class="el-input__suffix"  @click="showPass">
+                    <span class="el-input__suffix-inner">
+                        <i :class="icon"></i>
+                    </span>
+                </span>
+            </div>
+            </div>
+        </div>
+            <button @click="check" type="button" class="el-button el-button--primary">
+                <span>登录</span>
+            </button>
+             <p class="account-reg tc" style="margin-top: 10px;"><a style="margin-left: 80%;color: #666;" href="https://www.jiansheji.cn/index/toFindPwd.do" target="_blank">找回密码</a></p>
+        </form>
+    </el-dialog>
+    <input id="loginBtn" type="hidden" style="display: none;" value="拖动验证隐藏按钮"/>
+    <!-- 拖动验证框 -->
+    <div id="verifyPop" >
+    </div>
+    <!--找回密码-->
+    <el-dialog
+            title="找回密码"
+            :visible.sync="findPasswordVisible"
+            :close-on-click-modal = "false"
+            :close-on-press-escape = "false"
+            width="410px">
+        <el-form class="login-form">
+            <el-form-item prop="tel">
+                <el-input placeholder="请输入手机号" v-model="changePwdUserPhone"></el-input>
+            </el-form-item>
+            <el-form-item >
+                
+                <el-row :gutter="24">
+                    <el-col :span="16"><el-input placeholder="请输入验证码" v-model="SMSCodeChange"></el-input></el-col>
+                    <el-col :span="8"><el-button  @click="changePwdSendCode" id="changePwdSendCode"  type="primary"   :loading="isChangeSending">{{sendChangeButton}}</el-button></el-col>
+                </el-row>
+            </el-form-item>
+            <el-button type="primary" @click="newPassword">下一步</el-button>
+        </el-form>
+    </el-dialog>
+    <!--新密码-->
+    <el-dialog
+            title="新密码"
+            :visible.sync="newPasswordVisible"
+            :close-on-click-modal = "false"
+            :close-on-press-escape = "false"
+            width="410px">
+        <el-form class="login-form">
+            <el-form-item prop="tel">
+                <el-input type="password" placeholder="请输入密码" v-model="newUserPassword"></el-input>
+            </el-form-item>
+            <el-form-item prop="tel">
+                <el-input type="password" placeholder="请输入确认密码" v-model="newUserPasswords"></el-input>
+            </el-form-item>
+            <el-button type="primary" @click="resetPassword">下一步</el-button>
+        </el-form>
+    </el-dialog>
+    <!--新密码-->
+    <el-dialog
+            title="修改密码"
+            :visible.sync="pwdInconformityVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="410px">
+        <el-form class="login-form">
+            <el-form-item prop="tel">
+                <el-input placeholder="请输入手机号" v-model="userAccount" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item prop="tel">
+                <el-input type="password" placeholder="请输入原密码" v-model="userPassword" disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item prop="tel">
+                <el-input type="password" placeholder="请输入新密码" v-model="newUserPassword"></el-input>
+            </el-form-item>
+            <el-form-item prop="tel">
+                <el-input type="password" placeholder="请输入确认密码" v-model="newUserPasswords"></el-input>
+            </el-form-item>
+            <el-button type="primary" @click="resetPwdByInconformity">确定</el-button>
+        </el-form>
+    </el-dialog>
+    <!--密码修改成功-->
+    <el-dialog
+            :visible.sync="newPasswordSuccessVisible"
+            width="410px">
+        <el-form class="login-form">
+            <div class="login-success">
+                <i class="icon icon-success"></i>
+                <div>修改密码成功~</div>
+            </div>
+            <el-button type="primary" @click="toLogin">返回登录</el-button>
+        </el-form>
+    </el-dialog>
+    <!--预览弹窗-->
+    <el-dialog
+            title="预览"
+            :visible.sync="previewVisible"
+            width="820px">
+        <!--平面图和样机图分别写了可能用到的样式，具体怎么判断你们自己定-->
+        <!--平面图-->
+        <template v-if="showPlaneImg">
+            <!--横版（横版两张竖向排列）-->
+            <template v-if="goodsType !='13'">
+                <div v-if="ratio=='1'" class="preview-plane card-h" :class="!showDesignMsg? 'model-width':''">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+                    <img v-if="hasBack == '2'" :src="'/siteWeb/assets/resource/imgs/large/'+img_back"/>
+                </div>
+                <!--竖版（竖版两张横向排列）-->
+                <div v-else-if="ratio=='2' " class="preview-plane card-v" :class="!showDesignMsg?'model-width':''">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+                    <img v-if="hasBack == '2'" :src="'/siteWeb/assets/resource/imgs/large/'+img_back"/>
+                </div>
+                <!--其他单张图片-->
+                <div v-else class="preview-plane" :class="!showDesignMsg?'model-width':''">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+                </div>
+            </template>
+            <template v-if="goodsType =='13'">
+                <!--台历-->
+                <div  class="calender-h ">
+                    <el-carousel :interval="4000"  height="500px" width="400px" arrow="always" :autoplay="false" loop="false">
+                        <el-carousel-item v-for="item in calendarImgs" :key="item"  display="inline-table" class="block">
+                            <div class="calender-imgs">
+                                <img :src="item"  class="taili-preview"/>
+                                <img :src="'/siteWeb/assets/resource/imgs/normal/' + boardringimg" :class="tailihuan"/>
+                                <img :src="'/siteWeb/assets/resource/imgs/normal/' + boardbgimg" :class="tailiban"/>
+                            </div>
+                        </el-carousel-item>
+                    </el-carousel>
+                </div>
+            </template>
+        </template>
+        <!--样机 图-->
+        <template v-if="hasModelImg && !showPlaneImg">
+            <!--名片横版-->
+            <div v-if="goodsType=='1'" class="preview-model card-h">
+                <img src="/siteWeb/skins/imgs/jsj/bgCardH.jpg"/>
+                <div class="imgf">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+                </div>
+                <div class="imgb">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_back"/>
+                </div>
+            </div>
+            <!--名片竖版-->
+            <div v-else-if="goodsType=='2'" class="preview-model card-v">
+                <img src="/siteWeb/skins/imgs/jsj/bgCardS.png"/>
+                <img class="imgf" :src="'/siteWeb/assets/resource/imgs/normal/'+img_front"/>
+                <img class="imgb" :src="'/siteWeb/assets/resource/imgs/normal/'+img_back"/>
+            </div>
+            <!--宣传单-->
+            <!--画册-->
+            <div v-else-if="goodsType=='11'" class="preview-model picture-album">
+                <img src="/siteWeb/skins/imgs/jsj/hc.png"/>
+                <img class="imgf" :src="'/siteWeb/assets/resource/imgs/normal/'+img_front"/>
+                <img class="imgb" :src="'/siteWeb/assets/resource/imgs/normal/'+img_back"/>
+            </div>
+            <div v-else-if="goodsType=='3'" class="preview-model card-v leaflet">
+                <img src="/siteWeb/skins/imgs/jsj/xcd.png"/>
+                <img class="imgf" :src="'/siteWeb/assets/resource/imgs/normal/'+img_front"/>
+                <img class="imgb" :src="'/siteWeb/assets/resource/imgs/normal/'+img_back"/>
+            </div>
+            <!--不干胶-->
+            <div v-else-if="goodsType=='12'" class="preview-model card-v sticker">
+                <div>
+                    <el-button type="primary" @click="joinTeamFromLink()">立即使用</el-button>
+                </div>
+                <img src="/siteWeb/skins/imgs/jsj/bgj.png"/>
+                <img class="img" :src="'/siteWeb/assets/resource/imgs/normal/'+img_front"/>
+            </div>
+            <!--海报-->
+            <div v-else-if="goodsType=='10'" class="preview-model card-v poster">
+                <img src="/siteWeb/skins/imgs/jsj/hb.png"/>
+                <img class="img" :src="'/siteWeb/assets/resource/imgs/normal/'+img_front"/>
+            </div>
+            <!--二折页-->
+            <div v-else-if="goodsType=='8'" class="preview-model two-fold">
+                <img src="/siteWeb/skins/imgs/jsj/erzy.png"/>
+                <img class="img1" :src="firstDataUrl"/>
+                <img class="img2" :src="secondDataUrl"/>
+            </div>
+            <!--三折页-->
+            <div v-else-if="goodsType=='9'" class="preview-model three-fold">
+                <img src="/siteWeb/skins/imgs/jsj/szy.png"/>
+                <img class="img1" :src="firstDataUrl"/>
+                <img class="img2" :src="secondDataUrl"/>
+                <img class="img3" :src="thirdDataUrl"/>
+            </div>
+            <!--易拉宝-->
+            <div v-else-if="goodsType=='5'" class="preview-model rollup">
+                <img src="/siteWeb/skins/imgs/jsj/bgDisplayRack.jpg"/>
+                <img class="img" :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+            </div>
+            <!--易拉宝-->
+            <div v-else-if="goodsType=='common'" class="preview-model rollup">
+                <div v-if="ratio=='1'" class="preview-plane card-h" :class="!showDesignMsg? 'model-width':''">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+                    <img v-if="hasBack == '2'" :src="'/siteWeb/assets/resource/imgs/large/'+img_back"/>
+                </div>
+                <!--竖版（竖版两张横向排列）-->
+                <div v-else-if="ratio=='2' " class="preview-plane card-v" :class="!showDesignMsg?'model-width':''">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+                    <img v-if="hasBack == '2'" :src="'/siteWeb/assets/resource/imgs/large/'+img_back"/>
+                </div>
+                <!--其他单张图片-->
+                <div v-else class="preview-plane" :class="!showDesignMsg?'model-width':''">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+                </div>
+            </div>
+            <!-- 红包 -->
+            <div v-else-if="goodsType=='17'||goodsType=='18'||goodsType=='19'" class="preview-plane rp-preview-box">
+                <div class="rp-preview" :class="'rp-preview-l-'+(goodsType=='17'?'by':goodsType=='18'?'zby':'qy')">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+                </div>
+                <div v-if="goodsType!='18'" class="rp-preview" :class="'rp-preview-r-'+(goodsType=='17'?'by':'qy')">
+                    <img :src="'/siteWeb/assets/resource/imgs/large/'+img_front"/>
+                </div>
+                <img class="frame-img" :src="'/siteWeb/skins/imgs/jsj/'+(goodsType=='17'?'by':goodsType=='18'?'zby':'qy')+'-3d-bg.png'" loading="lazy" />
+                <img class="top-img" :src="'/siteWeb/skins/imgs/jsj/'+(goodsType=='17'?'by':goodsType=='18'?'zby':'qy')+'-3d-mask.png'" loading="lazy" />
+            </div>
+        </template>
+        <div class="preview-detail" v-if="showDesignMsg">
+            <h3>{{preview_title}}</h3>
+            <div class="preview-btn">
+                <el-button type="primary"  size="middle" @click="openDiy();">立即编辑</el-button>
+                <el-button type=""  size="middle" @click="addLike();">收藏</el-button>
+            </div>
+            <ul class="preview-introduce">
+                <li><span class="introduce-title">尺寸：</span><span class="introduce-content">{{preview_size}} mm</span></li>
+                <li><span class="introduce-title">编号：</span><span class="introduce-content">{{preview_no}}</span></li>
+                <li><span class="introduce-title">上架时间：</span><span class="introduce-content">{{preview_time}}</span></li>
+                <li><span class="introduce-title">设计师：</span><span class="introduce-content"><el-avatar :size="20" :src="preview_designer_img" fit="cover"></el-avatar>{{preview_designer}}</span></li>
+            </ul>
+        </div>
+        <div v-if="hasModelImg" class="preview-tab">
+            <a :class="showPlaneImg? '':'active'" @click="showPlaneImg=false">样机</a>
+            <a :class="showPlaneImg? 'active':''" @click="showPlaneImg=true">平面</a>
+        </div>
+    </el-dialog>
+    <el-dialog
+            width="30%"
+            title="成员要求"
+            class="dialog-invite-box"
+            :visible.sync="innerVisible"
+            append-to-body>
+        <div class="dialog-invite">
+            <el-avatar :size="88" :src="teamavatar" fit="cover"></el-avatar>
+            <p>{{teamname}}</p>
+            <div class="dialog-content">
+                用户“{{captainname}}”邀请您加入团队“{{teamname}}”，<br/>是否使用当前账号“{{userName}}”加入？
+            </div>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="joinTeamFromLink()">立即加入</el-button>
+        </div>
+    </el-dialog>
+
+    <el-dialog
+            title="字体预加载"
+            :close-on-click-modal = "false"
+            :close-on-press-escape = "false"
+            :visible.sync="loadingFont"
+            :show-close=false
+            width="410px">
+        <el-progress :text-inside="true" :stroke-width="26" :percentage="percentage" style="margin: 10px 0 10px 0" :format="loadingformat" :color="customColors"></el-progress>
+        <p style="text-align: center;color: #2196f3;">为提高设计效率，正在为您预加载字体...</p>
+    </el-dialog>
+
+    <el-dialog
+            width="45%"
+            title="更新日志"
+            class="dialog-invite-box"
+            :visible.sync="historyShow"
+            append-to-body>
+        <div class="dialog-history">
+            <div class="header">
+                <h3 class="version"><i class="diyicon icon-banben"></i>{{systemUpdateMenusTree.rootname}}</h3>
+                <span class="update-time"><i
+                        class="diyicon icon-shijian"></i>{{systemUpdateMenusTree.createtime}}</span>
+            </div>
+            <div class="content-list">
+                <div class="item" v-for="(childItemOne, indexOne) in systemUpdateMenusTree.child" key="indexOne">
+                    <h3>{{childItemOne.menuname}}</h3>
+                    <ul>
+                        <li class="item-detail" v-for="(childItemTwo, indexTwo) in childItemOne.child" key="indexTwo">
+                            <span v-html="indexTwo+1 + '.' + childItemTwo.menuname"></span>
+                            <ul class="item-detail-content">
+                                <li class="item-detail-content-list"
+                                    v-for="(childItemThree, indexThree) in childItemTwo.child" key="indexThree"
+                                    v-html="indexThree+1 + '.' + childItemThree.nodes"></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </el-dialog>
+
+    <!--登录-->
+    
+        <div class="notice_index" v-show="notifyVisible">
+            <div class="notify-tab">
+                <a :class="!showread?'active':''" @click="showread=false" class="no-read"
+                   :count="unreadNotifyCount">未读</a>
+                <a :class="showread?'active':''" @click="showread=true">已读</a>
+            </div>
+            <!--内容块2-开始-->
+            <template v-if="showread">
+                <div >
+                    <el-card class="box-card" v-for="(notify,index) in notifyReadList" :key="index" style="margin: 5px;"
+                             @click="confirmNotify(notify);">
+                        <template v-if="notify.isread=='1'">
+                            <span v-if="notify.source=='print'" >您有未确认订单, 请及时确认</span>
+                            <span v-if="notify.source=='all'" >您有新的设计任务, 请及时确认</span>
+                            <span v-if="notify.source=='changeDger'">更换设计师, 请及时确认</span>
+                            <span v-if="notify.source=='modifyPrice'">设计改价, 请及时确认</span>
+                            <span v-if="notify.source=='orderback'" >订单打回, 请及时确认</span>
+                            <span v-if="notify.source=='dsnmp'" >您有新的订单, 请及时接单</span>
+                            <span class="order-no">(订单号:{{notify.ordernum}})</span>
+                            <div class="read-time">
+                                <span >接收时间: {{notify.createtime}}</span>
+                                <span >处理时间: {{notify.createtime}}</span>
+                            </div>
+                        </template>
+                    </el-card>
+                    <!--文字操作锦集-结束-->
+                </div>
+            </template>
+            <template v-else>
+                <div>
+                    <el-card class="box-card" v-for="(notify,index) in notifyNoReadList" :key="index"
+                             style="margin: 5px;" @click="confirmNotify(notify);">
+                        <template v-if="notify.isread=='0'">
+                            <span v-if="notify.source=='print'" >您有未确认订单, 请及时确认</span>
+                            <span v-if="notify.source=='all'" >您有新的设计任务, 请及时确认</span>
+                            <span v-if="notify.source=='changeDger'">更换设计师, 请及时确认</span>
+                            <span v-if="notify.source=='modifyPrice'">设计改价, 请及时确认</span>
+                            <span v-if="notify.source=='orderback'" >订单打回, 请及时确认</span>
+                            <span v-if="notify.source=='dsnmp'" >您有新的订单, 请及时接单</span>
+                            <span class="order-no">(订单号:{{notify.ordernum}})</span>
+                            <div class="noread-time">
+                                <span >{{notify.createtime}}</span>
+                                <a href="javacript:void(0)" class="read" @click="confirmNotify(notify, '1')">标已读</a>
+                                <a href="javacript:void(0)" @click="confirmNotify(notify,'2')">去查看></a>
+                            </div>
+
+                        </template>
+                    </el-card>
+                </div>
+            </template>
+        </div>
+    
+
+    <!--画册预览弹窗开始-->
+    <div class="pop-box pop-box-te">
+        <div class="pop-box-close"></div>
+        <div class="flipbook-viewport">
+            <div class="container">
+                <div class="flipbook" id="flipbook">
+
+                </div>
+            </div>
+            <div class="bookControls">
+                <span class="goFirst"></span>
+                <span class="previous"></span>
+                <span class="next"></span>
+                <span class="goLast"></span>
+            </div>
+        </div>
+    </div>
+    <!--画册预览弹窗结束-->
+
+
+    <!--预览弹窗-->
+    <el-dialog
+            title="请选择打孔效果"
+            :visible.sync="isWorkCard"
+            width="620px">
+        <!--人像卡选择打孔类型-->
+        <div class="hitholeEffect" style="height:320px;">
+            <ul class="hole-boxs">
+                <li :class="[holeStyle=='1'?'on':'']" @click="holeStyle = '1'">
+                    <div class="hole-bg">
+                        <img src="/siteWeb//skins/imgs/work/long_hold.png" />
+                    </div>
+                    <div class="hold-tips">
+                        <label class="hold-name">标准长孔</label>
+                        <p class="hold-size">14mm * 3mm</p>
+                    </div>
+                </li>
+                <li :class="[holeStyle=='4'?'on':'']" @click="holeStyle = '4'">
+                    <div class="hole-bg">
+                        <img src="/siteWeb//skins/imgs/work/no_hold.png" />
+                    </div>
+                    <div class="hold-tips">
+                        <label class="hold-name">标准无孔</label>
+                        <p class="hold-size">标准无孔</p>
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="goToWorkCardDesignTool()">开启设计</el-button>
+        </div>
+
+    </el-dialog>
+
+    <!--预览弹窗-->
+    <el-dialog
+            title="套系模版"
+            :visible.sync="seriesPreview"
+            width="1200px">
+        <div style="height: 70vh;">
+            <vue-waterfall-easy
+
+                    :imgs-arr="seriesList"
+                    src-key="imgSrcF"
+            
+                    :max-cols="4"
+                    @scrollreachbottom="getSeriesData"
+                    ref="waterfall">
+
+                
+                <!--商品列表-->
+                <div class="img-info" slot-scope="props" >
+                    <p class="some-info" >{{props.value.parentTempName}}</p>
+                    <p class="some-info" >模板ID:{{props.value.templateId}}</p>
+                    <p class="some-info" >{{props.value.title}}</p>
+
+                    <div v-if="props.value.hasrights == '1'" class="tab-hover">
+                        <a href="javascript:void(0);">
+                            <img src="/siteWeb/skins/imgs/jsj/b.png"  style="width: 35px" />
+                        </a>
+                    </div>
+                    <div class="goods-hover-freewall">
+                        <div class="goods-hover-header">
+                            <a class="btn" @click="previewTem(props.value)">
+                                <i class="icon icon-preview"></i>
+                            </a>
+                        </div>
+                        <div class="goods-hover-freewall-footer">
+                            <el-button type="primary" round size="small"  @click="openSeriesDiy(props.value)">开启设计</el-button>
+                        </div>
+                    </div>
+                </div>
+
+            </vue-waterfall-easy>
+
+        </div>
+
+    </el-dialog>
+
+    <!--预览弹窗-->
+    <el-dialog
+            title="请选设计页数（默认单页）"
+            :visible.sync="isGuangGaoQi"
+            :close-on-click-modal = "false"
+            :close-on-press-escape = "false"
+            width="420px">
+        <!--人像卡选择打孔类型-->
+        <div class="hitholeEffect" style="text-align: center">
+            <el-switch
+                    v-model="pageCount"
+                    active-text="单页设计"
+                    inactive-text="双页设计"
+                    active-value="1"
+                    inactive-value="2">
+            </el-switch>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="goGuangGaoQiDesignTool()">开启设计</el-button>
+        </div>
+
+    </el-dialog>
+
+    <el-dialog
+            :title="sizeModelTitle"
+            :visible.sync="isTrophy"
+            :close-on-click-modal = "false"
+            :close-on-press-escape = "false"
+            width="460px">
+        <!--奖杯选择尺寸-->
+        <div class="hitholeEffect" style="text-align: center">
+            <div class="trophy-size-items">
+                <el-radio-group v-model="designerGoodsSizeCode">
+                    <el-radio v-for="(item,index) in designerGoodsSizeModelList" :key="index" :label="item.sizecode">{{item.sizetype}}
+                    </el-radio>
+                </el-radio-group>
+            </div>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="goTrophyDesign()">开启设计</el-button>
+        </div>
+    </el-dialog>
+
+    <el-dialog
+            :title="materialTitle"
+            :visible.sync="isMaterial"
+            :close-on-click-modal = "false"
+            :close-on-press-escape = "false"
+            width="460px">
+        <!--奖杯选择尺寸-->
+        <div class="hitholeEffect" style="text-align: center">
+            <div class="trophy-size-items">
+                <el-radio-group v-model="designerGoodsMaterialCode">
+                    <el-radio v-for="(item,index) in designerGoodsMaterialList" :key="index" :label="item.materialcode">{{item.materialname}}
+                    </el-radio>
+                </el-radio-group>
+            </div>
+        </div>
+        <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="goMaterialDesign()">开启设计</el-button>
+        </div>
+    </el-dialog>
+
+    <!--移动到文件夹-->
+    <el-dialog
+            title="添加到团队文件夹"
+            :visible.sync="moveTeamFolderVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            :modal-append-to-body="false"
+    
+            width="570px">
+        <ul class="user-folder user-folder-dialog">
+            <li
+                    v-for="item in folderList"
+                    :key="item.id"
+                    :class="moveTeamFolder==item.id?'active':''"
+                    @click="moveTeamFolder=item.id">
+                <svg class="svg-icon open" aria-hidden="true">
+                    <use xlink:href="#svg-icon-folder-open"></use>
+                </svg>
+                <svg class="svg-icon close" aria-hidden="true">
+                    <use xlink:href="#svg-icon-folder-close"></use>
+                </svg>
+                {{item.foldername}}
+            </li>
+        </ul>
+        <span slot="footer">
+                    <el-button size="small" @click="moveTeamFolderVisible = false">取 消</el-button>
+                    <el-button size="small" type="primary" @click="moveUserDesign">确定</el-button>
+            </span>
+    </el-dialog>
+    <!--创建文件夹-->
+
+    <!-- 设计找回 -->
+    <el-dialog
+            title="找回设计"
+            :visible.sync="findDesignVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="410px">
+        <el-form class="login-form">
+            <el-form-item prop="tel">
+                <el-input type="textarea" :rows="5" placeholder="输入分享链接" v-model="errorDesignUrl"></el-input>
+            </el-form-item>
+
+            <el-button type="primary" @click="findTheDesign()">确定</el-button>
+        </el-form>
+    </el-dialog>
+
+    <!--生成链接邀请-->
+    <el-dialog
+            class="linkVisible"
+            title="链接邀请"
+            :visible.sync="linkVisible"
+            width="600px">
+        <div class="link-content">
+            <p>将以下链接复制发送给好友，点击此链接的人即可申请加入团队</p>
+            <el-input id="copyID" :value="invitationLink" readonly></el-input>
+        </div>
+        <span slot="footer">
+						    <el-button size="small" type="primary" @click="copyInvitationLink()">复制邀请链接</el-button>
+						  </span>
+    </el-dialog>
+
+    <!--创建文件夹-->
+    <el-dialog
+            title="创建文件夹"
+            :visible.sync="newTeamTmplFolderVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="400px">
+        <el-form label-width="90px">
+            <el-form-item label="文件夹名称">
+                <el-input v-model="newTeamTmplFolderName" placeholder="请输入文件夹名称"  maxlength="10"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer">
+						    <el-button size="small" type="primary" @click="createTeamTmplFolder">创建文件夹</el-button>
+						  </span>
+    </el-dialog>
+    <!--团队模板重命名文件夹-->
+    <el-dialog
+            title="重命名文件夹"
+            :visible.sync="reTeamTmplnameVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="400px">
+        <el-form label-width="90px">
+            <el-form-item label="文件夹名称">
+                <el-input v-model="newTeamTmplFolderName" placeholder="请输入文件夹名称" >111</el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer">
+						    <el-button size="small" type="primary" @click="updateTeamTmplFolderName">确定</el-button>
+						    <el-button size="small" @click="reTeamTmplnameVisible = false">取消</el-button>
+						  </span>
+    </el-dialog>
+
+    <!--团队模板移动到文件夹-->
+    <el-dialog
+            title="移动到文件夹"
+            :visible.sync="moveTeamTmplFolderVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            :modal-append-to-body="false"
+    
+            width="570px">
+        <ul class="user-folder user-folder-dialog">
+            <li @click="addTeamTmplFolder">
+                <i class="el-icon-plus"></i>创建文件夹
+            </li>
+            <li
+                    v-for="item in teamTmplFolderList"
+                    :key="item.id"
+                    :class="moveTeamTmplFolder==item.id?'active':''"
+                    @click="moveTeamTmplFolder=item.id">
+                <svg class="svg-icon open" aria-hidden="true">
+                    <use xlink:href="#svg-icon-folder-open"></use>
+                </svg>
+                <svg class="svg-icon close" aria-hidden="true">
+                    <use xlink:href="#svg-icon-folder-close"></use>
+                </svg>
+                {{item.foldername}}
+            </li>
+        </ul>
+        <span slot="footer">
+						    <el-button size="small" @click="moveTeamTmplFolderVisible = false">取 消</el-button>
+						    <el-button size="small" type="primary" @click="moveToTeamTmplFolder">移动</el-button>
+						  </span>
+    </el-dialog>
+
+    <!--移动到文件夹-->
+    <el-dialog
+            title="移动到文件夹"
+            :visible.sync="moveTeamMaterialFolderVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            :modal-append-to-body="false"
+    
+            width="570px">
+        <ul class="user-folder user-folder-dialog">
+            <li @click="addTeamMaterialFolder">
+                <i class="el-icon-plus"></i>创建文件夹
+            </li>
+            <li
+                    v-for="item in teamMaterialFolderList"
+                    :key="item.id"
+                    :class="moveTeamMaterialFolder==item.id?'active':''"
+                    @click="moveTeamMaterialFolder=item.id">
+                <svg class="svg-icon open" aria-hidden="true">
+                    <use xlink:href="#svg-icon-folder-open"></use>
+                </svg>
+                <svg class="svg-icon close" aria-hidden="true">
+                    <use xlink:href="#svg-icon-folder-close"></use>
+                </svg>
+                {{item.foldername}}
+            </li>
+        </ul>
+        <span slot="footer">
+						    <el-button size="small" @click="moveTeamMaterialFolderVisible = false">取 消</el-button>
+						    <el-button size="small" type="primary" @click="moveToTeamMaterialFolder">移动</el-button>
+						  </span>
+    </el-dialog>
+    <!--创建文件夹-->
+    <el-dialog
+            title="创建文件夹"
+            :visible.sync="newTeamMaterialFolderVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="400px">
+        <el-form label-width="90px">
+            <el-form-item label="文件夹名称">
+                <el-input v-model="newTeamMaterialFolderName" placeholder="请输入文件夹名称"  maxlength="10"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer">
+						    <el-button size="small" type="primary" @click="createTeamMaterialFolder">创建文件夹</el-button>
+						  </span>
+    </el-dialog>
+    <!--重命名文件夹-->
+    <el-dialog
+            title="重命名文件夹"
+            :visible.sync="reTeamMaterialnameVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="400px">
+        <el-form label-width="90px">
+            <el-form-item label="文件夹名称">
+                <el-input v-model="newTeamMaterialFolderName" placeholder="请输入文件夹名称" >111</el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer">
+						    <el-button size="small" type="primary" @click="updateTeamMaterialFolderName">确定</el-button>
+						    <el-button size="small" @click="reTeamMaterialnameVisible = false">取消</el-button>
+						  </span>
+    </el-dialog>
+
+    <!--移动到文件夹-->
+    <el-dialog
+            title="移动到文件夹"
+            :visible.sync="moveUserMaterialFolderVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="570px">
+        <ul class="user-folder user-folder-dialog">
+            <li @click="addUserMaterialFolder">
+                <i class="el-icon-plus"></i>创建文件夹
+            </li>
+            <li
+                    v-for="item in userMaterialFolderList"
+                    :key="item.id"
+                    :class="moveUserMaterialFolder==item.id?'active':''"
+                    @click="moveUserMaterialFolder=item.id">
+                <svg class="svg-icon open" aria-hidden="true">
+                    <use xlink:href="#svg-icon-folder-open"></use>
+                </svg>
+                <svg class="svg-icon close" aria-hidden="true">
+                    <use xlink:href="#svg-icon-folder-close"></use>
+                </svg>
+                {{item.filename}}
+            </li>
+        </ul>
+        <span slot="footer">
+						    <el-button size="small" @click="moveUserMaterialFolderVisible = false">取 消</el-button>
+						    <el-button size="small" type="primary" @click="moveToUserMaterialFolder">移动</el-button>
+						  </span>
+    </el-dialog>
+    <!--创建文件夹-->
+    <el-dialog
+            title="创建文件夹"
+            :visible.sync="newUserMaterialFolderVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="400px">
+        <el-form label-width="90px">
+            <el-form-item label="文件夹名称">
+                <el-input v-model="newUserMaterialFolderName" placeholder="请输入文件夹名称"  maxlength="10"></el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer">
+						    <el-button size="small" type="primary" @click="createUserMaterialFolder">创建文件夹</el-button>
+						  </span>
+    </el-dialog>
+    <!--重命名文件夹-->
+    <el-dialog
+            title="重命名文件夹"
+            :visible.sync="reUserMaterialnameVisible"
+            :close-on-click-modal="false"
+            :close-on-press-escape="false"
+            width="400px">
+        <el-form label-width="90px">
+            <el-form-item label="文件夹名称">
+                <el-input v-model="newUserMaterialFolderName" placeholder="请输入文件夹名称" >111</el-input>
+            </el-form-item>
+        </el-form>
+        <span slot="footer">
+						    <el-button size="small" type="primary" @click="updateUserMaterialFolderName">确定</el-button>
+						    <el-button size="small" @click="reUserMaterialnameVisible = false">取消</el-button>
+						  </span>
+    </el-dialog>
+    <div v-if="showAlert">
+        <el-card class="box-card" style="width: 360px;position: fixed;top: 75px;right: 20px;height: 200px;">
+            <div slot="header" class="clearfix">
+                <span style="font-size: initial">处罚通知</span>
+                <el-button style="float: right; padding: 3px 0" type="text" @click.native="showAlert=!showAlert">X</el-button>
+            </div>
+            <div class="text item">
+                <span style="overflow: hidden;display: -webkit-box;-webkit-line-clamp: 3; -webkit-box-orient: vertical;word-break: break-all; " @click="receivingOrders('2')" :title="noticeContent">{{noticeContent}}</span>
+            </div>
+        </el-card>
+        <div style="width: 325px; position: fixed; top: 230px; right: 40px; height: 200px;">
+            <el-button type="text" @click.native="showPrev" :disabled="prevDisabled">上一条</el-button>
+            <el-button style="float: right;" type="text" @click.native="showNext" :disabled="nextDisabled">下一条</el-button>
+        </div>
+    </div>
+
+    <div id="selected-tmpls" >
+        <img class="selected-back" src="/siteWeb/skins/imgs/jsj/select-title.png" >
+        <div class="tmpls-box" >
+
+        </div>
+    </div>
+</div>
+
+<!--加载页面loading-->
+<div class="page-loading">
+    <img src="/siteWeb/skins/imgs/jsj/loading-page.svg"/>
+</div>
+<!--共用js-->
+<input type="hidden" id="authorization" value=""/>
+<input type="hidden" id="uuid" value=""/>
+<input type="hidden" id="templateType" value=""/>
+<input type="hidden" id="menuType" value=""/>
+<input type="hidden" id="sjsUuid" value=""/>
+<input type="hidden" id="publicKey" name="publicKey" value=""/>
+<input type="hidden" id="clientMark" name="clientMark" value=""/>
+<script type="text/javascript" src="/siteWeb/js/jsj/socket/sockjs.min.js"></script>
+<script type="text/javascript" src="/siteWeb/js/jsj/socket/stomp.min.js"></script>
+<script type="text/javascript" src="/siteWeb//js/libs/layer/layer.js"></script>
+<script type="text/javascript" src="/siteWeb/js/libs/vue.min.js"></script>
+<script type="text/javascript" src="/siteWeb/js/libs/element-ui.min.js"></script>
+<script type="text/javascript" src="/siteWeb/js/jsj/iconfont.js?v=20260707017"></script>
+<script type="text/javascript" src="/siteWeb//js/libs/flipbook/modernizr.2.5.3.min.js"></script>
+<script type="text/javascript" src="/siteWeb//js/libs/jsencrypt.min.js"></script>
+<!--页面js-->
+<script type="text/javascript" src="/siteWeb//js/libs/html2canvas.min.js"></script>
+<script type="text/javascript" src="/siteWeb/js/libs/logincheck/logincheck.js"></script>
+<script type="text/javascript" src="/siteWeb/js/libs/swiper.min.js"></script>
+<script type="text/javascript" src="/siteWeb/js/libs/vue-lazyload.js"></script>
+<script type="text/javascript" src="/siteWeb/js/libs/vueWaterfallEasy.js" ></script>
+<script type="text/javascript" src="/siteWeb/js/jsj/index.js?v=20260707017"></script>
+
+
+<script src="/siteWeb/js/jsj/verify/crypto-js.js"></script>
+<script src="/siteWeb/js/jsj/verify/ase.js"></script>
+<script src="/siteWeb/js/jsj/verify/verify.js" ></script>
+<script src="/siteWeb/js/jsj/verify/verifyLogin.js" ></script>
+
+
+
+</body>
+</html>

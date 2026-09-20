@@ -1,0 +1,39 @@
+{
+  "ts": "2026-09-20T04:38:00.748Z",
+  "stage": "STAGE-9-P0E-JSJ-MENU",
+  "branch": "stage-9-altq-baidu-reconstruction",
+  "url": "https://diy.zheliyin.com/siteWeb/jsj/index.do",
+  "errors": [],
+  "loginState": {
+    "hasLoginBtn": true,
+    "body": "模板中心\n设计工具\n功能介绍\n登录\n 热门推荐\n在线模板\n印刷物料\n影像生活\n其他类\n图片工具\n 智能抠图\n 证件照\n PSD转换\n 电子画册\n 台历核稿\n 照片书核稿\n 格式转换\n 图片超分\n其他\n更新日志\n意见反馈\n模板需求\n登录\n登录\n找回密码"
+  },
+  "links": [],
+  "menuText": [],
+  "allLinkTexts": [
+    "热门推荐",
+    "名片",
+    "宣传单",
+    "优惠券",
+    "台历",
+    "平面纸杯",
+    "不干胶",
+    "套系模版",
+    "查看更多>",
+    "照片书",
+    "台历",
+    "新媒体",
+    "电商类",
+    "生活类",
+    "其他",
+    "智能抠图",
+    "证件照",
+    "PSD转换",
+    "电子画册",
+    "台历核稿",
+    "照片书核稿",
+    "格式转换",
+    "图片超分",
+    "找回密码"
+  ]
+}
