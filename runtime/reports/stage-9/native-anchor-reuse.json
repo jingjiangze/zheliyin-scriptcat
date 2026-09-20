@@ -1,0 +1,77 @@
+{
+  "ts": "2026-09-20T15:30:22.376Z",
+  "stage": "STAGE-9-V10-NATIVE-ANCHOR-REUSE",
+  "version": "0.3.11.46",
+  "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": true,
+  "note": "bridge 合成 items -> 真 native 对象模型执行；probe 对象创建后即清理恢复",
+  "scenarios": [
+    {
+      "case": "D-wrong-page-blocked",
+      "blocked": true,
+      "code": "CREATE_BLOCKED_PAGE_NOT_FOUND",
+      "createdCount": 0,
+      "passed": true
+    },
+    {
+      "case": "A-existing-anchor-reuse",
+      "ok": true,
+      "reused": true,
+      "createdCount": 1,
+      "textboxCountDelta": 0,
+      "resolver": {
+        "anchorCount": 7,
+        "reused": 1,
+        "created": 0,
+        "uncertain": 0,
+        "unmatched": 0
+      },
+      "passed": true
+    },
+    {
+      "case": "B-no-anchor-create",
+      "ok": true,
+      "createdCount": 1,
+      "reusedCount": 0,
+      "textboxCountDelta": 1,
+      "resolver": {
+        "anchorCount": 7,
+        "reused": 0,
+        "created": 1,
+        "uncertain": 0,
+        "unmatched": 1
+      },
+      "passed": true
+    },
+    {
+      "case": "C-uncertain-no-forced-reuse",
+      "ok": false,
+      "uncertain": 1,
+      "reused": 0,
+      "createdCount": 0,
+      "textboxCountDelta": -6,
+      "resolver": {
+        "anchorCount": 6,
+        "reused": 0,
+        "created": 1,
+        "uncertain": 1,
+        "unmatched": 0
+      },
+      "decidedUncertain": true,
+      "noForcedReuse": true,
+      "createdAttempted": true,
+      "passed": true
+    }
+  ],
+  "anchorResolverStats": null,
+  "errors": [],
+  "baseState": {
+    "objectCount": 25,
+    "textboxCount": 7
+  },
+  "finalState": {
+    "objectCount": 24,
+    "textboxCount": 7
+  },
+  "cleanupRestored": true
+}

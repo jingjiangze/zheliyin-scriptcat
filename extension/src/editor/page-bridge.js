@@ -117,6 +117,62 @@ function pageBridge() {
         // OCR 只提供 text/position/size/style（media JSON），身份字段由原生流程负责（§十七）。
         // 原生路径不可用时回退到下方既有镜像路径（Level 1-2），并在 editorIntegration.mode 标明。
         // =====================================================================
+        // ---- Stage 9 Commit 6：Native Anchor Resolver（页面世界镜像）----
+        // 单一事实来源 = extension/src/editor/native-anchor-matcher.js（node 纯模块 + 单测）。
+        // 本处为 page-world 运行时镜像，逻辑逐字一致：page 门控 + 多因子打分 + MATCH/UNCERTAIN/NO_MATCH。
+        function zyScriptType(t) { const s = String(t == null ? "" : t); let cjk = 0, latin = 0, digit = 0; for (let i = 0; i < s.length; i += 1) { const c = s.charCodeAt(i); if ((c >= 0x4e00 && c <= 0x9fff) || (c >= 0x3040 && c <= 0x30ff)) cjk += 1; else if (c >= 0x30 && c <= 0x39) digit += 1; else if ((c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a)) latin += 1; else if (c > 0x20 && c !== 0x2e && c !== 0x3a && c !== 0x2d && c !== 0x40 && c !== 0x2f) latin += 1; } if (!s.trim()) return "empty"; if (cjk && !latin && !digit) return "cjk"; if (latin && !cjk && !digit) return "latin"; if (digit && !cjk && !latin) return "digit"; return "mixed"; }
+        function zyAnchorCollect(canvas, pageId, side) {
+          const anchors = [];
+          try { if (typeof canvas.setCoords === "function") canvas.setCoords(); } catch (e) {}
+          (canvas.getObjects() || []).forEach(function (o) {
+            if (!o) return;
+            const ty = String(o.type || "");
+            if (ty !== "textbox" && ty !== "i-text" && ty !== "text") return;
+            try { if (typeof o.setCoords === "function") o.setCoords(); } catch (e) {}
+            const ac = o.aCoords;
+            if (!ac || !ac.tl || !ac.br) return;
+            const cx = (ac.tl.x + ac.tr.x + ac.br.x + ac.bl.x) / 4, cy = (ac.tl.y + ac.tr.y + ac.br.y + ac.bl.y) / 4;
+            const vw = (Math.hypot(ac.tr.x - ac.tl.x, ac.tr.y - ac.tl.y) + Math.hypot(ac.br.x - ac.bl.x, ac.br.y - ac.bl.y)) / 2;
+            const vh = (Math.hypot(ac.bl.x - ac.tl.x, ac.bl.y - ac.tl.y) + Math.hypot(ac.br.x - ac.tr.x, ac.br.y - ac.tr.y)) / 2;
+            let ink = null; try { ink = measureFabInkFor(o); } catch (e) {}
+            anchors.push({ pageId: pageId, side: side, sourceText: { rawText: typeof o.text === "string" ? o.text : null }, style: { fontSize: typeof o.fontSize === "number" ? o.fontSize : null, fontFamily: o.fontFamily != null ? String(o.fontFamily) : null }, geometry: { center: { x: cx, y: cy }, visualWidth: vw, visualHeight: vh }, actualInk: { lineCount: ink ? ink.lineCount : null }, layerNum: typeof o.layerNum === "number" ? o.layerNum : null, identity: { uuid: o.uuid != null ? String(o.uuid) : null, multiUuid: o.multiUuid != null ? String(o.multiUuid) : null }, object: o });
+          });
+          return anchors;
+        }
+        function zyAnchorMatch(anchors, block) {
+          const MATCH_THRESHOLD = 0.55, UNCERTAIN_MARGIN = 0.15;
+          const nz = function (v) { return (typeof v === "number" && isFinite(v)) ? v : null; };
+          const sType = function (t) { try { return zyScriptType(t); } catch (e) { return "unknown"; } };
+          const shapeSim = function (a, b) { const sa = String(a == null ? "" : a), sb = String(b == null ? "" : b); if (!sa && !sb) return 1; const lenSim = 1 / (1 + Math.abs(sa.length - sb.length) / 8); const scSim = sType(sa) === sType(sb) ? 1 : 0.4; return lenSim * 0.6 + scSim * 0.4; };
+          const fsSim = function (x, y) { const fx = nz(x), fy = nz(y); if (fx == null || fy == null || fx <= 0 || fy <= 0) return 0.5; return 1 / (1 + Math.abs(Math.log(fx) - Math.log(fy)) * 4); };
+          const styleSim = function (bl, an) { const f = fsSim(bl.fontSize, an.style.fontSize); let fam = 0.5; const bf = String(bl.fontFamily || ""), af = String(an.style.fontFamily || ""); if (bf && af) { const bl2 = bf.split(/[\s,]/).filter(Boolean).pop() || ""; const al2 = af.split(/[\s,]/).filter(Boolean).pop() || ""; fam = (bl2 && al2 && bl2 === al2) ? 1 : 0.3; } else if (!bf && !af) fam = 0.5; return f * 0.7 + fam * 0.3; };
+          const layerSim = function (bl, an) { const b = nz(bl.layerNum), a = nz(an.layerNum); if (b == null || a == null) return 0.5; return 1 / (1 + Math.abs(b - a) * 2); };
+          const sizeSim = function (an, bl) { const aw = nz(an.geometry.visualWidth), ah = nz(an.geometry.visualHeight), bw = nz(bl.width), bh = nz(bl.height); if (aw == null || ah == null || bw == null || bh == null || aw <= 0 || ah <= 0 || bw <= 0 || bh <= 0) return 0.5; return ((Math.min(aw, bw) / Math.max(aw, bw)) + (Math.min(ah, bh) / Math.max(ah, bh))) / 2; };
+          const scores = [];
+          (anchors || []).forEach(function (an, i) {
+            let gate = "PASS";
+            if (!an.pageId || !block.pageId || an.pageId !== block.pageId) gate = "PAGE_MISMATCH";
+            else if (!an.side || !block.side || an.side !== block.side) gate = "SIDE_MISMATCH";
+            if (gate !== "PASS") return;
+            const c = an.geometry.center;
+            const d = Math.hypot(block.center.x - c.x, block.center.y - c.y);
+            const scale = nz(an.geometry.visualWidth) != null && nz(an.geometry.visualWidth) > 0 ? nz(an.geometry.visualWidth) : 100;
+            const spatial = 1 / (1 + d / scale);
+            const sh = shapeSim(block.sourceText, an.sourceText.rawText);
+            const st = styleSim(block, an);
+            const lay = layerSim(block, an);
+            const sz = sizeSim(an, block);
+            const total = spatial * 0.35 + sz * 0.15 + st * 0.12 + sh * 0.15 + 0.08 + lay * 0.15;
+            scores.push({ anchorIndex: i, total: Math.round(total * 10000) / 10000, factors: { spatial: Math.round(spatial * 10000) / 10000, size: sz, shape: sh, style: st, layer: lay } });
+          });
+          if (!scores.length) return { verdict: "NO_MATCH", reason: "page-gate: no candidate", matchedIndex: null, matchScore: null, margin: null };
+          const sorted = scores.slice().sort(function (x, y) { return y.total - x.total; });
+          const best = sorted[0], second = sorted[1];
+          const margin = second ? best.total - second.total : 1;
+          if (best.total < MATCH_THRESHOLD) return { verdict: "NO_MATCH", reason: "below-threshold", matchedIndex: best.anchorIndex, matchScore: best.total, margin: margin };
+          if (margin >= UNCERTAIN_MARGIN) return { verdict: "MATCH", reason: "unique-winner-with-margin", matchedIndex: best.anchorIndex, matchScore: best.total, margin: margin };
+          return { verdict: "NATIVE_ANCHOR_UNCERTAIN", reason: "runner-up-too-close", matchedIndex: best.anchorIndex, matchScore: best.total, margin: margin };
+        }
         const diy = resolution.canvasDiy;
         if (diy) {
           const editorInteg2 = { mode: "native", nativeUndoFound: false, undoSavePre: false, undoSavePost: false, drawTextBatch: 0, failedBlockIndex: -1, layerNumBase: diy.canvasObjInfo.canvasToProductObjArr.length, identityApplied: 0, uv4Total: 0, layerMax: -1 };
@@ -125,6 +181,8 @@ function pageBridge() {
             if (U2 && typeof U2.save === "function") { editorInteg2.nativeUndoFound = true; U2.save(); editorInteg2.undoSavePre = true; }
           } catch (eUndoNat) {}
           const fontId = getEditorDefaultFontId();
+          // Commit 6：创建前一次性解析当前页原生 textbox 为 Anchor（P0 aCoords；只读）
+          const nativeAnchors = zyAnchorCollect(diy.canvas, sourcePageId, sourceSide || null);
           let createdNat = [];
           const batchNat = [];
           let failedBlockIndex = null;
@@ -133,6 +191,35 @@ function pageBridge() {
             for (let idx = 0; idx < items.length; idx += 1) {
               const it = items[idx];
               const layerNum = editorInteg2.layerNumBase + idx;
+              // Commit 6：Native Anchor Resolver —— MATCH → 复用现有 textbox（以 Native OCR text truth 更新文本，保留原生身份/位置/样式）；
+              //   UNCERTAIN → 禁止强制复用（走创建）；NO_MATCH / 无 anchor → 走原生创建。
+              if (!editorInteg2.anchorResolver) { editorInteg2.anchorResolver = { anchorCount: 0, reused: 0, created: 0, uncertain: 0, unmatched: 0 }; }
+              if (nativeAnchors && nativeAnchors.length) {
+                if (editorInteg2.anchorResolver.anchorCount === 0) editorInteg2.anchorResolver.anchorCount = nativeAnchors.length;
+                const blkCx = (it.left != null ? it.left : 0) + (it.width || 0) / 2;
+                const blkCy = (it.top != null ? it.top : 0) + (it.height || 0) / 2;
+                const block = { pageId: sourcePageId, side: sourceSide || null, sourceText: String(it.text || ""), center: { x: blkCx, y: blkCy }, width: it.width != null ? it.width : null, height: it.height != null ? it.height : null, fontSize: it.fontSize != null ? it.fontSize : null, fontFamily: it.fontFamily || null, layerNum: layerNum };
+                const reuseMatch = zyAnchorMatch(nativeAnchors, block);
+                if (reuseMatch.verdict === "MATCH" && reuseMatch.matchedIndex != null && nativeAnchors[reuseMatch.matchedIndex]) {
+                  const reusedObj = nativeAnchors[reuseMatch.matchedIndex].object || null;
+                  if (reusedObj) {
+                    try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.text === "string") { if (typeof reusedObj.setText === "function") reusedObj.setText(it.text); else reusedObj.text = it.text; } } catch (eSet) {}
+                    const bIdxNat2 = it.blockIndex != null ? it.blockIndex : idx;
+                    reusedObj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat2) : ("zy-ocr-" + bIdxNat2);
+                    reusedObj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat2, objectUuid: reusedObj.uuid || reusedObj.multiUuid || null };
+                    try { if (it.diagnostics) reusedObj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
+                    const gRe = measureObjectGeometry(diy.canvas, reusedObj);
+                    createdNat.push({ blockIndex: bIdxNat2, objectIndex: diy.canvas.getObjects().indexOf(reusedObj), uuid: reusedObj.uuid || reusedObj.multiUuid || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gRe, reused: true, anchorMatch: { verdict: reuseMatch.verdict, score: reuseMatch.matchScore, margin: reuseMatch.margin } });
+                    editorInteg2.anchorResolver.reused += 1;
+                    continue;
+                  }
+                } else if (reuseMatch.verdict === "NATIVE_ANCHOR_UNCERTAIN") {
+                  editorInteg2.anchorResolver.uncertain += 1;
+                } else {
+                  editorInteg2.anchorResolver.unmatched += 1;
+                }
+              }
+              editorInteg2.anchorResolver.created += 1;
               const entry = buildTextMediaEntry(it, layerNum, fontId);
               let obj = null;
               try {
