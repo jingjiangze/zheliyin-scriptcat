@@ -216,7 +216,7 @@ function compareQuad(target, actual) {
   } catch (e) { out.errors.push(String(e && e.message || e).slice(0, 400)); }
   finally { try { page && await page.close(); } catch (e) {} try { browser && await browser.close(); } catch (e) {} }
   fs.mkdirSync(REPORT_DIR, { recursive: true });
-  const name = "background-image-audit-" + (process.env.ZY_CASES || "A0,B10,C30,D45s05").replace(/[,\/]/g, "-") + ".json";
+  const name = process.env.ZY_OUT || ("background-image-audit-" + (process.env.ZY_CASES || "A0,B10,C30,D45s05").replace(/[,\/]/g, "-") + ".json"); // ZY_OUT：短输出名（规避超长路径 MAX_PATH）
   fs.writeFileSync(path.join(REPORT_DIR, name), JSON.stringify(out, null, 2));
   console.log("STAGE-8B STEP5 done cases=" + out.cases.length + " errors=" + out.errors.length + " -> " + path.join(REPORT_DIR, name));
   console.log("summary: " + out.cases.map((c) => c.id + "=" + (c.passSummary ? (c.passSummary.pass + "/" + c.passSummary.blocks) : "n/a")).join(" "));
