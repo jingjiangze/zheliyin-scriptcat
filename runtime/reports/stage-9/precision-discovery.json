@@ -1,0 +1,79 @@
+{
+  "ts": "2026-09-20T05:50:46.837Z",
+  "stage": "STAGE-9-PRECISION-DISCOVERY",
+  "branch": "stage-9-altq-baidu-reconstruction",
+  "url": "https://diy.zheliyin.com/siteWeb/userCenterJsj/OCRTool.do",
+  "errors": [],
+  "cookieNames": [
+    "SESSION[REDACTED]",
+    "diy-User-third",
+    "Hm_lvt_d520b29109368bfb557295626af72342",
+    "HMACCOUNT",
+    "thirdMember[REDACTED]",
+    "lastAccessTime",
+    "Hm_lpvt_d520b29109368bfb557295626af72342",
+    "thirdLocalForage"
+  ],
+  "cookiePresent": true,
+  "title": "智能设计定制未来",
+  "ui": {
+    "found": [
+      "当前位置： 常用推荐  文字识别|breadcrumb|",
+      "文字识别||",
+      "印刷体 手写体||",
+      "印刷体|el-radio|",
+      "印刷体|el-radio__label|",
+      "手写体|el-radio is-focus is-checked|",
+      "手写体|el-radio__label|",
+      "将截图或者图片粘贴、复制到此处|el-col el-col-12|",
+      "Ctrl+v粘贴、添加到此处|el-row|",
+      "Ctrl+v粘贴、添加到此处|el-col el-col-12|",
+      "Ctrl+v粘贴、添加到此处||",
+      "Ctrl+v粘贴、添加到此处|el-upload el-upload--text|",
+      "Ctrl+v粘贴、添加到此处|img-box|"
+    ],
+    "radio": [
+      {
+        "name": "",
+        "value": "1",
+        "checked": false,
+        "cls": "el-radio__original"
+      },
+      {
+        "name": "",
+        "value": "2",
+        "checked": true,
+        "cls": "el-radio__original"
+      }
+    ],
+    "vueTextType": "2",
+    "vueDataKeys": [
+      "recogText",
+      "textType"
+    ],
+    "bodyHead": "模板中心\n设计工具\n功能介绍\n 常用推荐\n 设计工具\n 设计网站\n 设计教程\n当前位置： 常用推荐  文字识别\n文字识别\n印刷体 \n手写体\n将截图或者图片粘贴、复制到此处\n 下载 复制 清空\nCtrl+v粘贴、添加到此处"
+  },
+  "note": "请在窗口中观察『文字识别』工具的选项；若有 精准/高精度 类选项请选中，然后粘贴真实名片图片触发一次识别（脚本只观察，不做任何自动点击）",
+  "lastReq": {
+    "method": "POST",
+    "url": "/siteWeb/userCenterJsj/uploadOCR.do",
+    "formData": [
+      "file=[object File]",
+      "textType=2"
+    ],
+    "status": 200,
+    "body": "{\"success\":true,\"message\":\"8\",\"userData\":\"思考过程<br/>Stage9V3精准模式复测规格收到。本轮先冻结基线,然后取证“精准识别选项的真实HTTP参数(不猜)。冻结确<br/>认<br/>已执行1条命令)<br/>基线冻结(3562干净)。写精准模式U取证脚本(收举OCRToldo全部控件+网络hook捕获真实参数;用户<br/>窗口中人工选择“精准\\\"选项触发一次识别<br/>已创建1个文件><br/>运行精准模式取证——窗口弹出后请:1)观察“文字识别”工具的选项;2)若有“精准高精度”类选项请选中它;3)粘<br/>贴名片图片触发一次识别(脚"
+  },
+  "caughtReqs": [
+    {
+      "method": "POST",
+      "url": "/siteWeb/userCenterJsj/uploadOCR.do",
+      "formData": [
+        "file=[object File]",
+        "textType=2"
+      ],
+      "status": 200,
+      "body": "{\"success\":true,\"message\":\"8\",\"userData\":\"思考过程<br/>Stage9V3精准模式复测规格收到。本轮先冻结基线,然后取证“精准识别选项的真实HTTP参数(不猜)。冻结确<br/>认<br/>已执行1条命令)<br/>基线冻结(3562干净)。写精准模式U取证脚本(收举OCRToldo全部控件+网络hook捕获真实参数;用户<br/>窗口中人工选择“精准\\\"选项触发一次识别<br/>已创建1个文件><br/>运行精准模式取证——窗口弹出后请:1)观察“文字识别”工具的选项;2)若有“精准高精度”类选项请选中它;3)粘<br/>贴名片图片触发一次识别(脚"
+    }
+  ]
+}
