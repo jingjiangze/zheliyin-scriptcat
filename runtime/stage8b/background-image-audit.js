@@ -99,6 +99,7 @@ function compareQuad(target, actual) {
   // 读新建文字对象：全 aCoords quad + 业务字段
   const readNew = (ids) => ev((arg) => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const d = vo && vo.totalCanvasArray && vo.totalCanvasArray[0]; const c = d && d.canvas; if (!c) return { arr: [], canvas: null }; try { c.setCoords && c.setCoords(); } catch (e) {} const arr = []; c.getObjects().forEach((o) => { if (typeof o.text !== "string") return; const id = o.uuid || o.multiUuid; if (arg.ids && arg.ids.length && id != null && arg.ids.indexOf(id) < 0) return; if (!(String(o.zyOcrKey || "").indexOf("zy-ocr-") === 0 || o.zyOcrDiagnostics || o.zy8bTargetQuad || (arg.ids && arg.ids.length && id != null))) return; const ac = o.aCoords || null; const quad = ac && ac.tl ? [ac.tl, ac.tr, ac.br, ac.bl].map((p) => ({ x: p.x, y: p.y })) : null; arr.push({ id: id || null, text: String(o.text || "").slice(0, 14), zyOcrKey: o.zyOcrKey || null, left: o.left, top: o.top, width: o.width, height: o.height, scaleX: o.scaleX, scaleY: o.scaleY, fontSize: o.fontSize, angle: o.angle, originX: o.originX, quad: quad, biz: { locationX: o.locationX, locationY: o.locationY, locationWidth: o.locationWidth, locationHeight: o.locationHeight, locationRotation: o.locationRotation, loc: o.location ? { x: o.location.x, y: o.location.y, width: o.location.width, height: o.location.height, factWidth: o.location.factWidth, factHeight: o.location.factHeight, rotation: o.location.rotation } : null, pointSize: o.media && o.media.font ? o.media.font.pointSize : null } }); }); return { arr, canvas: { width: c.width, height: c.height, viewportTransform: c.viewportTransform ? Array.from(c.viewportTransform) : null, zoom: c.getZoom ? c.getZoom() : null, retina: c.getRetinaScaling ? c.getRetinaScaling() : null } }; }, { ids });
   const armHook = () => ev(() => {
+    if (window.__b8capOn) { try { window.removeEventListener("message", window.__b8capOn); } catch (e) {} }
     window.__b8cap = { prep: [], msg: [], adjust: [], adjustResult: [], createResult: null };
     const on = (e) => {
       if (!e.data) return;
@@ -206,7 +207,7 @@ function compareQuad(target, actual) {
           }
         });
         rec.passSummary = { blocks: rec.compare.length, pass: rec.compare.filter((c) => c.pass).length, fail: rec.compare.filter((c) => !c.pass).length };
-        const rb = await rollback("b8-");
+        const rb = await rollback("b8r-"); // b8r- 前缀：同时清理每 case 注入的图片对象 + OCR 文字（防 active/first 路由图片累积）
         rec.rollback = rb;
         // 清背景图
         await ev(() => { const req = window.requirejs || window.require; const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO); const c = vo && vo.totalCanvasArray && vo.totalCanvasArray[0] && vo.totalCanvasArray[0].canvas; if (c) { try { c.setBackgroundImage(null); if (c.requestRenderAll) c.requestRenderAll(); } catch (e) {} } return { ok: true }; });
