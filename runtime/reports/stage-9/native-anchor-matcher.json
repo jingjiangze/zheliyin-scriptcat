@@ -1,0 +1,418 @@
+{
+  "ts": "2026-09-20T15:03:39.921Z",
+  "stage": "STAGE-9-V9-NATIVE-ANCHOR-MATCHER",
+  "userscriptVersion": "0.3.11.44",
+  "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": true,
+  "note": "read-only; matcher 消费 canvas-space block（OCR→canvas 映射由 image-space 负责，Commit 6 接线）；不含生产 pipeline 改动",
+  "anchors": [
+    {
+      "objectIndex": 5,
+      "label": "山东东方美学美妆工作室",
+      "pageId": "canvas:c0",
+      "side": "FRONT",
+      "sourceText": {
+        "rawText": "山东东方美学美妆工作室"
+      },
+      "style": {
+        "fontSize": 21.20516693228872,
+        "fontFamily": "OPPOSans-R"
+      },
+      "geometry": {
+        "center": {
+          "x": 158.54509383960064,
+          "y": 240.29897500151952
+        },
+        "visualWidth": 243.45616746899418,
+        "visualHeight": 24.961838633486252,
+        "angle": 0
+      },
+      "actualInk": {
+        "lineCount": null
+      },
+      "layerNum": 5,
+      "identity": {
+        "uuid": "09dc38bf-a530-4161-a7c1-c417ef9f31f1",
+        "multiUuid": "49cfa0b8-7422-4eb8-9129-3d8eb8909153"
+      }
+    },
+    {
+      "objectIndex": 6,
+      "label": "Email:dongfang@163.com",
+      "pageId": "canvas:c0",
+      "side": "FRONT",
+      "sourceText": {
+        "rawText": "Email:dongfang@163.com"
+      },
+      "style": {
+        "fontSize": 12.95543959730228,
+        "fontFamily": "OPPOSans-R"
+      },
+      "geometry": {
+        "center": {
+          "x": 147.03090246190646,
+          "y": 275.9177961663421
+        },
+        "visualWidth": 163.59076694614362,
+        "visualHeight": 15.63964674495162,
+        "angle": 0
+      },
+      "actualInk": {
+        "lineCount": null
+      },
+      "layerNum": 6,
+      "identity": {
+        "uuid": "84a023fd-c06e-410f-ad20-4b54af5ad8e0",
+        "multiUuid": "557bc30c-56e4-4b8b-bfbf-0a983825a290"
+      }
+    },
+    {
+      "objectIndex": 7,
+      "label": "Tel:400-8888 8888",
+      "pageId": "canvas:c0",
+      "side": "FRONT",
+      "sourceText": {
+        "rawText": "Tel:400-8888 8888"
+      },
+      "style": {
+        "fontSize": 13,
+        "fontFamily": "OPPOSans-R"
+      },
+      "geometry": {
+        "center": {
+          "x": 131.44643922955237,
+          "y": 298.91423284110306
+        },
+        "visualWidth": 131.9362962242095,
+        "visualHeight": 15.690000000000055,
+        "angle": 0
+      },
+      "actualInk": {
+        "lineCount": null
+      },
+      "layerNum": 7,
+      "identity": {
+        "uuid": "10316dc7-da34-48cf-80fd-d34d4d2febb8",
+        "multiUuid": "a16aa499-464f-4e5c-b79d-5258549dd7cd"
+      }
+    },
+    {
+      "objectIndex": 8,
+      "label": "Add:XX市XX区XX广场A座15层（地铁X号",
+      "pageId": "canvas:c0",
+      "side": "FRONT",
+      "sourceText": {
+        "rawText": "Add:XX市XX区XX广场A座15层（地铁X号线XX站C口步行300米）"
+      },
+      "style": {
+        "fontSize": 13,
+        "fontFamily": "OPPOSans-R"
+      },
+      "geometry": {
+        "center": {
+          "x": 258.7686666838018,
+          "y": 321.9358461433882
+        },
+        "visualWidth": 385,
+        "visualHeight": 15.690000000000055,
+        "angle": 0
+      },
+      "actualInk": {
+        "lineCount": null
+      },
+      "layerNum": 8,
+      "identity": {
+        "uuid": "c7e13e9c-69d9-4df7-a884-f6cdc25d8774",
+        "multiUuid": "21d49fed-295d-4a37-9556-bbdecec05f32"
+      }
+    },
+    {
+      "objectIndex": 9,
+      "label": "主理人",
+      "pageId": "canvas:c0",
+      "side": "FRONT",
+      "sourceText": {
+        "rawText": "主理人"
+      },
+      "style": {
+        "fontSize": 16.28117203437238,
+        "fontFamily": "OPPOSans-R"
+      },
+      "geometry": {
+        "center": {
+          "x": 62.19102293539464,
+          "y": 116.19864936898608
+        },
+        "visualWidth": 50.74802566058227,
+        "visualHeight": 19.39772439884078,
+        "angle": 0
+      },
+      "actualInk": {
+        "lineCount": null
+      },
+      "layerNum": 9,
+      "identity": {
+        "uuid": "60490bd9-b062-4ba6-96f9-33a4d93f7ae9",
+        "multiUuid": "3934d20b-86b9-4227-ba5b-c2b2b2243e45"
+      }
+    },
+    {
+      "objectIndex": 10,
+      "label": "188 8888 6666",
+      "pageId": "canvas:c0",
+      "side": "FRONT",
+      "sourceText": {
+        "rawText": "188 8888 6666"
+      },
+      "style": {
+        "fontSize": 15.838569405606602,
+        "fontFamily": "OPPOSans-R"
+      },
+      "geometry": {
+        "center": {
+          "x": 170.68510562810275,
+          "y": 115.94857888373343
+        },
+        "visualWidth": 114.5097474068473,
+        "visualHeight": 18.89758342833545,
+        "angle": 0
+      },
+      "actualInk": {
+        "lineCount": null
+      },
+      "layerNum": 10,
+      "identity": {
+        "uuid": "96acd5cd-a261-412a-98a4-292c80f86bca",
+        "multiUuid": "a493ad25-1b5b-47b3-876f-8af5e62e1947"
+      }
+    },
+    {
+      "objectIndex": 11,
+      "label": "简 小设",
+      "pageId": "canvas:c0",
+      "side": "FRONT",
+      "sourceText": {
+        "rawText": "简 小设"
+      },
+      "style": {
+        "fontSize": 30.779490573728324,
+        "fontFamily": "OPPOSans-M"
+      },
+      "geometry": {
+        "center": {
+          "x": 136.9304634130626,
+          "y": 78.30039549974896
+        },
+        "visualWidth": 200.22690661591815,
+        "visualHeight": 35.78082434831302,
+        "angle": 0
+      },
+      "actualInk": {
+        "lineCount": null
+      },
+      "layerNum": 11,
+      "identity": {
+        "uuid": "de0d5d42-f668-443b-9687-6d73035d2810",
+        "multiUuid": "0a596bb9-4132-4bea-a03d-db79cfc3cdf7"
+      }
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "ideal-self[山东东方美学美妆工作室]",
+      "expected": "MATCH",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 0,
+      "matchScore": 0.94,
+      "margin": 0.3076,
+      "winnerLabel": "山东东方美学美妆工作室",
+      "passed": true
+    },
+    {
+      "name": "ideal-self[Email:dongfang@163.com]",
+      "expected": "MATCH",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 1,
+      "matchScore": 0.94,
+      "margin": 0.2016,
+      "winnerLabel": "Email:dongfang@163.com",
+      "passed": true
+    },
+    {
+      "name": "ideal-self[Tel:400-8888 8888]",
+      "expected": "MATCH",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 2,
+      "matchScore": 0.94,
+      "margin": 0.2016,
+      "winnerLabel": "Tel:400-8888 8888",
+      "passed": true
+    },
+    {
+      "name": "ideal-self[Add:XX市XX区XX广场A座15层（地铁X号]",
+      "expected": "MATCH",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 3,
+      "matchScore": 0.94,
+      "margin": 0.3709,
+      "winnerLabel": "Add:XX市XX区XX广场A座15层（地铁X号",
+      "passed": true
+    },
+    {
+      "name": "ideal-self[主理人]",
+      "expected": "MATCH",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 4,
+      "matchScore": 0.94,
+      "margin": 0.3414,
+      "winnerLabel": "主理人",
+      "passed": true
+    },
+    {
+      "name": "ideal-self[188 8888 6666]",
+      "expected": "MATCH",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 5,
+      "matchScore": 0.94,
+      "margin": 0.3358,
+      "winnerLabel": "188 8888 6666",
+      "passed": true
+    },
+    {
+      "name": "ideal-self[简 小设]",
+      "expected": "MATCH",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 6,
+      "matchScore": 0.94,
+      "margin": 0.3358,
+      "winnerLabel": "简 小设",
+      "passed": true
+    },
+    {
+      "name": "jitter[山东东方美学美妆工作室]",
+      "expected": "MATCH_OR_UNCERTAIN",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 0,
+      "matchScore": 0.8931,
+      "margin": 0.257,
+      "winnerLabel": "山东东方美学美妆工作室",
+      "passed": true
+    },
+    {
+      "name": "jitter[Email:dongfang@163.com]",
+      "expected": "MATCH_OR_UNCERTAIN",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 1,
+      "matchScore": 0.8931,
+      "margin": 0.177,
+      "winnerLabel": "Email:dongfang@163.com",
+      "passed": true
+    },
+    {
+      "name": "jitter[Tel:400-8888 8888]",
+      "expected": "MATCH_OR_UNCERTAIN",
+      "verdict": "NATIVE_ANCHOR_UNCERTAIN",
+      "reason": "runner-up-too-close-or-ambiguous",
+      "matchedIndex": 2,
+      "matchScore": 0.8931,
+      "margin": 0.1297,
+      "winnerLabel": "Tel:400-8888 8888",
+      "passed": true
+    },
+    {
+      "name": "jitter[Add:XX市XX区XX广场A座15层（地铁X号]",
+      "expected": "MATCH_OR_UNCERTAIN",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 3,
+      "matchScore": 0.8931,
+      "margin": 0.3277,
+      "winnerLabel": "Add:XX市XX区XX广场A座15层（地铁X号",
+      "passed": true
+    },
+    {
+      "name": "jitter[主理人]",
+      "expected": "MATCH_OR_UNCERTAIN",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 4,
+      "matchScore": 0.8931,
+      "margin": 0.281,
+      "winnerLabel": "主理人",
+      "passed": true
+    },
+    {
+      "name": "jitter[188 8888 6666]",
+      "expected": "MATCH_OR_UNCERTAIN",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 5,
+      "matchScore": 0.8931,
+      "margin": 0.2666,
+      "winnerLabel": "188 8888 6666",
+      "passed": true
+    },
+    {
+      "name": "jitter[简 小设]",
+      "expected": "MATCH_OR_UNCERTAIN",
+      "verdict": "MATCH",
+      "reason": "unique-winner-with-margin",
+      "matchedIndex": 6,
+      "matchScore": 0.8931,
+      "margin": 0.268,
+      "winnerLabel": "简 小设",
+      "passed": true
+    },
+    {
+      "name": "foreign-offscreen",
+      "expected": "NO_MATCH",
+      "verdict": "NO_MATCH",
+      "reason": "below-threshold",
+      "matchedIndex": 6,
+      "matchScore": 0.4466,
+      "margin": 0.0192,
+      "winnerLabel": "简 小设",
+      "passed": true
+    },
+    {
+      "name": "page-gate-different-page",
+      "expected": "NO_MATCH",
+      "verdict": "NO_MATCH",
+      "reason": "page-gate: no candidate",
+      "matchedIndex": null,
+      "matchScore": null,
+      "winnerLabel": null,
+      "passed": true
+    },
+    {
+      "name": "near-twin-uncertain",
+      "expected": "MATCH_ANY",
+      "verdict": "NATIVE_ANCHOR_UNCERTAIN",
+      "reason": "runner-up-too-close-or-ambiguous",
+      "matchedIndex": 0,
+      "matchScore": 0.9322,
+      "margin": 0.1015,
+      "winnerLabel": "山东东方美学美妆工作室",
+      "passed": true
+    }
+  ],
+  "summary": {
+    "scenarios": 17,
+    "passed": 17,
+    "anchorCount": 7,
+    "matcher": {
+      "threshold": 0.55,
+      "uncertainMargin": 0.15
+    }
+  },
+  "errors": []
+}
