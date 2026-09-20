@@ -1,0 +1,1085 @@
+{
+  "ts": "2026-09-20T07:24:00.175Z",
+  "stage": "STAGE-9-V4-BAIDU-GEOMETRY-BENCH",
+  "image": "real-card-shengying.png",
+  "roundsPerMode": 2,
+  "method": "pair-shared-region-local-otsu-ink",
+  "caveats": [
+    "height 指标受共享扩展区垂直并线影响（局部少数类前景 bbox 可能跨多行合并），height 轴仅作参考；width/centerX 在单列名片上可信",
+    "Image Ink = 局部 Otsu 少数类前景 bbox（极性无关），非人工标注真值"
+  ],
+  "errors": [],
+  "imageNatural": {
+    "width": 895,
+    "height": 577
+  },
+  "summary": {
+    "verdict": {
+      "centerX": "accurate",
+      "centerY": "accurate",
+      "width": "accurate",
+      "height": "accurate",
+      "widthRelPct": "accurate",
+      "heightRelPct": "standard",
+      "widthDeltaPct": -5.4
+    },
+    "perAxis": {
+      "standard": {
+        "centerX": 23.05,
+        "centerY": 9.85,
+        "width": 114.5,
+        "height": 135.5,
+        "widthRelPct": 20.35
+      },
+      "accurate": {
+        "centerX": 22.85,
+        "centerY": 9.6,
+        "width": 108.3,
+        "height": 134.4,
+        "widthRelPct": 19.75
+      }
+    },
+    "perRound": [
+      {
+        "round": 0,
+        "standard": {
+          "n": 10,
+          "widthMAE": 114.5,
+          "centerXMAE": 23.05,
+          "heightMAE": 135.5,
+          "widthRelPct": 20.350506835606787
+        },
+        "accurate": {
+          "n": 10,
+          "widthMAE": 108.3,
+          "centerXMAE": 22.85,
+          "heightMAE": 134.4,
+          "widthRelPct": 19.749068929731738
+        },
+        "lineCount": {
+          "standard": 10,
+          "accurate": 10
+        }
+      },
+      {
+        "round": 1,
+        "standard": {
+          "n": 10,
+          "widthMAE": 114.5,
+          "centerXMAE": 23.05,
+          "heightMAE": 135.5,
+          "widthRelPct": 20.350506835606787
+        },
+        "accurate": {
+          "n": 10,
+          "widthMAE": 108.3,
+          "centerXMAE": 22.85,
+          "heightMAE": 134.4,
+          "widthRelPct": 19.749068929731738
+        },
+        "lineCount": {
+          "standard": 10,
+          "accurate": 10
+        }
+      }
+    ],
+    "lines": [
+      {
+        "order": 0,
+        "standard": {
+          "words": "吴健湘",
+          "location": {
+            "left": 270,
+            "top": 29,
+            "width": 185,
+            "height": 61
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "吴健湘",
+          "location": {
+            "left": 272,
+            "top": 31,
+            "width": 184,
+            "height": 58
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 272,
+          "y": 35,
+          "w": 222,
+          "h": 93,
+          "pixels": 3579
+        },
+        "err": {
+          "std": {
+            "centerX": 20.5,
+            "centerY": 22,
+            "width": 37,
+            "height": 32,
+            "widthRelPct": 16.666666666666664,
+            "heightRelPct": 34.40860215053764
+          },
+          "acc": {
+            "centerX": 19,
+            "centerY": 21.5,
+            "width": 38,
+            "height": 35,
+            "widthRelPct": 17.117117117117118,
+            "heightRelPct": 37.634408602150536
+          },
+          "stdVsAcc": {
+            "centerX": 1.5,
+            "centerY": 0.5,
+            "width": 1,
+            "height": 3
+          }
+        }
+      },
+      {
+        "order": 1,
+        "standard": {
+          "words": "客户经理",
+          "location": {
+            "left": 492,
+            "top": 41,
+            "width": 112,
+            "height": 33
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "客户经理",
+          "location": {
+            "left": 489,
+            "top": 42,
+            "width": 118,
+            "height": 35
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 494,
+          "y": 46,
+          "w": 112,
+          "h": 31,
+          "pixels": 1339
+        },
+        "err": {
+          "std": {
+            "centerX": 2,
+            "centerY": 4,
+            "width": 0,
+            "height": 2,
+            "widthRelPct": 0,
+            "heightRelPct": 6.451612903225806
+          },
+          "acc": {
+            "centerX": 2,
+            "centerY": 2,
+            "width": 6,
+            "height": 4,
+            "widthRelPct": 5.357142857142857,
+            "heightRelPct": 12.903225806451612
+          },
+          "stdVsAcc": {
+            "centerX": 0,
+            "centerY": 2,
+            "width": 6,
+            "height": 2
+          }
+        }
+      },
+      {
+        "order": 2,
+        "standard": {
+          "words": "Telephone:+8615913171583",
+          "location": {
+            "left": 271,
+            "top": 105,
+            "width": 362,
+            "height": 44
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "Telephone: +8615913171583",
+          "location": {
+            "left": 267,
+            "top": 103,
+            "width": 368,
+            "height": 46
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 193,
+          "y": 35,
+          "w": 516,
+          "h": 188,
+          "pixels": 14123
+        },
+        "err": {
+          "std": {
+            "centerX": 1,
+            "centerY": 2,
+            "width": 154,
+            "height": 144,
+            "widthRelPct": 29.844961240310074,
+            "heightRelPct": 76.59574468085107
+          },
+          "acc": {
+            "centerX": 0,
+            "centerY": 3,
+            "width": 148,
+            "height": 142,
+            "widthRelPct": 28.68217054263566,
+            "heightRelPct": 75.53191489361703
+          },
+          "stdVsAcc": {
+            "centerX": 1,
+            "centerY": 1,
+            "width": 6,
+            "height": 2
+          }
+        }
+      },
+      {
+        "order": 3,
+        "standard": {
+          "words": "佛山盛盈包装制品有限公司",
+          "location": {
+            "left": 275,
+            "top": 178,
+            "width": 508,
+            "height": 64
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "佛山盛盈包装制品有限公司",
+          "location": {
+            "left": 269,
+            "top": 177,
+            "width": 519,
+            "height": 67
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 165,
+          "y": 73,
+          "w": 720,
+          "h": 275,
+          "pixels": 44300
+        },
+        "err": {
+          "std": {
+            "centerX": 4,
+            "centerY": 0.5,
+            "width": 212,
+            "height": 211,
+            "widthRelPct": 29.444444444444446,
+            "heightRelPct": 76.72727272727272
+          },
+          "acc": {
+            "centerX": 3.5,
+            "centerY": 0,
+            "width": 201,
+            "height": 208,
+            "widthRelPct": 27.916666666666668,
+            "heightRelPct": 75.63636363636364
+          },
+          "stdVsAcc": {
+            "centerX": 0.5,
+            "centerY": 0.5,
+            "width": 11,
+            "height": 3
+          }
+        }
+      },
+      {
+        "order": 4,
+        "standard": {
+          "words": "Tel.:0757-88809856",
+          "location": {
+            "left": 277,
+            "top": 246,
+            "width": 278,
+            "height": 39
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "Tel.:0757-88809856",
+          "location": {
+            "left": 274,
+            "top": 246,
+            "width": 283,
+            "height": 40
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 277,
+          "y": 191,
+          "w": 337,
+          "h": 135,
+          "pixels": 12587
+        },
+        "err": {
+          "std": {
+            "centerX": 29.5,
+            "centerY": 7,
+            "width": 59,
+            "height": 96,
+            "widthRelPct": 17.50741839762611,
+            "heightRelPct": 71.11111111111111
+          },
+          "acc": {
+            "centerX": 30,
+            "centerY": 7.5,
+            "width": 54,
+            "height": 95,
+            "widthRelPct": 16.023738872403563,
+            "heightRelPct": 70.37037037037037
+          },
+          "stdVsAcc": {
+            "centerX": 0.5,
+            "centerY": 0.5,
+            "width": 5,
+            "height": 1
+          }
+        }
+      },
+      {
+        "order": 5,
+        "standard": {
+          "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
+          "location": {
+            "left": 277,
+            "top": 271,
+            "width": 571,
+            "height": 57
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
+          "location": {
+            "left": 272,
+            "top": 270,
+            "width": 583,
+            "height": 59
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 155,
+          "y": 153,
+          "w": 729,
+          "h": 293,
+          "pixels": 40615
+        },
+        "err": {
+          "std": {
+            "centerX": 43,
+            "centerY": 0,
+            "width": 158,
+            "height": 236,
+            "widthRelPct": 21.67352537722908,
+            "heightRelPct": 80.54607508532423
+          },
+          "acc": {
+            "centerX": 44,
+            "centerY": 0,
+            "width": 146,
+            "height": 234,
+            "widthRelPct": 20.027434842249658,
+            "heightRelPct": 79.86348122866895
+          },
+          "stdVsAcc": {
+            "centerX": 1,
+            "centerY": 0,
+            "width": 12,
+            "height": 2
+          }
+        }
+      },
+      {
+        "order": 6,
+        "standard": {
+          "words": "佛山鼎盛通生物科技有限公司",
+          "location": {
+            "left": 281,
+            "top": 332,
+            "width": 556,
+            "height": 67
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "佛山鼎盛通生物科技有限公司",
+          "location": {
+            "left": 275,
+            "top": 329,
+            "width": 568,
+            "height": 72
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 161,
+          "y": 215,
+          "w": 723,
+          "h": 300,
+          "pixels": 38956
+        },
+        "err": {
+          "std": {
+            "centerX": 36.5,
+            "centerY": 0.5,
+            "width": 167,
+            "height": 233,
+            "widthRelPct": 23.09820193637621,
+            "heightRelPct": 77.66666666666666
+          },
+          "acc": {
+            "centerX": 36.5,
+            "centerY": 0,
+            "width": 155,
+            "height": 228,
+            "widthRelPct": 21.43845089903181,
+            "heightRelPct": 76
+          },
+          "stdVsAcc": {
+            "centerX": 0,
+            "centerY": 0.5,
+            "width": 12,
+            "height": 5
+          }
+        }
+      },
+      {
+        "order": 7,
+        "standard": {
+          "words": "Tel.:0757-88809856",
+          "location": {
+            "left": 283,
+            "top": 401,
+            "width": 278,
+            "height": 41
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "Tel.: 0757-88809856",
+          "location": {
+            "left": 280,
+            "top": 401,
+            "width": 284,
+            "height": 42
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 283,
+          "y": 344,
+          "w": 338,
+          "h": 136,
+          "pixels": 12529
+        },
+        "err": {
+          "std": {
+            "centerX": 30,
+            "centerY": 9.5,
+            "width": 60,
+            "height": 95,
+            "widthRelPct": 17.75147928994083,
+            "heightRelPct": 69.85294117647058
+          },
+          "acc": {
+            "centerX": 30,
+            "centerY": 10,
+            "width": 54,
+            "height": 94,
+            "widthRelPct": 15.976331360946746,
+            "heightRelPct": 69.11764705882352
+          },
+          "stdVsAcc": {
+            "centerX": 0,
+            "centerY": 0.5,
+            "width": 6,
+            "height": 1
+          }
+        }
+      },
+      {
+        "order": 8,
+        "standard": {
+          "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+          "location": {
+            "left": 284,
+            "top": 423,
+            "width": 601,
+            "height": 58
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+          "location": {
+            "left": 278,
+            "top": 421,
+            "width": 612,
+            "height": 61
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 155,
+          "y": 298,
+          "w": 731,
+          "h": 268,
+          "pixels": 34127
+        },
+        "err": {
+          "std": {
+            "centerX": 64,
+            "centerY": 20,
+            "width": 130,
+            "height": 210,
+            "widthRelPct": 17.783857729138166,
+            "heightRelPct": 78.35820895522389
+          },
+          "acc": {
+            "centerX": 63.5,
+            "centerY": 19.5,
+            "width": 119,
+            "height": 207,
+            "widthRelPct": 16.27906976744186,
+            "heightRelPct": 77.23880597014924
+          },
+          "stdVsAcc": {
+            "centerX": 0.5,
+            "centerY": 0.5,
+            "width": 11,
+            "height": 3
+          }
+        }
+      },
+      {
+        "order": 9,
+        "standard": {
+          "words": "E-mail:sandy.wu@shengying.Itd",
+          "location": {
+            "left": 287,
+            "top": 496,
+            "width": 397,
+            "height": 55
+          },
+          "probability": null
+        },
+        "accurate": {
+          "words": "E-mail:sandy.wu@shengying.ltd",
+          "location": {
+            "left": 284,
+            "top": 496,
+            "width": 403,
+            "height": 54
+          },
+          "probability": null
+        },
+        "ink": {
+          "x": 203,
+          "y": 415,
+          "w": 565,
+          "h": 151,
+          "pixels": 12296
+        },
+        "err": {
+          "std": {
+            "centerX": 0,
+            "centerY": 33,
+            "width": 168,
+            "height": 96,
+            "widthRelPct": 29.734513274336283,
+            "heightRelPct": 63.576158940397356
+          },
+          "acc": {
+            "centerX": 0,
+            "centerY": 32.5,
+            "width": 162,
+            "height": 97,
+            "widthRelPct": 28.67256637168142,
+            "heightRelPct": 64.23841059602648
+          },
+          "stdVsAcc": {
+            "centerX": 0,
+            "centerY": 0.5,
+            "width": 6,
+            "height": 1
+          }
+        }
+      }
+    ],
+    "lineCountPerMode": {
+      "standard": [
+        10,
+        10
+      ],
+      "accurate": [
+        10,
+        10
+      ]
+    }
+  },
+  "raw": {
+    "standard": [
+      {
+        "raw": [
+          {
+            "words": "吴健湘",
+            "location": {
+              "left": 270,
+              "top": 29,
+              "width": 185,
+              "height": 61
+            },
+            "probability": null
+          },
+          {
+            "words": "客户经理",
+            "location": {
+              "left": 492,
+              "top": 41,
+              "width": 112,
+              "height": 33
+            },
+            "probability": null
+          },
+          {
+            "words": "Telephone:+8615913171583",
+            "location": {
+              "left": 271,
+              "top": 105,
+              "width": 362,
+              "height": 44
+            },
+            "probability": null
+          },
+          {
+            "words": "佛山盛盈包装制品有限公司",
+            "location": {
+              "left": 275,
+              "top": 178,
+              "width": 508,
+              "height": 64
+            },
+            "probability": null
+          },
+          {
+            "words": "Tel.:0757-88809856",
+            "location": {
+              "left": 277,
+              "top": 246,
+              "width": 278,
+              "height": 39
+            },
+            "probability": null
+          },
+          {
+            "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
+            "location": {
+              "left": 277,
+              "top": 271,
+              "width": 571,
+              "height": 57
+            },
+            "probability": null
+          },
+          {
+            "words": "佛山鼎盛通生物科技有限公司",
+            "location": {
+              "left": 281,
+              "top": 332,
+              "width": 556,
+              "height": 67
+            },
+            "probability": null
+          },
+          {
+            "words": "Tel.:0757-88809856",
+            "location": {
+              "left": 283,
+              "top": 401,
+              "width": 278,
+              "height": 41
+            },
+            "probability": null
+          },
+          {
+            "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+            "location": {
+              "left": 284,
+              "top": 423,
+              "width": 601,
+              "height": 58
+            },
+            "probability": null
+          },
+          {
+            "words": "E-mail:sandy.wu@shengying.Itd",
+            "location": {
+              "left": 287,
+              "top": 496,
+              "width": 397,
+              "height": 55
+            },
+            "probability": null
+          }
+        ],
+        "lineCount": 10,
+        "meta": {
+          "mode": "standard",
+          "profile": "STANDARD_POSITION",
+          "endpoint": "https://aip.baidubce.com/rest/2.0/ocr/v1/general"
+        }
+      },
+      {
+        "raw": [
+          {
+            "words": "吴健湘",
+            "location": {
+              "left": 270,
+              "top": 29,
+              "width": 185,
+              "height": 61
+            },
+            "probability": null
+          },
+          {
+            "words": "客户经理",
+            "location": {
+              "left": 492,
+              "top": 41,
+              "width": 112,
+              "height": 33
+            },
+            "probability": null
+          },
+          {
+            "words": "Telephone:+8615913171583",
+            "location": {
+              "left": 271,
+              "top": 105,
+              "width": 362,
+              "height": 44
+            },
+            "probability": null
+          },
+          {
+            "words": "佛山盛盈包装制品有限公司",
+            "location": {
+              "left": 275,
+              "top": 178,
+              "width": 508,
+              "height": 64
+            },
+            "probability": null
+          },
+          {
+            "words": "Tel.:0757-88809856",
+            "location": {
+              "left": 277,
+              "top": 246,
+              "width": 278,
+              "height": 39
+            },
+            "probability": null
+          },
+          {
+            "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
+            "location": {
+              "left": 277,
+              "top": 271,
+              "width": 571,
+              "height": 57
+            },
+            "probability": null
+          },
+          {
+            "words": "佛山鼎盛通生物科技有限公司",
+            "location": {
+              "left": 281,
+              "top": 332,
+              "width": 556,
+              "height": 67
+            },
+            "probability": null
+          },
+          {
+            "words": "Tel.:0757-88809856",
+            "location": {
+              "left": 283,
+              "top": 401,
+              "width": 278,
+              "height": 41
+            },
+            "probability": null
+          },
+          {
+            "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+            "location": {
+              "left": 284,
+              "top": 423,
+              "width": 601,
+              "height": 58
+            },
+            "probability": null
+          },
+          {
+            "words": "E-mail:sandy.wu@shengying.Itd",
+            "location": {
+              "left": 287,
+              "top": 496,
+              "width": 397,
+              "height": 55
+            },
+            "probability": null
+          }
+        ],
+        "lineCount": 10,
+        "meta": {
+          "mode": "standard",
+          "profile": "STANDARD_POSITION",
+          "endpoint": "https://aip.baidubce.com/rest/2.0/ocr/v1/general"
+        }
+      }
+    ],
+    "accurate": [
+      {
+        "raw": [
+          {
+            "words": "吴健湘",
+            "location": {
+              "left": 272,
+              "top": 31,
+              "width": 184,
+              "height": 58
+            },
+            "probability": null
+          },
+          {
+            "words": "客户经理",
+            "location": {
+              "left": 489,
+              "top": 42,
+              "width": 118,
+              "height": 35
+            },
+            "probability": null
+          },
+          {
+            "words": "Telephone: +8615913171583",
+            "location": {
+              "left": 267,
+              "top": 103,
+              "width": 368,
+              "height": 46
+            },
+            "probability": null
+          },
+          {
+            "words": "佛山盛盈包装制品有限公司",
+            "location": {
+              "left": 269,
+              "top": 177,
+              "width": 519,
+              "height": 67
+            },
+            "probability": null
+          },
+          {
+            "words": "Tel.:0757-88809856",
+            "location": {
+              "left": 274,
+              "top": 246,
+              "width": 283,
+              "height": 40
+            },
+            "probability": null
+          },
+          {
+            "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
+            "location": {
+              "left": 272,
+              "top": 270,
+              "width": 583,
+              "height": 59
+            },
+            "probability": null
+          },
+          {
+            "words": "佛山鼎盛通生物科技有限公司",
+            "location": {
+              "left": 275,
+              "top": 329,
+              "width": 568,
+              "height": 72
+            },
+            "probability": null
+          },
+          {
+            "words": "Tel.: 0757-88809856",
+            "location": {
+              "left": 280,
+              "top": 401,
+              "width": 284,
+              "height": 42
+            },
+            "probability": null
+          },
+          {
+            "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+            "location": {
+              "left": 278,
+              "top": 421,
+              "width": 612,
+              "height": 61
+            },
+            "probability": null
+          },
+          {
+            "words": "E-mail:sandy.wu@shengying.ltd",
+            "location": {
+              "left": 284,
+              "top": 496,
+              "width": 403,
+              "height": 54
+            },
+            "probability": null
+          }
+        ],
+        "lineCount": 10,
+        "meta": {
+          "mode": "accurate",
+          "profile": "ACCURATE_POSITION",
+          "endpoint": "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate"
+        }
+      },
+      {
+        "raw": [
+          {
+            "words": "吴健湘",
+            "location": {
+              "left": 272,
+              "top": 31,
+              "width": 184,
+              "height": 58
+            },
+            "probability": null
+          },
+          {
+            "words": "客户经理",
+            "location": {
+              "left": 489,
+              "top": 42,
+              "width": 118,
+              "height": 35
+            },
+            "probability": null
+          },
+          {
+            "words": "Telephone: +8615913171583",
+            "location": {
+              "left": 267,
+              "top": 103,
+              "width": 368,
+              "height": 46
+            },
+            "probability": null
+          },
+          {
+            "words": "佛山盛盈包装制品有限公司",
+            "location": {
+              "left": 269,
+              "top": 177,
+              "width": 519,
+              "height": 67
+            },
+            "probability": null
+          },
+          {
+            "words": "Tel.:0757-88809856",
+            "location": {
+              "left": 274,
+              "top": 246,
+              "width": 283,
+              "height": 40
+            },
+            "probability": null
+          },
+          {
+            "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
+            "location": {
+              "left": 272,
+              "top": 270,
+              "width": 583,
+              "height": 59
+            },
+            "probability": null
+          },
+          {
+            "words": "佛山鼎盛通生物科技有限公司",
+            "location": {
+              "left": 275,
+              "top": 329,
+              "width": 568,
+              "height": 72
+            },
+            "probability": null
+          },
+          {
+            "words": "Tel.: 0757-88809856",
+            "location": {
+              "left": 280,
+              "top": 401,
+              "width": 284,
+              "height": 42
+            },
+            "probability": null
+          },
+          {
+            "words": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+            "location": {
+              "left": 278,
+              "top": 421,
+              "width": 612,
+              "height": 61
+            },
+            "probability": null
+          },
+          {
+            "words": "E-mail:sandy.wu@shengying.ltd",
+            "location": {
+              "left": 284,
+              "top": 496,
+              "width": 403,
+              "height": 54
+            },
+            "probability": null
+          }
+        ],
+        "lineCount": 10,
+        "meta": {
+          "mode": "accurate",
+          "profile": "ACCURATE_POSITION",
+          "endpoint": "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate"
+        }
+      }
+    ]
+  }
+}
