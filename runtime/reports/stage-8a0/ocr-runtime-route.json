@@ -1,0 +1,28 @@
+{
+  "generatedAt": "2026-09-19T03:02:25.301Z",
+  "install": "ok",
+  "baiduInject": {
+    "skipped": "inputs not found"
+  },
+  "fixtures": [
+    {
+      "id": "ctl-252438",
+      "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+      "accessible": true,
+      "pageInfo": {
+        "ok": true,
+        "code": "OK",
+        "pageId": "canvas:c0",
+        "side": "FRONT",
+        "cc": 1
+      },
+      "click": {
+        "clicked": true,
+        "via": "#zy-native-ocr-btn"
+      },
+      "finalStatus": "已生成 3 个文字（可双击编辑）",
+      "errors": []
+    }
+  ],
+  "errors": []
+}

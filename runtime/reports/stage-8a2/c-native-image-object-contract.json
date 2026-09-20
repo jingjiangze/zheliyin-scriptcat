@@ -1,0 +1,91 @@
+{
+  "ts": "2026-09-19T08:48:59.495Z",
+  "stage": "8A2-C3",
+  "subject": "站点原生 drawImg(2 参) 创建的真实 image object 字段契约（1040459, itemList=0）",
+  "verdict": "C_NATIVE_IMAGE_OBJECT = CONFIRMED（真机原生 drawImg 创建；不再依赖 Ctrl+V）",
+  "howCreated": "CanvasDiy.drawImg(dataUrl, {x:40,y:40,factWidth:140,factHeight:42,isqrcode:'0'}) — f 第三参 undefined（photoupload 相同入口形态）",
+  "record": {
+    "IDENTITY": {
+      "uuid": {
+        "type": "string",
+        "samplePrefix": "06684998...",
+        "note": "ua 内 C() 生成（新增路径）"
+      },
+      "multiUuid": {
+        "type": "string",
+        "samplePrefix": "4656e0f5...",
+        "note": ".pageWrapMulti 存在时生成"
+      },
+      "markuuid": {
+        "type": "string|null",
+        "value": null
+      },
+      "zyBare": {
+        "type": "undefined",
+        "note": "非站点字段（仅诊断标记，真实对象无）"
+      }
+    },
+    "GEOMETRY": {
+      "type": "image",
+      "width": {
+        "type": "number",
+        "value": 127
+      },
+      "height": {
+        "type": "number",
+        "value": 38.1
+      },
+      "scaleX": 1,
+      "scaleY": 1,
+      "left": 40,
+      "top": 40,
+      "angle": 0,
+      "originX": "left",
+      "originY": "top",
+      "bigPicWidth": 1000,
+      "noCutWidth": 127,
+      "lockUniScaling": false
+    },
+    "MEDIA": {
+      "mediaMediaType": "image",
+      "mediaImgPath": {
+        "type": "string",
+        "sample": "data:image/png;base64,iVBOR...(截断)",
+        "note": "生产为 assets/resource/... 或 S3 URL"
+      },
+      "isqrcode": "0",
+      "layerAlpha": "1.00",
+      "isEdit": true,
+      "mediaIsBG": false,
+      "protoVisible": true,
+      "hasMediaProp": false,
+      "note": "注意：对象本身无 .media 属性（业务字段在顶层）"
+    },
+    "REGISTRY": {
+      "inCanvasToProductObjArr": true,
+      "index": 0,
+      "canvasObjLenAfter": "9",
+      "regLenAfter": "1"
+    },
+    "itemListEffect": {
+      "afterDrawImg": 0,
+      "note": "drawImg 不写 itemList；itemList 由 setItemListJson 建立"
+    },
+    "vsBareFabricImage": {
+      "bareHasMediaMediaType": false,
+      "bareMissing": [
+        "mediaMediaType",
+        "mediaImgPath",
+        "layerAlpha",
+        "isEdit",
+        "mediaIsBG",
+        "protoVisible",
+        "noCutWidth",
+        "bigPicWidth",
+        "lockUniScaling",
+        "uuid(multiUuid)"
+      ],
+      "conclusion": "serializer 以 mediaMediaType 为过滤键；裸 Fabric.Image 无 → 被跳过（实证 bare→ilAfter=0）"
+    }
+  }
+}

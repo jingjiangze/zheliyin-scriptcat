@@ -1,0 +1,121 @@
+{
+  "ts": "2026-09-19T08:48:59.495Z",
+  "stage": "8A2-C3",
+  "subject": "ProductDataModel.setItemListJson 契约与 H_NATIVE_IMAGE_SERIALIZER",
+  "verdict": "C_NATIVE_SERIALIZER = PASS；H_NATIVE_IMAGE_SERIALIZER = TRUE",
+  "signature": {
+    "site": "ProductDataModel.getInstance().setItemListJson(objects, pageIdx, canvasDiy)",
+    "arity": 3,
+    "siteCode": "ia.prototype.setItemListJson=function(a,d,m) @ProductDataModel",
+    "note": "页面命中 ProductDataModel（getInstance()），非 ItemDataModel（4 参、不写 pageList）"
+  },
+  "behavior": [
+    "1. m.handlerOutCanvasObj() （需要 canvasDiy 实例）",
+    "2. scan canvas.getObjects() → filter mediaMediaType 非空 且 != TEXT(trim空)/environment9/pasteLocationLog/circleLine → a=w（objects 参数被覆盖）",
+    "3. p=c.pageList[d]（ProductVO）; p.content.itemList=[] 清空重建",
+    "4. mediaMediaType==image → Q(obj) 生成 geometry(fromURL 实测: width=127,height=38.1) → 拼接 layer/media JSON → R() JSON.parse 校验（location/printLocation width/height>0） → p.content.itemList[index]=item"
+  ],
+  "matrix": {
+    "native drawImg-created image": {
+      "ilBefore": 0,
+      "ilAfter": 1,
+      "itemMediaType": "image",
+      "note": "EXP2 实证"
+    },
+    "bare fabric.Image": {
+      "ilBefore": 0,
+      "ilAfter": 0,
+      "types": [],
+      "note": "EXP3A 实证（无 mediaMediaType 被过滤）"
+    },
+    "bare + 补 native 字段": {
+      "ilBefore": 0,
+      "ilAfter": 1,
+      "types": [
+        "image"
+      ],
+      "note": "EXP3B 实证（字段决定识别，非 prototype）"
+    }
+  },
+  "item0Schema": {
+    "topKeys": [
+      "layer",
+      "isEdit",
+      "rightsMaterial",
+      "gildMaterial",
+      "media",
+      "topEnable",
+      "resourceType",
+      "maskEnable",
+      "isDisplay",
+      "printLocation",
+      "lowPixelFlag",
+      "visible",
+      "deleteState",
+      "location",
+      "visitLevel",
+      "selectEnabled",
+      "isDesign",
+      "isComposite",
+      "isPreview",
+      "isDesignShape",
+      "noCutWidth",
+      "markuuid",
+      "resouceCategoryId",
+      "materialDragType",
+      "rightType",
+      "zdsc",
+      "uuid",
+      "multiUuid",
+      "designableArea",
+      "pageNumLeftUuid"
+    ],
+    "mediaKeys": [
+      "isBG",
+      "imgPath",
+      "imgPathBlack",
+      "oldImgPath",
+      "highEditImgPath",
+      "enhancesize",
+      "pngStroke",
+      "pngStrokeWidth",
+      "mediaType",
+      "isqrcode",
+      "textChange",
+      "personflag",
+      "cmykSpecial",
+      "appointCmyk"
+    ],
+    "locationKeys": [
+      "x",
+      "y",
+      "width",
+      "height",
+      "factWidth",
+      "factHeight",
+      "rotation"
+    ],
+    "printLocationKeys": [
+      "x",
+      "y",
+      "width",
+      "height",
+      "rotation"
+    ],
+    "layerKeys": [
+      "alpha"
+    ],
+    "uuidPreserved": true,
+    "isEdit": true,
+    "visible": true,
+    "mediaType": "image",
+    "isBG": false
+  },
+  "closedLoop": {
+    "drawImg(2arg) -> setItemListJson -> itemList>=1 -> drawText": {
+      "drawTextOk": true,
+      "afterObjLen": 10,
+      "note": "EXP4 实证：undefined.media 消除"
+    }
+  }
+}

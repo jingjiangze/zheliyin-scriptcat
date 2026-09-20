@@ -1,0 +1,280 @@
+{
+  "ts": "2026-09-20T05:03:13.156Z",
+  "stage": "STAGE-9-P0-NATIVE-OCR",
+  "branch": "stage-9-altq-baidu-reconstruction",
+  "url": "https://diy.zheliyin.com/siteWeb/userCenterJsj/OCRTool.do",
+  "cookieNames": [
+    "SESSION[REDACTED]",
+    "diy-User-third",
+    "Hm_lvt_d520b29109368bfb557295626af72342",
+    "HMACCOUNT",
+    "thirdMember[REDACTED]",
+    "lastAccessTime",
+    "Hm_lpvt_d520b29109368bfb557295626af72342",
+    "thirdLocalForage"
+  ],
+  "cookieInjected": true,
+  "navs": [
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/userCenterJsj/OCRTool.do",
+      "ct": "text/html;charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/js/libs/jquery-1.11.1.min.js",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/skins/imgs/jsj/logo.png",
+      "ct": "image/png"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/skins/imgs/jsj/loading-page.svg",
+      "ct": "image/svg+xml"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/js/common/globalAjax.js",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/skins/css/jsj/css/iconfont.css",
+      "ct": "text/css"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/js/common/globalMessage.js",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/js/common/commonUtil.js",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/js/libs/vue.min.js",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/skins/css/jsj/css/template-center.css?v=20260707017",
+      "ct": "text/css"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/js/libs/element-ui.min.js",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/skins/css/jsj/css/element-ui/element-ui.css",
+      "ct": "text/css"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb//js/libs/layer/layer.js",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/js/jsj/toolUse.js?v=20260707017",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/js/libs/vue-lazyload.js",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/js/jsj/iconfont.js",
+      "ct": "application/javascript; charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb//js/libs/layer/skin/default/layer.css?v=3.0.11110",
+      "ct": "text/css"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb//jsj/getDesignTool.do",
+      "ct": "application/json;charset=UTF-8"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/skins/css/jsj/css/element-ui/fonts/element-icons.woff",
+      "ct": "application/x-font-woff"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/skins/css/jsj/fonts/iconfont.woff?t=1588836658661",
+      "ct": "application/x-font-woff"
+    },
+    {
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/userCenterJsj/uploadOCR.do",
+      "ct": "application/json;charset=UTF-8"
+    }
+  ],
+  "pages": [],
+  "scripts": [
+    "https://hm.baidu.com/hm.js?d520b29109368bfb557295626af72342",
+    "https://diy.zheliyin.com/siteWeb/js/libs/jquery-1.11.1.min.js",
+    "https://diy.zheliyin.com/siteWeb/js/common/globalAjax.js",
+    "https://diy.zheliyin.com/siteWeb/js/common/globalMessage.js",
+    "https://diy.zheliyin.com/siteWeb/js/common/commonUtil.js",
+    "https://diy.zheliyin.com/siteWeb//js/libs/layer/layer.js",
+    "https://diy.zheliyin.com/siteWeb/js/libs/vue.min.js",
+    "https://diy.zheliyin.com/siteWeb/js/libs/element-ui.min.js",
+    "https://diy.zheliyin.com/siteWeb/js/libs/vue-lazyload.js",
+    "https://diy.zheliyin.com/siteWeb/js/jsj/iconfont.js",
+    "https://diy.zheliyin.com/siteWeb/js/jsj/toolUse.js?v=20260707017"
+  ],
+  "inlineScan": [],
+  "staticHits": [
+    {
+      "src": "https://diy.zheliyin.com/siteWeb/js/libs/jquery-1.11.1.min.js",
+      "keys": [
+        "k1",
+        "k2"
+      ],
+      "samples": [
+        "unrecognized"
+      ]
+    },
+    {
+      "src": "https://diy.zheliyin.com/siteWeb/js/common/globalAjax.js",
+      "keys": [
+        "k2"
+      ],
+      "samples": []
+    },
+    {
+      "src": "https://diy.zheliyin.com/siteWeb/js/libs/vue.min.js",
+      "keys": [
+        "k2"
+      ],
+      "samples": []
+    },
+    {
+      "src": "https://diy.zheliyin.com/siteWeb/js/libs/element-ui.min.js",
+      "keys": [
+        "k1",
+        "k2",
+        "k3"
+      ],
+      "samples": [
+        "upload",
+        "e.prototype.doCreateChildren",
+        "t.doCreateChildren",
+        "i.root.doCreateChildren",
+        "upload",
+        "upload",
+        "upload",
+        "uploading"
+      ]
+    },
+    {
+      "src": "https://diy.zheliyin.com/siteWeb/js/jsj/iconfont.js",
+      "keys": [
+        "k1"
+      ],
+      "samples": [
+        "psdupload"
+      ]
+    },
+    {
+      "src": "https://diy.zheliyin.com/siteWeb/js/jsj/toolUse.js?v=20260707017",
+      "keys": [
+        "k0",
+        "k1",
+        "k2",
+        "k3"
+      ],
+      "samples": [
+        "this.emptyOcrText",
+        "userCenterJsj/uploadOCR.do",
+        "beforeImageUpload",
+        "handleUploadForm",
+        "userCenterJsj/uploadOCR.do",
+        "handleUpload",
+        "uploadSuccess",
+        "copyOcrText"
+      ]
+    }
+  ],
+  "hooks": {
+    "xhr": [
+      {
+        "method": "GET",
+        "url": "/siteWeb//jsj/getDesignTool.do",
+        "bodyType": "string",
+        "bodyLen": null,
+        "formKeys": null,
+        "status": 200,
+        "respType": "",
+        "body": "[len:10937]",
+        "ts": 258
+      },
+      {
+        "method": "POST",
+        "url": "/siteWeb/userCenterJsj/uploadOCR.do",
+        "bodyType": "FormData",
+        "bodyLen": null,
+        "formKeys": [
+          "file",
+          "textType"
+        ],
+        "status": 200,
+        "respType": "",
+        "body": "{\"success\":true,\"message\":\"0\",\"userData\":\"TraeWork<br/>思考过程><br/>先读新附件内容，再结合 cookie=[REDACTED]：找到OCRTool.do 的真实OCR协议并证明可直调（绕过按钮）。用户提供了有效<br/>登录 Cookie=[REDACTED]状态并审计运行时来源（§二<br/>S9P0-A Git 冻结+ runtime-manifest/@require 来源审计(demo/test 混用记录，不改)><br/>已创建1个文件><br/>启动深度取证（注入Cookie=[REDACTED]一<br/>次识别（脚本只观察网络，不做任何点击/坐标自动化；100秒捕获窗口<br/>正在执行命令><br/>\"}",
+        "ts": 28339
+      }
+    ],
+    "fetch": [],
+    "ws": [],
+    "beacon": [],
+    "paste": [
+      {
+        "types": [
+          "Files"
+        ],
+        "items": [
+          {
+            "kind": "file",
+            "type": "image/png"
+          }
+        ],
+        "ts": 27203
+      }
+    ],
+    "file": [
+      {
+        "op": "readAsDataURL",
+        "file": {
+          "name": "image.png",
+          "size": 87205,
+          "type": "image/png"
+        },
+        "ts": 27205
+      }
+    ],
+    "canvas": [],
+    "err": null
+  },
+  "errors": [],
+  "consoleDiag": [
+    "TypeError: Cannot set properties of undefined (setting 'isPrintTmpl')\n    at wn.beforeCreate (https://diy.zheliyin.com/siteWeb/js/jsj/toolUse.js?v=20260707017:2:493)\n    at He (https://diy.zheliyin.com/siteWeb/js/libs/vue.min.js:6:11397)\n    at Yt (https://diy.zheliyin.com/siteWeb/js/libs/vue.min.js"
+  ],
+  "finalUrl": "https://diy.zheliyin.com/siteWeb/userCenterJsj/OCRTool.do",
+  "title": "智能设计定制未来",
+  "bodyHead": "模板中心\n设计工具\n功能介绍\n 常用推荐\n 设计工具\n 设计网站\n 设计教程\n当前位置： 常用推荐  文字识别\n文字识别\n印刷体 \n手写体\n将截图或者图片粘贴、复制到此处\n 下载 复制 清空\nCtrl+v粘贴、添加到此处",
+  "iframes": [],
+  "inlineScriptCount": 1,
+  "collectNote": "窗口内请手动粘贴/选取测试图片触发一次识别（脚本仅观察网络，不做点击/坐标自动化）"
+}

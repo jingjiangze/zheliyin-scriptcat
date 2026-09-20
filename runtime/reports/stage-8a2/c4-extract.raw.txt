@@ -1,0 +1,97 @@
+## ua FULL=6655 start=137532 end=144187
+### ua 尾部（5500 起）
+b.threeDTxetProperty?(l.threeDTxetProperty=b.threeDTxetProperty,l.moveTo(b.layerNum),e.canvasObjInfo.canvasToProductObjArr.splice(Number(b.layerNum),0,l),c(".saveLoading").hide(),c(".saveLoading p").text("正在保存...")):e.canvasObjInfo.canvasToProductObjArr.push(l);l.setCoords();e.canvas.requestRenderAll();if(!b||0!=b.XlayerNum&&!b.XlayerNum)l.uuid=C(),requirejs(["SimpleCommandManager","CreateLayerThumbnailCommand"],
+function(a,b){l.applyFilters();a.getInstance().excute(new b(l))});e.updateBleedLevel()}0==q&&(f||(e.CheckImgPixel(l),z.getInstance().save()),ca&&l.cutAreaWidth&&""!=l.cutAreaWidth?e.reCutImg([l],!1,!0):e.checkObjsInProductJson(f));0<c(".codeItem .hiddenExistsFill").length&&c(".codeItem .hiddenExistsFill").is(":checked")&&(c(".codeItem .hiddenExistsFill").trigger("click"),c(".codeItem .hiddenExistsFill").trigger("click"));if(b&&b.imgAddContainer||b&&b.changeImageColor)e.canvas.setActiveObject(l),e.updatePropPanel();
+b&&"isAlphaStroke"==b.isAlphaStroke&&e.canvas.setActiveObject(l);b&&"F82C9D36D4C8A93BA37A54B3EDF56E2C"===b.markuuid&&(q=e.canvas.getObjects(),1<=q.length&&e.canvas.moveTo(l,q.length-1))}}},{crossOrigin:"anonymous"})}
+
+### ua 全部（重打，含触发点定位）
+ua=function(a,b,f,d,h,e,g,k){if(-1==a.indexOf("base64")&&-1==a.indexOf("MXYZ")&&"99"==c("#typeid").val()&&b&&"1"!=b.isqrcode){var l={imgPath:Utils.largeToNormalImg(a).split("/normal/")[1]};c.ajax({url:contextPath+"/commontool/materialRecognition.do",data:JSON.stringify(l),
+dataType:"json",type:"POST",contentType:"application/json",success:function(a){}})}u.Image.fromURL(a,function(l){if(0!=l.width&&0!=l.height){e.setCornerAndBorderSize(l);if(-1!=a.indexOf(c("#resourcePath").val())||"normal"==g)l.enhancesize=g;l.lockUniScaling=!1;l.bigPicWidth=l.getWidth();if(!h||h.hitB){if(void 0!=f){if(k){var q=k.width/l.width;f.cutArea&&(f.cutArea.x/=q,f.cutArea.y/=q,f.cutArea.width/=q,f.cutArea.height/=q);l.enhancesize=g;f.media.enhancesize=g}f.zdsc&&"false"!=f.zdsc&&(l.zdsc=!0,
+1!=c("#isMask").val()&&(l.evented=!1,l.selectable=!1,e.canvasObjInfo.pasteLocationLog=l));f.rightType&&(l.rightType=f.rightType);P.createObjProductJsonDetail(l,f,e.canvas);l.mediaImgPath=a;void 0==f.filters||f.cutArea||c.each(f.filters,function(a){if("Brightness"==f.filters[a].type){var b=new u.Image.filters.Brightness({brightness:parseFloat(f.filters[a].brightness/255)});l.filters[0]=b;l.applyFilters()}"Contrast"==f.filters[a].type&&(b=new u.Image.filters.Contrast({contrast:parseFloat(f.filters[a].contrast/
+255)}),l.filters[1]=b,l.applyFilters());"ColorMatrix"==f.filters[a].type&&(b=new u.Image.filters.ColorMatrix({matrix:f.filters[a].matrix,vals:f.filters[a].vals}),l.filters[2]=b,l.filters[2].vals=f.filters[a].vals,l.colorMatrixVals=f.filters[a].vals,l.applyFilters());"Saturation"==f.filters[a].type&&(b=new u.Image.filters.Saturation({saturation:parseFloat(f.filters[a].saturate/100)}),l.filters[3]=b,l.applyFilters());"Blur"==f.filters[a].type&&(u.filterBackend=new u.Canvas2dFilterBackend,b=new u.Image.filters.Blur({blur:f.filters[a].blur}),
+l.filters[4]=b,l.applyFilters());"Invert"==f.filters[a].type&&(u.filterBackend=new u.Canvas2dFilterBackend,a=new u.Image.filters.Invert({invertVal:f.filters[a].invertVal}),l.filters[5]=a,l.applyFilters())});void 0!=f.filters&&f.cutArea&&""!=f.cutArea.width&&(l.productFilters=f.filters);null!=f.shadow&&void 0!=f.shadow&&""!=f.shadow&&e.drawShadow(f,l);f.rightsMaterial&&(l.rightsMaterial=!0);"F82C9D36D4C8A93BA37A54B3EDF56E2C"===f.markuuid&&(l.isEdit=!1,l.lockMovementX=!0,l.lockMovementY=!0,l.lockRotation=
+!0,l.lockScalingX=!0,l.lockScalingY=!0);e.canvas.requestRenderAll()}else l.set({originX:"left",originY:"top"}),l.mediaMediaType=m.IAMGE,l.mediaImgPath=a,null!=b&&void 0!=b&&(void 0!=b.angle&&l.setAngle(b.angle),null==b.x&&null==b.y?(l.setLeft((e.currentFactWidth-l.getWidth())/2),l.setTop((e.currentFactHeight-l.getHeight())/2)):(l.setLeft(b.x),l.setTop(b.y)),b.logoCompose&&(l.logoCompose=b.logoCompose),b.markuuid&&(l.markuuid=b.markuuid,"F82C9D36D4C8A93BA37A54B3EDF56E2C"===b.markuuid&&(l.isEdit=!1,
+l.lockMovementX=!0,l.lockMovementY=!0,l.lockRotation=!0,l.lockScalingX=!0,l.lockScalingY=!0)),e.setScaleMaterial(l,b),l.noCutWidth=l.getWidth(),l.isqrcode=b.isqrcode,b.scaleX&&b.scaleY&&(l.scaleX=b.scaleX,l.scaleY=b.scaleY),0<c(".pageWrapMulti").length&&(l.multiUuid=void 0==b.multiUuid||""==b.multiUuid?C():b.multiUuid),l.cmykSpecial=void 0==b.cmykSpecial||0==b.cmykSpecial?!1:b.cmykSpecial,l.appointCmyk=void 0==b.appointCmyk||""==b.appointCmyk?"":b.appointCmyk,void 0!=b.oldMediaImgPath&&(l.oldMediaImgPath=
+b.oldMediaImgPath,void 0!=b.pngStrokeWidth&&void 0!=b.pngStroke&&(l.pngStrokeWidth=b.pngStrokeWidth,l.pngStroke=b.pngStroke)),void 0!=b.highEditMediaImgPath&&(l.highEditMediaImgPath=b.highEditMediaImgPath),void 0!=b.enhancesize&&(l.enhancesize=b.enhancesize),b.gildMaterial&&(c(".rightBtn .export").show(),"59"!=c("#diyTypeNumCup").val()&&"68"!=c("#diyTypeNumCup").val()||c("#submitProduct").show(),l.gildMaterial=!0,l.mediaImgPathBlack=b.mediaImgPathBlack,b.multiUuid&&(l.multiUuid=b.multiUuid),b.angle&&
+(l.angle=b.angle)),b.grayOriginPath&&(l.grayOriginPath=b.grayOriginPath),1==b.lianDanImg&&(l.lianDanImg=b.lianDanImg),b.rightType&&(l.rightType=b.rightType),b.noCutOutFile&&(l.mediaImgPathNoCutOut=b.noCutOutFile)),l.layerAlpha=l.getOpacity().toFixed(2),l.isEdit=!0,l.mediaIsBG=!1,l.protoVisible=l.getVisible();e.canvas.getActiveObject();p.templateInfo.radius&&e.updateDegreeCurve(l);b&&b.selfGroupUuid&&"false"!=b.selfGroupUuid&&(l.selfGroupUuid=b.selfGroupUuid);"1206213"==c("#designerGoodsId").val()&&
+-1!=l.mediaImgPath.indexOf("MXYZ-3978F290A79A4C57B6FB479B2B2B8BA7.png")&&(l.appointCmyk="0,100,100,40");e.canvas.add(l).renderAll();l.setCoords();l.layerHighestB=!1;b&&b.showWidth&&(l.setScaleX(b.showWidth/l.width),l.setScaleY(b.showHeight/l.height));var t=0,q=!1,w;for(w in e.canvasObjInfo.canvasToProductObjArr){if(void 0!=f)break;var n=e.canvasObjInfo.canvasToProductObjArr[w];h&&(n=h);if(n&&"group"==n.type&&1==Ma(l,n,"draging")&&h&&(n.mediaMediaType==m.ADVANCED_IMAGE_MASK||n.mediaMediaType==m.IMAGE_MASK)){q=
+!0;e.canvas.remove(l).renderAll();n.mediaMediaType==m.IMAGE_MASK&&(e.setImgMask(l,n,void 0,"replace"),l.container=n,l.isForRq="TRUE",n.isExist=!0);n.mediaMediaType==m.ADVANCED_IMAGE_MASK&&(e.setAdvanceImgMask(l,n,void 0,"replace"),l.container=n,l.isForRq="TRUE",n.isExist=!0);e.CheckImgPixel(l);z.getInstance().save();void 0!=f&&l.moveTo(f.layerNum);t++;break}}if(0==t){b&&(0==b.XlayerNum||b.XlayerNum)?(l.layerNum=b.XlayerNum,l.markuuid=b.markuuid,e.canvasObjInfo.canvasToProductObjArr.splice(Number(b.XlayerNum),
+1,l),l.uuid=b.uuid,l.moveTo(d),w=l.toDataURL(),c("#"+l.uuid).find("img").attr("src",w)):b&&b.threeDTxetProperty?(l.threeDTxetProperty=b.threeDTxetProperty,l.moveTo(b.layerNum),e.canvasObjInfo.canvasToProductObjArr.splice(Number(b.layerNum),0,l),c(".saveLoading").hide(),c(".saveLoading p").text("正在保存...")):e.canvasObjInfo.canvasToProductObjArr.push(l);l.setCoords();e.canvas.requestRenderAll();if(!b||0!=b.XlayerNum&&!b.XlayerNum)l.uuid=C(),requirejs(["SimpleCommandManager","CreateLayerThumbnailCommand"],
+function(a,b){l.applyFilters();a.getInstance().excute(new b(l))});e.updateBleedLevel()}0==q&&(f||(e.CheckImgPixel(l),z.getInstance().save()),ca&&l.cutAreaWidth&&""!=l.cutAreaWidth?e.reCutImg([l],!1,!0):e.checkObjsInProductJson(f));0<c(".codeItem .hiddenExistsFill").length&&c(".codeItem .hiddenExistsFill").is(":checked")&&(c(".codeItem .hiddenExistsFill").trigger("click"),c(".codeItem .hiddenExistsFill").trigger("click"));if(b&&b.imgAddContainer||b&&b.changeImageColor)e.canvas.setActiveObject(l),e.updatePropPanel();
+b&&"isAlphaStroke"==b.isAlphaStroke&&e.canvas.setActiveObject(l);b&&"F82C9D36D4C8A93BA37A54B3EDF56E2C"===b.markuuid&&(q=e.canvas.getObjects(),1<=q.length&&e.canvas.moveTo(l,q.length-1))}}},{crossOrigin:"anonymous"})}
+
+
+## createObjProductJsonDetail 全库扫描
+  CanvasDiy.js-v20260707017 @85102 : ppointCmyk=purePrevcolors_326CMYK[h]);P.createObjProductJsonDetail(this.bgShapeO
+  CanvasDiy.js-v20260707017 @127384 : .canvas.add(e).renderAll();void 0!=b?(P.createObjProductJsonDetail(e,b,f.canvas)
+  (CanvasDiy.js-v20260707017 更多 13 处…)
+  OneKeyCanvasDiy.js-v20260707017 @7183 : = function(a,b){var c=this;void 0!=b?x.createObjProductJsonDetail(this.bgShapeO
+  OneKeyCanvasDiy.js-v20260707017 @15127 : idth,f=d.height,h=scaleY=1;void 0!=b?(x.createObjProductJsonDetail(d,b,c.canvas)
+  (OneKeyCanvasDiy.js-v20260707017 更多 12 处…)
+  ProductJsonObjAssignment.js-v20260707017 @94 : ","ProductVO"],function(m,c,l,h){return{createObjProductJsonDetail:function(a,b,
+
+
+## setItemListJson 调用点全库扫描
+  --- AddPageNumPropPanel.js-v20260707017 @8688
+  PRE : or(g=r.next();!g.done;g=r.next())(g=g.value)&&0!=Number(g.idName.split("c")[1])&&(l=2*Number(g.idName.split("c")[1])-h,"left"==c.direction&&--l,0>l&&l>A||(l=I(l,b),c.number=l,O(JSON.parse(JSON.stringify(c)),g)));setTimeout(function(){S.getInstance().
+  POST: setItemListJson([], e,C.getCurrentCanvas());for(var c=b,h=R.colorHex(d),w=C.getCurrentCanvas().canvas,g=w._objects,l=Number(u)-1,q,f,r=null,t=null,p=0;p<g.length;p++){var k=g[p];k
+  --- CanvasDiy.js-v20260707017 @245189
+  PRE : ,h.objWidth=b.objWidth,h.objHeight=b.objHeight;a.belongToContainer&&(a.belongToContainer.copyLayerNum=a.copyLayerNum,a=a.belongToContainer);f.push(a);g.length-1==c&& N.create("copyAndPaste").trigger("objectCopy")}})}}0!=f.length&&(a={copiedItems:ea.
+  POST: setItemListJson(f,this.canvas).itemList},d=C(),a.uuidCopy=d,0==c("#uuidCopy").length?c("body").append('\x3cinput style\x3d"display:none"; id\x3d"uuidCopy" value\x3d'+d+"\x3e"):c("#
+  --- CanvasDiy.js-v20260707017 @331709
+  PRE : tArr.push(b))}}(k)),g.push.apply(g,k.childrenElementArr)),k={length:k.length,childrenElementArr:k.childrenElementArr})}var f=g,w=n.currentCanvasNum-1;requirejs(["ProductDataModel"],function(b){c(".canvasWrap .load-page").show();ca=!0;b.getInstance().
+  POST: setItemListJson(a.canvasObjInfo.canvasToProductObjArr,w,a);p.templateInfo.isCupFlatten&&(delete p.templateInfo.radius,c.each(p.pageList,function(a){a= p.pageList[a];for(var b=0;b<
+  --- CustomerHeadMenuBarThird.js-v20260707017 @45350
+  PRE : s.add(m));d.canvas.renderAll();c.pageList[h].viewImageCoupon=d.canvas.toDataURL("image/png");l&&(d.canvas.remove(l),d.canvas.remove(u),d.canvas.remove(t),d.canvas.remove(m));k&&(d.canvas.overlayImage.visible=!0);d.canvas.renderAll()}Fb.getInstance().
+  POST: setItemListJson(d.canvas._objects,h,d);"autoSave"==b&&("autoSave"!=b||"14"!=a("#typeid").val()&&"99"==a("#typeid").val()&&"12"==a("#typeid").val()&&"17"=="#typeid".val())||d.setCan
+  --- DULeftNativePublic.js-v20260707017 @45094
+  PRE : =n.currentCanvasNum-1;for(var g=r.getCurrentCanvas(),m=a.extend([],g.canvas._objects),q=0;q<m.length;q++)"40E94DA28F664112A2AF3AB54C548768"==m[q].markuuid&&"environment9"!=m[q].objType&&e.getInstance().excute(new f(m[q],m[q].canvas));b.getInstance().
+  POST: setItemListJson(n.canvasToProductObjArr,d,g);l.templateInfo.isCupFlatten&&(delete l.templateInfo.radius,a.each(l.pageList,function(a){a=l.pageList[a];for(var b=0;b< a.content.item
+  --- DULeftNativePublic.js-v20260707017 @46205
+  PRE : ,m=r.getCurrentCanvas(),q=m.canvas._objects,k,B=0;B<q.length;B++)if(q[B].mediaMediaType==c.SVG&&"environment9"!=q[B].objType){k=m.canvasObjInfo.canvasToProductObjArr.indexOf(q[B]);e.getInstance().excute(new f(q[B],q[B].canvas));break}b.getInstance().
+  POST: setItemListJson(n.canvasToProductObjArr,h,m);b=l.pageList[h].content.itemList.length; e=[g];l.pageList[h].content.itemList[b-1].media.mediaType==c.PACKING_BOX_IMAGE?(c=a.extend([]
+  --- DULeftNativePublic.js-v20260707017 @48752
+  PRE : {time:1500});else{for(var h=n.currentCanvasNum-1,m=r.getCurrentCanvas(),q=m.canvas._objects,B=0;B<q.length;B++)q[B].mediaMediaType==c.IAMGE&&-1<q[B].mediaImgPath.indexOf("MXYZ-")&&(e.getInstance().excute(new g(q[B],q[B].canvas)),B--);b.getInstance().
+  POST: setItemListJson(n.canvasToProductObjArr,h,m);b=l.pageList[h].content.itemList.concat([]);b[0]&&b[0].media.isBG&&b.splice(0, 1);f.pageList.content.itemList=d.concat(b);r.getCurrent
+  --- DULeftNativePublic.js-v20260707017 @50531
+  PRE : =r.getCurrentCanvas(),q=m.canvas._objects,k,B=0;B<q.length;B++)if(q[B].mediaMediaType==c.SVG&&"environment9"!=q[B].objType){k=m.canvasObjInfo.canvasToProductObjArr.indexOf(q[B]); e.getInstance().excute(new f(q[B],q[B].canvas));break}b.getInstance().
+  POST: setItemListJson(n.canvasToProductObjArr,h,m);b=l.pageList[h].content.itemList.length;e=[g];l.pageList[h].content.itemList[b-1].media.mediaType==c.PACKING_BOX_IMAGE?(c=a.extend([],e
+  --- DULeftNativePublic.js-v20260707017 @331850
+  PRE : (a){return-1<a.indexOf("marked_cup")}),u=$jscomp.makeIterator(u),e=u.next();!e.done;e=u.next())a("#"+e.value).removeAttr("id"); a(this).attr("useFlag",1);if(d)requirejs(["ProductDataModel","LoadFromProductJsonCommand"],function(d,e){d.getInstance().
+  POST: setItemListJson(n.canvasToProductObjArr,0,v);delete l.templateInfo.radius;a.each(l.pageList,function(a){a=l.pageList[a];for(var b=0;b<a.content.itemList.length;b++)a.content.itemLi
+  --- FormatSet.js-v20260707017 @342
+  PRE : t fontdetect layer".split(" "),function(b,g,h,n,r,y,z,A,B,E){var m=n.frontImgPathStr,p=[],C=function(c,b){requirejs(["sundry"],function(b){b.deleteBlank()});null==b||void 0==b?(b=n.currentCanvasNum-1,-1>=b&&(b=0)):0>b&&(b=0);return c=c.getInstance().
+  POST: setItemListJson(n.canvasToProductObjArr,b,n.totalCanvasArray[b])};return{drawFormatItemListById:function(c,u){b(".lodingMask").show();var q=20,t=setInterval(function(){q++; b(".pe
+  --- ItemDataModel.js-v20260707017 @36962
+  PRE : +1,base64Str:a};g=O.toProductJsonErrorArray;a=!1;for(m=0;m<g.length;m++)g[m].width==f.width&&g[m].height==f.height&&g[m].pageNumber==f.pageNumber&&g[m].base64Str==f.base64Str&&(a=!0);a||O.toProductJsonErrorArray.push(f);ca.push(f)}return k}; return{
+  POST: setItemListJson:function(a,h,A,k){ca=[];var g=[],n=O.currentCanvasNum-1;h&&(n=Number(h.contextContainer.canvas.id.split("c")[1]));for(var D=[],c={},b=0;b<a.length;c={scalexWidth:c.
+  --- MultiNewPagePublic.js-v20260707017 @96851
+  PRE : ,0,c),e.canvas.renderAll(),e.setCanvasURL()}}else console.log("没有背景");a(".saveLoading").hide();a(".saveLoading p").text("正在保存...")}}});var ea=function(c,b){if("327"==a("#typeid").val())requirejs(["ItemDataModel"], function(d){var g=Utils.uuid();d=d.
+  POST: setItemListJson([c],c.canvas).itemList[0];if(void 0==c.multiUuid||""==c.multiUuid)c.multiUuid=g,d.multiUuid=g;g=[0,54];g=f.currentCanvasNum-1;"same-huase"==c.huaseContrl?g=40>g?[0,
+  --- MultiNewPagePublic.js-v20260707017 @128079
+  PRE : s)if(b=b.userData,-1<a("#materName").val().indexOf("pdd")||"拼多多台历"== a("#afterFileName").val()){var c=0;b[0].pageCalName.split("年");for(var h=e.pageList.length,g=0;g<b.length;g++)if(f.totalCanvasArray[g]){var l=f.totalCanvasArray[g];Q.getInstance().
+  POST: setItemListJson(l.canvasObjInfo.canvasToProductObjArr,g,l)}for(g=0;g<b.length;g++)for(var l=!1,m=0;m<b[g].content.itemList.length;m++){var k=b[g].content.itemList[m];if("dateBar"==
+  --- MultiNewPagePublic.js-v20260707017 @129198
+  PRE : tyleId= d;b=Z.getJsonFonts(e,[]);0<c&&(c+=1);v.stopRenderNum(h);0<b.length?fa(b,void 0,c):(a("#renderFlag").val(1),v.setCanvasContinuRender(c))}else{for(c=0;c<b.length;c++)for(h=!1,f.totalCanvasArray[c+1]&&(g=f.totalCanvasArray[c+1],Q.getInstance().
+  POST: setItemListJson(g.canvasObjInfo.canvasToProductObjArr,c+1,g)),g=0;g<b[c].content.itemList.length;g++)if(l=b[c].content.itemList[g],"dateBar"==l.markuuid){l.isEdit=!1;l.selectEnable
+  --- MultiNewPagePublic.js-v20260707017 @132143
+  PRE : plateName").val().indexOf("pdd")||"拼多多台历"==a("#afterFileName").val())&&"1"==a("#isTemplatePage").val()){if(0<b.length){b[0].pageCalName.split("年");for(var k=e.pageList.length,p,u=0;u< e.pageList.length;u++)(g=f.totalCanvasArray[u])&&Q.getInstance().
+  POST: setItemListJson(g.canvasObjInfo.canvasToProductObjArr,u,g);for(u=0;u<e.pageList.length;u++)if(e.pageList[u].pageCalName)for(p||("所有"==l&&(p=u),"正面"==l&&-1<e.pageList[u].pageCalName
+  --- MultiNewPagePublic.js-v20260707017 @133799
+  PRE : h?fa(b,l,p):("所有"==l||e.templateInfo.deletDateBarBack?a("#renderFlag").val(1): "正面"!=l&&"背面"!=l||a("#renderFlag").val(2),v.setCanvasContinuRender(p))}}else if(0<b.length){for(p=0;p<e.pageList.length;p++)if((t=f.totalCanvasArray[p])&&Q.getInstance().
+  POST: setItemListJson(t.canvasObjInfo.canvasToProductObjArr,p,t),e.pageList[p].pageCalName)for(k||("所有"==l&&(k=p),"正面"==l&&-1<e.pageList[p].pageCalName.indexOf("月正面")&&(k=p),"背面"==l&&-1<
+  --- MultiNewPagePublic.js-v20260707017 @138869
+  PRE : markuuid="F82C9D36D4C8A93BA37A54B3EDF56E2C";c.drawImg(b,d);a(".saveLoading").find("p").text("正在应用图片...");a(".saveLoading").hide()});var ma=function(a){v.deleteBlank(); if(null==a||void 0==a){var b=f.currentCanvasNum-1;-1>=b&&(b=0);a=Q.getInstance().
+  POST: setItemListJson(f.canvasToProductObjArr,b,f.totalCanvasArray[b])}else 0>a&&(a=0),a=Q.getInstance().setItemListJson(f.canvasToProductObjArr,a,f.totalCanvasArray[b]);return a},W='\x3
+  --- MultiNewPagePublic.js-v20260707017 @138968
+  PRE : ...");a(".saveLoading").hide()});var ma=function(a){v.deleteBlank(); if(null==a||void 0==a){var b=f.currentCanvasNum-1;-1>=b&&(b=0);a=Q.getInstance().setItemListJson(f.canvasToProductObjArr,b,f.totalCanvasArray[b])}else 0>a&&(a=0),a=Q.getInstance().
+  POST: setItemListJson(f.canvasToProductObjArr,a,f.totalCanvasArray[b]);return a},W='\x3ca class\x3d"add-page-last" style\x3d"float:left;" href\x3d"javascript:void(0);"\x3e加页\x3c/a\x3e',s
+  --- ProductDataModel.js-v20260707017 @35234
+  PRE : id);A.visible=a[b].visible;0<Ja.length&&0<c.pageList.length&&(p.content.itemList[b]= A)}}else if(a[b].mediaMediaType==v.SELF_GROUP){if("1"==f("#groupPage").val()){var Fc=a[b].toDataURL({format:"png"});h.push(String(b)+"\x3dlayerIndex"+Fc)}var dc=mc.
+  POST: setItemListJson(a[b].getObjects(),g,b,a[b]),x=dc.itemList;if("dateBar"==a[b].markuuid)for(var ec=$jscomp.makeIterator(x),ob=ec.next();!ob.done;ob=ec.next()){var qa=ob.value;qa.medi
+  --- sundry.js-v20260707017 @15658
+  PRE : his).find("img");if(a(d).attr("groupdesign")&& "undefined"!=a(d).attr("groupdesign")){var e=JSON.parse(a(d).attr("groupdesign"));e.location.x=b.x;e.location.y=b.y;requirejs(["ProductDataModel"],function(a){var b=l.currentCanvasNum-1;a.getInstance().
+  POST: setItemListJson(D.canvasToProductObjArr,b,f);a=e.childrenElement;var d=D.canvasToProductObjArr.length;delete e.childrenElement;a.forEach(function(a,b){a.parentItem=e;a.dragObj=!0;a
+  --- sundry.js-v20260707017 @31472
+  PRE : tHeight=g.attr("oheight"),a(g).attr("groupdesign")&&"undefined"!=a(g).attr("groupdesign")){var x=JSON.parse(a(g).attr("groupdesign"));x.location.x=d;x.location.y=e;requirejs(["ProductDataModel"],function(a){var b=l.currentCanvasNum-1;a.getInstance().
+  POST: setItemListJson(D.canvasToProductObjArr,b,f);var c=D.canvasToProductObjArr.length; a=x.childrenElement;delete x.childrenElement;a.forEach(function(a,b){a.parentItem=x;a.dragObj=!0

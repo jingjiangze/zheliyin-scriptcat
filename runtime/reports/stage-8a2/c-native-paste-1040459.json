@@ -1,0 +1,53 @@
+{
+  "ts": "2026-09-19T08:01:18.801Z",
+  "stage": "STAGE-8A2B-native-paste-image",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "native-paste-image",
+  "records": [
+    {
+      "mode": "native-paste-image",
+      "steps": [
+        {
+          "tag": "base",
+          "objLen": 8,
+          "regLen": 0,
+          "itemListLen": 0
+        },
+        {
+          "tag": "afterPaste",
+          "objLen": 8,
+          "regLen": 0,
+          "itemListLen": 0,
+          "imgs": [],
+          "grew": false
+        }
+      ],
+      "errors": [],
+      "clipboardSet": {
+        "ok": true,
+        "method": "clipboard-api",
+        "err": null
+      },
+      "created": {
+        "found": false,
+        "serialized": {
+          "n": -1,
+          "reason": "no object"
+        },
+        "drawText": {
+          "ok": false,
+          "err": "Cannot read properties of undefined (reading 'media')",
+          "itemListBefore": 0
+        }
+      },
+      "afterCleanup": {
+        "objLen": 9
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
+  ]
+}

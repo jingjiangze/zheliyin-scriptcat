@@ -1,0 +1,219 @@
+{
+  "ts": "2026-09-19T07:46:36.374Z",
+  "stage": "STAGE-8A2B-native-image-inventory",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "native-image-inventory",
+  "records": [
+    {
+      "mode": "native-image-inventory",
+      "steps": [
+        {
+          "tag": "base",
+          "objLen": 8,
+          "regLen": 0,
+          "itemListLen": 0,
+          "objs": [
+            {
+              "type": "line",
+              "multiUuid": null
+            },
+            {
+              "type": "line",
+              "multiUuid": null
+            },
+            {
+              "type": "line",
+              "multiUuid": null
+            },
+            {
+              "type": "line",
+              "multiUuid": null
+            },
+            {
+              "type": "line",
+              "multiUuid": null
+            },
+            {
+              "type": "line",
+              "multiUuid": null
+            },
+            {
+              "type": "line",
+              "multiUuid": null
+            },
+            {
+              "type": "line",
+              "multiUuid": null
+            }
+          ]
+        },
+        {
+          "tag": "afterUpload",
+          "objLen": 8,
+          "regLen": 0,
+          "itemListLen": 0,
+          "tookMs": 36543,
+          "insertClick": 4,
+          "grew": false
+        }
+      ],
+      "ui": {
+        "fileInputs": [
+          {
+            "i": 0,
+            "accept": "image/jpeg,image/png",
+            "cls": "selectbtn"
+          },
+          {
+            "i": 1,
+            "accept": null,
+            "cls": "webuploader-element-invisible"
+          },
+          {
+            "i": 2,
+            "accept": null,
+            "cls": "webuploader-element-invisible"
+          },
+          {
+            "i": 3,
+            "accept": null,
+            "cls": "webuploader-element-invisible"
+          },
+          {
+            "i": 4,
+            "accept": "image/jpeg,image/png,image/gif",
+            "cls": "selectbtn"
+          },
+          {
+            "i": 5,
+            "accept": "image/jpeg,image/png",
+            "cls": ""
+          },
+          {
+            "i": 6,
+            "accept": "image/jpeg,image/png",
+            "cls": "selectbtn"
+          },
+          {
+            "i": 7,
+            "accept": "image/jpeg,image/png",
+            "cls": "selectbtn"
+          },
+          {
+            "i": 8,
+            "accept": "image/jpeg,image/png,image/gif",
+            "cls": "selectbtn"
+          },
+          {
+            "i": 9,
+            "accept": "image/jpeg,image/png,image/gif",
+            "cls": "selectbtn"
+          },
+          {
+            "i": 10,
+            "accept": "image/jpeg,image/png",
+            "cls": "selectbtn"
+          },
+          {
+            "i": 11,
+            "accept": "image/jpg,image/jpeg,image/bmp,image/png",
+            "cls": "webuploader-element-invisible"
+          }
+        ],
+        "imageButtons": [
+          {
+            "tag": "LI",
+            "cls": "active",
+            "text": "素材"
+          },
+          {
+            "tag": "LI",
+            "cls": "",
+            "text": "上传"
+          },
+          {
+            "tag": "A",
+            "cls": "btn on",
+            "text": "素材"
+          },
+          {
+            "tag": "SPAN",
+            "cls": "",
+            "text": "素材格式："
+          },
+          {
+            "tag": "LI",
+            "cls": "titleTextBg",
+            "text": "标题素材"
+          },
+          {
+            "tag": "LI",
+            "cls": "composeTextBg",
+            "text": "组合素材"
+          },
+          {
+            "tag": "A",
+            "cls": "btn on",
+            "text": "官方素材"
+          },
+          {
+            "tag": "A",
+            "cls": "btn",
+            "text": "我的素材"
+          }
+        ]
+      },
+      "created": {
+        "found": false,
+        "serialized": {
+          "n": -1,
+          "reason": "no object"
+        }
+      },
+      "serialized": null,
+      "errors": [],
+      "tmpPng": "D:\\zheliyin-scriptcat\\runtime\\reports\\stage-8a2\\native-upload-input.png",
+      "fileInputPick": {
+        "found": true,
+        "id": "select_btn_1",
+        "cls": "selectbtn",
+        "counts": 12
+      },
+      "material": {
+        "cand": [
+          {
+            "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAPaCAYAAABLaSa7AAAQAElEQVR4AezY2XIju44F",
+            "cls": ""
+          },
+          {
+            "src": "blob:https://diy.zheliyin.com/afc4338a-e970-44f8-886f-3727b7479940",
+            "cls": ""
+          },
+          {
+            "src": "blob:https://diy.zheliyin.com/afc4338a-e970-44f8-886f-3727b7479940",
+            "cls": ""
+          }
+        ],
+        "ups": [],
+        "num": 3
+      },
+      "clickedMaterial": true,
+      "insertClick": 4,
+      "createdRaw": {
+        "objLen": 8,
+        "regLen": 0,
+        "itemListLen": 0,
+        "lastItem": null,
+        "activeText": "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\n\n\n    \n        \n            \n        \n        \n        已加载90%，请耐心等待。。。\n       \n            \n            \n                \n                    多版设计可"
+      },
+      "afterCleanup": {
+        "objLen": 8
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
+  ]
+}

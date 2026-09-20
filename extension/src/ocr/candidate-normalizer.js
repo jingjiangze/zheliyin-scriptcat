@@ -191,9 +191,12 @@ function groupWordsToLines(words, opts) {
     for (let i = 0; i < lines.length; i += 1) {
       const L = lines[i];
       const lMid = L.bbox.y + L.bbox.height / 2;
-      const scale = Math.max(w.bbox.height, L.bbox.height);
-      const minH = Math.min(w.bbox.height, L.bbox.height);
-      const ratio = minH > 0 ? scale / minH : null;
+      // Stage 8D P3（真实名片取证）：容差尺度改用「矮者」min（不再用 max —— 离群高词/极端词高会
+      // 把 y 容差撑大，导致跨视觉行（y 差 30~50px）的碎片词误并进同一行，如 L16 405..453 跨 48px）。
+      const scale = Math.min(w.bbox.height, L.bbox.height);
+      const maxH = Math.max(w.bbox.height, L.bbox.height);
+      const minH = scale;
+      const ratio = minH > 0 ? maxH / minH : null;
       const lastW = L.words[L.words.length - 1];
       // §十七 决策证据（数值化；baselineProxy=底部差近似基线差）
       const ev = {
@@ -297,6 +300,10 @@ function groupLinesToBlocks(lines, opts) {
   const overlapRatioMin = o.overlapRatioMin != null ? o.overlapRatioMin : 0.5;
   const leftAlignTolRatio = o.leftAlignTolRatio != null ? o.leftAlignTolRatio : 0.5;
   const maxGapPxOverride = o.maxGapPx != null ? o.maxGapPx : null; // null → 1.5 × medianLineHeight
+  // Stage 8D P4（LINE→BLOCK）：非重叠堆叠分支的行中心基线门禁。
+  // 离线实验（33 行 fixture + 合成多行正文）：正常段距行中心差≈mH+gap → baselineDelta 1.2~1.5；
+  // 链式巨型块（B5/B6）= 1.87/2.69。默认 1.6 = 正常段落保留、链式吸入拒绝的最小分隔点。
+  const baselineDeltaMax = o.baselineDeltaMax != null ? o.baselineDeltaMax : 1.6;
   // Stage 7.8 §二十四：Vertical Overlap Guard —— y 带重叠超出阈值时视为同排续接，要求强横向覆盖。
   const vOverlapMergeMax = o.vOverlapMergeMax != null ? o.vOverlapMergeMax : 0.5;
   const vOverlapXMin = o.vOverlapXMin != null ? o.vOverlapXMin : 0.85;
@@ -373,7 +380,9 @@ function groupLinesToBlocks(lines, opts) {
           m.baselineDelta = Math.abs((L.bbox.y + L.bbox.height / 2) - (blk.yStart + blk.yEnd) / 2) / Math.max(blk.mH, L.bbox.height);
           if (m.verticalOverlap > vOverlapMergeMax) {
             if (overlap < vOverlapXMin * minW) failed.push("vertical-overlap");
-            else if (m.baselineDelta > 0.5) failed.push("baseline-offset");
+            // Stage 8D P4（v18 真机 mergeAudit「回册/多」bd=0.45 擦边）：同排续接基线门 0.5→0.38
+            // （真实同行续接 bd≈0.1~0.25；0.4~0.5 为相邻不同行 bbox padding 交叠）
+            else if (m.baselineDelta > 0.38) failed.push("baseline-offset");
           } else if (!xOk) failed.push("horizontal-overlap");
         } else if (!xOk) {
           failed.push("horizontal-overlap");
@@ -389,6 +398,9 @@ function groupLinesToBlocks(lines, opts) {
         }
         // §二十三 baseline 记录（正常堆叠不设门禁，仅供 Fixture 分析）
         if (m.baselineDelta == null) m.baselineDelta = Math.abs((L.bbox.y + L.bbox.height / 2) - (blk.yStart + blk.yEnd) / 2) / Math.max(blk.mH, L.bbox.height);
+        // Stage 8D P4（真实名片取证 mergeAudit B5/B6）：非重叠 gap 分支此前完全无 baseline 门禁，
+        // baselineDelta 1.87/2.69（行中心差近乎两倍行高）仍被链式吸入 → 增加 baselineDeltaMax 硬门。
+        if (baselineDeltaMax != null && m.baselineDelta > baselineDeltaMax) failed.push("baseline-delta");
       }
     }
     if (!failed.length) { m.decision = "MERGE"; return { ok: true, m: m, failed: [] }; }
@@ -530,6 +542,8 @@ function estimateTextWidth(text, fontSize, opts) {
 // 返回：
 //   { layoutWidth, perLine:[{text, estimatedWidth, needsWrap}], forcedWrapDetected, estimatedFinalLineCount }
 // layoutWidth = clamp(max(60, 最长行估计宽 + margin, minWidth), 60, maxWidth)
+// Stage 8A-2 B（Text Scale）：新增 visualWidth 选项 —— 以 OCR 视觉宽（bbox×displayScale）为主导下限，
+//   防「字符估算宽（随钳制 fontSize 膨胀）把 textbox 撑宽」；防换行硬约束仍以估算宽兜底。
 // forcedWrapDetected：存在 needsWrap=true 的逻辑行（即单行在给定 maxWidth 下仍放不下）。
 function estimateTextLayout(textLines, fontSize, opts) {
   const o = opts || {};
@@ -537,6 +551,7 @@ function estimateTextLayout(textLines, fontSize, opts) {
   const margin = o.margin != null ? o.margin : Math.max(12, fs * 0.4);
   const minWidth = o.minWidth != null ? o.minWidth : 60;
   const maxWidth = o.maxWidth != null ? o.maxWidth : 4000;
+  const vw = o.visualWidth != null ? o.visualWidth : null; // OCR bbox 视觉宽（已×displayScale）
   const lines = (Array.isArray(textLines) ? textLines : []).map(function (l) { return String(l || ""); });
   const perLine = lines.map(function (text) {
     return { text: text, estimatedWidth: estimateTextWidth(text, fs) };
@@ -544,8 +559,21 @@ function estimateTextLayout(textLines, fontSize, opts) {
     return p.text !== "";
   });
   const wMax = perLine.reduce(function (m, p) { return Math.max(m, p.estimatedWidth); }, 0);
-  let layoutWidth = Math.min(Math.max(minWidth, wMax + margin, 60), maxWidth);
+  // Stage 8A-2 B（Text Scale）：视觉宽优先 —— layoutWidth 尽量贴近 OCR 视觉宽（vw），
+  //   不被「fs 钳制导致膨胀的字符估算宽」主导；仅当视觉宽放不下最长字符行（§11 防换行硬约束）
+  //   才扩展。无 vw 时回退旧逻辑（minWidth 与估算宽取大），保持既有行为。
+  let layoutWidth;
+  if (vw != null) {
+    layoutWidth = Math.min(Math.max(vw + margin, minWidth, 60), maxWidth);
+  } else {
+    layoutWidth = Math.min(Math.max(minWidth, wMax + margin, 60), maxWidth);
+  }
   let forcedWrapDetected = false;
+  const wNeeded = wMax + margin;
+  if (wNeeded > layoutWidth) {
+    // 视觉/基准宽放不下时：§11 防换行兜底抬升（不超过 maxWidth）
+    layoutWidth = Math.min(Math.max(layoutWidth, wNeeded), maxWidth);
+  }
   perLine.forEach(function (p) {
     p.needsWrap = p.estimatedWidth + margin > layoutWidth;
     if (p.needsWrap) forcedWrapDetected = true;

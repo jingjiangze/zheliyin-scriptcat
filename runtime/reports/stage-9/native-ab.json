@@ -1,0 +1,241 @@
+{
+  "ts": "2026-09-20T05:52:06.946Z",
+  "stage": "STAGE-9-PRECISION-AB",
+  "branch": "stage-9-altq-baidu-reconstruction",
+  "runs": [
+    {
+      "mode": "PRINTED(印刷体)",
+      "textType": "1",
+      "run": 1,
+      "status": 200,
+      "ct": "application/json;charset=UTF-8",
+      "elapsedMs": 918,
+      "responseShape": {
+        "success": true,
+        "message": "9",
+        "userData": "吴健湘<br/>客户经理<br/>Telephone: +8615913171583<br/>佛山盛盈包装制品有限公司<br/>Tel.:0757-88809856<br/>地址：广东省佛山市高明区杨和镇阳西大道和政路12号<br/>佛山鼎盛通生物科技有限公司<br/>Tel.: 0757-88809856<br/>地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号<br/>E-mail:sandy.wu@shengying.ltd<br/>"
+      },
+      "lineCount": 10,
+      "lines": [
+        {
+          "order": 0,
+          "rawText": "吴健湘",
+          "matchText": "吴健湘"
+        },
+        {
+          "order": 1,
+          "rawText": "客户经理",
+          "matchText": "客户经理"
+        },
+        {
+          "order": 2,
+          "rawText": "Telephone: +8615913171583",
+          "matchText": "telephone+8615913171583"
+        },
+        {
+          "order": 3,
+          "rawText": "佛山盛盈包装制品有限公司",
+          "matchText": "佛山盛盈包装制品有限公司"
+        },
+        {
+          "order": 4,
+          "rawText": "Tel.:0757-88809856",
+          "matchText": "tel.075788809856"
+        },
+        {
+          "order": 5,
+          "rawText": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
+          "matchText": "地址广东省佛山市高明区杨和镇阳西大道和政路12号"
+        },
+        {
+          "order": 6,
+          "rawText": "佛山鼎盛通生物科技有限公司",
+          "matchText": "佛山鼎盛通生物科技有限公司"
+        },
+        {
+          "order": 7,
+          "rawText": "Tel.: 0757-88809856",
+          "matchText": "tel.075788809856"
+        },
+        {
+          "order": 8,
+          "rawText": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+          "matchText": "地址广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号"
+        },
+        {
+          "order": 9,
+          "rawText": "E-mail:sandy.wu@shengying.ltd",
+          "matchText": "emailsandy.wu@shengying.ltd"
+        }
+      ],
+      "ok": true,
+      "hasTruth": {
+        "name": true,
+        "company": true,
+        "phone": true,
+        "tel": true,
+        "email": true
+      }
+    },
+    {
+      "mode": "HANDWRITTEN(手写体)",
+      "textType": "2",
+      "run": 1,
+      "status": 200,
+      "ct": "application/json;charset=UTF-8",
+      "elapsedMs": 726,
+      "responseShape": {
+        "success": true,
+        "message": "10",
+        "userData": "吴健湘<br/>客户经理<br/>Telephone:+86 15913171583<br/>佛山盛盈包装制品有限公司<br/>Tel.: 0757-88809856<br/>地址:广东省佛山市高明区杨和镇阳西大道和政路12号<br/>佛山鼎盛通生物科技有限公司<br/>Tel.: 0757-88809856<br/>地址:广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号<br/>E-mail:sandy.wu@shengying.Itd<br/>"
+      },
+      "lineCount": 10,
+      "lines": [
+        {
+          "order": 0,
+          "rawText": "吴健湘",
+          "matchText": "吴健湘"
+        },
+        {
+          "order": 1,
+          "rawText": "客户经理",
+          "matchText": "客户经理"
+        },
+        {
+          "order": 2,
+          "rawText": "Telephone:+86 15913171583",
+          "matchText": "telephone+8615913171583"
+        },
+        {
+          "order": 3,
+          "rawText": "佛山盛盈包装制品有限公司",
+          "matchText": "佛山盛盈包装制品有限公司"
+        },
+        {
+          "order": 4,
+          "rawText": "Tel.: 0757-88809856",
+          "matchText": "tel.075788809856"
+        },
+        {
+          "order": 5,
+          "rawText": "地址:广东省佛山市高明区杨和镇阳西大道和政路12号",
+          "matchText": "地址广东省佛山市高明区杨和镇阳西大道和政路12号"
+        },
+        {
+          "order": 6,
+          "rawText": "佛山鼎盛通生物科技有限公司",
+          "matchText": "佛山鼎盛通生物科技有限公司"
+        },
+        {
+          "order": 7,
+          "rawText": "Tel.: 0757-88809856",
+          "matchText": "tel.075788809856"
+        },
+        {
+          "order": 8,
+          "rawText": "地址:广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+          "matchText": "地址广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号"
+        },
+        {
+          "order": 9,
+          "rawText": "E-mail:sandy.wu@shengying.Itd",
+          "matchText": "emailsandy.wu@shengying.itd"
+        }
+      ],
+      "ok": true,
+      "hasTruth": {
+        "name": true,
+        "company": true,
+        "phone": true,
+        "tel": true,
+        "email": true
+      }
+    },
+    {
+      "mode": "HANDWRITTEN(手写体)",
+      "textType": "2",
+      "run": 2,
+      "status": 200,
+      "ct": "application/json;charset=UTF-8",
+      "elapsedMs": 1133,
+      "responseShape": {
+        "success": true,
+        "message": "11",
+        "userData": "吴健湘<br/>客户经理<br/>Telephone:+86 15913171583<br/>佛山盛盈包装制品有限公司<br/>Tel.: 0757-88809856<br/>地址:广东省佛山市高明区杨和镇阳西大道和政路12号<br/>佛山鼎盛通生物科技有限公司<br/>Tel.: 0757-88809856<br/>地址:广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号<br/>E-mail:sandy.wu@shengying.Itd<br/>"
+      },
+      "lineCount": 10,
+      "lines": [
+        {
+          "order": 0,
+          "rawText": "吴健湘",
+          "matchText": "吴健湘"
+        },
+        {
+          "order": 1,
+          "rawText": "客户经理",
+          "matchText": "客户经理"
+        },
+        {
+          "order": 2,
+          "rawText": "Telephone:+86 15913171583",
+          "matchText": "telephone+8615913171583"
+        },
+        {
+          "order": 3,
+          "rawText": "佛山盛盈包装制品有限公司",
+          "matchText": "佛山盛盈包装制品有限公司"
+        },
+        {
+          "order": 4,
+          "rawText": "Tel.: 0757-88809856",
+          "matchText": "tel.075788809856"
+        },
+        {
+          "order": 5,
+          "rawText": "地址:广东省佛山市高明区杨和镇阳西大道和政路12号",
+          "matchText": "地址广东省佛山市高明区杨和镇阳西大道和政路12号"
+        },
+        {
+          "order": 6,
+          "rawText": "佛山鼎盛通生物科技有限公司",
+          "matchText": "佛山鼎盛通生物科技有限公司"
+        },
+        {
+          "order": 7,
+          "rawText": "Tel.: 0757-88809856",
+          "matchText": "tel.075788809856"
+        },
+        {
+          "order": 8,
+          "rawText": "地址:广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+          "matchText": "地址广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号"
+        },
+        {
+          "order": 9,
+          "rawText": "E-mail:sandy.wu@shengying.Itd",
+          "matchText": "emailsandy.wu@shengying.itd"
+        }
+      ],
+      "ok": true,
+      "hasTruth": {
+        "name": true,
+        "company": true,
+        "phone": true,
+        "tel": true,
+        "email": true
+      }
+    }
+  ],
+  "errors": [],
+  "cookiePresent": true,
+  "cookieNames": [
+    "SESSION[REDACTED]",
+    "diy-User-third",
+    "Hm_lvt_d520b29109368bfb557295626af72342",
+    "HMACCOUNT",
+    "thirdMember[REDACTED]",
+    "lastAccessTime",
+    "Hm_lpvt_d520b29109368bfb557295626af72342",
+    "thirdLocalForage"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-09-19T03:03:15.988Z",
+  "unitNote": "单位链：SOURCE_IMAGE_PIXEL(image natural) → EDITOR_CANVAS_PIXEL(fabric canvas w/h) → 渲染视图（DIP/显示 px 未取证 UNKNOWN）；禁止混用 mm/CSS px",
+  "fixtures": [
+    {
+      "id": "ctl-252438",
+      "accessible": true,
+      "canvas": {
+        "width": 871.4999999999999,
+        "height": 530.1624999999999,
+        "unit": "EDITOR_CANVAS_PIXEL(fabric)"
+      },
+      "imagesObjects": 0,
+      "backgroundImage": null,
+      "ocrInput": null,
+      "note": "模板画布无 type==='image' 对象且无 backgroundImage → buildOcrPrepare 走 IMAGE_UNAVAILABLE（REAL）。7.8R 已知：需注入 fabric.Image 后 kind=active-image"
+    }
+  ]
+}

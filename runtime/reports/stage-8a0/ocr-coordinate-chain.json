@@ -1,0 +1,11 @@
+{
+  "generatedAt": "2026-09-19T03:03:15.988Z",
+  "chain": [
+    "SOURCE_IMAGE_PIXEL(OCR bbox; candidate-normalizer coordinateSpace='image-pixel')",
+    "→ (buildItemsFromOcr) ux=x/w-0.5 以 源natural 尺寸归一化（CODE FACT, page-bridge geometry.width/height=target.width）",
+    "→ cx,cy + dx*sx,dy*sy（editor 画布中心 + image 显示 scale）",
+    "→ Native drawText(left/top/width/height/fontSize)（EDITOR_CANVAS_PIXEL）"
+  ],
+  "knownSpace": "candidate-normalizer 统一输出 coordinateSpace='image-pixel'（CODE FACT + Stage7.8 单测）",
+  "unknownSpace": "Canvas 显示 DIP 与 EDITOR_CANVAS_PIXEL 的比例关系、fontSize 单位→渲染 px 映射 = UNKNOWN（Stage 8A Typography 校准目标）"
+}

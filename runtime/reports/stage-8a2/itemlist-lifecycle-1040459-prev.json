@@ -1,0 +1,98 @@
+{
+  "ts": "2026-09-19T06:38:41.180Z",
+  "stage": "STAGE-8A2B-itemlist-lifecycle",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "itemlist-lifecycle",
+  "records": [
+    {
+      "mode": "itemlist-lifecycle",
+      "templateId": "1040459",
+      "steps": [
+        {
+          "tag": "T0-pageLoaded",
+          "itemListLen": 1,
+          "ids": {
+            "pageList": null,
+            "page": null,
+            "content": null,
+            "itemList": null
+          },
+          "item0Keys": [
+            "maskEnable",
+            "isPreview",
+            "noCutWidth",
+            "media",
+            "lowPixelFlag",
+            "selectEnabled",
+            "uuid",
+            "layer",
+            "isDesignShape",
+            "rightType"
+          ],
+          "objLen": 9,
+          "regLen": 1,
+          "textCount": 0
+        },
+        {
+          "tag": "T4-ctor",
+          "itemListLen": 1,
+          "ids": {
+            "pageList": null,
+            "page": null,
+            "content": null,
+            "itemList": null
+          },
+          "item0Keys": [
+            "maskEnable",
+            "isPreview",
+            "noCutWidth",
+            "media",
+            "lowPixelFlag",
+            "selectEnabled",
+            "uuid",
+            "layer",
+            "isDesignShape",
+            "rightType"
+          ],
+          "objLen": 9,
+          "regLen": 1,
+          "textCount": 0
+        },
+        {
+          "tag": "T5-add",
+          "itemListLen": 1,
+          "ids": {
+            "pageList": null,
+            "page": null,
+            "content": null,
+            "itemList": null
+          },
+          "item0Keys": [
+            "maskEnable",
+            "isPreview",
+            "noCutWidth",
+            "media",
+            "lowPixelFlag",
+            "selectEnabled",
+            "uuid",
+            "layer",
+            "isDesignShape",
+            "rightType"
+          ],
+          "objLen": 10,
+          "regLen": 1,
+          "textCount": 0
+        }
+      ],
+      "experiments": [],
+      "errors": [
+        "stepA2 is not defined"
+      ]
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function"
+  ]
+}

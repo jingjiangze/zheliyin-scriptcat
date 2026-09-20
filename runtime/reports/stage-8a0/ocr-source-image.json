@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-09-19T03:02:25.301Z",
+  "fixtures": [
+    {
+      "id": "ctl-252438",
+      "pageAudit": {
+        "ok": true,
+        "currentCanvasNum": 1,
+        "pages": [
+          {
+            "canvasIndex": 0,
+            "pageId": null,
+            "side": "FRONT",
+            "canvasWidth": 871.4999999999999,
+            "canvasHeight": 530.1624999999999,
+            "objectCount": 9,
+            "images": [],
+            "backgroundImage": null
+          }
+        ]
+      }
+    }
+  ]
+}

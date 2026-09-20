@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.1
+// @version      0.3.11.35
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,18 +14,27 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-quality.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.1
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.1
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.35
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -46,7 +55,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.1";
+  const VERSION = "0.3.11.35";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -844,6 +853,8 @@
     }
     const cloudKept = (cloudQa.kept && cloudQa.kept.length) ? cloudQa.kept : res.candidates;
     ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " kept=" + cloudKept.length + " elapsed=" + res.meta.elapsed + "ms");
+    // Stage 8D §十九取证：cloud raw candidates 证据（行级 bbox）
+    ocrLog("RAW_CAND8D", (res.candidates.map((c) => String(c.text || "").slice(0, 10) + "@" + JSON.stringify({ x: Math.round((c.bbox && (c.bbox.x0 != null ? c.bbox.x0 : c.bbox.x)) || 0), y: Math.round((c.bbox && (c.bbox.y0 != null ? c.bbox.y0 : c.bbox.y)) || 0), w: Math.round((c.bbox && (c.bbox.x1 != null ? Math.abs(c.bbox.x1 - c.bbox.x0) : c.bbox.width)) || 0), h: Math.round((c.bbox && (c.bbox.y1 != null ? Math.abs(c.bbox.y1 - c.bbox.y0) : c.bbox.height)) || 0) })).join("|")).slice(0, 4000));
     // Stage 7.8 §三十二/§四十一：六维质量门分级诊断（仅记录，不改 fallback 决策 ——
     // §三十四 特殊符号不直接判 OCR 失败，由 sanitizer 清洗负责）
     const cloudBundle = (typeof bundleOcrQuality === "function")
@@ -856,8 +867,42 @@
     // Stage 6.1：行级候选 → TextBlock（1 block = 1 textbox，§8）→ 统一 Mapper
     // 锁不在此释放：由 buildItemsFromOcr（ocrCreate 回复/超时/空结果）决定事务终态
     const lineCandidates = unifyCandidates(cloudKept, { width: img.width, height: img.height });
-    const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(lineCandidates) : (lineCandidates || []).map(oneLineBlock);
-    buildItemsFromOcr(blocks, img, diag);
+    const gate8d = runCandidateGate(lineCandidates, { width: img.width, height: img.height });
+    if (!gate8d.ok) { ocrRunning = false; setStatus("OCR 候选质量门阻断（" + String(gate8d.reason || "invalid-result") + "），未生成文字"); ocrLog("GATE8D", "block-set suspect: " + (gate8d.setSuspectReasons || []).join("|")); return; }
+    const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(gate8d.validated) : (gate8d.validated || []).map(oneLineBlock);
+    const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate）
+    buildItemsFromOcr(tb.blocks, img, diag);
+  }
+
+  // ---- Stage 9 V3：Native OCR = 绝对文字真值（§一/§九十 feature gate zyStage9NativeTruth）----
+  // 规则：最终 textbox.text 必须来自 nativeOcr.texts[].rawText（原样，禁 trim/禁 sanitize）。
+  // 本刀只做 Text Truth 接线（§五十九）：不及 Font/Position/Vertical/ImageInk；Geometry 沿用候选块。
+  // mode：真实取证（V3 精准复测）= OCRTool 仅 印刷体(textType=1)/手写体(textType=2) 两选项，
+  // 无独立"精准"参数；实验开关 zyStage9NativeOcrMode 允许切换（默认 1），不硬编码。
+  const STAGE9_NATIVE_TRUTH = GM_getValue("zyStage9NativeTruth", "0") === "1";
+  const STAGE9_NATIVE_OCR_MODE = GM_getValue("zyStage9NativeOcrMode", "1"); // "1"|"2"（取证值）
+  async function maybeApplyNativeTruth(blocks, img, diag) {
+    if (!STAGE9_NATIVE_TRUTH || typeof recognize !== "function" || typeof applyNativeTextTruth !== "function") {
+      return { blocks: blocks || [], mode: "OFF", skipped: true };
+    }
+    try {
+      const native = await recognize(img.dataUrl, {
+        pageId: (img && img.pageId) || null,
+        transactionId: (img && img.transactionId) || null,
+        imageFingerprint: null,
+        textType: STAGE9_NATIVE_OCR_MODE
+      });
+      if (!(native && native.ok)) {
+        ocrLog("TRUTH", "native unavailable " + String((native && native.error && native.error.errorCode) || "?"));
+        return { blocks: blocks || [], mode: "OFF", skipped: true, reason: "unavailable" };
+      }
+      const applied = applyNativeTextTruth(blocks || [], native);
+      ocrLog("TRUTH", "native lines=" + native.texts.length + " kept=" + applied.kept.length + " droppedLegacy=" + applied.legacyDropped.length + " unmatchedNative=" + applied.unmatchedNative.length + " valid=" + applied.gate.allTextTruthValid + (applied.gate.failureCode ? " fail=" + applied.gate.failureCode : ""));
+      return { blocks: applied.kept, mode: "NATIVE_TRUTH", native: native, applied: applied };
+    } catch (e) {
+      ocrLog("TRUTH", "exception " + String(e && (e.message || e) || "").slice(0, 160));
+      return { blocks: blocks || [], mode: "OFF", skipped: true };
+    }
   }
 
   // 本地 Tesseract 执行器（manual local / auto 下 Cloud 失败后的 local-fallback 共用，§8.1）
@@ -885,7 +930,7 @@
       window.postMessage({ source: "zy-ocr-req", dataUrl: img.dataUrl }, location.origin);
       setStatus("OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…");
       let tries = 0;
-      const timer = setInterval(() => {
+      const timer = setInterval(async () => {
         tries += 1;
         const out = document.documentElement.getAttribute("data-zy-ocr-result");
         if (out) {
@@ -900,8 +945,12 @@
               return;
             }
             ocrLog("LOCAL_RECOGNIZING", "lines=" + (r.lines || []).length + " words=" + (r.words || []).length + " image=" + r.w + "x" + r.h);
+            // Stage 8D §十九取证：raw words 证据（含 bbox/置信度）—— 供 raw→normalized→accepted→blocked 统计与行聚类审计
+            ocrLog("RAW_WORDS8D", ((r.words || []).map((wo) => String(wo.text || "").slice(0, 8) + "@" + JSON.stringify({ x: Math.round((wo.bbox && (wo.bbox.x0 != null ? wo.bbox.x0 : wo.bbox.x)) || 0), y: Math.round((wo.bbox && (wo.bbox.y0 != null ? wo.bbox.y0 : wo.bbox.y)) || 0), w: Math.round((wo.bbox && (wo.bbox.x1 != null ? Math.abs(wo.bbox.x1 - wo.bbox.x0) : wo.bbox.width)) || 0), h: Math.round((wo.bbox && (wo.bbox.y1 != null ? Math.abs(wo.bbox.y1 - wo.bbox.y0) : wo.bbox.height)) || 0) }) + (typeof wo.confidence === "number" ? ":" + Math.round(wo.confidence * 100) : "")).join("|")).slice(0, 4000));
             emitOcrDiag(Object.assign({}, diag, { reason: null }));
             const size = { width: r.w || img.width, height: r.h || img.height };
+            // Stage 8D 取证：tesseract 原始输出字段化落盘（防循环引用；供 runner 抓取后在 node 完整复现聚合/合并）
+            try { window.__zy8dRaw = JSON.stringify({ w: (r.words || []).map(function (x) { return { text: x.text, bbox: x.bbox, confidence: x.confidence }; }), l: (r.lines || []).map(function (x) { return { text: x.text, bbox: x.bbox }; }), size: size }); } catch (e) { try { window.__zy8dRaw = "__SE_ERR:" + String(e && e.message || e).slice(0, 120); } catch (e2) {} }
             let unified = null;
             if (r.words && r.words.length && typeof aggregateLineCandidates === "function") {
               try {
@@ -911,13 +960,17 @@
                   unified = null;
                 }
               } catch (e) {
-                ocrLog("ERROR", "grouping failed: " + String(e && e.message || e).slice(0, 120));
+                ocrLog("ERROR", "grouping8d: " + String(e && (e.stack || (e.message ? "msg:" + e.message : e)) || e).slice(0, 400));
                 unified = null;
               }
             }
             if (!unified) unified = unifyCandidates((r && r.lines) || [], size, { sourceProvider: "LOCAL" }); // Stage 7.8 §五：Local 结果打标 LOCAL
             if (unified && unified.length && typeof aggregateLineCandidates === "function") {
               ocrLog("GROUP", "lines=" + unified.length + " y=" + unified.map((l) => Math.round(l.bbox.y || 0)).join(",") + " h=" + unified.map((l) => Math.round(l.bbox.height || 0)).join(","));
+            }
+            // Stage 8D 取证打点：unified 第一元素形态（定位 reading 'slice' 崩点）
+            if (unified && unified[0]) {
+              ocrLog("TRACE8D", "unified=" + unified.length + " k0=" + JSON.stringify(Object.keys(unified[0])) + " b0=" + JSON.stringify({ y: unified[0].bbox && unified[0].bbox.y, h: unified[0].bbox && unified[0].bbox.height, t: String(unified[0].text || "").slice(0, 6) }));
             }
             // Stage 7.3（OCR 稳定化 §二）：本地结果同样过质量门（本地为 fallback 末端，
             // FAIL → 终态报错，不再换路；避免垃圾候选进入画布）
@@ -939,12 +992,17 @@
             if (localBundle) {
               emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, quality6: { overall: localBundle.overall, reasonCode: localBundle.reasonCode, total: localBundle.total, text: localBundle.textQuality && localBundle.textQuality.status, block: localBundle.blockQuality && localBundle.blockQuality.status, bbox: localBundle.bboxQuality && localBundle.bboxQuality.status, size: localBundle.sizeQuality && localBundle.sizeQuality.status, symbol: localBundle.symbolQuality && localBundle.symbolQuality.status, merge: localBundle.mergeQuality && localBundle.mergeQuality.status } }));
             }
+            const gate8d = runCandidateGate(localKept, { width: size.width || img.width, height: size.height || img.height });
+            if (!gate8d.ok) { ocrRunning = false; setStatus("OCR 候选质量门阻断（" + String(gate8d.reason || "invalid-result") + "），未生成文字"); ocrLog("GATE8D", "block-set suspect: " + (gate8d.setSuspectReasons || []).join("|")); return; }
+            ocrLog("TRACE8D", "gate-kept=" + (gate8d.validated || []).length + " score=" + (gate8d.score && gate8d.score.score));
             const blocks = (typeof buildTextBlocks === "function")
-              ? buildTextBlocks(localKept)
-              : (localKept || []).map(oneLineBlock);
-            buildItemsFromOcr(blocks, img, diag);
+              ? buildTextBlocks(gate8d.validated)
+              : (gate8d.validated || []).map(oneLineBlock);
+            ocrLog("TRACE8D", "blocks=" + (blocks || []).length);
+            const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate；OFF 时原样）
+            buildItemsFromOcr(tb.blocks, img, diag);
           } catch (e) {
-            ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse: " + e);
+            ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse8d: " + String(e && (e.stack || (e.message ? "msg:" + e.message : e)) || e).slice(0, 600));
             emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "exception" }));
           }
         } else if (tries > OCR_TIMEOUT_TRIES) {
@@ -1006,6 +1064,8 @@
       }
       ocrLog("PREPARING", "kind=" + prep.kind + " " + prep.width + "x" + prep.height + " dataUrl=" + prep.dataUrl.length + " chars");
       ocrTarget = { kind: prep.kind, geo: prep.geometry };
+      // Stage 8B STEP 5：真实模板字体（StyleCandidate 来源 1，禁止硬编码"思源黑体 Regular"）
+      ocrTarget.fontStyle = prep.templateFont || null;
       // Stage 7.6（Page Ownership §13/§14/§15）：冻结 OCR Source Page —— 图片与页面同帧捕获（ocrPrepare.page），
       // 若缺省则回退 getCurrentPage；自此刻起用户如何切页，OCR 结果仍属于 sourcePageId。
       // 无法可靠识别页面 → 停止 OCR（CURRENT_PAGE_UNKNOWN），严禁静默默认 FRONT。
@@ -1068,12 +1128,32 @@
   // Stage 6.1 §13：多行 textbox 高度须容纳 lineCount×lineHeight（无参考样式的默认行高系数）
   const FONT_LINE_HEIGHT = 1.3;
 
+  // Stage 8D §四~§八：OCR Candidate Quality Gate —— 逐块硬门剔除（TINY/GIANT/单字符噪点/越界/低置信）
+  // + block-set 聚合怀疑（碎片占比/强重叠/超大覆盖）→ suspect 整体阻断 reconstruction。
+  // 状态语义：OCR_DETECTED（原始）→ OCR_VALIDATED（gate 通过）→ RECONSTRUCTION_READY（buildItems）
+  // → RECONSTRUCTION_CREATED（native 创建）→ RECONSTRUCTION_VERIFIED（ink/geometry 验证）。
+  // 纯函数缺失（@require 未加载/旧版）时安全降级：全部放行（与原行为一致，不误伤）。
+  let currentGateScore = 0.9; // 最近一次 gate 的 Readiness Score（供 buildItemsFromOcr 的字号融合使用）
+  function runCandidateGate(candList, size) {
+    if (typeof validateBlockSet !== "function") return { ok: true, validated: candList, blocked: [], suspect: false, setSuspectReasons: [], degraded: true };
+    const g = validateBlockSet(candList, size, { imageSize: size });
+    const bDetail = (g.blocked || []).map(function (b) { return b.index + ":" + ((b.reasons || []).join("|")) + ":" + String(b.text || ""); }).join(",");
+    ocrLog("GATE8D", "total=" + g.total + " blocked=" + (g.blocked || []).length + " [" + bDetail + "] kept=" + (g.validated || []).length + " suspect=" + (g.setSuspectReasons || []).join("|") + " score=" + (g.score && g.score.score));
+    currentGateScore = (g.score && typeof g.score.score === "number") ? g.score.score : 0.9;
+    if (g.suspect || !g.ok) {
+      ocrLog("GATE8D", "BLOCK_SET_SUSPECT " + (g.setSuspectReasons || []).join("|") + " aggregate-fragments=" + (g.aggregate && g.aggregate.fragments) + "/" + g.total + " heavyOverlap=" + (g.aggregate && g.aggregate.heavyOverlapPairs) + " maxCover=" + (g.aggregate && g.aggregate.maxCoverRatio));
+      return { ok: false, reason: (g.setSuspectReasons && g.setSuspectReasons.join("|")) || g.reason || "OCR_BLOCK_SET_SUSPECT", validated: g.validated || [], blocked: g.blocked || [], suspect: true, setSuspectReasons: g.setSuspectReasons || [], aggregate: g.aggregate || null };
+    }
+    return { ok: true, validated: g.validated || [], blocked: g.blocked || [], suspect: false, setSuspectReasons: [], aggregate: g.aggregate || null, score: g.score || null };
+  }
+
   function buildItemsFromOcr(blocks, img, diag) {
     // Stage 6.1：消费 TextBlock（1 TextBlock = 1 textbox，§8 硬规则）。
     // block 结构：{text(含\n), bbox, center, confidence, wordBoxes, lineBoxes, lineCount, coordinateSpace}
     // 几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）。P3：只消费统一候选边界。
     const geo = ocrTarget && ocrTarget.geo;
     if (!geo) { setStatus("OCR 目标已失效，请重新识别"); ocrLog("ERROR", "ocrTarget missing"); ocrRunning = false; return; }
+    ocrLog("TRACE8D", "buildItems blocks=" + (blocks || []).length + " geoAC=" + !!(geo.aCoords) + " measurer=" + (typeof browserTextMeasurer === "function" ? "fn" : "no") + " fusion=" + (typeof solveFontSizeFusion === "function" ? "fn" : "no"));
     // Stage 7.6：source page 归属（ocrTarget 已在 handleOcrImage 冻结）—— 每个 item 携带 pageId/side，
     // 由 page-bridge 在创建前做 Ownership 硬门禁（Stage 7.7）。
     const srcPageId = (ocrTarget && ocrTarget.pageId) || null;
@@ -1084,9 +1164,30 @@
     const angle = geo.angle || 0;
     const rad = (angle * Math.PI) / 180, cos = Math.cos(rad), sin = Math.sin(rad);
     const cx = left + (w * sx) / 2, cy = top + (h * sy) / 2;
+    // Stage 8B STEP 5：一次性度量器 + StyleCandidate（模板真实字体优先，禁止硬编码"思源黑体 Regular"）
+    const fontFamilyCandidate = (ocrTarget && ocrTarget.fontStyle && ocrTarget.fontStyle.fontFamily) || null;
+    const fontMeas8b = (typeof browserTextMeasurer === "function") ? browserTextMeasurer() : null;
+    const fontMeas8bAvailable = !!(fontMeas8b && fontMeas8b.available);
+    const measureFamily = fontFamilyCandidate || "sans-serif";
+    // Stage 8D P5-1（§四~§六）：字体来源 provenance 四层（纯诊断；不改变 measureFamily/创建行为）
+    // 本轮无可靠站点默认/系统匹配证据 → siteDefault/systemMatch 传 null → 如实 FONT_FALLBACK。
+    const fontProv = (typeof resolveFontSource === "function")
+      ? resolveFontSource({ templateFamily: fontFamilyCandidate, siteDefaultFamily: null, systemMatchFamily: null })
+      : { source: fontFamilyCandidate ? "FONT_REAL_TEMPLATE" : "FONT_FALLBACK", family: measureFamily, templateFamily: fontFamilyCandidate || null, siteDefaultFamily: null, systemMatchFamily: null, fallbackFamily: "sans-serif" };
     // 输出指标（§22）：forced wrapped 逻辑行数、多行 block 数
     let forcedWrapTotal = 0, multiLineTotal = 0;
-    const items = (blocks || []).filter((b) => b && b.bbox && typeof b.bbox.x === "number" && b.bbox.width > 0).map((b, bi) => {
+    // Stage 8D §十八兜底：TextBlock 层（合并后）二次质量门 —— 合并可能产生 GIANT/TINY 异常块，
+    // 必须在进入 Native 前拦截（禁止用 outer 尺寸失真块直接创建）。
+    let workBlocks = (blocks || []).filter((b) => b && b.bbox && typeof b.bbox.x === "number" && b.bbox.width > 0);
+    if (typeof validateBlockSet === "function" && workBlocks.length && geo.naturalWidth > 0) {
+      const bg = validateBlockSet(workBlocks, { width: geo.naturalWidth, height: geo.naturalHeight }, { imageSize: { width: geo.naturalWidth, height: geo.naturalHeight } });
+      if (bg.blocked && bg.blocked.length) ocrLog("GATE8D-BLOCK", "block-layer blocked=" + bg.blocked.map((b) => b.index + ":" + ((b.reasons || []).join("|")) + ":" + String(b.text || "")).join(","));
+      if (bg.suspect) ocrLog("GATE8D-BLOCK", "block-layer set-suspect " + (bg.setSuspectReasons || []).join("|"));
+      workBlocks = bg.validated || [];
+      if (!workBlocks.length) { ocrRunning = false; setStatus("候选文字块经质量门后无有效块，未生成文字"); ocrLog("GATE8D-BLOCK", "all blocked, nothing to create"); return; }
+    }
+    // 8D §十六：状态链 —— gate 已过（candidate 层）标记 OCR_VALIDATED；进入 mapping 标记 RECONSTRUCTION_READY
+    const items = workBlocks.map((b, bi) => {
       // Stage 7.8 §十三：safeText 真正送 DIY（rawText 仅证据/诊断/重处理）；
       // 仅含被 BLOCKED 移除字符的空块直接剔除，不创建空 textbox（§三十三 special-character 门）。
       // Stage 7.8R §八：Text Safety Gate BLOCK（残留异常字符/空 safeText）同样剔除，不创建。
@@ -1095,20 +1196,66 @@
         ocrLog("SAFETY_GATE", "block " + bi + " status=BLOCK issues=" + (safety.issues || []).join("|"));
         return null;
       }
-      const srcText = (b.safeText != null && String(b.safeText).trim() !== "") ? String(b.safeText) : String(b.text || "");
+      // Stage 9 V3（§六/二十）：NATIVE_OCR 块的最终文字 = rawText 绝对原样（禁 trim/sanitize/归一）；
+      // 其余块保持 Legacy（safeText→text）供回归对比（§五十八）。
+      const srcText = (b.textSource === "NATIVE_OCR" && b.rawText != null)
+        ? String(b.rawText)
+        : ((b.safeText != null && String(b.safeText).trim() !== "") ? String(b.safeText) : String(b.text || ""));
       if (!srcText.trim()) return null;
+      // Stage 8B STEP 4（Phase A）：唯一几何合同 —— 用 aCoords 真值建立 source→canvas 仿射，
+      // 把 OCR 块四角映射为目标 quad（Phase B compare / Phase C 校正 / Phase E gate 唯一基准）。
+      // 旧版页面桥（无 aCoords）或未加载 image-space/text-fit 时整体降级旧路径，行为不变。
+      let targetQuad = null, imageRuntimeState = null;
+      if (geo.aCoords && typeof buildImageTransform === "function" && typeof mapRectToCanvas === "function" && typeof validateQuadInsideCanvas === "function") {
+        try {
+          const imgT = buildImageTransform({ naturalWidth: geo.naturalWidth, naturalHeight: geo.naturalHeight, width: w, height: h, aCoords: geo.aCoords });
+          if (imgT) {
+            const mq = mapRectToCanvas({ x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height }, imgT);
+            if (mq && Array.isArray(mq.corners) && mq.corners.length === 4) {
+              targetQuad = mq.corners;
+              imageRuntimeState = { basis: "aCoords", naturalWidth: geo.naturalWidth, naturalHeight: geo.naturalHeight, objectWidth: w, objectHeight: h, sourceWidth: geo.naturalWidth, sourceHeight: geo.naturalHeight };
+              // Phase E 前置门禁（坐标合同 §5 F6/§7）：中心出界或越界>20% → 该块禁创建（GEOMETRY_INVALID）
+              if ((geo.canvasWidth > 0) && (geo.canvasHeight > 0)) {
+                const gq = validateQuadInsideCanvas(targetQuad, geo.canvasWidth, geo.canvasHeight, { tolerance: 0.2 });
+                if (!gq.valid) {
+                  ocrLog("GEOMETRY_GATE", "block " + bi + " " + (gq.reason || "invalid") + "（禁创建，目标越界）");
+                  return null;
+                }
+              }
+            }
+          }
+        } catch (eGeo) { targetQuad = null; imageRuntimeState = null; }
+      }
       const bw = b.bbox.width * sx, bh = b.bbox.height * sy;
-      // §10：视觉字高 → fontSize 标定（取 block 内行高均值；多行 block 以行高为基准而非整块高度）
+      // §10（legacy 诊断保留）：avgLineH（行高均值）仅作诊断与 fallback。
       let lineHSum = 0;
       (b.lines || []).forEach((l) => { if (l && l.bbox && l.bbox.height > 0) lineHSum += l.bbox.height; });
       const avgLineH = (b.lines && b.lines.length && lineHSum > 0) ? lineHSum / b.lines.length : bh;
-      const fs = Math.max(10, Math.min(160, Math.round((avgLineH * sy) / FONT_HEIGHT_RATIO)));
+      // Stage 8D §十三~§十五（Typography Evidence Fusion）：不再让 width 单一指标独裁字号。
+      // 融合 advance width（主）、ink height（有则交叉校验）、OCR bbox height（仅 sanity）；
+      // 叠加 gate Readiness Score（quality<0.5 → 该块不创建）。8B 定案保持：advance 命中源字号。
+      let fs = null, fsSource = "none", zy8bAdvance = null, fusion8d = null;
+      if (fontMeas8bAvailable && typeof solveFontSizeFusion === "function") {
+        fusion8d = solveFontSizeFusion({ text: srcText, targetVisualWidth: Math.max(8, bw), inkHeight: null, ocrHeight: bh, fontFamily: measureFamily, measurer: fontMeas8b.measurer, quality: currentGateScore != null ? currentGateScore : 0.9 });
+        if (fusion8d && fusion8d.ok && fusion8d.fontSize > 0) {
+          fs = Math.min(160, Math.max(8, fusion8d.fontSize));
+          fsSource = fusion8d.reason || "fusion";
+          zy8bAdvance = (fusion8d.sources && fusion8d.sources.advance && fusion8d.sources.advance.advanceWidth) || null;
+        } else if (fusion8d && !fusion8d.ok) {
+          ocrLog("FUSION8D", "block " + bi + " reject reason=" + String(fusion8d.reason || "") + " quality=" + (currentGateScore != null ? Math.round(currentGateScore * 100) / 100 : "n/a"));
+        }
+      }
+      if (!fs) { fs = Math.max(8, Math.min(160, Math.round((avgLineH * sy) / FONT_HEIGHT_RATIO))); fsSource = "legacy-height-ratio"; }
+      // 8D §十二：bbox 三层分离（ocrBBox / textVisualTarget / textLayoutTarget）—— 诊断与下游用
+      const bboxSep = (typeof bboxSeparation === "function")
+        ? bboxSeparation({ x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height }, sx)
+        : null;
       // §11/§12：textbox layoutWidth —— 优先真实文本测量（字号标定+字符宽度估计+安全余量），
       // 宽度 = clamp(max(60, 视觉宽, 最长行估计宽+margin), ≤4000)，OCR 原始单行不得因宽度不足再换行
       const textLines = srcText.split("\n").filter((t) => t !== "");
       const layout = (typeof estimateTextLayout === "function")
-        ? estimateTextLayout(textLines, fs, { minWidth: Math.max(60, bw + 8), maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)) })
-        : { layoutWidth: Math.max(60, bw + 8), perLine: textLines.map((t) => ({ text: t, estimatedWidth: 0, needsWrap: false })), forcedWrapDetected: false, estimatedFinalLineCount: textLines.length };
+        ? estimateTextLayout(textLines, fs, { minWidth: Math.max(60, bw + 8, zy8bAdvance != null ? zy8bAdvance + Math.max(10, Math.round(fs * 0.35)) : 0), maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)), visualWidth: bw })
+        : { layoutWidth: Math.max(60, bw + 8, zy8bAdvance != null ? zy8bAdvance + Math.max(10, Math.round(fs * 0.35)) : 0), perLine: textLines.map((t) => ({ text: t, estimatedWidth: 0, needsWrap: false })), forcedWrapDetected: false, estimatedFinalLineCount: textLines.length };
       if (layout.forcedWrapDetected) forcedWrapTotal += 1;
       if (textLines.length > 1) multiLineTotal += 1;
       // §18：换行诊断字段（sourceLineCount = OCR 原始逻辑行；forcedWrapDetected = 存在源单行放不下）
@@ -1127,17 +1274,56 @@
         sizeCluster: b.sizeCluster || null,
         sizeRatio: b.sizeRatio != null ? b.sizeRatio : null,
         estimatedTextHeight: b.estimatedTextHeight != null ? b.estimatedTextHeight : null,
-        safetyGate: (b.safety && b.safety.status) ? b.safety.status : null // Stage 7.8R §八：SAFE / BLOCK
+        safetyGate: (b.safety && b.safety.status) ? b.safety.status : null, // Stage 7.8R §八：SAFE / BLOCK
+        // Stage 8B STEP 5：字号求解来源 / 样式候选（真实模板字体优先）
+        fsSource: fsSource,
+        textSource: b.textSource || "LEGACY_OCR", // Stage 9 V3：NATIVE_OCR = 绝对文字真值
+        textTruth: b.textTruth || null,
+        fontFamilyUsed: measureFamily,
+        fontFamilySource: fontFamilyCandidate ? "template" : "fallback",
+        legacyAvgLineH: avgLineH,
+        // Stage 8D P5-1（§六/§七/§九）：字体来源四层 + specialStyle + orientation（均纯诊断，零行为影响）
+        fontFamilyResolved: fontProv.family,
+        fontFamilySource8d: fontProv.source,
+        fontProvision: { source: fontProv.source, templateFamily: fontProv.templateFamily, siteDefaultFamily: fontProv.siteDefaultFamily, systemMatchFamily: fontProv.systemMatchFamily, fallbackFamily: fontProv.fallbackFamily },
+        specialStyle: (typeof assessSpecialStyle === "function")
+          ? (function () { const sp = assessSpecialStyle({ noTemplateFont: !fontFamilyCandidate, singleLine: textLines.length === 1, largeFont: fs >= 40, textLength: srcText.length, fontWeight: (ocrTarget && ocrTarget.fontStyle && ocrTarget.fontStyle.fontWeight) || null }); return { specialStyle: sp.specialStyle, styleStatus: sp.styleStatus, evidence: sp.specialStyleEvidence }; })()
+          : { specialStyle: false, styleStatus: "STYLE_READY", evidence: null },
+        orientation: (typeof blockTextAngle === "function" && typeof buildOrientationDiagnostics === "function" && typeof classifyTextAngle === "function")
+          ? buildOrientationDiagnostics(blockTextAngle(b.lines), angle, { classifyTextAngle: classifyTextAngle })
+          : { source: "NONE", blockAngle: null, imageAngle: angle || 0, classification: "UNKNOWN", confidence: 0 },
+        // Stage 8D：融合证据（§十四）与 bbox 三层分离（§十二）
+        fusion8d: fusion8d ? { reason: fusion8d.reason, confidence: fusion8d.confidence, quality: currentGateScore != null ? Math.round(currentGateScore * 100) / 100 : null, warnings: (fusion8d.warnings || []).slice(0, 4) } : null,
+        bboxSeparation8d: bboxSep ? { visualWidth: bboxSep.textVisualTarget.width, ocrBoxH: Math.round(bboxSep.ocrBBox.height * 100) / 100, layoutW: null } : null,
+        // Stage 8D P6-1（§二十一）：Source = OCR bbox（canvas 像素）—— 与 Target(text-fit)/Actual(rendered ink) 三层对比用
+        ocrBBox8d: { width: Math.round(bw * 100) / 100, height: Math.round(bh * 100) / 100 },
+        // 8D §十六：状态链（gate 已过 → READY；创建后由 calibration/ink 推进 CREATED/VERIFIED）
+        status8d: "RECONSTRUCTION_READY"
       };
       // §14：几何模型 —— 水平文本 left/top；θ≠0 旋转文本 center/angle（保留 P5 rotation 行为，零变化）
       const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
-      const base = { text: srcText, blockIndex: bi, fontFamily: "思源黑体 Regular", diagnostics: diagnostics, pageId: srcPageId, side: srcSide };
+      const base = { text: srcText, blockIndex: bi, fontFamily: fontFamilyCandidate || "sans-serif", diagnostics: diagnostics, pageId: srcPageId, side: srcSide, zy8bFontMismatch: !fontFamilyCandidate };
+      if (targetQuad) { base.zy8bTargetQuad = targetQuad; base.zy8bImageRuntime = imageRuntimeState; } // Stage 8B STEP 4：目标几何附到 item
+      if (zy8bAdvance != null) base.zy8bAdvance = zy8bAdvance; // Stage 8B STEP 5：渲染 advance（typography 宽度比较基准）
       // §13：textbox height 须容纳 lineCount×lineHeight（禁止只用单行 OCR bbox.height）
       const boxHeight = Math.round(textLines.length * fs * FONT_LINE_HEIGHT + 8);
       if (!angle) {
         return Object.assign({}, base, { left: px - 4, top: py - 4, width: layout.layoutWidth, fontSize: fs, height: boxHeight });
+      }
+      // Stage 8A-1（WRONG_ORIGIN fix）：旋转文本不再用 center/origin 定位（left 语义错位，§二十九 四角→AABB）。
+      // 源 bbox 四角（source px，绕图片中心 w/2,h/2 并乘 scale）→ AABB 左上，originX 恒为 'left'，
+      // textbox 自带 angle 渲染旋转。矩阵 x'=cos*sx*x − sin*sy*y + tx；tx = cx − cos*sx*w/2 + sin*sy*h/2。
+      // image-transform.js 缺省时回退原 center 计算（保持行为）。
+      const corners = (typeof transformCorners === "function")
+        ? transformCorners({ left: b.bbox.x, top: b.bbox.y, width: b.bbox.width, height: b.bbox.height },
+          [cos * sx, sin * sx, -sin * sy, cos * sy, cx - cos * sx * (w / 2) + sin * sy * (h / 2), cy - sin * sx * (w / 2) - cos * sy * (h / 2)])
+        : null;
+      if (corners) {
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        corners.forEach((p) => { minX = Math.min(minX, p.x); minY = Math.min(minY, p.y); maxX = Math.max(maxX, p.x); maxY = Math.max(maxY, p.y); });
+        return Object.assign({}, base, { left: minX, top: minY, angle: angle, origin: "left", width: layout.layoutWidth, fontSize: fs, height: boxHeight });
       }
       const ucx = (b.bbox.x + b.bbox.width / 2) / w - 0.5;
       const ucy = (b.bbox.y + b.bbox.height / 2) / h - 0.5;
@@ -1169,6 +1355,8 @@
         if (e.data.ok) {
           setStatus("已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）");
           ocrLog("SUCCESS", "created=" + (e.data.created || []).length + "/" + (e.data.detectedBlocks || 0) + " editorInteg=" + JSON.stringify({ undo: !!integ.nativeUndoFound, savePre: !!integ.undoSavePre, savePost: !!integ.undoSavePost, ident: integ.identityApplied, uv4: integ.uv4Total, layerMax: integ.layerMax }));
+          // Stage 8B STEP 4（Phase B/C/E）：创建后几何闭环校正（不阻塞终态回复，异步进行）
+          runGeometryCalibration(items, e.data, srcSide);
         } else {
           setStatus("生成失败：" + (e.data.message || "未创建文字") + (e.data.failedBlockIndex != null ? "（第 " + e.data.failedBlockIndex + " 个失败，已回滚）" : ""));
           ocrLog("ERROR", "ocrCreate failed created=" + (e.data.created || []).length + " detected=" + (e.data.detectedBlocks || 0) + " failedIdx=" + (e.data.failedBlockIndex != null ? e.data.failedBlockIndex : "n/a") + " msg=" + String(e.data.message || "").slice(0, 120));
@@ -1180,6 +1368,136 @@
     window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, items: items }, location.origin);
     // 事务结束：释放 ocrTarget，避免下次识别串用旧目标
     ocrTarget = null;
+  }
+
+  // Stage 8B STEP 4（Phase B/C/E）：创建后几何闭环校正 —— compare(targetQuad vs 实测 aCoords) →
+  // 修正（高→fontSize、宽→textbox width、center→left/top、angle→双旋转核对）→ 重测，≤8 轮；
+  // 最终仍超差 → CREATE_REJECTED_GEOMETRY_MISMATCH（Phase E 诊断，不删除对象；删除动作留真机取证）。
+  async function runGeometryCalibration(itemsList, reply, side) {
+    if (typeof compareTextGeometry !== "function" || typeof quadSize !== "function" || typeof quadCenter !== "function" || typeof quadAngle !== "function") return;
+    // 宽度约束修正依赖真实文本测量（浏览器 2d context；无则整体跳过防换行优化）
+    const textMeasurer = (typeof browserTextMeasurer === "function") ? browserTextMeasurer() : null;
+    const withMeasurer = function (f) { return textMeasurer && textMeasurer.available ? textMeasurer.measurer : null; };
+    if (typeof GM_getValue === "function" && GM_getValue("zyCalibrate8B", "1") === "0") { ocrLog("GEOMETRY", "calibration disabled by zyCalibrate8B=0"); return; }
+    const pending = [];
+    (itemsList || []).forEach(function (it) {
+      const created = (reply && reply.created ? reply.created : []).find(function (c) { return c && c.blockIndex === it.blockIndex; });
+      if (!it.zy8bTargetQuad || !created || !created.geometry || !created.geometry.quad) return;
+      pending.push({ blockIndex: it.blockIndex, item: it, geom: created.geometry, round: 0, done: false, compare: null, large: 0 });
+    });
+    if (!pending.length) return;
+    const ZY_OK = [], ZY_REJECT = [];
+    const waitAdjOnce = function () {
+      return new Promise(function (resolve) {
+        let done = false;
+        const to = setTimeout(function () { if (!done) { done = true; cleanup(); resolve(null); } }, 10000);
+        const onAdj = function (e2) {
+          if (!e2.data || e2.data.source !== "zy-card-assistant-page" || e2.data.type !== "ocrAdjustResult") return;
+          if (done) return; done = true; clearTimeout(to); cleanup(); resolve(e2.data);
+        };
+        const cleanup = function () { window.removeEventListener("message", onAdj); };
+        window.addEventListener("message", onAdj);
+      });
+    };
+    const correctionsFor = function (it, geom, cmp) {
+      // Stage 8B STEP 5/6（§11/§12/§十四）：calibration 职责收敛 —— 只做小误差修正；
+      // 换行（WRAP）只加宽不缩字号；字大小只 ±1 小步；需要大跳变 → 归类 CALIBRATION_MODEL_FAILURE。
+      const corr = {}, tq = it.zy8bTargetQuad;
+      let any = false, large = false;
+      const tSz = quadSize(tq), tCtr = quadCenter(tq), tAng = quadAngle(tq);
+      const aCtr = (geom.center && typeof geom.center.x === "number") ? geom.center : quadCenter(geom.quad);
+      const aAng = (typeof geom.angle === "number") ? geom.angle : quadAngle(geom.quad);
+      if (cmp.failures.indexOf("center") >= 0) {
+        const dx = tCtr.x - aCtr.x, dy = tCtr.y - aCtr.y;
+        if (Math.abs(dx) > 0.01 || Math.abs(dy) > 0.01) {
+          const cl = Math.round((geom.left || 0) + dx), ct = Math.round((geom.top || 0) + dy);
+          corr.left = cl; corr.top = ct; any = true;
+          if (Math.abs(dx) > 2 || Math.abs(dy) > 2) large = true;
+        }
+      }
+      if (cmp.typography.wrapDetected && typeof geom.textboxWidth === "number" && it.text) {
+        // §12 硬规则：单行 OCR 渲染成多行 → 只加宽（用真实 advance），绝不缩字号
+        const measW = withMeasurer();
+        let needW = geom.textboxWidth + (tSz.width - geom.width) + 8;
+        if (typeof solveTextWidth === "function" && measW) {
+          const mw = solveTextWidth(it.text, geom.fontSize || 14, { margin: 0, measurer: measW, fontFamily: it.fontFamily || "sans-serif" });
+          if (mw) needW = Math.max(needW, Math.ceil(mw.advanceWidth + 4));
+        }
+        corr.width = Math.min(4000, Math.max(20, Math.round(needW)));
+        any = true;
+      }
+      if (cmp.failures.indexOf("height") >= 0 && typeof geom.fontSize === "number" && it.text && !cmp.typography.wrapDetected) {
+        // 无换行的小高度差：字号 ±1 小步（STEP E：1~3 次小修正内收敛）
+        const fsCur = geom.fontSize;
+        const step = tSz.height > geom.height ? 1 : -1;
+        const fsNew = Math.min(160, Math.max(8, fsCur + step));
+        corr.fontSize = fsNew;
+        if (Math.abs(fsNew - fsCur) > 1) large = true;
+        // 同步用 advance 兜底宽度（防 fs 变化导致 wrap）
+        const measW2 = withMeasurer();
+        if (typeof solveTextWidth === "function" && measW2) {
+          const mw = solveTextWidth(it.text, fsNew, { margin: 0, measurer: measW2, fontFamily: it.fontFamily || "sans-serif" });
+          if (mw) corr.width = Math.min(4000, Math.max(geom.textboxWidth || 20, Math.ceil(mw.advanceWidth + 4)));
+        }
+        any = true;
+      }
+      if (cmp.failures.indexOf("width") >= 0 && typeof geom.textboxWidth === "number") {
+        // 宽度只在仍小于内容时微增（目标宽度由 Phase 1 advance 决定；此处仅为 wrap/精度兜底）
+        const needW = Math.max(geom.textboxWidth, Math.ceil(geom.width + (tSz.width - geom.width)));
+        corr.width = Math.min(4000, Math.max(20, needW));
+        any = true;
+      }
+      if (cmp.failures.indexOf("angle") >= 0) {
+        const delta = ((tAng - aAng + 180) % 360 + 360) % 360 - 180;
+        const next = ((geom.angle || 0) + delta + 180) % 360 - 180;
+        if (Math.abs(delta) < 45 && Math.abs(delta) > 0.05) { corr.angle = Math.round(next * 1000) / 1000; any = true; if (Math.abs(delta) > 0.5) large = true; }
+      }
+      corr.__large = large;
+      return any ? corr : null;
+    };
+    const CATEGORY = function (p) {
+      if (p.compare && p.compare.typography.wrapDetected) return "WRAP";
+      if (p.compare && p.compare.typography.fontMismatch) return "STYLE_MISMATCH";
+      if (p.compare && !p.compare.geometry.pass) return (p.compare.failures || []).indexOf("center") >= 0 || (p.compare.failures || []).indexOf("angle") >= 0 ? "IMAGE_TRANSFORM" : "FONT_MODEL";
+      return "FONT_MODEL";
+    };
+    // STEP E：只允许 ≤3 轮小修正；仅「几何失败 / 仍换行」才拒绝；typography 差异 → 保留对象并备注（§15/§19/§24）
+    const ZY_NOTES = [];
+    for (let round = 0; round < 4; round += 1) {
+      const need = [];
+      pending.forEach(function (p) {
+        if (p.done) return;
+        const cmp = compareTextGeometry(p.item.zy8bTargetQuad, p.geom.quad, { centerTol: 2, cornerTol: 3, widthTol: 3, angleTol: 0.5, renderedLineCount: p.geom.renderedLineCount != null ? p.geom.renderedLineCount : null, targetLineCount: (p.item.diagnostics && p.item.diagnostics.sourceLineCount) || 1, fontMismatch: !!p.item.zy8bFontMismatch, advanceOverride: p.item.zy8bAdvance != null ? p.item.zy8bAdvance : null, fontSize: p.geom.fontSize != null ? p.geom.fontSize : null });
+        p.compare = cmp;
+        if (cmp.pass) { p.done = true; ZY_OK.push(p.blockIndex); return; }
+        if (cmp.geometry.pass && !cmp.typography.wrapDetected) {
+          // 视觉几何正确、无换行 → 对象保留；typography 差异仅记录（字体不匹配属 StyleResolver 范畴）
+          p.done = true; ZY_NOTES.push({ blockIndex: p.blockIndex, status: cmp.status, failures: (cmp.failures || []).join("|"), category: CATEGORY(p) });
+          return;
+        }
+        if (p.round >= 3) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: (cmp.failures || []).join("|"), status: cmp.status }); return; }
+        const corr = correctionsFor(p.item, p.geom, cmp);
+        if (!corr) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_NO_CORRECTION", category: CATEGORY(p), failures: (cmp.failures || []).join("|") }); return; }
+        p.round += 1;
+        if (corr.__large) p.large += 1;
+        delete corr.__large;
+        need.push({ blockIndex: p.blockIndex, corrections: corr });
+      });
+      if (!need.length) break;
+      window.postMessage({ source: "zy-card-assistant", type: "ocrAdjust", side: side || "front", items: need }, location.origin);
+      const rep = await waitAdjOnce();
+      if (!rep || !rep.items) break;
+      rep.items.forEach(function (r) {
+        const p = pending.find(function (x) { return x.blockIndex === r.blockIndex; });
+        if (p && r.ok && r.geometry && r.geometry.quad) p.geom = r.geometry;
+      });
+    }
+    pending.forEach(function (p) { if (!p.done) { p.done = true; if (p.compare && p.compare.geometry.pass && !p.compare.typography.wrapDetected) { ZY_NOTES.push({ blockIndex: p.blockIndex, status: p.compare.status, failures: (p.compare.failures || []).join("|"), category: CATEGORY(p) }); } else { ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: p.compare ? (p.compare.failures || []).join("|") : "no-compare", status: p.compare ? p.compare.status : null }); } } });
+    if (ZY_OK.length || ZY_REJECT.length || ZY_NOTES.length) {
+      const summary = { ok: ZY_OK.length, rejected: ZY_REJECT.length, noted: ZY_NOTES.length, rejectedBlocks: ZY_REJECT.map(function (r) { return { blockIndex: r.blockIndex, code: r.code, category: r.category, failures: r.failures, status: r.status }; }), notes: ZY_NOTES };
+      setStatus("几何校验完成：通过 " + ZY_OK.length + " 个" + (ZY_NOTES.length ? "，保留 " + ZY_NOTES.length + " 个（" + ZY_NOTES.map(function (n) { return n.category; }).join("|") + "，仅备注）" : "") + (ZY_REJECT.length ? "，拒绝 " + ZY_REJECT.length + " 个（" + ZY_REJECT.map(function (r) { return r.category; }).join("|") + "）" : "") + "（细节见控制台 zy-ocr GEOMETRY）");
+      ocrLog("GEOMETRY", JSON.stringify(summary));
+    }
   }
 
   function readSideTextFromPanel() {

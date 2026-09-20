@@ -1,0 +1,2157 @@
+{
+  "ts": "2026-09-20T04:31:29.565Z",
+  "stage": "STAGE-9-P0-ALTQ",
+  "branch": "stage-9-altq-baidu-reconstruction",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "card": "D:\\zheliyin-scriptcat\\runtime\\stage8b\\assets\\real-card-shengying.png",
+  "net": [
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropBar.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropBar.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/MaskImgPropBar.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/MaskImgPropBar.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/SVGPropBar.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/SVGPropBar.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/GroupPropBar.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/GroupPropBar.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/UnknowPropBar.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/UnknowPropBar.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TablePropBar.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TablePropBar.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/BackColorPropBar.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/BackColorPropBar.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/AddPageNumPropBar.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/AddPageNumPropBar.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/CupOneKeyPropBar.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/CupOneKeyPropBar.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CalculationCoordsSize.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CalculationCoordsSize.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/Map.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/Map.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/XMLParse.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/util/XMLParse.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/3D/OrbitControls.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/3D/OrbitControls.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/3D/loaders/OBJLoader.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/3D/loaders/OBJLoader.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/MarkId.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/MarkId.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/3D/loaders/GLTFLoader.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/3D/loaders/GLTFLoader.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/interface/InterFace.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/interface/InterFace.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/interface/ICommand.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/interface/ICommand.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/layer.min.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/layer.min.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.Huploadify.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.Huploadify.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.SuperSlide.2.1.1.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.SuperSlide.2.1.1.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/GuideLine.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/GuideLine.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/jsonmedia/ProductJsonObjAssignment.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/jsonmedia/ProductJsonObjAssignment.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckMaskImg.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CheckMaskImg.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/ColorPicker.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/ColorPicker.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/SetCurved.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/SetCurved.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CalcuNewXYInPartPage.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/CalcuNewXYInPartPage.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/guide-rulers.min.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/guide-rulers.min.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetTextColor.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetTextColor.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.qrcode.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.qrcode.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/utf.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/utf.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/handsontable.full.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/handsontable.full.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/UpdateAllLevel.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/utils/UpdateAllLevel.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/ImagePropPanel.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/ImagePropPanel.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropPanel.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropPanel.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/GroupPropPanel.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/GroupPropPanel.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery-ui.min.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery-ui.min.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/freewall.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/freewall.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.minicolors.min.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.minicolors.min.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/cropper.min.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/cropper.min.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/SetPartPageAlign.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/SetPartPageAlign.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/SVGPropPanel.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/SVGPropPanel.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/UnknowPropPannelR.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/UnknowPropPannelR.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TablePropPanel.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TablePropPanel.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/BackColorPropPanel.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/BackColorPropPanel.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/AddPageNumPropPanel.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/AddPageNumPropPanel.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/CupOneKeyPropPanel.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/property/CupOneKeyPropPanel.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/three.min.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/three.min.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/interface/ISetTool.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/interface/ISetTool.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/fabric.curvedText.min.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/fabric.curvedText.min.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/SetSize.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/SetSize.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetFont3D.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetFont3D.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.ui.rotatable.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.ui.rotatable.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/svgtools/SetSvgColor.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/svgtools/SetSvgColor.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.mousewheel.min.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/jquery.mousewheel.min.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/xnColorPicker.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/public/xnColorPicker.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/fabric.table.min.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/libs/fabric.table.min.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetFontWeight.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetFontWeight.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetTextDecoration.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetTextDecoration.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/FormatCard/getDicItem.do?code=M001",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
+      "method": "POST",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
+      "method": "POST",
+      "post": "templateId=252937&selectMaskId=&designerGoodsSizeCode=&designerGoodsId=252438&templateTypeId=12"
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/commontool/queryWebInfo.do?sourceId=999",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/diy/findAllFont.do",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/diy/findTemplateById.do",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/diy/getFontCss.do",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-652584115FFF44AC80A86D25B037C3EF.woff",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO5D0BC40868F94EB2B2775372A66B33B9.woff",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGOFAEF85F21A474B82995E1DCE18782C27.woff",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO07DD9CBBD38443EF84B5D90F9FD3FA8B.woff",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO77EBC5C9ED4041F2A48F67295BA4B78E.woff",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO16194CBF720B4A5996CBF42BB8D4E542.woff",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-86CC43ACB7DA4C84A9EBB8D7D3649A5B.woff",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO07DD9CBBD38443EF84B5D90F9FD3FA8B.woff",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGOFAEF85F21A474B82995E1DCE18782C27.woff",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-652584115FFF44AC80A86D25B037C3EF.woff",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO77EBC5C9ED4041F2A48F67295BA4B78E.woff",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO16194CBF720B4A5996CBF42BB8D4E542.woff",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/pixWarn.png",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/imgs/large/MXYZ-NEWMONGOE2043208C71B4BBF96E190A1837A30F0.png",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/imgs/large/MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/command/LoadFromProductJsonCommand.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/pixWarn.png",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/imgs/large/MXYZ-NEWMONGOE2043208C71B4BBF96E190A1837A30F0.png",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/imgs/large/MXYZ-NEWMONGOADB715C81F524846B72B599949BB5576.png",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/command/LoadFromProductJsonCommand.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/OneKeyCanvasDiy.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/OneKeyCanvasDiy.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-NEWMONGO5D0BC40868F94EB2B2775372A66B33B9.woff",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/assets/resource/files/MXYZ-86CC43ACB7DA4C84A9EBB8D7D3649A5B.woff",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/command/CreateLayerThumbnailCommand.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/command/CloseLoadingCommand.js?v=20260707017",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/command/CreateLayerThumbnailCommand.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/common/command/CloseLoadingCommand.js?v=20260707017",
+      "status": 200
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/ocrDesign/add.png",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "req",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/layer/icon.png",
+      "method": "GET",
+      "post": ""
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/layer/icon.png",
+      "status": 200
+    },
+    {
+      "dir": "res",
+      "url": "https://diy.zheliyin.com/diyWeb/skins/imgs/ocrDesign/add.png",
+      "status": 200
+    }
+  ],
+  "console": [
+    "No routes matched location \"/script/list\" ",
+    "Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: https://diy.zheliyin.com/diyWeb/skins/fonts/diyicon/iconfont.woff2?t=1779360481699",
+    "Failed to load resource: net::ERR_CONNECTION_CLOSED",
+    "Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: https://diy.zheliyin.com/diyWeb/skins/fonts/diy3V/iconfont.woff?t=1585737881463",
+    "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+    "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+    "[DOM] Input elements should have autocomplete attributes (suggested: \"new-password\"): (More info: https://goo.gl/9p2vKq) %o",
+    "[DOM] Input elements should have autocomplete attributes (suggested: \"new-password\"): (More info: https://goo.gl/9p2vKq) %o",
+    "window在require之前完成",
+    "开始加载",
+    "思源黑体 Medium字体下载成功",
+    "指定字体预加载",
+    "指定字体预加载",
+    "指定字体预加载",
+    "指定字体预加载",
+    "指定字体预加载",
+    "Failed to load resource: net::ERR_CONNECTION_CLOSED",
+    "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+    "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq) %o",
+    "[DOM] Input elements should have autocomplete attributes (suggested: \"new-password\"): (More info: https://goo.gl/9p2vKq) %o",
+    "[DOM] Input elements should have autocomplete attributes (suggested: \"new-password\"): (More info: https://goo.gl/9p2vKq) %o",
+    "window在require之前完成",
+    "开始加载",
+    "思源黑体 Medium字体下载成功",
+    "指定字体预加载",
+    "指定字体预加载",
+    "指定字体预加载",
+    "指定字体预加载",
+    "指定字体预加载",
+    "指定字体已渲染",
+    "指定字体已渲染",
+    "指定字体已渲染==汉仪楷体简",
+    "指定字体已渲染",
+    "指定字体已渲染",
+    "汉仪楷体简字体下载成功",
+    "指定字体已渲染==思源黑体 Medium",
+    "指定字体已渲染"
+  ],
+  "diag": [
+    "PAGEERROR: window.closeSocket is not a function"
+  ],
+  "steps": [],
+  "answers": {
+    "Q1_pageListensShortcut": true,
+    "Q2_whichFunctionCalled": "UNKNOWN_deep_trace_见 keyListeners/network",
+    "Q3_networkRequest": 80,
+    "Q4_requestUrl": [
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropBar.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/jquery.Huploadify.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/jquery.Huploadify.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetTextColor.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/tools/txttools/SetTextColor.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropPanel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/property/TextPropPanel.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/fabric.curvedText.min.js?v=20260707017",
+      "https://diy.zheliyin.com/diyWeb/js/libs/fabric.curvedText.min.js?v=20260707017"
+    ],
+    "Q5_whereResult": null,
+    "Q6_domWritten": 60,
+    "Q7_hiddenTextarea": null,
+    "Q8_editorObjectWritten": {
+      "before": 9,
+      "after": 10,
+      "delta": 1
+    },
+    "Q9_clipboard": null,
+    "Q10_globalWritten": 0,
+    "Q11_tempTextObject": null,
+    "Q12_ocrResultArray": null
+  },
+  "cardLoaded": {
+    "ok": true,
+    "nw": 895,
+    "nh": 577
+  },
+  "beforeObjs": [
+    {
+      "type": "rect",
+      "text": null,
+      "uuid": "d8483304-cabb-44b4-8b4d-1416bc37339c"
+    },
+    {
+      "type": "line",
+      "text": null,
+      "uuid": null
+    },
+    {
+      "type": "line",
+      "text": null,
+      "uuid": null
+    },
+    {
+      "type": "line",
+      "text": null,
+      "uuid": null
+    },
+    {
+      "type": "line",
+      "text": null,
+      "uuid": null
+    },
+    {
+      "type": "line",
+      "text": null,
+      "uuid": null
+    },
+    {
+      "type": "line",
+      "text": null,
+      "uuid": null
+    },
+    {
+      "type": "line",
+      "text": null,
+      "uuid": null
+    },
+    {
+      "type": "line",
+      "text": null,
+      "uuid": null
+    }
+  ],
+  "step1": {
+    "probeAfter": {
+      "probe": {
+        "ok": true,
+        "startTs": 1789878703761,
+        "events": [
+          {
+            "t": "keydown",
+            "key": "Q",
+            "code": "KeyQ",
+            "alt": true,
+            "ctrl": false,
+            "shift": false,
+            "target": "BODY",
+            "phase": 1,
+            "defaultPrevented": false,
+            "ts": 1078
+          },
+          {
+            "t": "keyup",
+            "key": "Q",
+            "code": "KeyQ",
+            "alt": true,
+            "ctrl": false,
+            "shift": false,
+            "target": "BODY",
+            "phase": 1,
+            "defaultPrevented": false,
+            "ts": 1106
+          }
+        ],
+        "mutations": [
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          }
+        ],
+        "globals": [],
+        "baseline": {
+          "active": "BODY.",
+          "selText": ""
+        },
+        "mo": {},
+        "keyListeners": []
+      },
+      "activeAfter": "BODY.",
+      "selText": "",
+      "objects": [
+        {
+          "type": "rect",
+          "text": null,
+          "uuid": "d8483304-cabb-44b4-8b4d-1416bc37339c"
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        }
+      ],
+      "candidates": [
+        {
+          "where": "reqjs",
+          "name": "CheckTextBox",
+          "kind": "object"
+        },
+        {
+          "where": "reqjs",
+          "name": "SetTextColor",
+          "kind": "object"
+        },
+        {
+          "where": "reqjs",
+          "name": "CurvedText",
+          "kind": "function"
+        },
+        {
+          "where": "reqjs",
+          "name": "TextPropPanel",
+          "kind": "object"
+        },
+        {
+          "where": "reqjs",
+          "name": "TextPropBar",
+          "kind": "object"
+        },
+        {
+          "where": "reqjs",
+          "name": "SetTextDecoration",
+          "kind": "object"
+        }
+      ]
+    },
+    "clipboard": {
+      "ok": true,
+      "text": ""
+    }
+  },
+  "selectedImg": {
+    "ok": true
+  },
+  "step2": {
+    "probeAfter": {
+      "probe": {
+        "ok": true,
+        "startTs": 1789878703761,
+        "events": [
+          {
+            "t": "keydown",
+            "key": "Q",
+            "code": "KeyQ",
+            "alt": true,
+            "ctrl": false,
+            "shift": false,
+            "target": "BODY",
+            "phase": 1,
+            "defaultPrevented": false,
+            "ts": 1078
+          },
+          {
+            "t": "keyup",
+            "key": "Q",
+            "code": "KeyQ",
+            "alt": true,
+            "ctrl": false,
+            "shift": false,
+            "target": "BODY",
+            "phase": 1,
+            "defaultPrevented": false,
+            "ts": 1106
+          },
+          {
+            "t": "keydown",
+            "key": "Q",
+            "code": "KeyQ",
+            "alt": true,
+            "ctrl": false,
+            "shift": false,
+            "target": "BODY",
+            "phase": 1,
+            "defaultPrevented": false,
+            "ts": 7548
+          },
+          {
+            "t": "keyup",
+            "key": "Q",
+            "code": "KeyQ",
+            "alt": true,
+            "ctrl": false,
+            "shift": false,
+            "target": "BODY",
+            "phase": 1,
+            "defaultPrevented": false,
+            "ts": 7555
+          }
+        ],
+        "mutations": [
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "x"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "y"
+          },
+          {
+            "type": "attributes",
+            "target": "A",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "area"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "position"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "LI",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "LI",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "A",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "A",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "A",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "LI",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "LI",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "A",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "A",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "A",
+            "added": 0,
+            "removed": 0,
+            "attr": "class"
+          },
+          {
+            "type": "attributes",
+            "target": "DIV",
+            "added": 0,
+            "removed": 0,
+            "attr": "style"
+          }
+        ],
+        "globals": [],
+        "baseline": {
+          "active": "BODY.",
+          "selText": ""
+        },
+        "mo": {},
+        "keyListeners": []
+      },
+      "activeAfter": "BODY.",
+      "selText": "",
+      "objects": [
+        {
+          "type": "rect",
+          "text": null,
+          "uuid": "d8483304-cabb-44b4-8b4d-1416bc37339c"
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "line",
+          "text": null,
+          "uuid": null
+        },
+        {
+          "type": "image",
+          "text": null,
+          "uuid": "s9altq-1789878710090"
+        }
+      ],
+      "candidates": [
+        {
+          "where": "reqjs",
+          "name": "CheckTextBox",
+          "kind": "object"
+        },
+        {
+          "where": "reqjs",
+          "name": "SetTextColor",
+          "kind": "object"
+        },
+        {
+          "where": "reqjs",
+          "name": "CurvedText",
+          "kind": "function"
+        },
+        {
+          "where": "reqjs",
+          "name": "TextPropPanel",
+          "kind": "object"
+        },
+        {
+          "where": "reqjs",
+          "name": "TextPropBar",
+          "kind": "object"
+        },
+        {
+          "where": "reqjs",
+          "name": "SetTextDecoration",
+          "kind": "object"
+        }
+      ]
+    },
+    "clipboard": {
+      "ok": true,
+      "text": ""
+    }
+  },
+  "cleanup": {
+    "ok": true,
+    "removed": 1
+  },
+  "objDelta": {
+    "step1": {
+      "before": 9,
+      "after": 9,
+      "delta": 0
+    },
+    "step2": {
+      "before": 9,
+      "after": 10,
+      "delta": 1
+    }
+  }
+}

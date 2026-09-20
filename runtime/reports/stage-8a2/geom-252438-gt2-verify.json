@@ -1,0 +1,314 @@
+{
+  "rows": [
+    {
+      "angle": 0,
+      "blocks": [
+        {
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 88,
+            "top": 83
+          },
+          "gt": {
+            "left": 92,
+            "top": 87
+          },
+          "actual": {
+            "left": 88,
+            "top": 83
+          },
+          "dExpGT_L": -4,
+          "dExpGT_T": -4,
+          "dActGT_L": -4,
+          "dActGT_T": -4
+        },
+        {
+          "text": "中号正文联系电话",
+          "expected": {
+            "left": 88,
+            "top": 167
+          },
+          "gt": {
+            "left": 92,
+            "top": 171
+          },
+          "actual": {
+            "left": 88,
+            "top": 167
+          },
+          "dExpGT_L": -4,
+          "dExpGT_T": -4,
+          "dActGT_L": -4,
+          "dActGT_T": -4
+        },
+        {
+          "text": "小字页肝版权各注",
+          "expected": {
+            "left": 87,
+            "top": 256
+          },
+          "gt": {
+            "left": 91,
+            "top": 260
+          },
+          "actual": {
+            "left": 87,
+            "top": 256
+          },
+          "dExpGT_L": -4,
+          "dExpGT_T": -4,
+          "dActGT_L": -4,
+          "dActGT_T": -4
+        }
+      ]
+    },
+    {
+      "angle": 2,
+      "blocks": [
+        {
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 94.59,
+            "top": 70.74
+          },
+          "gt": {
+            "left": 94.59,
+            "top": 70.74
+          },
+          "actual": {
+            "left": 95,
+            "top": 71
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": 0.41,
+          "dActGT_T": 0.26
+        },
+        {
+          "text": "中号正文联系电话",
+          "expected": {
+            "left": 93.02,
+            "top": 154.69
+          },
+          "gt": {
+            "left": 93.02,
+            "top": 154.69
+          },
+          "actual": {
+            "left": 93,
+            "top": 155
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": -0.02,
+          "dActGT_T": 0.31
+        },
+        {
+          "text": "小字页肝版权各注",
+          "expected": {
+            "left": 89.16,
+            "top": 243.6
+          },
+          "gt": {
+            "left": 89.16,
+            "top": 243.6
+          },
+          "actual": {
+            "left": 89,
+            "top": 244
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": -0.16,
+          "dActGT_T": 0.4
+        }
+      ]
+    },
+    {
+      "angle": 5,
+      "blocks": [
+        {
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 99.53,
+            "top": 46.68
+          },
+          "gt": {
+            "left": 99.53,
+            "top": 46.68
+          },
+          "actual": {
+            "left": 100,
+            "top": 47
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": 0.47,
+          "dActGT_T": 0.32
+        },
+        {
+          "text": "中号正文联系电话",
+          "expected": {
+            "left": 95.61,
+            "top": 130.36
+          },
+          "gt": {
+            "left": 95.61,
+            "top": 130.36
+          },
+          "actual": {
+            "left": 96,
+            "top": 130
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": 0.39,
+          "dActGT_T": -0.36
+        },
+        {
+          "text": "小字页肝版权各注",
+          "expected": {
+            "left": 87.47,
+            "top": 218.93
+          },
+          "gt": {
+            "left": 87.47,
+            "top": 218.93
+          },
+          "actual": {
+            "left": 87,
+            "top": 219
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": -0.47,
+          "dActGT_T": 0.07
+        }
+      ]
+    },
+    {
+      "angle": 8,
+      "blocks": [
+        {
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 105.74,
+            "top": 23.06
+          },
+          "gt": {
+            "left": 105.74,
+            "top": 23.06
+          },
+          "actual": {
+            "left": 106,
+            "top": 23
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": 0.26,
+          "dActGT_T": -0.06
+        },
+        {
+          "text": "中号正文联系电话",
+          "expected": {
+            "left": 99.48,
+            "top": 106.25
+          },
+          "gt": {
+            "left": 99.48,
+            "top": 106.25
+          },
+          "actual": {
+            "left": 99,
+            "top": 106
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": -0.48,
+          "dActGT_T": -0.25
+        },
+        {
+          "text": "小字页肝版权各注",
+          "expected": {
+            "left": 87.07,
+            "top": 194.24
+          },
+          "gt": {
+            "left": 87.07,
+            "top": 194.24
+          },
+          "actual": {
+            "left": 87,
+            "top": 194
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": -0.07,
+          "dActGT_T": -0.24
+        }
+      ]
+    },
+    {
+      "angle": 10,
+      "blocks": [
+        {
+          "text": "大字标题实例文字",
+          "expected": {
+            "left": 110.57,
+            "top": 7.6
+          },
+          "gt": {
+            "left": 110.57,
+            "top": 7.6
+          },
+          "actual": {
+            "left": 111,
+            "top": 8
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": 0.43,
+          "dActGT_T": 0.4
+        },
+        {
+          "text": "中号正文联系电话",
+          "expected": {
+            "left": 102.76,
+            "top": 90.33
+          },
+          "gt": {
+            "left": 102.76,
+            "top": 90.33
+          },
+          "actual": {
+            "left": 103,
+            "top": 90
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": 0.24,
+          "dActGT_T": -0.33
+        },
+        {
+          "text": "小字页肝版权各注",
+          "expected": {
+            "left": 87.53,
+            "top": 177.8
+          },
+          "gt": {
+            "left": 87.53,
+            "top": 177.8
+          },
+          "actual": {
+            "left": 88,
+            "top": 178
+          },
+          "dExpGT_L": 0,
+          "dExpGT_T": 0,
+          "dActGT_L": 0.47,
+          "dActGT_T": 0.2
+        }
+      ]
+    }
+  ]
+}

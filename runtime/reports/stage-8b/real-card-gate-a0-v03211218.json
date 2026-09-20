@@ -1,0 +1,3511 @@
+{
+  "ts": "2026-09-20T03:22:58.727Z",
+  "stage": "STAGE-8B-STEP5",
+  "branch": "stage-8d-ocr-quality-reconstruction",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "cases": [
+    {
+      "id": "A0",
+      "route": "background",
+      "angle": 0,
+      "scale": 1,
+      "steps": [
+        {
+          "image": {
+            "naturalWidth": 895,
+            "naturalHeight": 577,
+            "width": 895,
+            "height": 577,
+            "scaleX": 1,
+            "scaleY": 1,
+            "left": 0,
+            "top": 0,
+            "angle": 0,
+            "originX": "left",
+            "originY": "top",
+            "aCoords": {
+              "tl": [
+                0,
+                0
+              ],
+              "tr": [
+                895,
+                0
+              ],
+              "br": [
+                895,
+                577
+              ],
+              "bl": [
+                0,
+                577
+              ]
+            }
+          },
+          "canvas": {
+            "width": 619.5,
+            "height": 376.8625,
+            "viewportTransform": [
+              1.0325,
+              0,
+              0,
+              1.0325,
+              0,
+              0
+            ],
+            "zoom": 1.0325,
+            "retina": 1.0000000149011612
+          },
+          "diy": {
+            "currentFactWidth": 600,
+            "currentFactHeight": 365,
+            "currentSize": 1.0325
+          },
+          "registry": 1
+        }
+      ],
+      "rows": [],
+      "hook": {
+        "prep": [
+          {
+            "geo": {
+              "left": 0,
+              "top": 0,
+              "width": 895,
+              "height": 577,
+              "scaleX": 1,
+              "scaleY": 1,
+              "angle": 0,
+              "canvasWidth": 619.5,
+              "canvasHeight": 376.8625,
+              "naturalWidth": 895,
+              "naturalHeight": 577,
+              "aCoords": {
+                "tl": {
+                  "x": 0,
+                  "y": 0
+                },
+                "tr": {
+                  "x": 895,
+                  "y": 0
+                },
+                "br": {
+                  "x": 895,
+                  "y": 577
+                },
+                "bl": {
+                  "x": 0,
+                  "y": 577
+                }
+              }
+            },
+            "pageOk": true
+          }
+        ],
+        "msg": [
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "text": "出",
+                "left": 437,
+                "top": 6,
+                "fontSize": 89,
+                "width": 120,
+                "height": 124,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 441.00000000000017,
+                    "y": 9.999999999999984
+                  },
+                  {
+                    "x": 474.00000000000017,
+                    "y": 9.999999999999982
+                  },
+                  {
+                    "x": 474.0000000000001,
+                    "y": 136.99999999999997
+                  },
+                  {
+                    "x": 441.0000000000001,
+                    "y": 136.99999999999997
+                  }
+                ]
+              },
+              {
+                "blockIndex": 1,
+                "text": "天住",
+                "left": 273,
+                "top": 31,
+                "fontSize": 37,
+                "width": 189,
+                "height": 56,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 277.00000000000017,
+                    "y": 34.99999999999999
+                  },
+                  {
+                    "x": 453.00000000000017,
+                    "y": 34.999999999999986
+                  },
+                  {
+                    "x": 453.0000000000001,
+                    "y": 87.99999999999999
+                  },
+                  {
+                    "x": 277.0000000000001,
+                    "y": 87.99999999999999
+                  }
+                ]
+              },
+              {
+                "blockIndex": 2,
+                "text": "轿 CO 天 住 出",
+                "left": 490,
+                "top": 42,
+                "fontSize": 21,
+                "width": 205,
+                "height": 35,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 494.00000000000017,
+                    "y": 45.99999999999998
+                  },
+                  {
+                    "x": 606.0000000000001,
+                    "y": 45.99999999999998
+                  },
+                  {
+                    "x": 606.0000000000001,
+                    "y": 75.99999999999997
+                  },
+                  {
+                    "x": 494.00000000000017,
+                    "y": 75.99999999999999
+                  }
+                ]
+              },
+              {
+                "blockIndex": 3,
+                "text": "轿 CO 天 住 出",
+                "left": 13,
+                "top": 50,
+                "fontSize": 55,
+                "width": 528,
+                "height": 80,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 17.000000000000195,
+                    "y": 54
+                  },
+                  {
+                    "x": 208.00000000000017,
+                    "y": 53.99999999999999
+                  },
+                  {
+                    "x": 208.00000000000014,
+                    "y": 133
+                  },
+                  {
+                    "x": 17.000000000000167,
+                    "y": 133
+                  }
+                ]
+              },
+              {
+                "blockIndex": 4,
+                "text": "Telephone:",
+                "left": 268,
+                "top": 104.99999999999997,
+                "fontSize": 28,
+                "width": 406,
+                "height": 44,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 272.0000000000001,
+                    "y": 108.99999999999999
+                  },
+                  {
+                    "x": 632.0000000000001,
+                    "y": 108.99999999999997
+                  },
+                  {
+                    "x": 632.0000000000001,
+                    "y": 148.99999999999997
+                  },
+                  {
+                    "x": 272.0000000000001,
+                    "y": 149
+                  }
+                ]
+              },
+              {
+                "blockIndex": 5,
+                "text": "阅梧回盈\n器洛明",
+                "left": 76,
+                "top": 173,
+                "fontSize": 107,
+                "width": 506,
+                "height": 286,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 80.00000000000014,
+                    "y": 177
+                  },
+                  {
+                    "x": 549,
+                    "y": 176.99999999999997
+                  },
+                  {
+                    "x": 549,
+                    "y": 330
+                  },
+                  {
+                    "x": 80.00000000000009,
+                    "y": 330
+                  }
+                ]
+              },
+              {
+                "blockIndex": 6,
+                "text": "回册佛山盛包装制品限",
+                "left": 28,
+                "top": 180,
+                "fontSize": 58,
+                "width": 707,
+                "height": 159,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 32.00000000000015,
+                    "y": 184
+                  },
+                  {
+                    "x": 719,
+                    "y": 183.99999999999997
+                  },
+                  {
+                    "x": 719,
+                    "y": 266
+                  },
+                  {
+                    "x": 32.00000000000012,
+                    "y": 266
+                  }
+                ]
+              },
+              {
+                "blockIndex": 10,
+                "text": "器 洛 Tel.: ",
+                "left": 274,
+                "top": 247,
+                "fontSize": 53,
+                "width": 793,
+                "height": 146,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 278.00000000000006,
+                    "y": 251
+                  },
+                  {
+                    "x": 564,
+                    "y": 250.99999999999997
+                  },
+                  {
+                    "x": 564,
+                    "y": 326
+                  },
+                  {
+                    "x": 278.00000000000006,
+                    "y": 326
+                  }
+                ]
+              },
+              {
+                "blockIndex": 14,
+                "text": "由",
+                "left": 182,
+                "top": 313,
+                "fontSize": 20,
+                "width": 60,
+                "height": 34,
+                "hasTargetQuad": true,
+                "targetQuad": [
+                  {
+                    "x": 186.00000000000009,
+                    "y": 317
+                  },
+                  {
+                    "x": 209.00000000000009,
+                    "y": 317
+                  },
+                  {
+                    "x": 209.00000000000006,
+                    "y": 345
+                  },
+                  {
+                    "x": 186.00000000000006,
+                    "y": 345
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "adjust": [
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "corrections": {
+                  "left": 397,
+                  "top": 11,
+                  "width": 120
+                }
+              },
+              {
+                "blockIndex": 1,
+                "corrections": {
+                  "left": 270,
+                  "top": 33,
+                  "width": 189
+                }
+              },
+              {
+                "blockIndex": 2,
+                "corrections": {
+                  "left": 447,
+                  "top": 43,
+                  "width": 205
+                }
+              },
+              {
+                "blockIndex": 3,
+                "corrections": {
+                  "left": -152,
+                  "top": 53,
+                  "width": 528
+                }
+              },
+              {
+                "blockIndex": 4,
+                "corrections": {
+                  "left": 249,
+                  "top": 106,
+                  "width": 406
+                }
+              },
+              {
+                "blockIndex": 5,
+                "corrections": {
+                  "left": 61,
+                  "top": 110,
+                  "width": 506
+                }
+              },
+              {
+                "blockIndex": 6,
+                "corrections": {
+                  "left": 22,
+                  "top": 145,
+                  "width": 707
+                }
+              },
+              {
+                "blockIndex": 10,
+                "corrections": {
+                  "left": 24,
+                  "top": 215,
+                  "width": 793
+                }
+              },
+              {
+                "blockIndex": 14,
+                "corrections": {
+                  "left": 167,
+                  "top": 314,
+                  "width": 60
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "corrections": {
+                  "left": 397,
+                  "top": 23,
+                  "width": 120
+                }
+              },
+              {
+                "blockIndex": 1,
+                "corrections": {
+                  "left": 270,
+                  "top": 40,
+                  "width": 189
+                }
+              },
+              {
+                "blockIndex": 2,
+                "corrections": {
+                  "left": 447,
+                  "top": 49,
+                  "width": 205
+                }
+              },
+              {
+                "blockIndex": 3,
+                "corrections": {
+                  "left": -152,
+                  "top": 62,
+                  "width": 528
+                }
+              },
+              {
+                "blockIndex": 4,
+                "corrections": {
+                  "left": 249,
+                  "top": 113,
+                  "width": 406
+                }
+              },
+              {
+                "blockIndex": 5,
+                "corrections": {
+                  "left": 61,
+                  "top": 120,
+                  "width": 506
+                }
+              },
+              {
+                "blockIndex": 6,
+                "corrections": {
+                  "left": 22,
+                  "top": 152,
+                  "width": 707
+                }
+              },
+              {
+                "blockIndex": 10,
+                "corrections": {
+                  "left": 24,
+                  "top": 222,
+                  "width": 793
+                }
+              },
+              {
+                "blockIndex": 14,
+                "corrections": {
+                  "left": 167,
+                  "top": 319,
+                  "width": 60
+                }
+              }
+            ]
+          }
+        ],
+        "adjustResult": [
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 397,
+                      "y": 11
+                    },
+                    {
+                      "x": 518,
+                      "y": 11
+                    },
+                    {
+                      "x": 518,
+                      "y": 112.57
+                    },
+                    {
+                      "x": 397,
+                      "y": 112.57
+                    }
+                  ],
+                  "center": {
+                    "x": 457.5,
+                    "y": 61.785
+                  },
+                  "width": 121,
+                  "height": 101.57,
+                  "angle": 0,
+                  "left": 397,
+                  "top": 11,
+                  "fontSize": 89,
+                  "textboxWidth": 120,
+                  "textboxHeight": 100.57,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 1,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 270,
+                      "y": 33
+                    },
+                    {
+                      "x": 460,
+                      "y": 33
+                    },
+                    {
+                      "x": 460,
+                      "y": 75.81
+                    },
+                    {
+                      "x": 270,
+                      "y": 75.81
+                    }
+                  ],
+                  "center": {
+                    "x": 365,
+                    "y": 54.405
+                  },
+                  "width": 190,
+                  "height": 42.81,
+                  "angle": 0,
+                  "left": 270,
+                  "top": 33,
+                  "fontSize": 37,
+                  "textboxWidth": 189,
+                  "textboxHeight": 41.81,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 2,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 447,
+                      "y": 43
+                    },
+                    {
+                      "x": 653,
+                      "y": 43
+                    },
+                    {
+                      "x": 653,
+                      "y": 67.72999999999999
+                    },
+                    {
+                      "x": 447,
+                      "y": 67.72999999999999
+                    }
+                  ],
+                  "center": {
+                    "x": 550,
+                    "y": 55.364999999999995
+                  },
+                  "width": 206,
+                  "height": 24.72999999999999,
+                  "angle": 0,
+                  "left": 447,
+                  "top": 43,
+                  "fontSize": 21,
+                  "textboxWidth": 205,
+                  "textboxHeight": 23.729999999999997,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 3,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": -152,
+                      "y": 53
+                    },
+                    {
+                      "x": 377,
+                      "y": 53
+                    },
+                    {
+                      "x": 377,
+                      "y": 116.15
+                    },
+                    {
+                      "x": -152,
+                      "y": 116.15
+                    }
+                  ],
+                  "center": {
+                    "x": 112.5,
+                    "y": 84.575
+                  },
+                  "width": 529,
+                  "height": 63.150000000000006,
+                  "angle": 0,
+                  "left": -152,
+                  "top": 53,
+                  "fontSize": 55,
+                  "textboxWidth": 528,
+                  "textboxHeight": 62.15,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 4,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 249,
+                      "y": 106
+                    },
+                    {
+                      "x": 656,
+                      "y": 106
+                    },
+                    {
+                      "x": 656,
+                      "y": 138.64
+                    },
+                    {
+                      "x": 249,
+                      "y": 138.64
+                    }
+                  ],
+                  "center": {
+                    "x": 452.5,
+                    "y": 122.32
+                  },
+                  "width": 407,
+                  "height": 32.639999999999986,
+                  "angle": 0,
+                  "left": 249,
+                  "top": 106,
+                  "fontSize": 28,
+                  "textboxWidth": 406,
+                  "textboxHeight": 31.639999999999997,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 5,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 61,
+                      "y": 110
+                    },
+                    {
+                      "x": 568,
+                      "y": 110
+                    },
+                    {
+                      "x": 568,
+                      "y": 377.00199999999995
+                    },
+                    {
+                      "x": 61,
+                      "y": 377.00199999999995
+                    }
+                  ],
+                  "center": {
+                    "x": 314.5,
+                    "y": 243.50099999999998
+                  },
+                  "width": 507,
+                  "height": 267.00199999999995,
+                  "angle": 0,
+                  "left": 61,
+                  "top": 110,
+                  "fontSize": 107,
+                  "textboxWidth": 506,
+                  "textboxHeight": 266.00199999999995,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 2
+                }
+              },
+              {
+                "blockIndex": 6,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 22,
+                      "y": 145
+                    },
+                    {
+                      "x": 730,
+                      "y": 145
+                    },
+                    {
+                      "x": 730,
+                      "y": 290.188
+                    },
+                    {
+                      "x": 22,
+                      "y": 290.188
+                    }
+                  ],
+                  "center": {
+                    "x": 376,
+                    "y": 217.594
+                  },
+                  "width": 708,
+                  "height": 145.188,
+                  "angle": 0,
+                  "left": 22,
+                  "top": 145,
+                  "fontSize": 58,
+                  "textboxWidth": 707,
+                  "textboxHeight": 144.188,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 2
+                }
+              },
+              {
+                "blockIndex": 10,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 24,
+                      "y": 215.00000000000003
+                    },
+                    {
+                      "x": 818,
+                      "y": 215.00000000000003
+                    },
+                    {
+                      "x": 818,
+                      "y": 347.75800000000004
+                    },
+                    {
+                      "x": 24,
+                      "y": 347.75800000000004
+                    }
+                  ],
+                  "center": {
+                    "x": 421,
+                    "y": 281.379
+                  },
+                  "width": 794,
+                  "height": 132.758,
+                  "angle": 0,
+                  "left": 24,
+                  "top": 215,
+                  "fontSize": 53,
+                  "textboxWidth": 793,
+                  "textboxHeight": 131.75799999999998,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 2
+                }
+              },
+              {
+                "blockIndex": 14,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 167,
+                      "y": 314
+                    },
+                    {
+                      "x": 228,
+                      "y": 314
+                    },
+                    {
+                      "x": 228,
+                      "y": 337.6
+                    },
+                    {
+                      "x": 167,
+                      "y": 337.6
+                    }
+                  ],
+                  "center": {
+                    "x": 197.5,
+                    "y": 325.8
+                  },
+                  "width": 61,
+                  "height": 23.600000000000023,
+                  "angle": 0,
+                  "left": 167,
+                  "top": 314,
+                  "fontSize": 20,
+                  "textboxWidth": 60,
+                  "textboxHeight": 22.599999999999998,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              }
+            ]
+          },
+          {
+            "items": [
+              {
+                "blockIndex": 0,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 397,
+                      "y": 23
+                    },
+                    {
+                      "x": 518,
+                      "y": 23
+                    },
+                    {
+                      "x": 518,
+                      "y": 124.57
+                    },
+                    {
+                      "x": 397,
+                      "y": 124.57
+                    }
+                  ],
+                  "center": {
+                    "x": 457.5,
+                    "y": 73.785
+                  },
+                  "width": 121,
+                  "height": 101.57,
+                  "angle": 0,
+                  "left": 397,
+                  "top": 23,
+                  "fontSize": 89,
+                  "textboxWidth": 120,
+                  "textboxHeight": 100.57,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 1,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 270,
+                      "y": 40
+                    },
+                    {
+                      "x": 460,
+                      "y": 40
+                    },
+                    {
+                      "x": 460,
+                      "y": 82.81
+                    },
+                    {
+                      "x": 270,
+                      "y": 82.81
+                    }
+                  ],
+                  "center": {
+                    "x": 365,
+                    "y": 61.405
+                  },
+                  "width": 190,
+                  "height": 42.81,
+                  "angle": 0,
+                  "left": 270,
+                  "top": 40,
+                  "fontSize": 37,
+                  "textboxWidth": 189,
+                  "textboxHeight": 41.81,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 2,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 447,
+                      "y": 49
+                    },
+                    {
+                      "x": 653,
+                      "y": 49
+                    },
+                    {
+                      "x": 653,
+                      "y": 73.72999999999999
+                    },
+                    {
+                      "x": 447,
+                      "y": 73.72999999999999
+                    }
+                  ],
+                  "center": {
+                    "x": 550,
+                    "y": 61.364999999999995
+                  },
+                  "width": 206,
+                  "height": 24.72999999999999,
+                  "angle": 0,
+                  "left": 447,
+                  "top": 49,
+                  "fontSize": 21,
+                  "textboxWidth": 205,
+                  "textboxHeight": 23.729999999999997,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 3,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": -152,
+                      "y": 62
+                    },
+                    {
+                      "x": 377,
+                      "y": 62
+                    },
+                    {
+                      "x": 377,
+                      "y": 125.15
+                    },
+                    {
+                      "x": -152,
+                      "y": 125.15
+                    }
+                  ],
+                  "center": {
+                    "x": 112.5,
+                    "y": 93.575
+                  },
+                  "width": 529,
+                  "height": 63.150000000000006,
+                  "angle": 0,
+                  "left": -152,
+                  "top": 62,
+                  "fontSize": 55,
+                  "textboxWidth": 528,
+                  "textboxHeight": 62.15,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 4,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 249,
+                      "y": 113
+                    },
+                    {
+                      "x": 656,
+                      "y": 113
+                    },
+                    {
+                      "x": 656,
+                      "y": 145.64
+                    },
+                    {
+                      "x": 249,
+                      "y": 145.64
+                    }
+                  ],
+                  "center": {
+                    "x": 452.5,
+                    "y": 129.32
+                  },
+                  "width": 407,
+                  "height": 32.639999999999986,
+                  "angle": 0,
+                  "left": 249,
+                  "top": 113,
+                  "fontSize": 28,
+                  "textboxWidth": 406,
+                  "textboxHeight": 31.639999999999997,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              },
+              {
+                "blockIndex": 5,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 61,
+                      "y": 120
+                    },
+                    {
+                      "x": 568,
+                      "y": 120
+                    },
+                    {
+                      "x": 568,
+                      "y": 387.00199999999995
+                    },
+                    {
+                      "x": 61,
+                      "y": 387.00199999999995
+                    }
+                  ],
+                  "center": {
+                    "x": 314.5,
+                    "y": 253.50099999999998
+                  },
+                  "width": 507,
+                  "height": 267.00199999999995,
+                  "angle": 0,
+                  "left": 61,
+                  "top": 120,
+                  "fontSize": 107,
+                  "textboxWidth": 506,
+                  "textboxHeight": 266.00199999999995,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 2
+                }
+              },
+              {
+                "blockIndex": 6,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 22,
+                      "y": 152
+                    },
+                    {
+                      "x": 730,
+                      "y": 152
+                    },
+                    {
+                      "x": 730,
+                      "y": 297.188
+                    },
+                    {
+                      "x": 22,
+                      "y": 297.188
+                    }
+                  ],
+                  "center": {
+                    "x": 376,
+                    "y": 224.594
+                  },
+                  "width": 708,
+                  "height": 145.188,
+                  "angle": 0,
+                  "left": 22,
+                  "top": 152,
+                  "fontSize": 58,
+                  "textboxWidth": 707,
+                  "textboxHeight": 144.188,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 2
+                }
+              },
+              {
+                "blockIndex": 10,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 24,
+                      "y": 222.00000000000003
+                    },
+                    {
+                      "x": 818,
+                      "y": 222.00000000000003
+                    },
+                    {
+                      "x": 818,
+                      "y": 354.75800000000004
+                    },
+                    {
+                      "x": 24,
+                      "y": 354.75800000000004
+                    }
+                  ],
+                  "center": {
+                    "x": 421,
+                    "y": 288.379
+                  },
+                  "width": 794,
+                  "height": 132.758,
+                  "angle": 0,
+                  "left": 24,
+                  "top": 222,
+                  "fontSize": 53,
+                  "textboxWidth": 793,
+                  "textboxHeight": 131.75799999999998,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 2
+                }
+              },
+              {
+                "blockIndex": 14,
+                "ok": true,
+                "error": null,
+                "geometry": {
+                  "quad": [
+                    {
+                      "x": 167,
+                      "y": 319
+                    },
+                    {
+                      "x": 228,
+                      "y": 319
+                    },
+                    {
+                      "x": 228,
+                      "y": 342.6
+                    },
+                    {
+                      "x": 167,
+                      "y": 342.6
+                    }
+                  ],
+                  "center": {
+                    "x": 197.5,
+                    "y": 330.8
+                  },
+                  "width": 61,
+                  "height": 23.600000000000023,
+                  "angle": 0,
+                  "left": 167,
+                  "top": 319,
+                  "fontSize": 20,
+                  "textboxWidth": 60,
+                  "textboxHeight": 22.599999999999998,
+                  "lineHeight": 1.2,
+                  "renderedLineCount": 1
+                }
+              }
+            ]
+          }
+        ],
+        "createResult": {
+          "ok": true,
+          "detectedBlocks": 9,
+          "createdCount": 9,
+          "created": [
+            {
+              "blockIndex": 0,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 437,
+                    "y": 6
+                  },
+                  {
+                    "x": 558,
+                    "y": 6
+                  },
+                  {
+                    "x": 558,
+                    "y": 131
+                  },
+                  {
+                    "x": 437,
+                    "y": 131
+                  }
+                ],
+                "center": {
+                  "x": 497.5,
+                  "y": 68.5
+                },
+                "width": 121,
+                "height": 125,
+                "angle": 0,
+                "left": 437,
+                "top": 6,
+                "fontSize": 89,
+                "textboxWidth": 120,
+                "textboxHeight": 124,
+                "lineHeight": 1.2,
+                "renderedLineCount": 1
+              },
+              "text": "出"
+            },
+            {
+              "blockIndex": 1,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 273,
+                    "y": 31
+                  },
+                  {
+                    "x": 463,
+                    "y": 31
+                  },
+                  {
+                    "x": 463,
+                    "y": 88
+                  },
+                  {
+                    "x": 273,
+                    "y": 88
+                  }
+                ],
+                "center": {
+                  "x": 368,
+                  "y": 59.5
+                },
+                "width": 190,
+                "height": 57,
+                "angle": 0,
+                "left": 273,
+                "top": 31,
+                "fontSize": 37,
+                "textboxWidth": 189,
+                "textboxHeight": 56,
+                "lineHeight": 1.2,
+                "renderedLineCount": 1
+              },
+              "text": "天住"
+            },
+            {
+              "blockIndex": 2,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 490,
+                    "y": 42
+                  },
+                  {
+                    "x": 696,
+                    "y": 42
+                  },
+                  {
+                    "x": 696,
+                    "y": 78
+                  },
+                  {
+                    "x": 490,
+                    "y": 78
+                  }
+                ],
+                "center": {
+                  "x": 593,
+                  "y": 60
+                },
+                "width": 206,
+                "height": 36,
+                "angle": 0,
+                "left": 490,
+                "top": 42,
+                "fontSize": 21,
+                "textboxWidth": 205,
+                "textboxHeight": 35,
+                "lineHeight": 1.2,
+                "renderedLineCount": 1
+              },
+              "text": "轿 CO 天 住 出"
+            },
+            {
+              "blockIndex": 3,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 13,
+                    "y": 50
+                  },
+                  {
+                    "x": 542,
+                    "y": 50
+                  },
+                  {
+                    "x": 542,
+                    "y": 131
+                  },
+                  {
+                    "x": 13,
+                    "y": 131
+                  }
+                ],
+                "center": {
+                  "x": 277.5,
+                  "y": 90.5
+                },
+                "width": 529,
+                "height": 81,
+                "angle": 0,
+                "left": 13,
+                "top": 50,
+                "fontSize": 55,
+                "textboxWidth": 528,
+                "textboxHeight": 80,
+                "lineHeight": 1.2,
+                "renderedLineCount": 1
+              },
+              "text": "轿 CO 天 住 出"
+            },
+            {
+              "blockIndex": 4,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 268,
+                    "y": 105
+                  },
+                  {
+                    "x": 675,
+                    "y": 105
+                  },
+                  {
+                    "x": 675,
+                    "y": 150
+                  },
+                  {
+                    "x": 268,
+                    "y": 150
+                  }
+                ],
+                "center": {
+                  "x": 471.5,
+                  "y": 127.5
+                },
+                "width": 407,
+                "height": 45,
+                "angle": 0,
+                "left": 268,
+                "top": 105,
+                "fontSize": 28,
+                "textboxWidth": 406,
+                "textboxHeight": 44,
+                "lineHeight": 1.2,
+                "renderedLineCount": 1
+              },
+              "text": "Telephone:"
+            },
+            {
+              "blockIndex": 5,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 76,
+                    "y": 173
+                  },
+                  {
+                    "x": 583,
+                    "y": 173
+                  },
+                  {
+                    "x": 583,
+                    "y": 460
+                  },
+                  {
+                    "x": 76,
+                    "y": 460
+                  }
+                ],
+                "center": {
+                  "x": 329.5,
+                  "y": 316.5
+                },
+                "width": 507,
+                "height": 287,
+                "angle": 0,
+                "left": 76,
+                "top": 173,
+                "fontSize": 107,
+                "textboxWidth": 506,
+                "textboxHeight": 286,
+                "lineHeight": 1.2,
+                "renderedLineCount": 2
+              },
+              "text": "阅梧回盈\n器洛明"
+            },
+            {
+              "blockIndex": 6,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 28,
+                    "y": 180
+                  },
+                  {
+                    "x": 736,
+                    "y": 180
+                  },
+                  {
+                    "x": 736,
+                    "y": 340
+                  },
+                  {
+                    "x": 28,
+                    "y": 340
+                  }
+                ],
+                "center": {
+                  "x": 382,
+                  "y": 260
+                },
+                "width": 708,
+                "height": 160,
+                "angle": 0,
+                "left": 28,
+                "top": 180,
+                "fontSize": 58,
+                "textboxWidth": 707,
+                "textboxHeight": 159,
+                "lineHeight": 1.2,
+                "renderedLineCount": 2
+              },
+              "text": "回册佛山盛包装制品限"
+            },
+            {
+              "blockIndex": 10,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 274,
+                    "y": 247
+                  },
+                  {
+                    "x": 1068,
+                    "y": 247
+                  },
+                  {
+                    "x": 1068,
+                    "y": 394
+                  },
+                  {
+                    "x": 274,
+                    "y": 394
+                  }
+                ],
+                "center": {
+                  "x": 671,
+                  "y": 320.5
+                },
+                "width": 794,
+                "height": 147,
+                "angle": 0,
+                "left": 274,
+                "top": 247,
+                "fontSize": 53,
+                "textboxWidth": 793,
+                "textboxHeight": 146,
+                "lineHeight": 1.2,
+                "renderedLineCount": 2
+              },
+              "text": "器 洛 Tel.: "
+            },
+            {
+              "blockIndex": 14,
+              "geometry": {
+                "quad": [
+                  {
+                    "x": 182,
+                    "y": 313
+                  },
+                  {
+                    "x": 243,
+                    "y": 313
+                  },
+                  {
+                    "x": 243,
+                    "y": 348
+                  },
+                  {
+                    "x": 182,
+                    "y": 348
+                  }
+                ],
+                "center": {
+                  "x": 212.5,
+                  "y": 330.5
+                },
+                "width": 61,
+                "height": 35,
+                "angle": 0,
+                "left": 182,
+                "top": 313,
+                "fontSize": 20,
+                "textboxWidth": 60,
+                "textboxHeight": 34,
+                "lineHeight": 1.2,
+                "renderedLineCount": 1
+              },
+              "text": "由"
+            }
+          ]
+        }
+      },
+      "created": [
+        {
+          "id": "d0d760ce-4504-4759-a678-d63a75379065",
+          "text": "出",
+          "zyOcrKey": "zy-ocr-0",
+          "left": 397,
+          "top": 23,
+          "width": 120,
+          "height": 100.57,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 89,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 397,
+              "y": 23
+            },
+            {
+              "x": 518,
+              "y": 23
+            },
+            {
+              "x": 518,
+              "y": 124.57
+            },
+            {
+              "x": 397,
+              "y": 124.57
+            }
+          ],
+          "biz": {
+            "locationX": 397,
+            "locationY": 23,
+            "locationWidth": 120,
+            "locationHeight": 100.57,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "24054e81-8d7e-49dc-a32c-962042da2ea9",
+          "text": "天住",
+          "zyOcrKey": "zy-ocr-1",
+          "left": 270,
+          "top": 40,
+          "width": 189,
+          "height": 41.81,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 37,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 270,
+              "y": 40
+            },
+            {
+              "x": 460,
+              "y": 40
+            },
+            {
+              "x": 460,
+              "y": 82.81
+            },
+            {
+              "x": 270,
+              "y": 82.81
+            }
+          ],
+          "biz": {
+            "locationX": 270,
+            "locationY": 40,
+            "locationWidth": 189,
+            "locationHeight": 41.81,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "2d295897-e1f3-46d9-9b57-cc2d03bd3a67",
+          "text": "轿 CO 天 住 出 sre",
+          "zyOcrKey": "zy-ocr-2",
+          "left": 447,
+          "top": 49,
+          "width": 205,
+          "height": 23.729999999999997,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 21,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 447,
+              "y": 49
+            },
+            {
+              "x": 653,
+              "y": 49
+            },
+            {
+              "x": 653,
+              "y": 73.72999999999999
+            },
+            {
+              "x": 447,
+              "y": 73.72999999999999
+            }
+          ],
+          "biz": {
+            "locationX": 447,
+            "locationY": 49,
+            "locationWidth": 205,
+            "locationHeight": 23.729999999999997,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "ee4ce0a7-4db5-4560-b6ba-405f0e7d29fd",
+          "text": "轿 CO 天 住 出 sre",
+          "zyOcrKey": "zy-ocr-3",
+          "left": -152,
+          "top": 62,
+          "width": 528,
+          "height": 62.15,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 55,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": -152,
+              "y": 62
+            },
+            {
+              "x": 377,
+              "y": 62
+            },
+            {
+              "x": 377,
+              "y": 125.15
+            },
+            {
+              "x": -152,
+              "y": 125.15
+            }
+          ],
+          "biz": {
+            "locationX": -152,
+            "locationY": 62,
+            "locationWidth": 528,
+            "locationHeight": 62.15,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "5af601d2-b00d-4959-b1a4-eaba339986ab",
+          "text": "Telephone: +86",
+          "zyOcrKey": "zy-ocr-4",
+          "left": 249,
+          "top": 113,
+          "width": 406,
+          "height": 31.639999999999997,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 28,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 249,
+              "y": 113
+            },
+            {
+              "x": 656,
+              "y": 113
+            },
+            {
+              "x": 656,
+              "y": 145.64
+            },
+            {
+              "x": 249,
+              "y": 145.64
+            }
+          ],
+          "biz": {
+            "locationX": 249,
+            "locationY": 113,
+            "locationWidth": 406,
+            "locationHeight": 31.639999999999997,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "d4711e9a-0f6e-49b0-893c-135d82177fef",
+          "text": "阅梧回盈\n器洛明",
+          "zyOcrKey": "zy-ocr-5",
+          "left": 61,
+          "top": 120,
+          "width": 506,
+          "height": 266.00199999999995,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 107,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 61,
+              "y": 120
+            },
+            {
+              "x": 568,
+              "y": 120
+            },
+            {
+              "x": 568,
+              "y": 387.00199999999995
+            },
+            {
+              "x": 61,
+              "y": 387.00199999999995
+            }
+          ],
+          "biz": {
+            "locationX": 61,
+            "locationY": 120,
+            "locationWidth": 506,
+            "locationHeight": 266.00199999999995,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "bbed950f-6ced-4fa3-bab8-e186404c948f",
+          "text": "回册佛山盛包装制品限\n多",
+          "zyOcrKey": "zy-ocr-6",
+          "left": 22,
+          "top": 152,
+          "width": 707,
+          "height": 144.188,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 58,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 22,
+              "y": 152
+            },
+            {
+              "x": 730,
+              "y": 152
+            },
+            {
+              "x": 730,
+              "y": 297.188
+            },
+            {
+              "x": 22,
+              "y": 297.188
+            }
+          ],
+          "biz": {
+            "locationX": 22,
+            "locationY": 152,
+            "locationWidth": 707,
+            "locationHeight": 144.188,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "c7dc1e62-8f0c-4479-a71b-42bde1d9158a",
+          "text": "器 洛 Tel.: 0757",
+          "zyOcrKey": "zy-ocr-10",
+          "left": 24,
+          "top": 222,
+          "width": 793,
+          "height": 131.75799999999998,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 53,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 24,
+              "y": 222.00000000000003
+            },
+            {
+              "x": 818,
+              "y": 222.00000000000003
+            },
+            {
+              "x": 818,
+              "y": 354.75800000000004
+            },
+            {
+              "x": 24,
+              "y": 354.75800000000004
+            }
+          ],
+          "biz": {
+            "locationX": 24,
+            "locationY": 222,
+            "locationWidth": 793,
+            "locationHeight": 131.75799999999998,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        },
+        {
+          "id": "4df8682b-5424-429d-9314-5bb7ee499dc9",
+          "text": "由",
+          "zyOcrKey": "zy-ocr-14",
+          "left": 167,
+          "top": 319,
+          "width": 60,
+          "height": 22.599999999999998,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 20,
+          "angle": 0,
+          "originX": "left",
+          "quad": [
+            {
+              "x": 167,
+              "y": 319
+            },
+            {
+              "x": 228,
+              "y": 319
+            },
+            {
+              "x": 228,
+              "y": 342.6
+            },
+            {
+              "x": 167,
+              "y": 342.6
+            }
+          ],
+          "biz": {
+            "locationX": 167,
+            "locationY": 319,
+            "locationWidth": 60,
+            "locationHeight": 22.599999999999998,
+            "locationRotation": 0,
+            "loc": null,
+            "pointSize": null
+          }
+        }
+      ],
+      "compare": [
+        {
+          "blockIndex": 0,
+          "text": "出",
+          "pass": false,
+          "failures": [
+            "width",
+            "height"
+          ],
+          "errors": {
+            "center": 0.29,
+            "width": 88,
+            "height": 25.43,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 457.5000000000001,
+              "y": 73.49999999999997
+            },
+            "size": {
+              "width": 33,
+              "height": 126.99999999999999
+            },
+            "angle": -3.0841742365706834e-15
+          },
+          "actual": {
+            "center": {
+              "x": 457.5,
+              "y": 73.785
+            },
+            "size": {
+              "width": 121,
+              "height": 101.57
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 1,
+          "text": "天住",
+          "pass": false,
+          "failures": [
+            "width",
+            "height"
+          ],
+          "errors": {
+            "center": 0.09,
+            "width": 14,
+            "height": 10.19,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 365.0000000000001,
+              "y": 61.499999999999986
+            },
+            "size": {
+              "width": 176,
+              "height": 53
+            },
+            "angle": -2.313130677428012e-15
+          },
+          "actual": {
+            "center": {
+              "x": 365,
+              "y": 61.405
+            },
+            "size": {
+              "width": 190,
+              "height": 42.81
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 2,
+          "text": "轿 CO 天 住 出 sre",
+          "pass": false,
+          "failures": [
+            "width",
+            "height"
+          ],
+          "errors": {
+            "center": 0.37,
+            "width": 94,
+            "height": 5.27,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 550.0000000000001,
+              "y": 60.999999999999986
+            },
+            "size": {
+              "width": 111.99999999999994,
+              "height": 30
+            },
+            "angle": 0
+          },
+          "actual": {
+            "center": {
+              "x": 550,
+              "y": 61.364999999999995
+            },
+            "size": {
+              "width": 206,
+              "height": 24.72999999999999
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 3,
+          "text": "轿 CO 天 住 出 sre",
+          "pass": false,
+          "failures": [
+            "width",
+            "height"
+          ],
+          "errors": {
+            "center": 0.08,
+            "width": 338,
+            "height": 15.85,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 112.50000000000017,
+              "y": 93.5
+            },
+            "size": {
+              "width": 190.99999999999997,
+              "height": 79
+            },
+            "angle": -2.1314712001430904e-15
+          },
+          "actual": {
+            "center": {
+              "x": 112.5,
+              "y": 93.575
+            },
+            "size": {
+              "width": 529,
+              "height": 63.150000000000006
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 4,
+          "text": "Telephone: +86",
+          "pass": false,
+          "failures": [
+            "width",
+            "height"
+          ],
+          "errors": {
+            "center": 0.59,
+            "width": 47,
+            "height": 7.36,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 452.0000000000001,
+              "y": 128.99999999999997
+            },
+            "size": {
+              "width": 360,
+              "height": 40.00000000000001
+            },
+            "angle": -2.2617277734851675e-15
+          },
+          "actual": {
+            "center": {
+              "x": 452.5,
+              "y": 129.32
+            },
+            "size": {
+              "width": 407,
+              "height": 32.639999999999986
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 5,
+          "text": "阅梧回盈\n器洛明",
+          "pass": false,
+          "failures": [
+            "width",
+            "height"
+          ],
+          "errors": {
+            "center": 0,
+            "width": 38,
+            "height": 114,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 314.5,
+              "y": 253.5
+            },
+            "size": {
+              "width": 468.9999999999999,
+              "height": 153
+            },
+            "angle": -3.4721620403183815e-15
+          },
+          "actual": {
+            "center": {
+              "x": 314.5,
+              "y": 253.50099999999998
+            },
+            "size": {
+              "width": 507,
+              "height": 267.00199999999995
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 6,
+          "text": "回册佛山盛包装制品限\n多",
+          "pass": false,
+          "failures": [
+            "width",
+            "height"
+          ],
+          "errors": {
+            "center": 0.64,
+            "width": 21,
+            "height": 63.19,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 375.50000000000006,
+              "y": 225
+            },
+            "size": {
+              "width": 686.9999999999999,
+              "height": 82.00000000000001
+            },
+            "angle": -2.3703697189364206e-15
+          },
+          "actual": {
+            "center": {
+              "x": 376,
+              "y": 224.594
+            },
+            "size": {
+              "width": 708,
+              "height": 145.188
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 10,
+          "text": "器 洛 Tel.: 0757",
+          "pass": false,
+          "failures": [
+            "width",
+            "height"
+          ],
+          "errors": {
+            "center": 0.12,
+            "width": 508,
+            "height": 57.76,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 421,
+              "y": 288.5
+            },
+            "size": {
+              "width": 285.99999999999994,
+              "height": 75.00000000000001
+            },
+            "angle": -5.6938601290535694e-15
+          },
+          "actual": {
+            "center": {
+              "x": 421,
+              "y": 288.379
+            },
+            "size": {
+              "width": 794,
+              "height": 132.758
+            },
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 14,
+          "text": "由",
+          "pass": false,
+          "failures": [
+            "width",
+            "height"
+          ],
+          "errors": {
+            "center": 0.2,
+            "width": 38,
+            "height": 4.4,
+            "angle": 0
+          },
+          "expected": {
+            "center": {
+              "x": 197.50000000000006,
+              "y": 331
+            },
+            "size": {
+              "width": 23,
+              "height": 28
+            },
+            "angle": 0
+          },
+          "actual": {
+            "center": {
+              "x": 197.5,
+              "y": 330.8
+            },
+            "size": {
+              "width": 61,
+              "height": 23.600000000000023
+            },
+            "angle": 0
+          }
+        }
+      ],
+      "errors": [],
+      "imgInjected": {
+        "ok": true,
+        "w": 895,
+        "h": 577,
+        "nw": 895,
+        "nh": 577,
+        "left": 0,
+        "top": 0,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "ac": null
+      },
+      "imgSnap": {
+        "image": {
+          "naturalWidth": 895,
+          "naturalHeight": 577,
+          "width": 895,
+          "height": 577,
+          "scaleX": 1,
+          "scaleY": 1,
+          "left": 0,
+          "top": 0,
+          "angle": 0,
+          "originX": "left",
+          "originY": "top",
+          "aCoords": {
+            "tl": [
+              0,
+              0
+            ],
+            "tr": [
+              895,
+              0
+            ],
+            "br": [
+              895,
+              577
+            ],
+            "bl": [
+              0,
+              577
+            ]
+          }
+        },
+        "canvas": {
+          "width": 619.5,
+          "height": 376.8625,
+          "viewportTransform": [
+            1.0325,
+            0,
+            0,
+            1.0325,
+            0,
+            0
+          ],
+          "zoom": 1.0325,
+          "retina": 1.0000000149011612
+        },
+        "diy": {
+          "currentFactWidth": 600,
+          "currentFactHeight": 365,
+          "currentSize": 1.0325
+        },
+        "registry": 1
+      },
+      "beforeObjCount": 9,
+      "status": [
+        "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
+        "几何校验完成：通过 0 个，保留 9 个（STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
+      ],
+      "done": true,
+      "rawDump": {
+        "w": [
+          {
+            "text": "轿",
+            "bbox": {
+              "x0": 17,
+              "y0": 54,
+              "x1": 99,
+              "y1": 133
+            },
+            "confidence": 0
+          },
+          {
+            "text": "CO",
+            "bbox": {
+              "x0": 122,
+              "y0": 55,
+              "x1": 208,
+              "y1": 120
+            },
+            "confidence": 17.633224487304688
+          },
+          {
+            "text": "天",
+            "bbox": {
+              "x0": 277,
+              "y0": 35,
+              "x1": 395,
+              "y1": 88
+            },
+            "confidence": 55.662986755371094
+          },
+          {
+            "text": "住",
+            "bbox": {
+              "x0": 410,
+              "y0": 36,
+              "x1": 453,
+              "y1": 80
+            },
+            "confidence": 33.00384521484375
+          },
+          {
+            "text": "出",
+            "bbox": {
+              "x0": 441,
+              "y0": 10,
+              "x1": 474,
+              "y1": 137
+            },
+            "confidence": 36.09572982788086
+          },
+          {
+            "text": "sres",
+            "bbox": {
+              "x0": 494,
+              "y0": 46,
+              "x1": 606,
+              "y1": 76
+            },
+            "confidence": 29.397064208984375
+          },
+          {
+            "text": "Telephone:",
+            "bbox": {
+              "x0": 272,
+              "y0": 119,
+              "x1": 406,
+              "y1": 149
+            },
+            "confidence": 91.482421875
+          },
+          {
+            "text": "+86",
+            "bbox": {
+              "x0": 416,
+              "y0": 116,
+              "x1": 462,
+              "y1": 138
+            },
+            "confidence": 92.5941162109375
+          },
+          {
+            "text": "15913171583",
+            "bbox": {
+              "x0": 471,
+              "y0": 109,
+              "x1": 632,
+              "y1": 136
+            },
+            "confidence": 92.21163177490234
+          },
+          {
+            "text": "回",
+            "bbox": {
+              "x0": 32,
+              "y0": 185,
+              "x1": 78,
+              "y1": 218
+            },
+            "confidence": 89.07647705078125
+          },
+          {
+            "text": "阅",
+            "bbox": {
+              "x0": 80,
+              "y0": 182,
+              "x1": 115,
+              "y1": 229
+            },
+            "confidence": 0
+          },
+          {
+            "text": "梧",
+            "bbox": {
+              "x0": 116,
+              "y0": 180,
+              "x1": 141,
+              "y1": 218
+            },
+            "confidence": 0
+          },
+          {
+            "text": "册",
+            "bbox": {
+              "x0": 144,
+              "y0": 184,
+              "x1": 167,
+              "y1": 220
+            },
+            "confidence": 0
+          },
+          {
+            "text": "回",
+            "bbox": {
+              "x0": 174,
+              "y0": 177,
+              "x1": 203,
+              "y1": 211
+            },
+            "confidence": 0
+          },
+          {
+            "text": "人",
+            "bbox": {
+              "x0": 684,
+              "y0": 190,
+              "x1": 763,
+              "y1": 195
+            },
+            "confidence": 61.74287033081055
+          },
+          {
+            "text": "多",
+            "bbox": {
+              "x0": 33,
+              "y0": 214,
+              "x1": 200,
+              "y1": 266
+            },
+            "confidence": 2.7392501831054688
+          },
+          {
+            "text": "佛山",
+            "bbox": {
+              "x0": 277,
+              "y0": 200,
+              "x1": 385,
+              "y1": 243
+            },
+            "confidence": 93.26671600341797
+          },
+          {
+            "text": "盛",
+            "bbox": {
+              "x0": 408,
+              "y0": 199,
+              "x1": 430,
+              "y1": 236
+            },
+            "confidence": 91.28948974609375
+          },
+          {
+            "text": "盈",
+            "bbox": {
+              "x0": 429,
+              "y0": 182,
+              "x1": 463,
+              "y1": 248
+            },
+            "confidence": 81.04093933105469
+          },
+          {
+            "text": "包装",
+            "bbox": {
+              "x0": 462,
+              "y0": 192,
+              "x1": 558,
+              "y1": 234
+            },
+            "confidence": 74.17237854003906
+          },
+          {
+            "text": "制品",
+            "bbox": {
+              "x0": 563,
+              "y0": 188,
+              "x1": 641,
+              "y1": 230
+            },
+            "confidence": 95.7253189086914
+          },
+          {
+            "text": "有",
+            "bbox": {
+              "x0": 670,
+              "y0": 193,
+              "x1": 674,
+              "y1": 214
+            },
+            "confidence": 93.30205535888672
+          },
+          {
+            "text": "限",
+            "bbox": {
+              "x0": 685,
+              "y0": 186,
+              "x1": 719,
+              "y1": 222
+            },
+            "confidence": 92.33964538574219
+          },
+          {
+            "text": "公",
+            "bbox": {
+              "x0": 721,
+              "y0": 220,
+              "x1": 726,
+              "y1": 221
+            },
+            "confidence": 92.65693664550781
+          },
+          {
+            "text": "三",
+            "bbox": {
+              "x0": 755,
+              "y0": 197,
+              "x1": 772,
+              "y1": 198
+            },
+            "confidence": 0
+          },
+          {
+            "text": "器",
+            "bbox": {
+              "x0": 85,
+              "y0": 243,
+              "x1": 151,
+              "y1": 304
+            },
+            "confidence": 50.089744567871094
+          },
+          {
+            "text": "洛",
+            "bbox": {
+              "x0": 159,
+              "y0": 263,
+              "x1": 201,
+              "y1": 305
+            },
+            "confidence": 0
+          },
+          {
+            "text": "Tel.:",
+            "bbox": {
+              "x0": 278,
+              "y0": 260,
+              "x1": 331,
+              "y1": 285
+            },
+            "confidence": 77.79409790039062
+          },
+          {
+            "text": "0757-88809856",
+            "bbox": {
+              "x0": 342,
+              "y0": 251,
+              "x1": 554,
+              "y1": 282
+            },
+            "confidence": 90.70867919921875
+          },
+          {
+            "text": "wy",
+            "bbox": {
+              "x0": 707,
+              "y0": 236,
+              "x1": 736,
+              "y1": 252
+            },
+            "confidence": 68.91380310058594
+          },
+          {
+            "text": "眉",
+            "bbox": {
+              "x0": 35,
+              "y0": 312,
+              "x1": 69,
+              "y1": 353
+            },
+            "confidence": 0
+          },
+          {
+            "text": "吉",
+            "bbox": {
+              "x0": 79,
+              "y0": 305,
+              "x1": 119,
+              "y1": 351
+            },
+            "confidence": 0
+          },
+          {
+            "text": "生",
+            "bbox": {
+              "x0": 124,
+              "y0": 309,
+              "x1": 184,
+              "y1": 348
+            },
+            "confidence": 0
+          },
+          {
+            "text": "由",
+            "bbox": {
+              "x0": 186,
+              "y0": 317,
+              "x1": 209,
+              "y1": 345
+            },
+            "confidence": 17.939285278320312
+          },
+          {
+            "text": "过",
+            "bbox": {
+              "x0": 280,
+              "y0": 299,
+              "x1": 336,
+              "y1": 326
+            },
+            "confidence": 39.88311767578125
+          },
+          {
+            "text": "广东",
+            "bbox": {
+              "x0": 353,
+              "y0": 297,
+              "x1": 399,
+              "y1": 324
+            },
+            "confidence": 96.55482482910156
+          },
+          {
+            "text": "省",
+            "bbox": {
+              "x0": 408,
+              "y0": 295,
+              "x1": 430,
+              "y1": 322
+            },
+            "confidence": 87.67849731445312
+          },
+          {
+            "text": "佛山",
+            "bbox": {
+              "x0": 433,
+              "y0": 294,
+              "x1": 468,
+              "y1": 321
+            },
+            "confidence": 96.04579162597656
+          },
+          {
+            "text": "市",
+            "bbox": {
+              "x0": 481,
+              "y0": 291,
+              "x1": 508,
+              "y1": 318
+            },
+            "confidence": 75.95305633544922
+          },
+          {
+            "text": "高",
+            "bbox": {
+              "x0": 519,
+              "y0": 291,
+              "x1": 530,
+              "y1": 316
+            },
+            "confidence": 91.36549377441406
+          },
+          {
+            "text": "明",
+            "bbox": {
+              "x0": 529,
+              "y0": 271,
+              "x1": 549,
+              "y1": 330
+            },
+            "confidence": 89.6792221069336
+          },
+          {
+            "text": "区",
+            "bbox": {
+              "x0": 548,
+              "y0": 290,
+              "x1": 564,
+              "y1": 314
+            },
+            "confidence": 93.12390899658203
+          },
+          {
+            "text": "杨",
+            "bbox": {
+              "x0": 573,
+              "y0": 288,
+              "x1": 587,
+              "y1": 314
+            },
+            "confidence": 89.07137298583984
+          },
+          {
+            "text": "和",
+            "bbox": {
+              "x0": 596,
+              "y0": 287,
+              "x1": 610,
+              "y1": 313
+            },
+            "confidence": 96.98904418945312
+          },
+          {
+            "text": "镇",
+            "bbox": {
+              "x0": 621,
+              "y0": 285,
+              "x1": 635,
+              "y1": 312
+            },
+            "confidence": 90.69821166992188
+          },
+          {
+            "text": "阳",
+            "bbox": {
+              "x0": 644,
+              "y0": 285,
+              "x1": 658,
+              "y1": 311
+            },
+            "confidence": 92.9219970703125
+          },
+          {
+            "text": "西",
+            "bbox": {
+              "x0": 669,
+              "y0": 283,
+              "x1": 681,
+              "y1": 309
+            },
+            "confidence": 52.368736267089844
+          },
+          {
+            "text": "大",
+            "bbox": {
+              "x0": 706,
+              "y0": 290,
+              "x1": 723,
+              "y1": 316
+            },
+            "confidence": 93.27318572998047
+          },
+          {
+            "text": "道",
+            "bbox": {
+              "x0": 736,
+              "y0": 282,
+              "x1": 740,
+              "y1": 294
+            },
+            "confidence": 85.45684051513672
+          },
+          {
+            "text": "和",
+            "bbox": {
+              "x0": 744,
+              "y0": 286,
+              "x1": 748,
+              "y1": 298
+            },
+            "confidence": 97.00247955322266
+          },
+          {
+            "text": "下",
+            "bbox": {
+              "x0": 759,
+              "y0": 276,
+              "x1": 780,
+              "y1": 300
+            },
+            "confidence": 88.11067962646484
+          },
+          {
+            "text": "路",
+            "bbox": {
+              "x0": 778,
+              "y0": 275,
+              "x1": 803,
+              "y1": 314
+            },
+            "confidence": 0
+          },
+          {
+            "text": "口",
+            "bbox": {
+              "x0": 37,
+              "y0": 390,
+              "x1": 114,
+              "y1": 434
+            },
+            "confidence": 0
+          },
+          {
+            "text": "EE",
+            "bbox": {
+              "x0": 89,
+              "y0": 369,
+              "x1": 128,
+              "y1": 438
+            },
+            "confidence": 0
+          },
+          {
+            "text": "汪",
+            "bbox": {
+              "x0": 127,
+              "y0": 369,
+              "x1": 180,
+              "y1": 438
+            },
+            "confidence": 0
+          },
+          {
+            "text": "口",
+            "bbox": {
+              "x0": 168,
+              "y0": 383,
+              "x1": 212,
+              "y1": 427
+            },
+            "confidence": 40.85063552856445
+          },
+          {
+            "text": "|",
+            "bbox": {
+              "x0": 205,
+              "y0": 369,
+              "x1": 215,
+              "y1": 438
+            },
+            "confidence": 82.20845794677734
+          },
+          {
+            "text": "佛山",
+            "bbox": {
+              "x0": 283,
+              "y0": 358,
+              "x1": 365,
+              "y1": 400
+            },
+            "confidence": 90.88753509521484
+          },
+          {
+            "text": "朱",
+            "bbox": {
+              "x0": 383,
+              "y0": 356,
+              "x1": 409,
+              "y1": 396
+            },
+            "confidence": 0
+          },
+          {
+            "text": "盛",
+            "bbox": {
+              "x0": 429,
+              "y0": 352,
+              "x1": 480,
+              "y1": 392
+            },
+            "confidence": 0
+          },
+          {
+            "text": "通",
+            "bbox": {
+              "x0": 479,
+              "y0": 331,
+              "x1": 521,
+              "y1": 404
+            },
+            "confidence": 92.47744750976562
+          },
+          {
+            "text": "生物",
+            "bbox": {
+              "x0": 520,
+              "y0": 347,
+              "x1": 582,
+              "y1": 388
+            },
+            "confidence": 96.87736511230469
+          },
+          {
+            "text": "科技",
+            "bbox": {
+              "x0": 602,
+              "y0": 340,
+              "x1": 695,
+              "y1": 384
+            },
+            "confidence": 96.36107635498047
+          },
+          {
+            "text": "有",
+            "bbox": {
+              "x0": 694,
+              "y0": 331,
+              "x1": 731,
+              "y1": 404
+            },
+            "confidence": 93.2202377319336
+          },
+          {
+            "text": "限",
+            "bbox": {
+              "x0": 730,
+              "y0": 339,
+              "x1": 755,
+              "y1": 378
+            },
+            "confidence": 93.2005844116211
+          },
+          {
+            "text": "公司",
+            "bbox": {
+              "x0": 771,
+              "y0": 335,
+              "x1": 837,
+              "y1": 373
+            },
+            "confidence": 96.5869140625
+          },
+          {
+            "text": "本",
+            "bbox": {
+              "x0": 38,
+              "y0": 422,
+              "x1": 140,
+              "y1": 446
+            },
+            "confidence": 0
+          },
+          {
+            "text": "Tel.:",
+            "bbox": {
+              "x0": 284,
+              "y0": 417,
+              "x1": 337,
+              "y1": 441
+            },
+            "confidence": 41.24587631225586
+          },
+          {
+            "text": "0757-88809856",
+            "bbox": {
+              "x0": 347,
+              "y0": 405,
+              "x1": 561,
+              "y1": 438
+            },
+            "confidence": 90.87063598632812
+          },
+          {
+            "text": "让",
+            "bbox": {
+              "x0": 46,
+              "y0": 450,
+              "x1": 99,
+              "y1": 503
+            },
+            "confidence": 19.389434814453125
+          },
+          {
+            "text": "和",
+            "bbox": {
+              "x0": 99,
+              "y0": 453,
+              "x1": 149,
+              "y1": 524
+            },
+            "confidence": 0
+          },
+          {
+            "text": "刘",
+            "bbox": {
+              "x0": 161,
+              "y0": 443,
+              "x1": 207,
+              "y1": 502
+            },
+            "confidence": 0
+          },
+          {
+            "text": "地",
+            "bbox": {
+              "x0": 286,
+              "y0": 455,
+              "x1": 335,
+              "y1": 480
+            },
+            "confidence": 92.71696472167969
+          },
+          {
+            "text": "址",
+            "bbox": {
+              "x0": 316,
+              "y0": 422,
+              "x1": 333,
+              "y1": 484
+            },
+            "confidence": 20.52484130859375
+          },
+          {
+            "text": ":广东",
+            "bbox": {
+              "x0": 332,
+              "y0": 422,
+              "x1": 388,
+              "y1": 484
+            },
+            "confidence": 38.21439743041992
+          },
+          {
+            "text": "人",
+            "bbox": {
+              "x0": 390,
+              "y0": 451,
+              "x1": 408,
+              "y1": 476
+            },
+            "confidence": 73.3498764038086
+          },
+          {
+            "text": "佛",
+            "bbox": {
+              "x0": 409,
+              "y0": 450,
+              "x1": 446,
+              "y1": 474
+            },
+            "confidence": 0
+          },
+          {
+            "text": "市",
+            "bbox": {
+              "x0": 448,
+              "y0": 449,
+              "x1": 466,
+              "y1": 472
+            },
+            "confidence": 29.7645263671875
+          },
+          {
+            "text": "高",
+            "bbox": {
+              "x0": 475,
+              "y0": 448,
+              "x1": 485,
+              "y1": 471
+            },
+            "confidence": 34.68553161621094
+          },
+          {
+            "text": "明",
+            "bbox": {
+              "x0": 491,
+              "y0": 448,
+              "x1": 504,
+              "y1": 470
+            },
+            "confidence": 65.33430480957031
+          },
+          {
+            "text": "区",
+            "bbox": {
+              "x0": 510,
+              "y0": 447,
+              "x1": 523,
+              "y1": 468
+            },
+            "confidence": 88.54936218261719
+          },
+          {
+            "text": "志和",
+            "bbox": {
+              "x0": 530,
+              "y0": 445,
+              "x1": 560,
+              "y1": 468
+            },
+            "confidence": 0
+          },
+          {
+            "text": "镇",
+            "bbox": {
+              "x0": 568,
+              "y0": 441,
+              "x1": 608,
+              "y1": 466
+            },
+            "confidence": 87.73417663574219
+          },
+          {
+            "text": "天道",
+            "bbox": {
+              "x0": 617,
+              "y0": 422,
+              "x1": 662,
+              "y1": 484
+            },
+            "confidence": 0
+          },
+          {
+            "text": "和",
+            "bbox": {
+              "x0": 661,
+              "y0": 439,
+              "x1": 672,
+              "y1": 461
+            },
+            "confidence": 92.76435852050781
+          },
+          {
+            "text": "咒",
+            "bbox": {
+              "x0": 688,
+              "y0": 436,
+              "x1": 716,
+              "y1": 460
+            },
+            "confidence": 0
+          },
+          {
+            "text": "12",
+            "bbox": {
+              "x0": 716,
+              "y0": 422,
+              "x1": 733,
+              "y1": 484
+            },
+            "confidence": 87.3182373046875
+          },
+          {
+            "text": "号",
+            "bbox": {
+              "x0": 743,
+              "y0": 434,
+              "x1": 754,
+              "y1": 457
+            },
+            "confidence": 80.30874633789062
+          },
+          {
+            "text": "车",
+            "bbox": {
+              "x0": 762,
+              "y0": 432,
+              "x1": 773,
+              "y1": 456
+            },
+            "confidence": 82.54159545898438
+          },
+          {
+            "text": "同房",
+            "bbox": {
+              "x0": 781,
+              "y0": 428,
+              "x1": 860,
+              "y1": 455
+            },
+            "confidence": 8.867195129394531
+          },
+          {
+            "text": "33",
+            "bbox": {
+              "x0": 859,
+              "y0": 422,
+              "x1": 884,
+              "y1": 484
+            },
+            "confidence": 0
+          },
+          {
+            "text": "回",
+            "bbox": {
+              "x0": 40,
+              "y0": 519,
+              "x1": 83,
+              "y1": 564
+            },
+            "confidence": 62.86439514160156
+          },
+          {
+            "text": "浇",
+            "bbox": {
+              "x0": 101,
+              "y0": 510,
+              "x1": 126,
+              "y1": 561
+            },
+            "confidence": 4.356109619140625
+          },
+          {
+            "text": ":",
+            "bbox": {
+              "x0": 129,
+              "y0": 521,
+              "x1": 137,
+              "y1": 529
+            },
+            "confidence": 86.60452270507812
+          },
+          {
+            "text": "导",
+            "bbox": {
+              "x0": 161,
+              "y0": 508,
+              "x1": 216,
+              "y1": 554
+            },
+            "confidence": 0
+          },
+          {
+            "text": "Emailsandywu@shengyingtd",
+            "bbox": {
+              "x0": 290,
+              "y0": 500,
+              "x1": 683,
+              "y1": 545
+            },
+            "confidence": 29.718475341796875
+          },
+          {
+            "text": "Je",
+            "bbox": {
+              "x0": 432,
+              "y0": 534,
+              "x1": 886,
+              "y1": 567
+            },
+            "confidence": 30.082725524902344
+          }
+        ],
+        "l": [
+          {
+            "text": "轿 CO 天 住 出 sres",
+            "bbox": {
+              "x0": 17,
+              "y0": 35,
+              "x1": 606,
+              "y1": 133
+            }
+          },
+          {
+            "text": "Telephone: +86 15913171583",
+            "bbox": {
+              "x0": 272,
+              "y0": 109,
+              "x1": 632,
+              "y1": 149
+            }
+          },
+          {
+            "text": "回 阅 梧 册 回 人",
+            "bbox": {
+              "x0": 32,
+              "y0": 177,
+              "x1": 763,
+              "y1": 229
+            }
+          },
+          {
+            "text": "多 佛山 盛 盈 包装 制品 有 限 公 三",
+            "bbox": {
+              "x0": 33,
+              "y0": 186,
+              "x1": 772,
+              "y1": 266
+            }
+          },
+          {
+            "text": "器 洛 Tel.: 0757-88809856 wy",
+            "bbox": {
+              "x0": 85,
+              "y0": 236,
+              "x1": 736,
+              "y1": 305
+            }
+          },
+          {
+            "text": "眉 吉 生 由 过 广东 省 佛山 市 高 明 区 杨 和 镇 阳 西 大 道 和 下 路",
+            "bbox": {
+              "x0": 35,
+              "y0": 275,
+              "x1": 803,
+              "y1": 353
+            }
+          },
+          {
+            "text": "口 EE 汪 口 | 佛山 朱 盛 通 生物 科技 有 限 公司",
+            "bbox": {
+              "x0": 37,
+              "y0": 331,
+              "x1": 837,
+              "y1": 434
+            }
+          },
+          {
+            "text": "本 Tel.: 0757-88809856",
+            "bbox": {
+              "x0": 38,
+              "y0": 405,
+              "x1": 561,
+              "y1": 446
+            }
+          },
+          {
+            "text": "让 和 刘 地 址 :广东 人 佛 市 高 明 区 志和 镇 天道 和 咒 12 号 车 同房 33",
+            "bbox": {
+              "x0": 46,
+              "y0": 426,
+              "x1": 884,
+              "y1": 524
+            }
+          },
+          {
+            "text": "回 浇 : 导 Emailsandywu@shengyingtd",
+            "bbox": {
+              "x0": 40,
+              "y0": 500,
+              "x1": 683,
+              "y1": 564
+            }
+          },
+          {
+            "text": "Je",
+            "bbox": {
+              "x0": 432,
+              "y0": 534,
+              "x1": 886,
+              "y1": 567
+            }
+          }
+        ],
+        "size": {
+          "width": 895,
+          "height": 577
+        }
+      },
+      "canvasSnap": {
+        "width": 619.5,
+        "height": 376.8625,
+        "viewportTransform": [
+          1.0325,
+          0,
+          0,
+          1.0325,
+          0,
+          0
+        ],
+        "zoom": 1.0325,
+        "retina": 1.0000000149011612
+      },
+      "passSummary": {
+        "blocks": 9,
+        "pass": 0,
+        "fail": 9
+      },
+      "rollback": {
+        "ok": true,
+        "removed": 9
+      }
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][CANVAS_READY] w=619.5x376.8625 objs=9 bg=true active=null",
+    "[zy-ocr][PREPARING] kind=background-image 895x577 dataUrl=1291706 chars",
+    "[zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current",
+    "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
+    "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
+    "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+    "[zy-ocr][LOCAL_RECOGNIZING] lines=11 words=97 image=undefinedxundefined",
+    "[zy-ocr][RAW_WORDS8D] 轿@{\"x\":17,\"y\":54,\"w\":82,\"h\":79}:0|CO@{\"x\":122,\"y\":55,\"w\":86,\"h\":65}:1763|天@{\"x\":277,\"y\":35,\"w\":118,\"h\":53}:5566|住@{\"x\":410,\"y\":36,\"w\":43,\"h\":44}:3300|出@{\"x\":441,\"y\":10,\"w\":33,\"h\":127}:3610|sres@{\"x\":494,\"y\":46,\"w\":112,\"h\":30}:2940|Telephon@{\"x\":272,\"y\":119,\"w\":134,\"h\":30}:9148|+86@{\"x\":416,\"y\":116,\"w\":46,\"h\":22}:9259|15913171@{\"x\":471,\"y\":109,\"w\":161,\"h\":27}:9221|回@{\"x\":32,\"y",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
+    "[zy-ocr][GROUP] lines=33 y=10,35,46,54,109,177,184,190,193,197,214,220,236,243,251,275,276,282,290,305,317,331,335,369,383,405,422,422,439,450,500,521,534 h=127,53,30,79,40,71,59,5,21,1,52,1,16,87,34,41,24,16,36,48,28,73,65,69,51,36,38,102,41,53,64,8,33",
+    "[zy-ocr][TRACE8D] unified=33 k0=[\"id\",\"text\",\"bbox\",\"lineBBox\",\"wordBoxes\",\"confidence\",\"rotation\",\"coordinateSpace\",\"imageSize\",\"sourceProvider\",\"lineIndex\",\"wordIndex\",\"rawMeta\"] b0={\"y\":10,\"h\":127,\"t\":\"出\"}",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":33,\"kept\":31,\"dropped\":2}}",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"WARN\",\"reasonCode\":\"WARN\",\"total\":31,\"text\":\"PASS\",\"block\":\"WARN\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"WARN\"}}",
+    "[zy-ocr][GATE8D] total=31 blocked=1 [10:TINY_BOX:公] kept=30 suspect= score=0.92",
+    "[zy-ocr][TRACE8D] gate-kept=30 score=0.92",
+    "[zy-ocr][TRACE8D] blocks=24",
+    "[zy-ocr][TRACE8D] buildItems blocks=24 geoAC=true measurer=fn fusion=fn",
+    "[zy-ocr][GEOMETRY_GATE] block 7 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 8 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 9 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 11 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 12 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 13 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 15 out-of-bounds-pct-0.650（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 16 out-of-bounds-pct-0.609（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 17 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 18 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 19 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 20 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 21 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 22 center-outside（禁创建，目标越界）",
+    "[zy-ocr][GEOMETRY_GATE] block 23 center-outside（禁创建，目标越界）",
+    "[zy-ocr][BUILDING] blocks=9 forcedWrap=0 multiLine=3",
+    "[zy-ocr][SUCCESS] created=9/9 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":9,\"uv4\":9,\"layerMax\":-1}",
+    "[zy-ocr][GEOMETRY] {\"ok\":0,\"rejected\":0,\"noted\":9,\"rejectedBlocks\":[],\"notes\":[{\"blockIndex\":0,\"status\":\"TYPOGRAPHY_FAIL\",\"failures\":\"width\",\"category\":\"STYLE_MISMATCH\"},{\"blockIndex\":1,\"status\":\"TYPOGRAPHY_FAIL\",\"failures\":\"width\",\"category\":\"STYLE_MISMATCH\"},{\"blockIndex\":2,\"status\":\"TYPOGRAPHY_FAIL\",\"failures\":\"width\",\"category\":\"STYLE_MISMATCH\"},{\"blockIndex\":3,\"status\":\"TYPOGRAPHY_FAIL\",\"fail"
+  ],
+  "consoleDiag": [
+    "Failed to load resource: net::ERR_CONNECTION_CLOSED",
+    "PAGEERROR: window.closeSocket is not a function",
+    "Failed to load resource: net::ERR_CONNECTION_CLOSED"
+  ],
+  "injectMode": "page-world",
+  "bgFile": "D:\\zheliyin-scriptcat\\runtime\\stage8b\\assets\\real-card-shengying.png",
+  "consoleLong": [
+    "[zy-ocr][RAW_WORDS8D] 轿@{\"x\":17,\"y\":54,\"w\":82,\"h\":79}:0|CO@{\"x\":122,\"y\":55,\"w\":86,\"h\":65}:1763|天@{\"x\":277,\"y\":35,\"w\":118,\"h\":53}:5566|住@{\"x\":410,\"y\":36,\"w\":43,\"h\":44}:3300|出@{\"x\":441,\"y\":10,\"w\":33,\"h\":127}:3610|sres@{\"x\":494,\"y\":46,\"w\":112,\"h\":30}:2940|Telephon@{\"x\":272,\"y\":119,\"w\":134,\"h\":30}:9148|+86@{\"x\":416,\"y\":116,\"w\":46,\"h\":22}:9259|15913171@{\"x\":471,\"y\":109,\"w\":161,\"h\":27}:9221|回@{\"x\":32,\"y\":185,\"w\":46,\"h\":33}:8908|阅@{\"x\":80,\"y\":182,\"w\":35,\"h\":47}:0|梧@{\"x\":116,\"y\":180,\"w\":25,\"h\":38}:0|册@{\"x\":144,\"y\":184,\"w\":23,\"h\":36}:0|回@{\"x\":174,\"y\":177,\"w\":29,\"h\":34}:0|人@{\"x\":684,\"y\":190,\"w\":79,\"h\":5}:6174|多@{\"x\":33,\"y\":214,\"w\":167,\"h\":52}:274|佛山@{\"x\":277,\"y\":200,\"w\":108,\"h\":43}:9327|盛@{\"x\":408,\"y\":199,\"w\":22,\"h\":37}:9129|盈@{\"x\":429,\"y\":182,\"w\":34,\"h\":66}:8104|包装@{\"x\":462,\"y\":192,\"w\":96,\"h\":42}:7417|制品@{\"x\":563,\"y\":188,\"w\":78,\"h\":42}:9573|有@{\"x\":670,\"y\":193,\"w\":4,\"h\":21}:9330|限@{\"x\":685,\"y\":186,\"w\":34,\"h\":36}:9234|公@{\"x\":721,\"y\":220,\"w\":5,\"h\":1}:9266|三@{\"x\":755,\"y\":197,\"w\":17,\"h\":1}:0|器@{\"x\":85,\"y\":243,\"w\":66,\"h\":61}:5009|洛@{\"x\":159,\"y\":263,\"w\":42,\"h\":42}:0|Tel.:@{\"x\":278,\"y\":260,\"w\":53,\"h\":25}:7779|0757-888@{\"x\":342,\"y\":251,\"w\":212,\"h\":31}:9071|wy@{\"x\":707,\"y\":236,\"w\":29,\"h\":16}:6891|眉@{\"x\":35,\"y\":312,\"w\":34,\"h\":41}:0|吉@{\"x\":79,\"y\":305,\"w\":40,\"h\":46}:0|生@{\"x\":124,\"y\":309,\"w\":60,\"h\":39}:0|由@{\"x\":186,\"y\":317,\"w\":23,\"h\":28}:1794|过@{\"x\":280,\"y\":299,\"w\":56,\"h\":27}:3988|广东@{\"x\":353,\"y\":297,\"w\":46,\"h\":27}:9655|省@{\"x\":408,\"y\":295,\"w\":22,\"h\":27}:8768|佛山@{\"x\":433,\"y\":294,\"w\":35,\"h\":27}:9605|市@{\"x\":481,\"y\":291,\"w\":27,\"h\":27}:7595|高@{\"x\":519,\"y\":291,\"w\":11,\"h\":25}:9137|明@{\"x\":529,\"y\":271,\"w\":20,\"h\":59}:8968|区@{\"x\":548,\"y\":290,\"w\":16,\"h\":24}:9312|杨@{\"x\":573,\"y\":288,\"w\":14,\"h\":26}:8907|和@{\"x\":596,\"y\":287,\"w\":14,\"h\":26}:9699|镇@{\"x\":621,\"y\":285,\"w\":14,\"h\":27}:9070|阳@{\"x\":644,\"y\":285,\"w\":14,\"h\":26}:9292|西@{\"x\":669,\"y\":283,\"w\":12,\"h\":26}:5237|大@{\"x\":706,\"y\":290,\"w\":17,\"h\":26}:9327|道@{\"x\":736,\"y\":282,\"w\":4,\"h\":12}:8546|和@{\"x\":744,\"y\":286,\"w\":4,\"h\":12}:9700|下@{\"x\":759,\"y\":276,\"w\":21,\"h\":24}:8811|路@{\"x\":778,\"y\":275,\"w\":25,\"h\":39}:0|口@{\"x\":37,\"y\":390,\"w\":77,\"h\":44}:0|EE@{\"x\":89,\"y\":369,\"w\":39,\"h\":69}:0|汪@{\"x\":127,\"y\":369,\"w\":53,\"h\":69}:0|口@{\"x\":168,\"y\":383,\"w\":44,\"h\":44}:4085||@{\"x\":205,\"y\":369,\"w\":10,\"h\":69}:8221|佛山@{\"x\":283,\"y\":358,\"w\":82,\"h\":42}:9089|朱@{\"x\":383,\"y\":356,\"w\":26,\"h\":40}:0|盛@{\"x\":429,\"y\":352,\"w\":51,\"h\":40}:0|通@{\"x\":479,\"y\":331,\"w\":42,\"h\":73}:9248|生物@{\"x\":520,\"y\":347,\"w\":62,\"h\":41}:9688|科技@{\"x\":602,\"y\":340,\"w\":93,\"h\":44}:9636|有@{\"x\":694,\"y\":331,\"w\":37,\"h\":73}:9322|限@{\"x\":730,\"y\":339,\"w\":25,\"h\":39}:9320|公司@{\"x\":771,\"y\":335,\"w\":66,\"h\":38}:9659|本@{\"x\":38,\"y\":422,\"w\":102,\"h\":24}:0|Tel.:@{\"x\":284,\"y\":417,\"w\":53,\"h\":24}:4125|0757-888@{\"x\":347,\"y\":405,\"w\":214,\"h\":33}:9087|让@{\"x\":46,\"y\":450,\"w\":53,\"h\":53}:1939|和@{\"x\":99,\"y\":453,\"w\":50,\"h\":71}:0|刘@{\"x\":161,\"y\":443,\"w\":46,\"h\":59}:0|地@{\"x\":286,\"y\":455,\"w\":49,\"h\":25}:9272|址@{\"x\":316,\"y\":422,\"w\":17,\"h\":62}:2052|:广东@{\"x\":332,\"y\":422,\"w\":56,\"h\":62}:3821|人@{\"x\":390,\"y\":451,\"w\":18,\"h\":25}:7335|佛@{\"x\":409,\"y\":450,\"w\":37,\"h\":24}:0|市@{\"x\":448,\"y\":449,\"w\":18,\"h\":23}:2976|高@{\"x\":475,\"y\":448,\"w\":10,\"h\":23}:3469|明@{\"x\":491,\"y\":448,\"w\":13,\"h\":22}:6533|区@{\"x\":510,\"y\":447,\"w\":13,\"h\":21}:8855|志和@{\"x\":530,\"y\":445,\"w\":30,\"h\":23}:0|镇@{\"x\":568,\"y\":441,\"w\":40,\"h\":25}:8773|天道@{\"x\":617,\"y\":422,\"w\":45,\"h\":62}:0|和@{\"x\":661,\"y\":439,\"w\":11,\"h\":22}:9276|咒@{\"x\":688,\"y\":436,\"w\":28,\"h\":24}:0|12@{\"x\":716,\"y\":422,\"w\":17,\"h\":62}:8732|号@{\"x\":743,\"y\":434,\"w\":11,\"h\":23}:8031|车@{\"x\":762,\"y\":432,\"w\":11,\"h\":24}:8254|同房@{\"x\":781,\"y\":428,\"w\":79,\"h\":27}:887|33@{\"x\":859,\"y\":422,\"w\":25,\"h\":62}:0|回@{\"x\":40,\"y\":519,\"w\":43,\"h\":45}:6286|浇@{\"x\":101,\"y\":510,\"w\":25,\"h\":51}:436|:@{\"x\":129,\"y\":521,\"w\":8,\"h\":8}:8660|导@{\"x\":161,\"y\":508,\"w\":55,\"h\":46}:0|Emailsan@{\"x\":290,\"y\":500,\"w\":393,\"h\":45}:2972|Je@{\"x\":432,\"y\":534,\"w\":454,\"h\":33}:3008"
+  ]
+}

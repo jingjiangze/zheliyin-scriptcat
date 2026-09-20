@@ -1,0 +1,58 @@
+{
+  "ts": "2026-09-20T04:33:27.973Z",
+  "stage": "STAGE-9-P0B-OCRTOOL",
+  "branch": "stage-9-altq-baidu-reconstruction",
+  "url": "https://diy.zheliyin.com/siteWeb/userCenterJsj/OCRTool.do",
+  "net": [
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "https://diy.zheliyin.com/siteWeb/userCenterJsj/OCRTool.do",
+      "post": "",
+      "contentType": ""
+    },
+    {
+      "dir": "res",
+      "status": 200,
+      "url": "https://diy.zheliyin.com/siteWeb/userCenterJsj/OCRTool.do",
+      "ct": "",
+      "body": null
+    },
+    {
+      "dir": "req",
+      "method": "GET",
+      "url": "http://diy.zheliyin.com:443/siteWeb/jsj/index.do",
+      "post": "",
+      "contentType": ""
+    },
+    {
+      "dir": "res",
+      "status": 400,
+      "url": "http://diy.zheliyin.com:443/siteWeb/jsj/index.do",
+      "ct": "text/html; charset=UTF-8",
+      "body": "<html>\r\n<head><title>400 The plain HTTP request was sent to HTTPS port</title></head>\r\n<body bgcolor=\"white\">\r\n<center><h1>400 Bad Request</h1></center>\r\n<center>The plain HTTP request was sent to HTTPS port</center>\r\n<hr><center>nginx/1.10.3 (Ubuntu)</center>\r\n</body>\r\n</html>\r\n<!-- a padding to disable MSIE and Chrome friendly error page -->\r\n<!-- a padding to disable MSIE and Chrome friendly error page -->\r\n<!-- a padding to disable MSIE and Chrome friendly error page -->\r\n<!-- a padding to disable MSIE and Chrome friendly error page -->\r\n<!-- a padding to disable MSIE and Chrome friendly error page -->\r\n<!-- a padding to disable MSIE and Chrome friendly error page -->\r\n"
+    }
+  ],
+  "console": [
+    "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+    "Failed to load resource: the server responded with a status of 400 (Bad Request)"
+  ],
+  "errors": [],
+  "pageInfo": {
+    "title": "400 The plain HTTP request was sent to HTTPS port",
+    "ready": "complete",
+    "bodyTextFileted": "400 Bad Request\nThe plain HTTP request was sent to HTTPS port\nnginx/1.10.3 (Ubuntu)",
+    "fileInputs": [],
+    "buttons": [],
+    "iframes": [],
+    "altqBox": {
+      "have": false
+    }
+  },
+  "altqOnPage": {
+    "active": "BODY",
+    "bodyHead": "400 Bad Request\nThe plain HTTP request was sent to HTTPS port\nnginx/1.10.3 (Ubuntu)"
+  },
+  "fileInputsFinal": [],
+  "uploadSkipped": "no-file-input"
+}

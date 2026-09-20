@@ -140,8 +140,12 @@ function pageBridge() {
                   batchNat.push(obj);
                   if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{12,}$/.test(obj.multiUuid)) editorInteg2.uv4Total += 1;
                   try { if (it.diagnostics) obj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
+                  // Stage 8B STEP 4（Phase B/C）：测量本对象真实几何 + 业务字段初始同步 + 定位 key
+                  obj.zyOcrKey = "zy-ocr-" + (it.blockIndex != null ? it.blockIndex : idx);
+                  const gNat = measureObjectGeometry(diy.canvas, obj);
+                  syncBusinessFieldsFromObject(obj);
+                  createdNat.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: diy.canvas.getObjects().indexOf(obj), uuid: obj ? (obj.uuid || obj.multiUuid || null) : null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gNat });
                 }
-                createdNat.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: diy.canvas.getObjects().indexOf(obj), uuid: obj ? (obj.uuid || obj.multiUuid || null) : null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide });
               } catch (e2) {
                 failMsg = "native item" + idx + ": " + String(e2 && e2.message || e2).slice(0, 120);
                 failedBlockIndex = idx;
@@ -214,7 +218,10 @@ function pageBridge() {
               // Stage 6 P0：编辑器对象模型镜像（native 字段，多数字段为审计所得 252438 真机 schema）
               try { if (mirrorEditorObjectModel(canvas, obj)) editorInteg.identityApplied += 1; } catch (eMirror) { console.warn("[zy-ocr][ocrCreate] mirror err=" + String(eMirror && eMirror.message || eMirror).slice(0, 120)); }
               if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{20,}$/.test(obj.multiUuid)) editorInteg.uv4Total += 1;
-              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide });
+              // Stage 8B STEP 4（Phase B/C）：测量本对象真实几何 + 定位 key（供 ocrAdjust 校正）
+              obj.zyOcrKey = "zy-ocr-" + (it.blockIndex != null ? it.blockIndex : idx);
+              const gObj = measureObjectGeometry(canvas, obj);
+              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gObj });
               batch.push(obj);
             } catch (e2) {
               // §16 事务：第一个失败即终止，全量回滚本批已建对象，恢复创建前状态（created=0）
@@ -251,6 +258,40 @@ function pageBridge() {
           pageId: sourcePageId, side: sourceSide,
           editorIntegration: editorInteg
         });
+        return;
+      }
+      if (event.data.type === "ocrAdjust") {
+        // Stage 8B STEP 4（Phase C）：创建后几何自动闭环校正 —— 按 blockIndex 定位本批 OCR 对象
+        // （zyOcrKey），应用 fontSize/width/height/left/top/angle 修正，重新实测并同步业务字段。
+        // 只操作本批创建的 zyOcrKey 对象；无对象时报错不抛异常。
+        const canvasAdj = findCanvasForSide(event.data.side || "front");
+        const itemsAdj = Array.isArray(event.data.items) ? event.data.items : [];
+        const resultsAdj = [];
+        itemsAdj.forEach(function (adj) {
+          const res = { blockIndex: adj.blockIndex, ok: false, error: null, geometry: null };
+          try {
+            const key = "zy-ocr-" + (adj.blockIndex != null ? adj.blockIndex : -1);
+            const objsAdj = canvasAdj ? canvasAdj.getObjects() : [];
+            let found = null;
+            for (let i = objsAdj.length - 1; i >= 0; i -= 1) { if (objsAdj[i] && objsAdj[i].zyOcrKey === key) { found = objsAdj[i]; break; } }
+            if (!found) { res.error = "object-not-found"; resultsAdj.push(res); return; }
+            const c = adj.corrections || {};
+            const cfg = {};
+            if (typeof c.fontSize === "number" && c.fontSize >= 8 && c.fontSize <= 160) cfg.fontSize = c.fontSize;
+            if (typeof c.width === "number" && c.width >= 20) cfg.width = c.width;
+            if (typeof c.height === "number" && c.height >= 14) cfg.height = c.height;
+            if (typeof c.left === "number" && isFinite(c.left)) cfg.left = c.left;
+            if (typeof c.top === "number" && isFinite(c.top)) cfg.top = c.top;
+            if (typeof c.angle === "number" && isFinite(c.angle)) cfg.angle = c.angle;
+            found.set(cfg);
+            if (adj.syncBusiness !== false) syncBusinessFieldsFromObject(found);
+            res.geometry = measureObjectGeometry(canvasAdj, found);
+            res.ok = true;
+          } catch (eAdj) { res.error = String(eAdj && eAdj.message || eAdj).slice(0, 120); }
+          resultsAdj.push(res);
+        });
+        if (canvasAdj && canvasAdj.requestRenderAll) canvasAdj.requestRenderAll();
+        post("ocrAdjustResult", { ok: true, items: resultsAdj });
         return;
       }
       if (event.data.type === "getCanvasInfo") {
@@ -544,6 +585,67 @@ function pageBridge() {
       return found;
     }
 
+    // ---- Stage 8B STEP 4（Phase B/D）：创建后实测与业务字段同步 ----
+    // aCoords 为 CANVAS_LOGICAL 真值（fabric calcCoords 不含 viewportTransform）。仅序列化数字，禁止回传对象。
+    function measureObjectGeometry(canvas, obj) {
+      try {
+        if (!obj || typeof obj.setCoords !== "function") return null;
+        if (canvas && typeof canvas.setCoords === "function") canvas.setCoords();
+        else obj.setCoords();
+        const ac = obj.aCoords;
+        if (!ac || !ac.tl || !ac.tr || !ac.br || !ac.bl || typeof ac.tl.x !== "number") return null;
+        const quad = [ac.tl, ac.tr, ac.br, ac.bl].map(function (p) { return { x: p.x, y: p.y }; });
+        const cx = (quad[0].x + quad[1].x + quad[2].x + quad[3].x) / 4;
+        const cy = (quad[0].y + quad[1].y + quad[2].y + quad[3].y) / 4;
+        const d = function (a, b) { return Math.hypot(a.x - b.x, a.y - b.y); };
+        const width = (d(quad[0], quad[1]) + d(quad[2], quad[3])) / 2;
+        const height = (d(quad[0], quad[3]) + d(quad[1], quad[2])) / 2;
+        const angle = (Math.atan2(quad[1].y - quad[0].y, quad[1].x - quad[0].x) * 180) / Math.PI;
+        // Stage 8B STEP 6（§12）：渲染行数 —— 单行 OCR 不得渲染成多行（WRAP_DETECTED）
+        let renderedLineCount = null;
+        try {
+          if (obj._textLines && obj._textLines.length) renderedLineCount = obj._textLines.length;
+          else {
+            const lh = (typeof obj.lineHeight === "number" && obj.lineHeight > 0) ? obj.lineHeight : 1.16;
+            const fsN = obj.fontSize || 16;
+            const perLine = fsN * lh;
+            renderedLineCount = Math.max(1, Math.round(height / Math.max(perLine, 1e-6)));
+          }
+        } catch (eR) { renderedLineCount = null; }
+        return {
+          quad: quad, center: { x: cx, y: cy }, width: width, height: height, angle: angle,
+          left: typeof obj.left === "number" ? obj.left : null,
+          top: typeof obj.top === "number" ? obj.top : null,
+          fontSize: typeof obj.fontSize === "number" ? obj.fontSize : null,
+          textboxWidth: typeof obj.width === "number" ? obj.width : null,
+          textboxHeight: typeof obj.height === "number" ? obj.height : null,
+          lineHeight: typeof obj.lineHeight === "number" ? obj.lineHeight : null,
+          renderedLineCount: renderedLineCount
+        };
+      } catch (eM) { return null; }
+    }
+    // Phase D：几何收敛后把最终 fabric 几何同步回站点业务字段（location*/printLocation* + location 子对象）。
+    function syncBusinessFieldsFromObject(obj) {
+      try {
+        if (!obj) return false;
+        const gx = { left: obj.left != null ? obj.left : 0, top: obj.top != null ? obj.top : 0, width: obj.width != null ? obj.width : 60, height: obj.height != null ? obj.height : 20, rotation: obj.angle || 0 };
+        obj.locationX = gx.left; obj.locationY = gx.top;
+        obj.locationWidth = gx.width; obj.locationHeight = gx.height; obj.locationRotation = gx.rotation;
+        if (obj.location && typeof obj.location === "object") {
+          obj.location.x = Math.round(gx.left); obj.location.y = Math.round(gx.top);
+          obj.location.width = Math.round(gx.width); obj.location.height = Math.round(gx.height);
+          obj.location.factWidth = Math.round(gx.width); obj.location.factHeight = Math.round(gx.height);
+          obj.location.rotation = gx.rotation;
+        }
+        if (obj.printLocation && typeof obj.printLocation === "object") {
+          obj.printLocation.x = Math.round(gx.left); obj.printLocation.y = Math.round(gx.top);
+          obj.printLocation.width = Math.round(gx.width); obj.printLocation.height = Math.round(gx.height);
+          obj.printLocation.rotation = gx.rotation;
+        }
+        return true;
+      } catch (eS) { return false; }
+    }
+
     // ---- Stage 5.5B P1：只读画布信息 / OCR 目标准备（页面世界执行，隔离世界不可见）----
     function buildCanvasInfo() {
       const canvas = findCanvasForSide("front");
@@ -584,6 +686,20 @@ function pageBridge() {
       let left = target.left, top = target.top;
       if (!isFinite(left)) left = (canvas.width - w * (target.scaleX || 1)) / 2;
       if (!isFinite(top)) top = (canvas.height - h * (target.scaleY || 1)) / 2;
+      // Stage 8B STEP 4（Phase 0）：aCoords 真值采集 —— setCoords() 后读四角（CANVAS_LOGICAL，
+      // fabric calcCoords 不含 viewportTransform/zoom），供 image-space.js 建立「source→canvas」
+      // 唯一仿射（坐标合同 §3）；无 aCoords 时调用方降级旧路径，禁止用 left/top 猜测。
+      let aCoords = null;
+      try {
+        if (typeof target.setCoords === "function") target.setCoords();
+        const ac = target.aCoords;
+        if (ac && ac.tl && ac.tr && ac.br && ac.bl && typeof ac.tl.x === "number") {
+          aCoords = {
+            tl: { x: ac.tl.x, y: ac.tl.y }, tr: { x: ac.tr.x, y: ac.tr.y },
+            br: { x: ac.br.x, y: ac.br.y }, bl: { x: ac.bl.x, y: ac.bl.y }
+          };
+        }
+      } catch (eAc) { aCoords = null; }
       return {
         ok: true,
         kind: kind,
@@ -594,7 +710,12 @@ function pageBridge() {
           left: left, top: top,
           width: target.width, height: target.height,
           scaleX: target.scaleX || 1, scaleY: target.scaleY || 1,
-          angle: target.angle || 0
+          angle: target.angle || 0,
+          // Stage 8B STEP 4：画布逻辑尺寸 / natural 尺寸 / aCoords 真值（缺省 null，调用方降级）
+          canvasWidth: canvas ? (canvas.width != null ? canvas.width : null) : null,
+          canvasHeight: canvas ? (canvas.height != null ? canvas.height : null) : null,
+          naturalWidth: w, naturalHeight: h,
+          aCoords: aCoords
         }
       };
     }
@@ -605,12 +726,38 @@ function pageBridge() {
       if (!resolution || resolution.status !== "ok" || !resolution.canvas) return { ok: false, code: "CURRENT_PAGE_UNKNOWN", currentPage: resolution || null, message: "当前编辑页面无法识别，无法准备 OCR 目标图（CURRENT_PAGE_UNKNOWN）" };
       const canvas = resolution.canvas;
       if (!canvas) return { ok: false, code: "CANVAS_NOT_READY", message: "画布未就绪，请等待模板加载完成" };
+      // Stage 8B STEP 5（§3/§4）：真实模板字体采样 —— StyleCandidate 来源 1（当前模板真实 textbox）。
+      // 禁止硬编码"思源黑体 Regular"；模板无文字对象时为 null（调用方走 fallback 并标记 fontMismatch）。
+      const templateFont = sampleTemplateFont(canvas);
       const active = canvas.getActiveObject ? canvas.getActiveObject() : null;
-      if (active && String(active.type) === "image") return extractImagePayload(active, "active-image", canvas);
-      if (canvas.backgroundImage && String(canvas.backgroundImage.type) === "image") return extractImagePayload(canvas.backgroundImage, "background-image", canvas);
+      if (active && String(active.type) === "image") return Object.assign(extractImagePayload(active, "active-image", canvas), { templateFont: templateFont });
+      if (canvas.backgroundImage && String(canvas.backgroundImage.type) === "image") return Object.assign(extractImagePayload(canvas.backgroundImage, "background-image", canvas), { templateFont: templateFont });
       const first = canvas.getObjects().find(function (o) { return o && String(o.type) === "image"; });
-      if (first) return extractImagePayload(first, "first-image", canvas);
+      if (first) return Object.assign(extractImagePayload(first, "first-image", canvas), { templateFont: templateFont });
       return { ok: false, code: "IMAGE_UNAVAILABLE", message: "未找到可识别的图片：请先在画布选中一张图片，或填充一张背景图" };
+    }
+    // Stage 8B STEP 5（§3）：真实模板字体采样 —— 多数派 fontFamily + 代表性样式
+    function sampleTemplateFont(canvas) {
+      try {
+        const counts = {};
+        let best = null, bestN = 0, sample = null;
+        (canvas.getObjects() || []).forEach(function (o) {
+          if (!o || typeof o.text !== "string" || !String(o.text || "").trim()) return;
+          const fm = String(o.fontFamily || "").trim();
+          if (!fm) return;
+          counts[fm] = (counts[fm] || 0) + 1;
+          if (counts[fm] > bestN) { bestN = counts[fm]; best = fm; sample = o; }
+        });
+        if (!best) return null;
+        return {
+          fontFamily: best,
+          fontWeight: sample.fontWeight != null ? sample.fontWeight : null,
+          fontStyle: sample.fontStyle != null ? sample.fontStyle : null,
+          lineHeight: sample.lineHeight != null ? sample.lineHeight : null,
+          fontSizeSample: sample.fontSize != null ? sample.fontSize : null,
+          count: bestN
+        };
+      } catch (e) { return null; }
     }
     function findCanvasForSide(side) {
       const CanvasObjVO = getLoadedModule("CanvasObjVO") || window.CanvasObjVO;

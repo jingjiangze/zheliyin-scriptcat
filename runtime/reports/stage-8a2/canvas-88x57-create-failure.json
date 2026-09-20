@@ -1,0 +1,470 @@
+{
+  "ts": "2026-09-19T05:44:14.844Z",
+  "stage": "STAGE-8A2B-ctrig",
+  "branch": "stage-8a-2-rotation-policy-geometry",
+  "mode": "ctrig",
+  "records": [
+    {
+      "mode": "ctrig",
+      "delayMs": 0,
+      "img": {
+        "ok": true,
+        "w": 1000,
+        "h": 300,
+        "nw": 1000,
+        "nh": 300,
+        "sx": 1,
+        "sy": 1,
+        "angle": 0,
+        "left": 20,
+        "top": 20
+      },
+      "samples": [
+        {
+          "t": 1789796679429,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 9,
+          "regLen": 1
+        },
+        {
+          "t": 1789796680040,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796680640,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        }
+      ],
+      "rd": null,
+      "cap": [
+        {
+          "kind": "throw",
+          "text": "大字标题实例文字",
+          "err": "Cannot read properties of undefined (reading 'media')",
+          "stack": "TypeError: Cannot read properties of undefined (reading 'media')\n    at v.checkObjsInProductJson (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:190:251)\n    at v.drawText (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:416:20)\n    at diy.drawText (eval at evaluate (:311:30), <anonymous>:21:258)\n    at <anonymous>:111:21",
+          "layer": 1,
+          "snapshot": {
+            "holderKey": "mod:ProductVO",
+            "itemListLen": 0,
+            "objLen": 10,
+            "cc": null
+          },
+          "entry": {
+            "location": {
+              "x": 48,
+              "y": 43,
+              "width": 493,
+              "height": 85,
+              "factWidth": 493,
+              "factHeight": 85,
+              "rotation": 0
+            },
+            "printLocation": {
+              "x": 48,
+              "y": 43,
+              "width": 493,
+              "height": 85,
+              "rotation": 0
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "status": [
+        "正在等待编辑器加载…",
+        "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
+        "生成失败：未创建文字（第 0 个失败，已回滚）"
+      ],
+      "ids": [
+        "89e5d902-16f1-4dab-8fec-091087730417"
+      ],
+      "created": [
+        {
+          "id": "89e5d902-16f1-4dab-8fec-091087730417",
+          "text": "大字标题实例文字",
+          "left": 48,
+          "top": 43,
+          "width": 493,
+          "height": 85,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 59,
+          "angle": 0,
+          "originX": "left",
+          "visible": true,
+          "opacity": 1,
+          "aCoords": {
+            "tl": [
+              48,
+              43
+            ],
+            "br": [
+              542,
+              129
+            ]
+          },
+          "boundingRect": {
+            "left": 36.2580121703854,
+            "top": 32.481135902636915,
+            "width": 373.15537525354966,
+            "height": 64.96227180527384
+          },
+          "biz": {
+            "locationX": 48,
+            "locationY": 43,
+            "locationWidth": 493,
+            "locationHeight": 85
+          }
+        }
+      ],
+      "canvasInfo": {
+        "width": 453.22515212981745,
+        "height": 744.8,
+        "ft": [
+          0.7553752535496957,
+          0,
+          0,
+          0.7553752535496957,
+          0,
+          0
+        ],
+        "zoom": 0.7553752535496957,
+        "retina": 0.800000011920929
+      },
+      "done": true
+    },
+    {
+      "mode": "ctrig",
+      "delayMs": 8000,
+      "img": {
+        "ok": true,
+        "w": 1000,
+        "h": 300,
+        "nw": 1000,
+        "nh": 300,
+        "sx": 1,
+        "sy": 1,
+        "angle": 0,
+        "left": 20,
+        "top": 20
+      },
+      "samples": [
+        {
+          "t": 1789796681252,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796681856,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796682456,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796683068,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796683681,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796684296,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796684908,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796685510,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796686110,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796686712,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796687316,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796687918,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796688522,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796689136,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 10,
+          "regLen": 2
+        },
+        {
+          "t": 1789796689751,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 11,
+          "regLen": 3
+        },
+        {
+          "t": 1789796690355,
+          "cc": 1,
+          "pageListLen": null,
+          "itemListLen": null,
+          "itemListLastOk": false,
+          "objLen": 11,
+          "regLen": 3
+        }
+      ],
+      "rd": null,
+      "cap": [
+        {
+          "kind": "throw",
+          "text": "大字标题实例文字",
+          "err": "Cannot read properties of undefined (reading 'media')",
+          "stack": "TypeError: Cannot read properties of undefined (reading 'media')\n    at v.checkObjsInProductJson (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:190:251)\n    at v.drawText (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:416:20)\n    at diy.drawText (eval at evaluate (:311:30), <anonymous>:21:258)\n    at <anonymous>:111:21",
+          "layer": 1,
+          "snapshot": {
+            "holderKey": "mod:ProductVO",
+            "itemListLen": 0,
+            "objLen": 10,
+            "cc": null
+          },
+          "entry": {
+            "location": {
+              "x": 48,
+              "y": 43,
+              "width": 493,
+              "height": 85,
+              "factWidth": 493,
+              "factHeight": 85,
+              "rotation": 0
+            },
+            "printLocation": {
+              "x": 48,
+              "y": 43,
+              "width": 493,
+              "height": 85,
+              "rotation": 0
+            }
+          }
+        },
+        {
+          "kind": "throw",
+          "text": "大字标题实例文字",
+          "err": "Cannot read properties of undefined (reading 'media')",
+          "stack": "TypeError: Cannot read properties of undefined (reading 'media')\n    at v.checkObjsInProductJson (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:190:251)\n    at v.drawText (https://diy.zheliyin.com/diyWeb/js/mulitCanvas/v2/design/public/view/CanvasDiy.js?v=20260707017:416:20)\n    at diy.drawText (eval at evaluate (:311:30), <anonymous>:21:258)\n    at <anonymous>:111:21",
+          "layer": 2,
+          "snapshot": {
+            "holderKey": "mod:ProductVO",
+            "itemListLen": 0,
+            "objLen": 11,
+            "cc": null
+          },
+          "entry": {
+            "location": {
+              "x": 48,
+              "y": 43,
+              "width": 493,
+              "height": 85,
+              "factWidth": 493,
+              "factHeight": 85,
+              "rotation": 0
+            },
+            "printLocation": {
+              "x": 48,
+              "y": 43,
+              "width": 493,
+              "height": 85,
+              "rotation": 0
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "status": [
+        "正在等待编辑器加载…",
+        "OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…",
+        "生成失败：未创建文字（第 0 个失败，已回滚）"
+      ],
+      "ids": [
+        "17422694-6db0-46af-b819-45f55e8da0ae"
+      ],
+      "created": [
+        {
+          "id": "17422694-6db0-46af-b819-45f55e8da0ae",
+          "text": "大字标题实例文字",
+          "left": 48,
+          "top": 43,
+          "width": 493,
+          "height": 85,
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 59,
+          "angle": 0,
+          "originX": "left",
+          "visible": true,
+          "opacity": 1,
+          "aCoords": {
+            "tl": [
+              48,
+              43
+            ],
+            "br": [
+              542,
+              129
+            ]
+          },
+          "boundingRect": {
+            "left": 36.2580121703854,
+            "top": 32.481135902636915,
+            "width": 373.15537525354966,
+            "height": 64.96227180527384
+          },
+          "biz": {
+            "locationX": 48,
+            "locationY": 43,
+            "locationWidth": 493,
+            "locationHeight": 85
+          }
+        }
+      ],
+      "canvasInfo": {
+        "width": 453.22515212981745,
+        "height": 744.8,
+        "ft": [
+          0.7553752535496957,
+          0,
+          0,
+          0.7553752535496957,
+          0,
+          0
+        ],
+        "zoom": 0.7553752535496957,
+        "retina": 0.800000011920929
+      },
+      "done": true
+    }
+  ],
+  "errors": [],
+  "console": [
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[zy-ocr][CANVAS_READY] w=453.22515212981745x744.8 objs=9 bg=false active=image",
+    "[zy-ocr][PREPARING] kind=active-image 1000x300 dataUrl=29422 chars",
+    "[zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current",
+    "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
+    "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
+    "[zy-ocr][LOCAL_LOADING] engine downloaded 66695 chars",
+    "[zy-ocr][LOCAL_RECOGNIZING] lines=3 words=25 image=undefinedxundefined",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
+    "[zy-ocr][GROUP] lines=3 y=27,111,200 h=57,18,11",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":3,\"kept\":3,\"dropped\":0}}",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"PASS\",\"reasonCode\":null,\"total\":3,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"PASS\"}}",
+    "[zy-ocr][BUILDING] blocks=3 forcedWrap=0 multiLine=0",
+    "[zy-ocr][ERROR] ocrCreate failed created=0 detected=3 failedIdx=0 msg=",
+    "[zy-ocr][CANVAS_READY] w=453.22515212981745x744.8 objs=10 bg=false active=image",
+    "[zy-ocr][PREPARING] kind=active-image 1000x300 dataUrl=29422 chars",
+    "[zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current",
+    "[zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"cloud-primary\",\"fallback\":true,\"reason\":\"auth-error\",\"failCode\":\"BAIDU_NOT_CONFIGURED\"}",
+    "[zy-ocr][FALLBACK] cloud BAIDU_NOT_CONFIGURED (auth-error) → local",
+    "[zy-ocr][LOCAL_RECOGNIZING] lines=3 words=25 image=undefinedxundefined",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null}",
+    "[zy-ocr][GROUP] lines=3 y=27,111,200 h=57,18,11",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":3,\"kept\":3,\"dropped\":0}}",
+    "[zy-ocr][DIAG] {\"engine\":\"local\",\"attempt\":\"local-fallback\",\"fallback\":true,\"reason\":null,\"quality6\":{\"overall\":\"PASS\",\"reasonCode\":null,\"total\":3,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"PASS\"}}",
+    "[zy-ocr][BUILDING] blocks=3 forcedWrap=0 multiLine=0",
+    "[zy-ocr][ERROR] ocrCreate failed created=0 detected=3 failedIdx=0 msg="
+  ]
+}
