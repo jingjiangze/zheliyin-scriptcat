@@ -850,7 +850,7 @@
         return { executed: true, statusCode: "FEATURE_OFF", native: null };
       }
       const native = await recognizeWithFallback(img.dataUrl, {
-        textType: STAGE9_NATIVE_OCR_MODE, // 手写体优先；生产真值收敛见 OCR-P0.2-B（commit 3）
+        textType: "2", // OCR-P1 Commit 1：生产 Truth 固定 textType=2（GM zyStage9NativeOcrMode 仅诊断；禁止非 2 进入生产请求）
         pageId: (img && img.pageId) || null,
         transactionId: (img && img.transactionId) || null,
         imageFingerprint: (img && img.imageFingerprint) || null
@@ -922,17 +922,16 @@
     const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(gate8d.validated) : (gate8d.validated || []).map(oneLineBlock);
     pipelineEvidence({ stage: "BLOCKS", blocks: blocks.length });
     const tb = await maybeApplyNativeTruth(blocks, img, diag); // OCR-P0.2/0.3：Native Text Truth（复用 runNativeTruth，多因素对齐）
-    // OCR-P0.3-D/E：Native Text exists + geometry 缺失 → Completeness Gate 本批不创建
-    // （禁止部分成功假象：识别 N 行只有 N-2 行有可靠 geometry 时，整批停下，不创建 N-2 行）。
-    if (tb && tb.gate && STAGE9_NATIVE_TRUTH) {
-      const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
-      if (cg && !cg.ok) {
-        ocrRunning = false;
-        setStatus(cg.message);
-        ocrLog("NATIVE_GATE", "code=" + cg.code + " matched=" + cg.matched + " unresolved=" + cg.unresolved);
-        pipelineEvidence({ stage: "NATIVE_GATE", code: cg.code, matched: cg.matched, unresolved: cg.unresolved, totalNative: cg.totalNative, blockCreate: true });
-        return false;
-      }
+    // OCR-P1 Commit 1：Native Truth Gate 统一防线 —— tb.blocked（unavailable/依赖缺失）
+    // 或 Completeness Gate 失败（INCOMPLETE/UNRESOLVED）→ 本批不创建，禁止任何非
+    // NATIVE_OCR text 进入 buildItemsFromOcr（绝对冻结 2/3）。
+    if (!nativeTruthGatePassed(tb)) {
+      const fg = nativeTruthGateFail(tb);
+      ocrRunning = false;
+      setStatus(fg.message);
+      ocrLog("NATIVE_GATE", "code=" + fg.code + " matched=" + ((tb && tb.gate && tb.gate.matched) || 0) + " unresolved=" + ((tb && tb.gate && tb.gate.unmatchedNative) || 0) + " blocked=" + !!((tb && tb.blocked)));
+      pipelineEvidence({ stage: "NATIVE_GATE", code: fg.code, matched: (tb && tb.gate && tb.gate.matched) || 0, unresolved: (tb && tb.gate && tb.gate.unmatchedNative) || 0, totalNative: (tb && tb.gate && tb.gate.totalNative) || 0, blockCreate: true });
+      return false;
     }
     await buildItemsFromOcr(tb.blocks, img, diag);
     return true;
@@ -959,9 +958,43 @@
   // OCR-P0.3（commit 5）：Native/Geometry 多因素匹配（alignNativeGeometry）—— 禁止 index-only 配对。
   // Geometry Provider 只提供位置（bbox/rotation/line-grouping）；textbox.text 恒为 native.rawText。
   // 匹配产物 kept（含 geometry）作为 Final OCR Items 输入；unmatchedNative/unusedGeometry 记录审计。
+  // OCR-P1 Commit 1：Native Truth Gate 统一防线（只读判定，不修改创建链路）。
+  // 生产语义（STAGE9_NATIVE_TRUTH=true 恒开）：creation 的 blocks 必须来自 Native Truth
+  // 且通过 Completeness Gate；tb.blocked（unavailable/依赖缺失/empty）→ 一律 STOP。
+  function nativeTruthGatePassed(tb) {
+    if (!STAGE9_NATIVE_TRUTH) return true; // feature off：保留历史降级
+    if (typeof resolveGate === "function") return !!(resolveGate(tb) && resolveGate(tb).ok); // OCR-P1 Commit 1：纯模块统一判定
+    if (!tb || tb.blocked) return false;   // 兜底：unavailable / 依赖缺失 / 显式拦截
+    if (tb.gate && tb.gate.totalNative > 0) { // 兜底：Completeness 门禁
+      const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
+      return !!(cg && cg.ok);
+    }
+    return false;                          // 兜底：无 Native 真值 → 无创建
+  }
+  function nativeTruthGateFail(tb) {
+    if (typeof resolveGate === "function") {
+      const rg = resolveGate(tb);
+      return { code: rg && rg.code, message: rg && rg.message };
+    }
+    if (!tb) return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截（无结果），本批不创建" };
+    if (tb.blocked) {
+      if (tb.reason === "unavailable") return { code: "NATIVE_UNAVAILABLE", message: "Native OCR 不可用（" + String(tb.nativeFailCode || "?") + "），本批不创建（禁止用其它 OCR 文本进入画布）" };
+      if (tb.reason === "dependency-missing") return { code: "NATIVE_DEPENDENCY_MISSING", message: "Native Truth 依赖缺失，本批不创建" };
+      return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截，本批不创建" };
+    }
+    if (tb.gate && tb.gate.totalNative > 0) {
+      const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
+      return { code: (cg && cg.code) || "NATIVE_GEOMETRY_INCOMPLETE", message: (cg && cg.message) || "几何不完整，本批不创建" };
+    }
+    return { code: "NATIVE_NO_TRUTH", message: "无 Native 文字真值，本批不创建" };
+  }
   async function maybeApplyNativeTruth(blocks, img, diag) {
-    if (!STAGE9_NATIVE_TRUTH || typeof alignNativeGeometry !== "function") {
-      return { blocks: blocks || [], mode: "OFF", skipped: true };
+    if (!STAGE9_NATIVE_TRUTH) {
+      return { blocks: blocks || [], mode: "OFF", skipped: true }; // feature off：保留历史降级（Completeness Gate 不适用）
+    }
+    if (typeof alignNativeGeometry !== "function" || typeof evaluateCompleteness !== "function" || typeof recognizeWithFallback !== "function") {
+      ocrLog("TRUTH", "native dependencies missing (align/evaluate/recognize)");
+      return { blocks: [], mode: "OFF", skipped: true, reason: "dependency-missing", blocked: true };
     }
     try {
       // OCR-P0.2：复用 runNativeTruth 已执行的第一主链结果；仅在直接进入（manual-local 等）时补执行
@@ -969,15 +1002,16 @@
       if (!native) {
         if (typeof recognizeWithFallback !== "function") return { blocks: blocks || [], mode: "OFF", skipped: true };
         try { native = await recognizeWithFallback(img.dataUrl, {
-          textType: STAGE9_NATIVE_OCR_MODE, // 手写体优先；空/失败自动回退印刷体
+          textType: "2", // OCR-P1 Commit 1：生产 Truth 固定 textType=2
           pageId: (img && img.pageId) || null,
           transactionId: (img && img.transactionId) || null,
           imageFingerprint: (img && img.imageFingerprint) || null
         }); img._native = native; } catch (eN) { native = null; }
       }
       if (!(native && native.ok)) {
-        ocrLog("TRUTH", "native unavailable " + String((native && native.error && native.error.errorCode) || "?"));
-        return { blocks: blocks || [], mode: "OFF", skipped: true, reason: "unavailable" };
+        const ncode = String((native && native.error && native.error.errorCode) || "?");
+        ocrLog("TRUTH", "native unavailable " + ncode + " -> block create (禁止其它 OCR text 进入画布)");
+        return { blocks: [], mode: "OFF", skipped: true, reason: "unavailable", blocked: true, nativeFailCode: ncode };
       }
       // OCR-P0.3-F（行级摊平）：aligner 按 Native 行配对行级几何；buildTextBlocks 合并块（多行）会
       // 让几何槽位 < nativeLines（如 6 块 vs 10 行）→ 误配 INCOMPLETE。此处优先摊平 block.lines，
@@ -1142,6 +1176,15 @@
               : (gate8d.validated || []).map(oneLineBlock);
             ocrLog("TRACE8D", "blocks=" + (blocks || []).length);
             const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate；OFF 时原样）
+            // OCR-P1 Commit 1：Local path 同样必须通过 Native Truth Gate（审计 C 泄漏修复）
+            if (!nativeTruthGatePassed(tb)) {
+              const fgL = nativeTruthGateFail(tb);
+              ocrRunning = false;
+              setStatus(fgL.message);
+              ocrLog("NATIVE_GATE", "local-path code=" + fgL.code + " blocked=" + !!((tb && tb.blocked)));
+              pipelineEvidence({ stage: "NATIVE_GATE", path: "LOCAL", code: fgL.code, blocked: !!((tb && tb.blocked)), blockCreate: true });
+              return;
+            }
             buildItemsFromOcr(tb.blocks, img, diag).catch((eBuild) => { ocrRunning = false; setStatus("识别异常：" + String(eBuild && eBuild.message || eBuild).slice(0, 100)); ocrLog("ERROR", "buildItemsFromOcr: " + String(eBuild && eBuild.stack || (eBuild && eBuild.message || eBuild)).slice(0, 300)); });
           } catch (e) {
             ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse8d: " + String(e && (e.stack || (e.message ? "msg:" + e.message : e)) || e).slice(0, 600));

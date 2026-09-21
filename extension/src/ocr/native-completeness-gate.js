@@ -103,7 +103,27 @@ function resolveUnmatchedGeometry(alignResult, candidates) {
   return out;
 }
 
+// ---- OCR-P1 Commit 1：生产 Gate 统一判定（maybeApplyNativeTruth 返回值 tb → 是否允许 creation）----
+// 语义：Native unavailable / 依赖缺失 / 无真值 / geometry 不完整 → ok=false（本批不创建）。
+function resolveGate(tb) {
+  if (!tb) return { ok: false, code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截（无结果），本批不创建", matched: 0, unresolved: 0, totalNative: 0 };
+  var g = tb.gate || {};
+  var matched = (tb.matched && tb.matched.matchedNative ? tb.matched.matchedNative.length : ((g && g.matched) || 0));
+  var unresolved = (tb.matched && tb.matched.unmatchedNative ? tb.matched.unmatchedNative.length : ((g && g.unmatchedNative) || 0));
+  var totalNative = (g && g.totalNative) || 0;
+  if (tb.blocked) {
+    if (tb.reason === "unavailable") return { ok: false, code: "NATIVE_UNAVAILABLE", message: "Native OCR 不可用（" + String(tb.nativeFailCode || "?") + "），本批不创建（禁止用其它 OCR 文本进入画布）", matched: 0, unresolved: totalNative, totalNative: totalNative };
+    if (tb.reason === "dependency-missing") return { ok: false, code: "NATIVE_DEPENDENCY_MISSING", message: "Native Truth 依赖缺失，本批不创建", matched: 0, unresolved: 0, totalNative: 0 };
+    return { ok: false, code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截，本批不创建", matched: 0, unresolved: totalNative, totalNative: totalNative };
+  }
+  if (totalNative > 0) {
+    var cg = evaluateCompleteness(tb.matched);
+    return { ok: !!(cg && cg.ok), code: (cg && cg.code) || CODE_INCOMPLETE, message: (cg && cg.message) || "几何不完整，本批不创建", matched: matched, unresolved: unresolved, totalNative: totalNative };
+  }
+  return { ok: false, code: "NATIVE_NO_TRUTH", message: "无 Native 文字真值，本批不创建", matched: 0, unresolved: 0, totalNative: 0 };
+}
+
 if (typeof module !== "undefined" && module.exports) module.exports = {
-  evaluateCompleteness, resolveGeometryCandidates, resolveUnmatchedGeometry,
+  evaluateCompleteness, resolveGeometryCandidates, resolveUnmatchedGeometry, resolveGate,
   CODE_COMPLETE, CODE_INCOMPLETE, CODE_UNRESOLVED
 };
