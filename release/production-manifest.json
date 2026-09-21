@@ -1,0 +1,206 @@
+{
+  "version": "0.3.11.49",
+  "entry": "zheliyin-card-assistant.user.js",
+  "requires": 28,
+  "files": [
+    "zheliyin-card-assistant.user.js",
+    "extension/src/fields/field-core.js",
+    "extension/src/core/config-core.js",
+    "extension/src/ai/ai-client.js",
+    "extension/src/editor/page-bridge.js",
+    "extension/src/editor/image-transform.js",
+    "extension/src/editor/image-space.js",
+    "extension/src/editor/image-containment.js",
+    "extension/src/editor/multiline-typography.js",
+    "extension/src/editor/text-fit.js",
+    "extension/src/editor/text-fit-fusion.js",
+    "extension/src/editor/ink-measure.js",
+    "extension/src/ocr/baidu-provider.js",
+    "extension/src/ocr/native-ocr-provider.js",
+    "extension/src/ocr/fallback-policy.js",
+    "extension/src/ocr/candidate-normalizer.js",
+    "extension/src/ocr/ocr-candidate-gate.js",
+    "extension/src/ocr/font-source.js",
+    "extension/src/ocr/text-truth-gate.js",
+    "extension/src/ocr/transaction-identity.js",
+    "extension/src/ocr/recognition-mode.js",
+    "extension/src/editor/image-ink-target.js",
+    "extension/src/editor/native-color.js",
+    "extension/src/editor/font-target-source.js",
+    "extension/src/ocr/credential-crypto.js",
+    "extension/src/ocr/ocr-quality.js",
+    "extension/src/ocr/ocr-text-sanitizer.js",
+    "extension/src/ocr/ocr-size-analyzer.js",
+    "extension/src/ocr/ocr-text-safety-gate.js"
+  ],
+  "requiresDetail": [
+    {
+      "id": "field-core",
+      "branch": "demo",
+      "rel": "extension/src/fields/field-core.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "config-core",
+      "branch": "demo",
+      "rel": "extension/src/core/config-core.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "ai-client",
+      "branch": "demo",
+      "rel": "extension/src/ai/ai-client.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "page-bridge",
+      "branch": "test",
+      "rel": "extension/src/editor/page-bridge.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "image-transform",
+      "branch": "test",
+      "rel": "extension/src/editor/image-transform.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "image-space",
+      "branch": "test",
+      "rel": "extension/src/editor/image-space.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "image-containment",
+      "branch": "test",
+      "rel": "extension/src/editor/image-containment.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "multiline-typography",
+      "branch": "test",
+      "rel": "extension/src/editor/multiline-typography.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "text-fit",
+      "branch": "test",
+      "rel": "extension/src/editor/text-fit.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "text-fit-fusion",
+      "branch": "test",
+      "rel": "extension/src/editor/text-fit-fusion.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "ink-measure",
+      "branch": "test",
+      "rel": "extension/src/editor/ink-measure.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "baidu-provider",
+      "branch": "test",
+      "rel": "extension/src/ocr/baidu-provider.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "native-ocr-provider",
+      "branch": "test",
+      "rel": "extension/src/ocr/native-ocr-provider.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "fallback-policy",
+      "branch": "demo",
+      "rel": "extension/src/ocr/fallback-policy.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "candidate-normalizer",
+      "branch": "test",
+      "rel": "extension/src/ocr/candidate-normalizer.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "ocr-candidate-gate",
+      "branch": "test",
+      "rel": "extension/src/ocr/ocr-candidate-gate.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "font-source",
+      "branch": "test",
+      "rel": "extension/src/ocr/font-source.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "text-truth-gate",
+      "branch": "test",
+      "rel": "extension/src/ocr/text-truth-gate.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "transaction-identity",
+      "branch": "test",
+      "rel": "extension/src/ocr/transaction-identity.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "recognition-mode",
+      "branch": "test",
+      "rel": "extension/src/ocr/recognition-mode.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "image-ink-target",
+      "branch": "test",
+      "rel": "extension/src/editor/image-ink-target.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "native-color",
+      "branch": "test",
+      "rel": "extension/src/editor/native-color.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "font-target-source",
+      "branch": "test",
+      "rel": "extension/src/editor/font-target-source.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "credential-crypto",
+      "branch": "demo",
+      "rel": "extension/src/ocr/credential-crypto.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "ocr-quality",
+      "branch": "test",
+      "rel": "extension/src/ocr/ocr-quality.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "ocr-text-sanitizer",
+      "branch": "test",
+      "rel": "extension/src/ocr/ocr-text-sanitizer.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "ocr-size-analyzer",
+      "branch": "test",
+      "rel": "extension/src/ocr/ocr-size-analyzer.js",
+      "v": "0.3.11.49"
+    },
+    {
+      "id": "ocr-text-safety-gate",
+      "branch": "test",
+      "rel": "extension/src/ocr/ocr-text-safety-gate.js",
+      "v": "0.3.11.49"
+    }
+  ]
+}
