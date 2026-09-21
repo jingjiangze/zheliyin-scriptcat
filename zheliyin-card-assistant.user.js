@@ -31,6 +31,7 @@
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.53
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.53
@@ -920,7 +921,19 @@
     if (!gate8d.ok) { ocrRunning = false; setStatus("OCR 候选质量门阻断（" + String(gate8d.reason || "invalid-result") + "），未生成文字"); ocrLog("GATE8D", "block-set suspect: " + (gate8d.setSuspectReasons || []).join("|")); return; }
     const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(gate8d.validated) : (gate8d.validated || []).map(oneLineBlock);
     pipelineEvidence({ stage: "BLOCKS", blocks: blocks.length });
-    const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（复用 runNativeTruth 结果，不重复调用）
+    const tb = await maybeApplyNativeTruth(blocks, img, diag); // OCR-P0.2/0.3：Native Text Truth（复用 runNativeTruth，多因素对齐）
+    // OCR-P0.3-D/E：Native Text exists + geometry 缺失 → Completeness Gate 本批不创建
+    // （禁止部分成功假象：识别 N 行只有 N-2 行有可靠 geometry 时，整批停下，不创建 N-2 行）。
+    if (tb && tb.gate && STAGE9_NATIVE_TRUTH) {
+      const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
+      if (cg && !cg.ok) {
+        ocrRunning = false;
+        setStatus(cg.message);
+        ocrLog("NATIVE_GATE", "code=" + cg.code + " matched=" + cg.matched + " unresolved=" + cg.unresolved);
+        pipelineEvidence({ stage: "NATIVE_GATE", code: cg.code, matched: cg.matched, unresolved: cg.unresolved, totalNative: cg.totalNative, blockCreate: true });
+        return false;
+      }
+    }
     await buildItemsFromOcr(tb.blocks, img, diag);
     return true;
   }
