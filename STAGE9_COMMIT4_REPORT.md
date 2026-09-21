@@ -178,12 +178,12 @@ Commit 4 序列（test 与 stage-9-altq-baidu-reconstruction 双分支同步）�
 | Commit 4.1 | 8820334 | geometry space schema |
 | Commit 4.2 | 097ffac | native anchor recovery + identity |
 | Commit 4.3 | 20b2ee3 | image ink recovery + occupancy + isolation + rotation |
-| Commit 4.4 | %COMMIT4_4_SHA% | 真机集成 + evidence（本报告随行） |
+| Commit 4.4 | 4fdf095 | 真机集成 + evidence（本报告随行） |
 
 ## 15. GitHub Branch SHA
 
-- test 分支：%COMMIT4_4_SHA%
-- stage-9-altq-baidu-reconstruction 分支：%COMMIT4_4_SHA%
+- test 分支：4fdf095
+- stage-9-altq-baidu-reconstruction 分支：4fdf095
 - main：不动 ｜ demo：不动
 
 ## 门禁检查表（§十八）
