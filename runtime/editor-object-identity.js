@@ -1,116 +1,95 @@
-// runtime/editor-object-identity.js — Stage 5.0 §十四/§十五/§十六：Object Identity Test
-// 回答：一个 Canvas Object 如何稳定识别？
-//   1) uuid / markuuid / id / index 四类候选的真实覆盖与唯一性矩阵（全画布）
-//   2) mutation（setText）后 identity 是否稳定（同一对象前后 identity 值不变）
-//   3) index 位次语义：不删除真实模板对象；用「fabric 数组顺序 = 渲染 z 序，插入/删除即移位」的事实 +
-//      以 apply 创建对象 append 到数组尾部（RUNTIME-8 已证）作为 index 不可作 identity 的依据
-// 约束：只读 + 一次 setText 临时修改并恢复；禁止删除/新增真实模板对象（§十五 冲突降级为观察性证据）
-// 输出：reports/stage5-object-identity.json
+// =====================================================================
+// 折立印名片套版助手 - Editor Object Identity（OCR-P1 Commit 4.2 / 任务书 §五）
+// ---------------------------------------------------------------------
+// 目标：Native Anchor 命中的对象必须复用「同一 identity」而非再造 textbox：
+//     native OCR row → native anchor → same object identity → 几何校准 → 落位
+// 能力（纯函数，node 可测）：
+//   snapshotIdentity(obj)            —— 提取真实 identity 键集（原生 uuid/multiUuid
+//                                       优先；退化用 zyOcrKey/zyOcrObjectId 弱比较）
+//   sameIdentity(a, b)               —— 前后 snapshot 是否同一对象（uuid/multiUuid 为准）
+//   assertSingleIdentityPerBlock(objs)—— 同一 block 不得产生多个 object identity
+//   neverFabricateIdentity(obj)      —— anchor 失败时不得伪造 identity（无真实身份 → 拒绝）
+// 铁律：
+//   - uuid / multiUuid = 编辑器原生真实身份字段（page-bridge 读取来源）；
+//   - 两者皆无时允许 zyOcrKey / zyOcrObjectId{txId,pageId,blockId} 退化比较，
+//     但绝不把「位置相近」当作身份；
+//   - 确无身份字段的对象：退回「按 block 新建」语义，不能伪装成已有 identity。
+// =====================================================================
 "use strict";
-const path = require("path");
-const fs = require("fs");
-const { chromium } = require("playwright");
 
-const EDITOR_URL = "https://diy.zheliyin.com/diyWeb/third/1203177/2114747/999/thirdDiyAdd.do";
-const TEST_TEXT = "ZY_STAGE5_ID_TEST";
+function str(v) { return (v == null ? null : String(v)); }
 
-(async () => {
-  const out = { ts: new Date().toISOString(), stage: "Stage 5.0 identity", steps: [], errors: [] };
-  const step = (n, ok, d, ev) => { out.steps.push({ name: n, ok: ok ? "PASS" : "FAIL", detail: String(d || "").slice(0, 500), evidence: ev || "n/a" }); if (!ok) out.errors.push(n); };
-  let browser = null;
-  try {
-    browser = await chromium.launchPersistentContext(path.join(__dirname, "browser", "profile-usc3"), {
-      channel: "chromium", headless: false,
-      ignoreDefaultArgs: ["--enable-automation", "--disable-extensions"],
-      args: ["--disable-features=DisableLoadExtensionCommandLineSwitch", "--enable-unsafe-extension-debugging"],
-      viewport: { width: 1440, height: 900 }
-    });
-    const page = browser.pages()[0];
-    await page.goto(EDITOR_URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch((e) => step("nav", false, String(e && e.message || e)));
-    step("nav", true, "真实编辑器已打开", "REAL_EDITOR");
+// 提取对象可比较身份。返回 { strong: {uuid, multiUuid}, weak: {...}, ok: boolean }
+function snapshotIdentity(o) {
+  if (!o) return { ok: false, reasons: ["no-object"] };
+  var uuid = str(o.uuid) || null;
+  var multiUuid = str(o.multiUuid) || null;
+  var markuuid = str(o.markuuid) || null;
+  var oid = o.zyOcrObjectId || null;
+  var zyOcrKey = str(o.zyOcrKey) || null;
+  var strong = { uuid: uuid, multiUuid: multiUuid };
+  var weak = {
+    zyOcrKey: zyOcrKey,
+    txId: oid && str(oid.transactionId) != null ? String(oid.transactionId) : null,
+    pageId: oid && str(oid.pageId) != null ? String(oid.pageId) : null,
+    blockId: oid && oid.blockId != null ? String(oid.blockId) : null,
+    objectUuid: oid && str(oid.objectUuid) != null ? String(oid.objectUuid) : null,
+    markuuid: markuuid
+  };
+  var hasStrong = !!(strong.uuid || strong.multiUuid);
+  var hasWeak = !!(weak.zyOcrKey || weak.txId || (weak.objectUuid) || weak.markuuid);
+  return { ok: hasStrong || hasWeak, strong: strong, weak: weak, hasStrong: hasStrong, hasWeak: hasWeak, reasons: hasStrong || hasWeak ? [] : ["no-identity-field"] };
+}
 
-    // 等待 textbox 就绪
-    const waitCanvas = async () => {
-      const deadline = Date.now() + 120000;
-      while (Date.now() < deadline) {
-        const r = await page.evaluate(() => {
-          const req = window.requirejs || window.require;
-          const ctx = req && req.s && req.s.contexts && req.s.contexts._;
-          const vo = (ctx && ctx.defined && ctx.defined.CanvasObjVO) || window.CanvasObjVO;
-          const c = vo && vo.totalCanvasArray && vo.totalCanvasArray[0] && ((vo.totalCanvasArray[0].canvas) || vo.totalCanvasArray[0]);
-          return c && typeof c.getObjects === "function" ? c.getObjects().filter((o) => o && typeof o.text === "string").length : 0;
-        }).catch(() => 0);
-        if (r >= 1) return true;
-        await new Promise((res) => setTimeout(res, 3000));
-      }
-      return false;
-    };
-    step("canvas-text-ready", await waitCanvas(), "textbox 就绪", "REAL_CANVAS");
-
-    // 唯一性矩阵 + 目标对象（第一个 textbox）
-    const matrix = await page.evaluate(() => {
-      const req = window.requirejs || window.require;
-      const ctx = req && req.s && req.s.contexts && req.s.contexts._;
-      const vo = (ctx && ctx.defined && ctx.defined.CanvasObjVO) || window.CanvasObjVO;
-      const c = vo.totalCanvasArray[0].canvas || vo.totalCanvasArray[0];
-      const objs = c.getObjects();
-      const rows = objs.map((o, idx) => ({ index: idx, type: o.type, uuid: o.uuid != null ? String(o.uuid) : null, markuuid: o.markuuid != null ? String(o.markuuid) : null, id: o.id != null ? String(o.id) : null, isText: typeof o.text === "string", text: typeof o.text === "string" ? String(o.text).slice(0, 20) : null }));
-      function uniq(vals) { const m = {}; const dup = new Set(); const seen = new Set(); vals.forEach((v) => { if (v == null) return; if (seen.has(v)) dup.add(v); seen.add(v); m[v] = (m[v] || 0) + 1; }); return { total: vals.filter((v) => v != null).length, unique: seen.size, hasDup: dup.size > 0, dupValues: Array.from(dup).slice(0, 5) }; }
-      const uuidAll = uniq(rows.map((r) => r.uuid));
-      const markAll = uniq(rows.map((r) => r.markuuid));
-      const idAll = uniq(rows.map((r) => r.id));
-      // textbox 子集的 markuuid 唯一性（业务聚焦）
-      const tb = rows.filter((r) => r.isText);
-      const markTb = uniq(tb.map((r) => r.markuuid));
-      const target = tb[0];
-      const targetObj = objs[target.index];
-      return { rows: rows, uniq: { uuidAll: uuidAll, markAll: markAll, idAll: idAll, markTextboxOnly: markTb }, target: { index: target.index, uuid: target.uuid, markuuid: target.markuuid, text: target.text, type: target.type } };
-    });
-    step("identity-matrix", !!matrix, JSON.stringify({ uuidAll: matrix.uniq.uuidAll, markAll: matrix.uniq.markAll, idAll: matrix.uniq.idAll, markTextboxOnly: matrix.uniq.markTextboxOnly }), "REAL_CANVAS");
-    if (!matrix) return;
-
-    // mutation 前后 identity 对比：setText(TEST) → 重新定位（markuuid/uuid）→ 恢复 → 复读
-    const idAfterMutation = await page.evaluate(({ targetMark, targetUuid, testText }) => {
-      const req = window.requirejs || window.require;
-      const ctx = req && req.s && req.s.contexts && req.s.contexts._;
-      const vo = (ctx && ctx.defined && ctx.defined.CanvasObjVO) || window.CanvasObjVO;
-      const c = vo.totalCanvasArray[0].canvas || vo.totalCanvasArray[0];
-      const objs = c.getObjects();
-      const byMark = targetMark != null ? objs.find((o) => o != null && String(o.markuuid || "") === targetMark) : undefined;
-      const byUuid = targetUuid != null ? objs.find((o) => o != null && String(o.uuid || "") === targetUuid) : undefined;
-      const anchor = byMark || byUuid;
-      if (!anchor) return { found: false };
-      const originalText = String(anchor.text || "");
-      const before = { markuuid: String(anchor.markuuid || ""), uuid: String(anchor.uuid || ""), index: objs.indexOf(anchor), text: originalText.slice(0, 16) };
-      if (typeof anchor.setText === "function") anchor.setText(testText);
-      anchor.dirty = true;
-      if (typeof anchor.initDimensions === "function") anchor.initDimensions();
-      const after = { markuuid: String(anchor.markuuid || ""), uuid: String(anchor.uuid || ""), index: objs.indexOf(anchor), text: String(anchor.text || "").slice(0, 24) };
-      // 恢复原值（完整文本）
-      if (typeof anchor.setText === "function") anchor.setText(originalText);
-      anchor.dirty = true;
-      if (typeof anchor.initDimensions === "function") anchor.initDimensions();
-      const restored = { markuuid: String(anchor.markuuid || ""), uuid: String(anchor.uuid || ""), index: objs.indexOf(anchor), text: String(anchor.text || "").slice(0, 16) };
-      return { found: true, before: before, after: after, restored: restored };
-    }, { targetMark: matrix.target.markuuid, targetUuid: matrix.target.uuid, testText: TEST_TEXT });
-    step("identity-stable-under-mutation", !!(idAfterMutation && idAfterMutation.found && idAfterMutation.before.markuuid === idAfterMutation.after.markuuid && idAfterMutation.before.uuid === idAfterMutation.after.uuid), JSON.stringify(idAfterMutation), "REAL_CANVAS");
-    step("identity-index-note", true, "fabric 数组顺序=渲染 z 序：插入/删除即移位（apply 创建对象追加至尾部 RUNTIME-8 已证）；index 仅在当前数组快照内可取，不作稳定 identity", "§十五");
-
-    out.summary = {
-      identity_matrix: matrix.uniq,
-      identity_stable_under_mutation: idAfterMutation && idAfterMutation.before,
-      finding: {
-        "PERSISTED_EDITOR_ID": "markuuid（textbox 唯一、跨 reload 稳定，实测 AD4636D5...）；SVG 组内共享 → 对象级唯一仅对独立文字/图形成立",
-        "LOCAL_RUNTIME_ID": "uuid（每次页面会话重新生成）+ array index（位次），仅会话内可作运行引用，不得跨会话持久",
-        "id 字段": "SVG 图层名（'图层_1'），组内重复，不可作 identity"
-      }
-    };
-  } catch (e) {
-    step("fatal", false, String(e && e.stack || e).slice(0, 500));
-  } finally {
-    if (browser) await browser.close().catch(() => {});
+// 前后 snapshot 是否同一对象（强身份优先；退化用 zyOcrKey 或 txId+blockId）
+function sameIdentity(a, b) {
+  var sa = a && typeof a.uuid !== "undefined" ? a : snapshotIdentity(a);
+  var sb = b && typeof b.uuid !== "undefined" ? b : snapshotIdentity(b);
+  var A = snapshotIdentity(a), B = snapshotIdentity(b);
+  if (!A.ok || !B.ok) return false;
+  if (A.hasStrong && B.hasStrong) {
+    if (A.strong.uuid && B.strong.uuid) return A.strong.uuid === B.strong.uuid;
+    if (A.strong.multiUuid && B.strong.multiUuid) return A.strong.multiUuid === B.strong.multiUuid;
   }
-  fs.writeFileSync(path.join(__dirname, "reports", "stage5-object-identity.json"), JSON.stringify(out, null, 1), "utf8");
-  console.log("[stage5-identity] errors=" + out.errors.length + " → reports/stage5-object-identity.json");
-  process.exit(out.errors.length ? 1 : 0);
-})();
+  if (A.weak.zyOcrKey && B.weak.zyOcrKey) return A.weak.zyOcrKey === B.weak.zyOcrKey;
+  if (A.weak.txId && B.weak.txId && A.weak.blockId != null && B.weak.blockId != null) {
+    return A.weak.txId === B.weak.txId && A.weak.blockId === B.weak.blockId;
+  }
+  if (A.weak.objectUuid && B.weak.objectUuid) return A.weak.objectUuid === B.weak.objectUuid;
+  return false;
+}
+
+// 同一 block（blockId 相同）不得产生多个 object identity。返回 { ok, violations: [{blockId, identities, ids}] }
+function assertSingleIdentityPerBlock(objects) {
+  var objs = Array.isArray(objects) ? objects : [];
+  var byBlock = {};
+  objs.forEach(function (o) {
+    if (!o) return;
+    var varid = (o.zyOcrObjectId && o.zyOcrObjectId.blockId != null) ? String(o.zyOcrObjectId.blockId) : Math.random().toString(16).slice(2);
+    var s = snapshotIdentity(o);
+    if (!byBlock[varid]) byBlock[varid] = { rawId: o.zyOcrObjectId && o.zyOcrObjectId.blockId, identities: [] };
+    byBlock[varid].identities.push({ uuid: s.strong.uuid, multiUuid: s.strong.multiUuid, zyOcrKey: s.weak.zyOcrKey });
+  });
+  var violations = [];
+  Object.keys(byBlock).forEach(function (k) {
+    var b = byBlock[k];
+    var ids = b.identities.map(function (x) { return JSON.stringify(x); });
+    var uniq = ids.filter(function (v, i) { return ids.indexOf(v) === i; });
+    if (uniq.length > 1) violations.push({ blockId: b.rawId, identities: b.identities, ids: ids });
+  });
+  return { ok: violations.length === 0, violations: violations };
+}
+
+// anchor 失败时不得伪造 identity：无任何真实身份字段 → 明确拒绝。
+function neverFabricateIdentity(o) {
+  var s = snapshotIdentity(o);
+  if (!s.ok) return { ok: false, code: "NO_IDENTITY", reasons: s.reasons };
+  return { ok: true, source: s.hasStrong ? (s.strong.uuid ? "uuid" : "multiUuid") : "weak" };
+}
+
+if (typeof module !== "undefined" && module.exports) module.exports = {
+  snapshotIdentity: snapshotIdentity,
+  sameIdentity: sameIdentity,
+  assertSingleIdentityPerBlock: assertSingleIdentityPerBlock,
+  neverFabricateIdentity: neverFabricateIdentity
+};
