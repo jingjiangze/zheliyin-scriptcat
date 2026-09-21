@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.53
+// @version      0.3.11.54
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -33,6 +33,7 @@
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.53
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.54
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.53
@@ -1040,6 +1041,33 @@
         }
       });
       const matched = alignNativeGeometry(native.texts || [], geoBlocks, {});
+      // OCR-P1 Commit 2：Native Geometry Recovery —— aligner 未匹配的 Native 行沿搜索链
+      // 恢复 geometry（BAIDU LINE → BAIDU WORD；LOCAL/ANCHOR/INK 为后续 Commit）。
+      // 恢复产物并入 matchedNative（text 恒为 native.rawText），再交由 Completeness Gate。
+      // 硬规则：禁止固定间距/offset/居中/随机/multiplier 猜测；不可恢复 → 仍 INCOMPLETE/UNRESOLVED。
+      let recovery = null;
+      if ((matched.unmatchedNative || []).length > 0 && typeof recoverNativeGeometry === "function") {
+        const imgNW = (img && (img.naturalWidth || img.width)) || null;
+        const imgNH = (img && (img.naturalHeight || img.height)) || null;
+        recovery = recoverNativeGeometry(matched.unmatchedNative, {
+          lineCandidates: matched.unusedGeometry || [],      // 剩余 line 级候选（含 wordBoxes 展开）
+          occupiedGeometries: matched.matchedGeometry || [], // 已被 aligner 消费的几何
+          imageBounds: (imgNW && imgNH) ? { x: 0, y: 0, width: imgNW, height: imgNH } : null,
+          thresholds: { rowTol: 8 }
+        });
+        (recovery.recovered || []).forEach(function (rc) {
+          matched.matchedNative.push({ native: rc.native, geometry: rc.geometry, match: { score: rc.score, method: rc.source, factors: rc.evidence, recovery: true } });
+        });
+        matched.unmatchedNative = recovery.unresolved || [];
+        matched.gate = matched.gate || {};
+        matched.gate.matched = matched.matchedNative.length;
+        matched.gate.unmatchedNative = matched.unmatchedNative.length;
+        matched.gate.geometryRecovered = (recovery.recovered || []).length;
+        matched.gate.geometryRecoverySource = (recovery.recovered || []).map(function (rr) { return rr.source; });
+        matched.gate.geometryRecoveryRejected = (recovery.rejected || []).map(function (rj) { return { reason: rj.reason, of: rj.native && rj.native.rawText }; });
+        matched.recovery = recovery;
+      }
+
       // 构造 kept block（text 恒 = native.rawText；geometry 取自匹配候选 —— P0.3-C Provider 不提供最终 text）
       const kept = (matched.matchedNative || []).map(function (m) {
         const g = m.geometry;
