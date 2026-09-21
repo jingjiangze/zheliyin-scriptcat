@@ -1,233 +1,233 @@
 {
-  "version": "0.3.11.49",
+  "version": "0.3.11.53",
   "entry": "zheliyin-card-assistant.user.js",
   "requires": 28,
   "versionConsistent": true,
   "allResolved": true,
-  "testReferences": 0,
-  "allDemo": true,
+  "testReferences": 28,
+  "allDemo": false,
   "files": [
     {
       "id": "field-core",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/fields/field-core.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "988f2d74eb5e65c2"
     },
     {
       "id": "config-core",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/core/config-core.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "59551fff22a265a1"
     },
     {
       "id": "ai-client",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ai/ai-client.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "4ec07dbe5c36c4a2"
     },
     {
       "id": "page-bridge",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/page-bridge.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
-      "hash": "75ff375bf41044d3"
+      "hash": "1c5ca14c655d4c1b"
     },
     {
       "id": "image-transform",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/image-transform.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "8ae79f2ca71820a4"
     },
     {
       "id": "image-space",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/image-space.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "222bbbcfa7dde6f6"
     },
     {
       "id": "image-containment",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/image-containment.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "f7c6ac82c2967731"
     },
     {
       "id": "multiline-typography",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/multiline-typography.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "00d7e4ab45110a86"
     },
     {
       "id": "text-fit",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/text-fit.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "dd48bb5f4c35db44"
     },
     {
       "id": "text-fit-fusion",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/text-fit-fusion.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "f7cc8b67ee663027"
     },
     {
       "id": "ink-measure",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/ink-measure.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "805681a33ce57177"
     },
     {
       "id": "baidu-provider",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/baidu-provider.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "217ae32fec666292"
     },
     {
       "id": "native-ocr-provider",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/native-ocr-provider.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "9dc0092535ee1c58"
     },
     {
       "id": "fallback-policy",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/fallback-policy.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "10d8746ea9c2c66f"
     },
     {
       "id": "candidate-normalizer",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/candidate-normalizer.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "c788fd95ff254119"
     },
     {
       "id": "ocr-candidate-gate",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-candidate-gate.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "1c3b4236cd537b50"
     },
     {
       "id": "font-source",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/font-source.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "a9f238da62d26578"
     },
     {
       "id": "text-truth-gate",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/text-truth-gate.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "b12e193d6c8da348"
     },
     {
       "id": "transaction-identity",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/transaction-identity.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "e917399915443fec"
     },
     {
       "id": "recognition-mode",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/recognition-mode.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "e01352b01b236f1b"
     },
     {
       "id": "image-ink-target",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/image-ink-target.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "3d5246a9b3d75761"
     },
     {
       "id": "native-color",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/native-color.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "990bc0ac8b5e39ca"
     },
     {
       "id": "font-target-source",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/font-target-source.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "33069075ef46da91"
     },
     {
       "id": "credential-crypto",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/credential-crypto.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "d1c26b11134921de"
     },
     {
       "id": "ocr-quality",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-quality.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "e899cb4d3da66c75"
     },
     {
       "id": "ocr-text-sanitizer",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-text-sanitizer.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "0dae30c1f1b983e6"
     },
     {
       "id": "ocr-size-analyzer",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-size-analyzer.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "d0883e1dc304b6d0"
     },
     {
       "id": "ocr-text-safety-gate",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-text-safety-gate.js",
-      "v": "0.3.11.49",
+      "v": "0.3.11.53",
       "resolved": true,
       "hash": "e3f6c712fcb68edf"
     }

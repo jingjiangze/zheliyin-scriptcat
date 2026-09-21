@@ -1,4 +1,4 @@
-// =====================================================================
+﻿// =====================================================================
 // 折立印名片套版助手 - Editor 边界（页面侧 Bridge，Stage 3）
 // ---------------------------------------------------------------------
 // 单一事实来源：与 field-core/config-core/ai-client 同模式（userscript
@@ -227,6 +227,15 @@ function pageBridge() {
                 diy.drawText(String(it.text || ""), null, null, null, entry, layerNum);
                 editorInteg2.drawTextBatch += 1;
                 obj = findOcrObject(diy, it, layerNum);
+                // Stage 10-C：Native Layer Contract 硬校验（创建后立即，§3 A-D；任一失败 → CREATE_NATIVE_LAYER_FAILED + 整批回滚）
+                const layerVerify10C = verifyNativeLayer10C(diy, obj, { registryDelta: diy.canvasObjInfo.canvasToProductObjArr.length - editorInteg2.layerNumBase });
+                if (!layerVerify10C.ok) {
+                  failMsg = "native layer item" + idx + ": " + String(layerVerify10C.failed || []).join("|");
+                  failedBlockIndex = idx;
+                  break;
+                }
+                editorInteg2.layerVerified = (editorInteg2.layerVerified || 0) + 1;
+                editorInteg2.layerVerify = { code: layerVerify10C.code, product: layerVerify10C.checks && layerVerify10C.checks.product ? layerVerify10C.checks.product.code : null };
                 if (obj) {
                   // t4 画后双保险: 原生 drawText 若未透传 entry 顶层字段, 直接补对象字段
                   obj.topEnable = obj.topEnable !== undefined ? obj.topEnable : 1;
@@ -290,84 +299,14 @@ function pageBridge() {
           });
           return;
         }
-        const editorInteg = { mode: "mirror", nativeUndoFound: false, undoSavePre: false, undoSavePost: false, identityApplied: 0, uv4Total: 0, layerMax: -1 };
-        // 编辑器本地能力：native Undo 快照（仅编辑器自身 API，失败静默）
-        try {
-          const U = getNativeUndoInstance();
-          if (U && typeof U.save === "function") {
-            editorInteg.nativeUndoFound = true;
-            U.save(); editorInteg.undoSavePre = true; // 创建前快照（让后续原生 undo 有机会回到创建前）
-          }
-        } catch (eUndo) {}
-        let created = [];
-        const batch = [];
-        let failedBlockIndex = null;
-        let failMsg = "";
-        try {
-          const ref = getTextObjects(canvas)[0] || canvas.getObjects().find(function (o) { return typeof o.text === "string"; }) || null;
-          editorInteg.layerMax = currentLayerMax(canvas);
-          for (let idx = 0; idx < items.length; idx += 1) {
-            const it = items[idx];
-            let obj = null;
-            try {
-              obj = createTextObject(canvas, String(it.text || ""), ref, idx, null);
-              if (!obj) throw new Error("createTextObject returned null");
-              const conf = { left: it.left != null ? it.left : 20, top: it.top != null ? it.top : 20 + idx * 24, width: Math.max(60, it.width || 120), fontSize: it.fontSize || 14, fontFamily: it.fontFamily || "思源黑体 Regular", textAlign: "left", fill: "#000000" };
-              // Stage 5.6 P5-D：旋转场景（Mapper 输出 angle + origin:"center"）——中心即 left/top，绕中心旋转
-              if (it.angle) { conf.angle = it.angle; conf.originX = "center"; conf.originY = "center"; }
-              // Stage 6.1 §13：多行 textbox 高度须容纳 lineCount×lineHeight（Mapper 已按行数计算）
-              if (it.height != null && isFinite(it.height) && it.height > 0) conf.height = it.height;
-              obj.set(conf);
-              setObjectText(obj, String(it.text || ""));
-              obj.zyFieldKey = "ocr_demo_" + String(it.text || "").slice(0, 4);
-              // §18：换行诊断挂载到对象（用于真实渲染行数校验）
-              if (it.diagnostics) { obj.zyOcrDiagnostics = it.diagnostics; }
-              // Stage 6 P0：编辑器对象模型镜像（native 字段，多数字段为审计所得 252438 真机 schema）
-              try { if (mirrorEditorObjectModel(canvas, obj)) editorInteg.identityApplied += 1; } catch (eMirror) { console.warn("[zy-ocr][ocrCreate] mirror err=" + String(eMirror && eMirror.message || eMirror).slice(0, 120)); }
-              if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{20,}$/.test(obj.multiUuid)) editorInteg.uv4Total += 1;
-              // Stage 8B STEP 4（Phase B/C）：测量本对象真实几何 + 定位 key（供 ocrAdjust 校正）
-              // Stage 9 V4 P1（§六）：key 升级 zy-ocr-{transactionId}-{blockIndex} + 对象完整身份
-              const bIdxMir = it.blockIndex != null ? it.blockIndex : idx;
-              obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxMir) : ("zy-ocr-" + bIdxMir);
-              obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxMir, objectUuid: obj.uuid || obj.multiUuid || obj.markuuid || null };
-              const gObj = measureObjectGeometry(canvas, obj);
-              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, ink: measureFabInkFor(obj), geometry: gObj });
-              batch.push(obj);
-            } catch (e2) {
-              // §16 事务：第一个失败即终止，全量回滚本批已建对象，恢复创建前状态（created=0）
-              failMsg = "item" + idx + ": " + String(e2 && e2.message || e2).slice(0, 120);
-              console.warn("[zy-ocr][ocrCreate] item error stack=" + String(e2 && e2.stack || e2).slice(0, 500));
-              failedBlockIndex = idx;
-              batch.forEach(function (o) { try { if (o && canvas.remove) canvas.remove(o); } catch (_e) {} });
-              created = [];
-              break;
-            }
-          }
-        } catch (e) {
-          failMsg = "ocrCreate: " + String(e && e.message || e).slice(0, 160);
-          console.warn("[zy-ocr][ocrCreate] batch error stack=" + String(e && e.stack || e).slice(0, 500));
-          failedBlockIndex = failedBlockIndex != null ? failedBlockIndex : (items.length - 1);
-          batch.forEach(function (o) { try { if (o && canvas.remove) canvas.remove(o); } catch (_e) {} });
-          created = [];
-        }
-        // Stage 6 P0：创建后再快照（若前置快照生效，undo/redo 可由原生管线闭环）
-        try {
-          const U = getNativeUndoInstance();
-          if (U && typeof U.save === "function") { U.save(); editorInteg.undoSavePost = true; }
-        } catch (eUndo2) {}
-        if (canvas.requestRenderAll) canvas.requestRenderAll();
-        const detectedBlocks = items.length;
-        const createdCount = created.length;
+        // Stage 10-C: OCR auto-create is Native-only; diy unavailable => CREATE_NATIVE_UNAVAILABLE stop
         post("ocrCreateResult", {
-          ok: createdCount === detectedBlocks && detectedBlocks > 0,
-          detectedBlocks: detectedBlocks,
-          createdCount: createdCount,
-          created: created,
-          failedBlockIndex: failedBlockIndex,
-          error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
-          pageId: sourcePageId, side: sourceSide,
+          ok: false, code: "CREATE_NATIVE_UNAVAILABLE",
+          message: "native text entry (CanvasDiy.drawText) unavailable, OCR auto-create stopped",
+          detectedBlocks: items.length, createdCount: 0, created: [], failedBlockIndex: 0,
+          error: "CREATE_NATIVE_UNAVAILABLE", pageId: sourcePageId, side: sourceSide,
           transactionId: txId, imageFingerprint: txFp,
-          editorIntegration: editorInteg
+          editorIntegration: { mode: "native-unavailable", mirrorFallbackForbidden: true }
         });
         return;
       }
@@ -906,6 +845,48 @@ function pageBridge() {
         if (o && String(o.text || "").trim() === target && (o.layerNum === layerNum || layerNum == null)) { found = o; break; }
       }
       return found;
+    }
+    // ---- Stage 10-C：Native Layer Contract 硬校验（页面世界镜像，逻辑与 native-layer-contract.js 逐字一致）----
+    // Canvas textbox ≠ Native Layer：仅看清画布对象不算创建成功；必须 canvasObject +
+    // 原生图层数组（canvasToProductObjArr）包含 / 原生身份字段 / 产品序列化链可见。
+    // 字段名以既有真机审计为准（252438 schema，见 STAGE_8A2 系列与 stage-6-2 报告）；禁止猜测。
+    // D 层（product/serializer）在页面世界可验证时判定；不可验证记为 UNKNOWN（不误杀），
+    // 由真机审计补测（契约 §3 D/E；本轮 A/B/C 为硬门禁）。
+    function verifyNativeLayer10C(diy, obj, o) {
+      const e = o || {};
+      try {
+        const canvas = diy && diy.canvas;
+        const layerArr = (diy && diy.canvasObjInfo && Array.isArray(diy.canvasObjInfo.canvasToProductObjArr)) ? diy.canvasObjInfo.canvasToProductObjArr : null;
+        const canvasObject = !!(canvas && obj && canvas.getObjects().indexOf(obj) >= 0);
+        const layerArrayHas = !!layerArr && obj != null && layerArr.indexOf(obj) >= 0;
+        const registryDelta = (e.registryDelta != null) ? e.registryDelta : null;
+        const layerOk = canvasObject && (layerArrayHas || registryDelta === 1);
+        const uuid = obj && obj.uuid != null ? String(obj.uuid) : null;
+        const multiUuid = obj && obj.multiUuid != null ? String(obj.multiUuid) : null;
+        const markuuid = obj && obj.markuuid != null ? String(obj.markuuid) : null;
+        const layerNum = (obj && typeof obj.layerNum === "number" && isFinite(obj.layerNum)) ? obj.layerNum : null;
+        const identityOk = !!(uuid || multiUuid || layerNum || (markuuid && markuuid !== ""));
+        // D 层：产品序列化链可见性探测（真机审计所得，不可验证 → UNKNOWN 不误杀）
+        let product = { ok: null, productRegistered: null, code: "PRODUCT_UNKNOWN" };
+        try {
+          const pi = diy && diy.canvasObjInfo;
+          const probeFn = (pi && typeof pi.checkObjsInProductJson === "function") ? pi.checkObjsInProductJson : null;
+          if (typeof probeFn === "function") {
+            const c1 = probeFn.call(pi);
+            const c2 = (Array.isArray(pi.canvasToProductObjArr) && pi.canvasToProductObjArr.indexOf(obj) >= 0);
+            product = { ok: !!(c1 !== false || c2), productRegistered: !!(c1 !== false || c2), code: c1 !== false ? "PRODUCT_REGISTERED" : (c2 ? "PRODUCT_REGISTERED_VIA_LAYER" : "PRODUCT_NOT_REGISTERED") };
+          }
+        } catch (eProd) { product = { ok: null, productRegistered: null, code: "PRODUCT_UNKNOWN" }; }
+        const checks = { layer: { ok: layerOk, canvasObject: canvasObject, nativeLayerRegistered: layerArrayHas, registryDelta: registryDelta }, identity: { ok: identityOk, uuid: uuid, multiUuid: multiUuid, layerNum: layerNum, markuuid: markuuid }, product: product };
+        const failed = [];
+        if (!layerOk) failed.push("LAYER:" + (canvasObject ? (layerArrayHas ? "REGISTRY_NO_LAYER_ARR" : "CANVAS_WITHOUT_LAYER") : "NO_CANVAS_OBJECT"));
+        if (!identityOk) failed.push("IDENTITY:NO_IDENTITY_FIELD");
+        if (product.code === "PRODUCT_NOT_REGISTERED") failed.push("PRODUCT:NOT_REGISTERED");
+        if (failed.length) return { ok: false, code: "CREATE_NATIVE_LAYER_FAILED", failed: failed, checks: checks, layerNum: layerNum, uuid: uuid, multiUuid: multiUuid };
+        return { ok: true, code: "OK", productUnknown: product.ok === null, failed: [], checks: checks, layerNum: layerNum, uuid: uuid, multiUuid: multiUuid };
+      } catch (eL) {
+        return { ok: false, code: "CREATE_NATIVE_LAYER_FAILED", failed: ["VERIFY_EXCEPTION:" + String(eL && eL.message || eL).slice(0, 80)], checks: null };
+      }
     }
 
     // ---- Stage 8B STEP 4（Phase B/D）：创建后实测与业务字段同步 ----
