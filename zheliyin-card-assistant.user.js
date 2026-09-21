@@ -31,6 +31,7 @@
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.53
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.53
 // @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.53
@@ -942,8 +943,11 @@
   const STAGE9_NATIVE_OCR_MODE = GM_getValue("zyStage9NativeOcrMode", "2"); // "2" 手写体优先（用户实测），"1" 印刷体
   // Stage 9 P4-B §七/§二十一：ImageInk typography target 实验开关（默认 OFF = 保持 OCR bbox target）
   const STAGE9_FONT_INK_TARGET = GM_getValue("zyStage9FontInkTarget", "0") === "1";
+  // OCR-P0.3（commit 5）：Native/Geometry 多因素匹配（alignNativeGeometry）—— 禁止 index-only 配对。
+  // Geometry Provider 只提供位置（bbox/rotation/line-grouping）；textbox.text 恒为 native.rawText。
+  // 匹配产物 kept（含 geometry）作为 Final OCR Items 输入；unmatchedNative/unusedGeometry 记录审计。
   async function maybeApplyNativeTruth(blocks, img, diag) {
-    if (!STAGE9_NATIVE_TRUTH || typeof applyNativeTextTruth !== "function") {
+    if (!STAGE9_NATIVE_TRUTH || typeof alignNativeGeometry !== "function") {
       return { blocks: blocks || [], mode: "OFF", skipped: true };
     }
     try {
@@ -962,10 +966,45 @@
         ocrLog("TRUTH", "native unavailable " + String((native && native.error && native.error.errorCode) || "?"));
         return { blocks: blocks || [], mode: "OFF", skipped: true, reason: "unavailable" };
       }
-      const applied = applyNativeTextTruth(blocks || [], native);
-      pipelineEvidence({ stage: "NATIVE", nativeLines: native.texts.length, nativeMode: (native.meta && native.meta.modeUsed) || null, nativeFallback: !!(native.meta && native.meta.fallbackUsed), kept: (applied.kept || []).length, legacyDropped: (applied.legacyDropped || []).length, unmatchedNative: (applied.unmatchedNative || []).length, fail: (!(applied.kept || []).length) ? ((applied.gate && applied.gate.allTextTruthValid) ? "NATIVE_UNMATCHED" : ((applied.gate && applied.gate.failureCode) || "NATIVE_EMPTY")) : null });
-      ocrLog("TRUTH", "native lines=" + native.texts.length + " mode=" + String((native.meta && native.meta.modeUsed) || "?") + " fb=" + (native.meta && native.meta.fallbackUsed ? 1 : 0) + " kept=" + applied.kept.length + " droppedLegacy=" + applied.legacyDropped.length + " unmatchedNative=" + applied.unmatchedNative.length + " valid=" + applied.gate.allTextTruthValid + (applied.gate.failureCode ? " fail=" + applied.gate.failureCode : ""));
-      return { blocks: applied.kept, mode: "NATIVE_TRUTH", native: native, applied: applied };
+      const geoBlocks = (blocks || []).map(function (b) {
+        return { text: b.text != null ? String(b.text) : null, bbox: b.bbox || null, words: (b.wordBoxes || b.words) ? (b.wordBoxes || b.words) : null, sourceProvider: b.sourceProvider || "BAIDU", _raw: b };
+      });
+      const matched = alignNativeGeometry(native.texts || [], geoBlocks, {});
+      // 构造 kept block（text 恒 = native.rawText；geometry 取自匹配候选 —— P0.3-C Provider 不提供最终 text）
+      const kept = (matched.matchedNative || []).map(function (m) {
+        const g = m.geometry;
+        const raw = (g && g._raw) || (g && g.synthetic ? null : null) || null;
+        const bbox = (g && g.bbox) || (raw && raw.bbox) || null;
+        return Object.assign({}, raw || {}, {
+          text: m.native.rawText,
+          rawText: m.native.rawText,
+          textSource: "NATIVE_OCR",
+          textTruth: { nativeId: m.native.id != null ? m.native.id : null, order: m.native.order != null ? m.native.order : null, nativeRawText: m.native.rawText, geometryStatus: (g && g.synthetic) ? "GEOMETRY_SYNTHETIC_UNION" : "GEOMETRY_FROM_CANDIDATE", matchMethod: m.match && m.match.method },
+          bbox: bbox
+        });
+      });
+      const gate = {
+        totalNative: (native.texts || []).length,
+        totalBlocks: geoBlocks.length,
+        matched: (matched.matchedNative || []).length,
+        unmatchedNative: (matched.unmatchedNative || []).length,
+        matchedGeometry: (matched.matchedGeometry || []).length,
+        unusedGeometry: (matched.unusedGeometry || []).length,
+        oneToMany: matched.gate ? matched.gate.oneToMany : 0,
+        manyToOne: matched.gate ? matched.gate.manyToOne : 0,
+        allTextTruthValid: true,
+        failureCode: null
+      };
+      // Text Truth Gate：kept.text 必须 === native.rawText（历史语义保留）
+      if (typeof validateNativeText === "function") {
+        for (let gi = 0; gi < kept.length; gi += 1) {
+          const v = validateNativeText({ text: kept[gi].text, textSource: kept[gi].textSource }, { rawText: kept[gi].rawText });
+          if (!v.ok) { gate.allTextTruthValid = false; gate.failureCode = v.code; break; }
+        }
+      }
+      pipelineEvidence({ stage: "NATIVE", nativeLines: gate.totalNative, nativeMode: (native.meta && native.meta.modeUsed) || null, nativeFallback: !!(native.meta && native.meta.fallbackUsed), statusCode: (native.meta && native.meta.statusCode) || null, kept: gate.matched, nativeBlocks: gate.totalBlocks, unmatchedNative: gate.unmatchedNative, unusedGeometry: gate.unusedGeometry, oneToMany: gate.oneToMany, manyToOne: gate.manyToOne, fail: (!gate.matched) ? ((gate.allTextTruthValid) ? "NATIVE_UNMATCHED" : (gate.failureCode || "NATIVE_EMPTY")) : null });
+      ocrLog("TRUTH", "align native=" + gate.totalNative + " geo=" + gate.totalBlocks + " matched=" + gate.matched + " unmatchedNative=" + gate.unmatchedNative + " unusedGeo=" + gate.unusedGeometry + " 1:N=" + gate.oneToMany + " N:1=" + gate.manyToOne + " valid=" + gate.allTextTruthValid);
+      return { blocks: kept, mode: "NATIVE_TRUTH", native: native, matched: matched, gate: gate };
     } catch (e) {
       ocrLog("TRUTH", "exception " + String(e && (e.message || e) || "").slice(0, 160));
       return { blocks: blocks || [], mode: "OFF", skipped: true };
