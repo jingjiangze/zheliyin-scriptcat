@@ -24,6 +24,19 @@ var MAX_BYTES = 4 * 1024 * 1024; // base64 字符串长度上限（官方 ≤4M�
 var MAX_SIDE = 4096;             // 最长边 ≤4096px（官方）
 var TOKEN_SKEW_MS = 60 * 1000;   // 过期前 1 分钟视为失效，主动刷新
 
+// ---- Stage 9 V4 §十一：百度 Endpoint Profile（标准含位置版 / 高精度含位置版）----
+// 用户实验开关 zyBaiduOcrMode（standard|accurate）只切换 endpoint；不做自动判断（§十二）。
+// 高精度≠bbox 一定更准 —— 是否为更好 Geometry 证据必须由真机 A/B 基准（Commit 3）回答。
+var BAIDU_OCR_PROFILES = {
+  standard: { endpoint: "https://aip.baidubce.com/rest/2.0/ocr/v1/general", name: "STANDARD_POSITION", provider: "baidu-general-standard-position" },
+  accurate: { endpoint: "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate", name: "ACCURATE_POSITION", provider: "baidu-accurate-position" }
+};
+function resolveBaiduProfile(ctx) {
+  var mode = (ctx && ctx.mode) === "accurate" ? "accurate" : "standard";
+  var p = BAIDU_OCR_PROFILES[mode];
+  return { mode: mode, endpoint: p.endpoint, name: p.name, provider: p.provider };
+}
+
 // 官方错误码 → 人话（§29：错误翻译人话，不裸抛 code；来源：百度文字识别 错误码）
 var BAIDU_ERR_MAP = {
   4: "百度 OCR：集群请求量超限额，请稍后重试",
@@ -119,6 +132,9 @@ function createBaiduProvider(opts) {
     },
     recognize: async function (image, ctx) {
       var cfg = o.getConfig ? (o.getConfig() || {}) : {};
+      // Stage 9 V4 §十一/§十二：实验模式切换（standard/accurate）→ endpoint/profile/provider
+      var prof = resolveBaiduProfile(ctx);
+      this.provider = prof.provider;
       if (!cfg.apiKey || !cfg.secretKey) return { provider: this.provider, providerType: "REMOTE", error: { errorCode: "BAIDU_NOT_CONFIGURED", errorMessage: "百度 OCR 未配置：请先在面板设置 API Key / Secret Key" }, candidates: [], meta: {} };
       var t0 = now();
       // 图片尺寸/大小保护（§P4：>4096px 或 >4M 等比压缩）
@@ -134,14 +150,15 @@ function createBaiduProvider(opts) {
       if (b64.length > MAX_BYTES) return { provider: this.provider, providerType: "REMOTE", error: { errorCode: "BAIDU_IMAGE_TOO_LARGE", errorMessage: BAIDU_ERR_MAP[216202] }, candidates: [], meta: {} };
       var tok = await this.getToken();
       if (!tok.ok) return { provider: this.provider, providerType: "REMOTE", error: tok.error, candidates: [], meta: {} };
-      var result = await this._recognizeWithToken(tok.token, b64, dataUrl, ctx, t0, 0);
+      var result = await this._recognizeWithToken(tok.token, b64, dataUrl, ctx, t0, 0, prof);
       return result;
     },
-    _recognizeWithToken: async function (token, b64, dataUrl, ctx, t0, retried) {
+    _recognizeWithToken: async function (token, b64, dataUrl, ctx, t0, retried, prof) {
+      var p = prof || resolveBaiduProfile(ctx);
       var body = "image=" + encodeURIComponent(b64);
       var r;
       try {
-        r = await o.http.request("POST", OCR_URL + "?access_token=" + encodeURIComponent(token), {
+        r = await o.http.request("POST", p.endpoint + "?access_token=" + encodeURIComponent(token), {
           headers: { "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json" },
           body: body,
           timeout: 30000
@@ -156,7 +173,7 @@ function createBaiduProvider(opts) {
         setVal("zyBaiduToken", "");
         setVal("zyBaiduTokenExpiryAt", "0");
         var tok2 = await this.getToken();
-        if (tok2.ok) return this._recognizeWithToken(tok2.token, b64, dataUrl, ctx, t0, 1);
+        if (tok2.ok) return this._recognizeWithToken(tok2.token, b64, dataUrl, ctx, t0, 1, p);
         return { provider: this.provider, providerType: "REMOTE", error: tok2.error, candidates: [], meta: {} };
       }
       if (!parsed || !Array.isArray(parsed.words_result)) {
@@ -195,10 +212,10 @@ function createBaiduProvider(opts) {
         provider: this.provider,
         providerType: "REMOTE",
         candidates: candidates,
-        meta: { imageWidth: imageW, imageHeight: imageH, elapsed: now() - t0, rawWordCount: parsed.words_result.length, lineCount: candidates.length, httpStatus: r.status }
+        meta: { imageWidth: imageW, imageHeight: imageH, elapsed: now() - t0, rawWordCount: parsed.words_result.length, lineCount: candidates.length, httpStatus: r.status, mode: p.mode, profileName: p.name, endpoint: p.endpoint }
       };
     }
   };
 }
 
-if (typeof module !== "undefined" && module.exports) module.exports = { createBaiduProvider, BAIDU_ERR_MAP, fromDataUrl, candidateId, TOKEN_URL, OCR_URL, MAX_BYTES, MAX_SIDE };
+if (typeof module !== "undefined" && module.exports) module.exports = { createBaiduProvider, BAIDU_ERR_MAP, fromDataUrl, candidateId, TOKEN_URL, OCR_URL, MAX_BYTES, MAX_SIDE, BAIDU_OCR_PROFILES, resolveBaiduProfile };

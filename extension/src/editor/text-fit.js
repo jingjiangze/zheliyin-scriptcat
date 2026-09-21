@@ -309,6 +309,8 @@ function compareTextGeometry(target, actual, opts) {
   const renderedLineCount = o.renderedLineCount;
   const targetLineCount = o.targetLineCount != null ? o.targetLineCount : 1;
   const wrapDetected = renderedLineCount != null && renderedLineCount > targetLineCount;
+  // Stage 9 Commit 8 D：rendered < source（行折叠）同样视为缺陷（不得直接 PASS；须调整 width/fontSize/lineHeight）
+  const collapseDetected = renderedLineCount != null && renderedLineCount < targetLineCount;
   const fontMismatch = !!o.fontMismatch;
   // §10/§24：typography.width 比较「渲染 advance」而非含 margin 的布局盒（advanceOverride）；
   // typography.height 用「字号视觉 sanity 模型」（§5 证据：OCR bbox 高=padding 产物，正比比较无意义）。
@@ -334,7 +336,7 @@ function compareTextGeometry(target, actual, opts) {
     aabbError: Math.round(aabbError * 1000) / 1000
   };
   const typography = {
-    pass: !wrapDetected && widthError <= widthTol && !heightFail,
+    pass: !wrapDetected && !collapseDetected && widthError <= widthTol && !heightFail,
     widthError: Math.round(widthError * 1000) / 1000,
     heightFail: heightFail,
     heightDelta: Math.round(heightDelta * 1000) / 1000,
@@ -348,6 +350,7 @@ function compareTextGeometry(target, actual, opts) {
   }
   if (!typography.pass) {
     if (wrapDetected) failures.push("wrap");
+    if (collapseDetected) failures.push("collapse");
     if (widthError > widthTol) failures.push("width");
     if (heightFail) failures.push("height");
   }

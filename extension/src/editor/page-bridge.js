@@ -21,6 +21,15 @@ function pageBridge() {
     const BRIDGE_SOURCE_IN_PAGE = "zy-card-assistant";
     const PAGE_SOURCE_IN_PAGE = "zy-card-assistant-page";
     window.addEventListener("message", function (event) {
+
+    // Stage 9 P4-D：Editor Actual Ink 测量（复用 ink-measure/measureFabricObjectInk；不可用返回 null，行为不变）
+    function measureFabInkFor(obj) {
+      try {
+        if (!window.__zy8dInk || typeof window.__zy8dInk.measureFabricObjectInk !== 'function' || !obj) return null;
+        var r = window.__zy8dInk.measureFabricObjectInk(obj);
+        return (r && r.ok && typeof r.inkHeight === 'number') ? { inkWidth: r.inkWidth, inkHeight: r.inkHeight, lineCount: r.lineCount != null ? r.lineCount : null, method: r.method || null } : null;
+      } catch (e) { return null; }
+    }
       if (event.source !== window || !event.data || event.data.source !== BRIDGE_SOURCE_IN_PAGE) return;
       if (event.data.type === "probe") {
         post("probeResult", buildProbeResult());
@@ -65,6 +74,10 @@ function pageBridge() {
         // 旧调用（无 pageId）保留兼容：走下方既有 Current Page Resolver（Stage 7.1 行为）。
         const sourcePageId = event.data.pageId || null;
         const sourceSide = event.data.side || null;
+        // Stage 9 V4 P1（§三/§四）：OCR Transaction Identity —— transactionId/imageFingerprint 从调用方冻结，
+        // 随对象 key / 对象身份 / 回复逐级透传（正反面各自独立 Session，禁跨页共享）。
+        const txId = event.data.transactionId || null;
+        const txFp = event.data.imageFingerprint || null;
         if (sourcePageId) {
           const inv = buildPageInventory();
           const known = inv.ok && (inv.pages || []).some(function (p) { return p.pageId === sourcePageId; });
@@ -104,6 +117,62 @@ function pageBridge() {
         // OCR 只提供 text/position/size/style（media JSON），身份字段由原生流程负责（§十七）。
         // 原生路径不可用时回退到下方既有镜像路径（Level 1-2），并在 editorIntegration.mode 标明。
         // =====================================================================
+        // ---- Stage 9 Commit 6：Native Anchor Resolver（页面世界镜像）----
+        // 单一事实来源 = extension/src/editor/native-anchor-matcher.js（node 纯模块 + 单测）。
+        // 本处为 page-world 运行时镜像，逻辑逐字一致：page 门控 + 多因子打分 + MATCH/UNCERTAIN/NO_MATCH。
+        function zyScriptType(t) { const s = String(t == null ? "" : t); let cjk = 0, latin = 0, digit = 0; for (let i = 0; i < s.length; i += 1) { const c = s.charCodeAt(i); if ((c >= 0x4e00 && c <= 0x9fff) || (c >= 0x3040 && c <= 0x30ff)) cjk += 1; else if (c >= 0x30 && c <= 0x39) digit += 1; else if ((c >= 0x41 && c <= 0x5a) || (c >= 0x61 && c <= 0x7a)) latin += 1; else if (c > 0x20 && c !== 0x2e && c !== 0x3a && c !== 0x2d && c !== 0x40 && c !== 0x2f) latin += 1; } if (!s.trim()) return "empty"; if (cjk && !latin && !digit) return "cjk"; if (latin && !cjk && !digit) return "latin"; if (digit && !cjk && !latin) return "digit"; return "mixed"; }
+        function zyAnchorCollect(canvas, pageId, side) {
+          const anchors = [];
+          try { if (typeof canvas.setCoords === "function") canvas.setCoords(); } catch (e) {}
+          (canvas.getObjects() || []).forEach(function (o) {
+            if (!o) return;
+            const ty = String(o.type || "");
+            if (ty !== "textbox" && ty !== "i-text" && ty !== "text") return;
+            try { if (typeof o.setCoords === "function") o.setCoords(); } catch (e) {}
+            const ac = o.aCoords;
+            if (!ac || !ac.tl || !ac.br) return;
+            const cx = (ac.tl.x + ac.tr.x + ac.br.x + ac.bl.x) / 4, cy = (ac.tl.y + ac.tr.y + ac.br.y + ac.bl.y) / 4;
+            const vw = (Math.hypot(ac.tr.x - ac.tl.x, ac.tr.y - ac.tl.y) + Math.hypot(ac.br.x - ac.bl.x, ac.br.y - ac.bl.y)) / 2;
+            const vh = (Math.hypot(ac.bl.x - ac.tl.x, ac.bl.y - ac.tl.y) + Math.hypot(ac.br.x - ac.tr.x, ac.br.y - ac.tr.y)) / 2;
+            let ink = null; try { ink = measureFabInkFor(o); } catch (e) {}
+            anchors.push({ pageId: pageId, side: side, sourceText: { rawText: typeof o.text === "string" ? o.text : null }, style: { fontSize: typeof o.fontSize === "number" ? o.fontSize : null, fontFamily: o.fontFamily != null ? String(o.fontFamily) : null }, geometry: { center: { x: cx, y: cy }, visualWidth: vw, visualHeight: vh }, actualInk: { lineCount: ink ? ink.lineCount : null }, layerNum: typeof o.layerNum === "number" ? o.layerNum : null, identity: { uuid: o.uuid != null ? String(o.uuid) : null, multiUuid: o.multiUuid != null ? String(o.multiUuid) : null }, object: o });
+          });
+          return anchors;
+        }
+        function zyAnchorMatch(anchors, block) {
+          const MATCH_THRESHOLD = 0.55, UNCERTAIN_MARGIN = 0.15;
+          const nz = function (v) { return (typeof v === "number" && isFinite(v)) ? v : null; };
+          const sType = function (t) { try { return zyScriptType(t); } catch (e) { return "unknown"; } };
+          const shapeSim = function (a, b) { const sa = String(a == null ? "" : a), sb = String(b == null ? "" : b); if (!sa && !sb) return 1; const lenSim = 1 / (1 + Math.abs(sa.length - sb.length) / 8); const scSim = sType(sa) === sType(sb) ? 1 : 0.4; return lenSim * 0.6 + scSim * 0.4; };
+          const fsSim = function (x, y) { const fx = nz(x), fy = nz(y); if (fx == null || fy == null || fx <= 0 || fy <= 0) return 0.5; return 1 / (1 + Math.abs(Math.log(fx) - Math.log(fy)) * 4); };
+          const styleSim = function (bl, an) { const f = fsSim(bl.fontSize, an.style.fontSize); let fam = 0.5; const bf = String(bl.fontFamily || ""), af = String(an.style.fontFamily || ""); if (bf && af) { const bl2 = bf.split(/[\s,]/).filter(Boolean).pop() || ""; const al2 = af.split(/[\s,]/).filter(Boolean).pop() || ""; fam = (bl2 && al2 && bl2 === al2) ? 1 : 0.3; } else if (!bf && !af) fam = 0.5; return f * 0.7 + fam * 0.3; };
+          const layerSim = function (bl, an) { const b = nz(bl.layerNum), a = nz(an.layerNum); if (b == null || a == null) return 0.5; return 1 / (1 + Math.abs(b - a) * 2); };
+          const sizeSim = function (an, bl) { const aw = nz(an.geometry.visualWidth), ah = nz(an.geometry.visualHeight), bw = nz(bl.width), bh = nz(bl.height); if (aw == null || ah == null || bw == null || bh == null || aw <= 0 || ah <= 0 || bw <= 0 || bh <= 0) return 0.5; return ((Math.min(aw, bw) / Math.max(aw, bw)) + (Math.min(ah, bh) / Math.max(ah, bh))) / 2; };
+          const scores = [];
+          (anchors || []).forEach(function (an, i) {
+            let gate = "PASS";
+            if (!an.pageId || !block.pageId || an.pageId !== block.pageId) gate = "PAGE_MISMATCH";
+            else if (!an.side || !block.side || an.side !== block.side) gate = "SIDE_MISMATCH";
+            if (gate !== "PASS") return;
+            const c = an.geometry.center;
+            const d = Math.hypot(block.center.x - c.x, block.center.y - c.y);
+            const scale = nz(an.geometry.visualWidth) != null && nz(an.geometry.visualWidth) > 0 ? nz(an.geometry.visualWidth) : 100;
+            const spatial = 1 / (1 + d / scale);
+            const sh = shapeSim(block.sourceText, an.sourceText.rawText);
+            const st = styleSim(block, an);
+            const lay = layerSim(block, an);
+            const sz = sizeSim(an, block);
+            const total = spatial * 0.35 + sz * 0.15 + st * 0.12 + sh * 0.15 + 0.08 + lay * 0.15;
+            scores.push({ anchorIndex: i, total: Math.round(total * 10000) / 10000, factors: { spatial: Math.round(spatial * 10000) / 10000, size: sz, shape: sh, style: st, layer: lay } });
+          });
+          if (!scores.length) return { verdict: "NO_MATCH", reason: "page-gate: no candidate", matchedIndex: null, matchScore: null, margin: null };
+          const sorted = scores.slice().sort(function (x, y) { return y.total - x.total; });
+          const best = sorted[0], second = sorted[1];
+          const margin = second ? best.total - second.total : 1;
+          if (best.total < MATCH_THRESHOLD) return { verdict: "NO_MATCH", reason: "below-threshold", matchedIndex: best.anchorIndex, matchScore: best.total, margin: margin };
+          if (margin >= UNCERTAIN_MARGIN) return { verdict: "MATCH", reason: "unique-winner-with-margin", matchedIndex: best.anchorIndex, matchScore: best.total, margin: margin };
+          return { verdict: "NATIVE_ANCHOR_UNCERTAIN", reason: "runner-up-too-close", matchedIndex: best.anchorIndex, matchScore: best.total, margin: margin };
+        }
         const diy = resolution.canvasDiy;
         if (diy) {
           const editorInteg2 = { mode: "native", nativeUndoFound: false, undoSavePre: false, undoSavePost: false, drawTextBatch: 0, failedBlockIndex: -1, layerNumBase: diy.canvasObjInfo.canvasToProductObjArr.length, identityApplied: 0, uv4Total: 0, layerMax: -1 };
@@ -112,6 +181,8 @@ function pageBridge() {
             if (U2 && typeof U2.save === "function") { editorInteg2.nativeUndoFound = true; U2.save(); editorInteg2.undoSavePre = true; }
           } catch (eUndoNat) {}
           const fontId = getEditorDefaultFontId();
+          // Commit 6：创建前一次性解析当前页原生 textbox 为 Anchor（P0 aCoords；只读）
+          const nativeAnchors = zyAnchorCollect(diy.canvas, sourcePageId, sourceSide || null);
           let createdNat = [];
           const batchNat = [];
           let failedBlockIndex = null;
@@ -120,6 +191,36 @@ function pageBridge() {
             for (let idx = 0; idx < items.length; idx += 1) {
               const it = items[idx];
               const layerNum = editorInteg2.layerNumBase + idx;
+              // Commit 6：Native Anchor Resolver —— MATCH → 复用现有 textbox（以 Native OCR text truth 更新文本，保留原生身份/位置/样式）；
+              //   UNCERTAIN → 禁止强制复用（走创建）；NO_MATCH / 无 anchor → 走原生创建。
+              if (!editorInteg2.anchorResolver) { editorInteg2.anchorResolver = { anchorCount: 0, reused: 0, created: 0, uncertain: 0, unmatched: 0 }; }
+              if (nativeAnchors && nativeAnchors.length) {
+                if (editorInteg2.anchorResolver.anchorCount === 0) editorInteg2.anchorResolver.anchorCount = nativeAnchors.length;
+                const blkCx = (it.left != null ? it.left : 0) + (it.width || 0) / 2;
+                const blkCy = (it.top != null ? it.top : 0) + (it.height || 0) / 2;
+                const block = { pageId: sourcePageId, side: sourceSide || null, sourceText: String(it.text || ""), center: { x: blkCx, y: blkCy }, width: it.width != null ? it.width : null, height: it.height != null ? it.height : null, fontSize: it.fontSize != null ? it.fontSize : null, fontFamily: it.fontFamily || null, layerNum: layerNum };
+                const reuseMatch = zyAnchorMatch(nativeAnchors, block);
+                if (reuseMatch.verdict === "MATCH" && reuseMatch.matchedIndex != null && nativeAnchors[reuseMatch.matchedIndex]) {
+                  const reusedObj = nativeAnchors[reuseMatch.matchedIndex].object || null;
+                  if (reusedObj) {
+                    try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.text === "string") { if (typeof reusedObj.setText === "function") reusedObj.setText(it.text); else reusedObj.text = it.text; } } catch (eSet) {}
+                    try { if (it.fill && typeof reusedObj.set === "function") reusedObj.set({ fill: it.fill }); else if (it.fill) reusedObj.fill = it.fill; } catch (eFillReuse) {} // Stage 10-A：仅在有前景证据时更新颜色
+                    const bIdxNat2 = it.blockIndex != null ? it.blockIndex : idx;
+                    reusedObj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat2) : ("zy-ocr-" + bIdxNat2);
+                    reusedObj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat2, objectUuid: reusedObj.uuid || reusedObj.multiUuid || null };
+                    try { if (it.diagnostics) reusedObj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
+                    const gRe = measureObjectGeometry(diy.canvas, reusedObj);
+                    createdNat.push({ blockIndex: bIdxNat2, objectIndex: diy.canvas.getObjects().indexOf(reusedObj), uuid: reusedObj.uuid || reusedObj.multiUuid || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gRe, reused: true, anchorMatch: { verdict: reuseMatch.verdict, score: reuseMatch.matchScore, margin: reuseMatch.margin } });
+                    editorInteg2.anchorResolver.reused += 1;
+                    continue;
+                  }
+                } else if (reuseMatch.verdict === "NATIVE_ANCHOR_UNCERTAIN") {
+                  editorInteg2.anchorResolver.uncertain += 1;
+                } else {
+                  editorInteg2.anchorResolver.unmatched += 1;
+                }
+              }
+              editorInteg2.anchorResolver.created += 1;
               const entry = buildTextMediaEntry(it, layerNum, fontId);
               let obj = null;
               try {
@@ -138,10 +239,15 @@ function pageBridge() {
                   obj.isPreview = obj.isPreview !== undefined ? obj.isPreview : 0;
                   obj.isDesignShape = obj.isDesignShape !== undefined ? obj.isDesignShape : 0;
                   batchNat.push(obj);
+                  if (it.fill && obj.fill !== it.fill) { try { if (typeof obj.set === "function") obj.set({ fill: it.fill }); else obj.fill = it.fill; } catch (eFill) {} } // Stage 10-A：drawText 双保险透传 fill
                   if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{12,}$/.test(obj.multiUuid)) editorInteg2.uv4Total += 1;
                   try { if (it.diagnostics) obj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
                   // Stage 8B STEP 4（Phase B/C）：测量本对象真实几何 + 业务字段初始同步 + 定位 key
-                  obj.zyOcrKey = "zy-ocr-" + (it.blockIndex != null ? it.blockIndex : idx);
+                  // Stage 9 V4 P1（§六）：key 升级 zy-ocr-{transactionId}-{blockIndex}，杜绝正反 blockIndex 碰撞；
+                  //   对象同时挂 zyOcrObjectId（transactionId/pageId/blockId/objectUuid 完整身份）。
+                  const bIdxNat = it.blockIndex != null ? it.blockIndex : idx;
+                  obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat) : ("zy-ocr-" + bIdxNat);
+                  obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat, objectUuid: obj.uuid || obj.multiUuid || null };
                   const gNat = measureObjectGeometry(diy.canvas, obj);
                   syncBusinessFieldsFromObject(obj);
                   createdNat.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: diy.canvas.getObjects().indexOf(obj), uuid: obj ? (obj.uuid || obj.multiUuid || null) : null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gNat });
@@ -179,6 +285,7 @@ function pageBridge() {
             failedBlockIndex: failedBlockIndex,
             error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
             pageId: sourcePageId, side: sourceSide,
+            transactionId: txId, imageFingerprint: txFp,
             editorIntegration: editorInteg2
           });
           return;
@@ -219,9 +326,12 @@ function pageBridge() {
               try { if (mirrorEditorObjectModel(canvas, obj)) editorInteg.identityApplied += 1; } catch (eMirror) { console.warn("[zy-ocr][ocrCreate] mirror err=" + String(eMirror && eMirror.message || eMirror).slice(0, 120)); }
               if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{20,}$/.test(obj.multiUuid)) editorInteg.uv4Total += 1;
               // Stage 8B STEP 4（Phase B/C）：测量本对象真实几何 + 定位 key（供 ocrAdjust 校正）
-              obj.zyOcrKey = "zy-ocr-" + (it.blockIndex != null ? it.blockIndex : idx);
+              // Stage 9 V4 P1（§六）：key 升级 zy-ocr-{transactionId}-{blockIndex} + 对象完整身份
+              const bIdxMir = it.blockIndex != null ? it.blockIndex : idx;
+              obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxMir) : ("zy-ocr-" + bIdxMir);
+              obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxMir, objectUuid: obj.uuid || obj.multiUuid || obj.markuuid || null };
               const gObj = measureObjectGeometry(canvas, obj);
-              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gObj });
+              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, ink: measureFabInkFor(obj), geometry: gObj });
               batch.push(obj);
             } catch (e2) {
               // §16 事务：第一个失败即终止，全量回滚本批已建对象，恢复创建前状态（created=0）
@@ -256,21 +366,57 @@ function pageBridge() {
           failedBlockIndex: failedBlockIndex,
           error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
           pageId: sourcePageId, side: sourceSide,
+          transactionId: txId, imageFingerprint: txFp,
           editorIntegration: editorInteg
         });
         return;
       }
       if (event.data.type === "ocrAdjust") {
-        // Stage 8B STEP 4（Phase C）：创建后几何自动闭环校正 —— 按 blockIndex 定位本批 OCR 对象
-        // （zyOcrKey），应用 fontSize/width/height/left/top/angle 修正，重新实测并同步业务字段。
+        // Stage 8B STEP 4（Phase C）：创建后几何自动闭环校正 —— 按定位 key（zyOcrKey）定位本批 OCR 对象，
+        // 应用 fontSize/width/height/left/top/angle 修正，重新实测并同步业务字段。
         // 只操作本批创建的 zyOcrKey 对象；无对象时报错不抛异常。
-        const canvasAdj = findCanvasForSide(event.data.side || "front");
+        // Stage 9 V4 P1（§四/§五）：Adjust 同样强制 Page Ownership —— 携带 pageId 的校准请求：
+        //   resolvePageInfo(pageId) → 当前页必须仍为 source page（canvas === source page canvas），
+        //   current.pageId !== request.pageId → PAGE_IDENTITY_CHANGED → 整批 STOP（禁止自动找另一个画布）；
+        //   key 按 transactionId 限定（zy-ocr-{txId}-{blockIndex}），杜绝正反 blockIndex 碰撞。
+        // 旧调用（无 pageId/transactionId）保留兼容：走 findCanvasForSide + 旧 key（仅旧探针/测试路径）。
+        const adjPageId = event.data.pageId || null;
+        const adjTxId = event.data.transactionId || null;
+        const adjFp = event.data.imageFingerprint || null;
         const itemsAdj = Array.isArray(event.data.items) ? event.data.items : [];
+        let canvasAdj = null;
+        if (adjPageId) {
+          const invAdj = buildPageInventory();
+          const knownAdj = invAdj.ok && (invAdj.pages || []).some(function (p) { return p.pageId === adjPageId; });
+          if (!knownAdj) {
+            post("ocrAdjustResult", { ok: false, code: "ADJUST_BLOCKED_PAGE_NOT_FOUND", message: "校准请求属于未知页面（" + adjPageId + "），已停止校准（禁止跨页自动找画布）。", items: [], pageId: adjPageId, transactionId: adjTxId, imageFingerprint: adjFp });
+            return;
+          }
+          const curAdj = buildCurrentPageInfo();
+          const gateAdj = validatePageOwnership(adjPageId, curAdj);
+          if (!gateAdj.ok) {
+            // §五：current.pageId !== request.pageId → PAGE_IDENTITY_CHANGED → STOP
+            const codeAdj = gateAdj.code === "CREATE_BLOCKED_WRONG_PAGE" ? "PAGE_IDENTITY_CHANGED" : String(gateAdj.code || "ADJUST_BLOCKED").replace(/^CREATE_BLOCKED_/, "ADJUST_BLOCKED_");
+            post("ocrAdjustResult", { ok: false, code: codeAdj, message: "校准期间页面已变化或无法验证（" + gateAdj.reason + "），已停止校准（" + codeAdj + "）。请重新识别当前页。", items: [], pageId: adjPageId, transactionId: adjTxId, imageFingerprint: adjFp, activePageId: (curAdj && curAdj.pageId) || null });
+            return;
+          }
+          // 仅允许「当前编辑页面」画布（gate 已保证 === source page canvas），禁止 findCanvasForSide 跨页寻找
+          const resoAdj = resolveCurrentEditorPage();
+          canvasAdj = (resoAdj && resoAdj.canvas) || null;
+          if (!canvasAdj) {
+            post("ocrAdjustResult", { ok: false, code: "ADJUST_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止校准。", items: [], pageId: adjPageId, transactionId: adjTxId, imageFingerprint: adjFp });
+            return;
+          }
+        } else {
+          // 旧调用（无 pageId）：side 定位（仅旧探针/测试兼容）
+          canvasAdj = findCanvasForSide(event.data.side || "front");
+        }
         const resultsAdj = [];
         itemsAdj.forEach(function (adj) {
           const res = { blockIndex: adj.blockIndex, ok: false, error: null, geometry: null };
           try {
-            const key = "zy-ocr-" + (adj.blockIndex != null ? adj.blockIndex : -1);
+            const idxAdj = adj.blockIndex != null ? adj.blockIndex : -1;
+            const key = adjTxId ? ("zy-ocr-" + adjTxId + "-" + idxAdj) : ("zy-ocr-" + idxAdj);
             const objsAdj = canvasAdj ? canvasAdj.getObjects() : [];
             let found = null;
             for (let i = objsAdj.length - 1; i >= 0; i -= 1) { if (objsAdj[i] && objsAdj[i].zyOcrKey === key) { found = objsAdj[i]; break; } }
@@ -286,12 +432,189 @@ function pageBridge() {
             found.set(cfg);
             if (adj.syncBusiness !== false) syncBusinessFieldsFromObject(found);
             res.geometry = measureObjectGeometry(canvasAdj, found);
+            res.ink = measureFabInkFor(found); // P4-D：Editor Actual Ink（fontSize 校准依据）
             res.ok = true;
           } catch (eAdj) { res.error = String(eAdj && eAdj.message || eAdj).slice(0, 120); }
           resultsAdj.push(res);
         });
         if (canvasAdj && canvasAdj.requestRenderAll) canvasAdj.requestRenderAll();
-        post("ocrAdjustResult", { ok: true, items: resultsAdj });
+        post("ocrAdjustResult", { ok: true, items: resultsAdj, pageId: adjPageId, transactionId: adjTxId, imageFingerprint: adjFp });
+        return;
+      }
+      if (event.data.type === "getTextInventory") {
+        // Stage 9 V4 §21/§22：只读 —— 当前编辑页文字对象清单（ExistingTextObjectSnapshot），
+        // 供 Recognition Mode Resolver（NEW/CALIBRATION/RETRY）判定；不改画布。
+        const resoInv = resolveCurrentEditorPage();
+        if (!resoInv || resoInv.status !== "ok" || !resoInv.canvas) {
+          post("getTextInventoryResult", { ok: false, code: "CURRENT_PAGE_UNKNOWN", pageId: null, items: [] });
+          return;
+        }
+        const invItems = getTextObjects(resoInv.canvas).map(function (o) {
+          const cx = typeof o.left === "number" ? o.left + (typeof o.width === "number" ? o.width / 2 : 0) : null;
+          const cy = typeof o.top === "number" ? o.top + (typeof o.height === "number" ? o.height / 2 : 0) : null;
+          return {
+            objectUuid: o.uuid || o.multiUuid || o.markuuid || null,
+            text: String(o.text != null ? o.text : ""),
+            left: typeof o.left === "number" ? o.left : null,
+            top: typeof o.top === "number" ? o.top : null,
+            width: typeof o.width === "number" ? o.width : null,
+            height: typeof o.height === "number" ? o.height : null,
+            fontSize: typeof o.fontSize === "number" ? o.fontSize : null,
+            fontFamily: o.fontFamily != null ? String(o.fontFamily) : null,
+            fontWeight: o.fontWeight != null ? String(o.fontWeight) : null,
+            fontStyle: o.fontStyle != null ? String(o.fontStyle) : null,
+            angle: typeof o.angle === "number" ? o.angle : 0,
+            center: (cx != null && cy != null) ? { x: cx, y: cy } : null
+          };
+        });
+        post("getTextInventoryResult", { ok: true, code: "OK", pageId: (function () { const cInv = buildCurrentPageInfo(); return (cInv && cInv.pageId) || resoInv.pageId; })(), side: resoInv.side, items: invItems });
+        return;
+      }
+      if (event.data.type === "inkMeasure") {
+        // Stage 9 P4-B §四/§五：只读 —— 对源图各 OCR block 区域测量「局部 Otsu 少数类前景墨迹 bbox」。
+        // 注：页桥以 toString 注入为自包含字符串，无法引用沙箱 @require 模块；此处内联实现与
+        // extension/src/editor/image-ink-target.js 同构（node 单测以模块为真源）。
+        // 只读不改画布；失败显式 reason（NO_REGION/NO_INK/NO_IMAGE_SOURCE/CROSS_ORIGIN_IMAGE），禁伪造 inkWidth。
+        const resoM = resolveCurrentEditorPage();
+        if (!resoM || resoM.status !== "ok" || !resoM.canvas) { post("inkMeasureResult", { ok: false, reason: "CURRENT_PAGE_UNKNOWN", items: [] }); return; }
+        const canvasM = resoM.canvas;
+        const activeM = canvasM.getActiveObject ? canvasM.getActiveObject() : null;
+        const targetM = (activeM && String(activeM.type) === "image") ? activeM
+          : ((canvasM.backgroundImage && String(canvasM.backgroundImage.type) === "image") ? canvasM.backgroundImage
+            : ((canvasM.getObjects && canvasM.getObjects().find ? canvasM.getObjects().find(function (o) { return o && String(o.type) === "image"; }) : null) || null));
+        if (!targetM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SOURCE", items: [] }); return; }
+        const elM = (targetM._element) || (targetM.getElement && targetM.getElement());
+        if (!elM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_ELEMENT", items: [] }); return; }
+        const iwM = elM.naturalWidth || elM.width || targetM.width;
+        const ihM = elM.naturalHeight || elM.height || targetM.height;
+        if (!iwM || !ihM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SIZE", items: [] }); return; }
+        const cvM = document.createElement("canvas"); cvM.width = iwM; cvM.height = ihM;
+        const c2M = cvM.getContext && cvM.getContext("2d");
+        if (!c2M) { post("inkMeasureResult", { ok: false, reason: "NO_CANVAS_CTX", items: [] }); return; }
+        let dM = null;
+        try { c2M.drawImage(elM, 0, 0); dM = c2M.getImageData(0, 0, iwM, ihM).data; } catch (e) { dM = null; }
+        if (!dM) { post("inkMeasureResult", { ok: false, reason: "CROSS_ORIGIN_IMAGE", items: [] }); return; }
+        const grayM = new Uint8Array(iwM * ihM);
+        for (let iM = 0; iM < iwM * ihM; iM += 1) { const jM = iM * 4; grayM[iM] = Math.round(0.299 * dM[jM] + 0.587 * dM[jM + 1] + 0.114 * dM[jM + 2]); }
+        const reqInk = Array.isArray(event.data.items) ? event.data.items : [];
+        const itemsM = reqInk.map(function (it) {
+          const bb = it.bbox || {};
+          const x0 = Math.max(0, Math.floor(bb.x || 0)), y0 = Math.max(0, Math.floor(bb.y || 0));
+          const x1 = Math.min(iwM - 1, Math.ceil((bb.x || 0) + (bb.width || 0)));
+          const y1 = Math.min(ihM - 1, Math.ceil((bb.y || 0) + (bb.height || 0)));
+          const ws = x1 - x0, hs = y1 - y0;
+          const base = { blockIndex: it.blockIndex != null ? it.blockIndex : null, lineIndex: it.lineIndex != null ? it.lineIndex : null };
+          if (ws < 2 || hs < 2 || x1 < x0 || y1 < y0) return Object.assign(base, { ok: false, reason: "NO_REGION", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          const hist = new Array(256).fill(0); let sum = 0, total = 0;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) { const g = grayM[y * iwM + x]; hist[g] += 1; total += 1; sum += g; }
+          if (total < 16) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          let sumB = 0, wB = 0, maxVar = 0, th = 128, found = false;
+          for (let t = 0; t < 256; t += 1) {
+            wB += hist[t]; if (wB === 0) continue;
+            const wF = total - wB; if (wF === 0) break;
+            sumB += t * hist[t];
+            const mB = sumB / wB, mF = (sum - sumB) / wF;
+            const v = wB * wF * (mB - mF) * (mB - mF);
+            if (v > maxVar) { maxVar = v; th = t; found = true; }
+          }
+          if (!found) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          let dark = 0;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) if (grayM[y * iwM + x] <= th) dark += 1;
+          const takeDark = dark <= total - dark;
+          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, cnt = 0;
+          for (let y = y0; y < y1; y += 1) {
+            for (let x = x0; x < x1; x += 1) {
+              const g = grayM[y * iwM + x];
+              const fg = takeDark ? (g <= th) : (g > th);
+              if (!fg) continue;
+              cnt += 1;
+              if (x < minX) minX = x; if (x > maxX) maxX = x;
+              if (y < minY) minY = y; if (y > maxY) maxY = y;
+            }
+          }
+          if (!(cnt >= 6 && maxX >= minX && maxY >= minY) || !isFinite(minX)) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          const inkW = maxX - minX + 1, inkH = maxY - minY + 1;
+          return Object.assign(base, { ok: true, reason: "OK", inkWidth: inkW, inkHeight: inkH, inkBox: { x: minX, y: minY, width: inkW, height: inkH }, coverage: Math.round((cnt / total) * 10000) / 10000 });
+        });
+        post("inkMeasureResult", { ok: true, reason: "OK", imageWidth: iwM, imageHeight: ihM, items: itemsM });
+        return;
+      }
+      if (event.data.type === "ocrCalibrate") {
+        // Stage 9 V4 §二十/§二十四：CALIBRATION_RECOGNITION / RECOGNITION_RETRY —— 更新现有 textbox，
+        // 不创建重复对象。错误行为：删除 A 重建 B（禁止）——保持 object identity，只改 text/样式/几何。
+        // 匹配策略（§23，文字只作 hint）：pageId + 阅读顺序（top 排序）一对一定位；
+        //   existing 不足 → 仅补齐缺失行（新建），多余不复制。
+        // 所有权（§四/§五）：与 ocrAdjust 同硬门禁 —— PAGE_IDENTITY_CHANGED → 整批 STOP。
+        const calPageId = event.data.pageId || null;
+        const calTxId = event.data.transactionId || null;
+        const calFp = event.data.imageFingerprint || null;
+        const calItems = Array.isArray(event.data.items) ? event.data.items : [];
+        if (!calPageId) {
+          post("ocrCalibrateResult", { ok: false, code: "CALIBRATE_BLOCKED_NO_PAGE", message: "校准请求缺少 pageId，已停止。", items: [], pageId: null, transactionId: calTxId, imageFingerprint: calFp });
+          return;
+        }
+        const invCal = buildPageInventory();
+        const knownCal = invCal.ok && (invCal.pages || []).some(function (p) { return p.pageId === calPageId; });
+        if (!knownCal) {
+          post("ocrCalibrateResult", { ok: false, code: "CALIBRATE_BLOCKED_PAGE_NOT_FOUND", message: "校准请求属于未知页面（" + calPageId + "），已停止（禁止跨页自动找画布）。", items: [], pageId: calPageId, transactionId: calTxId, imageFingerprint: calFp });
+          return;
+        }
+        const curCal = buildCurrentPageInfo();
+        const gateCal = validatePageOwnership(calPageId, curCal);
+        if (!gateCal.ok) {
+          const codeCal = gateCal.code === "CREATE_BLOCKED_WRONG_PAGE" ? "PAGE_IDENTITY_CHANGED" : String(gateCal.code || "CALIBRATE_BLOCKED").replace(/^CREATE_BLOCKED_/, "CALIBRATE_BLOCKED_");
+          post("ocrCalibrateResult", { ok: false, code: codeCal, message: "校准期间页面已变化或无法验证（" + gateCal.reason + "），已停止校准（" + codeCal + "）。", items: [], pageId: calPageId, transactionId: calTxId, imageFingerprint: calFp, activePageId: (curCal && curCal.pageId) || null });
+          return;
+        }
+        const resoCal = resolveCurrentEditorPage();
+        const canvasCal = (resoCal && resoCal.canvas) || null;
+        if (!canvasCal) {
+          post("ocrCalibrateResult", { ok: false, code: "CALIBRATE_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止校准。", items: [], pageId: calPageId, transactionId: calTxId, imageFingerprint: calFp });
+          return;
+        }
+        // 阅读序对象池（top 升序；对 zyOcrKey 助手对象与模板对象一视同仁）
+        const poolCal = getTextObjects(canvasCal).sort(function (a, b) { return (Number(a.top || 0) - Number(b.top || 0)) || (Number(a.left || 0) - Number(b.left || 0)); });
+        const itemsSorted = calItems.slice().sort(function (a, b) { return (Number(a.top != null ? a.top : 0) - Number(b.top != null ? b.top : 0)) || (Number(a.left != null ? a.left : 0) - Number(b.left != null ? b.left : 0)); });
+        const calOut = [];
+        const createdOut = [];
+        itemsSorted.forEach(function (it, i) {
+          try {
+            const target = poolCal[i] || null;
+            const text = String(it.text != null ? it.text : "");
+            const cfg = {};
+            if (typeof it.fontSize === "number" && it.fontSize >= 8 && it.fontSize <= 160) cfg.fontSize = it.fontSize;
+            if (typeof it.width === "number" && it.width >= 20) cfg.width = it.width;
+            if (typeof it.height === "number" && it.height >= 14) cfg.height = it.height;
+            if (typeof it.left === "number" && isFinite(it.left)) cfg.left = it.left;
+            if (typeof it.top === "number" && isFinite(it.top)) cfg.top = it.top;
+            if (typeof it.angle === "number" && isFinite(it.angle)) cfg.angle = it.angle;
+            if (it.fontFamily) cfg.fontFamily = it.fontFamily;
+            if (it.fontWeight) cfg.fontWeight = it.fontWeight;
+            if (it.fontStyle) cfg.fontStyle = it.fontStyle;
+            if (target) {
+              setObjectText(target, text);
+              target.set(cfg);
+              if (it.diagnostics) { try { target.zyOcrDiagnostics = it.diagnostics; } catch (eDiagC) {} }
+              const effTxC = it.transactionId || calTxId;
+              try { if (effTxC) target.zyOcrObjectId = { transactionId: effTxC, pageId: calPageId, blockId: it.blockIndex != null ? it.blockIndex : i, objectUuid: target.uuid || target.multiUuid || null }; } catch (eOid) {}
+              try { if (effTxC) target.zyOcrKey = "zy-ocr-" + effTxC + "-" + (it.blockIndex != null ? it.blockIndex : i); } catch (eKeyC) {}
+              syncBusinessFieldsFromObject(target);
+              calOut.push({ blockIndex: it.blockIndex != null ? it.blockIndex : i, objectUuid: target.uuid || target.multiUuid || null, text: String(text).slice(0, 16), updated: true, geometry: measureObjectGeometry(canvasCal, target) });
+            } else {
+              // 池外新建（缺失行补齐；不复制已有内容）
+              const obj = createTextObject(canvasCal, text, null, i, null);
+              if (!obj) return;
+              obj.set(cfg);
+              setObjectText(obj, text);
+              const effTxN = it.transactionId || calTxId;
+              try { if (effTxN) { obj.zyOcrKey = "zy-ocr-" + effTxN + "-" + (it.blockIndex != null ? it.blockIndex : i); obj.zyOcrObjectId = { transactionId: effTxN, pageId: calPageId, blockId: it.blockIndex != null ? it.blockIndex : i, objectUuid: obj.uuid || obj.multiUuid || null }; } } catch (eOidC) {}
+              syncBusinessFieldsFromObject(obj);
+              createdOut.push({ blockIndex: it.blockIndex != null ? it.blockIndex : i, objectUuid: obj.uuid || obj.multiUuid || null, text: String(text).slice(0, 16), geometry: measureObjectGeometry(canvasCal, obj) });
+            }
+          } catch (eCal) { calOut.push({ blockIndex: it.blockIndex != null ? it.blockIndex : i, updated: false, error: String(eCal && eCal.message || eCal).slice(0, 120) }); }
+        });
+        if (canvasCal.requestRenderAll) canvasCal.requestRenderAll();
+        post("ocrCalibrateResult", { ok: true, calibrated: calOut, created: createdOut, pageId: calPageId, side: event.data.side || null, transactionId: calTxId, imageFingerprint: calFp });
         return;
       }
       if (event.data.type === "getCanvasInfo") {
@@ -551,7 +874,7 @@ function pageBridge() {
       return {
         media: {
           mediaType: "text", text: text,
-          font: { pointSize: size, fontColor: "#000000", isHorizontal: 1, gravity: "left",
+          font: { pointSize: size, fontColor: it.fill || "#000000", isHorizontal: 1, gravity: "left",
             id: fontId || "1", isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 },
           charSpace: 0, lineSpace: 1.2, lineIdType: 0, isBG: 0, imgPath: ""
         },

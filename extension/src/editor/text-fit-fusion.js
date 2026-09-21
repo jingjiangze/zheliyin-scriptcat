@@ -25,7 +25,8 @@ var MIN_QUALITY_TO_CREATE = 0.5;   // 质量低于此 → 不创建（8D §十�
 var OK_BOTH_RATIO = 0.15;          // advance/ink 双证据偏差 ≤15% → 一致采用 advance
 var OCR_H_SANITY_LO = 0.4;         // fs 不得低于 ocrHeight*LO（过小 → 异常）
 var OCR_H_SANITY_HI = 2.4;         // fs 不得高于 ocrHeight*HI（过大 → 异常）
-var FS_MIN = 8, FS_MAX = 160;
+var FS_MIN = 10, FS_MAX = 160;
+var FONT_HEIGHT_RATIO = 0.969; // P4-D：视觉 ink 高 / fontSize（真机验证，Stage 8B F2）。高度主导字号；禁止再发明 0.8/0.9/1.1/K2 等全局倍率
 
 function isFiniteNum(v) { return typeof v === "number" && isFinite(v); }
 
@@ -66,11 +67,11 @@ function solveByAdvance(text, targetVisualWidth, fontFamily, measurer) {
   return { fontSize: Math.max(FS_MIN, Math.min(FS_MAX, Math.round(best))), advanceWidth: m2 ? m2.width : null, err: bestErr };
 }
 
-// ink 证据：fs = inkHeight / lineBoxRatio（ink 高指视觉墨迹行高，含 lineBox 比例）
+// ink 证据：fs = inkHeight / FONT_HEIGHT_RATIO（P4-D：视觉墨迹行高 / 0.969，真机验证关系）
 function solveByInkHeight(inkHeight, fontFamily, opts) {
   if (!isFiniteNum(inkHeight) || inkHeight <= 0) return null;
-  var fs = Math.max(FS_MIN, Math.min(FS_MAX, Math.round(inkHeight / lineBoxRatio(fontFamily, opts))));
-  return { fontSize: fs, inkHeight: inkHeight, ratio: lineBoxRatio(fontFamily, opts) };
+  var fs = Math.max(FS_MIN, Math.min(FS_MAX, Math.round(inkHeight / FONT_HEIGHT_RATIO)));
+  return { fontSize: fs, inkHeight: inkHeight, ratio: FONT_HEIGHT_RATIO };
 }
 
 // —— 主入口（8D §十四/§十五）——
@@ -98,12 +99,13 @@ function solveFontSizeFusion(input) {
 
   var fs = null, reason = "no-evidence";
   var sources = { advance: adv, ink: ink, ocrHeight: ocrSrc };
-  if (adv && ink) {
-    var d = Math.abs(adv.fontSize - ink.fontSize) / Math.max(1, Math.max(adv.fontSize, ink.fontSize));
-    if (d <= OK_BOTH_RATIO) { fs = adv.fontSize; reason = "advance-ink-consistent"; }
-    else { fs = adv.fontSize; reason = "advance-primary-ink-conflict"; warnings.push("ink conflict d=" + Math.round(d * 100) + "%"); }
+  if (ink) { // P4-D：Source Ink Height 第一优先；advance 降为第 4 优先（仅兜底/警示）
+    if (!adv) { fs = ink.fontSize; reason = "ink-height-primary"; } else { var d = Math.abs(adv.fontSize - ink.fontSize) / Math.max(1, Math.max(adv.fontSize, ink.fontSize));
+    if (d <= OK_BOTH_RATIO) { fs = ink.fontSize; reason = "ink-height-consistent-with-advance"; }
+    else { fs = ink.fontSize; reason = "ink-height-primary-advance-conflict"; warnings.push("advance conflict d=" + Math.round(d * 100) + "%"); }
+    }
   } else if (adv) { fs = adv.fontSize; reason = "advance-width-primary"; }
-  else if (ink) { fs = ink.fontSize; reason = "ink-height-primary"; }
+
   else if (ocrSrc) { fs = Math.max(FS_MIN, Math.min(FS_MAX, Math.round(ocrSrc.ocrHeight / 1.425))); reason = "ocr-height-legacy"; }
 
   if (fs == null) return { ok: false, reason: "no-evidence", fontSize: null, confidence: 0, sources: sources, warnings: warnings };

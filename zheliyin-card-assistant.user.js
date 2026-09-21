@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.35
+// @version      0.3.11.49
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,27 +14,34 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/image-transform.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/image-space.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/text-fit.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/text-fit-fusion.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/ink-measure.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/native-ocr-provider.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/font-source.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/text-truth-gate.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-quality.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.35
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.35
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/page-bridge.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/image-transform.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/image-space.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/image-containment.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/multiline-typography.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/text-fit.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/text-fit-fusion.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/ink-measure.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/baidu-provider.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/native-ocr-provider.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/candidate-normalizer.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/font-source.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/text-truth-gate.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/transaction-identity.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/recognition-mode.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/image-ink-target.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/native-color.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/editor/font-target-source.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-quality.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.49
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.49
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -55,7 +62,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.35";
+  const VERSION = "0.3.11.49";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -662,6 +669,7 @@
   let ocrRunning = false;
   let ocrEngineCache = null;
   let ocrTarget = null; // 本次 OCR 事务的目标图片 {obj, kind}，供重建时复用同一几何
+  const stage9TxByPage = {}; // Stage 9 V4 §26：每页最近事务（pageId → {imageFingerprint, ts}），供 RETRY 判定
 
   // §55 错误分类：给用户可操作的中文提示，而不是静默失败
   const OCR_ERR = {
@@ -673,6 +681,13 @@
 
   function ocrLog(stage, msg) {
     console.log("[zy-ocr][" + stage + "] " + msg);
+
+  }
+
+  // Stage 9 Commit 1（OCR Pipeline Evidence Audit）：只记录计数/失败码，零行为影响；汇总写 window.__zyOcrPipelineEvidence（runner 取证）。禁止记录文字内容/凭据。
+  function pipelineEvidence(rec) {
+    try { const cur = window.__zyOcrPipelineEvidence || {}; return (window.__zyOcrPipelineEvidence = Object.assign({}, cur, rec, { updated: Date.now() })); }
+    catch (e) { return null; }
   }
 
   // P1 根因（001-execution）：隔离世界读不到页面 world 的 requirejs 模块注册表（CanvasObjVO），
@@ -681,8 +696,8 @@
   // 桥接只读调用：postMessage 请求 → 等页面 bridge 回传（Promise，支持超时）
   // 注：仅用于只读查询（probe/getCanvasInfo/ocrPrepare/getCurrentPage）；apply/ocrCreate 走既有专用 listener，避免双响应。
   // Stage 7.6：getCurrentPage —— 供 OCR Source Page 冻结（图片与页面同帧的权威来源）。
-  function bridgeCall(type, timeoutMs) {
-    const replyMap = { probe: "probeResult", getCanvasInfo: "getCanvasInfoResult", ocrPrepare: "ocrPrepareResult", getCurrentPage: "getCurrentPageResult" };
+  function bridgeCall(type, timeoutMs, payload) {
+    const replyMap = { probe: "probeResult", getCanvasInfo: "getCanvasInfoResult", ocrPrepare: "ocrPrepareResult", getCurrentPage: "getCurrentPageResult", getTextInventory: "getTextInventoryResult", inkMeasure: "inkMeasureResult" };
     const replyType = replyMap[type] || (type + "Result");
     return new Promise((resolve) => {
       const on = (e) => {
@@ -692,7 +707,7 @@
         }
       };
       window.addEventListener("message", on);
-      window.postMessage({ source: BRIDGE_SOURCE, type: type }, location.origin);
+      window.postMessage(Object.assign({ source: BRIDGE_SOURCE, type: type }, payload || {}), location.origin);
       if (timeoutMs) setTimeout(() => { window.removeEventListener("message", on); resolve(null); }, timeoutMs);
     });
   }
@@ -829,7 +844,7 @@
     setStatus("百度云端识别中…");
     let res = null;
     try {
-      res = await provider.recognize(img.dataUrl, { imageWidth: img.width, imageHeight: img.height });
+      res = await provider.recognize(img.dataUrl, { imageWidth: img.width, imageHeight: img.height, mode: BAIDU_OCR_MODE });
     } catch (e) {
       maybeLocalFallback(img, "CLOUD_EXCEPTION", "exception", (diag && diag.attempt) || "cloud-primary");
       return;
@@ -848,11 +863,13 @@
     emitOcrDiag(Object.assign({}, diag, { reason: null, fallback: false, quality: { ok: cloudQa.ok, code: cloudQa.reasonCode || null, total: cloudQa.total, kept: (cloudQa.kept || []).length, dropped: (cloudQa.dropped || []).length } }));
     if (!cloudQa.ok) {
       ocrLog("QUALITY", "cloud quality fail code=" + (cloudQa.reasonCode || "invalid-result") + " total=" + cloudQa.total + " kept=0 reason=" + String(cloudQa.reason || "").slice(0, 120));
+      pipelineEvidence({ stage: "BAIDU", fail: cloudQa.reasonCode === "empty-result" ? "BAIDU_EMPTY" : "BAIDU_QUALITY_BLOCK", raw: cloudQa.total, qaKept: 0, qaCode: cloudQa.reasonCode || null });
       maybeLocalFallback(img, cloudQa.reasonCode === "empty-result" ? "CLOUD_EMPTY" : "CLOUD_QUALITY_FAIL", cloudQa.reasonCode || "invalid-result", (diag && diag.attempt) || "cloud-primary");
       return;
     }
     const cloudKept = (cloudQa.kept && cloudQa.kept.length) ? cloudQa.kept : res.candidates;
-    ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " kept=" + cloudKept.length + " elapsed=" + res.meta.elapsed + "ms");
+    ocrLog("BAIDU_RECOGNIZING", "lines=" + res.candidates.length + " kept=" + cloudKept.length + " elapsed=" + res.meta.elapsed + "ms" + (res.meta.mode ? " mode=" + res.meta.mode + " (" + (res.meta.profileName || "") + ")" : ""));
+    pipelineEvidence({ stage: "BAIDU", raw: (res.candidates || []).length, mode: BAIDU_OCR_MODE, qaKept: cloudKept.length });
     // Stage 8D §十九取证：cloud raw candidates 证据（行级 bbox）
     ocrLog("RAW_CAND8D", (res.candidates.map((c) => String(c.text || "").slice(0, 10) + "@" + JSON.stringify({ x: Math.round((c.bbox && (c.bbox.x0 != null ? c.bbox.x0 : c.bbox.x)) || 0), y: Math.round((c.bbox && (c.bbox.y0 != null ? c.bbox.y0 : c.bbox.y)) || 0), w: Math.round((c.bbox && (c.bbox.x1 != null ? Math.abs(c.bbox.x1 - c.bbox.x0) : c.bbox.width)) || 0), h: Math.round((c.bbox && (c.bbox.y1 != null ? Math.abs(c.bbox.y1 - c.bbox.y0) : c.bbox.height)) || 0) })).join("|")).slice(0, 4000));
     // Stage 7.8 §三十二/§四十一：六维质量门分级诊断（仅记录，不改 fallback 决策 ——
@@ -868,36 +885,44 @@
     // 锁不在此释放：由 buildItemsFromOcr（ocrCreate 回复/超时/空结果）决定事务终态
     const lineCandidates = unifyCandidates(cloudKept, { width: img.width, height: img.height });
     const gate8d = runCandidateGate(lineCandidates, { width: img.width, height: img.height });
+    pipelineEvidence({ stage: "GATE", unified: lineCandidates.length, gateKept: (gate8d ? gate8d.validated : []).length, ok: !!(gate8d && gate8d.ok), reason: (gate8d && gate8d.reason) || null });
+    pipelineEvidence({ stage: "GATE", fail: "CANDIDATE_GATE_EMPTY", unified: lineCandidates.length });
     if (!gate8d.ok) { ocrRunning = false; setStatus("OCR 候选质量门阻断（" + String(gate8d.reason || "invalid-result") + "），未生成文字"); ocrLog("GATE8D", "block-set suspect: " + (gate8d.setSuspectReasons || []).join("|")); return; }
     const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(gate8d.validated) : (gate8d.validated || []).map(oneLineBlock);
+    pipelineEvidence({ stage: "BLOCKS", blocks: blocks.length });
     const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate）
-    buildItemsFromOcr(tb.blocks, img, diag);
+    await buildItemsFromOcr(tb.blocks, img, diag);
   }
 
   // ---- Stage 9 V3：Native OCR = 绝对文字真值（§一/§九十 feature gate zyStage9NativeTruth）----
   // 规则：最终 textbox.text 必须来自 nativeOcr.texts[].rawText（原样，禁 trim/禁 sanitize）。
   // 本刀只做 Text Truth 接线（§五十九）：不及 Font/Position/Vertical/ImageInk；Geometry 沿用候选块。
-  // mode：真实取证（V3 精准复测）= OCRTool 仅 印刷体(textType=1)/手写体(textType=2) 两选项，
-  // 无独立"精准"参数；实验开关 zyStage9NativeOcrMode 允许切换（默认 1），不硬编码。
+  // mode：用户实测（2026-09-20）手写体(textType=2) 正确率明显更高 → 默认 "2" 优先；
+  // 空结果/接口失败视为"错误明显"→ 自动回退印刷体(textType=1) 重试一次（recognizeWithFallback）。
+  // Stage 9 V4 §十二：百度 OCR 实验模式（standard|accurate）—— 实验开关 zyBaiduOcrMode，不进长期配置系统
+  const BAIDU_OCR_MODE = GM_getValue("zyBaiduOcrMode", "standard"); // "accurate"=高精度含位置版 /general 之外
   const STAGE9_NATIVE_TRUTH = GM_getValue("zyStage9NativeTruth", "0") === "1";
-  const STAGE9_NATIVE_OCR_MODE = GM_getValue("zyStage9NativeOcrMode", "1"); // "1"|"2"（取证值）
+  const STAGE9_NATIVE_OCR_MODE = GM_getValue("zyStage9NativeOcrMode", "2"); // "2" 手写体优先（用户实测），"1" 印刷体
+  // Stage 9 P4-B §七/§二十一：ImageInk typography target 实验开关（默认 OFF = 保持 OCR bbox target）
+  const STAGE9_FONT_INK_TARGET = GM_getValue("zyStage9FontInkTarget", "0") === "1";
   async function maybeApplyNativeTruth(blocks, img, diag) {
-    if (!STAGE9_NATIVE_TRUTH || typeof recognize !== "function" || typeof applyNativeTextTruth !== "function") {
+    if (!STAGE9_NATIVE_TRUTH || typeof recognizeWithFallback !== "function" || typeof applyNativeTextTruth !== "function") {
       return { blocks: blocks || [], mode: "OFF", skipped: true };
     }
     try {
-      const native = await recognize(img.dataUrl, {
+      const native = await recognizeWithFallback(img.dataUrl, {
+        textType: STAGE9_NATIVE_OCR_MODE, // 手写体优先；空/失败自动回退印刷体
         pageId: (img && img.pageId) || null,
         transactionId: (img && img.transactionId) || null,
-        imageFingerprint: null,
-        textType: STAGE9_NATIVE_OCR_MODE
+        imageFingerprint: (img && img.imageFingerprint) || null
       });
       if (!(native && native.ok)) {
         ocrLog("TRUTH", "native unavailable " + String((native && native.error && native.error.errorCode) || "?"));
         return { blocks: blocks || [], mode: "OFF", skipped: true, reason: "unavailable" };
       }
       const applied = applyNativeTextTruth(blocks || [], native);
-      ocrLog("TRUTH", "native lines=" + native.texts.length + " kept=" + applied.kept.length + " droppedLegacy=" + applied.legacyDropped.length + " unmatchedNative=" + applied.unmatchedNative.length + " valid=" + applied.gate.allTextTruthValid + (applied.gate.failureCode ? " fail=" + applied.gate.failureCode : ""));
+      pipelineEvidence({ stage: "NATIVE", nativeLines: native.texts.length, nativeMode: (native.meta && native.meta.modeUsed) || null, nativeFallback: !!(native.meta && native.meta.fallbackUsed), kept: (applied.kept || []).length, legacyDropped: (applied.legacyDropped || []).length, unmatchedNative: (applied.unmatchedNative || []).length, fail: (!(applied.kept || []).length) ? ((applied.gate && applied.gate.allTextTruthValid) ? "NATIVE_UNMATCHED" : ((applied.gate && applied.gate.failureCode) || "NATIVE_EMPTY")) : null });
+      ocrLog("TRUTH", "native lines=" + native.texts.length + " mode=" + String((native.meta && native.meta.modeUsed) || "?") + " fb=" + (native.meta && native.meta.fallbackUsed ? 1 : 0) + " kept=" + applied.kept.length + " droppedLegacy=" + applied.legacyDropped.length + " unmatchedNative=" + applied.unmatchedNative.length + " valid=" + applied.gate.allTextTruthValid + (applied.gate.failureCode ? " fail=" + applied.gate.failureCode : ""));
       return { blocks: applied.kept, mode: "NATIVE_TRUTH", native: native, applied: applied };
     } catch (e) {
       ocrLog("TRUTH", "exception " + String(e && (e.message || e) || "").slice(0, 160));
@@ -1000,7 +1025,7 @@
               : (gate8d.validated || []).map(oneLineBlock);
             ocrLog("TRACE8D", "blocks=" + (blocks || []).length);
             const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate；OFF 时原样）
-            buildItemsFromOcr(tb.blocks, img, diag);
+            buildItemsFromOcr(tb.blocks, img, diag).catch((eBuild) => { ocrRunning = false; setStatus("识别异常：" + String(eBuild && eBuild.message || eBuild).slice(0, 100)); ocrLog("ERROR", "buildItemsFromOcr: " + String(eBuild && eBuild.stack || (eBuild && eBuild.message || eBuild)).slice(0, 300)); });
           } catch (e) {
             ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse8d: " + String(e && (e.stack || (e.message ? "msg:" + e.message : e)) || e).slice(0, 600));
             emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "exception" }));
@@ -1063,6 +1088,7 @@
         return;
       }
       ocrLog("PREPARING", "kind=" + prep.kind + " " + prep.width + "x" + prep.height + " dataUrl=" + prep.dataUrl.length + " chars");
+      pipelineEvidence({ stage: "PREP", ocrStart: new Date().toISOString(), kind: prep.kind, natural: prep.width + "x" + prep.height, sourceImage: prep.fingerprint ? prep.fingerprint : (prep.dataUrl ? "dataUrl:" + prep.dataUrl.length + "chars" : null) });
       ocrTarget = { kind: prep.kind, geo: prep.geometry };
       // Stage 8B STEP 5：真实模板字体（StyleCandidate 来源 1，禁止硬编码"思源黑体 Regular"）
       ocrTarget.fontStyle = prep.templateFont || null;
@@ -1080,8 +1106,15 @@
       ocrTarget.pageId = srcPage.pageId;
       ocrTarget.side = (srcPage.side === "FRONT" || srcPage.side === "BACK") ? srcPage.side : "UNKNOWN";
       ocrTarget.pageSource = srcPage.sideSource || null;
-      ocrLog("SOURCE_PAGE", "pageId=" + srcPage.pageId + " side=" + srcPage.side + " source=" + (srcPage.sideSource || "n/a"));
-      const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height };
+      // Stage 9 V4 P1（§三）：冻结 OCR Transaction Identity —— pageId/side/canvasId/imageFingerprint 一次锁定，
+      // 正反面各自独立 Session；图片指纹由 dataUrl 计算（同图同帧 → 同指纹）。
+      ocrTarget.transaction = (typeof createTransaction === "function")
+        ? createTransaction({ pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, dataUrl: prep.dataUrl, imageWidth: prep.width, imageHeight: prep.height })
+        : null;
+      // §26：记录本页最近事务（同图重识别 → RECOGNITION_RETRY 判定）
+      if (ocrTarget.transaction) stage9TxByPage[srcPage.pageId] = { pageId: srcPage.pageId, imageFingerprint: ocrTarget.transaction.imageFingerprint, ts: Date.now() };
+      ocrLog("SOURCE_PAGE", "pageId=" + srcPage.pageId + " side=" + srcPage.side + " source=" + (srcPage.sideSource || "n/a") + " tx=" + (ocrTarget.transaction && ocrTarget.transaction.transactionId || "n/a") + " fp=" + (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint || "n/a"));
+      const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height, pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, transactionId: (ocrTarget.transaction && ocrTarget.transaction.transactionId) || null, imageFingerprint: (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint) || null };
       const mode = getOcrMode();
       if (mode === "baidu") {
         // Stage 7.2：manual baidu → 仅 Cloud（无本地 fallback，§8.1）
@@ -1147,7 +1180,7 @@
     return { ok: true, validated: g.validated || [], blocked: g.blocked || [], suspect: false, setSuspectReasons: [], aggregate: g.aggregate || null, score: g.score || null };
   }
 
-  function buildItemsFromOcr(blocks, img, diag) {
+  async function buildItemsFromOcr(blocks, img, diag) {
     // Stage 6.1：消费 TextBlock（1 TextBlock = 1 textbox，§8 硬规则）。
     // block 结构：{text(含\n), bbox, center, confidence, wordBoxes, lineBoxes, lineCount, coordinateSpace}
     // 几何来自 ocrPrepare（页面世界已解析，隔离世界不直读画布）。P3：只消费统一候选边界。
@@ -1158,6 +1191,22 @@
     // 由 page-bridge 在创建前做 Ownership 硬门禁（Stage 7.7）。
     const srcPageId = (ocrTarget && ocrTarget.pageId) || null;
     const srcSide = (ocrTarget && ocrTarget.side) || null;
+    // Stage 9 V4 P1（§三/§七）：本次事务身份（随 item 与 ocrCreate/ocrAdjust 消息逐级透传）
+    const srcTxId = (ocrTarget && ocrTarget.transaction && ocrTarget.transaction.transactionId) || null;
+    const srcTxFp = (ocrTarget && ocrTarget.transaction && ocrTarget.transaction.imageFingerprint) || null;
+    const srcTxCanvas = (ocrTarget && ocrTarget.transaction && ocrTarget.transaction.canvasId) || null;
+    // Stage 9 V4 §17~§28：Recognition Mode 路由（zyStage9Calibration=1 启用，默认开启——画布已有文字 → 校准而非复制）
+    let recRoute = null;
+    const calFlag = (typeof GM_getValue === "function") ? GM_getValue("zyStage9Calibration", "1") : "1";
+    if (calFlag === "1" && srcPageId && srcTxFp && typeof resolveRecognitionMode === "function") {
+      try {
+        const invRes = await bridgeCall("getTextInventory", 2500);
+        const existingTextObjects = (invRes && invRes.ok && Array.isArray(invRes.items)) ? invRes.items : [];
+        const prevTx = stage9TxByPage[srcPageId] ? [stage9TxByPage[srcPageId]] : [];
+        recRoute = resolveRecognitionMode({ pageId: srcPageId, imageFingerprint: srcTxFp, existingTextObjects: existingTextObjects, previousTransactions: prevTx });
+        if (recRoute) ocrLog("ROUTING", "mode=" + recRoute.mode + " existing=" + existingTextObjects.length + " sameImage=" + recRoute.sameImage + " reasons=" + ((recRoute.reasons || []).join("|") || "n/a"));
+      } catch (eRoute) { ocrLog("ROUTING", "resolver exception " + String(eRoute && eRoute.message || eRoute).slice(0, 120)); recRoute = null; }
+    }
     const w = geo.width, h = geo.height, sx = geo.scaleX || 1, sy = geo.scaleY || 1;
     // 背景图 left/top 可能缺失：ocrPrepare 已在页面世界用画布居中兜底（§13）
     const left = geo.left, top = geo.top;
@@ -1187,6 +1236,50 @@
       if (!workBlocks.length) { ocrRunning = false; setStatus("候选文字块经质量门后无有效块，未生成文字"); ocrLog("GATE8D-BLOCK", "all blocked, nothing to create"); return; }
     }
     // 8D §十六：状态链 —— gate 已过（candidate 层）标记 OCR_VALIDATED；进入 mapping 标记 RECONSTRUCTION_READY
+    // Stage 9 P4-B §四/§五：ImageInk typography target 预取（只读；flag OFF 时零额外请求；失败显式 fallback）
+    const inkByBlock = {};
+    if (workBlocks.length && typeof bridgeCall === "function") {
+      try {
+        const inkRes = await bridgeCall("inkMeasure", 8000, { items: workBlocks.map(function (b, i) { return { blockIndex: i, bbox: { x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height } }; }) });
+        if (inkRes && inkRes.ok && Array.isArray(inkRes.items)) inkRes.items.forEach(function (r) { if (r && r.blockIndex != null) inkByBlock[r.blockIndex] = r; });
+
+      } catch (eInk) { ocrLog("FONT_TARGET", "inkMeasure exception " + String(eInk && eInk.message || eInk).slice(0, 120)); }
+    }
+    // Stage 9 Commit 8 A：per-line ImageInk（多行 block）—— 每行 line.bbox 独立测墨；
+    // 字号证据 = median(逐行 ink 高) × effectiveScaleY（affine），禁止 whole-block 总高当单行字号。
+    const lineInkByBlock = {};
+    if (workBlocks.length && typeof bridgeCall === "function") {
+      const lineReqs = [];
+      workBlocks.forEach(function (b, i) { if (b.lines && b.lines.length > 1) b.lines.forEach(function (l, li) { if (l && l.bbox && l.bbox.width > 0) lineReqs.push({ blockIndex: i, lineIndex: li, bbox: { x: l.bbox.x, y: l.bbox.y, width: l.bbox.width, height: l.bbox.height } }); }); });
+      if (lineReqs.length) {
+        try {
+          const lineRes = await bridgeCall("inkMeasure", 8000, { items: lineReqs });
+          if (lineRes && lineRes.ok && Array.isArray(lineRes.items)) lineRes.items.forEach(function (r) { if (r && r.blockIndex != null) { if (!lineInkByBlock[r.blockIndex]) lineInkByBlock[r.blockIndex] = []; lineInkByBlock[r.blockIndex][r.lineIndex != null ? r.lineIndex : lineInkByBlock[r.blockIndex].length] = r; } });
+        } catch (eLineInk) { ocrLog("FONT_TARGET", "per-line inkMeasure exception " + String(eLineInk && eLineInk.message || eLineInk).slice(0, 120)); }
+      }
+    }
+    // Stage 10-A：Source Image foreground 主色提取（§九/§十/§十一/§十二/§二十）
+    //   - 复用 ImageInk（inkByBlock.inkBox，缺失回落 bbox）作区域；纯模块对前景像素分桶求稳定主色
+    //   - 禁止 OCR 决定颜色；禁止 bbox 平均 RGB；UNKNOWN → 不设 fill（保留 Native Anchor/default）
+    const colorByBlock = {};
+    if (workBlocks.length && typeof extractForegroundColor === "function") {
+      try {
+        const rgbaDec = await new Promise((resolve) => {
+          const im = new Image();
+          im.onload = () => { try { const cv = document.createElement("canvas"); cv.width = im.naturalWidth; cv.height = im.naturalHeight; const g = cv.getContext("2d", { willReadFrequently: true }); g.drawImage(im, 0, 0); const d = g.getImageData(0, 0, cv.width, cv.height); resolve({ ok: true, data: d.data, width: cv.width, height: cv.height }); } catch (e) { resolve({ ok: false }); } };
+          im.onerror = () => resolve({ ok: false });
+          im.src = img.dataUrl;
+        });
+        if (rgbaDec && rgbaDec.ok) {
+          workBlocks.forEach(function (b, i) {
+            const ink = inkByBlock[i] || null;
+            const region = (ink && ink.inkBox) ? ink.inkBox : { x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height };
+            const o = extractForegroundColor({ data: rgbaDec.data, width: rgbaDec.width, height: rgbaDec.height, bbox: region });
+            if (o && o.ok) colorByBlock[i] = { color: o.color, confidence: o.confidence, sampleCount: o.sampleCount, coverage: o.coverage, source: o.source, method: o.method };
+          });
+        }
+      } catch (eColor) { ocrLog("COLOR", "extract exception " + String(eColor && eColor.message || eColor).slice(0, 120)); }
+    }
     const items = workBlocks.map((b, bi) => {
       // Stage 7.8 §十三：safeText 真正送 DIY（rawText 仅证据/诊断/重处理）；
       // 仅含被 BLOCKED 移除字符的空块直接剔除，不创建空 textbox（§三十三 special-character 门）。
@@ -1205,15 +1298,38 @@
       // Stage 8B STEP 4（Phase A）：唯一几何合同 —— 用 aCoords 真值建立 source→canvas 仿射，
       // 把 OCR 块四角映射为目标 quad（Phase B compare / Phase C 校正 / Phase E gate 唯一基准）。
       // 旧版页面桥（无 aCoords）或未加载 image-space/text-fit 时整体降级旧路径，行为不变。
-      let targetQuad = null, imageRuntimeState = null;
+      let targetQuad = null, imageRuntimeState = null, imgTShared = null, containRes = null, lineQuadsC7 = null;
       if (geo.aCoords && typeof buildImageTransform === "function" && typeof mapRectToCanvas === "function" && typeof validateQuadInsideCanvas === "function") {
         try {
           const imgT = buildImageTransform({ naturalWidth: geo.naturalWidth, naturalHeight: geo.naturalHeight, width: w, height: h, aCoords: geo.aCoords });
+          imgTShared = imgT;
           if (imgT) {
             const mq = mapRectToCanvas({ x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height }, imgT);
             if (mq && Array.isArray(mq.corners) && mq.corners.length === 4) {
               targetQuad = mq.corners;
               imageRuntimeState = { basis: "aCoords", naturalWidth: geo.naturalWidth, naturalHeight: geo.naturalHeight, objectWidth: w, objectHeight: h, sourceWidth: geo.naturalWidth, sourceHeight: geo.naturalHeight };
+
+              // Stage 9 Commit 7：containment 硬门禁（map → containment → pass 创建 / NEEDS_REPAIR → repair → 再判 → still fail 禁创建）
+              // 文字须留在图片内部；禁止「先创建再让文字跑出去」；旋转图片按 inverse(imageTransform) 在 IMAGE_PIXEL 系检查（非 Canvas AABB）。
+              if (targetQuad && (geo.naturalWidth > 0) && (geo.naturalHeight > 0) && typeof isQuadInsideImage === "function" && typeof repairQuadCentered === "function") {
+                const c0 = isQuadInsideImage(targetQuad, imgT, geo.naturalWidth, geo.naturalHeight, { marginPx: 0 });
+                if (c0.verdict === "NEEDS_REPAIR") {
+                  const rpC7 = repairQuadCentered(targetQuad, imgT, geo.naturalWidth, geo.naturalHeight, { marginPx: 0 });
+                  if (!rpC7 || rpC7.evidence.afterVerdict !== "CONTAINED") {
+                    ocrLog("GEOMETRY_GATE", "block " + bi + " containment repair failed，禁创建（文字须留在图片内）");
+                    return null;
+                  }
+                  targetQuad = rpC7.quad; c0.repaired = true; c0.repairEvidence = rpC7.evidence; containRes = c0;
+                } else if (c0.verdict === "CONTAINED") { containRes = c0; }
+                else { ocrLog("GEOMETRY_GATE", "block " + bi + " containment=" + c0.verdict + "（禁创建，文字须在图片内）"); return null; }
+              }
+              // Commit 7 C：多行逐 line.bbox 独立映射为 line quad（逐行几何证据；仍组成唯一 textbox，不拆分创建）
+              const lqC7 = (b.lines || []).map(function (l) {
+                if (!l || !l.bbox) return null;
+                const mqC7 = mapRectToCanvas({ x: l.bbox.x, y: l.bbox.y, width: l.bbox.width, height: l.bbox.height }, imgT);
+                return (mqC7 && Array.isArray(mqC7.corners) && mqC7.corners.length === 4) ? mqC7.corners : null;
+              }).filter(Boolean);
+              if (lqC7.length) lineQuadsC7 = lqC7;
               // Phase E 前置门禁（坐标合同 §5 F6/§7）：中心出界或越界>20% → 该块禁创建（GEOMETRY_INVALID）
               if ((geo.canvasWidth > 0) && (geo.canvasHeight > 0)) {
                 const gq = validateQuadInsideCanvas(targetQuad, geo.canvasWidth, geo.canvasHeight, { tolerance: 0.2 });
@@ -1227,7 +1343,31 @@
         } catch (eGeo) { targetQuad = null; imageRuntimeState = null; }
       }
       const bw = b.bbox.width * sx, bh = b.bbox.height * sy;
-      // §10（legacy 诊断保留）：avgLineH（行高均值）仅作诊断与 fallback。
+      // Stage 9 P4-B §六/§八/§十/§十一：Typography target 统一解析（字号与 layoutWidth 同源，杜绝双重标准）
+      const inkM = inkByBlock[bi] || null;
+      const tRes = (typeof resolveTypographyTarget === "function")
+        ? resolveTypographyTarget({ bboxWidth: b.bbox.width, imageInkWidth: (inkM && inkM.ok) ? inkM.inkWidth : null, inkValid: !!(inkM && inkM.ok), scale: sx, mode: STAGE9_FONT_INK_TARGET ? "image-ink" : "bbox", reason: (inkM && !inkM.ok) ? inkM.reason : null })
+        : { width: bw, source: "OCR_BBOX", fallback: false, reason: "RESOLVER_UNAVAILABLE" };
+      if (tRes && tRes.source === "IMAGE_INK") ocrLog("FONT_TARGET", "block=" + bi + " source=IMAGE_INK ocrBBox=" + Math.round(b.bbox.width) + " imageInk=" + Math.round((inkM && inkM.inkWidth) || 0) + " target=" + Math.round(tRes.width) + " fallback=0");
+      else if (tRes && tRes.fallback && STAGE9_FONT_INK_TARGET) ocrLog("FONT_TARGET", "block=" + bi + " source=" + tRes.source + " ocrBBox=" + Math.round(b.bbox.width) + " imageInk=" + (inkM && inkM.ok ? Math.round(inkM.inkWidth) : "null") + " fallback=1 reason=" + String(tRes.reason || "UNKNOWN"));
+      // Stage 9 P4-D：fontSize height-first —— 源图墨迹行高 ×sy → canvas 像素（Source Ink Height）；
+		// 宽度不再决定字号；宽度只管 textbox width / 防换行（§2/§5）。
+		      const effScaleC8 = (typeof effectiveScaleOf === "function" && imgTShared) ? effectiveScaleOf(imgTShared) : null;
+      const effSX = (effScaleC8 && effScaleC8.effectiveScaleX > 0) ? effScaleC8.effectiveScaleX : sx;
+      const effSY = (effScaleC8 && effScaleC8.effectiveScaleY > 0) ? effScaleC8.effectiveScaleY : sy;
+      let lineInkEvidence = null;
+      if (b.lines && b.lines.length > 1 && lineInkByBlock[bi] && lineInkByBlock[bi].length) {
+        const lh = lineInkByBlock[bi].map(function (r) { return (r && r.ok && typeof r.inkHeight === "number" && r.inkHeight > 0) ? r.inkHeight : null; }).filter(function (v) { return v != null; });
+        if (lh.length >= 1) {
+          const sorted = lh.slice().sort(function (a, b) { return a - b; });
+          const md = sorted.length % 2 ? sorted[(sorted.length - 1) / 2] : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2;
+          lineInkEvidence = { source: "per-line-median", perLineInkHeights: lh, medianInkHeight: md, medianCanvasPx: Math.round((md * effSY) * 100) / 100, effectiveScaleY: Math.round(effSY * 1e6) / 1e6 };
+        }
+      }
+      const sourceInkHeight = lineInkEvidence ? lineInkEvidence.medianCanvasPx
+        : ((inkM && inkM.ok && typeof inkM.inkHeight === "number" && inkM.inkHeight > 0) ? Math.round((inkM.inkHeight * effSY) * 100) / 100 : null);
+		      const sourceInkWidth = (inkM && inkM.ok && typeof inkM.inkWidth === 'number' && inkM.inkWidth > 0) ? Math.round((inkM.inkWidth * effSX) * 100) / 100 : null;
+		      // §10（legacy 诊断保留）：avgLineH（行高均值）仅作诊断与 fallback。
       let lineHSum = 0;
       (b.lines || []).forEach((l) => { if (l && l.bbox && l.bbox.height > 0) lineHSum += l.bbox.height; });
       const avgLineH = (b.lines && b.lines.length && lineHSum > 0) ? lineHSum / b.lines.length : bh;
@@ -1236,7 +1376,7 @@
       // 叠加 gate Readiness Score（quality<0.5 → 该块不创建）。8B 定案保持：advance 命中源字号。
       let fs = null, fsSource = "none", zy8bAdvance = null, fusion8d = null;
       if (fontMeas8bAvailable && typeof solveFontSizeFusion === "function") {
-        fusion8d = solveFontSizeFusion({ text: srcText, targetVisualWidth: Math.max(8, bw), inkHeight: null, ocrHeight: bh, fontFamily: measureFamily, measurer: fontMeas8b.measurer, quality: currentGateScore != null ? currentGateScore : 0.9 });
+        fusion8d = solveFontSizeFusion({ text: srcText, targetVisualWidth: Math.max(8, tRes.width), inkHeight: sourceInkHeight, ocrHeight: bh, fontFamily: measureFamily, measurer: fontMeas8b.measurer, quality: currentGateScore != null ? currentGateScore : 0.9 });
         if (fusion8d && fusion8d.ok && fusion8d.fontSize > 0) {
           fs = Math.min(160, Math.max(8, fusion8d.fontSize));
           fsSource = fusion8d.reason || "fusion";
@@ -1253,9 +1393,10 @@
       // §11/§12：textbox layoutWidth —— 优先真实文本测量（字号标定+字符宽度估计+安全余量），
       // 宽度 = clamp(max(60, 视觉宽, 最长行估计宽+margin), ≤4000)，OCR 原始单行不得因宽度不足再换行
       const textLines = srcText.split("\n").filter((t) => t !== "");
+      const tMinWidth = Math.max(60, tRes.width + 8, zy8bAdvance != null ? zy8bAdvance + Math.max(10, Math.round(fs * 0.35)) : 0);
       const layout = (typeof estimateTextLayout === "function")
-        ? estimateTextLayout(textLines, fs, { minWidth: Math.max(60, bw + 8, zy8bAdvance != null ? zy8bAdvance + Math.max(10, Math.round(fs * 0.35)) : 0), maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)), visualWidth: bw })
-        : { layoutWidth: Math.max(60, bw + 8, zy8bAdvance != null ? zy8bAdvance + Math.max(10, Math.round(fs * 0.35)) : 0), perLine: textLines.map((t) => ({ text: t, estimatedWidth: 0, needsWrap: false })), forcedWrapDetected: false, estimatedFinalLineCount: textLines.length };
+        ? estimateTextLayout(textLines, fs, { minWidth: tMinWidth, maxWidth: 4000, margin: Math.max(10, Math.round(fs * 0.35)), visualWidth: tRes.width })
+        : { layoutWidth: tMinWidth, perLine: textLines.map((t) => ({ text: t, estimatedWidth: 0, needsWrap: false })), forcedWrapDetected: false, estimatedFinalLineCount: textLines.length };
       if (layout.forcedWrapDetected) forcedWrapTotal += 1;
       if (textLines.length > 1) multiLineTotal += 1;
       // §18：换行诊断字段（sourceLineCount = OCR 原始逻辑行；forcedWrapDetected = 存在源单行放不下）
@@ -1265,6 +1406,15 @@
         estimatedFinalLineCount: layout.estimatedFinalLineCount,
         forcedWrapDetected: layout.forcedWrapDetected,
         layoutWidth: layout.layoutWidth,
+        // Stage 9 P4-B §八/§十二：typography target 来源取证（同源字号/layoutWidth；fallback 记录）
+        targetSource: (tRes && tRes.source) || "OCR_BBOX",
+        targetWidth: tRes ? Math.round(tRes.width * 100) / 100 : null,
+        ocrBBoxTargetWidth: Math.round(bw * 100) / 100,
+        imageInkTargetWidth: (inkM && inkM.ok) ? (Math.round(inkM.inkWidth * sx * 100) / 100) : null,
+			sourceInkHeight: sourceInkHeight, // P4-D：fontSize 高度证据（canvas px）
+			sourceInkWidth: sourceInkWidth, // P4-D：宽度证据（canvas px）\n\t\tperLineInkEvidence: lineInkEvidence ? { source: lineInkEvidence.source, perLineInkHeights: lineInkEvidence.perLineInkHeights, medianInkHeight: lineInkEvidence.medianInkHeight, medianCanvasPx: lineInkEvidence.medianCanvasPx, effectiveScaleY: lineInkEvidence.effectiveScaleY } : null, // Commit 8 A：逐行 ink 证据
+        inkFallback: !!(tRes && tRes.fallback),
+        inkReason: (inkM && !inkM.ok) ? inkM.reason : null,
         perLineWidth: layout.perLine.map((p) => ({ text: String(p.text).slice(0, 12), width: p.estimatedWidth, needsWrap: !!(p.needsWrap) })),
         provider: b.provider || b.sourceProvider || null,
         rawText: b.rawText != null ? String(b.rawText) : String(b.text || ""),
@@ -1297,6 +1447,9 @@
         bboxSeparation8d: bboxSep ? { visualWidth: bboxSep.textVisualTarget.width, ocrBoxH: Math.round(bboxSep.ocrBBox.height * 100) / 100, layoutW: null } : null,
         // Stage 8D P6-1（§二十一）：Source = OCR bbox（canvas 像素）—— 与 Target(text-fit)/Actual(rendered ink) 三层对比用
         ocrBBox8d: { width: Math.round(bw * 100) / 100, height: Math.round(bh * 100) / 100 },
+
+        containment8d: containRes ? { verdict: containRes.verdict, repaired: !!containRes.repaired, outsideCount: (containRes.evidence && containRes.evidence.outsideCount) || 0, margin: (containRes.evidence && containRes.evidence.marginPx) || 0 } : null,
+        targetQuad8d: (targetQuad && typeof quadTextGeometry === "function") ? (function () { const g = quadTextGeometry(targetQuad); return { width: Math.round(g.width * 100) / 100, height: Math.round(g.height * 100) / 100, angle: g.angle }; })() : null,
         // 8D §十六：状态链（gate 已过 → READY；创建后由 calibration/ink 推进 CREATED/VERIFIED）
         status8d: "RECONSTRUCTION_READY"
       };
@@ -1304,13 +1457,32 @@
       const ux = b.bbox.x / w - 0.5, uy = b.bbox.y / h - 0.5;
       const dx = ux * w * sx, dy = uy * h * sy;
       const px = cx + dx * cos - dy * sin, py = cy + dx * sin + dy * cos;
-      const base = { text: srcText, blockIndex: bi, fontFamily: fontFamilyCandidate || "sans-serif", diagnostics: diagnostics, pageId: srcPageId, side: srcSide, zy8bFontMismatch: !fontFamilyCandidate };
+      const base = { text: srcText, blockIndex: bi, fontFamily: fontFamilyCandidate || "sans-serif", diagnostics: diagnostics, pageId: srcPageId, side: srcSide, transactionId: srcTxId, imageFingerprint: srcTxFp, canvasId: srcTxCanvas, zy8bFontMismatch: !fontFamilyCandidate };
+      // Stage 10-A：颜色证据附到 item（fill 仅在有可靠前景证据时设置；UNKNOWN 保留 Native default）
+      const ce10 = colorByBlock[bi] || null;
+      if (ce10) base.fill = ce10.color;
+      base.zy8bFillEvidence = ce10 || { missing: true };
+      if (lineQuadsC7 && lineQuadsC7.length) base.zy8bLineQuads = lineQuadsC7; // Commit 7 C：逐行 quad 证据
+      if (containRes) base.zy8bContainment = containRes; // Commit 7：创建前 containment / repair 证据
       if (targetQuad) { base.zy8bTargetQuad = targetQuad; base.zy8bImageRuntime = imageRuntimeState; } // Stage 8B STEP 4：目标几何附到 item
       if (zy8bAdvance != null) base.zy8bAdvance = zy8bAdvance; // Stage 8B STEP 5：渲染 advance（typography 宽度比较基准）
       // §13：textbox height 须容纳 lineCount×lineHeight（禁止只用单行 OCR bbox.height）
-      const boxHeight = Math.round(textLines.length * fs * FONT_LINE_HEIGHT + 8);
+            const lineRatioBox = (typeof lineBoxRatio === "function") ? lineBoxRatio(fontFamilyCandidate || "sans-serif") : FONT_LINE_HEIGHT;
+      const boxHeight = Math.round(textLines.length * fs * lineRatioBox + 8);
+      // Stage 9 Commit 7：targetQuad 正式接管文字位置（OCR bbox → imageTransform → canvas targetQuad → text target geometry → Native drawText）。
+      // 有效缩放从 affine 列向量长度派生（effectiveScaleOf），禁止用 geo.scaleX/scaleY 充当 natural scaling truth；禁止恢复 ux/uy/px/py/-4 旧模型。
+      if (targetQuad && typeof quadTextGeometry === "function") {
+        const tqG = quadTextGeometry(targetQuad);
+        let c8W = layout.layoutWidth, c8H = boxHeight, c8L = tqG.left, c8T = tqG.top, c8Synth = null;
+        // Stage 9 Commit 8 C：多行 canvasLineQuad[] → 唯一 textbox（common rotation / max line width / 实际行距 / 总视觉高）
+        if (textLines.length > 1 && lineQuadsC7 && lineQuadsC7.length >= 2 && typeof synthesizeTextLayout === "function") {
+          const st8 = synthesizeTextLayout({ lineQuads: lineQuadsC7, lineCount: textLines.length, fontSize: fs, lineHeightRatio: lineRatioBox, layoutWidth: layout.layoutWidth, angle: tqG.angle, minWidth: Math.max(60, tMinWidth) });
+          if (st8) { c8Synth = st8; c8W = st8.width; c8H = st8.height; c8L = st8.left; c8T = st8.top; }
+        }
+        return Object.assign({}, base, { left: c8L, top: c8T, angle: tqG.angle, origin: "left", width: c8W, fontSize: fs, height: c8H, zy8bContainment: containRes, zy8bEffectiveScale: (typeof effectiveScaleOf === "function") ? effectiveScaleOf(imgTShared) : null, zy8bTargetGeometry: { left: c8L, top: c8T, width: c8W, height: c8H, angle: tqG.angle, center: tqG.center }, zy8bMultiline: c8Synth ? c8Synth.evidence : null, zy8bLineInkEvidence: lineInkEvidence });
+      }
       if (!angle) {
-        return Object.assign({}, base, { left: px - 4, top: py - 4, width: layout.layoutWidth, fontSize: fs, height: boxHeight });
+        return Object.assign({}, base, { left: px, top: py, width: layout.layoutWidth, fontSize: fs, height: boxHeight, zy8bContainment: containRes, zy8bGeometryPath: "LEGACY_NO_ACOORDS" });
       }
       // Stage 8A-1（WRONG_ORIGIN fix）：旋转文本不再用 center/origin 定位（left 语义错位，§二十九 四角→AABB）。
       // 源 bbox 四角（source px，绕图片中心 w/2,h/2 并乘 scale）→ AABB 左上，originX 恒为 'left'，
@@ -1331,6 +1503,7 @@
       const pcx = cx + dcx * cos - dcy * sin, pcy = cy + dcx * sin + dcy * cos;
       return Object.assign({}, base, { left: pcx, top: pcy, angle: angle, origin: "center", width: layout.layoutWidth, fontSize: fs, height: boxHeight });
     }).filter(Boolean); // Stage 7.8：剔除 safeText 为空的块（不创建空 textbox）
+    pipelineEvidence({ stage: "BUILD", blocks: workBlocks.length, items: items.length, fail: items.length ? null : "BUILD_EMPTY" });
     if (!items.length) {
       // 空结果：Cloud Primary 阶段空 → 转 Local FALLBACK；本地（manual/fallback）空 → 终态报错
       if (img && !img._cloudFallbackDone && diag && diag.engine === "cloud" && diag.attempt === "cloud-primary") {
@@ -1346,6 +1519,14 @@
     }
     setStatus("识别到 " + items.length + " 个文字区域，正在生成（BUILDING）…");
     ocrLog("BUILDING", "blocks=" + items.length + " forcedWrap=" + forcedWrapTotal + " multiLine=" + multiLineTotal);
+    // Stage 9 V4 §十九~§二十：路由 —— NEW_RECOGNITION 走创建；CALIBRATION/RETRY 走更新现有对象
+    if (recRoute && recRoute.mode !== "NEW_RECOGNITION") {
+      setStatus("画布已有 " + recRoute.existingCount + " 个文字，按「" + (recRoute.mode === "RECOGNITION_RETRY" ? "同图重识别" : "校准识别") + "」更新现有对象（不重复创建）…");
+      sendCalibration(items, recRoute, srcPageId, srcSide, srcTxId, srcTxFp);
+      // 事务结束：释放 ocrTarget，避免下次识别串用旧目标
+      ocrTarget = null;
+      return;
+    }
     // P0（真机 BUILDING 卡死）：页面桥异常时兜底，10 秒内未收到 ocrCreateResult 即走出死等状态
     const on = (e) => {
       if (e.data && e.data.source === "zy-card-assistant-page" && e.data.type === "ocrCreateResult") {
@@ -1354,20 +1535,43 @@
         const integ = e.data.editorIntegration || {};
         if (e.data.ok) {
           setStatus("已生成 " + (e.data.created || []).length + " 个文字（可双击编辑）");
+          pipelineEvidence({ stage: "CREATE", requested: e.data.detectedBlocks || 0, created: (e.data.created || []).length });
           ocrLog("SUCCESS", "created=" + (e.data.created || []).length + "/" + (e.data.detectedBlocks || 0) + " editorInteg=" + JSON.stringify({ undo: !!integ.nativeUndoFound, savePre: !!integ.undoSavePre, savePost: !!integ.undoSavePost, ident: integ.identityApplied, uv4: integ.uv4Total, layerMax: integ.layerMax }));
           // Stage 8B STEP 4（Phase B/C/E）：创建后几何闭环校正（不阻塞终态回复，异步进行）
           runGeometryCalibration(items, e.data, srcSide);
         } else {
+          pipelineEvidence({ stage: "CREATE", fail: "CREATE_FAILED", requested: e.data.detectedBlocks || 0, created: (e.data.created || []).length, failedIdx: e.data.failedBlockIndex != null ? e.data.failedBlockIndex : null });
           setStatus("生成失败：" + (e.data.message || "未创建文字") + (e.data.failedBlockIndex != null ? "（第 " + e.data.failedBlockIndex + " 个失败，已回滚）" : ""));
           ocrLog("ERROR", "ocrCreate failed created=" + (e.data.created || []).length + " detected=" + (e.data.detectedBlocks || 0) + " failedIdx=" + (e.data.failedBlockIndex != null ? e.data.failedBlockIndex : "n/a") + " msg=" + String(e.data.message || "").slice(0, 120));
         }
       }
     };
-    const fallbackTimer = setTimeout(() => { window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
+    const fallbackTimer = setTimeout(() => { pipelineEvidence({ stage: "CREATE", fail: "CREATE_TIMEOUT" }); window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
     window.addEventListener("message", on);
-    window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, items: items }, location.origin);
+    window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, transactionId: srcTxId, imageFingerprint: srcTxFp, items: items }, location.origin);
     // 事务结束：释放 ocrTarget，避免下次识别串用旧目标
     ocrTarget = null;
+  }
+
+  // Stage 9 V4 §二十/§二十六：校准识别/同图重识别 → 通知页面桥更新现有 textbox（不重复创建）
+  // 只在该事务的 pageId 上生效；page-bridge 侧 ocrCalibrate 有同款 Page Ownership 硬门禁（PAGE_IDENTITY_CHANGED STOP）。
+  function sendCalibration(itemsRes, route, pageId, side, txId, txFp) {
+    ocrLog("ROUTING", "calibrate mode=" + route.mode + " items=" + itemsRes.length + " pageId=" + pageId);
+    const onCal = (e) => {
+      if (e.data && e.data.source === PAGE_SOURCE && e.data.type === "ocrCalibrateResult") {
+        clearTimeout(tCal); window.removeEventListener("message", onCal); ocrRunning = false;
+        if (e.data.ok) {
+          setStatus("已校准 " + (e.data.calibrated || []).length + " 个文字" + ((e.data.created || []).length ? "，新建 " + e.data.created.length + " 个" : "") + "（未重复创建）");
+          ocrLog("SUCCESS", "calibrate ok calibrated=" + (e.data.calibrated || []).length + " created=" + (e.data.created || []).length + " pageId=" + e.data.pageId + " tx=" + e.data.transactionId);
+        } else {
+          setStatus("校准失败：" + (e.data.message || e.data.code || "未知"));
+          ocrLog("ERROR", "calibrate failed code=" + (e.data.code || "?") + " msg=" + String(e.data.message || "").slice(0, 120));
+        }
+      }
+    };
+    const tCal = setTimeout(() => { window.removeEventListener("message", onCal); ocrRunning = false; setStatus("校准超时（页面桥未确认）：请查看浏览器控制台（错误码 ocrCalibrate-reply-timeout）。"); ocrLog("ERROR", "ocrCalibrate reply timeout"); }, 10000);
+    window.addEventListener("message", onCal);
+    window.postMessage({ source: BRIDGE_SOURCE, type: "ocrCalibrate", pageId: pageId, side: side, transactionId: txId, imageFingerprint: txFp, items: itemsRes }, location.origin);
   }
 
   // Stage 8B STEP 4（Phase B/C/E）：创建后几何闭环校正 —— compare(targetQuad vs 实测 aCoords) →
@@ -1375,6 +1579,12 @@
   // 最终仍超差 → CREATE_REJECTED_GEOMETRY_MISMATCH（Phase E 诊断，不删除对象；删除动作留真机取证）。
   async function runGeometryCalibration(itemsList, reply, side) {
     if (typeof compareTextGeometry !== "function" || typeof quadSize !== "function" || typeof quadCenter !== "function" || typeof quadAngle !== "function") return;
+    // Stage 9 V4 P1（§四/§五）：校准消息携带事务身份（pageId/transactionId/imageFingerprint），
+    // page-bridge 据此做 Adjust Page Ownership 门禁（PAGE_IDENTITY_CHANGED → 整批 STOP，防正反串页）。
+    const txFirst = (itemsList && itemsList[0]) || null;
+    const txCalPageId = (txFirst && txFirst.pageId) || null;
+    const txCalId = (txFirst && txFirst.transactionId) || null;
+    const txCalFp = (txFirst && txFirst.imageFingerprint) || null;
     // 宽度约束修正依赖真实文本测量（浏览器 2d context；无则整体跳过防换行优化）
     const textMeasurer = (typeof browserTextMeasurer === "function") ? browserTextMeasurer() : null;
     const withMeasurer = function (f) { return textMeasurer && textMeasurer.available ? textMeasurer.measurer : null; };
@@ -1383,7 +1593,7 @@
     (itemsList || []).forEach(function (it) {
       const created = (reply && reply.created ? reply.created : []).find(function (c) { return c && c.blockIndex === it.blockIndex; });
       if (!it.zy8bTargetQuad || !created || !created.geometry || !created.geometry.quad) return;
-      pending.push({ blockIndex: it.blockIndex, item: it, geom: created.geometry, round: 0, done: false, compare: null, large: 0 });
+      pending.push({ blockIndex: it.blockIndex, item: it, geom: created.geometry, round: 0, done: false, compare: null, large: 0, srcInkH: (it.diagnostics && typeof it.diagnostics.sourceInkHeight === "number") ? it.diagnostics.sourceInkHeight : null, ink: (created && created.ink) || null, cal: [] });
     });
     if (!pending.length) return;
     const ZY_OK = [], ZY_REJECT = [];
@@ -1399,11 +1609,29 @@
         window.addEventListener("message", onAdj);
       });
     };
-    const correctionsFor = function (it, geom, cmp) {
+    const correctionsFor = function (p, geom, cmp) { const it = p.item;
       // Stage 8B STEP 5/6（§11/§12/§十四）：calibration 职责收敛 —— 只做小误差修正；
       // 换行（WRAP）只加宽不缩字号；字大小只 ±1 小步；需要大跳变 → 归类 CALIBRATION_MODEL_FAILURE。
       const corr = {}, tq = it.zy8bTargetQuad;
       let any = false, large = false;
+      // P4-D §7/§8：Source Ink Height vs Editor Actual Ink Height —— ±1 小步（禁外框高/OCR bbox 高；§10 字号未收敛不修 position）
+      if (p.ink && p.srcInkH > 0 && typeof geom.fontSize === "number" && it.text && !cmp.typography.wrapDetected) {
+        const pGap = Math.round(((p.ink.inkHeight - p.srcInkH) * 100)) / 100;
+        if (Math.abs(pGap) > 1.5) {
+          const fsCur = geom.fontSize;
+          const fsNew = Math.min(160, Math.max(10, fsCur + (pGap > 0 ? -1 : 1)));
+          corr.fontSize = fsNew; any = true;
+          p.cal.push({ round: (p.round || 0) + 1, sourceInkHeight: p.srcInkH, editorInkHeightBefore: p.ink.inkHeight, fontSizeBefore: fsCur, fontSizeAfter: fsNew, heightErrorBefore: pGap, heightRatio: Math.round((p.ink.inkHeight / p.srcInkH) * 1000) / 1000, annotation: pGap > 0 ? "editor-too-large" : "editor-too-small" });
+          if (Math.abs(pGap) > 2) large = true;
+          const measW2 = withMeasurer();
+          if (typeof solveTextWidth === "function" && measW2) {
+            const mw = solveTextWidth(it.text, fsNew, { margin: 0, measurer: measW2, fontFamily: it.fontFamily || "sans-serif" });
+            if (mw) corr.width = Math.min(4000, Math.max(geom.textboxWidth || 20, Math.ceil(mw.advanceWidth + 4)));
+          }
+          corr.__large = large;
+          return corr; // 只调字号（+防换行宽度），不动 center/angle
+        }
+      }
       const tSz = quadSize(tq), tCtr = quadCenter(tq), tAng = quadAngle(tq);
       const aCtr = (geom.center && typeof geom.center.x === "number") ? geom.center : quadCenter(geom.quad);
       const aAng = (typeof geom.angle === "number") ? geom.angle : quadAngle(geom.quad);
@@ -1426,7 +1654,7 @@
         corr.width = Math.min(4000, Math.max(20, Math.round(needW)));
         any = true;
       }
-      if (cmp.failures.indexOf("height") >= 0 && typeof geom.fontSize === "number" && it.text && !cmp.typography.wrapDetected) {
+      if (cmp.failures.indexOf("height") >= 0 && typeof geom.fontSize === "number" && it.text && !cmp.typography.wrapDetected && !(p.ink && p.srcInkH > 0)) { // P4-D：ink 证据时 fontSize 由 Actual Ink 校准（§8）
         // 无换行的小高度差：字号 ±1 小步（STEP E：1~3 次小修正内收敛）
         const fsCur = geom.fontSize;
         const step = tSz.height > geom.height ? 1 : -1;
@@ -1469,14 +1697,30 @@
         if (p.done) return;
         const cmp = compareTextGeometry(p.item.zy8bTargetQuad, p.geom.quad, { centerTol: 2, cornerTol: 3, widthTol: 3, angleTol: 0.5, renderedLineCount: p.geom.renderedLineCount != null ? p.geom.renderedLineCount : null, targetLineCount: (p.item.diagnostics && p.item.diagnostics.sourceLineCount) || 1, fontMismatch: !!p.item.zy8bFontMismatch, advanceOverride: p.item.zy8bAdvance != null ? p.item.zy8bAdvance : null, fontSize: p.geom.fontSize != null ? p.geom.fontSize : null });
         p.compare = cmp;
+        // P4-D §7：ink gap 显著时先修字号（±1），不得被 cmp.pass/几何通过短路（§10 字号优先于 position）
+        const pInkGapPre = (p.ink && p.srcInkH > 0 && typeof p.geom.fontSize === "number" && !cmp.typography.wrapDetected) ? Math.round(((p.ink.inkHeight - p.srcInkH) * 100)) / 100 : null;
+        if (pInkGapPre != null && Math.abs(pInkGapPre) > 1.5) {
+          // P4-D 二期：测量精度感知停止 —— fontSize ±1 后实测 ink 高度不再变化 → MEASUREMENT_PLATEAU（禁误判 CALIBRATION_MODEL_FAILURE）
+          const lastStep = (p.cal && p.cal.length) ? p.cal[p.cal.length - 1] : null;
+          if (lastStep && lastStep.editorInkHeightAfter != null && p.ink && typeof p.ink.inkHeight === "number" && Math.abs(p.ink.inkHeight - lastStep.editorInkHeightAfter) <= 0.5 && p.round >= 2) {
+            p.done = true;
+            p.cal[p.cal.length - 1].measurementPlateau = true;
+            ZY_NOTES.push({ blockIndex: p.blockIndex, status: cmp.status, failures: "height-ink", category: "FONT_MODEL", code: "MEASUREMENT_PLATEAU", plateauInkHeight: p.ink.inkHeight });
+            return;
+          }
+          if (p.round >= 3) { p.done = true; ZY_NOTES.push({ blockIndex: p.blockIndex, status: cmp.status, failures: "height-ink", category: "FONT_MODEL", code: "CALIBRATION_MODEL_FAILURE", cal: p.cal }); return; } // P4-D §14：4 轮不收敛 → 保留对象并备案（禁全局 multiplier）
+          const corrPre = correctionsFor(p, p.geom, cmp);
+          if (corrPre) { p.round += 1; if (corrPre.__large) { p.large += 1; delete corrPre.__large; } need.push({ blockIndex: p.blockIndex, corrections: corrPre }); }
+          return;
+        }
         if (cmp.pass) { p.done = true; ZY_OK.push(p.blockIndex); return; }
-        if (cmp.geometry.pass && !cmp.typography.wrapDetected) {
+        if (cmp.geometry.pass && !cmp.typography.wrapDetected && !(p.ink && p.srcInkH > 0 && Math.abs(p.ink.inkHeight - p.srcInkH) > 1.5)) { // P4-D：ink gap 未收敛不得提前备注
           // 视觉几何正确、无换行 → 对象保留；typography 差异仅记录（字体不匹配属 StyleResolver 范畴）
           p.done = true; ZY_NOTES.push({ blockIndex: p.blockIndex, status: cmp.status, failures: (cmp.failures || []).join("|"), category: CATEGORY(p) });
           return;
         }
         if (p.round >= 3) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: (cmp.failures || []).join("|"), status: cmp.status }); return; }
-        const corr = correctionsFor(p.item, p.geom, cmp);
+        const corr = correctionsFor(p, p.geom, cmp);
         if (!corr) { p.done = true; ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CREATE_REJECTED_NO_CORRECTION", category: CATEGORY(p), failures: (cmp.failures || []).join("|") }); return; }
         p.round += 1;
         if (corr.__large) p.large += 1;
@@ -1484,14 +1728,20 @@
         need.push({ blockIndex: p.blockIndex, corrections: corr });
       });
       if (!need.length) break;
-      window.postMessage({ source: "zy-card-assistant", type: "ocrAdjust", side: side || "front", items: need }, location.origin);
+      window.postMessage({ source: "zy-card-assistant", type: "ocrAdjust", side: side || "front", pageId: txCalPageId, transactionId: txCalId, imageFingerprint: txCalFp, items: need }, location.origin);
       const rep = await waitAdjOnce();
       if (!rep || !rep.items) break;
       rep.items.forEach(function (r) {
         const p = pending.find(function (x) { return x.blockIndex === r.blockIndex; });
         if (p && r.ok && r.geometry && r.geometry.quad) p.geom = r.geometry;
+        if (p && r.ok && r.ink) { p.ink = r.ink; if (p.cal.length) p.cal[p.cal.length - 1].editorInkHeightAfter = r.ink.inkHeight != null ? r.ink.inkHeight : null; } // P4-D：校准后 Actual Ink 回填
       });
     }
+    // P4-D §9：校准证据导出（window 隔离变量，供 runner readNew 取证）
+    try {
+      const withCal = pending.filter(function (x) { return x.cal && x.cal.length; }).map(function (x) { return { blockIndex: x.blockIndex, sourceInkHeight: x.srcInkH, rounds: x.cal.length, steps: x.cal, finalFontSize: (x.geom && typeof x.geom.fontSize === "number") ? x.geom.fontSize : null, finalEditorInkHeight: (x.ink && typeof x.ink.inkHeight === "number") ? x.ink.inkHeight : null, heightErrorAfter: (x.ink && x.srcInkH > 0 && typeof x.ink.inkHeight === "number") ? Math.round((x.ink.inkHeight - x.srcInkH) * 100) / 100 : null }; });
+      if (withCal.length) window.__zyStage9CalibrationEvidence = (window.__zyStage9CalibrationEvidence || []).concat(withCal);
+    } catch (eCalEv) {}
     pending.forEach(function (p) { if (!p.done) { p.done = true; if (p.compare && p.compare.geometry.pass && !p.compare.typography.wrapDetected) { ZY_NOTES.push({ blockIndex: p.blockIndex, status: p.compare.status, failures: (p.compare.failures || []).join("|"), category: CATEGORY(p) }); } else { ZY_REJECT.push({ blockIndex: p.blockIndex, code: "CALIBRATION_MODEL_FAILURE", category: CATEGORY(p), failures: p.compare ? (p.compare.failures || []).join("|") : "no-compare", status: p.compare ? p.compare.status : null }); } } });
     if (ZY_OK.length || ZY_REJECT.length || ZY_NOTES.length) {
       const summary = { ok: ZY_OK.length, rejected: ZY_REJECT.length, noted: ZY_NOTES.length, rejectedBlocks: ZY_REJECT.map(function (r) { return { blockIndex: r.blockIndex, code: r.code, category: r.category, failures: r.failures, status: r.status }; }), notes: ZY_NOTES };

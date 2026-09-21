@@ -127,6 +127,28 @@ function recognize(image, ctx) {
     });
 }
 
+// ---- recognizeWithFallback(image, ctx)：手写体优先，错误明显回退印刷体（用户实测手写体正确率更高）----
+// ctx.textType 主模式默认 "2"（手写体）；空结果/接口失败视为"错误明显"→ 自动回退 ctx.fallbackTo="1"（印刷体）重试一次。
+// 不评分、不猜内容；仅以"结果为空或接口失败"为回退触发（保守）。
+// 返回 same NativeOCRResult 结构 + meta.fallbackUsed/meta.modeUsed。
+function recognizeWithFallback(image, ctx) {
+  var c = ctx || {};
+  var primary = c.textType != null ? c.textType : "2"; // 手写体优先（用户实测 2026-09-20）
+  var fallback = c.fallbackTo != null ? c.fallbackTo : "1";
+  return recognize(image, Object.assign({}, c, { textType: primary })).then(function (r1) {
+    var emptyOrFail = !(r1 && r1.ok) || !((r1.texts || []).length);
+    if (!emptyOrFail) {
+      r1.meta = Object.assign({}, r1.meta, { modeUsed: primary, fallbackUsed: false });
+      return r1;
+    }
+    return recognize(image, Object.assign({}, c, { textType: fallback })).then(function (r2) {
+      if (r2) r2.meta = Object.assign({}, r2.meta || {}, { modeUsed: fallback, fallbackUsed: true, primaryMode: primary, primaryEmptyOrFail: emptyOrFail });
+      else r2 = { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, texts: [], error: { errorCode: "FALLBACK_FAIL", errorMessage: "主/回退模式均失败" } };
+      return r2;
+    });
+  });
+}
+
 if (typeof module !== "undefined" && module.exports) module.exports = {
-  recognize, buildFormData, parseNativeText, toNativeResult, ocrLineId
+  recognize, recognizeWithFallback, buildFormData, parseNativeText, toNativeResult, ocrLineId
 };
