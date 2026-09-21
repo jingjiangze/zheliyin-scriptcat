@@ -204,6 +204,7 @@ function pageBridge() {
                   const reusedObj = nativeAnchors[reuseMatch.matchedIndex].object || null;
                   if (reusedObj) {
                     try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.text === "string") { if (typeof reusedObj.setText === "function") reusedObj.setText(it.text); else reusedObj.text = it.text; } } catch (eSet) {}
+                    try { if (it.fill && typeof reusedObj.set === "function") reusedObj.set({ fill: it.fill }); else if (it.fill) reusedObj.fill = it.fill; } catch (eFillReuse) {} // Stage 10-A：仅在有前景证据时更新颜色
                     const bIdxNat2 = it.blockIndex != null ? it.blockIndex : idx;
                     reusedObj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat2) : ("zy-ocr-" + bIdxNat2);
                     reusedObj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat2, objectUuid: reusedObj.uuid || reusedObj.multiUuid || null };
@@ -238,6 +239,7 @@ function pageBridge() {
                   obj.isPreview = obj.isPreview !== undefined ? obj.isPreview : 0;
                   obj.isDesignShape = obj.isDesignShape !== undefined ? obj.isDesignShape : 0;
                   batchNat.push(obj);
+                  if (it.fill && obj.fill !== it.fill) { try { if (typeof obj.set === "function") obj.set({ fill: it.fill }); else obj.fill = it.fill; } catch (eFill) {} } // Stage 10-A：drawText 双保险透传 fill
                   if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{12,}$/.test(obj.multiUuid)) editorInteg2.uv4Total += 1;
                   try { if (it.diagnostics) obj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
                   // Stage 8B STEP 4（Phase B/C）：测量本对象真实几何 + 业务字段初始同步 + 定位 key
@@ -872,7 +874,7 @@ function pageBridge() {
       return {
         media: {
           mediaType: "text", text: text,
-          font: { pointSize: size, fontColor: "#000000", isHorizontal: 1, gravity: "left",
+          font: { pointSize: size, fontColor: it.fill || "#000000", isHorizontal: 1, gravity: "left",
             id: fontId || "1", isItalic: 0, textDecoration: "", linethrough: 0, overline: 0, isBold: 0, overprintStroke: 0 },
           charSpace: 0, lineSpace: 1.2, lineIdType: 0, isBG: 0, imgPath: ""
         },

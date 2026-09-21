@@ -1,16 +1,16 @@
 {
-  "ts": "2026-09-21T00:44:03.658Z",
+  "ts": "2026-09-21T02:04:19.766Z",
   "stage": "STAGE-9-9-FULL-PIPELINE",
-  "version": "0.3.11.48",
+  "version": "0.3.11.49",
   "cookiePresent": false,
-  "baiduPresent": true,
+  "baiduPresent": false,
   "gitBaseline": {
-    "head": "6370a5a6adb611180931fe1effa2b8fdd706f3ed",
+    "head": "a86a97a2ad40cb1e63ff22359d7f8495b367e841",
     "branch": "stage-9-altq-baidu-reconstruction",
     "clean": false,
-    "stage": "6370a5a6adb611180931fe1effa2b8fdd706f3ed",
-    "test": "6370a5a6adb611180931fe1effa2b8fdd706f3ed",
-    "local": "6370a5a6adb611180931fe1effa2b8fdd706f3ed"
+    "stage": "a86a97a2ad40cb1e63ff22359d7f8495b367e841",
+    "test": "a86a97a2ad40cb1e63ff22359d7f8495b367e841",
+    "local": "a86a97a2ad40cb1e63ff22359d7f8495b367e841"
   },
   "partA": {
     "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
@@ -23,7 +23,7 @@
         "textboxCountDelta": 0,
         "anchorScore": 0.8578,
         "winnerMargin": 0.29490000000000005,
-        "matchedUuid": "b00d65a0-7a22-484d-b5e6-af99f50f6467",
+        "matchedUuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
         "matchedMarkuuid": null,
         "resolver": {
           "anchorCount": 7,
@@ -41,7 +41,7 @@
         "textboxCountDelta": 1,
         "identity": [
           {
-            "uuid": "d32233c0-68b2-492c-877f-577114a57bc5",
+            "uuid": "d0d138be-a792-435b-bec8-ea1d851f3e13",
             "text": "ZY_99_PROBE_NEW",
             "pageId": "canvas:c0",
             "side": "FRONT",
@@ -119,7 +119,7 @@
           "textboxCount": 8,
           "dupObjects": 1,
           "uuids": [
-            "6f867871-b001-491c-a20a-be4398c9dff6"
+            "a8b6ddc1-a3fe-45ed-a6ca-72499b778996"
           ]
         },
         {
@@ -129,7 +129,7 @@
           "textboxCount": 8,
           "dupObjects": 1,
           "uuids": [
-            "6f867871-b001-491c-a20a-be4398c9dff6"
+            "a8b6ddc1-a3fe-45ed-a6ca-72499b778996"
           ]
         },
         {
@@ -139,7 +139,7 @@
           "textboxCount": 8,
           "dupObjects": 1,
           "uuids": [
-            "6f867871-b001-491c-a20a-be4398c9dff6"
+            "a8b6ddc1-a3fe-45ed-a6ca-72499b778996"
           ]
         }
       ],
@@ -963,7 +963,7 @@
               "fontSize": 21.20516693228872,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "5e62d8a1-1795-4519-8fd5-fc07931c1064",
+              "uuid": "700d0ef5-1891-4948-afe5-f9ef39be7c32",
               "center": {
                 "x": 158.54509383960064,
                 "y": 240.29897500151952
@@ -979,7 +979,7 @@
               "fontSize": 12.95543959730228,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "6cb56409-ec1d-4423-997c-000ff1f9904c",
+              "uuid": "ff3dcc13-ca81-4bf7-bae4-2d3e3a670f0f",
               "center": {
                 "x": 147.03090246190646,
                 "y": 275.9177961663421
@@ -995,7 +995,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "de6e88c9-2b86-4a41-ac24-41c8f02ce2f7",
+              "uuid": "68d6830c-f5bb-4b46-acfa-4577cb8ad6ef",
               "center": {
                 "x": 131.44643922955237,
                 "y": 298.91423284110306
@@ -1011,7 +1011,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "753e469b-b042-44d0-87aa-aa5ae9e9a1c4",
+              "uuid": "58a56e36-38c0-4f05-ad0c-be93696e82a3",
               "center": {
                 "x": 258.7686666838018,
                 "y": 321.9358461433882
@@ -1027,7 +1027,7 @@
               "fontSize": 16.28117203437238,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "6427257b-4f73-4400-bff2-52854d2469cc",
+              "uuid": "4b2de657-b173-4fd2-8437-cff9dfc3ef75",
               "center": {
                 "x": 62.19102293539464,
                 "y": 116.19864936898608
@@ -1043,7 +1043,7 @@
               "fontSize": 15.838569405606602,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "4c0e8a36-c328-4a7d-a89a-e63b42109bca",
+              "uuid": "aad4ac3a-5805-4689-92d9-0d93f602d40c",
               "center": {
                 "x": 170.68510562810275,
                 "y": 115.94857888373343
@@ -1059,7 +1059,7 @@
               "fontSize": 30.779490573728324,
               "fontFamily": "OPPOSans-M",
               "zyOcrKey": null,
-              "uuid": "b00d65a0-7a22-484d-b5e6-af99f50f6467",
+              "uuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
               "center": {
                 "x": 136.9304634130626,
                 "y": 78.30039549974896
@@ -1085,7 +1085,7 @@
               "fontSize": 21.20516693228872,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "5e62d8a1-1795-4519-8fd5-fc07931c1064",
+              "uuid": "700d0ef5-1891-4948-afe5-f9ef39be7c32",
               "center": {
                 "x": 158.54509383960064,
                 "y": 240.29897500151952
@@ -1101,7 +1101,7 @@
               "fontSize": 12.95543959730228,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "6cb56409-ec1d-4423-997c-000ff1f9904c",
+              "uuid": "ff3dcc13-ca81-4bf7-bae4-2d3e3a670f0f",
               "center": {
                 "x": 147.03090246190646,
                 "y": 275.9177961663421
@@ -1117,7 +1117,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "de6e88c9-2b86-4a41-ac24-41c8f02ce2f7",
+              "uuid": "68d6830c-f5bb-4b46-acfa-4577cb8ad6ef",
               "center": {
                 "x": 131.44643922955237,
                 "y": 298.91423284110306
@@ -1133,7 +1133,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "753e469b-b042-44d0-87aa-aa5ae9e9a1c4",
+              "uuid": "58a56e36-38c0-4f05-ad0c-be93696e82a3",
               "center": {
                 "x": 258.7686666838018,
                 "y": 321.9358461433882
@@ -1149,7 +1149,7 @@
               "fontSize": 16.28117203437238,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "6427257b-4f73-4400-bff2-52854d2469cc",
+              "uuid": "4b2de657-b173-4fd2-8437-cff9dfc3ef75",
               "center": {
                 "x": 62.19102293539464,
                 "y": 116.19864936898608
@@ -1165,7 +1165,7 @@
               "fontSize": 15.838569405606602,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "4c0e8a36-c328-4a7d-a89a-e63b42109bca",
+              "uuid": "aad4ac3a-5805-4689-92d9-0d93f602d40c",
               "center": {
                 "x": 170.68510562810275,
                 "y": 115.94857888373343
@@ -1181,7 +1181,7 @@
               "fontSize": 30.779490573728324,
               "fontFamily": "OPPOSans-M",
               "zyOcrKey": null,
-              "uuid": "b00d65a0-7a22-484d-b5e6-af99f50f6467",
+              "uuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
               "center": {
                 "x": 136.9304634130626,
                 "y": 78.30039549974896
@@ -1212,7 +1212,7 @@
               "fontSize": 21.20516693228872,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "5e62d8a1-1795-4519-8fd5-fc07931c1064",
+              "uuid": "700d0ef5-1891-4948-afe5-f9ef39be7c32",
               "center": {
                 "x": 158.54509383960064,
                 "y": 240.29897500151952
@@ -1228,7 +1228,7 @@
               "fontSize": 12.95543959730228,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "6cb56409-ec1d-4423-997c-000ff1f9904c",
+              "uuid": "ff3dcc13-ca81-4bf7-bae4-2d3e3a670f0f",
               "center": {
                 "x": 147.03090246190646,
                 "y": 275.9177961663421
@@ -1244,7 +1244,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "de6e88c9-2b86-4a41-ac24-41c8f02ce2f7",
+              "uuid": "68d6830c-f5bb-4b46-acfa-4577cb8ad6ef",
               "center": {
                 "x": 131.44643922955237,
                 "y": 298.91423284110306
@@ -1260,7 +1260,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "753e469b-b042-44d0-87aa-aa5ae9e9a1c4",
+              "uuid": "58a56e36-38c0-4f05-ad0c-be93696e82a3",
               "center": {
                 "x": 258.7686666838018,
                 "y": 321.9358461433882
@@ -1276,7 +1276,7 @@
               "fontSize": 16.28117203437238,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "6427257b-4f73-4400-bff2-52854d2469cc",
+              "uuid": "4b2de657-b173-4fd2-8437-cff9dfc3ef75",
               "center": {
                 "x": 62.19102293539464,
                 "y": 116.19864936898608
@@ -1292,7 +1292,7 @@
               "fontSize": 15.838569405606602,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "4c0e8a36-c328-4a7d-a89a-e63b42109bca",
+              "uuid": "aad4ac3a-5805-4689-92d9-0d93f602d40c",
               "center": {
                 "x": 170.68510562810275,
                 "y": 115.94857888373343
@@ -1307,8 +1307,8 @@
               "height": 34.78082434831301,
               "fontSize": 30.779490573728324,
               "fontFamily": "OPPOSans-M",
-              "zyOcrKey": "zy-ocr-tx-muaiw0pe-dsds8x-0",
-              "uuid": "b00d65a0-7a22-484d-b5e6-af99f50f6467",
+              "zyOcrKey": "zy-ocr-tx-mualr85y-4828hu-0",
+              "uuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
               "center": {
                 "x": 136.9304634130626,
                 "y": 78.30039549974896
@@ -1334,7 +1334,7 @@
               "fontSize": 21.20516693228872,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "5e62d8a1-1795-4519-8fd5-fc07931c1064",
+              "uuid": "700d0ef5-1891-4948-afe5-f9ef39be7c32",
               "center": {
                 "x": 158.54509383960064,
                 "y": 240.29897500151952
@@ -1350,7 +1350,7 @@
               "fontSize": 12.95543959730228,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "6cb56409-ec1d-4423-997c-000ff1f9904c",
+              "uuid": "ff3dcc13-ca81-4bf7-bae4-2d3e3a670f0f",
               "center": {
                 "x": 147.03090246190646,
                 "y": 275.9177961663421
@@ -1366,7 +1366,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "de6e88c9-2b86-4a41-ac24-41c8f02ce2f7",
+              "uuid": "68d6830c-f5bb-4b46-acfa-4577cb8ad6ef",
               "center": {
                 "x": 131.44643922955237,
                 "y": 298.91423284110306
@@ -1382,7 +1382,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "753e469b-b042-44d0-87aa-aa5ae9e9a1c4",
+              "uuid": "58a56e36-38c0-4f05-ad0c-be93696e82a3",
               "center": {
                 "x": 258.7686666838018,
                 "y": 321.9358461433882
@@ -1398,7 +1398,7 @@
               "fontSize": 16.28117203437238,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "6427257b-4f73-4400-bff2-52854d2469cc",
+              "uuid": "4b2de657-b173-4fd2-8437-cff9dfc3ef75",
               "center": {
                 "x": 62.19102293539464,
                 "y": 116.19864936898608
@@ -1414,7 +1414,7 @@
               "fontSize": 15.838569405606602,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "4c0e8a36-c328-4a7d-a89a-e63b42109bca",
+              "uuid": "aad4ac3a-5805-4689-92d9-0d93f602d40c",
               "center": {
                 "x": 170.68510562810275,
                 "y": 115.94857888373343
@@ -1429,8 +1429,8 @@
               "height": 34.78082434831301,
               "fontSize": 30.779490573728324,
               "fontFamily": "OPPOSans-M",
-              "zyOcrKey": "zy-ocr-tx-muaiw0pe-dsds8x-0",
-              "uuid": "b00d65a0-7a22-484d-b5e6-af99f50f6467",
+              "zyOcrKey": "zy-ocr-tx-mualr85y-4828hu-0",
+              "uuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
               "center": {
                 "x": 136.9304634130626,
                 "y": 78.30039549974896
@@ -1491,469 +1491,7 @@
   "partB": {
     "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
     "card": "real-card-shengying.png",
-    "runs": [
-      {
-        "case": "R0-CaseA-CaseD",
-        "steps": [
-          {
-            "step": "editor-ready",
-            "ok": true
-          },
-          {
-            "step": "bg-inject",
-            "ok": true
-          },
-          {
-            "step": "ocr-prepare",
-            "ok": true
-          },
-          {
-            "step": "native-probe",
-            "ok": true,
-            "status": 200,
-            "head": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
-          },
-          {
-            "step": "baidu-external",
-            "ok": true,
-            "candidates": 10
-          },
-          {
-            "step": "click-ocr",
-            "clicked": true
-          },
-          {
-            "step": "ocr-done",
-            "done": true,
-            "status": "已生成 2 个文字（可双击编辑）"
-          },
-          {
-            "step": "rollback",
-            "ok": true
-          }
-        ],
-        "blocks": [
-          {
-            "id": "f53d920b-fa78-4620-8374-1ca79cb17844",
-            "zyOcrKey": "zy-ocr-tx-muaiwi2x-qv6fzyeq-0",
-            "zyOcrObjectId": {
-              "transactionId": "tx-muaiwi2x-qv6fzyeq",
-              "pageId": "canvas:c0",
-              "blockId": 0,
-              "objectUuid": "f53d920b-fa78-4620-8374-1ca79cb17844"
-            },
-            "text": "吴健湘",
-            "fontFamily": "方正黑体简体",
-            "fontSize": 55,
-            "left": 260,
-            "top": 22,
-            "width": 204,
-            "height": 62.15,
-            "angle": 0,
-            "geo": {
-              "tl": [
-                260,
-                22.000000000000004
-              ],
-              "tr": [
-                465,
-                22.000000000000004
-              ],
-              "br": [
-                465,
-                85.15
-              ],
-              "bl": [
-                260,
-                85.15
-              ],
-              "cx": 362.5,
-              "cy": 53.575,
-              "angle": 0
-            },
-            "ink": {
-              "inkWidth": 158,
-              "inkHeight": 51,
-              "lineCount": 1,
-              "method": "FABRIC_OBJECT_LINES"
-            },
-            "count": 1,
-            "diag": {
-              "sourceLineCount": 1,
-              "estimatedFinalLineCount": 1,
-              "forcedWrapDetected": false,
-              "layoutWidth": 204,
-              "targetSource": "OCR_BBOX",
-              "targetWidth": 185,
-              "ocrBBoxTargetWidth": 185,
-              "imageInkTargetWidth": 176,
-              "sourceInkHeight": 53,
-              "sourceInkWidth": 176,
-              "inkFallback": false,
-              "inkReason": null,
-              "perLineWidth": [
-                {
-                  "text": "吴健湘",
-                  "width": 165,
-                  "needsWrap": false
-                }
-              ],
-              "provider": "BAIDU",
-              "rawText": "吴健湘",
-              "sanitized": false,
-              "sanitizeReason": "",
-              "blockedCount": 0,
-              "sizeCluster": "MEDIUM",
-              "sizeRatio": 1.23,
-              "estimatedTextHeight": 61,
-              "safetyGate": "SAFE",
-              "fsSource": "ink-height-primary",
-              "textSource": "LEGACY_OCR",
-              "textTruth": null,
-              "fontFamilyUsed": "sans-serif",
-              "fontFamilySource": "fallback",
-              "legacyAvgLineH": 61,
-              "fontFamilyResolved": "sans-serif",
-              "fontFamilySource8d": "FONT_FALLBACK",
-              "fontProvision": {
-                "source": "FONT_FALLBACK",
-                "templateFamily": null,
-                "siteDefaultFamily": null,
-                "systemMatchFamily": null,
-                "fallbackFamily": "sans-serif"
-              },
-              "specialStyle": {
-                "specialStyle": true,
-                "styleStatus": "STYLE_DEFERRED",
-                "evidence": {
-                  "noTemplateFont": true,
-                  "singleLine": true,
-                  "largeFont": true,
-                  "textLength": 3,
-                  "fontWeight": null
-                }
-              },
-              "orientation": {
-                "source": "NONE",
-                "blockAngle": null,
-                "imageAngle": 0,
-                "classification": "UNKNOWN",
-                "confidence": 0
-              },
-              "fusion8d": {
-                "reason": "ink-height-primary",
-                "confidence": 0.98,
-                "quality": 0.95,
-                "warnings": []
-              },
-              "bboxSeparation8d": {
-                "visualWidth": 185,
-                "ocrBoxH": 61,
-                "layoutW": null
-              },
-              "ocrBBox8d": {
-                "width": 185,
-                "height": 61
-              },
-              "containment8d": {
-                "verdict": "CONTAINED",
-                "repaired": false,
-                "outsideCount": 0,
-                "margin": 0
-              },
-              "targetQuad8d": {
-                "width": 185,
-                "height": 61,
-                "angle": 0
-              },
-              "status8d": "RECONSTRUCTION_READY"
-            }
-          },
-          {
-            "id": "267c4a1a-492a-4d75-8117-72011f23e585",
-            "zyOcrKey": "zy-ocr-tx-muaiwi2x-qv6fzyeq-4",
-            "zyOcrObjectId": {
-              "transactionId": "tx-muaiwi2x-qv6fzyeq",
-              "pageId": "canvas:c0",
-              "blockId": 4,
-              "objectUuid": "267c4a1a-492a-4d75-8117-72011f23e585"
-            },
-            "text": "Tel.:0757-88809856",
-            "fontFamily": "方正黑体简体",
-            "fontSize": 35,
-            "left": 231,
-            "top": 240,
-            "width": 370,
-            "height": 39.55,
-            "angle": 0,
-            "geo": {
-              "tl": [
-                231,
-                239.99999999999997
-              ],
-              "tr": [
-                602,
-                239.99999999999997
-              ],
-              "br": [
-                602,
-                280.54999999999995
-              ],
-              "bl": [
-                231,
-                280.54999999999995
-              ],
-              "cx": 416.5,
-              "cy": 260.275,
-              "angle": 0
-            },
-            "ink": {
-              "inkWidth": 320,
-              "inkHeight": 26,
-              "lineCount": 1,
-              "method": "FABRIC_OBJECT_LINES"
-            },
-            "count": 1,
-            "diag": {
-              "sourceLineCount": 1,
-              "estimatedFinalLineCount": 1,
-              "forcedWrapDetected": false,
-              "layoutWidth": 370,
-              "targetSource": "OCR_BBOX",
-              "targetWidth": 278,
-              "ocrBBoxTargetWidth": 278,
-              "imageInkTargetWidth": 276,
-              "sourceInkHeight": 34,
-              "sourceInkWidth": 276,
-              "inkFallback": false,
-              "inkReason": null,
-              "perLineWidth": [
-                {
-                  "text": "Tel.:0757-88",
-                  "width": 358,
-                  "needsWrap": false
-                }
-              ],
-              "provider": "BAIDU",
-              "rawText": "Tel.:0757-88809856",
-              "sanitized": false,
-              "sanitizeReason": "",
-              "blockedCount": 0,
-              "sizeCluster": "MEDIUM",
-              "sizeRatio": 0.79,
-              "estimatedTextHeight": 39,
-              "safetyGate": "SAFE",
-              "fsSource": "ink-height-primary",
-              "textSource": "LEGACY_OCR",
-              "textTruth": null,
-              "fontFamilyUsed": "sans-serif",
-              "fontFamilySource": "fallback",
-              "legacyAvgLineH": 39,
-              "fontFamilyResolved": "sans-serif",
-              "fontFamilySource8d": "FONT_FALLBACK",
-              "fontProvision": {
-                "source": "FONT_FALLBACK",
-                "templateFamily": null,
-                "siteDefaultFamily": null,
-                "systemMatchFamily": null,
-                "fallbackFamily": "sans-serif"
-              },
-              "specialStyle": {
-                "specialStyle": false,
-                "styleStatus": "STYLE_READY",
-                "evidence": {
-                  "noTemplateFont": true,
-                  "singleLine": true,
-                  "largeFont": false,
-                  "textLength": 18,
-                  "fontWeight": null
-                }
-              },
-              "orientation": {
-                "source": "NONE",
-                "blockAngle": null,
-                "imageAngle": 0,
-                "classification": "UNKNOWN",
-                "confidence": 0
-              },
-              "fusion8d": {
-                "reason": "ink-height-primary",
-                "confidence": 0.98,
-                "quality": 0.95,
-                "warnings": []
-              },
-              "bboxSeparation8d": {
-                "visualWidth": 278,
-                "ocrBoxH": 39,
-                "layoutW": null
-              },
-              "ocrBBox8d": {
-                "width": 278,
-                "height": 39
-              },
-              "containment8d": {
-                "verdict": "CONTAINED",
-                "repaired": false,
-                "outsideCount": 0,
-                "margin": 0
-              },
-              "targetQuad8d": {
-                "width": 278,
-                "height": 39,
-                "angle": 0
-              },
-              "status8d": "RECONSTRUCTION_READY"
-            }
-          }
-        ],
-        "errors": [],
-        "nativeTexts": [
-          "吴健湘",
-          "Tel.:0757-88809856"
-        ],
-        "baiduTexts": [
-          "吴健湘",
-          "客户经理",
-          "Telephone:+8615913171583",
-          "佛山盛盈包装制品有限公司",
-          "Tel.:0757-88809856",
-          "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
-          "佛山鼎盛通生物科技有限公司",
-          "Tel.:0757-88809856",
-          "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
-          "E-mail:sandy.wu@shengying.Itd"
-        ],
-        "finalTexts": [
-          "吴健湘",
-          "Tel.:0757-88809856"
-        ],
-        "nativeTruth": {
-          "allNativeSource": false,
-          "allMatchRaw": true,
-          "finalTexts": [
-            "吴健湘",
-            "Tel.:0757-88809856"
-          ],
-          "nativeTexts": [
-            "吴健湘",
-            "Tel.:0757-88809856"
-          ],
-          "verdict": "NATIVE_BLOCKED"
-        },
-        "conflict": {
-          "conflicts": [
-            {
-              "baiduText": "客户经理",
-              "nativeText": "Tel.:0757-88809856",
-              "resolution": "NATIVE_TRUTH"
-            }
-          ],
-          "resolution": "NATIVE_TRUTH",
-          "evidence": [
-            {
-              "text": "吴健湘",
-              "textSource": "LEGACY_OCR",
-              "rawText": "吴健湘"
-            },
-            {
-              "text": "Tel.:0757-88809856",
-              "textSource": "LEGACY_OCR",
-              "rawText": "Tel.:0757-88809856"
-            }
-          ]
-        },
-        "pageId": "canvas:c0",
-        "bgGeometry": {
-          "canvasWidth": 507.49999999999994,
-          "canvasHeight": 308.72916666666663,
-          "bgWidth": 895,
-          "bgHeight": 577,
-          "naturalWidth": 895,
-          "naturalHeight": 577,
-          "aCoords": {
-            "tl": [
-              0,
-              0
-            ],
-            "tr": [
-              895,
-              0
-            ],
-            "br": [
-              895,
-              577
-            ],
-            "bl": [
-              0,
-              577
-            ]
-          },
-          "transform": null
-        },
-        "nativeProbe": {
-          "ok": true,
-          "status": 200,
-          "head": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
-        },
-        "pipelineEvidence": {
-          "stage": "CREATE",
-          "ocrStart": "2026-09-21T00:44:51.464Z",
-          "kind": "background-image",
-          "natural": "895x577",
-          "sourceImage": "dataUrl:1291706chars",
-          "updated": 1789951492336,
-          "raw": 10,
-          "mode": "standard",
-          "qaKept": 10,
-          "unified": 10,
-          "gateKept": 10,
-          "ok": true,
-          "reason": null,
-          "fail": null,
-          "blocks": 8,
-          "items": 2,
-          "requested": 2,
-          "created": 2
-        },
-        "acceptance": {
-          "caseA": false,
-          "caseD": true,
-          "verdict": "NATIVE_BLOCKED",
-          "passed": false
-        }
-      },
-      {
-        "case": "R1-CaseC-baidu-only-drop",
-        "steps": [],
-        "errors": [
-          "NO_IMAGE_BBOX"
-        ],
-        "injected": null,
-        "createdTexts": [],
-        "dropped": null
-      },
-      {
-        "case": "R2-CaseB-native-only-unresolved",
-        "steps": [],
-        "errors": [
-          "NO_IMAGE_BBOX"
-        ],
-        "injected": null,
-        "createdTexts": [],
-        "unmatchedNative": null,
-        "resolved": null
-      },
-      {
-        "case": "R3-CaseD-conflict-native-truth",
-        "steps": [],
-        "errors": [
-          "NO_IMAGE_BBOX"
-        ],
-        "injected": null,
-        "createdTexts": [],
-        "nativeTruth": null
-      }
-    ],
+    "runs": [],
     "errors": []
   },
   "summary": {
@@ -1989,22 +1527,13 @@
     ],
     "fail": [],
     "blocked": [
-      "nativeTruth:R0-CaseA-CaseD"
+      "partB"
     ],
     "unknown": [],
-    "unresolved": [
-      "nativeTruth:R1-CaseC-baidu-only-drop",
-      "nativeTruth:R2-CaseB-native-only-unresolved",
-      "nativeTruth:R3-CaseD-conflict-native-truth"
-    ],
-    "nativeTruth:R0-CaseA-CaseD-detail": "native uploadOCR 返回登录跳转 HTML（会话未过）—— 见 nativeProbe",
-    "nativeTruth:R1-CaseC-baidu-only-drop-detail": "NO_IMAGE_BBOX",
-    "nativeTruth:R2-CaseB-native-only-unresolved-detail": "NO_IMAGE_BBOX",
-    "nativeTruth:R3-CaseD-conflict-native-truth-detail": "NO_IMAGE_BBOX"
+    "unresolved": [],
+    "partB-detail": "ZY_SKIP_B=1"
   },
-  "nextBlocker": "Stage 9.9 BLOCKED：nativeTruth:R0-CaseA-CaseD —— 补测后重新生成报告",
-  "console": [
-    "[zy-ocr][TRUTH] native unavailable PARSE_FAIL"
-  ],
+  "nextBlocker": "Stage 9.9 BLOCKED：partB —— 补测后重新生成报告",
+  "console": [],
   "errors": []
 }
