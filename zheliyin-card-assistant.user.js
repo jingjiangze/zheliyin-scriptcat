@@ -934,6 +934,14 @@
       pipelineEvidence({ stage: "NATIVE_GATE", code: fg.code, matched: (tb && tb.gate && tb.gate.matched) || 0, unresolved: (tb && tb.gate && tb.gate.unmatchedNative) || 0, totalNative: (tb && tb.gate && tb.gate.totalNative) || 0, blockCreate: true });
       return false;
     }
+    // OCR-P1 Commit 3a：部分创建的缺失文字告知（可靠行创建，缺失行不创建）
+    const _fg1 = nativeTruthGateFail(tb);
+    if (_fg1 && _fg1.code === "NATIVE_PARTIAL_OK") {
+      ocrRunning = true; setStatus(_fg1.message);
+      OCR_PARTIAL_LAST_MISSING = (_fg1.missingTexts || []).slice();
+    } else {
+      OCR_PARTIAL_LAST_MISSING = [];
+    }
     await buildItemsFromOcr(tb.blocks, img, diag);
     return true;
   }
@@ -951,7 +959,8 @@
   // mode：用户实测（2026-09-20）手写体(textType=2) 正确率明显更高 → 默认 "2" 优先；
   // 空结果/接口失败视为"错误明显"→ 自动回退印刷体(textType=1) 重试一次（recognizeWithFallback）。
   // Stage 9 V4 §十二：百度 OCR 实验模式（standard|accurate）—— 实验开关 zyBaiduOcrMode，不进长期配置系统
-  const BAIDU_OCR_MODE = GM_getValue("zyBaiduOcrMode", "standard"); // "accurate"=高精度含位置版 /general 之外
+  const BAIDU_OCR_MODE = GM_getValue("zyBaiduOcrMode", "standard");
+  const OCR_PARTIAL_LAST_MISSING = []; // OCR-P1 Commit 3a：最近一次部分创建的缺失文字清单（诊断/runner 抓取） // "accurate"=高精度含位置版 /general 之外
   const STAGE9_NATIVE_TRUTH = GM_getValue("zyStage9NativeTruth", "1") === "1"; // Stage 10-C：强制站点原生 OCRTool.do 手写体为文字真值（> Baidu；接口有则必须全到画布，无则禁止到画布）
   const STAGE9_NATIVE_OCR_MODE = GM_getValue("zyStage9NativeOcrMode", "2"); // "2" 手写体优先（用户实测），"1" 印刷体
   // Stage 9 P4-B §七/§二十一：ImageInk typography target 实验开关（默认 OFF = 保持 OCR bbox target）
@@ -964,7 +973,7 @@
   // 且通过 Completeness Gate；tb.blocked（unavailable/依赖缺失/empty）→ 一律 STOP。
   function nativeTruthGatePassed(tb) {
     if (!STAGE9_NATIVE_TRUTH) return true; // feature off：保留历史降级
-    if (typeof resolveGate === "function") return !!(resolveGate(tb) && resolveGate(tb).ok); // OCR-P1 Commit 1：纯模块统一判定
+    if (typeof resolveGate === "function") { const _rg = resolveGate(tb, { allowPartial: true }); return !!(_rg && _rg.ok); } // OCR-P1 Commit 1+3a：纯模块统一判定（allowPartial=可靠行部分创建）
     if (!tb || tb.blocked) return false;   // 兜底：unavailable / 依赖缺失 / 显式拦截
     if (tb.gate && tb.gate.totalNative > 0) { // 兜底：Completeness 门禁
       const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
@@ -1212,6 +1221,11 @@
               ocrLog("NATIVE_GATE", "local-path code=" + fgL.code + " blocked=" + !!((tb && tb.blocked)));
               pipelineEvidence({ stage: "NATIVE_GATE", path: "LOCAL", code: fgL.code, blocked: !!((tb && tb.blocked)), blockCreate: true });
               return;
+            }
+            const _fg2 = nativeTruthGateFail(tb);
+            if (_fg2 && _fg2.code === "NATIVE_PARTIAL_OK") {
+              ocrRunning = true; setStatus(_fg2.message);
+              OCR_PARTIAL_LAST_MISSING = (_fg2.missingTexts || []).slice();
             }
             buildItemsFromOcr(tb.blocks, img, diag).catch((eBuild) => { ocrRunning = false; setStatus("识别异常：" + String(eBuild && eBuild.message || eBuild).slice(0, 100)); ocrLog("ERROR", "buildItemsFromOcr: " + String(eBuild && eBuild.stack || (eBuild && eBuild.message || eBuild)).slice(0, 300)); });
           } catch (e) {

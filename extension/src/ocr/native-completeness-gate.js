@@ -105,8 +105,17 @@ function resolveUnmatchedGeometry(alignResult, candidates) {
 
 // ---- OCR-P1 Commit 1：生产 Gate 统一判定（maybeApplyNativeTruth 返回值 tb → 是否允许 creation）----
 // 语义：Native unavailable / 依赖缺失 / 无真值 / geometry 不完整 → ok=false（本批不创建）。
-function resolveGate(tb) {
-  if (!tb) return { ok: false, code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截（无结果），本批不创建", matched: 0, unresolved: 0, totalNative: 0 };
+function nativeMissingTexts(tb) {
+  var ar = tb && tb.matched;
+  if (ar && Array.isArray(ar.unmatchedNative)) return ar.unmatchedNative.map(function (n) { return n && n.rawText != null ? String(n.rawText) : ""; }).filter(Boolean);
+  return [];
+}
+// OCR-P1 Commit 3a：可靠行部分创建 —— opts.allowPartial=true 时，INCOMPLETE（部分匹配）
+// 允许创建已匹配行并明确告知缺失文字；UNRESOLVED（0 匹配）无可靠行，仍整批不创建。
+// textbox.text 恒来自 Native 的冻结规则不受影响（缺失行 text 不进画布）。
+function resolveGate(tb, o) {
+  o = o || {};
+  if (!tb) return { ok: false, code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截（无结果），本批不创建", matched: 0, unresolved: 0, totalNative: 0, missingTexts: [] };
   var g = tb.gate || {};
   var matched = (tb.matched && tb.matched.matchedNative ? tb.matched.matchedNative.length : ((g && g.matched) || 0));
   var unresolved = (tb.matched && tb.matched.unmatchedNative ? tb.matched.unmatchedNative.length : ((g && g.unmatchedNative) || 0));
@@ -118,9 +127,14 @@ function resolveGate(tb) {
   }
   if (totalNative > 0) {
     var cg = evaluateCompleteness(tb.matched);
-    return { ok: !!(cg && cg.ok), code: (cg && cg.code) || CODE_INCOMPLETE, message: (cg && cg.message) || "几何不完整，本批不创建", matched: matched, unresolved: unresolved, totalNative: totalNative };
+    var missing = nativeMissingTexts(tb);
+    if (cg && cg.ok) return { ok: true, code: "COMPLETE", message: cg.message, matched: matched, unresolved: 0, totalNative: totalNative, missingTexts: [] };
+    if (o.allowPartial && matched > 0) {
+      return { ok: true, code: "NATIVE_PARTIAL_OK", message: "Native 识别 " + totalNative + " 行，可定位 " + matched + " 行即将创建；缺失 " + unresolved + " 行文字不创建：" + (missing.join("、") || "（无）"), matched: matched, unresolved: unresolved, totalNative: totalNative, missingTexts: missing };
+    }
+    return { ok: false, code: (cg && cg.code) || CODE_INCOMPLETE, message: (cg && cg.message) || "几何不完整，本批不创建", matched: matched, unresolved: unresolved, totalNative: totalNative, missingTexts: missing };
   }
-  return { ok: false, code: "NATIVE_NO_TRUTH", message: "无 Native 文字真值，本批不创建", matched: 0, unresolved: 0, totalNative: 0 };
+  return { ok: false, code: "NATIVE_NO_TRUTH", message: "无 Native 文字真值，本批不创建", matched: 0, unresolved: 0, totalNative: 0, missingTexts: [] };
 }
 
 if (typeof module !== "undefined" && module.exports) module.exports = {
