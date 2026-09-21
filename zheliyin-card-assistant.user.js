@@ -1051,6 +1051,8 @@
         }
       });
       const matched = alignNativeGeometry(native.texts || [], geoBlocks, {});
+      // OCR-P1 Commit 3c.1：真机 runner 用初始 aligner 快照（recovery 前）
+      try { window.__zyInitialGate = { matched: (matched.matchedNative || []).length, unmatched: (matched.unmatchedNative || []).length, totalNative: (matched.gate && matched.gate.totalNative) || 0 }; } catch (e) {}
       // OCR-P1 Commit 2：Native Geometry Recovery —— aligner 未匹配的 Native 行沿搜索链
       // 恢复 geometry（BAIDU LINE → BAIDU WORD；LOCAL/ANCHOR/INK 为后续 Commit）。
       // 恢复产物并入 matchedNative（text 恒为 native.rawText），再交由 Completeness Gate。
@@ -1141,6 +1143,7 @@
       }
       pipelineEvidence({ stage: "NATIVE", nativeLines: gate.totalNative, nativeMode: (native.meta && native.meta.modeUsed) || null, nativeFallback: !!(native.meta && native.meta.fallbackUsed), statusCode: (native.meta && native.meta.statusCode) || null, kept: gate.matched, nativeBlocks: gate.totalBlocks, unmatchedNative: gate.unmatchedNative, unusedGeometry: gate.unusedGeometry, oneToMany: gate.oneToMany, manyToOne: gate.manyToOne, fail: (!gate.matched) ? ((gate.allTextTruthValid) ? "NATIVE_UNMATCHED" : (gate.failureCode || "NATIVE_EMPTY")) : null });
       ocrLog("TRUTH", "align native=" + gate.totalNative + " geo=" + gate.totalBlocks + " matched=" + gate.matched + " unmatchedNative=" + gate.unmatchedNative + " unusedGeo=" + gate.unusedGeometry + " 1:N=" + gate.oneToMany + " N:1=" + gate.manyToOne + " valid=" + gate.allTextTruthValid);
+      try { window.__zyNativeGateSummary = { totalNative: gate.totalNative, initialMatched: (window.__zyInitialGate && window.__zyInitialGate.matched) || 0, initialUnmatched: (window.__zyInitialGate && window.__zyInitialGate.unmatched) || 0, finalMatched: gate.matched, finalUnmatched: gate.unmatchedNative, missingTexts: ((matched.unmatchedNative || []).map(function (x) { return x && x.rawText != null ? String(x.rawText) : ""; }).filter(Boolean)), geometryRecovered: gate.geometryRecovered || 0, geometryRecoverySource: gate.geometryRecoverySource || [], localSidecar: gate.localSidecar || null }; } catch (e) {}
       return { blocks: kept, mode: "NATIVE_TRUTH", native: native, matched: matched, gate: gate };
     } catch (e) {
       ocrLog("TRUTH", "exception " + String(e && (e.message || e) || "").slice(0, 160));
@@ -1155,7 +1158,8 @@
   // responseText，成功缓存 ocrEngineCache；失败返回 SIDE_CAR_ENGINE_LOAD_FAILED。
   function ensureLocalOcrEngine() {
     return new Promise((resolve) => {
-      if (typeof ocrEngineCache === "string" && ocrEngineCache.length > 1000) { resolve({ ok: true, engine: ocrEngineCache }); return; }
+      if (typeof ocrEngineCache === "string" && ocrEngineCache.length > 1000) { try { window.__zyLocalEngineState = { loaded: true, bytes: ocrEngineCache.length }; } catch (e) {}
+            resolve({ ok: true, engine: ocrEngineCache }); return; }
       GM_xmlhttpRequest({
         method: "GET", url: OCR_CDN, timeout: 45000,
         onload: (x) => {
@@ -1167,7 +1171,7 @@
             resolve({ ok: false, code: "SIDE_CAR_ENGINE_LOAD_FAILED", reason: "http " + x.status });
           }
         },
-        onerror: () => resolve({ ok: false, code: "SIDE_CAR_ENGINE_LOAD_FAILED", reason: "network" })
+        onerror: () => { try { window.__zyLocalEngineState = { loaded: false, reason: "network" }; } catch (e) {} resolve({ ok: false, code: "SIDE_CAR_ENGINE_LOAD_FAILED", reason: "network" }); }
       });
     });
   }
