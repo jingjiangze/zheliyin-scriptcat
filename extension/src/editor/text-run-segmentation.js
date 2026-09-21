@@ -20,8 +20,8 @@ function isFiniteNumber(v) { return typeof v === "number" && isFinite(v); }
 
 // 保守候选阈值（第一版 candidate-only；可由 opts 覆盖用于真机标定）
 var DEFAULTS = {
-  mixedRatio: 0.65,        // 小/大 inkHeight 比值 ≤ 此值时视为 mixed candidate
-  boundaryGap: 0.55,       // 相邻 span 高度比 ≤ 此值才构成边界候选
+  mixedRatio: 0.65,        // 小/大 inkHeight 比值 ≤ 此值时视为 mixed candidate（与 boundary 同源）
+  boundaryGap: 0.65,       // 相邻 span 高度比 ≤ 此值才构成边界候选（与 mixedRatio 一致，避免检测/拆分层阈值漂移）
   geometryTolX: 0.45,      // 几何连续：相邻 span 中心 x 位移 ≤ 跨度比例（保守放宽）
   minEvidence: 2,          // 至少 span 数
   highConfidence: 0.8,     // HIGH_CONFIDENCE 阈值（→ Split）
@@ -157,11 +157,21 @@ function scoreRunBoundary(input) {
   var sizeScore = Math.max(0, Math.min(1, (1 - ratio) / (1 - opts.mixedRatio)));
   total += sizeScore * 0.5;
   reasons.push("size-ratio=" + Math.round(ratio * 1000) / 1000);
-  // 2) 顺序连续（文本顺序必须连续，否则降级）
+  // 2) 顺序连续（文本顺序必须连续；跨行 run 之间允许夹换行分隔符，见 applyOrderGapCheck）
   var sortedRuns = runs.slice().sort(function (a, b) { return a.charStart - b.charStart; });
+  var nativeLen = (o.nativeText || "").length;
   var orderScore = 1;
   for (var i = 1; i < sortedRuns.length; i += 1) {
-    if (sortedRuns[i].charStart !== sortedRuns[i - 1].charEnd) { orderScore = 0; reasons.push("order-gap"); break; }
+    var prevEnd = sortedRuns[i - 1].charEnd;
+    if (sortedRuns[i].charStart !== prevEnd) {
+      // 中间间隔必须全部是换行/行分隔符（跨行 run），才视为顺序连续；禁止有字符缝隙被静默吞掉
+      var gapOk = false;
+      if (prevEnd >= 0 && sortedRuns[i].charStart <= nativeLen && prevEnd < sortedRuns[i].charStart) {
+        var gapText = String(o.nativeText || "").slice(prevEnd, sortedRuns[i].charStart);
+        gapOk = gapText !== "" && /^[\n\r]+$/.test(gapText);
+      }
+      if (!gapOk) { orderScore = 0; reasons.push("order-gap"); break; }
+    }
   }
   total += orderScore * 0.2;
   // 3) 几何连续（相邻 run 中心距 vs run 尺寸合理）
@@ -237,11 +247,37 @@ function planRuns(input) {
 }
 function textConservationLocal(runs, nativeText) {
   var sorted = runs.slice().sort(function (a, b) { return a.charStart - b.charStart; });
-  var joined = sorted.map(function (r) { return r.text; }).join("");
-  var ok = joined === nativeText;
-  var cursor = 0, gaps = 0;
-  sorted.forEach(function (r) { if (r.charStart !== cursor) gaps += 1; cursor = r.charEnd; });
-  return { ok: ok && gaps === 0, joined: joined, expected: nativeText };
+  var parts = [];
+  var gapOk = true;
+  var cursor = 0;
+  var len = String(nativeText).length;
+  sorted.forEach(function (r, i) {
+    if (i === 0) {
+      if (r.charStart > 0) {
+        var lead = String(nativeText).slice(0, r.charStart);
+        if (lead !== "" && !/^[\n\r]+$/.test(lead)) gapOk = false;
+        else parts.push(lead);
+      }
+      parts.push(r.text);
+      cursor = r.charEnd;
+      return;
+    }
+    if (r.charStart > cursor) {
+      var mid = String(nativeText).slice(cursor, r.charStart);
+      parts.push(mid); // mid 应为纯换行；非换行则 conservation 失败（由 joined 对比兜底）
+      if (mid !== "" && !/^[\n\r]+$/.test(mid)) gapOk = false;
+    }
+    parts.push(r.text);
+    cursor = r.charEnd;
+  });
+  if (cursor < len) {
+    var tail = String(nativeText).slice(cursor);
+    parts.push(tail);
+    if (tail !== "" && !/^[\n\r]+$/.test(tail)) gapOk = false;
+  }
+  var joined = parts.join("");
+  var ok = joined === String(nativeText) && gapOk;
+  return { ok: ok, joined: joined, expected: String(nativeText) };
 }
 
 // ---- 导出（node + page-world 双端兼容）----
