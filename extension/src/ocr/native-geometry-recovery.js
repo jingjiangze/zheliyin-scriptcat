@@ -4,9 +4,9 @@
 // 定位：Native Truth OK、但 Completeness Gate 仍有 unmatchedNative 时，
 //   本模块沿搜索链为「有 Native 文本、暂无可靠 geometry」的行恢复 geometry：
 //      BAIDU LINE → BAIDU WORD → LOCAL → NATIVE ANCHOR → IMAGE INK
-//   （Commit 2 实现前两级 BAIDU_LINE / BAIDU_WORD；LOCAL / NATIVE_ANCHOR /
-//    IMAGE_INK 为后续 Commit 3/4 预留插槽，未实现前一律记入 unresolved，
-//    绝不猜测）。
+//   （Commit 2 实现 BAIDU_LINE / BAIDU_WORD；Commit 3b 实现 LOCAL sidecar；
+//    NATIVE_ANCHOR / IMAGE_INK 为 Commit 4 预留插槽，未实现前一律记入
+//    unresolved，绝不猜测）。
 // 硬规则（任务书 §Recovery + OCR-P0.3 既有约束）：
 //   - Geometry Provider 只提供 position/bbox/rotation/line grouping；
 //     text 仅用于匹配因子，绝不成为 textbox.text（最终 text 恒来自 Native）。
@@ -218,6 +218,7 @@ function recoverNativeGeometry(unmatchedNative, ctx) {
   var ns = (Array.isArray(unmatchedNative) ? unmatchedNative : []).slice();
   var lineCands = (Array.isArray(ctx.lineCandidates) ? ctx.lineCandidates : []).slice();
   var wordCands = extractWords(lineCands).concat(Array.isArray(ctx.wordCandidates) ? ctx.wordCandidates : []);
+  var localCands = (Array.isArray(ctx.localCandidates) ? ctx.localCandidates : []).slice();
   var occupied = (Array.isArray(ctx.occupiedGeometries) ? ctx.occupiedGeometries : []).slice();
   var imageBounds = ctx.imageBounds || null;
   var th = ctx.thresholds || {};
@@ -237,8 +238,10 @@ function recoverNativeGeometry(unmatchedNative, ctx) {
     attempted: 0,
     lineCandidates: lineCands.length,
     wordCandidates: wordCands.length,
+    localCandidates: localCands.length,
     lineRecovered: 0,
     wordRecovered: 0,
+    localRecovered: 0,
     unresolved: 0,
     rejections: {}
   };
@@ -370,12 +373,44 @@ function recoverNativeGeometry(unmatchedNative, ctx) {
       }
     }
 
+    // ---- 阶段 3：LOCAL（line 级，Commit 3b sidecar；仅当 BAIDU 两级未恢复且给了 localCandidates）----
+    // LOCAL 引擎（Tesseract chi_sim）文本精度低于 Baidu/native，匹配同门槛，
+    // 且保持「text 仅用于匹配、最终 text 恒来自 Native」；只提供 line 级 geometry。
+    if (!made && localCands.length) {
+      var lBest = null, lBestScore = 0, lEv = [];
+      for (var li = 0; li < localCands.length; li += 1) {
+        var lg = localCands[li];
+        if (!lg || !lg.bbox || lg.text == null) continue;
+        var lsim = textSimilarity(n.rawText, lg.text);
+        if (lsim < T.minSim) continue;
+        var lLen = Math.abs(String(n.rawText).length - String(lg.text).length) <= 2 ? 1 : 0;
+        var lType = scriptType(n.rawText) === scriptType(lg.text) ? 1 : 0;
+        var ls = lsim * 2 + lLen * 0.4 + lType * 0.4;
+        if (ls > lBestScore) { lBestScore = ls; lBest = lg; lEv = ["text-sim=" + lsim.toFixed(2), "len=" + lLen, "type=" + lType]; }
+      }
+      if (lBest) {
+        var lR = gateCheck(lBest.bbox, SOURCE_LOCAL);
+        if (lR.ok) {
+          made = { bbox: lR.rect, source: SOURCE_LOCAL, _geo: lBest };
+          method = "LOCAL_LINE_MULTI_FACTOR";
+          score = lBestScore;
+          evidence = lEv;
+          occupied.push({ bbox: lR.rect });
+        } else {
+          lastFail = { reason: lR.reason, detail: lR.detail };
+        }
+      } else if (!(lastFail && lastFail.reason && lastFail.reason !== "NO_LINE_CANDIDATE")) {
+        lastFail = { reason: "NO_LOCAL_CANDIDATE", detail: { candidates: localCands.length } };
+      }
+    }
+
     var key = n.id != null ? n.id : n.rawText;
     if (made) {
       recoveredSet[key] = 1;
       recovered.push({ native: n, geometry: made, source: made.source, method: method, score: score, evidence: evidence });
       if (made.source === SOURCE_BAIDU_LINE) diag.lineRecovered += 1;
       else if (made.source === SOURCE_BAIDU_WORD) diag.wordRecovered += 1;
+      else if (made.source === SOURCE_LOCAL) diag.localRecovered += 1;
     } else {
       reject(n, (lastFail && lastFail.reason) || "NO_WORD_MATCH", (lastFail && lastFail.detail) || { candidates: wordCands.length });
     }

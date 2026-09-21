@@ -134,6 +134,35 @@ t("REJECT→重试: 第一候选被占用时第二候选恢复成功", () => {
   assert.strictEqual(r.recovered[0].geometry.bbox.x, 400);
 });
 
+// ---- 阶段 3：LOCAL（Commit 3b sidecar）----
+t("LOCAL: line/word 失配但 local 行命中 → recovered source=LOCAL", () => {
+  const r = R.recoverNativeGeometry([N("吴健湘", 0)], {
+    lineCandidates: [L("别的文字", B(10, 20, 200, 24))], // BAIDU 失配
+    localCandidates: [{ text: "吴健湘", bbox: B(10, 20, 180, 22), sourceProvider: "LOCAL" }]
+  });
+  assert.strictEqual(r.recovered.length, 1);
+  assert.strictEqual(r.recovered[0].source, "LOCAL");
+  assert.strictEqual(r.recovered[0].method, "LOCAL_LINE_MULTI_FACTOR");
+  assert.strictEqual(r.diagnostics.localRecovered, 1);
+});
+t("LOCAL: local 也失配 → 保持 unresolved（绝不猜测）", () => {
+  const r = R.recoverNativeGeometry([N("手写难辨行", 0)], {
+    lineCandidates: [],
+    localCandidates: [{ text: "完全不同的内容", bbox: B(10, 20, 180, 22), sourceProvider: "LOCAL" }]
+  });
+  assert.strictEqual(r.recovered.length, 0);
+  assert.strictEqual(r.unresolved.length, 1);
+  assert.strictEqual(r.rejected[0].reason, "NO_LOCAL_CANDIDATE");
+});
+t("LOCAL: BAIDU line 已恢复时不需要 local（LINE 优先）", () => {
+  const r = R.recoverNativeGeometry([N("吴健湘", 0)], {
+    lineCandidates: [L("吴健湘", B(10, 20, 200, 24))],
+    localCandidates: [{ text: "吴健湘", bbox: B(10, 20, 180, 22), sourceProvider: "LOCAL" }]
+  });
+  assert.strictEqual(r.recovered[0].source, "BAIDU_LINE");
+  assert.strictEqual(r.diagnostics.localRecovered, 0);
+});
+
 // ---- 混合与诊断 ----
 t("混合: 2 native 行 → 1 LINE + 1 WORD 全恢复", () => {
   const r = R.recoverNativeGeometry([N("吴健湘", 0), N("张三董事长", 1)], {

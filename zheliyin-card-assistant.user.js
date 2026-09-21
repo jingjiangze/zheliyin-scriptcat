@@ -960,7 +960,8 @@
   // 空结果/接口失败视为"错误明显"→ 自动回退印刷体(textType=1) 重试一次（recognizeWithFallback）。
   // Stage 9 V4 §十二：百度 OCR 实验模式（standard|accurate）—— 实验开关 zyBaiduOcrMode，不进长期配置系统
   const BAIDU_OCR_MODE = GM_getValue("zyBaiduOcrMode", "standard");
-  const OCR_PARTIAL_LAST_MISSING = []; // OCR-P1 Commit 3a：最近一次部分创建的缺失文字清单（诊断/runner 抓取） // "accurate"=高精度含位置版 /general 之外
+  const OCR_PARTIAL_LAST_MISSING = [];
+  const STAGE9_LOCAL_SIDECAR = GM_getValue("zyStage9LocalSidecar", "0") === "1"; // OCR-P1 Commit 3b：LOCAL geometry sidecar（默认关；unmatched 剩余时同图跑 local 补位置） // OCR-P1 Commit 3a：最近一次部分创建的缺失文字清单（诊断/runner 抓取） // "accurate"=高精度含位置版 /general 之外
   const STAGE9_NATIVE_TRUTH = GM_getValue("zyStage9NativeTruth", "1") === "1"; // Stage 10-C：强制站点原生 OCRTool.do 手写体为文字真值（> Baidu；接口有则必须全到画布，无则禁止到画布）
   const STAGE9_NATIVE_OCR_MODE = GM_getValue("zyStage9NativeOcrMode", "2"); // "2" 手写体优先（用户实测），"1" 印刷体
   // Stage 9 P4-B §七/§二十一：ImageInk typography target 实验开关（默认 OFF = 保持 OCR bbox target）
@@ -1075,6 +1076,35 @@
         matched.gate.geometryRecoverySource = (recovery.recovered || []).map(function (rr) { return rr.source; });
         matched.gate.geometryRecoveryRejected = (recovery.rejected || []).map(function (rj) { return { reason: rj.reason, of: rj.native && rj.native.rawText }; });
         matched.recovery = recovery;
+      }
+      // OCR-P1 Commit 3b：LOCAL sidecar 第二段 —— 第一段(line/word)后仍 unresolved 且开关开启时
+      // 对同图跑本地识别拿 line 级几何补位（只提供 geometry；text 恒来自 Native）。
+      if ((matched.unmatchedNative || []).length > 0 && STAGE9_LOCAL_SIDECAR && typeof runLocalGeometrySidecar === "function" && typeof recoverNativeGeometry === "function") {
+        const localCands = await runLocalGeometrySidecar(img);
+        matched.gate = matched.gate || {};
+        if (localCands && localCands.length) {
+          const occ = (matched.matchedGeometry || []).map(function (og) { return { bbox: og.bbox }; });
+          if (recovery && Array.isArray(recovery.recovered)) recovery.recovered.forEach(function (rr) { occ.push({ bbox: rr.geometry && rr.geometry.bbox }); });
+          const rec2 = recoverNativeGeometry(matched.unmatchedNative, {
+            lineCandidates: [],                       // 第一阶段已尽力，不重复 BAIDU
+            localCandidates: localCands,              // LOCAL 级（第三优先）
+            occupiedGeometries: occ.filter(function (x) { return x && x.bbox; }),
+            imageBounds: ((img && (img.naturalWidth || img.width)) && (img.naturalHeight || img.height)) ? { x: 0, y: 0, width: img.naturalWidth || img.width, height: img.naturalHeight || img.height } : null,
+            thresholds: { rowTol: 8 }
+          });
+          (rec2.recovered || []).forEach(function (rc) {
+            matched.matchedNative.push({ native: rc.native, geometry: rc.geometry, match: { score: rc.score, method: rc.source, factors: rc.evidence, recovery: true } });
+          });
+          matched.unmatchedNative = rec2.unresolved || [];
+          matched.gate.matched = matched.matchedNative.length;
+          matched.gate.unmatchedNative = matched.unmatchedNative.length;
+          matched.gate.geometryRecovered = (matched.gate.geometryRecovered || 0) + (rec2.recovered || []).length;
+          matched.gate.geometryRecoverySource = [].concat(matched.gate.geometryRecoverySource || [], (rec2.recovered || []).map(function (rr) { return rr.source; }));
+          matched.gate.localSidecar = { used: true, candidates: localCands.length, recovered: (rec2.recovered || []).length };
+        } else {
+          matched.gate.localSidecar = { used: true, candidates: (localCands || []).length, recovered: 0 };
+        }
+        ocrLog("TRUTH", "local-sidecar: candidates=" + ((localCands || []).length) + " recovered=" + ((matched.gate.localSidecar && matched.gate.localSidecar.recovered) || 0) + " unresolvedAfter=" + matched.unmatchedNative.length);
       }
 
       // 构造 kept block（text 恒 = native.rawText；geometry 取自匹配候选 —— P0.3-C Provider 不提供最终 text）
@@ -1241,6 +1271,51 @@
     if (ocrEngineCache) { run(ocrEngineCache); return; }
     GM_xmlhttpRequest({ method: "GET", url: OCR_CDN, timeout: 45000, onload: (x) => { if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) { ocrEngineCache = x.responseText; ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars"); run(ocrEngineCache); } else { ocrRunning = false; setStatus("OCR 引擎加载失败（HTTP " + x.status + "）"); emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "http-error", error: "engine load http " + x.status })); } }, onerror: () => { ocrRunning = false; setStatus("OCR 引擎网络错误"); ocrLog("ERROR", "network error"); emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "http-error", error: "engine load network" })); } });
   }
+  // OCR-P1 Commit 3b：LOCAL geometry sidecar —— 仅供 geometry 补位使用。
+  // 语义：仅当 unmatchedNative 仍 >0 且开关开启时，对同图跑本地识别，
+  // 产出 line 级候选（[{text, bbox}]，sourceProvider=LOCAL）；绝不创建 textbox，
+  // 不碰 ocrRunning 锁；引擎缺失/失败/超时返回 []（不阻断主链 Native Truth）。
+  async function runLocalGeometrySidecar(img) {
+    if ((typeof unifyCandidates !== "function") || (typeof GM_addElement !== "function")) return [];
+    return await new Promise((resolve) => {
+      let settled = false;
+      const done = (cands) => { if (settled) return; settled = true; resolve(Array.isArray(cands) ? cands : []); };
+      try {
+        const executor = "(function(){var module={exports:{}};var exports=module.exports;var define;var require;" +
+          (typeof ocrEngineCache === "string" && ocrEngineCache.length > 1000 ? ocrEngineCache : "") + "\n" +
+          "var T=module.exports;" +
+          "if(!T||typeof T.createWorker!=='function'){document.documentElement.setAttribute('data-zy-sidecar-result',JSON.stringify({ok:false,err:'engine'}));return;}" +
+          "window.addEventListener('message',function(ev){if(!ev.data||ev.data.source!=='zy-ocr-sidecar')return;" +
+          "T.createWorker('chi_sim',1,{cacheMethod:'indexeddb'}).then(function(w){return w.recognize(ev.data.dataUrl).then(function(r){" +
+          "var lines=(r.data.lines||[]).filter(function(l){return l&&l.text&&l.bbox;}).map(function(l){return {text:l.text,bbox:l.bbox};});" +
+          "w.terminate();" +
+          "document.documentElement.setAttribute('data-zy-sidecar-result',JSON.stringify({ok:true,lines:lines,w:r.data.imageWidth,h:r.data.imageHeight}));" +
+          "});" +
+          "}).catch(function(e){document.documentElement.setAttribute('data-zy-sidecar-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));});" +
+          "})();";
+        GM_addElement("script", { textContent: executor });
+        document.documentElement.setAttribute("data-zy-sidecar-result", "");
+        window.postMessage({ source: "zy-ocr-sidecar", dataUrl: img.dataUrl }, location.origin);
+        let tries = 0;
+        const timer = setInterval(() => {
+          tries += 1;
+          const out = document.documentElement.getAttribute("data-zy-sidecar-result");
+          if (out) {
+            clearInterval(timer); settled = true;
+            try {
+              const r = JSON.parse(out);
+              if (!(r && r.ok)) { resolve([]); return; }
+              const size = { width: r.w || img.width, height: r.h || img.height };
+              resolve(unifyCandidates((r.lines || []), size, { sourceProvider: "LOCAL" }));
+            } catch (e) { resolve([]); }
+            return;
+          }
+          if (tries > 120) { clearInterval(timer); done([]); } // ~60s 超时兜底
+        }, 500);
+      } catch (e) { done([]); }
+    });
+  }
+  
   async function handleOcrImage() {
     if (state.ocrPanelClosed) return;
     if (ocrRunning) { setStatus("OCR 正在运行，请稍候…"); return; }
