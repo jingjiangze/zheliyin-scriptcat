@@ -1,0 +1,293 @@
+{
+  "ts": "2026-09-21T11:07:07.795Z",
+  "stage": "OCR-P1-COMMIT3C-PARTIAL-SIDECAR",
+  "cases": [
+    {
+      "id": "A",
+      "sidecar": "0",
+      "note": "sidecar OFF：可靠行创建 + 缺失文字告知"
+    },
+    {
+      "id": "B",
+      "sidecar": "1",
+      "note": "sidecar ON：首次 engine load + local 恢复"
+    },
+    {
+      "id": "C",
+      "sidecar": "1",
+      "note": "sidecar ON：local 无法恢复 → 不猜位置"
+    }
+  ],
+  "image": "real-card-xiazhu.png",
+  "cookiePresent": true,
+  "fields": [
+    "nativeLines",
+    "initialMatched",
+    "initialUnmatched",
+    "sidecarUsed",
+    "engineLoaded",
+    "localCandidates",
+    "localRecovered",
+    "finalMatched",
+    "finalUnmatched",
+    "createdCount",
+    "missingTexts",
+    "createCalled",
+    "nativeLayerCount"
+  ],
+  "runs": [
+    {
+      "case": "A",
+      "sidecar": false,
+      "run": 1,
+      "steps": [
+        {
+          "step": "editor-ready",
+          "ok": true,
+          "bridge": true
+        },
+        {
+          "step": "bg-inject",
+          "ok": true
+        },
+        {
+          "step": "ocr-prepare",
+          "ok": true
+        },
+        {
+          "step": "baidu-external",
+          "ok": true,
+          "candidates": 16
+        },
+        {
+          "step": "click-ocr",
+          "clicked": true
+        },
+        {
+          "step": "ocr-done",
+          "done": true,
+          "status": "几何校验完成：通过 0 个，保留 14 个（STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISM",
+          "samples": [
+            "正在准备图片…",
+            "百度云端识别中…",
+            "几何校验完成：通过 0 个，保留 14 个（STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|S"
+          ]
+        },
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [],
+      "created": [
+        {
+          "text": "手机:",
+          "id": "f4df4298-6724-4ba8-998e-5732c0bd80e7",
+          "blockIndex": 0
+        },
+        {
+          "text": "13719111188",
+          "id": "47f938e7-bc79-4ea3-98d7-ff515e084e04",
+          "blockIndex": 1
+        },
+        {
+          "text": "Mobile",
+          "id": "c1f5c223-3441-4356-8d55-2ee8c95075d1",
+          "blockIndex": 2
+        },
+        {
+          "text": "微信:",
+          "id": "07d64801-71e9-40c6-ab2c-88dd7fbb332f",
+          "blockIndex": 3
+        },
+        {
+          "text": "2287483098",
+          "id": "e9ea1d20-abfc-4411-a0c2-ed75136943b1",
+          "blockIndex": 4
+        },
+        {
+          "text": "Wechat",
+          "id": "67ac9429-e619-4d24-9987-a888927454e8",
+          "blockIndex": 5
+        },
+        {
+          "text": "Kaqi",
+          "id": "20338751-23bb-4669-b1e6-5d4a063842f5",
+          "blockIndex": 6
+        },
+        {
+          "text": "Guangzhou Aikaqi silicone Manufa",
+          "id": "82d054b9-31ed-4d0a-8f62-fee80bd74737",
+          "blockIndex": 7
+        },
+        {
+          "text": "Add:2B059, Area B, Wanling Toy B",
+          "id": "33dae74c-49d9-4e59-8f9f-d9b6461d41aa",
+          "blockIndex": 8
+        },
+        {
+          "text": "East Yide Rd, Guangzhou, China",
+          "id": "b7e09ef2-c096-46f3-9ee0-352959f33599",
+          "blockIndex": 9
+        },
+        {
+          "text": "Tel:+86-020-81060778E-mail:aikaq",
+          "id": "531cdf6f-2cbf-46b8-8712-370c761a0a99",
+          "blockIndex": 10
+        },
+        {
+          "text": "Xia Zhu Lian",
+          "id": "8b164961-0fb0-44d0-a698-ca5e697353f1",
+          "blockIndex": 11
+        },
+        {
+          "text": "广州爱卡奇硅胶制品有限公司",
+          "id": "4e53174f-b5e5-4f78-b9c6-b7664053aec9",
+          "blockIndex": 12
+        },
+        {
+          "text": "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
+          "id": "d279d36d-bc0d-4f2e-9935-86b4d6fa131b",
+          "blockIndex": 13
+        }
+      ],
+      "acceptance": [
+        {
+          "name": "consistency",
+          "ok": true,
+          "detail": "finalMatched+finalUnmatched===nativeLines"
+        },
+        {
+          "name": "missing-created-sum",
+          "ok": true,
+          "detail": "missingTexts.length===finalUnmatched"
+        },
+        {
+          "name": "sidecar-per-case",
+          "ok": true,
+          "detail": "case A sidecarUsed=false"
+        },
+        {
+          "name": "missing-not-created",
+          "ok": true,
+          "detail": "缺失行 text 不进入画布"
+        },
+        {
+          "name": "created-equal-finalMatched",
+          "ok": true,
+          "detail": "createdCount===finalMatched"
+        }
+      ],
+      "pageId": "canvas:c0",
+      "baiduCount": 16,
+      "drop": {
+        "prefix": "夏祝莲",
+        "before": 17,
+        "after": 16,
+        "dropped": 1
+      },
+      "baiduText": [
+        "Xia",
+        "Zhu",
+        "Lian",
+        "手机：",
+        "13719111188",
+        "Mobile",
+        "微信：",
+        "2287483098",
+        "Wechat",
+        "广州爱卡奇硅股制品有限公司",
+        "Kaqi",
+        "Guangzhou Aikaqi silicone Manufacturing ",
+        "地批：广州市一德东路万菱玩具精品广场二接B区2B059",
+        "Add:2B059,Area B,Wanling Toy Boutique Pl",
+        "East Yide Rd,Guangzhou,China",
+        "Tel:+86-020-81060778 E-mail:aikaqi@foxma"
+      ],
+      "statusText": {
+        "selectors": {
+          "#zy-native-status": "几何校验完成：通过 0 个，保留 14 个（STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISM",
+          "#zy-status": null,
+          ".zy-status": "几何校验完成：通过 0 个，保留 14 个（STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISM"
+        },
+        "bodyHits": [
+          "失败时用百度云端）"
+        ]
+      },
+      "gate": {
+        "totalNative": 15,
+        "initialMatched": 14,
+        "initialUnmatched": 1,
+        "finalMatched": 14,
+        "finalUnmatched": 1,
+        "missingTexts": [
+          "夏祝莲"
+        ],
+        "geometryRecovered": 0,
+        "geometryRecoverySource": [],
+        "localSidecar": null
+      },
+      "gateInitial": {
+        "matched": 14,
+        "unmatched": 1,
+        "totalNative": 15
+      },
+      "engine": null,
+      "sidecarCond": {
+        "unmatched": 1,
+        "flag": false,
+        "fnSide": true,
+        "fnRec": true
+      },
+      "nativeLayerCount": 14,
+      "createCalled": true,
+      "createEvidence": [
+        {
+          "requested": 14,
+          "created": 14,
+          "fail": null
+        }
+      ],
+      "fields": {
+        "nativeLines": 15,
+        "initialMatched": 14,
+        "initialUnmatched": 1,
+        "sidecarUsed": false,
+        "engineLoaded": false,
+        "localCandidates": null,
+        "localRecovered": 0,
+        "finalMatched": 14,
+        "finalUnmatched": 1,
+        "createdCount": 14,
+        "missingTexts": [
+          "夏祝莲"
+        ],
+        "createCalled": true,
+        "nativeLayerCount": 14
+      }
+    }
+  ],
+  "errors": [],
+  "acceptance": {
+    "consistency": {
+      "pass": 1,
+      "fail": 0
+    },
+    "missing-created-sum": {
+      "pass": 1,
+      "fail": 0
+    },
+    "sidecar-per-case": {
+      "pass": 1,
+      "fail": 0
+    },
+    "missing-not-created": {
+      "pass": 1,
+      "fail": 0
+    },
+    "created-equal-finalMatched": {
+      "pass": 1,
+      "fail": 0
+    }
+  }
+}

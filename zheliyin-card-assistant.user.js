@@ -1081,8 +1081,10 @@
       }
       // OCR-P1 Commit 3b：LOCAL sidecar 第二段 —— 第一段(line/word)后仍 unresolved 且开关开启时
       // 对同图跑本地识别拿 line 级几何补位（只提供 geometry；text 恒来自 Native）。
-      if ((matched.unmatchedNative || []).length > 0 && STAGE9_LOCAL_SIDECAR && typeof runLocalGeometrySidecar === "function" && typeof recoverNativeGeometry === "function") {
-        const localCands = await runLocalGeometrySidecar(img);
+      try { window.__zySidecarCond = { unmatched: (matched.unmatchedNative || []).length, flag: STAGE9_LOCAL_SIDECAR, fnSide: typeof runLocalGeometrySidecar === "function", fnRec: typeof recoverNativeGeometry === "function" }; } catch (e) {}
+            if ((matched.unmatchedNative || []).length > 0 && STAGE9_LOCAL_SIDECAR && typeof runLocalGeometrySidecar === "function" && typeof recoverNativeGeometry === "function") {
+      // entered 标记已迁移至 await 后
+                const localCands = await runLocalGeometrySidecar(img);
         matched.gate = matched.gate || {};
         if (localCands && localCands.length) {
           const occ = (matched.matchedGeometry || []).map(function (og) { return { bbox: og.bbox }; });
@@ -1102,8 +1104,9 @@
           matched.gate.unmatchedNative = matched.unmatchedNative.length;
           matched.gate.geometryRecovered = (matched.gate.geometryRecovered || 0) + (rec2.recovered || []).length;
           matched.gate.geometryRecoverySource = [].concat(matched.gate.geometryRecoverySource || [], (rec2.recovered || []).map(function (rr) { return rr.source; }));
-          matched.gate.localSidecar = { used: true, candidates: localCands.length, recovered: (rec2.recovered || []).length };
+          matched.gate.localSidecar = { used: true, candidates: localCands.length, recovered: (rec2.recovered || []).length }; try { window.__zySidecarCond = Object.assign({}, window.__zySidecarCond || {}, { branch: "if", localTexts: (localCands || []).map(function (lc) { return String(lc.text || "").slice(0, 24); }) }); } catch (e) {} // IF
         } else {
+          try { window.__zySidecarCond = Object.assign({}, window.__zySidecarCond || {}, { branch: "else" }); } catch (e) {}
           matched.gate.localSidecar = { used: true, candidates: (localCands || []).length, recovered: 0 };
         }
         ocrLog("TRUTH", "local-sidecar: candidates=" + ((localCands || []).length) + " recovered=" + ((matched.gate.localSidecar && matched.gate.localSidecar.recovered) || 0) + " unresolvedAfter=" + matched.unmatchedNative.length);
@@ -1132,6 +1135,10 @@
         oneToMany: matched.gate ? matched.gate.oneToMany : 0,
         manyToOne: matched.gate ? matched.gate.manyToOne : 0,
         allTextTruthValid: true,
+        localSidecar: (matched.gate && matched.gate.localSidecar) || null, // OCR-P1 Commit 3c.5：sidecar 诊断透传（否则报表 sidecarUsed=false）
+        geometryRecovered: (matched.gate && matched.gate.geometryRecovered) || 0,
+        geometryRecoverySource: (matched.gate && matched.gate.geometryRecoverySource) || [],
+        geometryRecoveryRejected: (matched.gate && matched.gate.geometryRecoveryRejected) || [],
         failureCode: null
       };
       // Text Truth Gate：kept.text 必须 === native.rawText（历史语义保留）
@@ -1158,13 +1165,14 @@
   // responseText，成功缓存 ocrEngineCache；失败返回 SIDE_CAR_ENGINE_LOAD_FAILED。
   function ensureLocalOcrEngine() {
     return new Promise((resolve) => {
-      if (typeof ocrEngineCache === "string" && ocrEngineCache.length > 1000) { try { window.__zyLocalEngineState = { loaded: true, bytes: ocrEngineCache.length }; } catch (e) {}
+      if (typeof ocrEngineCache === "string" && ocrEngineCache.length > 1000 && ocrEngineCache.indexOf("createWorker") >= 0) { try { window.__zyLocalEngineState = { loaded: true, bytes: ocrEngineCache.length }; } catch (e) {}
             resolve({ ok: true, engine: ocrEngineCache }); return; }
       GM_xmlhttpRequest({
         method: "GET", url: OCR_CDN, timeout: 45000,
         onload: (x) => {
-          if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) {
+          if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000 && x.responseText.indexOf("createWorker") >= 0) {
             ocrEngineCache = x.responseText;
+            try { window.__zyLocalEngineState = { loaded: true, bytes: x.responseText.length }; } catch (e) {}
             ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars");
             resolve({ ok: true, engine: ocrEngineCache });
           } else {
@@ -1325,6 +1333,7 @@
           "document.documentElement.setAttribute('data-zy-sidecar-result',JSON.stringify({ok:true,lines:lines,w:r.data.imageWidth,h:r.data.imageHeight}));" +
           "});" +
           "}).catch(function(e){document.documentElement.setAttribute('data-zy-sidecar-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));});" +
+          "});"+
           "})();";
         GM_addElement("script", { textContent: executor });
         document.documentElement.setAttribute("data-zy-sidecar-result", "");

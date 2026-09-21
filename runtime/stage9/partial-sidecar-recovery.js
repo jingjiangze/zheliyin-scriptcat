@@ -34,6 +34,7 @@ const CASES = [
 ];
 const RUNS_PER = Math.max(1, Number(process.env.ZY_RUNS || 1));
 const CASE_WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
+const DROP_PREFIX = process.env.ZY_DROP || ""; // 模拟 Baidu 漏行：删除 text 包含该前缀的候选（构造真实缺失分支）
 
 // ---- 13 字段 schema（报告用；runner 与 selftest 同源）----
 const FIELDS = ["nativeLines", "initialMatched", "initialUnmatched", "sidecarUsed", "engineLoaded", "localCandidates", "localRecovered", "finalMatched", "finalUnmatched", "createdCount", "missingTexts", "createCalled", "nativeLayerCount"];
@@ -212,17 +213,32 @@ function pageWorldPayloadFor(cond) {
     };
     const waitOcrDone = async (timeoutMs) => {
       const t0 = Date.now();
+      const samples = [];
       while (Date.now() - t0 < timeoutMs) {
         const r = await page.evaluate(() => {
           const el = document.querySelector("#zy-native-status") || document.querySelector("#zy-status") || document.querySelector(".zy-status");
           return { st: el ? String(el.textContent || "").trim().slice(0, 200) : null };
         }).catch(() => ({}));
         const st = r && r.st;
-        if (st && /已生成 \d+ 个文字|已校准 \d+ 个文字|未识别到文字|未生成文字|未找到可识别的图片|本批不进入创建|无法确定当前图片所属页面|OCR 目标已失效|无有效块|未通过质量检查|阻断|失败|异常|几何校验完成|已处理 \d+ 个文字图层|追加完成|识别完成|即将创建|文字不创建|缺失 \d+ 行/.test(st)) return { done: true, st };
+        if (st) samples.push(String(st).slice(0, 120));
+        if (st && /已生成 \d+ 个文字|已校准 \d+ 个文字|追加完成|几何校验完成|已处理 \d+ 个文字图层|识别完成|未识别到文字|未生成文字|未找到可识别的图片|本批不进入创建|无法确定当前图片所属页面|OCR 目标已失效|无有效块|未通过质量检查|阻断|失败|异常|即将创建|文字不创建|缺失 \d+ 行/.test(st)) return { done: true, st, samples };
         await SLEEP(900);
       }
-      return { done: false };
+      return { done: false, samples };
     };
+    const readStatusText = () => page.evaluate(() => {
+      const out = { selectors: {}, bodyHits: [] };
+      ["#zy-native-status", "#zy-status", ".zy-status"].forEach((sel) => {
+        try { const el = document.querySelector(sel); out.selectors[sel] = el ? String(el.textContent || "").trim().slice(0, 200) : null; } catch (e) { out.selectors[sel] = "ERR"; }
+      });
+      try {
+        const body = String(document.body.innerText || "");
+        const re = /(已生成|已处理|创建|缺失|不创建|即将创建|追加完成|识别完成|识别中|等待|失败|异常|超时)[^。！?；\n]{0,80}/g;
+        let m; let i = 0;
+        while ((m = re.exec(body)) !== null && i < 8) { out.bodyHits.push(m[0].slice(0, 90)); i += 1; }
+      } catch (e) {}
+      return out;
+    }).catch(() => ({ selectors: {}, bodyHits: [] }));
     const readNew = (ids) => page.evaluate(async (arg) => {
       const req = window.requirejs || window.require;
       const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
@@ -257,7 +273,7 @@ function pageWorldPayloadFor(cond) {
       try { if (vo && vo.totalCanvasArray[0] && vo.totalCanvasArray[0].canvas) vo.totalCanvasArray[0].canvas.requestRenderAll(); } catch (e) {}
       return { removed };
     });
-    const readGateSummary = () => page.evaluate(() => ({ summary: window.__zyNativeGateSummary || null, initial: window.__zyInitialGate || null, engine: window.__zyLocalEngineState || null, ev: window.__zyOcrPipelineEvidence || null })).catch(() => ({}));
+    const readGateSummary = () => page.evaluate(() => ({ summary: window.__zyNativeGateSummary || null, initial: window.__zyInitialGate || null, engine: window.__zyLocalEngineState || null, ev: window.__zyOcrPipelineEvidence || null, sidecarCond: window.__zySidecarCond || null })).catch(() => ({}));
 
     for (const c of CASES) { if (CASE_WHITELIST.length && CASE_WHITELIST.indexOf(c.id) < 0) continue;
       for (let r = 1; r <= RUNS_PER; r += 1) {
@@ -269,9 +285,33 @@ function pageWorldPayloadFor(cond) {
           await SLEEP(2500);
           await injectPageWorld(pageWorldPayloadFor(c));
           await SLEEP(1200);
-          const ready = await waitEditorReady(16);
-          rec.steps.push({ step: "editor-ready", ok: !!(ready && ready.ok), bridge: !!(ready && ready.bridge) });
+          let ready = await waitEditorReady(20);
           if (!(ready && ready.ok)) { rec.errors.push("EDITOR_UNAVAILABLE"); continue; }
+          // bridge 缺失时补装一次（page-bridge 由 installPageBridge 注入并落 marker），再复查
+          if (!(ready && ready.bridge)) {
+            await page.evaluate(() => { try { if (window.__ZY_DEBUG__ && window.__ZY_DEBUG__.installPageBridge) window.__ZY_DEBUG__.installPageBridge(); } catch (e) {} }).catch(() => {});
+            await SLEEP(1600);
+            ready = await waitEditorReady(4);
+          }
+          rec.steps.push({ step: "editor-ready", ok: !!(ready && ready.ok), bridge: !!(ready && ready.bridge) });
+          if (!(ready && ready.bridge)) {
+            rec.bridgeDiag = await page.evaluate(() => {
+              const dbg = window.__ZY_DEBUG__ || null;
+              const b = window.__ZY_CARD_ASSISTANT_BRIDGE__ || null;
+              return {
+                debug: !!dbg,
+                debugKeys: dbg ? Object.keys(dbg) : null,
+                pbType: typeof window.pageBridge,
+                unifyType: typeof window.unifyCandidates,
+                initFnType: typeof window.initZheliyin,
+                marker: !!(b && b.installed),
+                markerVal: b ? { installed: b.installed, ts: b.ts } : null,
+                scriptCount: document.querySelectorAll("script").length,
+                injectProbe: (!!window.__zyOcrPipelineEvidence || !!window.__zyInitialGate || !!window.__zyNativeGateSummary)
+              };
+            }).catch(() => null);
+            rec.errors.push("BRIDGE_UNAVAILABLE"); continue;
+          }
           const cp = await bridgeCall("getCurrentPage", {}, "getCurrentPageResult", 6000).catch(() => null);
           rec.pageId = (cp && cp.pageId) || null;
           const bg = await setBg();
@@ -279,32 +319,47 @@ function pageWorldPayloadFor(cond) {
           if (!(bg && bg.ok)) { rec.errors.push("BG_INJECT_FAIL"); continue; }
           const prep = await bridgeCall("ocrPrepare", {}, "ocrPrepareResult", 15000).catch(() => null);
           rec.steps.push({ step: "ocr-prepare", ok: !!(prep && prep.ok && prep.dataUrl) });
-          if (!(prep && prep.ok && prep.dataUrl)) { rec.errors.push("OCR_PREPARE_FAIL"); continue; }
+          if (!(prep && prep.ok && prep.dataUrl)) {
+            rec.ocrPrepareRaw = (() => { if (!prep) return null; const o = Object.assign({}, prep); if (typeof o.dataUrl === "string") o.dataUrlLen = o.dataUrl.length; delete o.dataUrl; return o; })();
+            rec.errors.push("OCR_PREPARE_FAIL"); continue;
+          }
           const extRes = await baiduRecognizeExternal(prep.dataUrl, "standard");
-          rec.baiduCount = (extRes && !extRes.error && extRes.candidates) ? extRes.candidates.length : null;
+          let extCands = (extRes && !extRes.error && extRes.candidates) ? extRes.candidates.slice() : [];
+          rec.baiduCount = extCands.length;
+          if (DROP_PREFIX) {
+            const before = extCands.length;
+            extCands = extCands.filter((c) => String((c && c.text) || "").indexOf(DROP_PREFIX) < 0);
+            rec.drop = { prefix: DROP_PREFIX, before: before, after: extCands.length, dropped: before - extCands.length };
+            rec.baiduCount = extCands.length;
+          }
           rec.steps.push({ step: "baidu-external", ok: !!(extRes && !extRes.error), candidates: rec.baiduCount });
+          rec.baiduText = extCands.map((c) => String((c && c.text) || "").slice(0, 40));
           if (!extRes || extRes.error) { rec.errors.push("BAIDU_EXTERNAL_FAIL: " + String((extRes && extRes.error && extRes.error.errorCode) || "?")); continue; }
-          await page.evaluate((r) => { try { window.__zyBaiduExternal = { res: r }; } catch (e) {} }, extRes);
+          await page.evaluate((r) => { try { window.__zyBaiduExternal = { res: r }; } catch (e) {} }, Object.assign({}, extRes, { candidates: extCands }));
           const before = await snapIds();
           const cl = await clickOcr();
           rec.steps.push({ step: "click-ocr", clicked: !!(cl && cl.clicked) });
           if (!(cl && cl.clicked)) { rec.errors.push("OCR_BTN_NOT_FOUND"); continue; }
-          const doneW = await waitOcrDone(240000);
-          rec.steps.push({ step: "ocr-done", done: !!doneW.done, status: doneW.st || null });
-          if (!doneW.done) { rec.errors.push("OCR_TIMEOUT"); continue; }
+          const doneW = await waitOcrDone(360000);
+          rec.steps.push({ step: "ocr-done", done: !!doneW.done, status: doneW.st || null, samples: (doneW.samples || []).slice(-6) });
+          if (!doneW.done) { rec.errors.push("OCR_TIMEOUT"); rec.timeout = true; }
+          // 无论 done/timeout 都采集状态文本与证据（定位终态文案 / 判断创建是否已完成）
+          rec.statusText = await readStatusText();
           const gs = await readGateSummary();
-          rec.gate = gs.summary; rec.gateInitial = gs.initial; rec.engine = gs.engine;
-          const cre = (gs.ev || []).filter((x) => x.stage === "CREATE");
-          rec.createCalled = (cre || []).length > 0;
-          rec.createEvidence = (cre || []).map((x) => ({ requested: x.requested, created: x.created, fail: x.fail || null }));
+          rec.gate = gs.summary; rec.gateInitial = gs.initial; rec.engine = gs.engine; rec.sidecarCond = gs.sidecarCond;
+          // __zyOcrPipelineEvidence 为单条快照对象（非数组）：若最后阶段为 CREATE 则直接取证
+          const evObj = (gs.ev && typeof gs.ev === "object" && !Array.isArray(gs.ev)) ? gs.ev : null;
+          const cre = (evObj && evObj.stage === "CREATE") ? [evObj] : [];
           const after = await snapIds();
           const createdIds = (after || []).filter((id) => (before || []).indexOf(id) < 0);
           const rd = await readNew(createdIds);
           rec.created = (rd && rd.arr || []).map((o) => ({ text: o.text, id: o.id, blockIndex: o.blockIndex }));
           rec.nativeLayerCount = (rd && rd.layerCount) || null;
+          rec.createCalled = (rec.created.length > 0) || (cre.length > 0); // 创建证据：对象增量 或 CREATE 阶段快照
+          rec.createEvidence = cre.map((x) => ({ requested: x.requested, created: x.created, fail: x.fail || null }));
           // ---- 13 字段汇总 ----
           const g = gs.summary || {};
-          const nativeLines = (g.totalNative != null ? g.totalNative : ((gs.ev || []).find((x) => x.stage === "NATIVE") || {}).nativeLines) || 0;
+          const nativeLines = (g.totalNative != null) ? g.totalNative : ((evObj && evObj.stage === "NATIVE" && evObj.nativeLines) || 0);
           rec.fields = {
             nativeLines: nativeLines,
             initialMatched: g.initialMatched != null ? g.initialMatched : ((gs.initial && gs.initial.matched) || 0),
