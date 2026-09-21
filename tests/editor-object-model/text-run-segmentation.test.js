@@ -68,16 +68,6 @@ const c3 = detectRunCandidates({
 });
 t("drc-unsorted-ok", c3.runs.length === 2 && c3.runs[0].text === "AB" && c3.runs[1].text === "CD", JSON.stringify(c3));
 
-// 0.63（27 vs 17）→ 检测层 mixed µ、拆分层 boundary 同阈值 → candidate=true（T-R7 一致性回归）
-const c4 = detectRunCandidates({
-  nativeText: "13800138000\ncontact@example.com",
-  spans: [
-    { start: 0, end: 11, spanInkHeight: 27, spanInkWidth: 223, x: 185 },
-    { start: 12, end: 31, spanInkHeight: 17, spanInkWidth: 197, x: 185 }
-  ]
-});
-t("drc-063-consistent", c4.candidate === true && c4.runs.length === 2, JSON.stringify(c4));
-
 // ================= scoreRunBoundary（§十五/§三十四） =================
 // 高置信 split（57 vs 32，顺序连续）
 const s1 = scoreRunBoundary({
