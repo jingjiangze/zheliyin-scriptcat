@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-20T10:37:54.999Z",
+  "ts": "2026-09-21T07:02:49.582Z",
   "stage": "STAGE-9-V4-FONT-TARGET-AB",
   "native": {
     "fixed": "textType=2",
@@ -11,445 +11,31 @@
       "id": "A1",
       "baidu": "standard",
       "imageInk": "0",
-      "runs": 2
+      "runs": 1
     },
     {
       "id": "A2",
       "baidu": "standard",
       "imageInk": "1",
-      "runs": 2
+      "runs": 1
     },
     {
       "id": "B1",
       "baidu": "accurate",
       "imageInk": "0",
-      "runs": 2
+      "runs": 1
     },
     {
       "id": "B2",
       "baidu": "accurate",
       "imageInk": "1",
-      "runs": 2
+      "runs": 1
     }
   ],
   "image": "real-card-shengying.png",
   "cookiePresent": true,
   "runs": [
     {
-      "condition": "A1",
-      "baidu": "standard",
-      "imageInkTarget": false,
-      "run": 1,
-      "pipeline": "FULL_REAL_PIPELINE",
-      "steps": [
-        {
-          "step": "editor-ready",
-          "ok": true,
-          "bridge": true
-        },
-        {
-          "step": "current-page",
-          "pageId": "canvas:c0",
-          "code": "OK"
-        },
-        {
-          "step": "bg-inject",
-          "ok": true
-        },
-        {
-          "step": "ocr-prepare",
-          "ok": true,
-          "kind": "background-image"
-        },
-        {
-          "step": "baidu-external",
-          "ok": true,
-          "candidates": 10,
-          "meta": "standard"
-        },
-        {
-          "step": "click-ocr",
-          "clicked": true,
-          "sel": "#zy-native-ocr-btn"
-        },
-        {
-          "step": "ocr-done",
-          "done": true,
-          "status": "几何校验完成：通过 0 个，保留 2 个（STYLE_MISMATCH|STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
-        },
-        {
-          "step": "read",
-          "objects": 2
-        },
-        {
-          "step": "rollback",
-          "ok": true
-        }
-      ],
-      "blocks": [
-        {
-          "blockIndex": 1,
-          "objectId": "cb4b769a-cbf6-4a99-a902-4a7e6ee6e0a5",
-          "zyOcrKey": "zy-ocr-tx-mu9onk0d-jov5vesl-1",
-          "text": "客户经理",
-          "fontFamily": "思源黑体 Regular",
-          "fontSize": 43,
-          "scriptType": "MEDIUM",
-          "sizeBucket": null,
-          "targetSource": "OCR_BBOX",
-          "ocrBBoxTargetWidth": 185,
-          "imageInkTargetWidth": null,
-          "inkFallback": false,
-          "inkReason": null,
-          "targetWidth": 185,
-          "advanceWidth": 172,
-          "editorInkWidth": 170,
-          "editorInkHeight": 41,
-          "K2_after": null,
-          "geometry": {
-            "tl": [
-              262,
-              35
-            ],
-            "tr": [
-              463,
-              35
-            ],
-            "br": [
-              463,
-              84.59
-            ],
-            "bl": [
-              262,
-              84.59
-            ],
-            "cx": 362.5,
-            "cy": 59.795,
-            "angle": 0
-          },
-          "position": {
-            "left": 262,
-            "top": 35,
-            "width": 200,
-            "height": 48.589999999999996,
-            "angle": 0
-          },
-          "wrap": {
-            "sourceLineCount": 1,
-            "estimatedFinalLineCount": 1,
-            "forcedWrapDetected": false,
-            "renderedLineCount": 1
-          },
-          "objectQuad": {
-            "tl": [
-              262,
-              35
-            ],
-            "tr": [
-              463,
-              35
-            ],
-            "br": [
-              463,
-              84.59
-            ],
-            "bl": [
-              262,
-              84.59
-            ],
-            "cx": 362.5,
-            "cy": 59.795,
-            "angle": 0
-          }
-        },
-        {
-          "blockIndex": 4,
-          "objectId": "a8f80db1-9f11-4d7e-8605-ef658691c32b",
-          "zyOcrKey": "zy-ocr-tx-mu9onk0d-jov5vesl-4",
-          "text": "Tel.: 0757-88809856",
-          "fontFamily": "思源黑体 Regular",
-          "fontSize": 27,
-          "scriptType": "MEDIUM",
-          "sizeBucket": null,
-          "targetSource": "OCR_BBOX",
-          "ocrBBoxTargetWidth": 278,
-          "imageInkTargetWidth": null,
-          "inkFallback": false,
-          "inkReason": null,
-          "targetWidth": 278,
-          "advanceWidth": 247.08,
-          "editorInkWidth": 247,
-          "editorInkHeight": 22,
-          "K2_after": null,
-          "geometry": {
-            "tl": [
-              268,
-              250
-            ],
-            "tr": [
-              564,
-              250
-            ],
-            "br": [
-              564,
-              281.51
-            ],
-            "bl": [
-              268,
-              281.51
-            ],
-            "cx": 416,
-            "cy": 265.755,
-            "angle": 0
-          },
-          "position": {
-            "left": 268,
-            "top": 250,
-            "width": 295,
-            "height": 30.509999999999998,
-            "angle": 0
-          },
-          "wrap": {
-            "sourceLineCount": 1,
-            "estimatedFinalLineCount": 1,
-            "forcedWrapDetected": false,
-            "renderedLineCount": 1
-          },
-          "objectQuad": {
-            "tl": [
-              268,
-              250
-            ],
-            "tr": [
-              564,
-              250
-            ],
-            "br": [
-              564,
-              281.51
-            ],
-            "bl": [
-              268,
-              281.51
-            ],
-            "cx": 416,
-            "cy": 265.755,
-            "angle": 0
-          }
-        }
-      ],
-      "errors": [],
-      "pageId": "canvas:c0",
-      "duplicateCount": 0
-    },
-    {
-      "condition": "A1",
-      "baidu": "standard",
-      "imageInkTarget": false,
-      "run": 2,
-      "pipeline": "FULL_REAL_PIPELINE",
-      "steps": [
-        {
-          "step": "editor-ready",
-          "ok": true,
-          "bridge": true
-        },
-        {
-          "step": "current-page",
-          "pageId": "canvas:c0",
-          "code": "OK"
-        },
-        {
-          "step": "bg-inject",
-          "ok": true
-        },
-        {
-          "step": "ocr-prepare",
-          "ok": true,
-          "kind": "background-image"
-        },
-        {
-          "step": "baidu-external",
-          "ok": true,
-          "candidates": 10,
-          "meta": "standard"
-        },
-        {
-          "step": "click-ocr",
-          "clicked": true,
-          "sel": "#zy-native-ocr-btn"
-        },
-        {
-          "step": "ocr-done",
-          "done": true,
-          "status": "几何校验完成：通过 0 个，保留 2 个（STYLE_MISMATCH|STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
-        },
-        {
-          "step": "read",
-          "objects": 2
-        },
-        {
-          "step": "rollback",
-          "ok": true
-        }
-      ],
-      "blocks": [
-        {
-          "blockIndex": 1,
-          "objectId": "053b7a2b-9a2b-437a-8bb9-c7fa2953e213",
-          "zyOcrKey": "zy-ocr-tx-mu9onpo5-7qt51guo-1",
-          "text": "客户经理",
-          "fontFamily": "思源黑体 Regular",
-          "fontSize": 43,
-          "scriptType": "MEDIUM",
-          "sizeBucket": null,
-          "targetSource": "OCR_BBOX",
-          "ocrBBoxTargetWidth": 185,
-          "imageInkTargetWidth": null,
-          "inkFallback": false,
-          "inkReason": null,
-          "targetWidth": 185,
-          "advanceWidth": 172,
-          "editorInkWidth": 170,
-          "editorInkHeight": 41,
-          "K2_after": null,
-          "geometry": {
-            "tl": [
-              262,
-              35
-            ],
-            "tr": [
-              463,
-              35
-            ],
-            "br": [
-              463,
-              84.59
-            ],
-            "bl": [
-              262,
-              84.59
-            ],
-            "cx": 362.5,
-            "cy": 59.795,
-            "angle": 0
-          },
-          "position": {
-            "left": 262,
-            "top": 35,
-            "width": 200,
-            "height": 48.589999999999996,
-            "angle": 0
-          },
-          "wrap": {
-            "sourceLineCount": 1,
-            "estimatedFinalLineCount": 1,
-            "forcedWrapDetected": false,
-            "renderedLineCount": 1
-          },
-          "objectQuad": {
-            "tl": [
-              262,
-              35
-            ],
-            "tr": [
-              463,
-              35
-            ],
-            "br": [
-              463,
-              84.59
-            ],
-            "bl": [
-              262,
-              84.59
-            ],
-            "cx": 362.5,
-            "cy": 59.795,
-            "angle": 0
-          }
-        },
-        {
-          "blockIndex": 4,
-          "objectId": "a1485870-2aa9-48f7-a003-4f6c846b3d8c",
-          "zyOcrKey": "zy-ocr-tx-mu9onpo5-7qt51guo-4",
-          "text": "Tel.: 0757-88809856",
-          "fontFamily": "思源黑体 Regular",
-          "fontSize": 27,
-          "scriptType": "MEDIUM",
-          "sizeBucket": null,
-          "targetSource": "OCR_BBOX",
-          "ocrBBoxTargetWidth": 278,
-          "imageInkTargetWidth": null,
-          "inkFallback": false,
-          "inkReason": null,
-          "targetWidth": 278,
-          "advanceWidth": 247.08,
-          "editorInkWidth": 247,
-          "editorInkHeight": 22,
-          "K2_after": null,
-          "geometry": {
-            "tl": [
-              268,
-              250
-            ],
-            "tr": [
-              564,
-              250
-            ],
-            "br": [
-              564,
-              281.51
-            ],
-            "bl": [
-              268,
-              281.51
-            ],
-            "cx": 416,
-            "cy": 265.755,
-            "angle": 0
-          },
-          "position": {
-            "left": 268,
-            "top": 250,
-            "width": 295,
-            "height": 30.509999999999998,
-            "angle": 0
-          },
-          "wrap": {
-            "sourceLineCount": 1,
-            "estimatedFinalLineCount": 1,
-            "forcedWrapDetected": false,
-            "renderedLineCount": 1
-          },
-          "objectQuad": {
-            "tl": [
-              268,
-              250
-            ],
-            "tr": [
-              564,
-              250
-            ],
-            "br": [
-              564,
-              281.51
-            ],
-            "bl": [
-              268,
-              281.51
-            ],
-            "cx": 416,
-            "cy": 265.755,
-            "angle": 0
-          }
-        }
-      ],
-      "errors": [],
-      "pageId": "canvas:c0",
-      "duplicateCount": 0
-    },
-    {
       "condition": "A2",
       "baidu": "standard",
       "imageInkTarget": true,
@@ -489,11 +75,11 @@
         {
           "step": "ocr-done",
           "done": true,
-          "status": "几何校验完成：通过 0 个，保留 2 个（STYLE_MISMATCH|STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
+          "status": "几何校验完成：通过 0 个，保留 10 个（STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_M"
         },
         {
           "step": "read",
-          "objects": 2
+          "objects": 10
         },
         {
           "step": "rollback",
@@ -502,50 +88,52 @@
       ],
       "blocks": [
         {
-          "blockIndex": 1,
-          "objectId": "2458bc04-1d2a-4733-8f0e-1ab4fdb251bc",
-          "zyOcrKey": "zy-ocr-tx-mu9onv74-1qvjjff9-1",
-          "text": "客户经理",
+          "blockIndex": 0,
+          "objectId": "ec09ec80-6a82-4375-81f7-0b79e14671d7",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-0",
+          "text": "吴健湘",
           "fontFamily": "思源黑体 Regular",
-          "fontSize": 43,
-          "scriptType": "MEDIUM",
+          "fontSize": 29,
+          "scriptType": null,
           "sizeBucket": null,
           "targetSource": "IMAGE_INK",
-          "ocrBBoxTargetWidth": 185,
-          "imageInkTargetWidth": 176,
+          "sourceInkHeight": 28.36,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 104.9,
+          "imageInkTargetWidth": 99.8,
           "inkFallback": false,
           "inkReason": null,
-          "targetWidth": 176,
-          "advanceWidth": 172,
-          "editorInkWidth": 170,
-          "editorInkHeight": 41,
-          "K2_after": 0.966,
+          "targetWidth": 99.8,
+          "advanceWidth": 87,
+          "editorInkWidth": 85,
+          "editorInkHeight": 28,
+          "K2_after": 0.852,
           "geometry": {
             "tl": [
-              267,
-              35
+              150,
+              15
             ],
             "tr": [
-              459,
-              35
+              260.79888268156424,
+              15
             ],
             "br": [
-              459,
-              84.59
+              260.79888268156424,
+              48.769999999999996
             ],
             "bl": [
-              267,
-              84.59
+              150,
+              48.769999999999996
             ],
-            "cx": 363,
-            "cy": 59.795,
+            "cx": 205.39944134078212,
+            "cy": 31.884999999999998,
             "angle": 0
           },
           "position": {
-            "left": 267,
-            "top": 35,
-            "width": 191,
-            "height": 48.589999999999996,
+            "left": 150,
+            "top": 15,
+            "width": 109.79888268156424,
+            "height": 32.769999999999996,
             "angle": 0
           },
           "wrap": {
@@ -556,70 +144,688 @@
           },
           "objectQuad": {
             "tl": [
-              267,
-              35
+              150,
+              15
             ],
             "tr": [
-              459,
-              35
+              260.79888268156424,
+              15
             ],
             "br": [
-              459,
-              84.59
+              260.79888268156424,
+              48.769999999999996
             ],
             "bl": [
-              267,
-              84.59
+              150,
+              48.769999999999996
             ],
-            "cx": 363,
-            "cy": 59.795,
+            "cx": 205.39944134078212,
+            "cy": 31.884999999999998,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 1,
+          "objectId": "8eb8f70c-5e92-454d-8ed6-9fa575b591b1",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-1",
+          "text": "客户经理",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 15,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 14.98,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 63.51,
+          "imageInkTargetWidth": 62.37,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 62.37,
+          "advanceWidth": 60,
+          "editorInkWidth": 61,
+          "editorInkHeight": 15,
+          "K2_after": 0.978,
+          "geometry": {
+            "tl": [
+              274,
+              22
+            ],
+            "tr": [
+              347.3743016759777,
+              22
+            ],
+            "br": [
+              347.3743016759777,
+              39.95
+            ],
+            "bl": [
+              274,
+              39.95
+            ],
+            "cx": 310.68715083798884,
+            "cy": 30.975,
+            "angle": 0
+          },
+          "position": {
+            "left": 274,
+            "top": 22,
+            "width": 72.37430167597765,
+            "height": 16.95,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              274,
+              22
+            ],
+            "tr": [
+              347.3743016759777,
+              22
+            ],
+            "br": [
+              347.3743016759777,
+              39.95
+            ],
+            "bl": [
+              274,
+              39.95
+            ],
+            "cx": 310.68715083798884,
+            "cy": 30.975,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 2,
+          "objectId": "a5e1015a-4d21-4e30-901b-71c23e318ac2",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-2",
+          "text": "Telephone:+86 1591317158",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 21,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 21.4,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 205.27,
+          "imageInkTargetWidth": 204.13,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 204.13,
+          "advanceWidth": 265.29,
+          "editorInkWidth": 277,
+          "editorInkHeight": 22,
+          "K2_after": 1.357,
+          "geometry": {
+            "tl": [
+              99,
+              56
+            ],
+            "tr": [
+              414,
+              56
+            ],
+            "br": [
+              414,
+              80.72999999999999
+            ],
+            "bl": [
+              99,
+              80.72999999999999
+            ],
+            "cx": 256.5,
+            "cy": 68.365,
+            "angle": 0
+          },
+          "position": {
+            "left": 99,
+            "top": 56,
+            "width": 314,
+            "height": 23.729999999999997,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              99,
+              56
+            ],
+            "tr": [
+              414,
+              56
+            ],
+            "br": [
+              414,
+              80.72999999999999
+            ],
+            "bl": [
+              99,
+              80.72999999999999
+            ],
+            "cx": 256.5,
+            "cy": 68.365,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 3,
+          "objectId": "054c7cbd-925a-4564-bd0c-7ed83c42d71b",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-3",
+          "text": "佛山盛盈包装制品有限公司",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 33,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 31.57,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 288.06,
+          "imageInkTargetWidth": 286.92,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 286.92,
+          "advanceWidth": 396,
+          "editorInkWidth": 393,
+          "editorInkHeight": 31,
+          "K2_after": 1.37,
+          "geometry": {
+            "tl": [
+              95,
+              93
+            ],
+            "tr": [
+              504,
+              93
+            ],
+            "br": [
+              504,
+              131.29
+            ],
+            "bl": [
+              95,
+              131.29
+            ],
+            "cx": 299.5,
+            "cy": 112.14499999999998,
+            "angle": 0
+          },
+          "position": {
+            "left": 95,
+            "top": 93,
+            "width": 408,
+            "height": 37.29,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              95,
+              93
+            ],
+            "tr": [
+              504,
+              93
+            ],
+            "br": [
+              504,
+              131.29
+            ],
+            "bl": [
+              95,
+              131.29
+            ],
+            "cx": 299.5,
+            "cy": 112.14499999999998,
             "angle": 0
           }
         },
         {
           "blockIndex": 4,
-          "objectId": "60fbd96a-4807-431d-800d-a0c6021ba686",
-          "zyOcrKey": "zy-ocr-tx-mu9onv74-1qvjjff9-4",
+          "objectId": "9de50618-193f-4cf9-bfbe-ab41eefc1592",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-4",
           "text": "Tel.: 0757-88809856",
           "fontFamily": "思源黑体 Regular",
-          "fontSize": 27,
-          "scriptType": "MEDIUM",
+          "fontSize": 20,
+          "scriptType": null,
           "sizeBucket": null,
           "targetSource": "IMAGE_INK",
-          "ocrBBoxTargetWidth": 278,
-          "imageInkTargetWidth": 276,
+          "sourceInkHeight": 18.19,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 157.64,
+          "imageInkTargetWidth": 156.5,
           "inkFallback": false,
           "inkReason": null,
-          "targetWidth": 276,
-          "advanceWidth": 247.08,
-          "editorInkWidth": 247,
-          "editorInkHeight": 22,
-          "K2_after": 0.895,
+          "targetWidth": 156.5,
+          "advanceWidth": 183.02,
+          "editorInkWidth": 183,
+          "editorInkHeight": 17,
+          "K2_after": 1.169,
           "geometry": {
             "tl": [
-              268,
-              250
+              130,
+              130
             ],
             "tr": [
-              564,
-              250
+              342,
+              130
             ],
             "br": [
-              564,
-              281.51
+              342,
+              153.60000000000002
             ],
             "bl": [
-              268,
-              281.51
+              130,
+              153.60000000000002
             ],
-            "cx": 416,
-            "cy": 265.755,
+            "cx": 236,
+            "cy": 141.8,
             "angle": 0
           },
           "position": {
-            "left": 268,
-            "top": 250,
-            "width": 295,
+            "left": 130,
+            "top": 130,
+            "width": 211,
+            "height": 22.599999999999998,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              130,
+              130
+            ],
+            "tr": [
+              342,
+              130
+            ],
+            "br": [
+              342,
+              153.60000000000002
+            ],
+            "bl": [
+              130,
+              153.60000000000002
+            ],
+            "cx": 236,
+            "cy": 141.8,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 5,
+          "objectId": "fae854a9-f4e6-448b-8e4a-5d2a63115b9c",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-5",
+          "text": "地址:广东省佛山市高明区杨和镇阳西大道和政路12",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 30,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 29.43,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 323.78,
+          "imageInkTargetWidth": 322.08,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 322.08,
+          "advanceWidth": 671.64,
+          "editorInkWidth": 701,
+          "editorInkHeight": 29,
+          "K2_after": 2.176,
+          "geometry": {
+            "tl": [
+              -43,
+              143
+            ],
+            "tr": [
+              680,
+              143
+            ],
+            "br": [
+              680,
+              177.89999999999998
+            ],
+            "bl": [
+              -43,
+              177.89999999999998
+            ],
+            "cx": 318.5,
+            "cy": 160.45,
+            "angle": 0
+          },
+          "position": {
+            "left": -43,
+            "top": 143,
+            "width": 722,
+            "height": 33.9,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              -43,
+              143
+            ],
+            "tr": [
+              680,
+              143
+            ],
+            "br": [
+              680,
+              177.89999999999998
+            ],
+            "bl": [
+              -43,
+              177.89999999999998
+            ],
+            "cx": 318.5,
+            "cy": 160.45,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 6,
+          "objectId": "4a3faee6-645c-4e09-800a-01e2eabeef4a",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-6",
+          "text": "佛山鼎盛通生物科技有限公司",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 35,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 34.24,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 315.27,
+          "imageInkTargetWidth": 314.14,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 314.14,
+          "advanceWidth": 455,
+          "editorInkWidth": 452,
+          "editorInkHeight": 34,
+          "K2_after": 1.439,
+          "geometry": {
+            "tl": [
+              83,
+              175
+            ],
+            "tr": [
+              551,
+              175
+            ],
+            "br": [
+              551,
+              215.55
+            ],
+            "bl": [
+              83,
+              215.55
+            ],
+            "cx": 317,
+            "cy": 195.27499999999998,
+            "angle": 0
+          },
+          "position": {
+            "left": 83,
+            "top": 175,
+            "width": 467,
+            "height": 39.55,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              83,
+              175
+            ],
+            "tr": [
+              551,
+              175
+            ],
+            "br": [
+              551,
+              215.55
+            ],
+            "bl": [
+              83,
+              215.55
+            ],
+            "cx": 317,
+            "cy": 195.27499999999998,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 7,
+          "objectId": "4c221bff-50d9-4326-97f8-f46a5a2578f6",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-7",
+          "text": "Tel.: 0757-88809856",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 21,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 19.26,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 157.64,
+          "imageInkTargetWidth": 157.07,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 157.07,
+          "advanceWidth": 192.17,
+          "editorInkWidth": 192,
+          "editorInkHeight": 17,
+          "K2_after": 1.222,
+          "geometry": {
+            "tl": [
+              128,
+              209
+            ],
+            "tr": [
+              350,
+              209
+            ],
+            "br": [
+              350,
+              233.73000000000002
+            ],
+            "bl": [
+              128,
+              233.73000000000002
+            ],
+            "cx": 239,
+            "cy": 221.365,
+            "angle": 0
+          },
+          "position": {
+            "left": 128,
+            "top": 209,
+            "width": 221,
+            "height": 23.729999999999997,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              128,
+              209
+            ],
+            "tr": [
+              350,
+              209
+            ],
+            "br": [
+              350,
+              233.73000000000002
+            ],
+            "bl": [
+              128,
+              233.73000000000002
+            ],
+            "cx": 239,
+            "cy": 221.365,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 8,
+          "objectId": "5500d69b-f2e5-4b48-b7ca-dc334b25f843",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-8",
+          "text": "地址:广东省佛山市高明区杨和镇阳西大道和政路12",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 31,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 30.5,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 340.79,
+          "imageInkTargetWidth": 339.09,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 339.09,
+          "advanceWidth": 694.03,
+          "editorInkWidth": 927,
+          "editorInkHeight": 30,
+          "K2_after": 2.734,
+          "geometry": {
+            "tl": [
+              -144,
+              224
+            ],
+            "tr": [
+              806,
+              224
+            ],
+            "br": [
+              806,
+              260.03
+            ],
+            "bl": [
+              -144,
+              260.03
+            ],
+            "cx": 331,
+            "cy": 242.015,
+            "angle": 0
+          },
+          "position": {
+            "left": -144,
+            "top": 224,
+            "width": 949,
+            "height": 35.029999999999994,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              -144,
+              224
+            ],
+            "tr": [
+              806,
+              224
+            ],
+            "br": [
+              806,
+              260.03
+            ],
+            "bl": [
+              -144,
+              260.03
+            ],
+            "cx": 331,
+            "cy": 242.015,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 9,
+          "objectId": "99eff088-f45e-4e86-a485-1f55ca621251",
+          "zyOcrKey": "zy-ocr-tx-muawesx8-hvtb5zog-9",
+          "text": "E-mail:sandy.wu@shengyin",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 27,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 27.29,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 225.11,
+          "imageInkTargetWidth": 223.41,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 223.41,
+          "advanceWidth": 346.79,
+          "editorInkWidth": 401,
+          "editorInkHeight": 28,
+          "K2_after": 1.795,
+          "geometry": {
+            "tl": [
+              38,
+              264
+            ],
+            "tr": [
+              513,
+              264
+            ],
+            "br": [
+              513,
+              295.51
+            ],
+            "bl": [
+              38,
+              295.51
+            ],
+            "cx": 275.5,
+            "cy": 279.755,
+            "angle": 0
+          },
+          "position": {
+            "left": 38,
+            "top": 264,
+            "width": 474,
             "height": 30.509999999999998,
             "angle": 0
           },
@@ -631,237 +837,168 @@
           },
           "objectQuad": {
             "tl": [
-              268,
-              250
+              38,
+              264
             ],
             "tr": [
-              564,
-              250
+              513,
+              264
             ],
             "br": [
-              564,
-              281.51
+              513,
+              295.51
             ],
             "bl": [
-              268,
-              281.51
+              38,
+              295.51
             ],
-            "cx": 416,
-            "cy": 265.755,
+            "cx": 275.5,
+            "cy": 279.755,
             "angle": 0
           }
         }
       ],
       "errors": [],
       "pageId": "canvas:c0",
-      "duplicateCount": 0
-    },
-    {
-      "condition": "A2",
-      "baidu": "standard",
-      "imageInkTarget": true,
-      "run": 2,
-      "pipeline": "FULL_REAL_PIPELINE",
-      "steps": [
-        {
-          "step": "editor-ready",
-          "ok": true,
-          "bridge": true
+      "golden": {
+        "sourceFile": "real-card-shengying.png",
+        "sourceSha256": "fdcea278fe1a92cdb0cf9d197ea080783b06f2600be81c847b60dab33c2ec364",
+        "injectedFp": "img-b34976bf-1106054",
+        "bg": {
+          "canvasWidth": 507.49999999999994,
+          "canvasHeight": 308.72916666666663,
+          "bgWidth": 895,
+          "bgHeight": 577,
+          "naturalWidth": 895,
+          "naturalHeight": 577,
+          "aCoords": null,
+          "transformFn": true,
+          "imageTransform": null
         },
+        "ocrFp": "img-7cc6db9c-1291706",
+        "ocrImgHash": "45bcf04b",
+        "bgImgHash": "45bcf04b",
+        "sameImage": true
+      },
+      "calibration": [
         {
-          "step": "current-page",
-          "pageId": "canvas:c0",
-          "code": "OK"
-        },
-        {
-          "step": "bg-inject",
-          "ok": true
-        },
-        {
-          "step": "ocr-prepare",
-          "ok": true,
-          "kind": "background-image"
-        },
-        {
-          "step": "baidu-external",
-          "ok": true,
-          "candidates": 10,
-          "meta": "standard"
-        },
-        {
-          "step": "click-ocr",
-          "clicked": true,
-          "sel": "#zy-native-ocr-btn"
-        },
-        {
-          "step": "ocr-done",
-          "done": true,
-          "status": "几何校验完成：通过 0 个，保留 2 个（STYLE_MISMATCH|STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
-        },
-        {
-          "step": "read",
-          "objects": 2
-        },
-        {
-          "step": "rollback",
-          "ok": true
-        }
-      ],
-      "blocks": [
-        {
-          "blockIndex": 1,
-          "objectId": "8a3eca21-8a19-40ec-8712-adf51f6a12da",
-          "zyOcrKey": "zy-ocr-tx-mu9oo03s-2etf62mg-1",
-          "text": "客户经理",
-          "fontFamily": "思源黑体 Regular",
-          "fontSize": 43,
-          "scriptType": "MEDIUM",
-          "sizeBucket": null,
-          "targetSource": "IMAGE_INK",
-          "ocrBBoxTargetWidth": 185,
-          "imageInkTargetWidth": 176,
-          "inkFallback": false,
-          "inkReason": null,
-          "targetWidth": 176,
-          "advanceWidth": 172,
-          "editorInkWidth": 170,
-          "editorInkHeight": 41,
-          "K2_after": 0.966,
-          "geometry": {
-            "tl": [
-              267,
-              35
-            ],
-            "tr": [
-              459,
-              35
-            ],
-            "br": [
-              459,
-              84.59
-            ],
-            "bl": [
-              267,
-              84.59
-            ],
-            "cx": 363,
-            "cy": 59.795,
-            "angle": 0
-          },
-          "position": {
-            "left": 267,
-            "top": 35,
-            "width": 191,
-            "height": 48.589999999999996,
-            "angle": 0
-          },
-          "wrap": {
-            "sourceLineCount": 1,
-            "estimatedFinalLineCount": 1,
-            "forcedWrapDetected": false,
-            "renderedLineCount": 1
-          },
-          "objectQuad": {
-            "tl": [
-              267,
-              35
-            ],
-            "tr": [
-              459,
-              35
-            ],
-            "br": [
-              459,
-              84.59
-            ],
-            "bl": [
-              267,
-              84.59
-            ],
-            "cx": 363,
-            "cy": 59.795,
-            "angle": 0
-          }
+          "blockIndex": 2,
+          "sourceInkHeight": 21.4,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 21.4,
+              "editorInkHeightBefore": 23,
+              "fontSizeBefore": 22,
+              "fontSizeAfter": 21,
+              "heightErrorBefore": 1.6,
+              "heightRatio": 1.075,
+              "annotation": "editor-too-large",
+              "editorInkHeightAfter": 22
+            }
+          ],
+          "finalFontSize": 21,
+          "finalEditorInkHeight": 22,
+          "heightErrorAfter": 0.6
         },
         {
           "blockIndex": 4,
-          "objectId": "1a46a396-605d-4e95-8fb8-5f83d3a796ca",
-          "zyOcrKey": "zy-ocr-tx-mu9oo03s-2etf62mg-4",
-          "text": "Tel.: 0757-88809856",
-          "fontFamily": "思源黑体 Regular",
-          "fontSize": 27,
-          "scriptType": "MEDIUM",
-          "sizeBucket": null,
-          "targetSource": "IMAGE_INK",
-          "ocrBBoxTargetWidth": 278,
-          "imageInkTargetWidth": 276,
-          "inkFallback": false,
-          "inkReason": null,
-          "targetWidth": 276,
-          "advanceWidth": 247.08,
-          "editorInkWidth": 247,
-          "editorInkHeight": 22,
-          "K2_after": 0.895,
-          "geometry": {
-            "tl": [
-              268,
-              250
-            ],
-            "tr": [
-              564,
-              250
-            ],
-            "br": [
-              564,
-              281.51
-            ],
-            "bl": [
-              268,
-              281.51
-            ],
-            "cx": 416,
-            "cy": 265.755,
-            "angle": 0
-          },
-          "position": {
-            "left": 268,
-            "top": 250,
-            "width": 295,
-            "height": 30.509999999999998,
-            "angle": 0
-          },
-          "wrap": {
-            "sourceLineCount": 1,
-            "estimatedFinalLineCount": 1,
-            "forcedWrapDetected": false,
-            "renderedLineCount": 1
-          },
-          "objectQuad": {
-            "tl": [
-              268,
-              250
-            ],
-            "tr": [
-              564,
-              250
-            ],
-            "br": [
-              564,
-              281.51
-            ],
-            "bl": [
-              268,
-              281.51
-            ],
-            "cx": 416,
-            "cy": 265.755,
-            "angle": 0
-          }
+          "sourceInkHeight": 18.19,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 18.19,
+              "editorInkHeightBefore": 16,
+              "fontSizeBefore": 19,
+              "fontSizeAfter": 20,
+              "heightErrorBefore": -2.19,
+              "heightRatio": 0.88,
+              "annotation": "editor-too-small",
+              "editorInkHeightAfter": 17
+            }
+          ],
+          "finalFontSize": 20,
+          "finalEditorInkHeight": 17,
+          "heightErrorAfter": -1.19
+        },
+        {
+          "blockIndex": 7,
+          "sourceInkHeight": 19.26,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 19.26,
+              "editorInkHeightBefore": 17,
+              "fontSizeBefore": 20,
+              "fontSizeAfter": 21,
+              "heightErrorBefore": -2.26,
+              "heightRatio": 0.883,
+              "annotation": "editor-too-small",
+              "editorInkHeightAfter": 17,
+              "measurementPlateau": true
+            }
+          ],
+          "finalFontSize": 21,
+          "finalEditorInkHeight": 17,
+          "heightErrorAfter": -2.26
+        },
+        {
+          "blockIndex": 9,
+          "sourceInkHeight": 27.29,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 27.29,
+              "editorInkHeightBefore": 29,
+              "fontSizeBefore": 28,
+              "fontSizeAfter": 27,
+              "heightErrorBefore": 1.71,
+              "heightRatio": 1.063,
+              "annotation": "editor-too-large",
+              "editorInkHeightAfter": 28
+            }
+          ],
+          "finalFontSize": 27,
+          "finalEditorInkHeight": 28,
+          "heightErrorAfter": 0.71
         }
       ],
-      "errors": [],
-      "pageId": "canvas:c0",
-      "duplicateCount": 0
+      "pipelineEvidence": {
+        "stage": "CREATE",
+        "ocrStart": "2026-09-21T07:03:00.332Z",
+        "kind": "background-image",
+        "natural": "895x577",
+        "sourceImage": "img-7cc6db9c-1291706",
+        "updated": 1789974181743,
+        "nativeLines": 10,
+        "ok": true,
+        "code": null,
+        "httpStatus": null,
+        "statusCode": "NATIVE_OK",
+        "raw": 10,
+        "mode": "standard",
+        "qaKept": 10,
+        "unified": 10,
+        "gateKept": 10,
+        "reason": null,
+        "fail": null,
+        "blocks": 10,
+        "nativeMode": "2",
+        "nativeFallback": false,
+        "kept": 10,
+        "nativeBlocks": 10,
+        "unmatchedNative": 0,
+        "unusedGeometry": 0,
+        "oneToMany": 0,
+        "manyToOne": 0,
+        "items": 10,
+        "requested": 10,
+        "created": 10
+      }
     },
     {
       "condition": "B1",
@@ -903,11 +1040,11 @@
         {
           "step": "ocr-done",
           "done": true,
-          "status": "几何校验完成：通过 0 个，保留 1 个（STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
+          "status": "几何校验完成：通过 0 个，保留 10 个（STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_M"
         },
         {
           "step": "read",
-          "objects": 1
+          "objects": 10
         },
         {
           "step": "rollback",
@@ -916,50 +1053,52 @@
       ],
       "blocks": [
         {
-          "blockIndex": 2,
-          "objectId": "7b99b2f8-7a38-44e3-8394-6f4de7116709",
-          "zyOcrKey": "zy-ocr-tx-mu9oo5nj-cdw7vyad-2",
-          "text": "Telephone:+86 1591317158",
+          "blockIndex": 0,
+          "objectId": "c7e9fdad-1d3b-487f-bca7-67c343a34853",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-0",
+          "text": "吴健湘",
           "fontFamily": "思源黑体 Regular",
-          "fontSize": 28,
-          "scriptType": "MEDIUM",
+          "fontSize": 29,
+          "scriptType": null,
           "sizeBucket": null,
           "targetSource": "OCR_BBOX",
-          "ocrBBoxTargetWidth": 283,
-          "imageInkTargetWidth": null,
+          "sourceInkHeight": 28.36,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 104.34,
+          "imageInkTargetWidth": 99.8,
           "inkFallback": false,
           "inkReason": null,
-          "targetWidth": 283,
-          "advanceWidth": 353.72,
-          "editorInkWidth": 369,
-          "editorInkHeight": 29,
-          "K2_after": null,
+          "targetWidth": 104.34,
+          "advanceWidth": 87,
+          "editorInkWidth": 85,
+          "editorInkHeight": 28,
+          "K2_after": 0.852,
           "geometry": {
             "tl": [
-              217,
-              250
+              149,
+              15
             ],
             "tr": [
-              615,
-              250
+              264.33519553072625,
+              15
             ],
             "br": [
-              615,
-              282.64
+              264.33519553072625,
+              48.769999999999996
             ],
             "bl": [
-              217,
-              282.64
+              149,
+              48.769999999999996
             ],
-            "cx": 416,
-            "cy": 266.32,
+            "cx": 206.66759776536313,
+            "cy": 31.884999999999998,
             "angle": 0
           },
           "position": {
-            "left": 217,
-            "top": 250,
-            "width": 397,
-            "height": 31.639999999999997,
+            "left": 149,
+            "top": 15,
+            "width": 114.33519553072624,
+            "height": 32.769999999999996,
             "angle": 0
           },
           "wrap": {
@@ -970,128 +1109,73 @@
           },
           "objectQuad": {
             "tl": [
-              217,
-              250
+              149,
+              15
             ],
             "tr": [
-              615,
-              250
+              264.33519553072625,
+              15
             ],
             "br": [
-              615,
-              282.64
+              264.33519553072625,
+              48.769999999999996
             ],
             "bl": [
-              217,
-              282.64
+              149,
+              48.769999999999996
             ],
-            "cx": 416,
-            "cy": 266.32,
+            "cx": 206.66759776536313,
+            "cy": 31.884999999999998,
             "angle": 0
           }
-        }
-      ],
-      "errors": [],
-      "pageId": "canvas:c0",
-      "duplicateCount": 0
-    },
-    {
-      "condition": "B1",
-      "baidu": "accurate",
-      "imageInkTarget": false,
-      "run": 2,
-      "pipeline": "FULL_REAL_PIPELINE",
-      "steps": [
-        {
-          "step": "editor-ready",
-          "ok": true,
-          "bridge": true
         },
         {
-          "step": "current-page",
-          "pageId": "canvas:c0",
-          "code": "OK"
-        },
-        {
-          "step": "bg-inject",
-          "ok": true
-        },
-        {
-          "step": "ocr-prepare",
-          "ok": true,
-          "kind": "background-image"
-        },
-        {
-          "step": "baidu-external",
-          "ok": true,
-          "candidates": 10,
-          "meta": "accurate"
-        },
-        {
-          "step": "click-ocr",
-          "clicked": true,
-          "sel": "#zy-native-ocr-btn"
-        },
-        {
-          "step": "ocr-done",
-          "done": true,
-          "status": "几何校验完成：通过 0 个，保留 1 个（STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
-        },
-        {
-          "step": "read",
-          "objects": 1
-        },
-        {
-          "step": "rollback",
-          "ok": true
-        }
-      ],
-      "blocks": [
-        {
-          "blockIndex": 2,
-          "objectId": "30eaa547-d6b5-459d-8b2f-06c1332bc833",
-          "zyOcrKey": "zy-ocr-tx-mu9ooai7-bdo2rvhn-2",
-          "text": "Telephone:+86 1591317158",
+          "blockIndex": 1,
+          "objectId": "9569f6b5-ee95-4aae-89f2-b976cc9d6b29",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-1",
+          "text": "客户经理",
           "fontFamily": "思源黑体 Regular",
-          "fontSize": 28,
-          "scriptType": "MEDIUM",
+          "fontSize": 17,
+          "scriptType": null,
           "sizeBucket": null,
           "targetSource": "OCR_BBOX",
-          "ocrBBoxTargetWidth": 283,
-          "imageInkTargetWidth": null,
+          "sourceInkHeight": 16.05,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 66.91,
+          "imageInkTargetWidth": 63.51,
           "inkFallback": false,
           "inkReason": null,
-          "targetWidth": 283,
-          "advanceWidth": 353.72,
-          "editorInkWidth": 369,
-          "editorInkHeight": 29,
-          "K2_after": null,
+          "targetWidth": 66.91,
+          "advanceWidth": 68,
+          "editorInkWidth": 68,
+          "editorInkHeight": 17,
+          "K2_after": 1.071,
           "geometry": {
             "tl": [
-              217,
-              250
+              271,
+              22
             ],
             "tr": [
-              615,
-              250
+              350,
+              22
             ],
             "br": [
-              615,
-              282.64
+              350,
+              42.209999999999994
             ],
             "bl": [
-              217,
-              282.64
+              271,
+              42.209999999999994
             ],
-            "cx": 416,
-            "cy": 266.32,
+            "cx": 310.5,
+            "cy": 32.105,
             "angle": 0
           },
           "position": {
-            "left": 217,
-            "top": 250,
-            "width": 397,
-            "height": 31.639999999999997,
+            "left": 271,
+            "top": 22,
+            "width": 78,
+            "height": 19.209999999999997,
             "angle": 0
           },
           "wrap": {
@@ -1102,30 +1186,801 @@
           },
           "objectQuad": {
             "tl": [
-              217,
-              250
+              271,
+              22
             ],
             "tr": [
-              615,
-              250
+              350,
+              22
             ],
             "br": [
-              615,
-              282.64
+              350,
+              42.209999999999994
             ],
             "bl": [
-              217,
-              282.64
+              271,
+              42.209999999999994
             ],
-            "cx": 416,
-            "cy": 266.32,
+            "cx": 310.5,
+            "cy": 32.105,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 2,
+          "objectId": "450358d9-fd28-4820-b260-540e7a301ce8",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-2",
+          "text": "Telephone:+86 1591317158",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 21,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "OCR_BBOX",
+          "sourceInkHeight": 21.4,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 208.67,
+          "imageInkTargetWidth": 204.13,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 208.67,
+          "advanceWidth": 265.29,
+          "editorInkWidth": 277,
+          "editorInkHeight": 22,
+          "K2_after": 1.357,
+          "geometry": {
+            "tl": [
+              98,
+              55
+            ],
+            "tr": [
+              413,
+              55
+            ],
+            "br": [
+              413,
+              79.72999999999999
+            ],
+            "bl": [
+              98,
+              79.72999999999999
+            ],
+            "cx": 255.5,
+            "cy": 67.365,
+            "angle": 0
+          },
+          "position": {
+            "left": 98,
+            "top": 55,
+            "width": 314,
+            "height": 23.729999999999997,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              98,
+              55
+            ],
+            "tr": [
+              413,
+              55
+            ],
+            "br": [
+              413,
+              79.72999999999999
+            ],
+            "bl": [
+              98,
+              79.72999999999999
+            ],
+            "cx": 255.5,
+            "cy": 67.365,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 3,
+          "objectId": "ad1a5531-f5a1-436d-8fba-50fdad44def9",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-3",
+          "text": "佛山盛盈包装制品有限公司",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 33,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "OCR_BBOX",
+          "sourceInkHeight": 32.1,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 294.29,
+          "imageInkTargetWidth": 287.49,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 294.29,
+          "advanceWidth": 396,
+          "editorInkWidth": 393,
+          "editorInkHeight": 31,
+          "K2_after": 1.367,
+          "geometry": {
+            "tl": [
+              95,
+              93
+            ],
+            "tr": [
+              504,
+              93
+            ],
+            "br": [
+              504,
+              131.29
+            ],
+            "bl": [
+              95,
+              131.29
+            ],
+            "cx": 299.5,
+            "cy": 112.14499999999998,
+            "angle": 0
+          },
+          "position": {
+            "left": 95,
+            "top": 93,
+            "width": 408,
+            "height": 37.29,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              95,
+              93
+            ],
+            "tr": [
+              504,
+              93
+            ],
+            "br": [
+              504,
+              131.29
+            ],
+            "bl": [
+              95,
+              131.29
+            ],
+            "cx": 299.5,
+            "cy": 112.14499999999998,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 4,
+          "objectId": "28ec2c9b-86e9-4b9f-8abd-99af82e4bfd3",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-4",
+          "text": "Tel.: 0757-88809856",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 20,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "OCR_BBOX",
+          "sourceInkHeight": 18.19,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 160.47,
+          "imageInkTargetWidth": 156.5,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 160.47,
+          "advanceWidth": 183.02,
+          "editorInkWidth": 183,
+          "editorInkHeight": 17,
+          "K2_after": 1.169,
+          "geometry": {
+            "tl": [
+              130,
+              131
+            ],
+            "tr": [
+              342,
+              131
+            ],
+            "br": [
+              342,
+              154.60000000000002
+            ],
+            "bl": [
+              130,
+              154.60000000000002
+            ],
+            "cx": 236,
+            "cy": 142.8,
+            "angle": 0
+          },
+          "position": {
+            "left": 130,
+            "top": 131,
+            "width": 211,
+            "height": 22.599999999999998,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              130,
+              131
+            ],
+            "tr": [
+              342,
+              131
+            ],
+            "br": [
+              342,
+              154.60000000000002
+            ],
+            "bl": [
+              130,
+              154.60000000000002
+            ],
+            "cx": 236,
+            "cy": 142.8,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 5,
+          "objectId": "0fce660e-4704-4717-92c4-a4ff0c5741f6",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-5",
+          "text": "地址:广东省佛山市高明区杨和镇阳西大道和政路12",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 31,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "OCR_BBOX",
+          "sourceInkHeight": 29.96,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 330.58,
+          "imageInkTargetWidth": 322.65,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 330.58,
+          "advanceWidth": 694.03,
+          "editorInkWidth": 724,
+          "editorInkHeight": 30,
+          "K2_after": 2.244,
+          "geometry": {
+            "tl": [
+              -54,
+              142
+            ],
+            "tr": [
+              693,
+              142
+            ],
+            "br": [
+              693,
+              178.02999999999997
+            ],
+            "bl": [
+              -54,
+              178.02999999999997
+            ],
+            "cx": 319.5,
+            "cy": 160.015,
+            "angle": 0
+          },
+          "position": {
+            "left": -54,
+            "top": 142,
+            "width": 746,
+            "height": 35.029999999999994,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              -54,
+              142
+            ],
+            "tr": [
+              693,
+              142
+            ],
+            "br": [
+              693,
+              178.02999999999997
+            ],
+            "bl": [
+              -54,
+              178.02999999999997
+            ],
+            "cx": 319.5,
+            "cy": 160.015,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 6,
+          "objectId": "7f7f0ee7-4fa3-4f91-90cb-4653cd2aaa4f",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-6",
+          "text": "佛山鼎盛通生物科技有限公司",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 36,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "OCR_BBOX",
+          "sourceInkHeight": 34.78,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 322.08,
+          "imageInkTargetWidth": 314.14,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 322.08,
+          "advanceWidth": 468,
+          "editorInkWidth": 465,
+          "editorInkHeight": 35,
+          "K2_after": 1.48,
+          "geometry": {
+            "tl": [
+              76,
+              174
+            ],
+            "tr": [
+              558,
+              174
+            ],
+            "br": [
+              558,
+              215.68
+            ],
+            "bl": [
+              76,
+              215.68
+            ],
+            "cx": 317,
+            "cy": 194.84000000000003,
+            "angle": 0
+          },
+          "position": {
+            "left": 76,
+            "top": 174,
+            "width": 481,
+            "height": 40.67999999999999,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              76,
+              174
+            ],
+            "tr": [
+              558,
+              174
+            ],
+            "br": [
+              558,
+              215.68
+            ],
+            "bl": [
+              76,
+              215.68
+            ],
+            "cx": 317,
+            "cy": 194.84000000000003,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 7,
+          "objectId": "058b0ebc-6494-4900-9c64-6759e6e7cccf",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-7",
+          "text": "Tel.: 0757-88809856",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 21,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "OCR_BBOX",
+          "sourceInkHeight": 19.26,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 161.04,
+          "imageInkTargetWidth": 157.07,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 161.04,
+          "advanceWidth": 192.17,
+          "editorInkWidth": 192,
+          "editorInkHeight": 17,
+          "K2_after": 1.222,
+          "geometry": {
+            "tl": [
+              128,
+              209
+            ],
+            "tr": [
+              350,
+              209
+            ],
+            "br": [
+              350,
+              233.73000000000002
+            ],
+            "bl": [
+              128,
+              233.73000000000002
+            ],
+            "cx": 239,
+            "cy": 221.365,
+            "angle": 0
+          },
+          "position": {
+            "left": 128,
+            "top": 209,
+            "width": 221,
+            "height": 23.729999999999997,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              128,
+              209
+            ],
+            "tr": [
+              350,
+              209
+            ],
+            "br": [
+              350,
+              233.73000000000002
+            ],
+            "bl": [
+              128,
+              233.73000000000002
+            ],
+            "cx": 239,
+            "cy": 221.365,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 8,
+          "objectId": "8e700ed4-6e76-48c3-ba59-bc94a51a9e4c",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-8",
+          "text": "地址:广东省佛山市高明区杨和镇阳西大道和政路12",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 33,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "OCR_BBOX",
+          "sourceInkHeight": 31.57,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 347.03,
+          "imageInkTargetWidth": 340.22,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 347.03,
+          "advanceWidth": 738.8,
+          "editorInkWidth": 987,
+          "editorInkHeight": 32,
+          "K2_after": 2.901,
+          "geometry": {
+            "tl": [
+              -175,
+              222
+            ],
+            "tr": [
+              837,
+              222
+            ],
+            "br": [
+              837,
+              260.29
+            ],
+            "bl": [
+              -175,
+              260.29
+            ],
+            "cx": 331,
+            "cy": 241.14499999999998,
+            "angle": 0
+          },
+          "position": {
+            "left": -175,
+            "top": 222,
+            "width": 1011,
+            "height": 37.29,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              -175,
+              222
+            ],
+            "tr": [
+              837,
+              222
+            ],
+            "br": [
+              837,
+              260.29
+            ],
+            "bl": [
+              -175,
+              260.29
+            ],
+            "cx": 331,
+            "cy": 241.14499999999998,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 9,
+          "objectId": "9675de11-227b-4081-ae21-6c8d0ec3b3bf",
+          "zyOcrKey": "zy-ocr-tx-muaweyrm-nn8grn6o-9",
+          "text": "E-mail:sandy.wu@shengyin",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 27,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "OCR_BBOX",
+          "sourceInkHeight": 26.75,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 228.52,
+          "imageInkTargetWidth": 225.11,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 228.52,
+          "advanceWidth": 346.79,
+          "editorInkWidth": 401,
+          "editorInkHeight": 28,
+          "K2_after": 1.781,
+          "geometry": {
+            "tl": [
+              38,
+              264
+            ],
+            "tr": [
+              513,
+              264
+            ],
+            "br": [
+              513,
+              295.51
+            ],
+            "bl": [
+              38,
+              295.51
+            ],
+            "cx": 275.5,
+            "cy": 279.755,
+            "angle": 0
+          },
+          "position": {
+            "left": 38,
+            "top": 264,
+            "width": 474,
+            "height": 30.509999999999998,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              38,
+              264
+            ],
+            "tr": [
+              513,
+              264
+            ],
+            "br": [
+              513,
+              295.51
+            ],
+            "bl": [
+              38,
+              295.51
+            ],
+            "cx": 275.5,
+            "cy": 279.755,
             "angle": 0
           }
         }
       ],
       "errors": [],
       "pageId": "canvas:c0",
-      "duplicateCount": 0
+      "golden": {
+        "sourceFile": "real-card-shengying.png",
+        "sourceSha256": "fdcea278fe1a92cdb0cf9d197ea080783b06f2600be81c847b60dab33c2ec364",
+        "injectedFp": "img-b34976bf-1106054",
+        "bg": {
+          "canvasWidth": 507.49999999999994,
+          "canvasHeight": 308.72916666666663,
+          "bgWidth": 895,
+          "bgHeight": 577,
+          "naturalWidth": 895,
+          "naturalHeight": 577,
+          "aCoords": {
+            "tl": [
+              0,
+              0
+            ],
+            "tr": [
+              507.49999999999994,
+              0
+            ],
+            "br": [
+              507.49999999999994,
+              308.72916666666663
+            ],
+            "bl": [
+              0,
+              308.72916666666663
+            ]
+          },
+          "transformFn": true,
+          "imageTransform": null
+        },
+        "ocrFp": "img-7cc6db9c-1291706",
+        "ocrImgHash": "45bcf04b",
+        "bgImgHash": "45bcf04b",
+        "sameImage": true
+      },
+      "calibration": [
+        {
+          "blockIndex": 2,
+          "sourceInkHeight": 21.4,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 21.4,
+              "editorInkHeightBefore": 23,
+              "fontSizeBefore": 22,
+              "fontSizeAfter": 21,
+              "heightErrorBefore": 1.6,
+              "heightRatio": 1.075,
+              "annotation": "editor-too-large",
+              "editorInkHeightAfter": 22
+            }
+          ],
+          "finalFontSize": 21,
+          "finalEditorInkHeight": 22,
+          "heightErrorAfter": 0.6
+        },
+        {
+          "blockIndex": 4,
+          "sourceInkHeight": 18.19,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 18.19,
+              "editorInkHeightBefore": 16,
+              "fontSizeBefore": 19,
+              "fontSizeAfter": 20,
+              "heightErrorBefore": -2.19,
+              "heightRatio": 0.88,
+              "annotation": "editor-too-small",
+              "editorInkHeightAfter": 17
+            }
+          ],
+          "finalFontSize": 20,
+          "finalEditorInkHeight": 17,
+          "heightErrorAfter": -1.19
+        },
+        {
+          "blockIndex": 7,
+          "sourceInkHeight": 19.26,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 19.26,
+              "editorInkHeightBefore": 17,
+              "fontSizeBefore": 20,
+              "fontSizeAfter": 21,
+              "heightErrorBefore": -2.26,
+              "heightRatio": 0.883,
+              "annotation": "editor-too-small",
+              "editorInkHeightAfter": 17,
+              "measurementPlateau": true
+            }
+          ],
+          "finalFontSize": 21,
+          "finalEditorInkHeight": 17,
+          "heightErrorAfter": -2.26
+        },
+        {
+          "blockIndex": 9,
+          "sourceInkHeight": 26.75,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 26.75,
+              "editorInkHeightBefore": 29,
+              "fontSizeBefore": 28,
+              "fontSizeAfter": 27,
+              "heightErrorBefore": 2.25,
+              "heightRatio": 1.084,
+              "annotation": "editor-too-large",
+              "editorInkHeightAfter": 28
+            }
+          ],
+          "finalFontSize": 27,
+          "finalEditorInkHeight": 28,
+          "heightErrorAfter": 1.25
+        }
+      ],
+      "pipelineEvidence": {
+        "stage": "CREATE",
+        "ocrStart": "2026-09-21T07:03:07.906Z",
+        "kind": "background-image",
+        "natural": "895x577",
+        "sourceImage": "img-7cc6db9c-1291706",
+        "updated": 1789974189442,
+        "nativeLines": 10,
+        "ok": true,
+        "code": null,
+        "httpStatus": null,
+        "statusCode": "NATIVE_OK",
+        "raw": 10,
+        "mode": "accurate",
+        "qaKept": 10,
+        "unified": 10,
+        "gateKept": 10,
+        "reason": null,
+        "fail": null,
+        "blocks": 10,
+        "nativeMode": "2",
+        "nativeFallback": false,
+        "kept": 10,
+        "nativeBlocks": 10,
+        "unmatchedNative": 0,
+        "unusedGeometry": 0,
+        "oneToMany": 0,
+        "manyToOne": 0,
+        "items": 10,
+        "requested": 10,
+        "created": 10
+      }
     },
     {
       "condition": "B2",
@@ -1167,11 +2022,11 @@
         {
           "step": "ocr-done",
           "done": true,
-          "status": "几何校验完成：通过 0 个，保留 1 个（STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
+          "status": "几何校验完成：通过 0 个，保留 10 个（STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_M"
         },
         {
           "step": "read",
-          "objects": 1
+          "objects": 10
         },
         {
           "step": "rollback",
@@ -1180,50 +2035,52 @@
       ],
       "blocks": [
         {
-          "blockIndex": 2,
-          "objectId": "1013eeac-1acb-464a-80a2-d7ec3dc23d51",
-          "zyOcrKey": "zy-ocr-tx-mu9oofd6-ds1cfvw0-2",
-          "text": "Telephone:+86 1591317158",
+          "blockIndex": 0,
+          "objectId": "6dd71a0e-9970-4324-803a-2b12d15c7c18",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-0",
+          "text": "吴健湘",
           "fontFamily": "思源黑体 Regular",
-          "fontSize": 28,
-          "scriptType": "MEDIUM",
+          "fontSize": 29,
+          "scriptType": null,
           "sizeBucket": null,
           "targetSource": "IMAGE_INK",
-          "ocrBBoxTargetWidth": 283,
-          "imageInkTargetWidth": 276,
+          "sourceInkHeight": 28.36,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 104.34,
+          "imageInkTargetWidth": 99.8,
           "inkFallback": false,
           "inkReason": null,
-          "targetWidth": 276,
-          "advanceWidth": 353.72,
-          "editorInkWidth": 369,
-          "editorInkHeight": 29,
-          "K2_after": 1.337,
+          "targetWidth": 99.8,
+          "advanceWidth": 87,
+          "editorInkWidth": 85,
+          "editorInkHeight": 28,
+          "K2_after": 0.852,
           "geometry": {
             "tl": [
-              217,
-              250
+              151,
+              15
             ],
             "tr": [
-              615,
-              250
+              261.79888268156424,
+              15
             ],
             "br": [
-              615,
-              282.64
+              261.79888268156424,
+              48.769999999999996
             ],
             "bl": [
-              217,
-              282.64
+              151,
+              48.769999999999996
             ],
-            "cx": 416,
-            "cy": 266.32,
+            "cx": 206.39944134078212,
+            "cy": 31.884999999999998,
             "angle": 0
           },
           "position": {
-            "left": 217,
-            "top": 250,
-            "width": 397,
-            "height": 31.639999999999997,
+            "left": 151,
+            "top": 15,
+            "width": 109.79888268156424,
+            "height": 32.769999999999996,
             "angle": 0
           },
           "wrap": {
@@ -1234,128 +2091,73 @@
           },
           "objectQuad": {
             "tl": [
-              217,
-              250
+              151,
+              15
             ],
             "tr": [
-              615,
-              250
+              261.79888268156424,
+              15
             ],
             "br": [
-              615,
-              282.64
+              261.79888268156424,
+              48.769999999999996
             ],
             "bl": [
-              217,
-              282.64
+              151,
+              48.769999999999996
             ],
-            "cx": 416,
-            "cy": 266.32,
+            "cx": 206.39944134078212,
+            "cy": 31.884999999999998,
             "angle": 0
           }
-        }
-      ],
-      "errors": [],
-      "pageId": "canvas:c0",
-      "duplicateCount": 0
-    },
-    {
-      "condition": "B2",
-      "baidu": "accurate",
-      "imageInkTarget": true,
-      "run": 2,
-      "pipeline": "FULL_REAL_PIPELINE",
-      "steps": [
-        {
-          "step": "editor-ready",
-          "ok": true,
-          "bridge": true
         },
         {
-          "step": "current-page",
-          "pageId": "canvas:c0",
-          "code": "OK"
-        },
-        {
-          "step": "bg-inject",
-          "ok": true
-        },
-        {
-          "step": "ocr-prepare",
-          "ok": true,
-          "kind": "background-image"
-        },
-        {
-          "step": "baidu-external",
-          "ok": true,
-          "candidates": 10,
-          "meta": "accurate"
-        },
-        {
-          "step": "click-ocr",
-          "clicked": true,
-          "sel": "#zy-native-ocr-btn"
-        },
-        {
-          "step": "ocr-done",
-          "done": true,
-          "status": "几何校验完成：通过 0 个，保留 1 个（STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
-        },
-        {
-          "step": "read",
-          "objects": 1
-        },
-        {
-          "step": "rollback",
-          "ok": true
-        }
-      ],
-      "blocks": [
-        {
-          "blockIndex": 2,
-          "objectId": "5476b339-6228-47a3-b8e7-1a1e6c864b5b",
-          "zyOcrKey": "zy-ocr-tx-mu9ookxq-pxnfqu5i-2",
-          "text": "Telephone:+86 1591317158",
+          "blockIndex": 1,
+          "objectId": "81ead3a8-f9d4-4c0f-b3d6-8d6a97287040",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-1",
+          "text": "客户经理",
           "fontFamily": "思源黑体 Regular",
-          "fontSize": 28,
-          "scriptType": "MEDIUM",
+          "fontSize": 17,
+          "scriptType": null,
           "sizeBucket": null,
           "targetSource": "IMAGE_INK",
-          "ocrBBoxTargetWidth": 283,
-          "imageInkTargetWidth": 276,
+          "sourceInkHeight": 16.05,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 66.91,
+          "imageInkTargetWidth": 63.51,
           "inkFallback": false,
           "inkReason": null,
-          "targetWidth": 276,
-          "advanceWidth": 353.72,
-          "editorInkWidth": 369,
-          "editorInkHeight": 29,
-          "K2_after": 1.337,
+          "targetWidth": 63.51,
+          "advanceWidth": 68,
+          "editorInkWidth": 68,
+          "editorInkHeight": 17,
+          "K2_after": 1.071,
           "geometry": {
             "tl": [
-              217,
-              250
+              271,
+              22
             ],
             "tr": [
-              615,
-              250
+              350,
+              22
             ],
             "br": [
-              615,
-              282.64
+              350,
+              42.209999999999994
             ],
             "bl": [
-              217,
-              282.64
+              271,
+              42.209999999999994
             ],
-            "cx": 416,
-            "cy": 266.32,
+            "cx": 310.5,
+            "cy": 32.105,
             "angle": 0
           },
           "position": {
-            "left": 217,
-            "top": 250,
-            "width": 397,
-            "height": 31.639999999999997,
+            "left": 271,
+            "top": 22,
+            "width": 78,
+            "height": 19.209999999999997,
             "angle": 0
           },
           "wrap": {
@@ -1366,30 +2168,801 @@
           },
           "objectQuad": {
             "tl": [
-              217,
-              250
+              271,
+              22
             ],
             "tr": [
-              615,
-              250
+              350,
+              22
             ],
             "br": [
-              615,
-              282.64
+              350,
+              42.209999999999994
             ],
             "bl": [
-              217,
-              282.64
+              271,
+              42.209999999999994
             ],
-            "cx": 416,
-            "cy": 266.32,
+            "cx": 310.5,
+            "cy": 32.105,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 2,
+          "objectId": "66d1b98f-c17a-4354-b09e-1891e3b82acf",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-2",
+          "text": "Telephone:+86 1591317158",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 21,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 21.4,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 208.67,
+          "imageInkTargetWidth": 204.13,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 204.13,
+          "advanceWidth": 265.29,
+          "editorInkWidth": 277,
+          "editorInkHeight": 22,
+          "K2_after": 1.357,
+          "geometry": {
+            "tl": [
+              98,
+              55
+            ],
+            "tr": [
+              413,
+              55
+            ],
+            "br": [
+              413,
+              79.72999999999999
+            ],
+            "bl": [
+              98,
+              79.72999999999999
+            ],
+            "cx": 255.5,
+            "cy": 67.365,
+            "angle": 0
+          },
+          "position": {
+            "left": 98,
+            "top": 55,
+            "width": 314,
+            "height": 23.729999999999997,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              98,
+              55
+            ],
+            "tr": [
+              413,
+              55
+            ],
+            "br": [
+              413,
+              79.72999999999999
+            ],
+            "bl": [
+              98,
+              79.72999999999999
+            ],
+            "cx": 255.5,
+            "cy": 67.365,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 3,
+          "objectId": "b2d3a751-4283-4f5c-a347-27ddd0cec904",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-3",
+          "text": "佛山盛盈包装制品有限公司",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 33,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 32.1,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 294.29,
+          "imageInkTargetWidth": 287.49,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 287.49,
+          "advanceWidth": 396,
+          "editorInkWidth": 393,
+          "editorInkHeight": 31,
+          "K2_after": 1.367,
+          "geometry": {
+            "tl": [
+              95,
+              93
+            ],
+            "tr": [
+              504,
+              93
+            ],
+            "br": [
+              504,
+              131.29
+            ],
+            "bl": [
+              95,
+              131.29
+            ],
+            "cx": 299.5,
+            "cy": 112.14499999999998,
+            "angle": 0
+          },
+          "position": {
+            "left": 95,
+            "top": 93,
+            "width": 408,
+            "height": 37.29,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              95,
+              93
+            ],
+            "tr": [
+              504,
+              93
+            ],
+            "br": [
+              504,
+              131.29
+            ],
+            "bl": [
+              95,
+              131.29
+            ],
+            "cx": 299.5,
+            "cy": 112.14499999999998,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 4,
+          "objectId": "c3bc77a2-1d80-4927-8d42-92af6b154721",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-4",
+          "text": "Tel.: 0757-88809856",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 20,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 18.19,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 160.47,
+          "imageInkTargetWidth": 156.5,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 156.5,
+          "advanceWidth": 183.02,
+          "editorInkWidth": 183,
+          "editorInkHeight": 17,
+          "K2_after": 1.169,
+          "geometry": {
+            "tl": [
+              130,
+              131
+            ],
+            "tr": [
+              342,
+              131
+            ],
+            "br": [
+              342,
+              154.60000000000002
+            ],
+            "bl": [
+              130,
+              154.60000000000002
+            ],
+            "cx": 236,
+            "cy": 142.8,
+            "angle": 0
+          },
+          "position": {
+            "left": 130,
+            "top": 131,
+            "width": 211,
+            "height": 22.599999999999998,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              130,
+              131
+            ],
+            "tr": [
+              342,
+              131
+            ],
+            "br": [
+              342,
+              154.60000000000002
+            ],
+            "bl": [
+              130,
+              154.60000000000002
+            ],
+            "cx": 236,
+            "cy": 142.8,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 5,
+          "objectId": "b9394b24-21e1-44d2-902d-ca92901dfc2d",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-5",
+          "text": "地址:广东省佛山市高明区杨和镇阳西大道和政路12",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 31,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 29.96,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 330.58,
+          "imageInkTargetWidth": 322.65,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 322.65,
+          "advanceWidth": 694.03,
+          "editorInkWidth": 724,
+          "editorInkHeight": 30,
+          "K2_after": 2.244,
+          "geometry": {
+            "tl": [
+              -54,
+              142
+            ],
+            "tr": [
+              693,
+              142
+            ],
+            "br": [
+              693,
+              178.02999999999997
+            ],
+            "bl": [
+              -54,
+              178.02999999999997
+            ],
+            "cx": 319.5,
+            "cy": 160.015,
+            "angle": 0
+          },
+          "position": {
+            "left": -54,
+            "top": 142,
+            "width": 746,
+            "height": 35.029999999999994,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              -54,
+              142
+            ],
+            "tr": [
+              693,
+              142
+            ],
+            "br": [
+              693,
+              178.02999999999997
+            ],
+            "bl": [
+              -54,
+              178.02999999999997
+            ],
+            "cx": 319.5,
+            "cy": 160.015,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 6,
+          "objectId": "b5b40a75-b109-4799-96cc-31a435b13d3f",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-6",
+          "text": "佛山鼎盛通生物科技有限公司",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 36,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 34.78,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 322.08,
+          "imageInkTargetWidth": 314.14,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 314.14,
+          "advanceWidth": 468,
+          "editorInkWidth": 465,
+          "editorInkHeight": 35,
+          "K2_after": 1.48,
+          "geometry": {
+            "tl": [
+              76,
+              174
+            ],
+            "tr": [
+              558,
+              174
+            ],
+            "br": [
+              558,
+              215.68
+            ],
+            "bl": [
+              76,
+              215.68
+            ],
+            "cx": 317,
+            "cy": 194.84000000000003,
+            "angle": 0
+          },
+          "position": {
+            "left": 76,
+            "top": 174,
+            "width": 481,
+            "height": 40.67999999999999,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              76,
+              174
+            ],
+            "tr": [
+              558,
+              174
+            ],
+            "br": [
+              558,
+              215.68
+            ],
+            "bl": [
+              76,
+              215.68
+            ],
+            "cx": 317,
+            "cy": 194.84000000000003,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 7,
+          "objectId": "4e8bed3f-bd72-4f14-b8ed-7c7dec107d2a",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-7",
+          "text": "Tel.: 0757-88809856",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 21,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 19.26,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 161.04,
+          "imageInkTargetWidth": 157.07,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 157.07,
+          "advanceWidth": 192.17,
+          "editorInkWidth": 192,
+          "editorInkHeight": 17,
+          "K2_after": 1.222,
+          "geometry": {
+            "tl": [
+              128,
+              209
+            ],
+            "tr": [
+              350,
+              209
+            ],
+            "br": [
+              350,
+              233.73000000000002
+            ],
+            "bl": [
+              128,
+              233.73000000000002
+            ],
+            "cx": 239,
+            "cy": 221.365,
+            "angle": 0
+          },
+          "position": {
+            "left": 128,
+            "top": 209,
+            "width": 221,
+            "height": 23.729999999999997,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              128,
+              209
+            ],
+            "tr": [
+              350,
+              209
+            ],
+            "br": [
+              350,
+              233.73000000000002
+            ],
+            "bl": [
+              128,
+              233.73000000000002
+            ],
+            "cx": 239,
+            "cy": 221.365,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 8,
+          "objectId": "7cb29fe8-e18c-4073-8940-f26930297156",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-8",
+          "text": "地址:广东省佛山市高明区杨和镇阳西大道和政路12",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 33,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 31.57,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 347.03,
+          "imageInkTargetWidth": 340.22,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 340.22,
+          "advanceWidth": 738.8,
+          "editorInkWidth": 987,
+          "editorInkHeight": 32,
+          "K2_after": 2.901,
+          "geometry": {
+            "tl": [
+              -175,
+              222
+            ],
+            "tr": [
+              837,
+              222
+            ],
+            "br": [
+              837,
+              260.29
+            ],
+            "bl": [
+              -175,
+              260.29
+            ],
+            "cx": 331,
+            "cy": 241.14499999999998,
+            "angle": 0
+          },
+          "position": {
+            "left": -175,
+            "top": 222,
+            "width": 1011,
+            "height": 37.29,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              -175,
+              222
+            ],
+            "tr": [
+              837,
+              222
+            ],
+            "br": [
+              837,
+              260.29
+            ],
+            "bl": [
+              -175,
+              260.29
+            ],
+            "cx": 331,
+            "cy": 241.14499999999998,
+            "angle": 0
+          }
+        },
+        {
+          "blockIndex": 9,
+          "objectId": "c4b37b76-e343-49aa-99c9-14499bf63ca4",
+          "zyOcrKey": "zy-ocr-tx-muawf4f5-3v4e7fx9-9",
+          "text": "E-mail:sandy.wu@shengyin",
+          "fontFamily": "思源黑体 Regular",
+          "fontSize": 27,
+          "scriptType": null,
+          "sizeBucket": null,
+          "targetSource": "IMAGE_INK",
+          "sourceInkHeight": 26.75,
+          "fontSizeSource": "ink-height-primary",
+          "ocrBBoxTargetWidth": 228.52,
+          "imageInkTargetWidth": 225.11,
+          "inkFallback": false,
+          "inkReason": null,
+          "targetWidth": 225.11,
+          "advanceWidth": 346.79,
+          "editorInkWidth": 401,
+          "editorInkHeight": 28,
+          "K2_after": 1.781,
+          "geometry": {
+            "tl": [
+              38,
+              264
+            ],
+            "tr": [
+              513,
+              264
+            ],
+            "br": [
+              513,
+              295.51
+            ],
+            "bl": [
+              38,
+              295.51
+            ],
+            "cx": 275.5,
+            "cy": 279.755,
+            "angle": 0
+          },
+          "position": {
+            "left": 38,
+            "top": 264,
+            "width": 474,
+            "height": 30.509999999999998,
+            "angle": 0
+          },
+          "wrap": {
+            "sourceLineCount": 1,
+            "estimatedFinalLineCount": 1,
+            "forcedWrapDetected": false,
+            "renderedLineCount": 1
+          },
+          "objectQuad": {
+            "tl": [
+              38,
+              264
+            ],
+            "tr": [
+              513,
+              264
+            ],
+            "br": [
+              513,
+              295.51
+            ],
+            "bl": [
+              38,
+              295.51
+            ],
+            "cx": 275.5,
+            "cy": 279.755,
             "angle": 0
           }
         }
       ],
       "errors": [],
       "pageId": "canvas:c0",
-      "duplicateCount": 0
+      "golden": {
+        "sourceFile": "real-card-shengying.png",
+        "sourceSha256": "fdcea278fe1a92cdb0cf9d197ea080783b06f2600be81c847b60dab33c2ec364",
+        "injectedFp": "img-b34976bf-1106054",
+        "bg": {
+          "canvasWidth": 507.49999999999994,
+          "canvasHeight": 308.72916666666663,
+          "bgWidth": 895,
+          "bgHeight": 577,
+          "naturalWidth": 895,
+          "naturalHeight": 577,
+          "aCoords": {
+            "tl": [
+              0,
+              0
+            ],
+            "tr": [
+              507.49999999999994,
+              0
+            ],
+            "br": [
+              507.49999999999994,
+              308.72916666666663
+            ],
+            "bl": [
+              0,
+              308.72916666666663
+            ]
+          },
+          "transformFn": true,
+          "imageTransform": null
+        },
+        "ocrFp": "img-7cc6db9c-1291706",
+        "ocrImgHash": "45bcf04b",
+        "bgImgHash": "45bcf04b",
+        "sameImage": true
+      },
+      "calibration": [
+        {
+          "blockIndex": 2,
+          "sourceInkHeight": 21.4,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 21.4,
+              "editorInkHeightBefore": 23,
+              "fontSizeBefore": 22,
+              "fontSizeAfter": 21,
+              "heightErrorBefore": 1.6,
+              "heightRatio": 1.075,
+              "annotation": "editor-too-large",
+              "editorInkHeightAfter": 22
+            }
+          ],
+          "finalFontSize": 21,
+          "finalEditorInkHeight": 22,
+          "heightErrorAfter": 0.6
+        },
+        {
+          "blockIndex": 4,
+          "sourceInkHeight": 18.19,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 18.19,
+              "editorInkHeightBefore": 16,
+              "fontSizeBefore": 19,
+              "fontSizeAfter": 20,
+              "heightErrorBefore": -2.19,
+              "heightRatio": 0.88,
+              "annotation": "editor-too-small",
+              "editorInkHeightAfter": 17
+            }
+          ],
+          "finalFontSize": 20,
+          "finalEditorInkHeight": 17,
+          "heightErrorAfter": -1.19
+        },
+        {
+          "blockIndex": 7,
+          "sourceInkHeight": 19.26,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 19.26,
+              "editorInkHeightBefore": 17,
+              "fontSizeBefore": 20,
+              "fontSizeAfter": 21,
+              "heightErrorBefore": -2.26,
+              "heightRatio": 0.883,
+              "annotation": "editor-too-small",
+              "editorInkHeightAfter": 17,
+              "measurementPlateau": true
+            }
+          ],
+          "finalFontSize": 21,
+          "finalEditorInkHeight": 17,
+          "heightErrorAfter": -2.26
+        },
+        {
+          "blockIndex": 9,
+          "sourceInkHeight": 26.75,
+          "rounds": 1,
+          "steps": [
+            {
+              "round": 2,
+              "sourceInkHeight": 26.75,
+              "editorInkHeightBefore": 29,
+              "fontSizeBefore": 28,
+              "fontSizeAfter": 27,
+              "heightErrorBefore": 2.25,
+              "heightRatio": 1.084,
+              "annotation": "editor-too-large",
+              "editorInkHeightAfter": 28
+            }
+          ],
+          "finalFontSize": 27,
+          "finalEditorInkHeight": 28,
+          "heightErrorAfter": 1.25
+        }
+      ],
+      "pipelineEvidence": {
+        "stage": "CREATE",
+        "ocrStart": "2026-09-21T07:03:15.233Z",
+        "kind": "background-image",
+        "natural": "895x577",
+        "sourceImage": "img-7cc6db9c-1291706",
+        "updated": 1789974196841,
+        "nativeLines": 10,
+        "ok": true,
+        "code": null,
+        "httpStatus": null,
+        "statusCode": "NATIVE_OK",
+        "raw": 10,
+        "mode": "accurate",
+        "qaKept": 10,
+        "unified": 10,
+        "gateKept": 10,
+        "reason": null,
+        "fail": null,
+        "blocks": 10,
+        "nativeMode": "2",
+        "nativeFallback": false,
+        "kept": 10,
+        "nativeBlocks": 10,
+        "unmatchedNative": 0,
+        "unusedGeometry": 0,
+        "oneToMany": 0,
+        "manyToOne": 0,
+        "items": 10,
+        "requested": 10,
+        "created": 10
+      }
     }
   ],
   "frontBack": {
@@ -1527,9 +3100,5 @@
       "note": "back-invariance + PAGE_IDENTITY_CHANGED 见 e2e-front-back-isolation.json (ac530ab PASS)"
     }
   },
-  "errors": [],
-  "postProcess": {
-    "note": "removed cookieNames per §11 (credential minimal-disclosure); added duplicateCount derived from created object ids",
-    "by": "stage9 executor 2026-09-20"
-  }
+  "errors": []
 }

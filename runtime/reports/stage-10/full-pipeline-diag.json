@@ -1,0 +1,102 @@
+{
+  "ts": "2026-09-21T06:49:39.836Z",
+  "statusSamples": [
+    {
+      "ms": 38,
+      "st": "正在准备图片…"
+    },
+    {
+      "ms": 1545,
+      "st": "几何校验完成：通过 0 个，保留 2 个（FONT_MODEL|STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMETRY）"
+    }
+  ],
+  "zyLog": [
+    "[info] [zy-ocr][INIT] pageBridge=function unifyCandidates=function baiduProvider=function credCrypto=function",
+    "[log] [zy-ocr][CANVAS_READY] w=507.49999999999994x308.72916666666663 objs=9 bg=true active=null",
+    "[log] [zy-ocr][PREPARING] kind=background-image 895x577 dataUrl=1291706 chars",
+    "[log] [zy-ocr][SOURCE_PAGE] pageId=canvas:c0 side=FRONT source=page-group.current tx=tx-muavxvls-fr0mdfky fp=img-7cc6db9c-1291706",
+    "[log] [zy-ocr][TRUTH] runNativeTruth ok=true lines=10 err=none",
+    "[log] [zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"manual-baidu\",\"fallback\":false,\"reason\":null,\"quality\":{\"ok\":true,\"code\":null,\"total\":10,\"kept\":10,\"dropped\":0}}",
+    "[log] [zy-ocr][BAIDU_RECOGNIZING] lines=10 kept=10 elapsed=600ms mode=standard (STANDARD_POSITION)",
+    "[log] [zy-ocr][RAW_CAND8D] 吴健湘@{\"x\":270,\"y\":29,\"w\":185,\"h\":61}|客户经理@{\"x\":492,\"y\":41,\"w\":112,\"h\":33}|Telephone:@{\"x\":271,\"y\":105,\"w\":362,\"h\":44}|佛山盛盈包装制品有限@{\"x\":275,\"y\":178,\"w\":508,\"h\":64}|Tel.:0757-@{\"x\":277,\"y\":246,\"w\":278,\"h\":39}|地址：广东省佛山市高@{\"x\":277,\"y\":271,\"w\":571,\"h\":57}|佛山鼎盛通生物科技有@{\"x\":281,\"y\":332,\"w\":556,\"h\":67}|Tel.:0757-@{\"x\":283,\"y\":401,\"w\":278,\"h\":41}|地址：广东省佛山市高@{\"x\":284,\"y\":423,\"w\":601,\"h\":58}|E-mail:san@{\"x\":287,\"y\":496,\"w\":397,\"h\":55}",
+    "[log] [zy-ocr][DIAG] {\"engine\":\"cloud\",\"attempt\":\"manual-baidu\",\"fallback\":false,\"quality6\":{\"overall\":\"WARN\",\"reasonCode\":\"WARN\",\"total\":10,\"text\":\"PASS\",\"block\":\"PASS\",\"bbox\":\"PASS\",\"size\":\"PASS\",\"symbol\":\"PASS\",\"merge\":\"WARN\"}}",
+    "[log] [zy-ocr][GATE8D] total=10 blocked=0 [] kept=10 suspect= score=0.95",
+    "[log] [zy-ocr][TRUTH] align native=10 geo=10 matched=10 unmatchedNative=0 unusedGeo=0 1:N=0 N:1=0 valid=true",
+    "[log] [zy-ocr][TRACE8D] buildItems blocks=10 geoAC=true measurer=fn fusion=fn",
+    "[log] [zy-ocr][ROUTING] mode=NEW_RECOGNITION existing=0 sameImage=true reasons=canvas-empty",
+    "[log] [zy-ocr][GEOMETRY_GATE] block 1 center-outside（禁创建，目标越界）",
+    "[log] [zy-ocr][GEOMETRY_GATE] block 2 out-of-bounds-pct-0.347（禁创建，目标越界）",
+    "[log] [zy-ocr][GEOMETRY_GATE] block 3 center-outside（禁创建，目标越界）",
+    "[log] [zy-ocr][GEOMETRY_GATE] block 5 center-outside（禁创建，目标越界）",
+    "[log] [zy-ocr][GEOMETRY_GATE] block 6 center-outside（禁创建，目标越界）",
+    "[log] [zy-ocr][GEOMETRY_GATE] block 7 center-outside（禁创建，目标越界）",
+    "[log] [zy-ocr][GEOMETRY_GATE] block 8 center-outside（禁创建，目标越界）",
+    "[log] [zy-ocr][GEOMETRY_GATE] block 9 center-outside（禁创建，目标越界）",
+    "[log] [zy-ocr][BUILDING] blocks=2 forcedWrap=0 multiLine=0",
+    "[log] [zy-ocr][SUCCESS] created=2/2 editorInteg={\"undo\":true,\"savePre\":true,\"savePost\":true,\"ident\":2,\"uv4\":2,\"layerMax\":-1}",
+    "[log] [zy-ocr][GEOMETRY] {\"ok\":0,\"rejected\":0,\"noted\":2,\"rejectedBlocks\":[],\"notes\":[{\"blockIndex\":4,\"status\":\"GEOMETRY_TYPOGRAPHY_FAIL\",\"failures\":\"height-ink\",\"category\":\"FONT_MODEL\",\"code\":\"MEASUREMENT_PLATEAU\",\"plateauInkHeight\":30},{\"blockIndex\":0,\"status\":\"TYPOGRAPHY_FAIL\",\"failures\":\"width\",\"category\":\"STYLE_MISMATCH\"}]}"
+  ],
+  "errors": [],
+  "bgInject": {
+    "ok": true
+  },
+  "ocrPrepare": {
+    "ok": true,
+    "kind": "background-image",
+    "err": null
+  },
+  "baiduExternal": {
+    "ok": true,
+    "candidates": 10,
+    "error": null
+  },
+  "click": {
+    "clicked": true,
+    "sel": "#zy-native-ocr-btn"
+  },
+  "finalEv": {
+    "stage": "CREATE",
+    "ocrStart": "2026-09-21T06:49:50.656Z",
+    "kind": "background-image",
+    "natural": "895x577",
+    "sourceImage": "img-7cc6db9c-1291706",
+    "updated": 1789973391616,
+    "nativeLines": 10,
+    "ok": true,
+    "code": null,
+    "httpStatus": null,
+    "statusCode": "NATIVE_OK",
+    "raw": 10,
+    "mode": "standard",
+    "qaKept": 10,
+    "unified": 10,
+    "gateKept": 10,
+    "reason": null,
+    "fail": null,
+    "blocks": 10,
+    "nativeMode": "2",
+    "nativeFallback": false,
+    "kept": 10,
+    "nativeBlocks": 10,
+    "unmatchedNative": 0,
+    "unusedGeometry": 0,
+    "oneToMany": 0,
+    "manyToOne": 0,
+    "items": 2,
+    "requested": 2,
+    "created": 2
+  },
+  "finalCanvas": {
+    "objects": [
+      {
+        "text": "吴健湘",
+        "id": "eddebb3c-170a-4213-815c-0047fbd1b9dd"
+      },
+      {
+        "text": "Tel.: 0757-88809856",
+        "id": "78cbaea5-8ec4-429d-bf3b-e13b79bf7734"
+      }
+    ],
+    "n": 11
+  }
+}

@@ -258,7 +258,7 @@ async function imageHashEqual(page, dataUrlA, dataUrlB) {
       if (!c) return res({ ok: false, reason: "no-canvas" });
       const f = (c.constructor && c.constructor.fabric) || window.fabric;
       const im = new Image();
-      im.onload = () => { try { const bg = new f.Image(im); bg.set({ left: 0, top: 0 }); c.setBackgroundImage(bg, () => { try { if (c.requestRenderAll) c.requestRenderAll(); } catch (e) {} res({ ok: true }); }); } catch (e) { res({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); } };
+      im.onload = () => { try { const bg = new f.Image(im); var cw = c.getWidth && c.getWidth() ? c.getWidth() : (c.width || 0); var chh = c.getHeight && c.getHeight() ? c.getHeight() : (c.height || 0); bg.set({ left: 0, top: 0, scaleX: cw && im.naturalWidth ? cw / im.naturalWidth : 1, scaleY: chh && im.naturalHeight ? chh / im.naturalHeight : 1 }); c.setBackgroundImage(bg, () => { try { if (c.requestRenderAll) c.requestRenderAll(); } catch (e) {} res({ ok: true }); }); } catch (e) { res({ ok: false, reason: String(e && e.message || e).slice(0, 100) }); } };
       im.onerror = () => res({ ok: false, reason: "img-fail" });
       im.src = arg.dataUrl;
     }), { dataUrl: "data:image/png;base64," + fs.readFileSync(CARD).toString("base64") });
@@ -285,7 +285,7 @@ async function imageHashEqual(page, dataUrlA, dataUrlB) {
           return { st: el ? String(el.textContent || "").trim().slice(0, 160) : null };
         }).catch(() => ({}));
         const st = r && r.st;
-        if (st && /已生成 \d+ 个文字|未识别到文字|失败|异常|几何校验完成/.test(st)) return { done: true, st };
+        if (st && /已生成 \d+ 个文字|已校准 \d+ 个文字|未识别到文字|未生成文字|未找到可识别的图片|本批不进入创建|无法确定当前图片所属页面|OCR 目标已失效|无有效块|未通过质量检查|阻断|失败|异常|几何校验完成|已处理 \d+ 个文字图层|追加完成|识别完成/.test(st)) return { done: true, st };
         await SLEEP(900);
       }
       return { done: false };

@@ -1,0 +1,254 @@
+{
+  "mode": "offline-align-diag",
+  "errors": [],
+  "native": {
+    "texts": [
+      "吴健湘",
+      "客户经理",
+      "Telephone:+86 15913171583",
+      "佛山盛盈包装制品有限公司",
+      "Tel.: 0757-88809856",
+      "地址:广东省佛山市高明区杨和镇阳西大道和政路12号",
+      "佛山鼎盛通生物科技有限公司",
+      "Tel.: 0757-88809856",
+      "地址:广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+      "E-mail:sandy.wu@shengying.Itd"
+    ]
+  },
+  "baidu": {
+    "error": null,
+    "candidates": [
+      {
+        "text": "吴健湘",
+        "bbox": {
+          "x": 272,
+          "y": 31,
+          "width": 184,
+          "height": 58
+        },
+        "kind": "?"
+      },
+      {
+        "text": "客户经理",
+        "bbox": {
+          "x": 489,
+          "y": 42,
+          "width": 118,
+          "height": 35
+        },
+        "kind": "?"
+      },
+      {
+        "text": "Telephone: +8615913171583",
+        "bbox": {
+          "x": 267,
+          "y": 103,
+          "width": 368,
+          "height": 46
+        },
+        "kind": "?"
+      },
+      {
+        "text": "佛山盛盈包装制品有限公司",
+        "bbox": {
+          "x": 269,
+          "y": 177,
+          "width": 519,
+          "height": 67
+        },
+        "kind": "?"
+      },
+      {
+        "text": "Tel.:0757-88809856",
+        "bbox": {
+          "x": 274,
+          "y": 246,
+          "width": 283,
+          "height": 40
+        },
+        "kind": "?"
+      },
+      {
+        "text": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号",
+        "bbox": {
+          "x": 272,
+          "y": 270,
+          "width": 583,
+          "height": 59
+        },
+        "kind": "?"
+      },
+      {
+        "text": "佛山鼎盛通生物科技有限公司",
+        "bbox": {
+          "x": 275,
+          "y": 329,
+          "width": 568,
+          "height": 72
+        },
+        "kind": "?"
+      },
+      {
+        "text": "Tel.: 0757-88809856",
+        "bbox": {
+          "x": 280,
+          "y": 401,
+          "width": 284,
+          "height": 42
+        },
+        "kind": "?"
+      },
+      {
+        "text": "地址：广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+        "bbox": {
+          "x": 278,
+          "y": 421,
+          "width": 612,
+          "height": 61
+        },
+        "kind": "?"
+      },
+      {
+        "text": "E-mail:sandy.wu@shengying.ltd",
+        "bbox": {
+          "x": 284,
+          "y": 496,
+          "width": 403,
+          "height": 54
+        },
+        "kind": "?"
+      }
+    ],
+    "meta": {
+      "imageWidth": null,
+      "imageHeight": null,
+      "elapsed": 656,
+      "rawWordCount": 10,
+      "lineCount": 10,
+      "httpStatus": 200,
+      "mode": "accurate",
+      "profileName": "ACCURATE_POSITION",
+      "endpoint": "https://aip.baidubce.com/rest/2.0/ocr/v1/accurate"
+    }
+  },
+  "align": {
+    "totalNative": 10,
+    "totalGeo": 10,
+    "matchedNative": [
+      {
+        "native": "吴健湘",
+        "geo": {
+          "x": 272,
+          "y": 31,
+          "width": 184,
+          "height": 58
+        },
+        "method": "EXACT_TEXT"
+      },
+      {
+        "native": "客户经理",
+        "geo": {
+          "x": 489,
+          "y": 42,
+          "width": 118,
+          "height": 35
+        },
+        "method": "EXACT_TEXT"
+      },
+      {
+        "native": "Telephone:+86 15913171583",
+        "geo": {
+          "x": 267,
+          "y": 103,
+          "width": 368,
+          "height": 46
+        },
+        "method": "EXACT_TEXT"
+      },
+      {
+        "native": "佛山盛盈包装制品有限公司",
+        "geo": {
+          "x": 269,
+          "y": 177,
+          "width": 519,
+          "height": 67
+        },
+        "method": "EXACT_TEXT"
+      },
+      {
+        "native": "Tel.: 0757-88809856",
+        "geo": {
+          "x": 274,
+          "y": 246,
+          "width": 283,
+          "height": 40
+        },
+        "method": "EXACT_TEXT"
+      },
+      {
+        "native": "地址:广东省佛山市高明区杨和镇阳西大道和政路12号",
+        "geo": {
+          "x": 272,
+          "y": 270,
+          "width": 583,
+          "height": 59
+        },
+        "method": "EXACT_TEXT"
+      },
+      {
+        "native": "佛山鼎盛通生物科技有限公司",
+        "geo": {
+          "x": 275,
+          "y": 329,
+          "width": 568,
+          "height": 72
+        },
+        "method": "EXACT_TEXT"
+      },
+      {
+        "native": "Tel.: 0757-88809856",
+        "geo": {
+          "x": 280,
+          "y": 401,
+          "width": 284,
+          "height": 42
+        },
+        "method": "EXACT_TEXT"
+      },
+      {
+        "native": "地址:广东省佛山市高明区杨和镇阳西大道和政路12号车间五厂房3号",
+        "geo": {
+          "x": 278,
+          "y": 421,
+          "width": 612,
+          "height": 61
+        },
+        "method": "EXACT_TEXT"
+      },
+      {
+        "native": "E-mail:sandy.wu@shengying.Itd",
+        "geo": {
+          "x": 284,
+          "y": 496,
+          "width": 403,
+          "height": 54
+        },
+        "method": "EXACT_TEXT"
+      }
+    ],
+    "unmatchedNative": [],
+    "matchedGeometry": 10,
+    "unusedGeometry": [],
+    "oneToMany": 0,
+    "manyToOne": 0
+  },
+  "gate": {
+    "ok": true,
+    "code": "COMPLETE",
+    "matched": 10,
+    "unresolved": 0,
+    "totalNative": 10,
+    "message": "Native 10/10 行全部获得 geometry"
+  },
+  "nativeHttp": 200
+}
