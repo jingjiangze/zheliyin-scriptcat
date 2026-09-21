@@ -5,8 +5,8 @@
 //   本模块沿搜索链为「有 Native 文本、暂无可靠 geometry」的行恢复 geometry：
 //      BAIDU LINE → BAIDU WORD → LOCAL → NATIVE ANCHOR → IMAGE INK
 //   （Commit 2 实现 BAIDU_LINE / BAIDU_WORD；Commit 3b 实现 LOCAL sidecar；
-//    NATIVE_ANCHOR / IMAGE_INK 为 Commit 4 预留插槽，未实现前一律记入
-//    unresolved，绝不猜测）。
+//    Commit 4.2 实现 NATIVE_ANCHOR（ctx.anchorCandidates，首选）；Commit 4.3 实现
+//    IMAGE_INK（ctx.inkResolver，末位）。未提供对应候选时仍记入 unresolved）。
 // 硬规则（任务书 §Recovery + OCR-P0.3 既有约束）：
 //   - Geometry Provider 只提供 position/bbox/rotation/line grouping；
 //     text 仅用于匹配因子，绝不成为 textbox.text（最终 text 恒来自 Native）。
@@ -242,6 +242,8 @@ function recoverNativeGeometry(unmatchedNative, ctx) {
     lineRecovered: 0,
     wordRecovered: 0,
     localRecovered: 0,
+    anchorRecovered: 0,
+    inkRecovered: 0,
     unresolved: 0,
     rejections: {}
   };
@@ -283,6 +285,30 @@ function recoverNativeGeometry(unmatchedNative, ctx) {
     var evidence = [];
     var lastFail = null; // { reason, detail } —— 最终 unresolved 时的归档原因
 
+    // ---- 阶段 0：NATIVE_ANCHOR（Commit 4.2/4.3，首选）----
+    // 调用方经 ctx.anchorCandidates 提供已由 Anchor Resolver 定位的 native 行几何
+    // （Anchor 只携带 geometry/identity，不携带 text；若 anchor 命中则按同 native 行
+    //  使用 —— 见 §十 pipeline：Native Anchor 优先于 Baidu/Local）。
+    if (!made && Array.isArray(ctx.anchorCandidates) && ctx.anchorCandidates.length) {
+      for (var ai = 0; ai < ctx.anchorCandidates.length && !made; ai += 1) {
+        var ac = ctx.anchorCandidates[ai];
+        if (!ac || !ac.geometry) continue;
+        var nkey = n.id != null ? n.id : n.rawText; // 本地身份键（var key 在阶段后赋值，此处不可引用）
+        if (ac.nativeKey != null && nkey != null && String(ac.nativeKey) !== String(nkey)) continue; // 必须属于当前 native 行
+        var aB = ac.geometry.bbox || { x: ac.geometry.x, y: ac.geometry.y, width: ac.geometry.width, height: ac.geometry.height };
+        var aR = gateCheck(aB, SOURCE_NATIVE_ANCHOR);
+        if (aR.ok) {
+          made = { bbox: aR.rect, source: SOURCE_NATIVE_ANCHOR, _geo: ac.geometry, identity: ac.identity || null };
+          method = "NATIVE_ANCHOR_RESOLVED";
+          score = 1;
+          evidence = ["anchor-identity=" + ((ac.identity && (ac.identity.uuid || ac.identity.multiUuid)) ? (ac.identity.uuid || ac.identity.multiUuid) : "none")];
+          occupied.push({ bbox: aR.rect });
+        } else {
+          lastFail = { reason: aR.reason, detail: aR.detail };
+        }
+      }
+    }
+
     // ---- 阶段 1：BAIDU LINE（多因素；多候选按 score 降序依次过几何硬门）----
     var candPicks = [];
     for (var gi = 0; gi < lineCands.length; gi += 1) {
@@ -310,7 +336,8 @@ function recoverNativeGeometry(unmatchedNative, ctx) {
         }
       }
     } else {
-      lastFail = { reason: "NO_LINE_CANDIDATE", detail: { candidates: lineCands.length } };
+      var isGeoLineFailPre = !!(lastFail && lastFail.reason && lastFail.reason !== "NO_LINE_CANDIDATE");
+      if (!isGeoLineFailPre) lastFail = { reason: "NO_LINE_CANDIDATE", detail: { candidates: lineCands.length } };
     }
 
     // ---- 阶段 2：BAIDU WORD（一行 native ↔ 多个 word box：合并 bbox + reading order）----
@@ -403,6 +430,31 @@ function recoverNativeGeometry(unmatchedNative, ctx) {
         lastFail = { reason: "NO_LOCAL_CANDIDATE", detail: { candidates: localCands.length } };
       }
     }
+
+    // ---- 阶段 4：IMAGE_INK（Commit 4.3，末位）----
+    // image-ink-recovery.resolveInkGeometry：对已确认 native 行的区域测量墨迹几何；
+    // 只有 anchor/区域可用时执行；无区域 → 不猜位置（NO_ANCHOR_REGION）。
+    if (!made && typeof ctx.inkResolver === "function") {
+      var ir = ctx.inkResolver(n);
+      if (ir && ir.ok && ir.geometry && typeof ir.geometry.x === "number" && isFinite(ir.geometry.x)) {
+        var iB = { x: ir.geometry.x, y: ir.geometry.y, width: ir.geometry.width, height: ir.geometry.height };
+        var iR = gateCheck(iB, SOURCE_IMAGE_INK);
+        if (iR.ok) {
+          made = { bbox: iR.rect, source: SOURCE_IMAGE_INK, ink: ir.geometry };
+          method = "IMAGE_INK_RESOLVED";
+          score = ((typeof ir.geometry.confidence === "number" && isFinite(ir.geometry.confidence)) ? ir.geometry.confidence : 1);
+          evidence = ["ink-conf=" + (ir.geometry.confidence != null ? Number(ir.geometry.confidence).toFixed(2) : "?")];
+          occupied.push({ bbox: iR.rect });
+        } else {
+          lastFail = { reason: iR.reason, detail: iR.detail };
+        }
+      } else {
+        var inkFailed = (ir && ir.reason) || "INK_UNRESOLVED";
+        if (!(lastFail && lastFail.reason && lastFail.reason !== "NO_LINE_CANDIDATE")) lastFail = { reason: "IMAGE_INK_" + inkFailed, detail: null };
+      }
+    }
+    if (made && made.source === SOURCE_NATIVE_ANCHOR) diag.anchorRecovered += 1;
+    if (made && made.source === SOURCE_IMAGE_INK) diag.inkRecovered += 1;
 
     var key = n.id != null ? n.id : n.rawText;
     if (made) {

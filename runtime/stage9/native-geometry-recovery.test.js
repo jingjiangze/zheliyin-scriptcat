@@ -191,5 +191,45 @@ t("稳健: 空输入不抛", () => {
   assert.strictEqual(r.unresolved.length, 0);
 });
 
+
+// ---- OCR-P1 Commit 4.2/4.3：ANCHOR / IMAGE_INK 阶段 ----
+(function () {
+  function recNative(native, ctx) { return R.recoverNativeGeometry(native, Object.assign({ thresholds: { rowTol: 8 } }, ctx || {})); }
+  t("anchor stage resolves with identity", () => {
+    const r = recNative([{ id: "a1", rawText: "夏祝莲" }], { anchorCandidates: [{ nativeKey: "a1", geometry: { bbox: { x: 10, y: 10, width: 60, height: 24 } }, identity: { uuid: "u1" } }] });
+    assert.strictEqual(r.recovered.length, 1);
+    assert.strictEqual(r.recovered[0].source, R.SOURCE_NATIVE_ANCHOR);
+    assert.strictEqual(r.diagnostics.anchorRecovered, 1);
+    assert.strictEqual(r.unresolved.length, 0);
+  });
+  t("anchor wrong nativeKey not consumed", () => {
+    const r = recNative([{ id: "a2", rawText: "手机:" }], { anchorCandidates: [{ nativeKey: "other", geometry: { bbox: { x: 10, y: 10, width: 60, height: 24 } } }] });
+    assert.strictEqual(r.recovered.length, 0);
+    assert.strictEqual(r.unresolved.length, 1);
+  });
+  t("anchor overlapping occupied rejected (no double occupy)", () => {
+    const r = recNative([{ id: "a3", rawText: "X" }], { anchorCandidates: [{ nativeKey: "a3", geometry: { bbox: { x: 0, y: 0, width: 60, height: 24 } } }], occupiedGeometries: [{ bbox: { x: 0, y: 0, width: 60, height: 24 } }] });
+    assert.strictEqual(r.recovered.length, 0);
+    assert.strictEqual(r.unresolved.length, 1);
+    // 拒因：OVERLAP_OCCUPIED（几何类优先）或 NO_LINE_CANDIDATE（最终归档）均可 —— 只允许重叠不被消费
+    assert.ok(r.rejected.some((x) => String(x.reason || "").indexOf("OVERLAP") >= 0 || String(x.reason || "").indexOf("NO_LINE_CANDIDATE") >= 0));
+  });
+  t("ink stage resolves", () => {
+    const r = recNative([{ id: "b1", rawText: "手机:" }], { inkResolver: () => ({ ok: true, geometry: { x: 20, y: 30, width: 40, height: 12, confidence: 0.9 } }) });
+    assert.strictEqual(r.recovered.length, 1);
+    assert.strictEqual(r.recovered[0].source, R.SOURCE_IMAGE_INK);
+    assert.strictEqual(r.diagnostics.inkRecovered, 1);
+  });
+  t("ink no-region -> unresolved (no guess)", () => {
+    const r = recNative([{ id: "b2", rawText: "微信:" }], { inkResolver: () => ({ ok: false, reason: "NO_ANCHOR_REGION" }) });
+    assert.strictEqual(r.recovered.length, 0);
+    assert.ok(r.rejected.some((x) => String(x.reason || "").indexOf("IMAGE_INK") >= 0));
+  });
+  t("anchor lost to baidu shading: anchor stage only when provided", () => {
+    const r = recNative([{ id: "c1", rawText: "Tel" }], { lineCandidates: [{ text: "Tel", bbox: { x: 5, y: 5, width: 40, height: 16 } }] });
+    assert.strictEqual(r.recovered[0].source, R.SOURCE_BAIDU_LINE);
+    assert.strictEqual(r.diagnostics.anchorRecovered, undefined || 0);
+  });
+})();
 console.log("native-geometry-recovery.test: pass=" + passed + " fail=" + failed);
 process.exit(failed ? 1 : 0);
