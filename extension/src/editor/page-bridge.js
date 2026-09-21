@@ -206,7 +206,8 @@ function pageBridge() {
                     try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.text === "string") { if (typeof reusedObj.setText === "function") reusedObj.setText(it.text); else reusedObj.text = it.text; } } catch (eSet) {}
                     try { if (it.fill && typeof reusedObj.set === "function") reusedObj.set({ fill: it.fill }); else if (it.fill) reusedObj.fill = it.fill; } catch (eFillReuse) {} // Stage 10-A：仅在有前景证据时更新颜色
                     const bIdxNat2 = it.blockIndex != null ? it.blockIndex : idx;
-                    reusedObj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat2) : ("zy-ocr-" + bIdxNat2);
+                    const runKeyNat2 = (it.zyRunIndex != null && it.zyRunIndex > 0) ? ("r" + it.zyRunIndex) : null; // Stage 10-B：run split 使同一 blockIndex 多个 textbox，key 须区分
+                    reusedObj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat2 + (runKeyNat2 ? "-" + runKeyNat2 : "")) : ("zy-ocr-" + bIdxNat2 + (runKeyNat2 ? "-" + runKeyNat2 : ""));
                     reusedObj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat2, objectUuid: reusedObj.uuid || reusedObj.multiUuid || null };
                     try { if (it.diagnostics) reusedObj.zyOcrDiagnostics = it.diagnostics; } catch (eDiag) {}
                     const gRe = measureObjectGeometry(diy.canvas, reusedObj);
@@ -246,7 +247,8 @@ function pageBridge() {
                   // Stage 9 V4 P1（§六）：key 升级 zy-ocr-{transactionId}-{blockIndex}，杜绝正反 blockIndex 碰撞；
                   //   对象同时挂 zyOcrObjectId（transactionId/pageId/blockId/objectUuid 完整身份）。
                   const bIdxNat = it.blockIndex != null ? it.blockIndex : idx;
-                  obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat) : ("zy-ocr-" + bIdxNat);
+                  const runKeyNat = (it.zyRunIndex != null && it.zyRunIndex > 0) ? ("r" + it.zyRunIndex) : null; // Stage 10-B：run split key 区分
+                  obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat + (runKeyNat ? "-" + runKeyNat : "")) : ("zy-ocr-" + bIdxNat + (runKeyNat ? "-" + runKeyNat : ""));
                   obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat, objectUuid: obj.uuid || obj.multiUuid || null };
                   const gNat = measureObjectGeometry(diy.canvas, obj);
                   syncBusinessFieldsFromObject(obj);

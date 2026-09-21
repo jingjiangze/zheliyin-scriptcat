@@ -1,16 +1,16 @@
 {
-  "ts": "2026-09-21T02:04:19.766Z",
+  "ts": "2026-09-21T03:12:11.906Z",
   "stage": "STAGE-9-9-FULL-PIPELINE",
-  "version": "0.3.11.49",
+  "version": "0.3.11.51",
   "cookiePresent": false,
   "baiduPresent": false,
   "gitBaseline": {
-    "head": "a86a97a2ad40cb1e63ff22359d7f8495b367e841",
+    "head": "9185697575b38ebd5f837cb3bf8fc30d74588ede",
     "branch": "stage-9-altq-baidu-reconstruction",
     "clean": false,
-    "stage": "a86a97a2ad40cb1e63ff22359d7f8495b367e841",
-    "test": "a86a97a2ad40cb1e63ff22359d7f8495b367e841",
-    "local": "a86a97a2ad40cb1e63ff22359d7f8495b367e841"
+    "stage": "9185697575b38ebd5f837cb3bf8fc30d74588ede",
+    "test": "9185697575b38ebd5f837cb3bf8fc30d74588ede",
+    "local": "9185697575b38ebd5f837cb3bf8fc30d74588ede"
   },
   "partA": {
     "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
@@ -23,7 +23,7 @@
         "textboxCountDelta": 0,
         "anchorScore": 0.8578,
         "winnerMargin": 0.29490000000000005,
-        "matchedUuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
+        "matchedUuid": "928082b1-f053-432d-aa47-7718ddd4010f",
         "matchedMarkuuid": null,
         "resolver": {
           "anchorCount": 7,
@@ -41,7 +41,7 @@
         "textboxCountDelta": 1,
         "identity": [
           {
-            "uuid": "d0d138be-a792-435b-bec8-ea1d851f3e13",
+            "uuid": "63e94eca-d74a-48de-9840-04feee9f71a5",
             "text": "ZY_99_PROBE_NEW",
             "pageId": "canvas:c0",
             "side": "FRONT",
@@ -119,7 +119,7 @@
           "textboxCount": 8,
           "dupObjects": 1,
           "uuids": [
-            "a8b6ddc1-a3fe-45ed-a6ca-72499b778996"
+            "f5cdf293-b613-4521-8178-294adcd98c2e"
           ]
         },
         {
@@ -129,7 +129,7 @@
           "textboxCount": 8,
           "dupObjects": 1,
           "uuids": [
-            "a8b6ddc1-a3fe-45ed-a6ca-72499b778996"
+            "f5cdf293-b613-4521-8178-294adcd98c2e"
           ]
         },
         {
@@ -139,7 +139,7 @@
           "textboxCount": 8,
           "dupObjects": 1,
           "uuids": [
-            "a8b6ddc1-a3fe-45ed-a6ca-72499b778996"
+            "f5cdf293-b613-4521-8178-294adcd98c2e"
           ]
         }
       ],
@@ -963,7 +963,7 @@
               "fontSize": 21.20516693228872,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "700d0ef5-1891-4948-afe5-f9ef39be7c32",
+              "uuid": "bb756398-aba1-4de5-a9ed-7af04abcaed4",
               "center": {
                 "x": 158.54509383960064,
                 "y": 240.29897500151952
@@ -979,7 +979,7 @@
               "fontSize": 12.95543959730228,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "ff3dcc13-ca81-4bf7-bae4-2d3e3a670f0f",
+              "uuid": "bae32870-1b21-4bf2-ad54-bf96928a77e2",
               "center": {
                 "x": 147.03090246190646,
                 "y": 275.9177961663421
@@ -995,7 +995,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "68d6830c-f5bb-4b46-acfa-4577cb8ad6ef",
+              "uuid": "5e7af212-b277-4729-9fd1-f3d54256d5ff",
               "center": {
                 "x": 131.44643922955237,
                 "y": 298.91423284110306
@@ -1011,7 +1011,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "58a56e36-38c0-4f05-ad0c-be93696e82a3",
+              "uuid": "3f87b91c-ccb6-43d9-9199-636b054d70c0",
               "center": {
                 "x": 258.7686666838018,
                 "y": 321.9358461433882
@@ -1027,7 +1027,7 @@
               "fontSize": 16.28117203437238,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "4b2de657-b173-4fd2-8437-cff9dfc3ef75",
+              "uuid": "822d54db-e4aa-4d2b-b232-0244c85dba45",
               "center": {
                 "x": 62.19102293539464,
                 "y": 116.19864936898608
@@ -1043,7 +1043,7 @@
               "fontSize": 15.838569405606602,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "aad4ac3a-5805-4689-92d9-0d93f602d40c",
+              "uuid": "0f5ce509-d873-4d1d-84df-1b5e2f9c7647",
               "center": {
                 "x": 170.68510562810275,
                 "y": 115.94857888373343
@@ -1059,7 +1059,7 @@
               "fontSize": 30.779490573728324,
               "fontFamily": "OPPOSans-M",
               "zyOcrKey": null,
-              "uuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
+              "uuid": "928082b1-f053-432d-aa47-7718ddd4010f",
               "center": {
                 "x": 136.9304634130626,
                 "y": 78.30039549974896
@@ -1085,7 +1085,7 @@
               "fontSize": 21.20516693228872,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "700d0ef5-1891-4948-afe5-f9ef39be7c32",
+              "uuid": "bb756398-aba1-4de5-a9ed-7af04abcaed4",
               "center": {
                 "x": 158.54509383960064,
                 "y": 240.29897500151952
@@ -1101,7 +1101,7 @@
               "fontSize": 12.95543959730228,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "ff3dcc13-ca81-4bf7-bae4-2d3e3a670f0f",
+              "uuid": "bae32870-1b21-4bf2-ad54-bf96928a77e2",
               "center": {
                 "x": 147.03090246190646,
                 "y": 275.9177961663421
@@ -1117,7 +1117,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "68d6830c-f5bb-4b46-acfa-4577cb8ad6ef",
+              "uuid": "5e7af212-b277-4729-9fd1-f3d54256d5ff",
               "center": {
                 "x": 131.44643922955237,
                 "y": 298.91423284110306
@@ -1133,7 +1133,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "58a56e36-38c0-4f05-ad0c-be93696e82a3",
+              "uuid": "3f87b91c-ccb6-43d9-9199-636b054d70c0",
               "center": {
                 "x": 258.7686666838018,
                 "y": 321.9358461433882
@@ -1149,7 +1149,7 @@
               "fontSize": 16.28117203437238,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "4b2de657-b173-4fd2-8437-cff9dfc3ef75",
+              "uuid": "822d54db-e4aa-4d2b-b232-0244c85dba45",
               "center": {
                 "x": 62.19102293539464,
                 "y": 116.19864936898608
@@ -1165,7 +1165,7 @@
               "fontSize": 15.838569405606602,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "aad4ac3a-5805-4689-92d9-0d93f602d40c",
+              "uuid": "0f5ce509-d873-4d1d-84df-1b5e2f9c7647",
               "center": {
                 "x": 170.68510562810275,
                 "y": 115.94857888373343
@@ -1181,7 +1181,7 @@
               "fontSize": 30.779490573728324,
               "fontFamily": "OPPOSans-M",
               "zyOcrKey": null,
-              "uuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
+              "uuid": "928082b1-f053-432d-aa47-7718ddd4010f",
               "center": {
                 "x": 136.9304634130626,
                 "y": 78.30039549974896
@@ -1212,7 +1212,7 @@
               "fontSize": 21.20516693228872,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "700d0ef5-1891-4948-afe5-f9ef39be7c32",
+              "uuid": "bb756398-aba1-4de5-a9ed-7af04abcaed4",
               "center": {
                 "x": 158.54509383960064,
                 "y": 240.29897500151952
@@ -1228,7 +1228,7 @@
               "fontSize": 12.95543959730228,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "ff3dcc13-ca81-4bf7-bae4-2d3e3a670f0f",
+              "uuid": "bae32870-1b21-4bf2-ad54-bf96928a77e2",
               "center": {
                 "x": 147.03090246190646,
                 "y": 275.9177961663421
@@ -1244,7 +1244,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "68d6830c-f5bb-4b46-acfa-4577cb8ad6ef",
+              "uuid": "5e7af212-b277-4729-9fd1-f3d54256d5ff",
               "center": {
                 "x": 131.44643922955237,
                 "y": 298.91423284110306
@@ -1260,7 +1260,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "58a56e36-38c0-4f05-ad0c-be93696e82a3",
+              "uuid": "3f87b91c-ccb6-43d9-9199-636b054d70c0",
               "center": {
                 "x": 258.7686666838018,
                 "y": 321.9358461433882
@@ -1276,7 +1276,7 @@
               "fontSize": 16.28117203437238,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "4b2de657-b173-4fd2-8437-cff9dfc3ef75",
+              "uuid": "822d54db-e4aa-4d2b-b232-0244c85dba45",
               "center": {
                 "x": 62.19102293539464,
                 "y": 116.19864936898608
@@ -1292,7 +1292,7 @@
               "fontSize": 15.838569405606602,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "aad4ac3a-5805-4689-92d9-0d93f602d40c",
+              "uuid": "0f5ce509-d873-4d1d-84df-1b5e2f9c7647",
               "center": {
                 "x": 170.68510562810275,
                 "y": 115.94857888373343
@@ -1307,8 +1307,8 @@
               "height": 34.78082434831301,
               "fontSize": 30.779490573728324,
               "fontFamily": "OPPOSans-M",
-              "zyOcrKey": "zy-ocr-tx-mualr85y-4828hu-0",
-              "uuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
+              "zyOcrKey": "zy-ocr-tx-muao6fwv-0j1kug-0",
+              "uuid": "928082b1-f053-432d-aa47-7718ddd4010f",
               "center": {
                 "x": 136.9304634130626,
                 "y": 78.30039549974896
@@ -1334,7 +1334,7 @@
               "fontSize": 21.20516693228872,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "700d0ef5-1891-4948-afe5-f9ef39be7c32",
+              "uuid": "bb756398-aba1-4de5-a9ed-7af04abcaed4",
               "center": {
                 "x": 158.54509383960064,
                 "y": 240.29897500151952
@@ -1350,7 +1350,7 @@
               "fontSize": 12.95543959730228,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "ff3dcc13-ca81-4bf7-bae4-2d3e3a670f0f",
+              "uuid": "bae32870-1b21-4bf2-ad54-bf96928a77e2",
               "center": {
                 "x": 147.03090246190646,
                 "y": 275.9177961663421
@@ -1366,7 +1366,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "68d6830c-f5bb-4b46-acfa-4577cb8ad6ef",
+              "uuid": "5e7af212-b277-4729-9fd1-f3d54256d5ff",
               "center": {
                 "x": 131.44643922955237,
                 "y": 298.91423284110306
@@ -1382,7 +1382,7 @@
               "fontSize": 13,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "58a56e36-38c0-4f05-ad0c-be93696e82a3",
+              "uuid": "3f87b91c-ccb6-43d9-9199-636b054d70c0",
               "center": {
                 "x": 258.7686666838018,
                 "y": 321.9358461433882
@@ -1398,7 +1398,7 @@
               "fontSize": 16.28117203437238,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "4b2de657-b173-4fd2-8437-cff9dfc3ef75",
+              "uuid": "822d54db-e4aa-4d2b-b232-0244c85dba45",
               "center": {
                 "x": 62.19102293539464,
                 "y": 116.19864936898608
@@ -1414,7 +1414,7 @@
               "fontSize": 15.838569405606602,
               "fontFamily": "OPPOSans-R",
               "zyOcrKey": null,
-              "uuid": "aad4ac3a-5805-4689-92d9-0d93f602d40c",
+              "uuid": "0f5ce509-d873-4d1d-84df-1b5e2f9c7647",
               "center": {
                 "x": 170.68510562810275,
                 "y": 115.94857888373343
@@ -1429,8 +1429,8 @@
               "height": 34.78082434831301,
               "fontSize": 30.779490573728324,
               "fontFamily": "OPPOSans-M",
-              "zyOcrKey": "zy-ocr-tx-mualr85y-4828hu-0",
-              "uuid": "724dc0e0-8b82-46f5-9be1-29cd51341d3f",
+              "zyOcrKey": "zy-ocr-tx-muao6fwv-0j1kug-0",
+              "uuid": "928082b1-f053-432d-aa47-7718ddd4010f",
               "center": {
                 "x": 136.9304634130626,
                 "y": 78.30039549974896

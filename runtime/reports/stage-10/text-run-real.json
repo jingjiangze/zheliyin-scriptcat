@@ -1,0 +1,826 @@
+{
+  "ts": "2026-09-21T03:11:27.413Z",
+  "stage": "STAGE-10B45-TEXT-RUN-REAL",
+  "version": "0.3.11.51",
+  "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": false,
+  "cases": [
+    {
+      "case": "T-R1",
+      "label": "single-line-same-style",
+      "expected": {
+        "verdict": "SINGLE",
+        "runCount": 1
+      },
+      "steps": [],
+      "page": {
+        "case": "T-R1",
+        "steps": [],
+        "errors": [],
+        "perLine": [
+          {
+            "line": 0,
+            "text": "单行同字号示例文本",
+            "fontSizePx": 36,
+            "bbox": {
+              "x": 80,
+              "y": 150,
+              "width": 520,
+              "height": 70
+            },
+            "inkHeight": 34,
+            "inkWidth": 327,
+            "inkBox": {
+              "x": 92,
+              "y": 170,
+              "width": 327,
+              "height": 34
+            }
+          }
+        ],
+        "naturalSize": {
+          "w": 900,
+          "h": 560
+        }
+      },
+      "plan": {
+        "result": "SINGLE_BLOCK_FALLBACK",
+        "runs": [],
+        "score": {
+          "verdict": "SINGLE",
+          "confidence": 0,
+          "level": "LOW",
+          "reasons": [
+            "no-runs"
+          ]
+        }
+      },
+      "verdict": "SINGLE",
+      "runCount": 1,
+      "textConservation": {
+        "joined": "",
+        "expected": "单行同字号示例文本",
+        "ok": false,
+        "runCount": 0,
+        "charTotal": 0,
+        "ordered": true,
+        "gapCount": 0
+      },
+      "createdItems": [
+        {
+          "text": "单行同字号示例文本",
+          "fontSize": 28
+        }
+      ],
+      "ocrCreate": {
+        "ok": true,
+        "detectedBlocks": 1,
+        "createdCount": 1,
+        "created": [
+          {
+            "text": "单行同字号示例文本"
+          }
+        ]
+      },
+      "actualObjects": [
+        {
+          "text": "单行同字号示例文本",
+          "fontSize": 28,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5d53-tr1-0"
+        }
+      ],
+      "createPass": true,
+      "expectedMatch": true,
+      "idempotence": {
+        "secondOk": true,
+        "note": "second tx same block/runIndex — anchor reuse 决策由原生 anchor 多因子决定"
+      },
+      "passed": true
+    },
+    {
+      "case": "T-R2",
+      "label": "two-line-same-style",
+      "expected": {
+        "verdict": "SINGLE",
+        "runCount": 1
+      },
+      "steps": [],
+      "page": {
+        "case": "T-R2",
+        "steps": [],
+        "errors": [],
+        "perLine": [
+          {
+            "line": 0,
+            "text": "两行同字号内容",
+            "fontSizePx": 36,
+            "bbox": {
+              "x": 80,
+              "y": 150,
+              "width": 520,
+              "height": 70
+            },
+            "inkHeight": 34,
+            "inkWidth": 253,
+            "inkBox": {
+              "x": 92,
+              "y": 170,
+              "width": 253,
+              "height": 34
+            }
+          },
+          {
+            "line": 1,
+            "text": "第二行同样大小",
+            "fontSizePx": 36,
+            "bbox": {
+              "x": 80,
+              "y": 230,
+              "width": 520,
+              "height": 70
+            },
+            "inkHeight": 34,
+            "inkWidth": 252,
+            "inkBox": {
+              "x": 92,
+              "y": 250,
+              "width": 252,
+              "height": 34
+            }
+          }
+        ],
+        "naturalSize": {
+          "w": 900,
+          "h": 560
+        }
+      },
+      "plan": {
+        "result": "SINGLE_BLOCK_FALLBACK",
+        "runs": [],
+        "score": {
+          "verdict": "SINGLE",
+          "confidence": 1,
+          "level": "HIGH",
+          "reasons": [
+            "single-run"
+          ]
+        }
+      },
+      "verdict": "SINGLE",
+      "runCount": 1,
+      "textConservation": {
+        "joined": "",
+        "expected": "两行同字号内容\n第二行同样大小",
+        "ok": false,
+        "runCount": 0,
+        "charTotal": 0,
+        "ordered": true,
+        "gapCount": 0
+      },
+      "createdItems": [
+        {
+          "text": "两行同字号内容\n第二行同样大小",
+          "fontSize": 28
+        }
+      ],
+      "ocrCreate": {
+        "ok": true,
+        "detectedBlocks": 1,
+        "createdCount": 1,
+        "created": [
+          {
+            "text": "两行同字号内容\n第二行同样大小",
+            "reused": true
+          }
+        ]
+      },
+      "actualObjects": [
+        {
+          "text": "两行同字号内容\n第二行同样大小",
+          "fontSize": 28,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5fp9-tr2-0"
+        }
+      ],
+      "createPass": true,
+      "expectedMatch": true,
+      "idempotence": {
+        "secondOk": true,
+        "note": "second tx same block/runIndex — anchor reuse 决策由原生 anchor 多因子决定"
+      },
+      "passed": true
+    },
+    {
+      "case": "T-R3",
+      "label": "big-plus-small",
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 2
+      },
+      "steps": [],
+      "page": {
+        "case": "T-R3",
+        "steps": [],
+        "errors": [],
+        "perLine": [
+          {
+            "line": 0,
+            "text": "大标题文字",
+            "fontSizePx": 52,
+            "bbox": {
+              "x": 80,
+              "y": 140,
+              "width": 520,
+              "height": 90
+            },
+            "inkHeight": 50,
+            "inkWidth": 260,
+            "inkBox": {
+              "x": 93,
+              "y": 155,
+              "width": 260,
+              "height": 50
+            }
+          },
+          {
+            "line": 1,
+            "text": "小字备注说明",
+            "fontSizePx": 22,
+            "bbox": {
+              "x": 80,
+              "y": 240,
+              "width": 520,
+              "height": 60
+            },
+            "inkHeight": 20,
+            "inkWidth": 130,
+            "inkBox": {
+              "x": 92,
+              "y": 272,
+              "width": 130,
+              "height": 20
+            }
+          }
+        ],
+        "naturalSize": {
+          "w": 900,
+          "h": 560
+        }
+      },
+      "plan": {
+        "result": "FULL_RUN_SPLIT",
+        "runs": [
+          {
+            "text": "大标题文字",
+            "charStart": 0,
+            "charEnd": 5,
+            "medianSpanInkHeight": 50
+          },
+          {
+            "text": "小字备注说明",
+            "charStart": 6,
+            "charEnd": 12,
+            "medianSpanInkHeight": 20
+          }
+        ],
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.94,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.4",
+            "score=0.94 level=HIGH"
+          ]
+        }
+      },
+      "verdict": "SPLIT",
+      "runCount": 2,
+      "textConservation": {
+        "joined": "大标题文字小字备注说明",
+        "expected": "大标题文字\n小字备注说明",
+        "ok": false,
+        "runCount": 2,
+        "charTotal": 11,
+        "ordered": false,
+        "gapCount": 1
+      },
+      "createdItems": [
+        {
+          "zyRunIndex": 0,
+          "text": "大标题文字",
+          "fontSize": 41
+        },
+        {
+          "zyRunIndex": 1,
+          "text": "小字备注说明",
+          "fontSize": 17
+        }
+      ],
+      "ocrCreate": {
+        "ok": true,
+        "detectedBlocks": 2,
+        "createdCount": 2,
+        "created": [
+          {
+            "text": "大标题文字"
+          },
+          {
+            "text": "小字备注说明"
+          }
+        ]
+      },
+      "actualObjects": [
+        {
+          "text": "大标题文字",
+          "fontSize": 41,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5i8j-tr3-0"
+        },
+        {
+          "text": "小字备注说明",
+          "fontSize": 17,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5i8j-tr3-0-r1"
+        }
+      ],
+      "createPass": true,
+      "expectedMatch": true,
+      "idempotence": {
+        "secondOk": true,
+        "note": "second tx same block/runIndex — anchor reuse 决策由原生 anchor 多因子决定"
+      },
+      "passed": true
+    },
+    {
+      "case": "T-R4",
+      "label": "big-small-big",
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 3
+      },
+      "steps": [],
+      "page": {
+        "case": "T-R4",
+        "steps": [],
+        "errors": [],
+        "perLine": [
+          {
+            "line": 0,
+            "text": "大字第一行",
+            "fontSizePx": 52,
+            "bbox": {
+              "x": 80,
+              "y": 140,
+              "width": 520,
+              "height": 90
+            },
+            "inkHeight": 50,
+            "inkWidth": 260,
+            "inkBox": {
+              "x": 93,
+              "y": 155,
+              "width": 260,
+              "height": 50
+            }
+          },
+          {
+            "line": 1,
+            "text": "小字中间行",
+            "fontSizePx": 22,
+            "bbox": {
+              "x": 80,
+              "y": 240,
+              "width": 520,
+              "height": 60
+            },
+            "inkHeight": 20,
+            "inkWidth": 109,
+            "inkBox": {
+              "x": 92,
+              "y": 272,
+              "width": 109,
+              "height": 20
+            }
+          },
+          {
+            "line": 2,
+            "text": "大字第三行",
+            "fontSizePx": 52,
+            "bbox": {
+              "x": 80,
+              "y": 320,
+              "width": 520,
+              "height": 90
+            },
+            "inkHeight": 50,
+            "inkWidth": 260,
+            "inkBox": {
+              "x": 93,
+              "y": 335,
+              "width": 260,
+              "height": 50
+            }
+          }
+        ],
+        "naturalSize": {
+          "w": 900,
+          "h": 560
+        }
+      },
+      "plan": {
+        "result": "FULL_RUN_SPLIT",
+        "runs": [
+          {
+            "text": "大字第一行",
+            "charStart": 0,
+            "charEnd": 5,
+            "medianSpanInkHeight": 50
+          },
+          {
+            "text": "小字中间行",
+            "charStart": 6,
+            "charEnd": 11,
+            "medianSpanInkHeight": 20
+          },
+          {
+            "text": "大字第三行",
+            "charStart": 12,
+            "charEnd": 17,
+            "medianSpanInkHeight": 50
+          }
+        ],
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.9,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.4",
+            "score=0.9 level=HIGH"
+          ]
+        }
+      },
+      "verdict": "SPLIT",
+      "runCount": 3,
+      "textConservation": {
+        "joined": "大字第一行小字中间行大字第三行",
+        "expected": "大字第一行\n小字中间行\n大字第三行",
+        "ok": false,
+        "runCount": 3,
+        "charTotal": 15,
+        "ordered": false,
+        "gapCount": 2
+      },
+      "createdItems": [
+        {
+          "zyRunIndex": 0,
+          "text": "大字第一行",
+          "fontSize": 41
+        },
+        {
+          "zyRunIndex": 1,
+          "text": "小字中间行",
+          "fontSize": 17
+        },
+        {
+          "zyRunIndex": 2,
+          "text": "大字第三行",
+          "fontSize": 41
+        }
+      ],
+      "ocrCreate": {
+        "ok": true,
+        "detectedBlocks": 3,
+        "createdCount": 3,
+        "created": [
+          {
+            "text": "大字第一行",
+            "reused": true
+          },
+          {
+            "text": "小字中间行",
+            "reused": true
+          },
+          {
+            "text": "大字第三行"
+          }
+        ]
+      },
+      "actualObjects": [
+        {
+          "text": "大字第一行",
+          "fontSize": 41,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5ks8-tr4-0"
+        },
+        {
+          "text": "小字中间行",
+          "fontSize": 17,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5ks8-tr4-0-r1"
+        },
+        {
+          "text": "大字第三行",
+          "fontSize": 41,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5ks8-tr4-0-r2"
+        }
+      ],
+      "createPass": true,
+      "expectedMatch": true,
+      "idempotence": {
+        "secondOk": true,
+        "note": "second tx same block/runIndex — anchor reuse 决策由原生 anchor 多因子决定"
+      },
+      "passed": true
+    },
+    {
+      "case": "T-R6",
+      "label": "name-title",
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 2
+      },
+      "steps": [],
+      "page": {
+        "case": "T-R6",
+        "steps": [],
+        "errors": [],
+        "perLine": [
+          {
+            "line": 0,
+            "text": "张三丰",
+            "fontSizePx": 56,
+            "bbox": {
+              "x": 80,
+              "y": 140,
+              "width": 520,
+              "height": 95
+            },
+            "inkHeight": 52,
+            "inkWidth": 165,
+            "inkBox": {
+              "x": 94,
+              "y": 153,
+              "width": 165,
+              "height": 52
+            }
+          },
+          {
+            "line": 1,
+            "text": "设计总监",
+            "fontSizePx": 24,
+            "bbox": {
+              "x": 80,
+              "y": 250,
+              "width": 520,
+              "height": 60
+            },
+            "inkHeight": 22,
+            "inkWidth": 95,
+            "inkBox": {
+              "x": 92,
+              "y": 280,
+              "width": 95,
+              "height": 22
+            }
+          }
+        ],
+        "naturalSize": {
+          "w": 900,
+          "h": 560
+        }
+      },
+      "plan": {
+        "result": "FULL_RUN_SPLIT",
+        "runs": [
+          {
+            "text": "张三丰",
+            "charStart": 0,
+            "charEnd": 3,
+            "medianSpanInkHeight": 52
+          },
+          {
+            "text": "设计总监",
+            "charStart": 4,
+            "charEnd": 8,
+            "medianSpanInkHeight": 22
+          }
+        ],
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.94,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.423",
+            "score=0.94 level=HIGH"
+          ]
+        }
+      },
+      "verdict": "SPLIT",
+      "runCount": 2,
+      "textConservation": {
+        "joined": "张三丰设计总监",
+        "expected": "张三丰\n设计总监",
+        "ok": false,
+        "runCount": 2,
+        "charTotal": 7,
+        "ordered": false,
+        "gapCount": 1
+      },
+      "createdItems": [
+        {
+          "zyRunIndex": 0,
+          "text": "张三丰",
+          "fontSize": 43
+        },
+        {
+          "zyRunIndex": 1,
+          "text": "设计总监",
+          "fontSize": 18
+        }
+      ],
+      "ocrCreate": {
+        "ok": true,
+        "detectedBlocks": 2,
+        "createdCount": 2,
+        "created": [
+          {
+            "text": "张三丰"
+          },
+          {
+            "text": "设计总监"
+          }
+        ]
+      },
+      "actualObjects": [
+        {
+          "text": "张三丰",
+          "fontSize": 43,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5nbt-tr6-0"
+        },
+        {
+          "text": "设计总监",
+          "fontSize": 18,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5nbt-tr6-0-r1"
+        }
+      ],
+      "createPass": true,
+      "expectedMatch": true,
+      "idempotence": {
+        "secondOk": true,
+        "note": "second tx same block/runIndex — anchor reuse 决策由原生 anchor 多因子决定"
+      },
+      "passed": true
+    },
+    {
+      "case": "T-R7",
+      "label": "phone-email",
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 2
+      },
+      "steps": [],
+      "page": {
+        "case": "T-R7",
+        "steps": [],
+        "errors": [],
+        "perLine": [
+          {
+            "line": 0,
+            "text": "13800138000",
+            "fontSizePx": 40,
+            "bbox": {
+              "x": 80,
+              "y": 145,
+              "width": 520,
+              "height": 75
+            },
+            "inkHeight": 27,
+            "inkWidth": 223,
+            "inkBox": {
+              "x": 94,
+              "y": 173,
+              "width": 223,
+              "height": 27
+            }
+          },
+          {
+            "line": 1,
+            "text": "contact@example.com",
+            "fontSizePx": 20,
+            "bbox": {
+              "x": 80,
+              "y": 240,
+              "width": 520,
+              "height": 55
+            },
+            "inkHeight": 17,
+            "inkWidth": 197,
+            "inkBox": {
+              "x": 91,
+              "y": 276,
+              "width": 197,
+              "height": 17
+            }
+          }
+        ],
+        "naturalSize": {
+          "w": 900,
+          "h": 560
+        }
+      },
+      "plan": {
+        "result": "FULL_RUN_SPLIT",
+        "runs": [
+          {
+            "text": "13800138000",
+            "charStart": 0,
+            "charEnd": 11,
+            "medianSpanInkHeight": 27
+          },
+          {
+            "text": "contact@example.com",
+            "charStart": 12,
+            "charEnd": 31,
+            "medianSpanInkHeight": 17
+          }
+        ],
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.91,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.63",
+            "score=0.91 level=HIGH"
+          ]
+        }
+      },
+      "verdict": "SPLIT",
+      "runCount": 2,
+      "textConservation": {
+        "joined": "13800138000contact@example.com",
+        "expected": "13800138000\ncontact@example.com",
+        "ok": false,
+        "runCount": 2,
+        "charTotal": 30,
+        "ordered": false,
+        "gapCount": 1
+      },
+      "createdItems": [
+        {
+          "zyRunIndex": 0,
+          "text": "13800138000",
+          "fontSize": 22
+        },
+        {
+          "zyRunIndex": 1,
+          "text": "contact@example.com",
+          "fontSize": 14
+        }
+      ],
+      "ocrCreate": {
+        "ok": true,
+        "detectedBlocks": 2,
+        "createdCount": 2,
+        "created": [
+          {
+            "text": "13800138000"
+          },
+          {
+            "text": "contact@example."
+          }
+        ]
+      },
+      "actualObjects": [
+        {
+          "text": "13800138000",
+          "fontSize": 22,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5pv5-tr7-0"
+        },
+        {
+          "text": "contact@example.com",
+          "fontSize": 14,
+          "fill": "#000000",
+          "key": "zy-ocr-tr-muao5pv5-tr7-0-r1"
+        }
+      ],
+      "createPass": true,
+      "expectedMatch": true,
+      "idempotence": {
+        "secondOk": true,
+        "note": "second tx same block/runIndex — anchor reuse 决策由原生 anchor 多因子决定"
+      },
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "total": 6,
+    "passed": 6,
+    "fail": 0
+  }
+}
