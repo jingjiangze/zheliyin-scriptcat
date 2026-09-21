@@ -563,7 +563,7 @@ return { ok: true, out };
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   t("cookie-parse", parseCookies("a=1; b=2; c").length === 2);
-  t("version-48", USERSCRIPT_VERSION === "0.3.11.48");
+  t("version-48", USERSCRIPT_VERSION === "0.3.11.53");
   t("card-exists", fs.existsSync(CARD));
   const IC = require(path.join(ROOT, "extension", "src", "editor", "image-containment.js"));
   const es = IC.effectiveScaleOf([0.5849, 0, 0, 0.5849, 0, 0]);

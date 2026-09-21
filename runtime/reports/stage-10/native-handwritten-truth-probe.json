@@ -1,51 +1,133 @@
 {
-  "ts": "2026-09-21T05:14:36.483Z",
+  "ts": "2026-09-21T06:10:44.610Z",
   "stage": "STAGE-10C-P4-HANDWRITTEN-TRUTH-PROBE",
   "api": "/siteWeb/userCenterJsj/uploadOCR.do",
   "textType": "2",
   "runs": [
     {
       "run": 1,
-      "at": "2026-09-21T05:14:44.170Z",
+      "at": "2026-09-21T06:10:52.895Z",
       "status": 200,
-      "elapsedMs": 565,
+      "elapsedMs": 815,
       "parsedShape": {
-        "rawHead": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+        "success": true,
+        "message": "9",
+        "userData": "夏祝莲<br/>Xia Zhu Lian<br/>手机:<br/>13719111188<br/>Mobile<br/>微信:<br/>2287483098<br/>Wechat<br/>广州爱卡奇硅胶制品有限公司<br/>Kaqi<br/>Guangzhou Aikaqi silicone Manufacturing Co. Ltd.<br/>地址;广州市一德东路万菱玩具精品广场二楼B区2B059<br/>Add:2B059, Area B, Wanling Toy Boutique Plaza,<br/>East Yide Rd, Guangzhou, China<br/>Tel:+86-020-81060778E-mail:aikaqi@foxmail.com<br/>"
       },
-      "ok": false,
-      "failReason": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+      "lineCount": 15,
+      "lines": [
+        "夏祝莲",
+        "Xia Zhu Lian",
+        "手机:",
+        "13719111188",
+        "Mobile",
+        "微信:",
+        "2287483098",
+        "Wechat",
+        "广州爱卡奇硅胶制品有限公司",
+        "Kaqi",
+        "Guangzhou Aikaqi silicone Manufacturing Co. Ltd.",
+        "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
+        "Add:2B059, Area B, Wanling Toy Boutique Plaza,",
+        "East Yide Rd, Guangzhou, China",
+        "Tel:+86-020-81060778E-mail:aikaqi@foxmail.com"
+      ],
+      "truth": {
+        "name": true,
+        "company": true,
+        "phone": true,
+        "wx": true,
+        "tel": true,
+        "email": true
+      },
+      "ok": true
     },
     {
       "run": 2,
-      "at": "2026-09-21T05:14:47.304Z",
+      "at": "2026-09-21T06:10:56.263Z",
       "status": 200,
-      "elapsedMs": 277,
+      "elapsedMs": 836,
       "parsedShape": {
-        "rawHead": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+        "success": true,
+        "message": "10",
+        "userData": "夏祝莲<br/>Xia Zhu Lian<br/>手机:<br/>13719111188<br/>Mobile<br/>微信:<br/>2287483098<br/>Wechat<br/>广州爱卡奇硅胶制品有限公司<br/>Kaqi<br/>Guangzhou Aikaqi silicone Manufacturing Co. Ltd.<br/>地址;广州市一德东路万菱玩具精品广场二楼B区2B059<br/>Add:2B059, Area B, Wanling Toy Boutique Plaza,<br/>East Yide Rd, Guangzhou, China<br/>Tel:+86-020-81060778E-mail:aikaqi@foxmail.com<br/>"
       },
-      "ok": false,
-      "failReason": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+      "lineCount": 15,
+      "lines": [
+        "夏祝莲",
+        "Xia Zhu Lian",
+        "手机:",
+        "13719111188",
+        "Mobile",
+        "微信:",
+        "2287483098",
+        "Wechat",
+        "广州爱卡奇硅胶制品有限公司",
+        "Kaqi",
+        "Guangzhou Aikaqi silicone Manufacturing Co. Ltd.",
+        "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
+        "Add:2B059, Area B, Wanling Toy Boutique Plaza,",
+        "East Yide Rd, Guangzhou, China",
+        "Tel:+86-020-81060778E-mail:aikaqi@foxmail.com"
+      ],
+      "truth": {
+        "name": true,
+        "company": true,
+        "phone": true,
+        "wx": true,
+        "tel": true,
+        "email": true
+      },
+      "ok": true
     },
     {
       "run": 3,
-      "at": "2026-09-21T05:14:50.137Z",
+      "at": "2026-09-21T06:10:59.659Z",
       "status": 200,
-      "elapsedMs": 325,
+      "elapsedMs": 995,
       "parsedShape": {
-        "rawHead": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+        "success": true,
+        "message": "11",
+        "userData": "夏祝莲<br/>Xia Zhu Lian<br/>手机:<br/>13719111188<br/>Mobile<br/>微信:<br/>2287483098<br/>Wechat<br/>广州爱卡奇硅胶制品有限公司<br/>Kaqi<br/>Guangzhou Aikaqi silicone Manufacturing Co. Ltd.<br/>地址;广州市一德东路万菱玩具精品广场二楼B区2B059<br/>Add:2B059, Area B, Wanling Toy Boutique Plaza,<br/>East Yide Rd, Guangzhou, China<br/>Tel:+86-020-81060778E-mail:aikaqi@foxmail.com<br/>"
       },
-      "ok": false,
-      "failReason": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+      "lineCount": 15,
+      "lines": [
+        "夏祝莲",
+        "Xia Zhu Lian",
+        "手机:",
+        "13719111188",
+        "Mobile",
+        "微信:",
+        "2287483098",
+        "Wechat",
+        "广州爱卡奇硅胶制品有限公司",
+        "Kaqi",
+        "Guangzhou Aikaqi silicone Manufacturing Co. Ltd.",
+        "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
+        "Add:2B059, Area B, Wanling Toy Boutique Plaza,",
+        "East Yide Rd, Guangzhou, China",
+        "Tel:+86-020-81060778E-mail:aikaqi@foxmail.com"
+      ],
+      "truth": {
+        "name": true,
+        "company": true,
+        "phone": true,
+        "wx": true,
+        "tel": true,
+        "email": true
+      },
+      "ok": true
     }
   ],
   "verdict": {
     "gate": "GATE-10C-HANDWRITTEN-TRUTH",
-    "pass": false,
-    "okRuns": 0,
+    "pass": true,
+    "okRuns": 3,
     "totalRuns": 3,
     "textType2Handwritten": true,
-    "notes": "handwritten endpoint not usable in current session"
+    "notes": "OCRTool.do handwritten (textType=2) returns valid text truth on real editor page"
   },
   "errors": [],
+  "cookieInjected": true,
   "pageUrl": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do"
 }

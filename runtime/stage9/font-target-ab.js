@@ -78,7 +78,7 @@ function conditionCode(cond) {
   repl('GM_getValue("zyBaiduOcrMode", "standard")', JSON.stringify(cond.baidu));
   repl('GM_getValue("zyStage9FontInkTarget", "0") === "1"', cond.ink === "1" ? "true" : "false");
   repl('GM_getValue("zyStage9NativeOcrMode", "2")', JSON.stringify("2"));
-  repl('GM_getValue("zyStage9NativeTruth", "0") === "1"', "true");
+  repl('GM_getValue("zyStage9NativeTruth", "1") === "1"', "true");
   repl('GM_getValue("zyOcrMode", "auto")', JSON.stringify("baidu"));
   repl('res = await provider.recognize(img.dataUrl, { imageWidth: img.width, imageHeight: img.height, mode: BAIDU_OCR_MODE });', 'res = (window.__zyBaiduExternal && window.__zyBaiduExternal.res) ? window.__zyBaiduExternal.res : { error: { errorCode: "EXTERNAL_BAIDU_MISSING", errorMessage: "runner external baidu not injected" } };');
   repl('document.addEventListener("DOMContentLoaded", initZheliyin);', '(function(){ if (document.body) { initZheliyin(); } else { document.addEventListener("DOMContentLoaded", function(){ initZheliyin(); }); } })();');
