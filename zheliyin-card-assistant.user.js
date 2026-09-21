@@ -1202,13 +1202,17 @@
       ocrTarget.pageSource = srcPage.sideSource || null;
       // Stage 9 V4 P1（§三）：冻结 OCR Transaction Identity —— pageId/side/canvasId/imageFingerprint 一次锁定，
       // 正反面各自独立 Session；图片指纹由 dataUrl 计算（同图同帧 → 同指纹）。
+      // OCR-P0.5：统一 Transaction —— 同一 OCR Transaction = 同一图片 = 同一 pageId。
+      // naturalWidth/naturalHeight 来自 IMAGE_PREP（原始自然尺寸）；payloadBytes 为解码后的真实字节数
+      // （buildFormPayload 校验 File.size === payloadBytes，禁止 Baidu 图 A / Native 图 B）。
+      const _prepIp = (prep && prep.imagePrep) || null;
       ocrTarget.transaction = (typeof createTransaction === "function")
-        ? createTransaction({ pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, dataUrl: prep.dataUrl, imageWidth: prep.width, imageHeight: prep.height })
+        ? createTransaction({ pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, dataUrl: prep.dataUrl, imageWidth: prep.width, imageHeight: prep.height, naturalWidth: (_prepIp && _prepIp.naturalWidth) || prep.width, naturalHeight: (_prepIp && _prepIp.naturalHeight) || prep.height, payloadBytes: (_prepIp && typeof _prepIp.decodedBytes === "number") ? _prepIp.decodedBytes : null })
         : null;
       // §26：记录本页最近事务（同图重识别 → RECOGNITION_RETRY 判定）
       if (ocrTarget.transaction) stage9TxByPage[srcPage.pageId] = { pageId: srcPage.pageId, imageFingerprint: ocrTarget.transaction.imageFingerprint, ts: Date.now() };
       ocrLog("SOURCE_PAGE", "pageId=" + srcPage.pageId + " side=" + srcPage.side + " source=" + (srcPage.sideSource || "n/a") + " tx=" + (ocrTarget.transaction && ocrTarget.transaction.transactionId || "n/a") + " fp=" + (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint || "n/a"));
-      const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height, pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, transactionId: (ocrTarget.transaction && ocrTarget.transaction.transactionId) || null, imageFingerprint: (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint) || null };
+      const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height, naturalWidth: (ocrTarget.transaction && ocrTarget.transaction.naturalWidth) || prep.width, naturalHeight: (ocrTarget.transaction && ocrTarget.transaction.naturalHeight) || prep.height, payloadBytes: (ocrTarget.transaction && ocrTarget.transaction.payloadBytes) || null, pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, transactionId: (ocrTarget.transaction && ocrTarget.transaction.transactionId) || null, imageFingerprint: (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint) || null };
       const mode = getOcrMode();
       if (mode === "baidu") {
         // Stage 7.2：manual baidu → 仅 Cloud（无本地 fallback，§8.1）

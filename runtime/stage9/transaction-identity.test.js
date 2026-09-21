@@ -28,8 +28,8 @@ t("fingerprintImage: 不同内容 → 不同指纹", () => {
   const b = TI.fingerprintImage("data:image/png;base64,AAAABBBC");
   assert.notStrictEqual(a, b);
 });
-t("createTransaction: 字段齐备 + side 归一", () => {
-  const tx = TI.createTransaction({ pageId: "canvas:c0", side: "FRONT", canvasId: "c0", dataUrl: "xx", imageWidth: 800, imageHeight: 500, now: 1700000000000 });
+t("createTransaction: 字段齐备 + side 归一 + OCR-P0.5 payload/自然尺寸", () => {
+  const tx = TI.createTransaction({ pageId: "canvas:c0", side: "FRONT", canvasId: "c0", dataUrl: "xx", imageWidth: 800, imageHeight: 500, naturalWidth: 1063, naturalHeight: 638, now: 1700000000000 });
   assert.ok(/^tx-[0-9a-z]+-[0-9a-z]+$/.test(tx.transactionId));
   assert.strictEqual(tx.pageId, "canvas:c0");
   assert.strictEqual(tx.side, "FRONT");
@@ -37,7 +37,20 @@ t("createTransaction: 字段齐备 + side 归一", () => {
   assert.ok(tx.imageFingerprint.startsWith("img-"));
   assert.strictEqual(tx.imageWidth, 800);
   assert.strictEqual(tx.imageHeight, 500);
+  assert.strictEqual(tx.naturalWidth, 1063);
+  assert.strictEqual(tx.naturalHeight, 638);
   assert.strictEqual(tx.createdAt, 1700000000000);
+});
+t("createTransaction: payloadBytes = decoded dataURL bytes（OCR-P0.5）", () => {
+  // "data:image/png;base64,AAAA" → b64="AAAA"（4 字符无 padding）→ 4*3/4-0 = 3 字节
+  const tx = TI.createTransaction({ pageId: "p", dataUrl: "data:image/png;base64,AAAA" });
+  assert.strictEqual(tx.payloadBytes, 3);
+  assert.strictEqual(TI.decodedBytes("data:image/png;base64,AAAA"), 3);
+  assert.strictEqual(TI.decodedBytes(null), -1);
+});
+t("createTransaction: 显式 payloadBytes 优先", () => {
+  const tx = TI.createTransaction({ pageId: "p", dataUrl: "x", payloadBytes: 123456 });
+  assert.strictEqual(tx.payloadBytes, 123456);
 });
 t("createTransaction: 两次调用 transactionId 唯一", () => {
   const a = TI.createTransaction({ pageId: "p", now: 1700000000000 });

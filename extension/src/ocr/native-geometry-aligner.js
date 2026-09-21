@@ -230,8 +230,9 @@ function alignNativeGeometry(nativeTexts, geometries, opts) {
       var score = sText * 2 + sLen * 0.4 + sType * 0.4 + sOrder * 0.6;
       if (score > bestScore) { bestScore = score; best = { gIdx: gi.idx, geo: gi.geo, score: score, sText: sText, sLen: sLen, sType: sType, sOrder: sOrder }; }
     });
-    // 因素门槛：text-sim >= 0.4（归一化后非零重叠）且至少 2 个非零因素
-    if (best && best.sText >= 0.4 && (best.sLen > 0 || best.sType > 0)) {
+    // 因素门槛（OCR-P0.3-A 硬规则）：text-sim >= 0.8（相等/包含级）且至少 1 个辅助因素，
+    // 拒绝短文本单字符重叠被宽松阈值误配（禁止放宽阈值掩盖 geometry 错误）。
+    if (best && best.sText >= 0.8 && (best.sLen > 0 || best.sType > 0)) {
       matchedGeoIdx[best.gIdx] = 1;
       usedNativeIdx[ni] = 1;
       matchedNative.push({
