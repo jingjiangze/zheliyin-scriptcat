@@ -1,0 +1,1245 @@
+{
+  "ts": "2026-09-21T03:02:07.012Z",
+  "stage": "STAGE-10B3-MIXED-TYPOGRAPHY-DETECT",
+  "version": "0.3.11.51",
+  "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": false,
+  "cases": [
+    {
+      "case": "T-R1",
+      "label": "single-line-same-style",
+      "rotate": null,
+      "scale": null,
+      "expected": {
+        "verdict": "SINGLE",
+        "runCount": 1,
+        "note": "1 Run"
+      },
+      "page": {
+        "case": "T-R1",
+        "steps": [],
+        "errors": [],
+        "drawn": {
+          "linesMeta": [
+            {
+              "text": "单行同字号示例文本",
+              "fontSizePx": 36,
+              "yCenter": 200,
+              "bandY": 150,
+              "bandH": 70
+            }
+          ]
+        },
+        "bgObject": {
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0
+        },
+        "perLine": [
+          {
+            "line": 0,
+            "text": "单行同字号示例文本",
+            "fontSizePx": 36,
+            "bbox": {
+              "x": 80,
+              "y": 150,
+              "width": 520,
+              "height": 70
+            },
+            "inkHeight": 34,
+            "inkWidth": 327,
+            "inkBox": {
+              "x": 92,
+              "y": 170,
+              "width": 327,
+              "height": 34
+            }
+          }
+        ]
+      },
+      "seg": {
+        "detect": {
+          "status": "UNKNOWN",
+          "mixedCandidate": false,
+          "confidence": 0,
+          "reason": "insufficient-evidence",
+          "minH": null,
+          "maxH": null,
+          "ratio": null,
+          "spanCount": 1
+        },
+        "candidate": {
+          "runs": [],
+          "boundaryIndexes": [],
+          "reason": "insufficient-evidence",
+          "candidate": false,
+          "spanCount": 1
+        },
+        "score": {
+          "verdict": "SINGLE",
+          "confidence": 0,
+          "level": "LOW",
+          "reasons": [
+            "no-runs"
+          ]
+        },
+        "planResult": "SINGLE_BLOCK_FALLBACK",
+        "planRuns": [],
+        "fallbackReason": "conservative-gate"
+      },
+      "verdict": "SINGLE",
+      "runCount": 0,
+      "expectedMatch": true,
+      "textConservationOk": false
+    },
+    {
+      "case": "T-R2",
+      "label": "two-line-same-style",
+      "rotate": null,
+      "scale": null,
+      "expected": {
+        "verdict": "SINGLE",
+        "runCount": 1,
+        "note": "2 line / 1 typography group"
+      },
+      "page": {
+        "case": "T-R2",
+        "steps": [],
+        "errors": [],
+        "drawn": {
+          "linesMeta": [
+            {
+              "text": "两行同字号内容",
+              "fontSizePx": 36,
+              "yCenter": 200,
+              "bandY": 150,
+              "bandH": 70
+            },
+            {
+              "text": "第二行同样大小",
+              "fontSizePx": 36,
+              "yCenter": 280,
+              "bandY": 230,
+              "bandH": 70
+            }
+          ]
+        },
+        "bgObject": {
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0
+        },
+        "perLine": [
+          {
+            "line": 0,
+            "text": "两行同字号内容",
+            "fontSizePx": 36,
+            "bbox": {
+              "x": 80,
+              "y": 150,
+              "width": 520,
+              "height": 70
+            },
+            "inkHeight": 34,
+            "inkWidth": 253,
+            "inkBox": {
+              "x": 92,
+              "y": 170,
+              "width": 253,
+              "height": 34
+            }
+          },
+          {
+            "line": 1,
+            "text": "第二行同样大小",
+            "fontSizePx": 36,
+            "bbox": {
+              "x": 80,
+              "y": 230,
+              "width": 520,
+              "height": 70
+            },
+            "inkHeight": 34,
+            "inkWidth": 252,
+            "inkBox": {
+              "x": 92,
+              "y": 250,
+              "width": 252,
+              "height": 34
+            }
+          }
+        ]
+      },
+      "seg": {
+        "detect": {
+          "status": "MIXED_OR_SINGLE",
+          "mixedCandidate": false,
+          "confidence": 1,
+          "reason": "single-unimodal",
+          "minH": 34,
+          "maxH": 34,
+          "ratio": 1,
+          "lowMean": 34,
+          "highMean": 0,
+          "clusterRatio": 1,
+          "spanCount": 2
+        },
+        "candidate": {
+          "runs": [
+            {
+              "charStart": 0,
+              "charEnd": 15,
+              "spanCount": 2,
+              "spanInkHeights": [
+                34,
+                34
+              ],
+              "medianSpanInkHeight": 34,
+              "x": 206.25,
+              "y": 190,
+              "spanInkWidth": 505,
+              "text": "两行同字号内容\n第二行同样大小"
+            }
+          ],
+          "boundaryIndexes": [],
+          "reason": "no-boundary",
+          "candidate": false,
+          "spanCount": 2,
+          "nativeText": "两行同字号内容\n第二行同样大小"
+        },
+        "score": {
+          "verdict": "SINGLE",
+          "confidence": 1,
+          "level": "HIGH",
+          "reasons": [
+            "single-run"
+          ]
+        },
+        "planResult": "SINGLE_BLOCK_FALLBACK",
+        "planRuns": [],
+        "fallbackReason": "conservative-gate"
+      },
+      "verdict": "SINGLE",
+      "runCount": 0,
+      "expectedMatch": true,
+      "textConservationOk": false
+    },
+    {
+      "case": "T-R3",
+      "label": "big-plus-small",
+      "rotate": null,
+      "scale": null,
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 2,
+        "note": "2 Run"
+      },
+      "page": {
+        "case": "T-R3",
+        "steps": [],
+        "errors": [],
+        "drawn": {
+          "linesMeta": [
+            {
+              "text": "大标题文字",
+              "fontSizePx": 52,
+              "yCenter": 200,
+              "bandY": 140,
+              "bandH": 90
+            },
+            {
+              "text": "小字备注说明",
+              "fontSizePx": 22,
+              "yCenter": 290,
+              "bandY": 240,
+              "bandH": 60
+            }
+          ]
+        },
+        "bgObject": {
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0
+        },
+        "perLine": [
+          {
+            "line": 0,
+            "text": "大标题文字",
+            "fontSizePx": 52,
+            "bbox": {
+              "x": 80,
+              "y": 140,
+              "width": 520,
+              "height": 90
+            },
+            "inkHeight": 50,
+            "inkWidth": 260,
+            "inkBox": {
+              "x": 93,
+              "y": 155,
+              "width": 260,
+              "height": 50
+            }
+          },
+          {
+            "line": 1,
+            "text": "小字备注说明",
+            "fontSizePx": 22,
+            "bbox": {
+              "x": 80,
+              "y": 240,
+              "width": 520,
+              "height": 60
+            },
+            "inkHeight": 20,
+            "inkWidth": 130,
+            "inkBox": {
+              "x": 92,
+              "y": 272,
+              "width": 130,
+              "height": 20
+            }
+          }
+        ]
+      },
+      "seg": {
+        "detect": {
+          "status": "MIXED_OR_SINGLE",
+          "mixedCandidate": true,
+          "confidence": 0.63,
+          "reason": "mixed-candidate--bimodal",
+          "minH": 20,
+          "maxH": 50,
+          "ratio": 0.4,
+          "lowMean": 20,
+          "highMean": 50,
+          "clusterRatio": 0.4,
+          "spanCount": 2
+        },
+        "candidate": {
+          "runs": [
+            {
+              "charStart": 0,
+              "charEnd": 5,
+              "spanCount": 1,
+              "spanInkHeights": [
+                50
+              ],
+              "medianSpanInkHeight": 50,
+              "x": 210,
+              "y": 140,
+              "spanInkWidth": 260,
+              "text": "大标题文字"
+            },
+            {
+              "charStart": 6,
+              "charEnd": 12,
+              "spanCount": 1,
+              "spanInkHeights": [
+                20
+              ],
+              "medianSpanInkHeight": 20,
+              "x": 145,
+              "y": 240,
+              "spanInkWidth": 130,
+              "text": "小字备注说明"
+            }
+          ],
+          "boundaryIndexes": [
+            1
+          ],
+          "reason": "visual-boundary",
+          "candidate": true,
+          "spanCount": 2,
+          "nativeText": "大标题文字\n小字备注说明"
+        },
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.94,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.4",
+            "score=0.94 level=HIGH"
+          ]
+        },
+        "planResult": "FULL_RUN_SPLIT",
+        "planRuns": [
+          {
+            "text": "大标题文字",
+            "charStart": 0,
+            "charEnd": 5,
+            "medianSpanInkHeight": 50
+          },
+          {
+            "text": "小字备注说明",
+            "charStart": 6,
+            "charEnd": 12,
+            "medianSpanInkHeight": 20
+          }
+        ],
+        "fallbackReason": null
+      },
+      "verdict": "SPLIT",
+      "runCount": 2,
+      "expectedMatch": true,
+      "textConservationOk": false
+    },
+    {
+      "case": "T-R4",
+      "label": "big-small-big",
+      "rotate": null,
+      "scale": null,
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 3,
+        "note": "3 Run"
+      },
+      "page": {
+        "case": "T-R4",
+        "steps": [],
+        "errors": [],
+        "drawn": {
+          "linesMeta": [
+            {
+              "text": "大字第一行",
+              "fontSizePx": 52,
+              "yCenter": 200,
+              "bandY": 140,
+              "bandH": 90
+            },
+            {
+              "text": "小字中间行",
+              "fontSizePx": 22,
+              "yCenter": 290,
+              "bandY": 240,
+              "bandH": 60
+            },
+            {
+              "text": "大字第三行",
+              "fontSizePx": 52,
+              "yCenter": 380,
+              "bandY": 320,
+              "bandH": 90
+            }
+          ]
+        },
+        "bgObject": {
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0
+        },
+        "perLine": [
+          {
+            "line": 0,
+            "text": "大字第一行",
+            "fontSizePx": 52,
+            "bbox": {
+              "x": 80,
+              "y": 140,
+              "width": 520,
+              "height": 90
+            },
+            "inkHeight": 50,
+            "inkWidth": 260,
+            "inkBox": {
+              "x": 93,
+              "y": 155,
+              "width": 260,
+              "height": 50
+            }
+          },
+          {
+            "line": 1,
+            "text": "小字中间行",
+            "fontSizePx": 22,
+            "bbox": {
+              "x": 80,
+              "y": 240,
+              "width": 520,
+              "height": 60
+            },
+            "inkHeight": 20,
+            "inkWidth": 109,
+            "inkBox": {
+              "x": 92,
+              "y": 272,
+              "width": 109,
+              "height": 20
+            }
+          },
+          {
+            "line": 2,
+            "text": "大字第三行",
+            "fontSizePx": 52,
+            "bbox": {
+              "x": 80,
+              "y": 320,
+              "width": 520,
+              "height": 90
+            },
+            "inkHeight": 50,
+            "inkWidth": 260,
+            "inkBox": {
+              "x": 93,
+              "y": 335,
+              "width": 260,
+              "height": 50
+            }
+          }
+        ]
+      },
+      "seg": {
+        "detect": {
+          "status": "MIXED_OR_SINGLE",
+          "mixedCandidate": true,
+          "confidence": 0.35,
+          "reason": "mixed-candidate--unimodal",
+          "minH": 20,
+          "maxH": 50,
+          "ratio": 0.4,
+          "lowMean": 40,
+          "highMean": 0,
+          "clusterRatio": 1,
+          "spanCount": 3
+        },
+        "candidate": {
+          "runs": [
+            {
+              "charStart": 0,
+              "charEnd": 5,
+              "spanCount": 1,
+              "spanInkHeights": [
+                50
+              ],
+              "medianSpanInkHeight": 50,
+              "x": 210,
+              "y": 140,
+              "spanInkWidth": 260,
+              "text": "大字第一行"
+            },
+            {
+              "charStart": 6,
+              "charEnd": 11,
+              "spanCount": 1,
+              "spanInkHeights": [
+                20
+              ],
+              "medianSpanInkHeight": 20,
+              "x": 134.5,
+              "y": 240,
+              "spanInkWidth": 109,
+              "text": "小字中间行"
+            },
+            {
+              "charStart": 12,
+              "charEnd": 17,
+              "spanCount": 1,
+              "spanInkHeights": [
+                50
+              ],
+              "medianSpanInkHeight": 50,
+              "x": 210,
+              "y": 320,
+              "spanInkWidth": 260,
+              "text": "大字第三行"
+            }
+          ],
+          "boundaryIndexes": [
+            1,
+            2
+          ],
+          "reason": "visual-boundary",
+          "candidate": true,
+          "spanCount": 3,
+          "nativeText": "大字第一行\n小字中间行\n大字第三行"
+        },
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.9,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.4",
+            "score=0.9 level=HIGH"
+          ]
+        },
+        "planResult": "FULL_RUN_SPLIT",
+        "planRuns": [
+          {
+            "text": "大字第一行",
+            "charStart": 0,
+            "charEnd": 5,
+            "medianSpanInkHeight": 50
+          },
+          {
+            "text": "小字中间行",
+            "charStart": 6,
+            "charEnd": 11,
+            "medianSpanInkHeight": 20
+          },
+          {
+            "text": "大字第三行",
+            "charStart": 12,
+            "charEnd": 17,
+            "medianSpanInkHeight": 50
+          }
+        ],
+        "fallbackReason": null
+      },
+      "verdict": "SPLIT",
+      "runCount": 3,
+      "expectedMatch": true,
+      "textConservationOk": false
+    },
+    {
+      "case": "T-R6",
+      "label": "name-title",
+      "rotate": null,
+      "scale": null,
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 2,
+        "note": "visual evidence supports split"
+      },
+      "page": {
+        "case": "T-R6",
+        "steps": [],
+        "errors": [],
+        "drawn": {
+          "linesMeta": [
+            {
+              "text": "张三丰",
+              "fontSizePx": 56,
+              "yCenter": 200,
+              "bandY": 140,
+              "bandH": 95
+            },
+            {
+              "text": "设计总监",
+              "fontSizePx": 24,
+              "yCenter": 300,
+              "bandY": 250,
+              "bandH": 60
+            }
+          ]
+        },
+        "bgObject": {
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0
+        },
+        "perLine": [
+          {
+            "line": 0,
+            "text": "张三丰",
+            "fontSizePx": 56,
+            "bbox": {
+              "x": 80,
+              "y": 140,
+              "width": 520,
+              "height": 95
+            },
+            "inkHeight": 52,
+            "inkWidth": 165,
+            "inkBox": {
+              "x": 94,
+              "y": 153,
+              "width": 165,
+              "height": 52
+            }
+          },
+          {
+            "line": 1,
+            "text": "设计总监",
+            "fontSizePx": 24,
+            "bbox": {
+              "x": 80,
+              "y": 250,
+              "width": 520,
+              "height": 60
+            },
+            "inkHeight": 22,
+            "inkWidth": 95,
+            "inkBox": {
+              "x": 92,
+              "y": 280,
+              "width": 95,
+              "height": 22
+            }
+          }
+        ]
+      },
+      "seg": {
+        "detect": {
+          "status": "MIXED_OR_SINGLE",
+          "mixedCandidate": true,
+          "confidence": 0.61,
+          "reason": "mixed-candidate--bimodal",
+          "minH": 22,
+          "maxH": 52,
+          "ratio": 0.423,
+          "lowMean": 22,
+          "highMean": 52,
+          "clusterRatio": 0.423,
+          "spanCount": 2
+        },
+        "candidate": {
+          "runs": [
+            {
+              "charStart": 0,
+              "charEnd": 3,
+              "spanCount": 1,
+              "spanInkHeights": [
+                52
+              ],
+              "medianSpanInkHeight": 52,
+              "x": 162.5,
+              "y": 140,
+              "spanInkWidth": 165,
+              "text": "张三丰"
+            },
+            {
+              "charStart": 4,
+              "charEnd": 8,
+              "spanCount": 1,
+              "spanInkHeights": [
+                22
+              ],
+              "medianSpanInkHeight": 22,
+              "x": 127.5,
+              "y": 250,
+              "spanInkWidth": 95,
+              "text": "设计总监"
+            }
+          ],
+          "boundaryIndexes": [
+            1
+          ],
+          "reason": "visual-boundary",
+          "candidate": true,
+          "spanCount": 2,
+          "nativeText": "张三丰\n设计总监"
+        },
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.94,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.423",
+            "score=0.94 level=HIGH"
+          ]
+        },
+        "planResult": "FULL_RUN_SPLIT",
+        "planRuns": [
+          {
+            "text": "张三丰",
+            "charStart": 0,
+            "charEnd": 3,
+            "medianSpanInkHeight": 52
+          },
+          {
+            "text": "设计总监",
+            "charStart": 4,
+            "charEnd": 8,
+            "medianSpanInkHeight": 22
+          }
+        ],
+        "fallbackReason": null
+      },
+      "verdict": "SPLIT",
+      "runCount": 2,
+      "expectedMatch": true,
+      "textConservationOk": false
+    },
+    {
+      "case": "T-R7",
+      "label": "phone-email",
+      "rotate": null,
+      "scale": null,
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 2,
+        "note": "2 Run"
+      },
+      "page": {
+        "case": "T-R7",
+        "steps": [],
+        "errors": [],
+        "drawn": {
+          "linesMeta": [
+            {
+              "text": "13800138000",
+              "fontSizePx": 40,
+              "yCenter": 200,
+              "bandY": 145,
+              "bandH": 75
+            },
+            {
+              "text": "contact@example.com",
+              "fontSizePx": 20,
+              "yCenter": 290,
+              "bandY": 240,
+              "bandH": 55
+            }
+          ]
+        },
+        "bgObject": {
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0
+        },
+        "perLine": [
+          {
+            "line": 0,
+            "text": "13800138000",
+            "fontSizePx": 40,
+            "bbox": {
+              "x": 80,
+              "y": 145,
+              "width": 520,
+              "height": 75
+            },
+            "inkHeight": 27,
+            "inkWidth": 223,
+            "inkBox": {
+              "x": 94,
+              "y": 173,
+              "width": 223,
+              "height": 27
+            }
+          },
+          {
+            "line": 1,
+            "text": "contact@example.com",
+            "fontSizePx": 20,
+            "bbox": {
+              "x": 80,
+              "y": 240,
+              "width": 520,
+              "height": 55
+            },
+            "inkHeight": 17,
+            "inkWidth": 197,
+            "inkBox": {
+              "x": 91,
+              "y": 276,
+              "width": 197,
+              "height": 17
+            }
+          }
+        ]
+      },
+      "seg": {
+        "detect": {
+          "status": "MIXED_OR_SINGLE",
+          "mixedCandidate": true,
+          "confidence": 0.42,
+          "reason": "mixed-candidate--bimodal",
+          "minH": 17,
+          "maxH": 27,
+          "ratio": 0.63,
+          "lowMean": 17,
+          "highMean": 27,
+          "clusterRatio": 0.63,
+          "spanCount": 2
+        },
+        "candidate": {
+          "runs": [
+            {
+              "charStart": 0,
+              "charEnd": 11,
+              "spanCount": 1,
+              "spanInkHeights": [
+                27
+              ],
+              "medianSpanInkHeight": 27,
+              "x": 191.5,
+              "y": 145,
+              "spanInkWidth": 223,
+              "text": "13800138000"
+            },
+            {
+              "charStart": 12,
+              "charEnd": 31,
+              "spanCount": 1,
+              "spanInkHeights": [
+                17
+              ],
+              "medianSpanInkHeight": 17,
+              "x": 178.5,
+              "y": 240,
+              "spanInkWidth": 197,
+              "text": "contact@example.com"
+            }
+          ],
+          "boundaryIndexes": [
+            1
+          ],
+          "reason": "visual-boundary",
+          "candidate": true,
+          "spanCount": 2,
+          "nativeText": "13800138000\ncontact@example.com"
+        },
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.91,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.63",
+            "score=0.91 level=HIGH"
+          ]
+        },
+        "planResult": "FULL_RUN_SPLIT",
+        "planRuns": [
+          {
+            "text": "13800138000",
+            "charStart": 0,
+            "charEnd": 11,
+            "medianSpanInkHeight": 27
+          },
+          {
+            "text": "contact@example.com",
+            "charStart": 12,
+            "charEnd": 31,
+            "medianSpanInkHeight": 17
+          }
+        ],
+        "fallbackReason": null
+      },
+      "verdict": "SPLIT",
+      "runCount": 2,
+      "expectedMatch": true,
+      "textConservationOk": false
+    },
+    {
+      "case": "T-R8",
+      "label": "rotated",
+      "rotate": 30,
+      "scale": null,
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 2,
+        "note": "rotation keeps IMAGE_PIXEL ink"
+      },
+      "page": {
+        "case": "T-R8",
+        "steps": [],
+        "errors": [],
+        "drawn": {
+          "linesMeta": [
+            {
+              "text": "大标题旋转",
+              "fontSizePx": 52,
+              "yCenter": 200,
+              "bandY": 140,
+              "bandH": 90
+            },
+            {
+              "text": "小字旋转备注",
+              "fontSizePx": 22,
+              "yCenter": 290,
+              "bandY": 240,
+              "bandH": 60
+            }
+          ]
+        },
+        "bgObject": {
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 30
+        },
+        "perLine": [
+          {
+            "line": 0,
+            "text": "大标题旋转",
+            "fontSizePx": 52,
+            "bbox": {
+              "x": 80,
+              "y": 140,
+              "width": 520,
+              "height": 90
+            },
+            "inkHeight": 50,
+            "inkWidth": 260,
+            "inkBox": {
+              "x": 93,
+              "y": 155,
+              "width": 260,
+              "height": 50
+            }
+          },
+          {
+            "line": 1,
+            "text": "小字旋转备注",
+            "fontSizePx": 22,
+            "bbox": {
+              "x": 80,
+              "y": 240,
+              "width": 520,
+              "height": 60
+            },
+            "inkHeight": 20,
+            "inkWidth": 132,
+            "inkBox": {
+              "x": 92,
+              "y": 272,
+              "width": 132,
+              "height": 20
+            }
+          }
+        ]
+      },
+      "seg": {
+        "detect": {
+          "status": "MIXED_OR_SINGLE",
+          "mixedCandidate": true,
+          "confidence": 0.63,
+          "reason": "mixed-candidate--bimodal",
+          "minH": 20,
+          "maxH": 50,
+          "ratio": 0.4,
+          "lowMean": 20,
+          "highMean": 50,
+          "clusterRatio": 0.4,
+          "spanCount": 2
+        },
+        "candidate": {
+          "runs": [
+            {
+              "charStart": 0,
+              "charEnd": 5,
+              "spanCount": 1,
+              "spanInkHeights": [
+                50
+              ],
+              "medianSpanInkHeight": 50,
+              "x": 210,
+              "y": 140,
+              "spanInkWidth": 260,
+              "text": "大标题旋转"
+            },
+            {
+              "charStart": 6,
+              "charEnd": 12,
+              "spanCount": 1,
+              "spanInkHeights": [
+                20
+              ],
+              "medianSpanInkHeight": 20,
+              "x": 146,
+              "y": 240,
+              "spanInkWidth": 132,
+              "text": "小字旋转备注"
+            }
+          ],
+          "boundaryIndexes": [
+            1
+          ],
+          "reason": "visual-boundary",
+          "candidate": true,
+          "spanCount": 2,
+          "nativeText": "大标题旋转\n小字旋转备注"
+        },
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.94,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.4",
+            "score=0.94 level=HIGH"
+          ]
+        },
+        "planResult": "FULL_RUN_SPLIT",
+        "planRuns": [
+          {
+            "text": "大标题旋转",
+            "charStart": 0,
+            "charEnd": 5,
+            "medianSpanInkHeight": 50
+          },
+          {
+            "text": "小字旋转备注",
+            "charStart": 6,
+            "charEnd": 12,
+            "medianSpanInkHeight": 20
+          }
+        ],
+        "fallbackReason": null
+      },
+      "verdict": "SPLIT",
+      "runCount": 2,
+      "expectedMatch": true,
+      "textConservationOk": false,
+      "geometryNote": "IMAGE_PIXEL ink sampled pre-transform; transform only applied to bg object"
+    },
+    {
+      "case": "T-R9",
+      "label": "nonuniform-scale",
+      "rotate": null,
+      "scale": [
+        0.6,
+        1.1
+      ],
+      "expected": {
+        "verdict": "SPLIT",
+        "runCount": 2,
+        "note": "nonuniform keeps IMAGE_PIXEL ink"
+      },
+      "page": {
+        "case": "T-R9",
+        "steps": [],
+        "errors": [],
+        "drawn": {
+          "linesMeta": [
+            {
+              "text": "大标题非均匀",
+              "fontSizePx": 52,
+              "yCenter": 200,
+              "bandY": 140,
+              "bandH": 90
+            },
+            {
+              "text": "小字备注缩放",
+              "fontSizePx": 22,
+              "yCenter": 290,
+              "bandY": 240,
+              "bandH": 60
+            }
+          ]
+        },
+        "bgObject": {
+          "scaleX": 0.6,
+          "scaleY": 1.1,
+          "angle": 0
+        },
+        "perLine": [
+          {
+            "line": 0,
+            "text": "大标题非均匀",
+            "fontSizePx": 52,
+            "bbox": {
+              "x": 80,
+              "y": 140,
+              "width": 520,
+              "height": 90
+            },
+            "inkHeight": 50,
+            "inkWidth": 311,
+            "inkBox": {
+              "x": 93,
+              "y": 155,
+              "width": 311,
+              "height": 50
+            }
+          },
+          {
+            "line": 1,
+            "text": "小字备注缩放",
+            "fontSizePx": 22,
+            "bbox": {
+              "x": 80,
+              "y": 240,
+              "width": 520,
+              "height": 60
+            },
+            "inkHeight": 20,
+            "inkWidth": 132,
+            "inkBox": {
+              "x": 92,
+              "y": 272,
+              "width": 132,
+              "height": 20
+            }
+          }
+        ]
+      },
+      "seg": {
+        "detect": {
+          "status": "MIXED_OR_SINGLE",
+          "mixedCandidate": true,
+          "confidence": 0.63,
+          "reason": "mixed-candidate--bimodal",
+          "minH": 20,
+          "maxH": 50,
+          "ratio": 0.4,
+          "lowMean": 20,
+          "highMean": 50,
+          "clusterRatio": 0.4,
+          "spanCount": 2
+        },
+        "candidate": {
+          "runs": [
+            {
+              "charStart": 0,
+              "charEnd": 6,
+              "spanCount": 1,
+              "spanInkHeights": [
+                50
+              ],
+              "medianSpanInkHeight": 50,
+              "x": 235.5,
+              "y": 140,
+              "spanInkWidth": 311,
+              "text": "大标题非均匀"
+            },
+            {
+              "charStart": 7,
+              "charEnd": 13,
+              "spanCount": 1,
+              "spanInkHeights": [
+                20
+              ],
+              "medianSpanInkHeight": 20,
+              "x": 146,
+              "y": 240,
+              "spanInkWidth": 132,
+              "text": "小字备注缩放"
+            }
+          ],
+          "boundaryIndexes": [
+            1
+          ],
+          "reason": "visual-boundary",
+          "candidate": true,
+          "spanCount": 2,
+          "nativeText": "大标题非均匀\n小字备注缩放"
+        },
+        "score": {
+          "verdict": "SPLIT",
+          "confidence": 0.94,
+          "level": "HIGH",
+          "reasons": [
+            "size-ratio=0.4",
+            "score=0.94 level=HIGH"
+          ]
+        },
+        "planResult": "FULL_RUN_SPLIT",
+        "planRuns": [
+          {
+            "text": "大标题非均匀",
+            "charStart": 0,
+            "charEnd": 6,
+            "medianSpanInkHeight": 50
+          },
+          {
+            "text": "小字备注缩放",
+            "charStart": 7,
+            "charEnd": 13,
+            "medianSpanInkHeight": 20
+          }
+        ],
+        "fallbackReason": null
+      },
+      "verdict": "SPLIT",
+      "runCount": 2,
+      "expectedMatch": true,
+      "textConservationOk": false,
+      "geometryNote": "IMAGE_PIXEL ink sampled pre-transform; transform only applied to bg object"
+    }
+  ],
+  "errors": [],
+  "summary": {
+    "total": 8,
+    "expectedMatch": 8,
+    "unknown": 0
+  }
+}
