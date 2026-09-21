@@ -960,7 +960,7 @@
   // 空结果/接口失败视为"错误明显"→ 自动回退印刷体(textType=1) 重试一次（recognizeWithFallback）。
   // Stage 9 V4 §十二：百度 OCR 实验模式（standard|accurate）—— 实验开关 zyBaiduOcrMode，不进长期配置系统
   const BAIDU_OCR_MODE = GM_getValue("zyBaiduOcrMode", "standard");
-  const OCR_PARTIAL_LAST_MISSING = [];
+  let OCR_PARTIAL_LAST_MISSING = [];
   const STAGE9_LOCAL_SIDECAR = GM_getValue("zyStage9LocalSidecar", "0") === "1"; // OCR-P1 Commit 3b：LOCAL geometry sidecar（默认关；unmatched 剩余时同图跑 local 补位置） // OCR-P1 Commit 3a：最近一次部分创建的缺失文字清单（诊断/runner 抓取） // "accurate"=高精度含位置版 /general 之外
   const STAGE9_NATIVE_TRUTH = GM_getValue("zyStage9NativeTruth", "1") === "1"; // Stage 10-C：强制站点原生 OCRTool.do 手写体为文字真值（> Baidu；接口有则必须全到画布，无则禁止到画布）
   const STAGE9_NATIVE_OCR_MODE = GM_getValue("zyStage9NativeOcrMode", "2"); // "2" 手写体优先（用户实测），"1" 印刷体
@@ -984,20 +984,20 @@
   }
   function nativeTruthGateFail(tb) {
     if (typeof resolveGate === "function") {
-      const rg = resolveGate(tb);
-      return { code: rg && rg.code, message: rg && rg.message };
+      const rg = resolveGate(tb, { allowPartial: true }); // OCR-P1 Commit 3c：与 passed 同一 allowPartial（PARTIAL_OK 携缺失文字)
+      return { code: rg && rg.code, message: rg && rg.message, missingTexts: (rg && rg.missingTexts) || [] };
     }
-    if (!tb) return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截（无结果），本批不创建" };
+    if (!tb) return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截（无结果），本批不创建", missingTexts: [] };
     if (tb.blocked) {
-      if (tb.reason === "unavailable") return { code: "NATIVE_UNAVAILABLE", message: "Native OCR 不可用（" + String(tb.nativeFailCode || "?") + "），本批不创建（禁止用其它 OCR 文本进入画布）" };
-      if (tb.reason === "dependency-missing") return { code: "NATIVE_DEPENDENCY_MISSING", message: "Native Truth 依赖缺失，本批不创建" };
-      return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截，本批不创建" };
+      if (tb.reason === "unavailable") return { code: "NATIVE_UNAVAILABLE", message: "Native OCR 不可用（" + String(tb.nativeFailCode || "?") + "），本批不创建（禁止用其它 OCR 文本进入画布）", missingTexts: [] };
+      if (tb.reason === "dependency-missing") return { code: "NATIVE_DEPENDENCY_MISSING", message: "Native Truth 依赖缺失，本批不创建", missingTexts: [] };
+      return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截，本批不创建", missingTexts: [] };
     }
     if (tb.gate && tb.gate.totalNative > 0) {
       const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
-      return { code: (cg && cg.code) || "NATIVE_GEOMETRY_INCOMPLETE", message: (cg && cg.message) || "几何不完整，本批不创建" };
+      return { code: (cg && cg.code) || "NATIVE_GEOMETRY_INCOMPLETE", message: (cg && cg.message) || "几何不完整，本批不创建", missingTexts: [] };
     }
-    return { code: "NATIVE_NO_TRUTH", message: "无 Native 文字真值，本批不创建" };
+    return { code: "NATIVE_NO_TRUTH", message: "无 Native 文字真值，本批不创建", missingTexts: [] };
   }
   async function maybeApplyNativeTruth(blocks, img, diag) {
     if (!STAGE9_NATIVE_TRUTH) {
@@ -1150,6 +1150,28 @@
 
   // 本地 Tesseract 执行器（manual local / auto 下 Cloud 失败后的 local-fallback 共用，§8.1）
   // executor 结构严格复刻 5.5A 已验证版本（node 复现：原 userscript 版尾部括号不平衡 → "Unexpected token ')'" → 脚本未执行 → 死等超时）
+  // OCR-P1 Commit 3c：共享本地引擎 loader（runLocalOcr 与 runLocalGeometrySidecar 复用，
+  // 不复制两套下载逻辑）。cache 存在直接返回；否则下载 OCR_CDN 并校验 HTTP/status/
+  // responseText，成功缓存 ocrEngineCache；失败返回 SIDE_CAR_ENGINE_LOAD_FAILED。
+  function ensureLocalOcrEngine() {
+    return new Promise((resolve) => {
+      if (typeof ocrEngineCache === "string" && ocrEngineCache.length > 1000) { resolve({ ok: true, engine: ocrEngineCache }); return; }
+      GM_xmlhttpRequest({
+        method: "GET", url: OCR_CDN, timeout: 45000,
+        onload: (x) => {
+          if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) {
+            ocrEngineCache = x.responseText;
+            ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars");
+            resolve({ ok: true, engine: ocrEngineCache });
+          } else {
+            resolve({ ok: false, code: "SIDE_CAR_ENGINE_LOAD_FAILED", reason: "http " + x.status });
+          }
+        },
+        onerror: () => resolve({ ok: false, code: "SIDE_CAR_ENGINE_LOAD_FAILED", reason: "network" })
+      });
+    });
+  }
+  
   async function runLocalOcr(img, diag) {
     setStatus("正在加载 OCR（首次约需下载 20MB 中文识别库，请耐心等待）…");
     const run = (engineText) => {
@@ -1268,8 +1290,13 @@
         }
       }, 500);
     };
-    if (ocrEngineCache) { run(ocrEngineCache); return; }
-    GM_xmlhttpRequest({ method: "GET", url: OCR_CDN, timeout: 45000, onload: (x) => { if (x.status >= 200 && x.status < 300 && x.responseText && x.responseText.length > 1000) { ocrEngineCache = x.responseText; ocrLog("LOCAL_LOADING", "engine downloaded " + x.responseText.length + " chars"); run(ocrEngineCache); } else { ocrRunning = false; setStatus("OCR 引擎加载失败（HTTP " + x.status + "）"); emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "http-error", error: "engine load http " + x.status })); } }, onerror: () => { ocrRunning = false; setStatus("OCR 引擎网络错误"); ocrLog("ERROR", "network error"); emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "http-error", error: "engine load network" })); } });
+    const eng = await ensureLocalOcrEngine(); // OCR-P1 Commit 3c：复用共享 loader（下载逻辑收敛）
+    if (eng.ok) { run(eng.engine); return; }
+    ocrRunning = false;
+    setStatus("OCR 引擎加载失败（" + String(eng.reason || eng.code || "?") + "）");
+    ocrLog("ERROR", "engine: " + String(eng.code || "?") + " " + String(eng.reason || ""));
+    emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "http-error", error: "engine load " + String(eng.reason || eng.code) }));
+    // OCR-P1 Commit 3c：旧下载逻辑已收敛至 ensureLocalOcrEngine()
   }
   // OCR-P1 Commit 3b：LOCAL geometry sidecar —— 仅供 geometry 补位使用。
   // 语义：仅当 unmatchedNative 仍 >0 且开关开启时，对同图跑本地识别，
@@ -1277,12 +1304,14 @@
   // 不碰 ocrRunning 锁；引擎缺失/失败/超时返回 []（不阻断主链 Native Truth）。
   async function runLocalGeometrySidecar(img) {
     if ((typeof unifyCandidates !== "function") || (typeof GM_addElement !== "function")) return [];
+    const eng = await ensureLocalOcrEngine(); // OCR-P1 Commit 3c：首次使用真正加载引擎
+    if (!eng.ok) { ocrLog("SIDECAR", "engine not ready " + (eng.code || "?") + " " + (eng.reason || "")); return []; }
     return await new Promise((resolve) => {
       let settled = false;
       const done = (cands) => { if (settled) return; settled = true; resolve(Array.isArray(cands) ? cands : []); };
       try {
         const executor = "(function(){var module={exports:{}};var exports=module.exports;var define;var require;" +
-          (typeof ocrEngineCache === "string" && ocrEngineCache.length > 1000 ? ocrEngineCache : "") + "\n" +
+          eng.engine + "\n" +
           "var T=module.exports;" +
           "if(!T||typeof T.createWorker!=='function'){document.documentElement.setAttribute('data-zy-sidecar-result',JSON.stringify({ok:false,err:'engine'}));return;}" +
           "window.addEventListener('message',function(ev){if(!ev.data||ev.data.source!=='zy-ocr-sidecar')return;" +
