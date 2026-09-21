@@ -1,14 +1,14 @@
 {
-  "ts": "2026-09-21T04:56:19.578Z",
+  "ts": "2026-09-21T05:14:36.483Z",
   "stage": "STAGE-10C-P4-HANDWRITTEN-TRUTH-PROBE",
   "api": "/siteWeb/userCenterJsj/uploadOCR.do",
   "textType": "2",
   "runs": [
     {
       "run": 1,
-      "at": "2026-09-21T04:56:27.308Z",
+      "at": "2026-09-21T05:14:44.170Z",
       "status": 200,
-      "elapsedMs": 483,
+      "elapsedMs": 565,
       "parsedShape": {
         "rawHead": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
       },
@@ -17,9 +17,9 @@
     },
     {
       "run": 2,
-      "at": "2026-09-21T04:56:30.347Z",
+      "at": "2026-09-21T05:14:47.304Z",
       "status": 200,
-      "elapsedMs": 207,
+      "elapsedMs": 277,
       "parsedShape": {
         "rawHead": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
       },
@@ -28,9 +28,9 @@
     },
     {
       "run": 3,
-      "at": "2026-09-21T04:56:33.114Z",
+      "at": "2026-09-21T05:14:50.137Z",
       "status": 200,
-      "elapsedMs": 199,
+      "elapsedMs": 325,
       "parsedShape": {
         "rawHead": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
       },
