@@ -1,16 +1,16 @@
 {
-  "ts": "2026-09-20T23:40:08.600Z",
+  "ts": "2026-09-21T02:06:13.037Z",
   "stage": "STAGE-9-9-DEPENDENCY-CLOSURE",
-  "version": "0.3.11.48",
+  "version": "0.3.11.49",
   "userscript": "D:\\zheliyin-scriptcat\\zheliyin-card-assistant.user.js",
   "dependencyClosure": {
     "passed": true,
-    "totalRequires": 27,
+    "totalRequires": 28,
     "files": [
       {
         "file": "fields/field-core.js",
         "branch": "demo",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -22,7 +22,7 @@
       {
         "file": "core/config-core.js",
         "branch": "demo",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -34,7 +34,7 @@
       {
         "file": "ai/ai-client.js",
         "branch": "demo",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -46,19 +46,19 @@
       {
         "file": "editor/page-bridge.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
-        "remoteHash": "bb46d78da3423cb8",
-        "localHash": "bb46d78da3423cb8",
+        "remoteHash": "75ff375bf41044d3",
+        "localHash": "75ff375bf41044d3",
         "contentMatch": true,
         "status": "MATCH_LOCAL"
       },
       {
         "file": "editor/image-transform.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -70,7 +70,7 @@
       {
         "file": "editor/image-space.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -82,7 +82,7 @@
       {
         "file": "editor/image-containment.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -94,7 +94,7 @@
       {
         "file": "editor/multiline-typography.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -106,7 +106,7 @@
       {
         "file": "editor/text-fit.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -118,7 +118,7 @@
       {
         "file": "editor/text-fit-fusion.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -130,7 +130,7 @@
       {
         "file": "editor/ink-measure.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -142,7 +142,7 @@
       {
         "file": "ocr/baidu-provider.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -154,7 +154,7 @@
       {
         "file": "ocr/native-ocr-provider.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -166,7 +166,7 @@
       {
         "file": "ocr/fallback-policy.js",
         "branch": "demo",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -178,7 +178,7 @@
       {
         "file": "ocr/candidate-normalizer.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -190,7 +190,7 @@
       {
         "file": "ocr/ocr-candidate-gate.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -202,7 +202,7 @@
       {
         "file": "ocr/font-source.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -214,7 +214,7 @@
       {
         "file": "ocr/text-truth-gate.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -226,7 +226,7 @@
       {
         "file": "ocr/transaction-identity.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -238,7 +238,7 @@
       {
         "file": "ocr/recognition-mode.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -250,7 +250,7 @@
       {
         "file": "editor/image-ink-target.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -260,9 +260,21 @@
         "status": "MATCH_LOCAL"
       },
       {
+        "file": "editor/native-color.js",
+        "branch": "test",
+        "versionQuery": "0.3.11.49",
+        "versionMatch": true,
+        "remoteExists": true,
+        "localExists": true,
+        "remoteHash": "990bc0ac8b5e39ca",
+        "localHash": "990bc0ac8b5e39ca",
+        "contentMatch": true,
+        "status": "MATCH_LOCAL"
+      },
+      {
         "file": "editor/font-target-source.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -274,7 +286,7 @@
       {
         "file": "ocr/credential-crypto.js",
         "branch": "demo",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -286,7 +298,7 @@
       {
         "file": "ocr/ocr-quality.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -298,7 +310,7 @@
       {
         "file": "ocr/ocr-text-sanitizer.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -310,7 +322,7 @@
       {
         "file": "ocr/ocr-size-analyzer.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -322,7 +334,7 @@
       {
         "file": "ocr/ocr-text-safety-gate.js",
         "branch": "test",
-        "versionQuery": "0.3.11.48",
+        "versionQuery": "0.3.11.49",
         "versionMatch": true,
         "remoteExists": true,
         "localExists": true,
@@ -339,7 +351,7 @@
       },
       {
         "branch": "test",
-        "count": 22
+        "count": 23
       }
     ],
     "staleModules": [],
