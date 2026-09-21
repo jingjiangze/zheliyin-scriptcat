@@ -79,6 +79,43 @@ t("parseNativeText / buildFormData 细节", () => {
   assert.strictEqual(N.buildFormData(null), null);
 });
 
+// ---- OCR-P0.1-B：buildFormPayload 诊断 + IMAGE_PAYLOAD_MISMATCH 完整性校验 ----
+t("payload: dataURL → diagnostics(mime/filename/blobSize/fileSize/textType/decodedBytes)", () => {
+  const p = N.buildFormPayload("data:image/png;base64,AAAA", { textType: "2" });
+  assert.strictEqual(p.ok, true);
+  assert.ok(p.diagnostics);
+  assert.strictEqual(p.diagnostics.mime, "image/png");
+  assert.strictEqual(p.diagnostics.filename, "native-ocr.png");
+  assert.strictEqual(p.diagnostics.textType, "2");
+  // "AAAA" base64 → 3 解码字节
+  assert.strictEqual(p.diagnostics.decodedBytes, 3);
+  assert.strictEqual(p.errorCode, null);
+  const file = p.formData.get("file");
+  assert.strictEqual(file.size, p.diagnostics.decodedBytes);
+  assert.strictEqual(p.formData.get("textType"), "2");
+});
+t("payload: File.size === decodedBytes（解码后原样封装，零截断）", () => {
+  const p = N.buildFormPayload("data:image/png;base64,AAAA", {});
+  assert.strictEqual(p.ok, true);
+  assert.strictEqual(p.diagnostics.fileSize, 3);
+  assert.strictEqual(p.diagnostics.fileSize, p.diagnostics.decodedBytes);
+  assert.strictEqual(p.diagnostics.transformPolicy, "pass-through");
+});
+t("payload: 无法构建 / 非法入参 → IMAGE_INVALID formData=null", () => {
+  const p1 = N.buildFormPayload(null, {});
+  assert.strictEqual(p1.ok, false);
+  assert.strictEqual(p1.errorCode, "IMAGE_INVALID");
+  const p2 = N.buildFormPayload("not-a-dataurl", {});
+  assert.strictEqual(p2.ok, false);
+  assert.strictEqual(p2.errorCode, "IMAGE_INVALID");
+});
+t("payload: recognize 对 payload 失败携带 errorCode=IMAGE_INVALID + payload.diagnostics", async () => {
+  const r = await N.recognize("not-a-dataurl", { fetch: mockFetch(200, OK_BODY) });
+  assert.strictEqual(r.ok, false);
+  assert.strictEqual(r.error.errorCode, "IMAGE_INVALID");
+  assert.ok(r.payload && r.payload.mime === "image/png"); // diagnostics 透传
+});
+
 // ---- recognizeWithFallback：手写体优先，错误明显回退印刷体 ----
 t("fallback: 主模式成功 → 不回退（modeUsed=primary）", async () => {
   const calls = [];

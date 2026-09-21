@@ -1004,12 +1004,35 @@ function pageBridge() {
           };
         }
       } catch (eAc) { aCoords = null; }
+      // OCR-P0.1：IMAGE_PREP 只读诊断 —— 证明"发给 Native OCR 的图片"是当前选中图片的完整像素数据。
+      // 六不保证（不裁剪/不缩放/不 JPEG 压缩/不改 orientation/不改自然尺寸/Baidu 与 Native 同 dataUrl）。
+      // 指纹算法与 transaction-identity.js fingerprintImage（FNV-1a）保持一致，供事务关联。
+      var dmp = /^data:([^;,]+)/i.exec(dataUrl || "");
+      var b64 = (dataUrl && dataUrl.indexOf(",") >= 0) ? dataUrl.slice(dataUrl.indexOf(",") + 1) : "";
+      var decodedBytes = -1;
+      try { decodedBytes = atob(b64).length; } catch (eD) { decodedBytes = -1; }
+      var fp = 0x811c9dc5;
+      for (var fpi = 0; fpi < dataUrl.length; fpi += 1) { fp ^= dataUrl.charCodeAt(fpi); fp = Math.imul(fp, 0x01000193) >>> 0; }
+      var fingerprint = "img-" + fp.toString(16) + "-" + dataUrl.length;
       return {
         ok: true,
         kind: kind,
         dataUrl: dataUrl,
         width: w,
         height: h,
+        imagePrep: {
+          kind: kind,
+          naturalWidth: w,
+          naturalHeight: h,
+          dataUrlMime: dmp ? dmp[1].toLowerCase() : "image/png",
+          decodedBytes: decodedBytes,
+          dataUrlChars: dataUrl.length,
+          fingerprint: fingerprint,
+          sourceElementType: el && el.tagName ? String(el.tagName).toUpperCase() : null,
+          transformPolicy: "pass-through", // 等尺寸 canvas + toDataURL("image/png")，无缩放/裁剪/JPEG
+          sameDataUrlForAllProviders: true
+        },
+        fingerprint: fingerprint,
         geometry: {
           left: left, top: top,
           width: target.width, height: target.height,
