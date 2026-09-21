@@ -1,0 +1,27 @@
+{
+  "ts": "2026-09-21T05:29:09.393Z",
+  "version": "0.3.11.53",
+  "branch": "test",
+  "regions": {
+    "ocrCreateHandler": {
+      "present": true,
+      "hash": "a7021bb9b30d1e8c54e670a211c3a4d2ddd650e074a78cf8de496d0858884467",
+      "len": 21772
+    },
+    "buildTextMediaEntry": {
+      "present": true,
+      "hash": "5ebcfaa2ad1c9fbaf892f655f5f10c6d418f99a714efdf62dddc2cd75faae297",
+      "len": 2400
+    },
+    "nativeDrawTextCall": {
+      "present": true,
+      "hash": "6196a2961024fac81b8b80bc9c3391edb1428b599e70f5f920ef85a409f68632",
+      "len": 2400
+    },
+    "verifyNativeLayer10C": {
+      "present": true,
+      "hash": "f1ae4e5d5151f0615ee426352d1046942e413ea22efa83f5e1f2775d9b61f049",
+      "len": 2400
+    }
+  }
+}
