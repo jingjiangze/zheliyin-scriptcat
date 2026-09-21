@@ -1,0 +1,51 @@
+{
+  "ts": "2026-09-21T04:56:19.578Z",
+  "stage": "STAGE-10C-P4-HANDWRITTEN-TRUTH-PROBE",
+  "api": "/siteWeb/userCenterJsj/uploadOCR.do",
+  "textType": "2",
+  "runs": [
+    {
+      "run": 1,
+      "at": "2026-09-21T04:56:27.308Z",
+      "status": 200,
+      "elapsedMs": 483,
+      "parsedShape": {
+        "rawHead": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+      },
+      "ok": false,
+      "failReason": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+    },
+    {
+      "run": 2,
+      "at": "2026-09-21T04:56:30.347Z",
+      "status": 200,
+      "elapsedMs": 207,
+      "parsedShape": {
+        "rawHead": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+      },
+      "ok": false,
+      "failReason": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+    },
+    {
+      "run": 3,
+      "at": "2026-09-21T04:56:33.114Z",
+      "status": 200,
+      "elapsedMs": 199,
+      "parsedShape": {
+        "rawHead": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+      },
+      "ok": false,
+      "failReason": "<html>\n<script>\nwindow.open ('http://diy.zheliyin.com:443/siteWeb/jsj/index.do','_top')\n</script>\n</html>\n"
+    }
+  ],
+  "verdict": {
+    "gate": "GATE-10C-HANDWRITTEN-TRUTH",
+    "pass": false,
+    "okRuns": 0,
+    "totalRuns": 3,
+    "textType2Handwritten": true,
+    "notes": "handwritten endpoint not usable in current session"
+  },
+  "errors": [],
+  "pageUrl": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do"
+}
