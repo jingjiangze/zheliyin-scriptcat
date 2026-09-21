@@ -1,7 +1,7 @@
 {
-  "version": "0.3.11.49",
+  "version": "0.3.11.52",
   "entry": "zheliyin-card-assistant.user.js",
-  "requires": 28,
+  "requires": 30,
   "files": [
     "zheliyin-card-assistant.user.js",
     "extension/src/fields/field-core.js",
@@ -27,6 +27,8 @@
     "extension/src/editor/image-ink-target.js",
     "extension/src/editor/native-color.js",
     "extension/src/editor/font-target-source.js",
+    "extension/src/editor/text-run-model.js",
+    "extension/src/editor/text-run-segmentation.js",
     "extension/src/ocr/credential-crypto.js",
     "extension/src/ocr/ocr-quality.js",
     "extension/src/ocr/ocr-text-sanitizer.js",
@@ -38,169 +40,181 @@
       "id": "field-core",
       "branch": "demo",
       "rel": "extension/src/fields/field-core.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "config-core",
       "branch": "demo",
       "rel": "extension/src/core/config-core.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "ai-client",
       "branch": "demo",
       "rel": "extension/src/ai/ai-client.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "page-bridge",
       "branch": "test",
       "rel": "extension/src/editor/page-bridge.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "image-transform",
       "branch": "test",
       "rel": "extension/src/editor/image-transform.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "image-space",
       "branch": "test",
       "rel": "extension/src/editor/image-space.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "image-containment",
       "branch": "test",
       "rel": "extension/src/editor/image-containment.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "multiline-typography",
       "branch": "test",
       "rel": "extension/src/editor/multiline-typography.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "text-fit",
       "branch": "test",
       "rel": "extension/src/editor/text-fit.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "text-fit-fusion",
       "branch": "test",
       "rel": "extension/src/editor/text-fit-fusion.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "ink-measure",
       "branch": "test",
       "rel": "extension/src/editor/ink-measure.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "baidu-provider",
       "branch": "test",
       "rel": "extension/src/ocr/baidu-provider.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "native-ocr-provider",
       "branch": "test",
       "rel": "extension/src/ocr/native-ocr-provider.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "fallback-policy",
       "branch": "demo",
       "rel": "extension/src/ocr/fallback-policy.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "candidate-normalizer",
       "branch": "test",
       "rel": "extension/src/ocr/candidate-normalizer.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "ocr-candidate-gate",
       "branch": "test",
       "rel": "extension/src/ocr/ocr-candidate-gate.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "font-source",
       "branch": "test",
       "rel": "extension/src/ocr/font-source.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "text-truth-gate",
       "branch": "test",
       "rel": "extension/src/ocr/text-truth-gate.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "transaction-identity",
       "branch": "test",
       "rel": "extension/src/ocr/transaction-identity.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "recognition-mode",
       "branch": "test",
       "rel": "extension/src/ocr/recognition-mode.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "image-ink-target",
       "branch": "test",
       "rel": "extension/src/editor/image-ink-target.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "native-color",
       "branch": "test",
       "rel": "extension/src/editor/native-color.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "font-target-source",
       "branch": "test",
       "rel": "extension/src/editor/font-target-source.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
+    },
+    {
+      "id": "text-run-model",
+      "branch": "test",
+      "rel": "extension/src/editor/text-run-model.js",
+      "v": "0.3.11.52"
+    },
+    {
+      "id": "text-run-segmentation",
+      "branch": "test",
+      "rel": "extension/src/editor/text-run-segmentation.js",
+      "v": "0.3.11.52"
     },
     {
       "id": "credential-crypto",
       "branch": "demo",
       "rel": "extension/src/ocr/credential-crypto.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "ocr-quality",
       "branch": "test",
       "rel": "extension/src/ocr/ocr-quality.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "ocr-text-sanitizer",
       "branch": "test",
       "rel": "extension/src/ocr/ocr-text-sanitizer.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "ocr-size-analyzer",
       "branch": "test",
       "rel": "extension/src/ocr/ocr-size-analyzer.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     },
     {
       "id": "ocr-text-safety-gate",
       "branch": "test",
       "rel": "extension/src/ocr/ocr-text-safety-gate.js",
-      "v": "0.3.11.49"
+      "v": "0.3.11.52"
     }
   ]
 }
