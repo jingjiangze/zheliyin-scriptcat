@@ -108,6 +108,7 @@ function toNativeResult(o) {
     transactionId: oo.transactionId || null,
     imageFingerprint: oo.imageFingerprint || null,
     ok: true,
+    statusCode: (oo.lines || []).length ? "NATIVE_OK" : "NATIVE_EMPTY", // OCR-P0.2-C：成功但无文字 = NATIVE_EMPTY（≠ 图片未交付）
     texts: texts,
     meta: {
       requestUrl: oo.requestUrl || "/siteWeb/userCenterJsj/uploadOCR.do",
@@ -116,7 +117,8 @@ function toNativeResult(o) {
       requestId: oo.requestId || null,
       timestamp: oo.timestamp || new Date().toISOString(),
       elapsedMs: typeof oo.elapsedMs === "number" ? oo.elapsedMs : null,
-      textType: oo.textType || "1"
+      textType: oo.textType || "1",
+      statusCode: (oo.lines || []).length ? "NATIVE_OK" : "NATIVE_EMPTY"
     }
   };
 }
@@ -132,21 +134,33 @@ function recognize(image, ctx) {
   var t0 = Date.now();
   return Promise.resolve()
     .then(function () {
-      if (!f) return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, texts: [], error: { errorCode: "NO_FETCH", errorMessage: "当前环境无 fetch（node 单测应注入 ctx.fetch）" } };
+      if (!f) return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, statusCode: "NATIVE_UPLOAD_FAILED", texts: [], error: { errorCode: "NO_FETCH", errorMessage: "当前环境无 fetch（node 单测应注入 ctx.fetch）" } };
       var fp = null;
       try { fp = buildFormPayload(image, { textType: c.textType }); } catch (e) { fp = null; }
       if (!fp || !fp.ok) {
-        return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, texts: [], payload: (fp && fp.diagnostics) || null, error: { errorCode: (fp && fp.errorCode) || "IMAGE_INVALID", errorMessage: (fp && fp.message) || "图片数据无法构建上传表单（payload 完整性校验失败，拒绝发送）" } };
+        return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, statusCode: "NATIVE_IMAGE_INVALID", texts: [], payload: (fp && fp.diagnostics) || null, error: { errorCode: (fp && fp.errorCode) || "IMAGE_INVALID", errorMessage: (fp && fp.message) || "图片数据无法构建上传表单（payload 完整性校验失败，拒绝发送）" } };
       }
       var fd = fp.formData;
       var reqId = c.transactionId || ("nat-" + Date.now().toString(36));
       return f(baseApi, { method: "POST", body: fd }).then(function (res) {
-        if (!res || typeof res.status !== "number") return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, texts: [], error: { errorCode: "BAD_RESPONSE", errorMessage: "非标准 fetch 响应" } };
+        if (!res || typeof res.status !== "number") return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, statusCode: "NATIVE_HTTP_FAILED", texts: [], error: { errorCode: "BAD_RESPONSE", errorMessage: "非标准 fetch 响应" } };
         return res.text().then(function (body) {
           var parsed = null;
           try { parsed = JSON.parse(body); } catch (e) { parsed = null; }
+          // OCR-P0.2-C 细分：HTTP 非 2xx 一律 NATIVE_HTTP_FAILED
+          if (typeof res.status === "number" && res.status >= 400) {
+            return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, statusCode: "NATIVE_HTTP_FAILED", texts: [], httpStatus: res.status, error: { errorCode: "HTTP_" + res.status, errorMessage: "上传接口返回 HTTP " + res.status, rawHead: String(body).slice(0, 200) } };
+          }
           if (!parsed || parsed.success !== true) {
-            return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, texts: [], httpStatus: res.status, error: { errorCode: parsed && parsed.success === false ? "OCR_FAILED" : "PARSE_FAIL", errorMessage: (parsed && (parsed.message || parsed.errorMessage)) || "接口未返回 success=true", rawHead: String(body).slice(0, 200) } };
+            // OCR-P0.2（BLOCKER 复现）：持久 profile 会话过期 → uploadOCR.do 返回登录跳转 HTML
+            // （含 window.open('http://diy.zheliyin.com:443/siteWeb/jsj/index.do')），JSON 解析必失败，
+            // 必须与「普通解析失败」区分：NATIVE_SESSION_EXPIRED ≠ NATIVE_PARSE_FAILED。
+            var bn = String(body || "").toLowerCase();
+            var isLoginPage = bn.indexOf("window.open") >= 0 || bn.indexOf("jsj/index.do") >= 0 || bn.indexOf("login") >= 0 || bn.indexOf("<html") >= 0;
+            if (isLoginPage) {
+              return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, statusCode: "NATIVE_SESSION_EXPIRED", texts: [], httpStatus: res.status, error: { errorCode: "SESSION_EXPIRED", errorMessage: "登录会话已过期，uploadOCR.do 返回登录页（需重新注入 ZY_STAGE9_COOKIE 或重建会话）", rawHead: String(body).slice(0, 200) } };
+            }
+            return { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, statusCode: parsed && parsed.success === false ? "NATIVE_PARSE_FAILED" : "NATIVE_PARSE_FAILED", texts: [], httpStatus: res.status, error: { errorCode: parsed && parsed.success === false ? "OCR_FAILED" : "PARSE_FAIL", errorMessage: (parsed && (parsed.message || parsed.errorMessage)) || "接口未返回 success=true", rawHead: String(body).slice(0, 200) } };
           }
           var lines = parseNativeText(parsed.userData);
           return toNativeResult({
@@ -159,28 +173,48 @@ function recognize(image, ctx) {
     });
 }
 
-// ---- recognizeWithFallback(image, ctx)：手写体优先，错误明显回退印刷体（用户实测手写体正确率更高）----
-// ctx.textType 主模式默认 "2"（手写体）；空结果/接口失败视为"错误明显"→ 自动回退 ctx.fallbackTo="1"（印刷体）重试一次。
-// 不评分、不猜内容；仅以"结果为空或接口失败"为回退触发（保守）。
-// 返回 same NativeOCRResult 结构 + meta.fallbackUsed/meta.modeUsed。
+// ---- recognizeWithFallback(image, ctx)：OCR-P0.2-B —— Production Truth = textType=2 only ----
+// 用户硬规则：OCRTool.do textType=2（手写体）是唯一生产文字真值。
+// 生产链禁止：textType=2 失败 → textType=1 → 把 type=1 当最终 truth。
+// 本函数：主调用 textType=2 作为唯一生产结果返回；若 type=2 空/失败，仅额外执行
+//   textType=1 作为 diagnostic evidence（meta.diagnosticType1），绝不把 type=1 的
+//   texts 注入返回结构 —— 最终 textbox.text 永远来自 textType=2。
+function classifyNativeStatus(r) {
+  if (r && r.ok && (r.texts || []).length) return "NATIVE_OK";
+  if (r && r.ok) return "NATIVE_EMPTY";               // 请求成功、成功结构、无文字
+  if (r && r.statusCode) return r.statusCode;           // 已细分（IMAGE/UPLOAD/HTTP/SESSION/PARSE）
+  if (!r) return "NATIVE_HTTP_FAILED";
+  return "NATIVE_PARSE_FAILED";
+}
 function recognizeWithFallback(image, ctx) {
   var c = ctx || {};
-  var primary = c.textType != null ? c.textType : "2"; // 手写体优先（用户实测 2026-09-20）
-  var fallback = c.fallbackTo != null ? c.fallbackTo : "1";
+  var primary = c.textType != null ? c.textType : "2"; // 生产真值模式（默认手写体 textType=2）
   return recognize(image, Object.assign({}, c, { textType: primary })).then(function (r1) {
+    r1.meta = Object.assign({}, r1.meta || {}, {
+      modeUsed: primary,
+      fallbackUsed: false,
+      productionTextType: "2",
+      statusCode: classifyNativeStatus(r1),
+      diagnosticType1: null
+    });
     var emptyOrFail = !(r1 && r1.ok) || !((r1.texts || []).length);
-    if (!emptyOrFail) {
-      r1.meta = Object.assign({}, r1.meta, { modeUsed: primary, fallbackUsed: false });
-      return r1;
-    }
-    return recognize(image, Object.assign({}, c, { textType: fallback })).then(function (r2) {
-      if (r2) r2.meta = Object.assign({}, r2.meta || {}, { modeUsed: fallback, fallbackUsed: true, primaryMode: primary, primaryEmptyOrFail: emptyOrFail });
-      else r2 = { provider: "NATIVE_OCR", source: "OCR_TOOL_API", ok: false, texts: [], error: { errorCode: "FALLBACK_FAIL", errorMessage: "主/回退模式均失败" } };
-      return r2;
+    if (!emptyOrFail) return r1;
+    // type=2 空/失败 → 执行 textType=1 仅作诊断（不进入生产 texts；不覆盖 r1）
+    return recognize(image, Object.assign({}, c, { textType: "1" })).then(function (r2) {
+      var diag = r2 ? {
+        textType: "1", ok: !!(r2 && r2.ok), lines: ((r2 && r2.texts) || []).length,
+        statusCode: classifyNativeStatus(r2),
+        errorCode: (r2 && r2.error && r2.error.errorCode) || null
+      } : { textType: "1", ok: false, lines: 0, statusCode: "NATIVE_HTTP_FAILED", errorCode: "FALLBACK_DIAG_FAIL" };
+      r1.meta = Object.assign({}, r1.meta || {}, {
+        fallbackUsed: true,
+        primaryEmptyOrFail: emptyOrFail,
+        diagnosticType1: diag
+      });
+      return r1; // 生产结果不变：textType=2 的原始结果（空/失败也原样）
     });
   });
 }
-
 if (typeof module !== "undefined" && module.exports) module.exports = {
-  recognize, recognizeWithFallback, buildFormData, buildFormPayload, parseNativeText, toNativeResult, ocrLineId
+  recognize, recognizeWithFallback, classifyNativeStatus, buildFormData, buildFormPayload, parseNativeText, toNativeResult, ocrLineId
 };
