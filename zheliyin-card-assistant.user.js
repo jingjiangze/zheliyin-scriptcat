@@ -979,8 +979,31 @@
         ocrLog("TRUTH", "native unavailable " + String((native && native.error && native.error.errorCode) || "?"));
         return { blocks: blocks || [], mode: "OFF", skipped: true, reason: "unavailable" };
       }
-      const geoBlocks = (blocks || []).map(function (b) {
-        return { text: b.text != null ? String(b.text) : null, bbox: b.bbox || null, words: (b.wordBoxes || b.words) ? (b.wordBoxes || b.words) : null, sourceProvider: b.sourceProvider || "BAIDU", _raw: b };
+      // OCR-P0.3-F（行级摊平）：aligner 按 Native 行配对行级几何；buildTextBlocks 合并块（多行）会
+      // 让几何槽位 < nativeLines（如 6 块 vs 10 行）→ 误配 INCOMPLETE。此处优先摊平 block.lines，
+      // 每行发布一个候选（仅几何 + 行文本匹配因子，不写 text truth）；无 lines 时回退整块。
+      const geoBlocks = [];
+      (blocks || []).forEach(function (b) {
+        if (!b || !b.bbox) return;
+        const lines = (Array.isArray(b.lines) && b.lines.length) ? b.lines : null;
+        if (lines) {
+          lines.forEach(function (ln, li) {
+            if (!ln || !ln.bbox) return;
+            geoBlocks.push({
+              text: ln.text != null ? String(ln.text) : null,
+              bbox: ln.bbox,
+              words: (ln.wordBoxes || ln.words) ? (ln.wordBoxes || ln.words) : null,
+              sourceProvider: b.sourceProvider || "BAIDU",
+              kind: "line",
+              lineIndex: li,
+              blockIndex: b.blockIndex != null ? b.blockIndex : null,
+              _raw: ln,
+              _block: b
+            });
+          });
+        } else {
+          geoBlocks.push({ text: b.text != null ? String(b.text) : null, bbox: b.bbox || null, words: (b.wordBoxes || b.words) ? (b.wordBoxes || b.words) : null, sourceProvider: b.sourceProvider || "BAIDU", kind: "line", _raw: b, _block: b });
+        }
       });
       const matched = alignNativeGeometry(native.texts || [], geoBlocks, {});
       // 构造 kept block（text 恒 = native.rawText；geometry 取自匹配候选 —— P0.3-C Provider 不提供最终 text）
