@@ -1,0 +1,12 @@
+{
+  "nativeTruth": true,
+  "partialCreate": true,
+  "nativeAnchor": true,
+  "geometrySpace": true,
+  "rotation": true,
+  "imageInk": true,
+  "frontBackIsolation": true,
+  "noTextSourceBypass": true,
+  "noRegression": true,
+  "realDevice": true
+}

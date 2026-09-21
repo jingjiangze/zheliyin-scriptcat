@@ -1,0 +1,206 @@
+{
+  "case": "A2",
+  "steps": [
+    {
+      "step": "editor-ready",
+      "ok": true,
+      "bridge": true
+    },
+    {
+      "step": "bg-inject",
+      "ok": true
+    },
+    {
+      "step": "preset-anchor",
+      "ok": true,
+      "uuid": "anchor-夏祝莲"
+    },
+    {
+      "step": "ocr-prepare",
+      "ok": true
+    },
+    {
+      "step": "baidu-external",
+      "ok": true,
+      "candidates": 17
+    },
+    {
+      "step": "click-ocr",
+      "clicked": true
+    },
+    {
+      "step": "ocr-done",
+      "done": true,
+      "status": "已校准 1 个文字，新建 14 个（未重复创建）"
+    },
+    {
+      "step": "rollback",
+      "ok": true
+    }
+  ],
+  "fields": {
+    "nativeLines": 15,
+    "initialMatched": 14,
+    "initialUnmatched": 1,
+    "finalMatched": 15,
+    "finalUnmatched": 0,
+    "sourcePriority": "NATIVE_ANCHOR",
+    "geometryRecoverySource": [
+      "NATIVE_ANCHOR"
+    ],
+    "createdCount": 15,
+    "missingTexts": [],
+    "createCalled": true,
+    "nativeLayerCount": null,
+    "anchorUsed": true,
+    "anchorIdentityReused": true
+  },
+  "acceptance": [
+    {
+      "name": "consistency",
+      "ok": true,
+      "detail": "sum===nativeLines"
+    },
+    {
+      "name": "created-equal-finalMatched",
+      "ok": true,
+      "detail": "created==finalMatched"
+    },
+    {
+      "name": "missing-reported",
+      "ok": true,
+      "detail": "missing length"
+    },
+    {
+      "name": "anchor-used",
+      "ok": true,
+      "detail": "NATIVE_ANCHOR 在 recovery 链命中"
+    },
+    {
+      "name": "anchor-identity-reused",
+      "ok": true,
+      "detail": "预置 uuid（anchor-夏祝莲）保留且无第二个同名对象"
+    }
+  ],
+  "errors": [],
+  "gate": {
+    "totalNative": 15,
+    "initialMatched": 14,
+    "initialUnmatched": 1,
+    "finalMatched": 15,
+    "finalUnmatched": 0,
+    "missingTexts": [],
+    "geometryRecovered": 1,
+    "geometryRecoverySource": [
+      "NATIVE_ANCHOR"
+    ],
+    "localSidecar": null
+  },
+  "ev": {
+    "stage": "BUILD",
+    "ocrStart": "2026-09-21T13:46:04.591Z",
+    "kind": "background-image",
+    "natural": "947x576",
+    "sourceImage": "img-ef6650d8-1228270",
+    "updated": 1789998365595,
+    "nativeLines": 15,
+    "ok": true,
+    "code": null,
+    "httpStatus": null,
+    "statusCode": "NATIVE_OK",
+    "raw": 16,
+    "mode": "standard",
+    "qaKept": 16,
+    "unified": 16,
+    "gateKept": 16,
+    "reason": null,
+    "fail": null,
+    "blocks": 15,
+    "nativeMode": "2",
+    "nativeFallback": false,
+    "kept": 15,
+    "nativeBlocks": 16,
+    "unmatchedNative": 0,
+    "unusedGeometry": 2,
+    "oneToMany": 0,
+    "manyToOne": 0,
+    "items": 15
+  },
+  "created": [
+    {
+      "id": "anchor-夏祝莲",
+      "text": "夏祝莲",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "Xia Zhu Lian",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "手机:",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "13719111188",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "Mobile",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "微信:",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "2287483098",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "Wechat",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "广州爱卡奇硅胶制品有限公司",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "Guangzhou Aikaqi silicone Manufa",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "Kaqi",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "Add:2B059, Area B, Wanling Toy B",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "East Yide Rd, Guangzhou, China",
+      "angle": 0
+    },
+    {
+      "id": null,
+      "text": "Tel:+86-020-81060778E-mail:aikaq",
+      "angle": 0
+    }
+  ]
+}

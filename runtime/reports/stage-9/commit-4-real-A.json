@@ -1,0 +1,194 @@
+{
+  "case": "A",
+  "steps": [
+    {
+      "step": "editor-ready",
+      "ok": true,
+      "bridge": true
+    },
+    {
+      "step": "bg-inject",
+      "ok": true
+    },
+    {
+      "step": "ocr-prepare",
+      "ok": true
+    },
+    {
+      "step": "baidu-external",
+      "ok": true,
+      "candidates": 17
+    },
+    {
+      "step": "click-ocr",
+      "clicked": true
+    },
+    {
+      "step": "ocr-done",
+      "done": true,
+      "status": "几何校验完成：通过 0 个，保留 15 个（STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISM"
+    },
+    {
+      "step": "rollback",
+      "ok": true
+    }
+  ],
+  "fields": {
+    "nativeLines": 15,
+    "initialMatched": 15,
+    "initialUnmatched": 0,
+    "finalMatched": 15,
+    "finalUnmatched": 0,
+    "sourcePriority": "none",
+    "geometryRecoverySource": [],
+    "createdCount": 15,
+    "missingTexts": [],
+    "createCalled": true,
+    "nativeLayerCount": 15,
+    "anchorUsed": false,
+    "anchorIdentityReused": null
+  },
+  "acceptance": [
+    {
+      "name": "consistency",
+      "ok": true,
+      "detail": "sum===nativeLines"
+    },
+    {
+      "name": "created-equal-finalMatched",
+      "ok": true,
+      "detail": "created==finalMatched"
+    },
+    {
+      "name": "missing-reported",
+      "ok": true,
+      "detail": "missing length"
+    },
+    {
+      "name": "no-recovery-when-complete",
+      "ok": true,
+      "detail": "全匹配时不触发 recovery"
+    }
+  ],
+  "errors": [],
+  "gate": {
+    "totalNative": 15,
+    "initialMatched": 15,
+    "initialUnmatched": 0,
+    "finalMatched": 15,
+    "finalUnmatched": 0,
+    "missingTexts": [],
+    "geometryRecovered": 0,
+    "geometryRecoverySource": [],
+    "localSidecar": null
+  },
+  "ev": {
+    "stage": "CREATE",
+    "ocrStart": "2026-09-21T13:45:57.343Z",
+    "kind": "background-image",
+    "natural": "947x576",
+    "sourceImage": "img-ef6650d8-1228270",
+    "updated": 1789998358707,
+    "nativeLines": 15,
+    "ok": true,
+    "code": null,
+    "httpStatus": null,
+    "statusCode": "NATIVE_OK",
+    "raw": 17,
+    "mode": "standard",
+    "qaKept": 17,
+    "unified": 17,
+    "gateKept": 17,
+    "reason": null,
+    "fail": null,
+    "blocks": 15,
+    "nativeMode": "2",
+    "nativeFallback": false,
+    "kept": 15,
+    "nativeBlocks": 17,
+    "unmatchedNative": 0,
+    "unusedGeometry": 2,
+    "oneToMany": 0,
+    "manyToOne": 0,
+    "items": 15,
+    "requested": 15,
+    "created": 15
+  },
+  "created": [
+    {
+      "id": "ab236709-2f51-454d-8008-2ef1355e7033",
+      "text": "夏祝莲",
+      "angle": 0
+    },
+    {
+      "id": "44a04ba3-e7c9-4c6b-806e-11440cb915fc",
+      "text": "手机:",
+      "angle": 0
+    },
+    {
+      "id": "4b25cbf3-4669-4f2b-b237-7b7141f6b81f",
+      "text": "13719111188",
+      "angle": 0
+    },
+    {
+      "id": "603b012e-953b-40cd-95d0-feb8f9d60a47",
+      "text": "Mobile",
+      "angle": 0
+    },
+    {
+      "id": "03b961a4-f581-4e8f-922c-9e324bc94e5d",
+      "text": "微信:",
+      "angle": 0
+    },
+    {
+      "id": "60790bb8-f291-4653-bf6a-87d691bd3ce0",
+      "text": "2287483098",
+      "angle": 0
+    },
+    {
+      "id": "ee32cfee-8257-4f6b-a7b2-6f7a47f8cd3b",
+      "text": "Wechat",
+      "angle": 0
+    },
+    {
+      "id": "7e11ade5-9a1a-4b88-bccf-3429ca504fc2",
+      "text": "Kaqi",
+      "angle": 0
+    },
+    {
+      "id": "38cf416f-609e-491c-b4fa-d55bde9f9ec8",
+      "text": "Guangzhou Aikaqi silicone Manufa",
+      "angle": 0
+    },
+    {
+      "id": "0295b1ae-2fe7-4de5-91bb-58e1d7c3b934",
+      "text": "Add:2B059, Area B, Wanling Toy B",
+      "angle": 0
+    },
+    {
+      "id": "cf812267-96b0-4205-9cd5-2518a3486eeb",
+      "text": "East Yide Rd, Guangzhou, China",
+      "angle": 0
+    },
+    {
+      "id": "0754d160-e0a5-4037-a17b-f36788b44734",
+      "text": "Tel:+86-020-81060778E-mail:aikaq",
+      "angle": 0
+    },
+    {
+      "id": "164acc27-ed57-4370-9541-7e7c474dc045",
+      "text": "Xia Zhu Lian",
+      "angle": 0
+    },
+    {
+      "id": "0426813c-48aa-445e-8917-2afaede0d612",
+      "text": "广州爱卡奇硅胶制品有限公司",
+      "angle": 0
+    },
+    {
+      "id": "14121cd2-e369-497d-a884-060951e262bb",
+      "text": "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
+      "angle": 0
+    }
+  ]
+}

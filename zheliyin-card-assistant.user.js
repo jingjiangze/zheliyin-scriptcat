@@ -1057,6 +1057,67 @@
       // 恢复 geometry（BAIDU LINE → BAIDU WORD；LOCAL/ANCHOR/INK 为后续 Commit）。
       // 恢复产物并入 matchedNative（text 恒为 native.rawText），再交由 Completeness Gate。
       // 硬规则：禁止固定间距/offset/居中/随机/multiplier 猜测；不可恢复 → 仍 INCOMPLETE/UNRESOLVED。
+      // OCR-P1 Commit 4.4：Native Anchor 候选（只读 getTextInventory，page-bridge 零改动）。
+      //   Anchor = 当前编辑页画布已有 textbox；identity=原生 uuid；几何 = canvas→源图逆投影
+      //   （buildImageTransform 仿射 + mapCanvasPointToImage），供 recovery 阶段 0 NATIVE_ANCHOR
+      //   与阶段 4 IMAGE_INK（region→ink，仅几何不产 text）使用。
+      let anchorCandidates = null;
+      let inkResolver39 = null;
+      try {
+        const geo4 = ocrTarget && ocrTarget.geo;
+        const tG4 = (geo4 && geo4.aCoords && geo4.naturalWidth > 0 && geo4.naturalHeight > 0 && typeof buildImageTransform === "function" && typeof mapCanvasPointToImage === "function")
+          ? buildImageTransform({ naturalWidth: geo4.naturalWidth, naturalHeight: geo4.naturalHeight, width: geo4.width, height: geo4.height, aCoords: geo4.aCoords }) : null;
+        if (tG4) {
+          const inv4 = await bridgeCall("getTextInventory", 2500);
+          if (inv4 && inv4.ok && Array.isArray(inv4.items) && inv4.items.length) {
+            anchorCandidates = inv4.items.map(function (it) {
+              if (!it || !it.text || !it.center) return null;
+              const crect = { x: (it.left != null ? it.left : 0), y: (it.top != null ? it.top : 0), width: (it.width || 0), height: (it.height || 0) };
+              const cq = [{ x: crect.x, y: crect.y }, { x: crect.x + crect.width, y: crect.y }, { x: crect.x + crect.width, y: crect.y + crect.height }, { x: crect.x, y: crect.y + crect.height }];
+              const iq = cq.map(function (pt) { try { return mapCanvasPointToImage(pt, tG4); } catch (e) { return null; } }).filter(Boolean);
+              let imgRect = null;
+              if (iq.length === 4) { var xs = iq.map(function (q) { return q.x; }), ys = iq.map(function (q) { return q.y; }); imgRect = { x: Math.min.apply(null, xs), y: Math.min.apply(null, ys), width: Math.max.apply(null, xs) - Math.min.apply(null, xs), height: Math.max.apply(null, ys) - Math.min.apply(null, ys) }; }
+              return {
+                text: String(it.text), normalizedText: null,
+                center: it.center || null, yIndex: null,
+                width: (it.width != null ? it.width : null), height: (it.height != null ? it.height : null),
+                angle: (it.angle != null ? it.angle : null),
+                identity: { uuid: it.objectUuid || null },
+                geometry: imgRect ? { bbox: imgRect } : null,
+                imageRegion: imgRect
+              };
+            }).filter(Boolean).filter(function (a) { return a.geometry; });
+            if (!anchorCandidates.length) anchorCandidates = null;
+          }
+        }
+      } catch (eA) { anchorCandidates = null; ocrLog("TRUTH", "anchor-collect exception " + String(eA && eA.message || eA).slice(0, 120)); }
+      // ImageInk resolver（同步闭包）：deocded gray + anchor imageRegion → resolveInkGeometry；
+      //   无区域 / 无 gray → 明确 NO_ANCHOR_REGION（不猜位置）。
+      try {
+        if (anchorCandidates && img && img.dataUrl) {
+          const gray4 = await new Promise(function (resolve) {
+            const im4 = new Image();
+            im4.onload = function () { try { var cv4 = document.createElement("canvas"); cv4.width = im4.naturalWidth; cv4.height = im4.naturalHeight; var g4 = cv4.getContext("2d", { willReadFrequently: true }); g4.drawImage(im4, 0, 0); var d4 = g4.getImageData(0, 0, cv4.width, cv4.height); var out = new Uint8Array(cv4.width * cv4.height); for (var k = 0; k < out.length; k += 1) { var j4 = k * 4; out[k] = Math.round(0.299 * d4.data[j4] + 0.587 * d4.data[j4 + 1] + 0.114 * d4.data[j4 + 2]); } resolve({ gray: out, width: cv4.width, height: cv4.height }); } catch (e) { resolve(null); } };
+            im4.onerror = function () { resolve(null); };
+            im4.src = img.dataUrl;
+          });
+          if (gray4) {
+            inkResolver39 = function (n) {
+              if (typeof resolveInkGeometry !== "function") return { ok: false, reason: "NO_RESOLVER" };
+              var keyText = (n && n.rawText != null) ? String(n.rawText) : "";
+              var acSel = null;
+              if (anchorCandidates) {
+                var kn = function (s) { return String(s || "").toLowerCase().replace(/[\s\u3000\u00a0]+/g, "").replace(/[·•．。，，、；“”‘’（）【】［］：：-]/g, ""); };
+                var nk5 = kn(keyText);
+                if (nk5) acSel = anchorCandidates.find(function (a) { return a.text && kn(a.text) === nk5; }) || null;
+              }
+              if (!acSel || !acSel.imageRegion) return { ok: false, reason: "NO_ANCHOR_REGION" };
+              return resolveInkGeometry({ native: n, region: acSel.imageRegion, gray: gray4.gray, imageWidth: gray4.width, imageHeight: gray4.height });
+            };
+          }
+        }
+      } catch (eInk) { inkResolver39 = null; }
+
       let recovery = null;
       if ((matched.unmatchedNative || []).length > 0 && typeof recoverNativeGeometry === "function") {
         const imgNW = (img && (img.naturalWidth || img.width)) || null;
@@ -1064,6 +1125,8 @@
         recovery = recoverNativeGeometry(matched.unmatchedNative, {
           lineCandidates: matched.unusedGeometry || [],      // 剩余 line 级候选（含 wordBoxes 展开）
           occupiedGeometries: matched.matchedGeometry || [], // 已被 aligner 消费的几何
+          anchorCandidates: anchorCandidates || [],       // Commit 4.4：NATIVE_ANCHOR（首选；canvas→源图逆投影几何）
+          inkResolver: inkResolver39 || null,              // Commit 4.4：IMAGE_INK（末位；无区域不猜）
           imageBounds: (imgNW && imgNH) ? { x: 0, y: 0, width: imgNW, height: imgNH } : null,
           thresholds: { rowTol: 8 }
         });
