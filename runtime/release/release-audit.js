@@ -14,11 +14,12 @@ const path = require("path");
 const crypto = require("crypto");
 const { execSync } = require("child_process");
 const ROOT = path.join(__dirname, "..", "..");
-const USERSCRIPT = path.join(ROOT, "zheliyin-card-assistant.user.js");
+let USERSCRIPT = path.join(ROOT, "zheliyin-card-assistant.user.js");
 const MANIFEST = path.join(ROOT, "release", "production-manifest.json");
 const ARGV = process.argv.slice(2);
 const MODE_GEN = ARGV.indexOf("--gen") >= 0;
 const BRANCH_DEMO = ARGV.indexOf("--branch") >= 0;
+{ const i = ARGV.indexOf("--entry"); if (i >= 0 && ARGV[i + 1]) USERSCRIPT = path.resolve(ARGV[i + 1]); }
 let REF = null;
 { const i = ARGV.indexOf("--ref"); if (i >= 0) REF = ARGV[i + 1] || null; }
 
