@@ -835,10 +835,41 @@
     ocrLog("FALLBACK", "cloud " + canonical + " (" + (failReason || "unknown") + ") → local");
     runLocalOcr(img, { engine: "local", attempt: "local-fallback", fallback: true, reason: null });
   }
-  async function runBaiduOcr(img, diag) {
+  // ---- OCR-P0.2 / P0.2-A：Native Truth 与 Baidu Geometry 解耦（并列主链）----
+  // 旧控制关系（废弃）：Baidu → quality → candidate gate → Native OCR
+  // 新控制关系：Image Prepare → Native OCR(textType=2, Text Truth) ∥ Baidu OCR(Geometry Evidence)
+  // 硬规则（§3/§5/§22）：即使 Baidu=0 / Baidu Quality FAIL / Candidate Gate FAIL / Baidu exception，
+  //   Native OCR 仍然独立执行（runNativeTruth）。Baidu 只提供 position/bbox/rotation，
+  //   禁止把 Baidu text 当最终文字。
+  async function runNativeTruth(img, diag) {
+    try {
+      if (!STAGE9_NATIVE_TRUTH || typeof recognizeWithFallback !== "function") {
+        ocrLog("TRUTH", "native feature off");
+        return { executed: true, statusCode: "FEATURE_OFF", native: null };
+      }
+      const native = await recognizeWithFallback(img.dataUrl, {
+        textType: STAGE9_NATIVE_OCR_MODE, // 手写体优先；生产真值收敛见 OCR-P0.2-B（commit 3）
+        pageId: (img && img.pageId) || null,
+        transactionId: (img && img.transactionId) || null,
+        imageFingerprint: (img && img.imageFingerprint) || null
+      });
+      img._native = native;
+      const ok = !!(native && native.ok);
+      pipelineEvidence({ stage: "NATIVE", nativeLines: (native && native.texts) ? native.texts.length : 0, ok: ok, code: (native && native.error && native.error.errorCode) || null, httpStatus: (native && native.httpStatus != null) ? native.httpStatus : null });
+      ocrLog("TRUTH", "runNativeTruth ok=" + ok + " lines=" + (((native && native.texts) || []).length) + " err=" + String((native && native.error && native.error.errorCode) || "none"));
+      return { executed: true, statusCode: ok ? "NATIVE_OK" : ((native && native.error && native.error.errorCode) || "NATIVE_FAIL"), native: native };
+    } catch (e) {
+      ocrLog("TRUTH", "runNativeTruth exception " + String(e && (e.message || e) || "").slice(0, 160));
+      return { executed: true, statusCode: "NATIVE_EXCEPTION", native: null };
+    }
+  }
+
+  // Geometry Recognition：Baidu → quality gate → candidate gate → blocks（仅 Geometry Evidence）
+  // 失败返回 false；不 throw。Native 已在 runBaiduOcr 编排层独立执行，Baidu 失败不阻断它（§P0.2）。
+  async function runGeometryRecognition(img, diag) {
     // diag = {engine:"cloud", attempt:"cloud-primary"|"manual-baidu", fallback:false}
     const provider = makeBaiduProvider();
-    if (!provider) { maybeLocalFallback(img, "CLOUD_MODULE_LOAD_FAILED", "exception", (diag && diag.attempt) || "cloud-primary"); return; }
+    if (!provider) { maybeLocalFallback(img, "CLOUD_MODULE_LOAD_FAILED", "exception", (diag && diag.attempt) || "cloud-primary"); return false; }
     setStatus("百度云端识别中…");
     let res = null;
     try {
@@ -888,8 +919,16 @@
     if (!gate8d.ok) { ocrRunning = false; setStatus("OCR 候选质量门阻断（" + String(gate8d.reason || "invalid-result") + "），未生成文字"); ocrLog("GATE8D", "block-set suspect: " + (gate8d.setSuspectReasons || []).join("|")); return; }
     const blocks = (typeof buildTextBlocks === "function") ? buildTextBlocks(gate8d.validated) : (gate8d.validated || []).map(oneLineBlock);
     pipelineEvidence({ stage: "BLOCKS", blocks: blocks.length });
-    const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（feature gate）
+    const tb = await maybeApplyNativeTruth(blocks, img, diag); // Stage 9 V3：Native Text Truth（复用 runNativeTruth 结果，不重复调用）
     await buildItemsFromOcr(tb.blocks, img, diag);
+    return true;
+  }
+
+  // OCR-P0.2-A 编排器：二者并列。Baidu 失败不阻断 Native（Native 已独立执行并保存结果/证据）。
+  async function runBaiduOcr(img, diag) {
+    const nt = await runNativeTruth(img, diag); // Native 第一主链，任何 Baidu 状态都执行
+    pipelineEvidence({ stage: "NATIVE_EXEC", statusCode: nt.statusCode, nativeLines: (nt.native && nt.native.texts) ? nt.native.texts.length : 0 });
+    await runGeometryRecognition(img, diag);
   }
 
   // ---- Stage 9 V3：Native OCR = 绝对文字真值（§一/§九十 feature gate zyStage9NativeTruth）----
@@ -904,16 +943,21 @@
   // Stage 9 P4-B §七/§二十一：ImageInk typography target 实验开关（默认 OFF = 保持 OCR bbox target）
   const STAGE9_FONT_INK_TARGET = GM_getValue("zyStage9FontInkTarget", "0") === "1";
   async function maybeApplyNativeTruth(blocks, img, diag) {
-    if (!STAGE9_NATIVE_TRUTH || typeof recognizeWithFallback !== "function" || typeof applyNativeTextTruth !== "function") {
+    if (!STAGE9_NATIVE_TRUTH || typeof applyNativeTextTruth !== "function") {
       return { blocks: blocks || [], mode: "OFF", skipped: true };
     }
     try {
-      const native = await recognizeWithFallback(img.dataUrl, {
-        textType: STAGE9_NATIVE_OCR_MODE, // 手写体优先；空/失败自动回退印刷体
-        pageId: (img && img.pageId) || null,
-        transactionId: (img && img.transactionId) || null,
-        imageFingerprint: (img && img.imageFingerprint) || null
-      });
+      // OCR-P0.2：复用 runNativeTruth 已执行的第一主链结果；仅在直接进入（manual-local 等）时补执行
+      let native = (img && img._native) || null;
+      if (!native) {
+        if (typeof recognizeWithFallback !== "function") return { blocks: blocks || [], mode: "OFF", skipped: true };
+        try { native = await recognizeWithFallback(img.dataUrl, {
+          textType: STAGE9_NATIVE_OCR_MODE, // 手写体优先；空/失败自动回退印刷体
+          pageId: (img && img.pageId) || null,
+          transactionId: (img && img.transactionId) || null,
+          imageFingerprint: (img && img.imageFingerprint) || null
+        }); img._native = native; } catch (eN) { native = null; }
+      }
       if (!(native && native.ok)) {
         ocrLog("TRUTH", "native unavailable " + String((native && native.error && native.error.errorCode) || "?"));
         return { blocks: blocks || [], mode: "OFF", skipped: true, reason: "unavailable" };
