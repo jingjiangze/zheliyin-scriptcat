@@ -27,9 +27,10 @@ const ROOT = path.join(__dirname, "..", "..");
 const SC_DIR = path.join(ROOT, "runtime", "vendor", "scriptcat");
 const PROFILE = process.env.P0_PROFILE || path.join(ROOT, "runtime", "browser", "profile-usc3");
 const EXT_ID = "ndcooeababalnlpkfedmmbbbgkljhpjf";
-const USERSCRIPT_PATH = path.join(ROOT, "zheliyin-card-assistant.user.js");
+const USERSCRIPT_PATH = process.env.ZY_USERSCRIPT_PATH || path.join(ROOT, "zheliyin-card-assistant.user.js");
+const MODULE_ROOT = process.env.ZY_MODULE_ROOT || path.join(ROOT, "extension", "src");
 const REPORT_DIR = path.join(ROOT, "runtime", "reports", "stage-9");
-const REPORT_FILE = path.join(REPORT_DIR, "stage-9-9-full-pipeline.json");
+const REPORT_FILE = process.env.ZY_REPORT_FILE || path.join(REPORT_DIR, "stage-9-9-full-pipeline.json");
 const adapter = require("../scriptcat-adapter");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL_A = process.env.ZY_URL_A || "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do";
@@ -107,7 +108,7 @@ function pageWorldPayloadFor(cond) {
     const mm = /\/extension\/src\/(.+)$/.exec(u);
     if (!mm) continue;
     const rel = mm[1].split("?")[0];
-    const fp = path.join(ROOT, "extension", "src", rel);
+    const fp = path.join(MODULE_ROOT, rel);
     if (fs.existsSync(fp)) parts.push("// ==== @require " + rel + " ====\n" + fs.readFileSync(fp, "utf8"));
   }
   parts.push(norm);
@@ -127,11 +128,11 @@ async function baiduRecognizeExternal(dataUrl, mode) {
 
 // ================= 页面世界纯模块（Part A mega 审计） =================
 const MEGA_MODULES = [
-  fs.readFileSync(path.join(ROOT, "extension", "src", "editor", "image-space.js"), "utf8"),
-  fs.readFileSync(path.join(ROOT, "extension", "src", "editor", "image-containment.js"), "utf8"),
-  fs.readFileSync(path.join(ROOT, "extension", "src", "editor", "multiline-typography.js"), "utf8"),
-  fs.readFileSync(path.join(ROOT, "extension", "src", "editor", "ink-measure.js"), "utf8"),
-  fs.readFileSync(path.join(ROOT, "extension", "src", "editor", "text-fit.js"), "utf8")
+  fs.readFileSync(path.join(MODULE_ROOT, "editor", "image-space.js"), "utf8"),
+  fs.readFileSync(path.join(MODULE_ROOT, "editor", "image-containment.js"), "utf8"),
+  fs.readFileSync(path.join(MODULE_ROOT, "editor", "multiline-typography.js"), "utf8"),
+  fs.readFileSync(path.join(MODULE_ROOT, "editor", "ink-measure.js"), "utf8"),
+  fs.readFileSync(path.join(MODULE_ROOT, "editor", "text-fit.js"), "utf8")
 ].join("\n;\n");
 const RESOLVE_ENTRY = `
 function resolveEntry99() {
