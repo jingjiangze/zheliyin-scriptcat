@@ -4,8 +4,8 @@
   "requires": 30,
   "versionConsistent": true,
   "allResolved": true,
-  "testReferences": 0,
-  "allDemo": true,
+  "testReferences": 25,
+  "allDemo": false,
   "files": [
     {
       "id": "field-core",
@@ -33,7 +33,7 @@
     },
     {
       "id": "page-bridge",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/page-bridge.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -41,7 +41,7 @@
     },
     {
       "id": "image-transform",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/image-transform.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -49,7 +49,7 @@
     },
     {
       "id": "image-space",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/image-space.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -57,7 +57,7 @@
     },
     {
       "id": "image-containment",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/image-containment.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -65,7 +65,7 @@
     },
     {
       "id": "multiline-typography",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/multiline-typography.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -73,7 +73,7 @@
     },
     {
       "id": "text-fit",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/text-fit.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -81,7 +81,7 @@
     },
     {
       "id": "text-fit-fusion",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/text-fit-fusion.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -89,7 +89,7 @@
     },
     {
       "id": "ink-measure",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/ink-measure.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -97,7 +97,7 @@
     },
     {
       "id": "baidu-provider",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/baidu-provider.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -105,7 +105,7 @@
     },
     {
       "id": "native-ocr-provider",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/native-ocr-provider.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -121,7 +121,7 @@
     },
     {
       "id": "candidate-normalizer",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/candidate-normalizer.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -129,7 +129,7 @@
     },
     {
       "id": "ocr-candidate-gate",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-candidate-gate.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -137,7 +137,7 @@
     },
     {
       "id": "font-source",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/font-source.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -145,7 +145,7 @@
     },
     {
       "id": "text-truth-gate",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/text-truth-gate.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -153,7 +153,7 @@
     },
     {
       "id": "transaction-identity",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/transaction-identity.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -161,7 +161,7 @@
     },
     {
       "id": "recognition-mode",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/recognition-mode.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -169,7 +169,7 @@
     },
     {
       "id": "image-ink-target",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/image-ink-target.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -177,7 +177,7 @@
     },
     {
       "id": "native-color",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/native-color.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -185,7 +185,7 @@
     },
     {
       "id": "font-target-source",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/font-target-source.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -193,7 +193,7 @@
     },
     {
       "id": "text-run-model",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/text-run-model.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -201,7 +201,7 @@
     },
     {
       "id": "text-run-segmentation",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/editor/text-run-segmentation.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -217,7 +217,7 @@
     },
     {
       "id": "ocr-quality",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-quality.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -225,7 +225,7 @@
     },
     {
       "id": "ocr-text-sanitizer",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-text-sanitizer.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -233,7 +233,7 @@
     },
     {
       "id": "ocr-size-analyzer",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-size-analyzer.js",
       "v": "0.3.11.52",
       "resolved": true,
@@ -241,7 +241,7 @@
     },
     {
       "id": "ocr-text-safety-gate",
-      "branch": "demo",
+      "branch": "test",
       "rel": "extension/src/ocr/ocr-text-safety-gate.js",
       "v": "0.3.11.52",
       "resolved": true,
