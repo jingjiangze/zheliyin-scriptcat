@@ -1856,7 +1856,7 @@
         fusion8d: fusion8d ? { reason: fusion8d.reason, confidence: fusion8d.confidence, quality: currentGateScore != null ? Math.round(currentGateScore * 100) / 100 : null, warnings: (fusion8d.warnings || []).slice(0, 4), fontEvidence: fusion8d.fontEvidence ? { status: fusion8d.fontEvidence.status, fontEvidenceStatus: fusion8d.fontEvidence.fontEvidenceStatus, diagnosis: fusion8d.fontEvidence.diagnosis, inkToOcrRatio: fusion8d.fontEvidence.inkToOcrRatio, advanceFontSize: fusion8d.fontEvidence.advanceFontSize, inkFontSize: fusion8d.fontEvidence.inkFontSize, inkHeight: sourceInkHeight, ocrHeight: bh } : null } : null,
         // OCR-P1 Commit 4.6-A：视觉几何来源取证（IMAGE_INK 优先 / OCR_BBOX_FALLBACK）+ 源墨迹字段
         visualGeometrySource: (typeof visualGeomSource !== "undefined") ? visualGeomSource : "OCR_BBOX_FALLBACK",
-        visualInkEvidence: (inkV && inkV.ok) ? { inkBox: inkV.inkBox, inkWidth: inkV.inkWidth, inkHeight: inkV.inkHeight, coverage: inkV.coverage, confidence: inkV.confidence, method: inkV.method, componentCount: inkV.componentCount, dominantComponentRatio: inkV.dominantComponentRatio, rowBandConfidence: inkV.rowBandConfidence } : null,
+        visualInkEvidence: (inkByBlock[bi] && inkByBlock[bi].ok) ? { inkBox: inkByBlock[bi].inkBox, inkWidth: inkByBlock[bi].inkWidth, inkHeight: inkByBlock[bi].inkHeight, coverage: inkByBlock[bi].coverage, confidence: inkByBlock[bi].confidence, method: inkByBlock[bi].method, componentCount: inkByBlock[bi].componentCount, dominantComponentRatio: inkByBlock[bi].dominantComponentRatio, rowBandConfidence: inkByBlock[bi].rowBandConfidence } : null,
         bboxSeparation8d: bboxSep ? { visualWidth: bboxSep.textVisualTarget.width, ocrBoxH: Math.round(bboxSep.ocrBBox.height * 100) / 100, layoutW: null } : null,
         // Stage 8D P6-1（§二十一）：Source = OCR bbox（canvas 像素）—— 与 Target(text-fit)/Actual(rendered ink) 三层对比用
         ocrBBox8d: { left: Math.round((b.bbox.x * sx) * 100) / 100, top: Math.round((b.bbox.y * sy) * 100) / 100, width: Math.round(bw * 100) / 100, height: Math.round(bh * 100) / 100 },
@@ -1987,6 +1987,10 @@
           imageInkWidth: dd.visualInkEvidence ? dd.visualInkEvidence.inkWidth : null,
           imageInkHeight: dd.visualInkEvidence ? dd.visualInkEvidence.inkHeight : null,
           imageInkCoverage: dd.visualInkEvidence ? dd.visualInkEvidence.coverage : null,
+          inkConfidence: dd.visualInkEvidence ? dd.visualInkEvidence.confidence : null,
+          inkComponentCount: dd.visualInkEvidence ? dd.visualInkEvidence.componentCount : null,
+          inkDominantRatio: dd.visualInkEvidence ? dd.visualInkEvidence.dominantComponentRatio : null,
+          inkRowBandConfidence: dd.visualInkEvidence ? dd.visualInkEvidence.rowBandConfidence : null,
           visualGeometrySource: dd.visualGeometrySource || "OCR_BBOX_FALLBACK",
           targetQuad: Array.isArray(tq8) ? tq8.map(function (c) { return { x: Math.round(c.x * 100) / 100, y: Math.round(c.y * 100) / 100 }; }) : null,
           targetGeometry: { left: item.left != null ? Math.round(item.left * 100) / 100 : null, top: item.top != null ? Math.round(item.top * 100) / 100 : null, width: item.width != null ? Math.round(item.width * 100) / 100 : null, height: item.height != null ? Math.round(item.height * 100) / 100 : null, angle: item.angle != null ? Math.round(item.angle * 100) / 100 : null },
