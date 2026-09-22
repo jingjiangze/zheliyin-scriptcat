@@ -105,32 +105,44 @@ dx/dy/widthGap/heightGap + leftShiftObserved（任务书 §18/§19）。
 - runner selftest：commit-46-real.js --selftest ALL PASS（A/B 注入开关验证）
 - 语法检查：userscript / page-bridge / text-fit-fusion / native-color / 新模块 node --check 全过
 
-## 9. real-device result（截至报告生成）
+## 9. real-device result（全量 A/B，2026-09-22，P0 自动登录会话）
 
-- **受阻项**：Native OCR **SESSION_EXPIRED**（会话 cookie 过期），
-  `uploadOCR.do` 走登录跳转；本 Commit 已保存运行轨迹：
-  - Baidu external 路径可达（diy:200 / raw:200）
-  - Native OCR 返回 SESSION_EXPIRED → 按既有语义「本批不创建」
-    （禁止用其它 OCR 文本进入画布，符合 Native Truth 铁律）
-  - runner 完整链路（editor-ready / bg-inject / ocr-prepare / click-ocr / rollback）已实际执行通过
-- **待会话重建后补跑**：注入新 ZY_STAGE9_COOKIE（或 P0_LOGIN_USER/PASS），
-  重跑 `node runtime/stage9/commit-46-real.js --selftest` 后
-  `node runtime/stage9/commit-46-real.js`
-  产出 A/B targetQuad / fontSize / fill / actual geometry / rendered ink 对照 + leftShift 判定。
+- **会话**：4.6-SESSION-b probe 自动登录（P0_LOGIN_USER/PASS → login.do → 门店页签发 diy-User-third）；
+  `cookieSource=probe`、identity=true（完整身份，非 merged）。
+- **执行**：`node runtime/stage9/commit-46-real.js`（ZY_CASE=V0,V15,V45；ZY_AB=A,B；ZY_SESSION_REFRESH=1=强制重抓）。
+  6 个 run 全部 Native OCR 通过：保留=创建成功、通过 0 个（Native Anchor 复用语义）、拒绝 0 个。
+
+| Case | AB 模式 | 旋转 | 保留行 | renderedInk 对比行 | leftShift(dx< -2) 行数 | dx 范围（代表性） |
+|------|---------|------|-------|--------------------|----------------------|-------------------|
+| V0 | A（旧 OCR bbox） | 0° | 15 | 10 | 10 | -5.9 ~ -15.4（夏祝莲 -14.03） |
+| V0 | B（Visual Ink 默认） | 0° | 15 | 10 | 10 | -16.0 ~ -75.7（夏祝莲 -75.66） |
+| V15 | A | 15° | 12 | 10 | 6 | -6.5 ~ -39.4（广州爱卡奇硅胶制品有限公司 -39.39） |
+| V15 | B | 15° | 11 | 9 | 9 | -12.3 ~ -56.3（夏祝莲 -56.29） |
+| V45 | A | 45° | 3 | 3 | 1 | Xia Zhu Lian -10.28 |
+| V45 | B | 45° | 2 | 2 | 2 | 夏祝莲 -7.94 / Xia Zhu Lian -26.21 |
+
+- **A/B 对照信号（Commit 4.6 修复方向证据）**：
+  1. **整体左移真实存在，且 B（Visual Ink 目标）比 A（旧 OCR bbox）更偏**：V0 下 B dx=-16~-76px（夏祝莲 -75.66），
+     A dx=-6~-15px（夏祝莲 -14.03）；V15 同向。→ 左移修复点落在 Visual Target 求解环节（targetLeft 过右），
+     非渲染端单点问题。
+  2. 真机 IMAGE_INK 全部未过 0.30 confidence 门槛（B 模式实际回落 OCR_BBOX_FALLBACK），逐行 visualGeometrySource 见 per-case JSON ——
+     门槛按本表 dx 分布收紧/放宽另议（§10）。
+  3. **旋转越大保留越少**：V15 保留 11-12 行、V45 仅 2-3 行（其余 unmatched），符合旋转下 geometry 映射考验点。
+  4. 字号全部 NORMAL（ink/ocr ratio 0.86~0.98，未触发 INK_TOO_LARGE）；颜色 fillGate 以 MULTI_MODAL / FOREGROUND_RELIABLE 为主（逐行见 per-case JSON）。
+- 报告件：`runtime/reports/stage-9/commit-46-real.json` + per-case `commit-46-real-{case}-{ab}.json`（cookie 只记名）。
 
 ## 10. unresolved
 
-- ~~Native OCR 会话过期（真机 A/B 全量证据受阻）~~ ✅ 已解除（4.6-SESSION，见 §13）：
-  resolveStage9Cookie() 自动抓取/合并已内嵌 runner，真机 V0/B 走 probe 路径跑通（cookieSource=merged，Native OCR 保留 15 行）。
+- ~~Native OCR 会话过期（真机 A/B 全量证据受阻）~~ ✅ 已解除（4.6-SESSION-b，见 §13.1/§9）：
+  resolveStage9Cookie() 自动续期 + P0 自动登录已内嵌 runner；全量 A/B（V0/V15/V45 × A/B）走 probe 自动登录路径（cookieSource=probe），6/6 run 通过。
 - IMAGE_INK 可靠性门槛 0.30 为「经验下界」（任务书 §5 明示不设未经实验的极端固定阈值）；
   真机复跑后按实测 dominance/rowBandConfidence 分布收紧或补充证据。
-- GitHub 网络（github.com:443）间歇不可达：本次多笔提交已本地 commit 完成，
-  推送至 test 与 stage-9-altq-baidu-reconstruction 待网络恢复后一次性双推（raw 已确认可达）。
+- GitHub 网络（github.com:443）间歇不可达问题已解除：4.6-SESSION 系列全部双推完成（见 §11）。
 
 ## 11. Git SHA
 
-- test = stage 本地 HEAD：552a4ce（含 4.6-A … 4.6-0b、4.6-SESSION 全部子提交）
-- 推送状态：全部子提交已双推至 test 与 stage-9-altq-baidu-reconstruction（GitHub 网络已恢复，工作树 clean）
+- test = stage 本地 HEAD：56ed36e（含 4.6-A … 4.6-0b、4.6-SESSION、4.6-SESSION-b 全部子提交）
+- 推送状态：4.6-SESSION 系列（552a4ce/726bdeb）已双推；本报告随 4.6-SESSION-b（56ed36e）的 docs 子提交推送
 - main / demo 未动（任务书 §0 约束保持）
 
 ## 12. 禁止项合规声明
@@ -153,5 +165,17 @@ Native Create 主入口、Native Layer Contract、Page Ownership、Partial Creat
 - 真机经验事实（2026-09-22）：
   1. 持久 profile 未登录时（缺 `diy-User-third`）→ Native OCR SESSION_EXPIRED；匿名新 SESSION 会**破坏**已验证 cookie → 合并必须保守（保留已验证 SESSION）。
   2. `browser.addCookies()` 注入的 cookie **不跨重启持久** → probe 每次运行重新抓取/合并；profile 是否登录决定产出「probe（完整身份）」或「merged（保守兜底）」。
-  3. 注入 `P0_LOGIN_USER/P0_LOGIN_PASS` 后，probe 可自动登录 `login.do` 重建完整身份（自愈路径；本次未注入凭据故未实测自动登录结果）。
+  3. 注入 `P0_LOGIN_USER/P0_LOGIN_PASS` 后，probe 可自动登录 `login.do` 重建完整身份 —— ✅ 已实测（见 §13.1）。
 - 复现命令：`node runtime/stage9/commit-46-real.js --selftest` → `node runtime/stage9/commit-46-real.js`（可选 `ZY_SESSION_REFRESH=1`、`ZY_CASE`/`ZY_AB`）。
+
+### 13.1 P0 自动登录自愈（4.6-SESSION-b）
+
+- 注入 `P0_LOGIN_USER` / `P0_LOGIN_PASS` 后 **probe 自动登录真机验证通过**：`source=probe`、`identity=true`
+  （cookie 含 `diy-User-third` + `SESSION` + `thirdMember` + `thirdLocalForage`）。
+- 登录流程关键实现（login.do，成熟做法取自 autologin3.js / p0/runner.js）：
+  1. 登录面板为弹窗：外层 `.mask-bg.zLoginOut`（display:none）包裹 `.zLoginTan` → `#userAccount`/`#userPassword` 存在但 0×0 不可交互，需先翻转 mask 层级展开；
+  2. 填表用原生 setter + input/change（React 受控输入），提交优先 `#accountLogin`，否则匹配可见「登录/确定」文本；
+  3. **登录成功仅签发 SESSION**（login.do 弹「请检查链接中店铺编码」alert）；`diy-User-third` 需跳门店设计页
+     （STORE_URL = /diyWeb/third/252438/2114747/999/thirdDiyAdd.do）后才 Set-Cookie → tryAutoLogin 先等 SESSION → 跳门店页 → 再验身份。
+- 凭据仅运行时环境变量（P0_LOGIN_USER/P0_LOGIN_PASS），不落库、不入报告 value；cookie 串仅写 %TEMP% 且报告只记名。
+- 全量 A/B 借此会话跑通（§9）。
