@@ -203,8 +203,20 @@ function pageBridge() {
                 if (reuseMatch.verdict === "MATCH" && reuseMatch.matchedIndex != null && nativeAnchors[reuseMatch.matchedIndex]) {
                   const reusedObj = nativeAnchors[reuseMatch.matchedIndex].object || null;
                   if (reusedObj) {
-                    try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.text === "string") { if (typeof reusedObj.setText === "function") reusedObj.setText(it.text); else reusedObj.text = it.text; } } catch (eSet) {}
+try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.text === "string") { if (typeof reusedObj.setText === "function") reusedObj.setText(it.text); else reusedObj.text = it.text; } } catch (eSet) {}
+                    // Commit 4.6-C：完整同步目标样式/几何（§10）——identity 保持原生，geometry/typography/style 采用当前 OCR/Visual Target；fill 仅可靠颜色证据更新；禁止删除重建。
+                    try {
+                      var zyCProps = {};
+                      var zyCNum = ["left", "top", "width", "height", "angle", "fontSize"];
+                      for (var zyCi = 0; zyCi < zyCNum.length; zyCi += 1) { var zyCk = zyCNum[zyCi]; var zyCv = it[zyCk]; if (zyCv != null && typeof zyCv === "number" && isFinite(zyCv) && (zyCk === "angle" || zyCk === "left" || zyCk === "top") ? true : (typeof zyCv === "number" && isFinite(zyCv) && zyCv > 0)) zyCProps[zyCk] = zyCv; }
+                      var zyCStr = ["fontFamily", "fontWeight", "fontStyle"];
+                      for (var zyCj = 0; zyCj < zyCStr.length; zyCj += 1) { var zyCsK = zyCStr[zyCj]; var zyCsV = it[zyCsK]; if (zyCsV != null && String(zyCsV).length) zyCProps[zyCsK] = String(zyCsV); }
+                      if (Object.keys(zyCProps).length) { if (typeof reusedObj.set === "function") reusedObj.set(zyCProps); else Object.keys(zyCProps).forEach(function (zyCz) { reusedObj[zyCz] = zyCProps[zyCz]; }); }
+                    } catch (eStyleApply) {}
                     try { if (it.fill && typeof reusedObj.set === "function") reusedObj.set({ fill: it.fill }); else if (it.fill) reusedObj.fill = it.fill; } catch (eFillReuse) {} // Stage 10-A：仅在有前景证据时更新颜色
+                    try { if (typeof reusedObj.setCoords === "function") reusedObj.setCoords(); } catch (eCoords) {}
+                    try { syncBusinessFieldsFromObject(reusedObj); } catch (eBizSync) {} // Commit 4.6-C：几何收敛后同步站点业务字段
+                    try { reusedObj.zyAnchorStyleApplied = { geometry: ["left","top","width","height","angle","fontSize"].filter(function (k) { return zyCProps && k in zyCProps; }), style: ["fontFamily","fontWeight","fontStyle"].filter(function (k) { return zyCProps && k in zyCProps; }), fillUpdated: !!it.fill, identity: "native-preserved" }; } catch (eStylMark) {}
                     const bIdxNat2 = it.blockIndex != null ? it.blockIndex : idx;
                     reusedObj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat2) : ("zy-ocr-" + bIdxNat2);
                     reusedObj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat2, objectUuid: reusedObj.uuid || reusedObj.multiUuid || null };
