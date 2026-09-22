@@ -1859,7 +1859,7 @@
         visualInkEvidence: (inkV && inkV.ok) ? { inkBox: inkV.inkBox, inkWidth: inkV.inkWidth, inkHeight: inkV.inkHeight, coverage: inkV.coverage, confidence: inkV.confidence, method: inkV.method, componentCount: inkV.componentCount, dominantComponentRatio: inkV.dominantComponentRatio, rowBandConfidence: inkV.rowBandConfidence } : null,
         bboxSeparation8d: bboxSep ? { visualWidth: bboxSep.textVisualTarget.width, ocrBoxH: Math.round(bboxSep.ocrBBox.height * 100) / 100, layoutW: null } : null,
         // Stage 8D P6-1（§二十一）：Source = OCR bbox（canvas 像素）—— 与 Target(text-fit)/Actual(rendered ink) 三层对比用
-        ocrBBox8d: { width: Math.round(bw * 100) / 100, height: Math.round(bh * 100) / 100 },
+        ocrBBox8d: { left: Math.round((b.bbox.x * sx) * 100) / 100, top: Math.round((b.bbox.y * sy) * 100) / 100, width: Math.round(bw * 100) / 100, height: Math.round(bh * 100) / 100 },
 
         containment8d: containRes ? { verdict: containRes.verdict, repaired: !!containRes.repaired, outsideCount: (containRes.evidence && containRes.evidence.outsideCount) || 0, margin: (containRes.evidence && containRes.evidence.marginPx) || 0 } : null,
         targetQuad8d: (targetQuad && typeof quadTextGeometry === "function") ? (function () { const g = quadTextGeometry(targetQuad); return { width: Math.round(g.width * 100) / 100, height: Math.round(g.height * 100) / 100, angle: g.angle }; })() : null,
@@ -1951,6 +1951,18 @@
           pipelineEvidence({ stage: "CREATE", requested: e.data.detectedBlocks || 0, created: (e.data.created || []).length });
           ocrLog("SUCCESS", "created=" + (e.data.created || []).length + "/" + (e.data.detectedBlocks || 0) + " editorInteg=" + JSON.stringify({ undo: !!integ.nativeUndoFound, savePre: !!integ.undoSavePre, savePost: !!integ.undoSavePost, ident: integ.identityApplied, uv4: integ.uv4Total, layerMax: integ.layerMax }));
           // Stage 8B STEP 4（Phase B/C/E）：创建后几何闭环校正（不阻塞终态回复，异步进行）
+          // Commit 4.6-0：anchor 回填（anchor 命中判定在 page-world 侧，创建回复后回填到只读诊断）
+          try {
+            const diagTail = window.__zyStage9VisualDiag && window.__zyStage9VisualDiag.length ? window.__zyStage9VisualDiag[window.__zyStage9VisualDiag.length - 1] : null;
+            if (diagTail && diagTail.rows && diagTail.txId === srcTxId) {
+              const createdIdx = {};
+              (e.data.created || []).forEach(function (c) { if (c && c.blockIndex != null) createdIdx[c.blockIndex] = c; });
+              diagTail.rows.forEach(function (r) {
+                const c = createdIdx[r.blockIndex] || null;
+                if (c) { r.anchorUsed = !!(c.anchorMatch && c.anchorMatch.verdict === "MATCH" && c.reused === true); if (c.uuid) r.anchorObjectUuid = String(c.uuid); }
+              });
+            }
+          } catch (eDiagAnchor) {}
           runGeometryCalibration(items, e.data, srcSide);
         } else {
           pipelineEvidence({ stage: "CREATE", fail: "CREATE_FAILED", requested: e.data.detectedBlocks || 0, created: (e.data.created || []).length, failedIdx: e.data.failedBlockIndex != null ? e.data.failedBlockIndex : null });
@@ -1961,6 +1973,36 @@
     };
     const fallbackTimer = setTimeout(() => { pipelineEvidence({ stage: "CREATE", fail: "CREATE_TIMEOUT" }); window.removeEventListener("message", on); ocrRunning = false; setStatus("生成文字超时（页面桥未能确认结果）：请查看浏览器控制台报错并反馈开发者（错误码 ocrCreate-reply-timeout）。"); ocrLog("ERROR", "ocrCreate reply timeout"); }, 10000);
     window.addEventListener("message", on);
+    // Commit 4.6-0（§1）：真机只读证据采集 —— 每 block 视觉字段（位置/字号/颜色/几何来源）。纯诊断，不改变行为。
+    try {
+      const diagRows = (items || []).filter(function (x) { return x && x.blockIndex != null; }).map(function (item) {
+        const dd = item.diagnostics || {};
+        const fillE = item.zy8bFillEvidence || null;
+        const tq8 = item.zy8bTargetQuad;
+        return {
+          blockIndex: item.blockIndex,
+          nativeText: String(item.text || ""),
+          ocrBBox: dd.ocrBBox8d ? { left: (dd.ocrBBox8d.left != null ? dd.ocrBBox8d.left : null), width: dd.ocrBBox8d.width, height: dd.ocrBBox8d.height } : null,
+          imageInkBox: dd.visualInkEvidence ? dd.visualInkEvidence.inkBox : null,
+          imageInkWidth: dd.visualInkEvidence ? dd.visualInkEvidence.inkWidth : null,
+          imageInkHeight: dd.visualInkEvidence ? dd.visualInkEvidence.inkHeight : null,
+          imageInkCoverage: dd.visualInkEvidence ? dd.visualInkEvidence.coverage : null,
+          visualGeometrySource: dd.visualGeometrySource || "OCR_BBOX_FALLBACK",
+          targetQuad: Array.isArray(tq8) ? tq8.map(function (c) { return { x: Math.round(c.x * 100) / 100, y: Math.round(c.y * 100) / 100 }; }) : null,
+          targetGeometry: { left: item.left != null ? Math.round(item.left * 100) / 100 : null, top: item.top != null ? Math.round(item.top * 100) / 100 : null, width: item.width != null ? Math.round(item.width * 100) / 100 : null, height: item.height != null ? Math.round(item.height * 100) / 100 : null, angle: item.angle != null ? Math.round(item.angle * 100) / 100 : null },
+          fontSize: item.fontSize != null ? Math.round(item.fontSize * 100) / 100 : null,
+          fontSource: dd.fsSource || "unknown",
+          fontSizeEvidence: dd.fusion8d && dd.fusion8d.fontEvidence ? dd.fusion8d.fontEvidence : null,
+          fill: item.fill != null ? item.fill : null,
+          fillConfidence: fillE ? fillE.confidence : null,
+          fillGate: fillE ? (fillE.gate || (fillE.skipped ? "SKIPPED" : "APPLIED")) : null,
+          fontFamily: item.fontFamily || null,
+          anchorUsed: null // 由创建回复后回填（anchor 命中在 page-world 侧判定）
+        };
+      });
+      const prev = window.__zyStage9VisualDiag || [];
+      window.__zyStage9VisualDiag = prev.concat({ ts: Date.now(), txId: srcTxId, side: srcSide, imageFingerprint: srcTxFp, rows: diagRows });
+    } catch (eDiag0) { ocrLog("DIAG0", "visual diag collect err: " + String(eDiag0 && eDiag0.message || eDiag0).slice(0, 100)); }
     window.postMessage({ source: "zy-card-assistant", type: "ocrCreate", pageId: srcPageId, side: srcSide, transactionId: srcTxId, imageFingerprint: srcTxFp, items: items }, location.origin);
     // 事务结束：释放 ocrTarget，避免下次识别串用旧目标
     ocrTarget = null;

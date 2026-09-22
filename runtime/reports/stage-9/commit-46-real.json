@@ -1,0 +1,90 @@
+{
+  "ts": "2026-09-22T05:53:04.467Z",
+  "stage": "OCR-P1-COMMIT4_6-REAL",
+  "cases": [
+    {
+      "id": "V0",
+      "sidecar": "0",
+      "note": "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy"
+    },
+    {
+      "id": "V15",
+      "sidecar": "0",
+      "rot": 15,
+      "note": "旋转 15°：visual bbox 四角 affine → targetQuad，位置/字号/颜色同源"
+    },
+    {
+      "id": "V45",
+      "sidecar": "0",
+      "rot": 45,
+      "note": "旋转 45°：验证旋转下 visual geometry 映射不回归"
+    }
+  ],
+  "image": "real-card-xiazhu.png",
+  "cookiePresent": true,
+  "abModes": [
+    "B"
+  ],
+  "runs": [
+    {
+      "case": "V0",
+      "ab": "B",
+      "note": "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy（新 Visual Ink geometry）",
+      "rot": 0,
+      "steps": [
+        {
+          "step": "editor-ready",
+          "ok": true,
+          "bridge": true
+        },
+        {
+          "step": "bg-inject",
+          "ok": true
+        },
+        {
+          "step": "ocr-prepare",
+          "ok": true
+        },
+        {
+          "step": "click-ocr",
+          "clicked": true
+        },
+        {
+          "step": "ocr-done",
+          "done": false,
+          "status": null
+        },
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [
+        "OCR_TIMEOUT"
+      ],
+      "diag": [],
+      "actualInk": [],
+      "visualRows": [],
+      "abCompare": null,
+      "leftShiftObserved": {
+        "count": 0,
+        "rows": []
+      },
+      "status": null,
+      "pageId": "canvas:c0",
+      "baiduCount": 17,
+      "ocrSamples": [
+        "正在准备图片…",
+        "Native OCR 不可用（SESSION_EXPIRED），本批不创建（禁止用其它 OCR 文本进入画布）",
+        "Native OCR 不可用（SESSION_EXPIRED），本批不创建（禁止用其它 OCR 文本进入画布）",
+        "Native OCR 不可用（SESSION_EXPIRED），本批不创建（禁止用其它 OCR 文本进入画布）",
+        "Native OCR 不可用（SESSION_EXPIRED），本批不创建（禁止用其它 OCR 文本进入画布）",
+        "Native OCR 不可用（SESSION_EXPIRED），本批不创建（禁止用其它 OCR 文本进入画布）",
+        "Native OCR 不可用（SESSION_EXPIRED），本批不创建（禁止用其它 OCR 文本进入画布）",
+        "Native OCR 不可用（SESSION_EXPIRED），本批不创建（禁止用其它 OCR 文本进入画布）"
+      ],
+      "renderedInkCompare": []
+    }
+  ],
+  "errors": []
+}

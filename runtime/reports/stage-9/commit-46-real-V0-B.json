@@ -1,0 +1,42 @@
+{
+  "case": "V0",
+  "ab": "B",
+  "steps": [
+    {
+      "step": "editor-ready",
+      "ok": true,
+      "bridge": true
+    },
+    {
+      "step": "bg-inject",
+      "ok": true
+    },
+    {
+      "step": "ocr-prepare",
+      "ok": true
+    },
+    {
+      "step": "click-ocr",
+      "clicked": true
+    },
+    {
+      "step": "ocr-done",
+      "done": false,
+      "status": null
+    },
+    {
+      "step": "rollback",
+      "ok": true
+    }
+  ],
+  "status": null,
+  "visualRows": [],
+  "renderedInkCompare": [],
+  "leftShiftObserved": {
+    "count": 0,
+    "rows": []
+  },
+  "errors": [
+    "OCR_TIMEOUT"
+  ]
+}
