@@ -1848,7 +1848,7 @@
           ? buildOrientationDiagnostics(blockTextAngle(b.lines), angle, { classifyTextAngle: classifyTextAngle })
           : { source: "NONE", blockAngle: null, imageAngle: angle || 0, classification: "UNKNOWN", confidence: 0 },
         // Stage 8D：融合证据（§十四）与 bbox 三层分离（§十二）
-        fusion8d: fusion8d ? { reason: fusion8d.reason, confidence: fusion8d.confidence, quality: currentGateScore != null ? Math.round(currentGateScore * 100) / 100 : null, warnings: (fusion8d.warnings || []).slice(0, 4) } : null,
+        fusion8d: fusion8d ? { reason: fusion8d.reason, confidence: fusion8d.confidence, quality: currentGateScore != null ? Math.round(currentGateScore * 100) / 100 : null, warnings: (fusion8d.warnings || []).slice(0, 4), fontEvidence: fusion8d.fontEvidence ? { status: fusion8d.fontEvidence.status, fontEvidenceStatus: fusion8d.fontEvidence.fontEvidenceStatus, diagnosis: fusion8d.fontEvidence.diagnosis, inkToOcrRatio: fusion8d.fontEvidence.inkToOcrRatio, advanceFontSize: fusion8d.fontEvidence.advanceFontSize, inkFontSize: fusion8d.fontEvidence.inkFontSize, inkHeight: sourceInkHeight, ocrHeight: bh } : null } : null,
         // OCR-P1 Commit 4.6-A：视觉几何来源取证（IMAGE_INK 优先 / OCR_BBOX_FALLBACK）+ 源墨迹字段
         visualGeometrySource: (typeof visualGeomSource !== "undefined") ? visualGeomSource : "OCR_BBOX_FALLBACK",
         visualInkEvidence: (inkV && inkV.ok) ? { inkBox: inkV.inkBox, inkWidth: inkV.inkWidth, inkHeight: inkV.inkHeight, coverage: inkV.coverage, confidence: inkV.confidence, method: inkV.method, componentCount: inkV.componentCount, dominantComponentRatio: inkV.dominantComponentRatio, rowBandConfidence: inkV.rowBandConfidence } : null,

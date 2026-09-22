@@ -74,6 +74,34 @@ function solveByInkHeight(inkHeight, fontFamily, opts) {
   return { fontSize: fs, inkHeight: inkHeight, ratio: FONT_HEIGHT_RATIO };
 }
 
+// —— OCR-P1 Commit 4.6-B：InkHeight 字号可信度判定 ——
+// 原则：InkHeight 是视觉证据，但不是无条件最高优先级。先判可信度，可信才进字号融合。
+function evaluateInkEvidenceForFontSize(input) {
+  var o = input || {};
+  var inkHeight = o.inkHeight, ocrHeight = o.ocrHeight, advanceFontSize = o.advanceFontSize;
+  var fontFamily = o.fontFamily || "sans-serif";
+  var status = "NORMAL", diagnosis = null;
+  var inkFontSize = null, ratio = null;
+  if (!isFiniteNum(inkHeight) || inkHeight <= 0) {
+    return { status: "INK_INVALID", diagnosis: "inkHeight 缺失/非正数", inkToOcrRatio: null, advanceFontSize: advanceFontSize, inkFontSize: null, fontEvidenceStatus: "INVALID_FOR_FONT_SIZE" };
+  }
+  var inkR = solveByInkHeight(inkHeight, fontFamily, o);
+  inkFontSize = inkR ? inkR.fontSize : null;
+  if (isFiniteNum(ocrHeight) && ocrHeight > 0) {
+    ratio = Math.round((inkHeight / ocrHeight) * 10000) / 10000;
+    if (ratio > 2.2) { status = "INK_TOO_LARGE"; diagnosis = "ink/ocr=" + ratio + ">2.2（疑似多行/纹理污染）"; }
+    else if (ratio < 0.35) { status = "INK_TOO_SMALL"; diagnosis = "ink/ocr=" + ratio + "<0.35（墨迹过小）"; }
+  }
+  if (status === "NORMAL" && isFiniteNum(advanceFontSize) && advanceFontSize > 0 && isFiniteNum(inkFontSize) && inkFontSize > 0) {
+    var d = Math.abs(advanceFontSize - inkFontSize) / Math.max(1, Math.max(advanceFontSize, inkFontSize));
+    if (d > OK_BOTH_RATIO) { status = "ADVANCE_INK_CONFLICT"; diagnosis = "advance 与 ink 冲突 d=" + Math.round(d * 100) + "%"; }
+  }
+  return {
+    status: status, diagnosis: diagnosis, inkToOcrRatio: ratio, advanceFontSize: advanceFontSize, inkFontSize: inkFontSize,
+    fontEvidenceStatus: (status === "NORMAL") ? "NORMAL" : "INVALID_FOR_FONT_SIZE"
+  };
+}
+
 // —— 主入口（8D §十四/§十五）——
 // input: {
 //   text, targetVisualWidth (advance 目标=ocrBBox.width×scale),
@@ -99,11 +127,19 @@ function solveFontSizeFusion(input) {
 
   var fs = null, reason = "no-evidence";
   var sources = { advance: adv, ink: ink, ocrHeight: ocrSrc };
-  if (ink) { // P4-D：Source Ink Height 第一优先；advance 降为第 4 优先（仅兜底/警示）
+  // OCR-P1 Commit 4.6-B：Ink 先做可信度判定 —— 异常 Ink 不得无条件压过 advance/sanity
+  var inkEval = null;
+  if (ink && ink.fontSize) inkEval = evaluateInkEvidenceForFontSize({ inkHeight: o.inkHeight, ocrHeight: o.ocrHeight, advanceFontSize: adv ? adv.fontSize : null, fontFamily: fontFamily, context: o.context || o });
+  var inkTrusted = !!(inkEval && inkEval.fontEvidenceStatus === "NORMAL");
+  if (ink && inkTrusted) { // P4-D：Source Ink Height 第一优先（仅可信时）；advance 兜底
     if (!adv) { fs = ink.fontSize; reason = "ink-height-primary"; } else { var d = Math.abs(adv.fontSize - ink.fontSize) / Math.max(1, Math.max(adv.fontSize, ink.fontSize));
-    if (d <= OK_BOTH_RATIO) { fs = ink.fontSize; reason = "ink-height-consistent-with-advance"; }
-    else { fs = ink.fontSize; reason = "ink-height-primary-advance-conflict"; warnings.push("advance conflict d=" + Math.round(d * 100) + "%"); }
+      if (d <= OK_BOTH_RATIO) { fs = ink.fontSize; reason = "ink-height-consistent-with-advance"; }
+      else { fs = ink.fontSize; reason = "ink-height-primary-advance-conflict"; warnings.push("advance conflict d=" + Math.round(d * 100) + "%"); }
     }
+  } else if (ink && !inkTrusted) {
+    warnings.push("ink rejected for font-size: " + String(inkEval ? (inkEval.fontEvidenceStatus + " " + (inkEval.diagnosis || "")) : "eval-unavailable"));
+    if (adv) { fs = adv.fontSize; reason = "advance-width-primary-ink-invalid"; }
+    else if (ocrSrc) { fs = Math.max(FS_MIN, Math.min(FS_MAX, Math.round(ocrSrc.ocrHeight / 1.425))); reason = "ocr-height-sanity-ink-invalid"; }
   } else if (adv) { fs = adv.fontSize; reason = "advance-width-primary"; }
 
   else if (ocrSrc) { fs = Math.max(FS_MIN, Math.min(FS_MAX, Math.round(ocrSrc.ocrHeight / 1.425))); reason = "ocr-height-legacy"; }
@@ -118,8 +154,9 @@ function solveFontSizeFusion(input) {
     }
   }
   fs = Math.max(FS_MIN, Math.min(FS_MAX, Math.round(fs)));
-  var confidence = Math.round((0.5 + 0.5 * quality - (reason.indexOf("conflict") >= 0 ? 0.15 : 0)) * 100) / 100;
-  return { ok: true, fontSize: fs, reason: reason, confidence: Math.max(0.1, Math.min(1, confidence)), sources: sources, warnings: warnings };
+  var confidence = Math.round((0.5 + 0.5 * quality - (reason.indexOf("conflict") >= 0 ? 0.15 : 0)- (reason.indexOf("invalid") >= 0 ? 0.05 : 0)) * 100) / 100;
+  return { ok: true, fontSize: fs, reason: reason, confidence: Math.max(0.1, Math.min(1, confidence)), sources: sources, warnings: warnings,
+    fontEvidence: inkEval ? { status: inkEval.status, fontEvidenceStatus: inkEval.fontEvidenceStatus, diagnosis: inkEval.diagnosis, inkToOcrRatio: inkEval.inkToOcrRatio, advanceFontSize: inkEval.advanceFontSize, inkFontSize: inkEval.inkFontSize } : null };
 }
 
 // —— 8D §十二：bbox 三层分离 ——
@@ -139,6 +176,6 @@ function bboxSeparation(ocrBBox, scale, opts) {
 }
 
 if (typeof module !== "undefined" && module.exports) module.exports = {
-  solveFontSizeFusion, bboxSeparation, lineBoxRatio,
+  solveFontSizeFusion, bboxSeparation, lineBoxRatio, evaluateInkEvidenceForFontSize,
   MIN_QUALITY_TO_CREATE, OCR_H_SANITY_LO, OCR_H_SANITY_HI
 };
