@@ -89,6 +89,7 @@
       },
       "fontSize": 16,
       "fontSource": "ink-height-primary",
+      "matchMethod": "EXACT_TEXT",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -104,7 +105,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "8100af61-0c0c-45ed-835f-e6a795f501e1"
+      "anchorObjectUuid": "9b11c9ea-09d4-4c87-8f98-26f7ef180a1a"
     },
     {
       "blockIndex": 1,
@@ -164,6 +165,7 @@
       },
       "fontSize": 10,
       "fontSource": "ink-height-primary",
+      "matchMethod": "EXACT_TEXT",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -179,7 +181,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "e76d0c34-4385-4381-91ec-0feb46a93b20"
+      "anchorObjectUuid": "9c3d72ea-a3ce-49d9-8243-dbf2f7082ade"
     },
     {
       "blockIndex": 2,
@@ -239,6 +241,7 @@
       },
       "fontSize": 24,
       "fontSource": "ink-height-primary",
+      "matchMethod": "EXACT_TEXT",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -254,7 +257,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "f2345d3b-16a6-45cd-87a7-e2b183963355"
+      "anchorObjectUuid": "f86de6cb-9035-4400-a307-6f14561adc2f"
     },
     {
       "blockIndex": 3,
@@ -314,6 +317,7 @@
       },
       "fontSize": 18,
       "fontSource": "ink-height-primary",
+      "matchMethod": "EXACT_TEXT",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -329,7 +333,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "4ba6c167-2f82-4eea-a777-b96e943a6133"
+      "anchorObjectUuid": "2edf3169-52c2-48f8-aa8f-48b84ff49c1a"
     },
     {
       "blockIndex": 4,
@@ -389,6 +393,7 @@
       },
       "fontSize": 13,
       "fontSource": "ink-height-primary",
+      "matchMethod": "EXACT_TEXT",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -404,7 +409,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "affbf967-c0e9-482b-b593-3f111fc6e9e7"
+      "anchorObjectUuid": "4bb629c1-a768-42a5-836d-e8db2770026a"
     },
     {
       "blockIndex": 5,
@@ -464,6 +469,7 @@
       },
       "fontSize": 12,
       "fontSource": "ink-height-primary",
+      "matchMethod": "EXACT_TEXT",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -479,7 +485,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "6db3f465-4d41-413a-ae24-4d92e18ee2c0"
+      "anchorObjectUuid": "f3bcd6fa-a267-4448-9a3b-b5f27c411aac"
     },
     {
       "blockIndex": 6,
@@ -539,6 +545,7 @@
       },
       "fontSize": 10,
       "fontSource": "ink-height-primary",
+      "matchMethod": "EXACT_TEXT",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -554,15 +561,15 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "c99bce68-9b93-43a3-af4b-f944cf7d7852"
+      "anchorObjectUuid": "330c4c8a-07d4-464e-9046-9d3e02e92802"
     },
     {
       "blockIndex": 7,
       "nativeText": "理财顾问",
       "ocrBBox": {
         "left": 27.87,
-        "width": 354.23,
-        "height": 84
+        "width": 175.24,
+        "height": 12.84
       },
       "blockLines": [],
       "lineInk": null,
@@ -574,30 +581,30 @@
       },
       "imageInkWidth": 71,
       "imageInkHeight": 22,
-      "imageInkCoverage": 0.152,
-      "inkConfidence": 0.55,
+      "imageInkCoverage": 0.3683,
+      "inkConfidence": 0.78,
       "inkComponentCount": 2,
       "inkDominantRatio": 0.6371,
-      "inkRowBandConfidence": 0.4305,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX",
       "inkGeometryReason": "INK_GEOMETRY_DISABLED",
       "visualSrcBoxUsed": {
         "x": 52,
-        "y": 67,
-        "width": 661,
-        "height": 157
+        "y": 200,
+        "width": 327,
+        "height": 24
       },
       "targetQuad": [
         {
           "x": 27.87,
-          "y": 35.85
+          "y": 107.01
         },
         {
-          "x": 382.1,
-          "y": 35.85
+          "x": 203.11,
+          "y": 107.01
         },
         {
-          "x": 382.1,
+          "x": 203.11,
           "y": 119.85
         },
         {
@@ -607,29 +614,30 @@
       ],
       "targetGeometry": {
         "left": 27.87,
-        "top": 35.85,
-        "width": 364.23,
+        "top": 107.01,
+        "width": 185.24,
         "height": 22,
         "angle": 0
       },
       "fontSize": 12,
-      "fontSource": "ink-height-primary-merged-block-ink-too-small",
+      "fontSource": "ink-height-primary",
+      "matchMethod": "SINGLE_LINE_CONTAINMENT",
       "fontSizeEvidence": {
-        "status": "INK_TOO_SMALL",
-        "fontEvidenceStatus": "INVALID_FOR_FONT_SIZE",
-        "diagnosis": "ink/ocr=0.1401<0.35（墨迹过小）",
-        "inkToOcrRatio": 0.1401,
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.9166,
         "advanceFontSize": null,
         "inkFontSize": 12,
         "inkHeight": 11.77,
-        "ocrHeight": 84.00429664933563
+        "ocrHeight": 12.841421143847485
       },
       "fill": "#fdfdfd",
       "fillConfidence": 0.4338,
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "c64d0188-7452-498e-845d-772a78cf26a6"
+      "anchorObjectUuid": "05ceb40a-06fd-4793-a0d2-f2afbd94d3ad"
     },
     {
       "blockIndex": 8,
@@ -689,6 +697,7 @@
       },
       "fontSize": 11,
       "fontSource": "ink-height-primary",
+      "matchMethod": "MULTI_FACTOR",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -704,7 +713,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "38f63d3f-9da6-4053-850b-17236819673e"
+      "anchorObjectUuid": "fc343650-0513-481f-8fec-c5912125b906"
     }
   ],
   "renderedInkCompare": [
@@ -823,12 +832,12 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "anchorUsed": false,
       "targetLeft": 27.87,
-      "targetTop": 35.85,
+      "targetTop": 107.01,
       "actualLeft": 22,
-      "actualTop": 71,
+      "actualTop": 106,
       "dx": -5.87,
-      "dy": 35.15,
-      "widthGap": -316.23,
+      "dy": -1.01,
+      "widthGap": -137.24,
       "heightGap": -10,
       "actualInkWidth": 48,
       "actualInkHeight": 12,

@@ -145,6 +145,64 @@ function alignNativeGeometry(nativeTexts, geometries, opts) {
     }
   });
 
+  // ---- Phase 1.5：SINGLE_LINE_CONTAINMENT —— native 是单个 geo 行文本的子串（geo 包含 native）----
+  // 真机修复(Commit A2 后继)：native「理财顾问」⊂ geo「理财顾问18888886666」
+  // 应直接匹配该单行几何(y200 h24)；若跳过本阶段，Phase 2 会把相邻行「1」(y67)+该行
+  // join(joined 文本意外包含 native)合成巨型 union 盒(x52 y67 w661 h157) → dy=+35。
+  // 规则：纯数字 native（电话/日期行）不参与聚合计数与匹配 —— 数字行是同一视觉行的
+  // 右侧片段，geo 长文本仅对文字行「唯一包含」时单行匹配可成立（理财顾问→y200 h24）；
+  // 数字行保持 unmatched（沿用缺失行语义），MANY_TO_ONE_SHARED 仅对多段真实文字行聚合。
+  remainingG = [];
+  gs.forEach(function (g, gi) { if (!matchedGeoIdx[gi]) remainingG.push({ geo: g, idx: gi }); });
+  if (remainingG.length) {
+    function isDigitOnly(s) { return /^[0-9\s\-+]+$/.test(String(s == null ? "" : s).trim()); }
+    // native 非纯数字（可参与单行包含）
+    function textyN(n) { return !isDigitOnly(n.rawText) && normKey(n.rawText).length >= 2; }
+    // geo → 包含的文字型未匹配 native 数（仅长侧包含方向）
+    var geoContainCount = {};
+    remainingG.forEach(function (gi) {
+      var gk = normKey(gi.geo.text);
+      var cnt = 0;
+      if (gk) {
+        ns.forEach(function (n, ni) {
+          if (usedNativeIdx[ni]) return;
+          if (!textyN(n)) return;
+          var nk = normKey(n.rawText);
+          if (nk && nk.length < gk.length && gk.indexOf(nk) >= 0) cnt += 1;
+        });
+      }
+      geoContainCount[gi.idx] = cnt;
+    });
+    ns.forEach(function (n, ni) {
+      if (usedNativeIdx[ni]) return;
+      if (!textyN(n)) return;
+      var nk = normKey(n.rawText);
+      var best = null, bestScore = 0;
+      remainingG.forEach(function (gi) {
+        var g = gi.geo;
+        if (g.text == null) return;
+        if (geoContainCount[gi.idx] !== 1) return; // 多文字 native 聚合 → 留给 MANY_TO_ONE
+        var gk = normKey(g.text);
+        if (!gk || gk.length <= nk.length) return; // 仅 geo 长侧包含
+        if (gk.indexOf(nk) < 0) return;
+        var sType = scriptType(n.rawText) === scriptType(g.text) ? 1 : 0;
+        var sLen = Math.abs(String(n.rawText).length - String(g.text).length) <= 2 ? 1 : 0;
+        var sim = textSimilarity(n.rawText, g.text); // 包含级 = 0.8
+        if (sim < 0.8) return;
+        var score = sim * 2 + sLen * 0.4 + sType * 0.4;
+        if (score > bestScore) { bestScore = score; best = { gIdx: gi.idx, geo: g, score: score, sim: sim, sLen: sLen, sType: sType }; }
+      });
+      if (best) {
+        matchedGeoIdx[best.gIdx] = 1;
+        usedNativeIdx[ni] = 1;
+        matchedNative.push({
+          native: n, geometry: best.geo,
+          match: { score: bestScore, method: "SINGLE_LINE_CONTAINMENT", factors: ["text-sim=" + best.sim.toFixed(2), "len=" + best.sLen, "type=" + best.sType] }
+        });
+      }
+    });
+  }
+
   // ---- Phase 2：one-to-many —— native 行被多个 geometry 行拆分覆盖（§9）----
   // native「张三 董事长」→ 两行 geo「张三」「董事长」：先按 y 序聚合相邻 geo 行的文本，
   // 合并后与 native 行比对；命中 → 该 native 用一个「合成 geometry」承载各子行。

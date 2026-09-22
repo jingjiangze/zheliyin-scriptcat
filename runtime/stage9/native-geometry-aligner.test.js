@@ -122,6 +122,47 @@ RUN.push(t("geometry words 存在时仅作 sub-geometry，text 恒来自 native"
   assert.strictEqual(r.gate.unmatchedNative, 0);
 }));
 
+// ---- Commit A2 后继：SINGLE_LINE_CONTAINMENT（真机回归：盈通启富卡 理财顾问）----
+// native「理财顾问」⊂ geo「理财顾问18888886666」应匹配单行（y200 h24）；
+// 禁止 Phase 2 把相邻行「1」(y67)+该行 join 合成巨型 union 盒（x52 y67 w661 h157）→ dy=+35。
+RUN.push(t("SINGLE_LINE_CONTAINMENT: native⊂单行 geo（理财顾问⊂理财顾问18888886666）→ 命中单行几何", async () => {
+  const ns = [nat("理财顾问", 0)];
+  const gs = [
+    geo("1", { x: 689, y: 67, width: 24, height: 30 }),
+    geo("理财顾问18888886666", { x: 52, y: 200, width: 327, height: 24 })
+  ];
+  const r = A.alignNativeGeometry(ns, gs);
+  assert.strictEqual(r.gate.matched, 1, "native⊂geo 应命中（单行包含）");
+  assert.strictEqual(r.gate.unmatchedNative, 0);
+  const m = r.matchedNative[0];
+  assert.strictEqual(m.match.method, "SINGLE_LINE_CONTAINMENT", "method=" + m.match.method);
+  // 几何必须是单行（non-union），位置在 理财顾问 行（y≈200），不是巨型 union（y67 h157）
+  assert.strictEqual(m.geometry.bbox.union, undefined, "禁止合成 union 盒");
+  assert.strictEqual(m.geometry.bbox.y, 200);
+  assert.strictEqual(m.geometry.bbox.height, 24);
+  assert.ok(m.geometry.bbox.width < 400, "宽度应为单行 327，而非巨型 union");
+}));
+
+// 反向 sanity：native 长、geo 短（native 包含 geo，如「张三 董事长」⊃「张三」）不属于本阶段 → 仍交 Phase 2 join
+RUN.push(t("SINGLE_LINE_CONTAINMENT 反向不抢：native 长 geo 短 → 不匹配单行包含（留给 one-to-many）", async () => {
+  const ns = [nat("张三 董事长", 0)];
+  const gs = [geo("张三", { x: 20, y: 60, width: 50, height: 20 }), geo("董事长", { x: 80, y: 65, width: 50, height: 20 })];
+  const r = A.alignNativeGeometry(ns, gs);
+  assert.strictEqual(r.gate.matched, 1);
+  assert.ok(r.matchedNative[0].match.method === "ONE_TO_MANY_LINES", "method=" + r.matchedNative[0].match.method);
+  assert.strictEqual(r.gate.unmatchedNative, 0);
+}));
+
+// 兼容：exact text 仍优先（Phase 1 不受影响）
+RUN.push(t("Phase 1 优先: 存在 exact 行时不用 containment", async () => {
+  const ns = [nat("盈通启富证券", 0)];
+  const gs = [geo("盈通启富证券", { x: 706, y: 68, width: 184, height: 29 }), geo("盈通启富证券 深圳分公司", { x: 10, y: 300, width: 200, height: 20 })];
+  const r = A.alignNativeGeometry(ns, gs);
+  assert.strictEqual(r.gate.matched, 1);
+  assert.strictEqual(r.matchedNative[0].match.method, "EXACT_TEXT", "method=" + r.matchedNative[0].match.method);
+  assert.strictEqual(r.matchedNative[0].geometry.bbox.y, 68);
+}));
+
 Promise.all(RUN).then(() => {
   console.log("native-geometry-aligner.test: pass=" + passed + " fail=" + failed);
   if (failures.length) console.error(failures.join("\n"));
