@@ -105,7 +105,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9b11c9ea-09d4-4c87-8f98-26f7ef180a1a"
+      "anchorObjectUuid": "5ceb0656-7115-408c-9e10-dec49327160a"
     },
     {
       "blockIndex": 1,
@@ -181,7 +181,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9c3d72ea-a3ce-49d9-8243-dbf2f7082ade"
+      "anchorObjectUuid": "6fbb1fcd-f677-445a-91d5-a40c35c3171a"
     },
     {
       "blockIndex": 2,
@@ -257,7 +257,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "f86de6cb-9035-4400-a307-6f14561adc2f"
+      "anchorObjectUuid": "921b5286-c8de-4c9c-841e-02a6c9e232b5"
     },
     {
       "blockIndex": 3,
@@ -333,7 +333,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "2edf3169-52c2-48f8-aa8f-48b84ff49c1a"
+      "anchorObjectUuid": "3cf54877-83cd-465f-a5a5-4db418909633"
     },
     {
       "blockIndex": 4,
@@ -409,7 +409,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "4bb629c1-a768-42a5-836d-e8db2770026a"
+      "anchorObjectUuid": "cd5e5095-a702-4fa2-ab20-a4d4ae3c98bf"
     },
     {
       "blockIndex": 5,
@@ -485,7 +485,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "f3bcd6fa-a267-4448-9a3b-b5f27c411aac"
+      "anchorObjectUuid": "2524531f-4fcc-40db-9e30-e8ad6c244cd2"
     },
     {
       "blockIndex": 6,
@@ -561,7 +561,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "330c4c8a-07d4-464e-9046-9d3e02e92802"
+      "anchorObjectUuid": "9d9b0c05-df43-419f-8638-7ff2143afb92"
     },
     {
       "blockIndex": 7,
@@ -637,7 +637,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "05ceb40a-06fd-4793-a0d2-f2afbd94d3ad"
+      "anchorObjectUuid": "daf98d45-004b-4bed-884f-0351cefd9436"
     },
     {
       "blockIndex": 8,
@@ -713,7 +713,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "fc343650-0513-481f-8fec-c5912125b906"
+      "anchorObjectUuid": "28bbb9a6-881c-4b1f-815e-08d6c220abbf"
     }
   ],
   "renderedInkCompare": [

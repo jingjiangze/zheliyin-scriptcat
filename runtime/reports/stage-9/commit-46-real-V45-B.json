@@ -22,14 +22,14 @@
     {
       "step": "ocr-done",
       "done": true,
-      "status": "几何校验完成：通过 0 个，保留 2 个（保留=创建成功，仅备注：FONT_MODEL|STYLE_MISMATCH），拒绝 0 个（细节见控制台 zy-ocr GEOMETRY）"
+      "status": "已生成 3 个文字（可双击编辑）"
     },
     {
       "step": "rollback",
       "ok": true
     }
   ],
-  "status": "几何校验完成：通过 0 个，保留 2 个（保留=创建成功，仅备注：FONT_MODEL|STYLE_MISMATCH），拒绝 0 个（细节见控制台 zy-ocr GEOMETRY）",
+  "status": "已生成 3 个文字（可双击编辑）",
   "visualRows": [
     {
       "blockIndex": 0,
@@ -39,6 +39,8 @@
         "width": 176.31,
         "height": 60.57
       },
+      "blockLines": [],
+      "lineInk": null,
       "imageInkBox": {
         "x": 464,
         "y": 18,
@@ -52,34 +54,42 @@
       "inkComponentCount": 1,
       "inkDominantRatio": 1,
       "inkRowBandConfidence": 1,
-      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "visualGeometrySource": "OCR_BBOX",
+      "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+      "visualSrcBoxUsed": {
+        "x": 349,
+        "y": 16,
+        "width": 329,
+        "height": 113
+      },
       "targetQuad": [
         {
-          "x": 169.01,
-          "y": 182.65
+          "x": 126.19,
+          "y": 138.31
         },
         {
-          "x": 206.52,
-          "y": 220.17
+          "x": 250.86,
+          "y": 262.99
         },
         {
-          "x": 164.45,
-          "y": 262.23
+          "x": 208.03,
+          "y": 305.81
         },
         {
-          "x": 126.94,
-          "y": 224.72
+          "x": 83.36,
+          "y": 181.14
         }
       ],
       "targetGeometry": {
-        "left": 126.94,
-        "top": 182.65,
+        "left": 83.36,
+        "top": 138.31,
         "width": 204,
         "height": 81,
         "angle": 45
       },
       "fontSize": 61,
       "fontSource": "ink-height-primary",
+      "matchMethod": "EXACT_TEXT",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -95,7 +105,83 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9a06b54f-9c05-452a-a5a9-79f5b2dd3106"
+      "anchorObjectUuid": "da6ee24b-fc0f-4385-9837-b68ae5ecf7ab"
+    },
+    {
+      "blockIndex": 1,
+      "nativeText": "手机:",
+      "ocrBBox": {
+        "left": 311.36,
+        "width": 38.05,
+        "height": 15.54
+      },
+      "blockLines": [],
+      "lineInk": null,
+      "imageInkBox": {
+        "x": 611,
+        "y": 186,
+        "width": 26,
+        "height": 25
+      },
+      "imageInkWidth": 26,
+      "imageInkHeight": 25,
+      "imageInkCoverage": 0.5458,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX",
+      "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+      "visualSrcBoxUsed": {
+        "x": 581,
+        "y": 182,
+        "width": 71,
+        "height": 29
+      },
+      "targetQuad": [
+        {
+          "x": 151.19,
+          "y": 289.14
+        },
+        {
+          "x": 178.09,
+          "y": 316.05
+        },
+        {
+          "x": 167.1,
+          "y": 327.04
+        },
+        {
+          "x": 140.2,
+          "y": 300.13
+        }
+      ],
+      "targetGeometry": {
+        "left": 140.2,
+        "top": 289.14,
+        "width": 60,
+        "height": 25,
+        "angle": 45
+      },
+      "fontSize": 14,
+      "fontSource": "ink-height-primary",
+      "matchMethod": "EXACT_TEXT",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8621,
+        "advanceFontSize": null,
+        "inkFontSize": 14,
+        "inkHeight": 13.4,
+        "ocrHeight": 15.543655960648145
+      },
+      "fill": null,
+      "fillConfidence": 0.5344,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "c6fc93ef-f675-44b6-99cf-ed6e5a94dfd4"
     },
     {
       "blockIndex": 12,
@@ -105,6 +191,8 @@
         "width": 54.13,
         "height": 22.51
       },
+      "blockLines": [],
+      "lineInk": null,
       "imageInkBox": {
         "x": 601,
         "y": 131,
@@ -118,34 +206,42 @@
       "inkComponentCount": 1,
       "inkDominantRatio": 1,
       "inkRowBandConfidence": 1,
-      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "visualGeometrySource": "OCR_BBOX",
+      "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+      "visualSrcBoxUsed": {
+        "x": 593,
+        "y": 128,
+        "width": 101,
+        "height": 42
+      },
       "targetQuad": [
         {
-          "x": 178.09,
-          "y": 277.39
+          "x": 176.2,
+          "y": 273.22
         },
         {
-          "x": 187.57,
-          "y": 286.87
+          "x": 214.47,
+          "y": 311.5
         },
         {
-          "x": 174.68,
-          "y": 299.75
+          "x": 198.55,
+          "y": 327.41
         },
         {
-          "x": 165.21,
-          "y": 290.28
+          "x": 160.28,
+          "y": 289.14
         }
       ],
       "targetGeometry": {
-        "left": 165.21,
-        "top": 277.39,
+        "left": 160.28,
+        "top": 273.22,
         "width": 137,
         "height": 31,
         "angle": 45
       },
       "fontSize": 19,
       "fontSource": "ink-height-primary",
+      "matchMethod": "MULTI_FACTOR",
       "fontSizeEvidence": {
         "status": "NORMAL",
         "fontEvidenceStatus": "NORMAL",
@@ -161,59 +257,68 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "e39f050f-54b9-44cf-9554-0bbd363905bc"
+      "anchorObjectUuid": "6d283570-7ec1-4a11-bd7e-6cf9bd18b3f5"
     }
   ],
   "renderedInkCompare": [
     {
       "block": "夏祝莲",
-      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "visualGeomSource": "OCR_BBOX",
       "fontSize": 61,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 126.94,
-      "targetTop": 182.65,
-      "actualLeft": 119,
-      "actualTop": 125,
-      "dx": -7.94,
-      "dy": -57.65,
-      "widthGap": -22,
-      "heightGap": -23,
-      "actualInkWidth": 182,
-      "actualInkHeight": 58,
+      "targetLeft": 83.36,
+      "targetTop": 138.31,
+      "actualLeft": 83,
+      "actualTop": 138,
+      "dx": -0.36,
+      "dy": -0.31,
+      "widthGap": -25,
+      "heightGap": -25,
+      "actualInkWidth": 179,
+      "actualInkHeight": 56,
       "sourceInkLeft": 464
     },
     {
+      "block": "手机:",
+      "visualGeomSource": "OCR_BBOX",
+      "fontSize": 14,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 140.2,
+      "targetTop": 289.14,
+      "actualLeft": 140,
+      "actualTop": 289,
+      "dx": -0.2,
+      "dy": -0.14,
+      "widthGap": -28,
+      "heightGap": -11,
+      "actualInkWidth": 32,
+      "actualInkHeight": 14,
+      "sourceInkLeft": 611
+    },
+    {
       "block": "Xia Zhu Lian",
-      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "visualGeomSource": "OCR_BBOX",
       "fontSize": 19,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 165.21,
-      "targetTop": 277.39,
-      "actualLeft": 139,
-      "actualTop": 228,
-      "dx": -26.21,
-      "dy": -49.39,
-      "widthGap": -24,
+      "targetLeft": 160.28,
+      "targetTop": 273.22,
+      "actualLeft": 160,
+      "actualTop": 273,
+      "dx": -0.28,
+      "dy": -0.22,
+      "widthGap": -30,
       "heightGap": -15,
-      "actualInkWidth": 113,
+      "actualInkWidth": 107,
       "actualInkHeight": 16,
       "sourceInkLeft": 601
     }
   ],
   "leftShiftObserved": {
-    "count": 2,
-    "rows": [
-      {
-        "block": "夏祝莲",
-        "dx": -7.94
-      },
-      {
-        "block": "Xia Zhu Lian",
-        "dx": -26.21
-      }
-    ]
+    "count": 0,
+    "rows": []
   },
   "errors": []
 }
