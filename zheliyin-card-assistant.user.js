@@ -1699,7 +1699,17 @@
           const imgT = buildImageTransform({ naturalWidth: geo.naturalWidth, naturalHeight: geo.naturalHeight, width: w, height: h, aCoords: geo.aCoords });
           imgTShared = imgT;
           if (imgT) {
-            const mq = mapRectToCanvas({ x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height }, imgT);
+            // OCR-P1 Commit 4.6-A：视觉几何 —— OCR_BBOX 仅作识别/搜索区域，不直接当最终位置。
+            // SOURCE_INK_BOX（ImageInk inkBox，防污染算法）可靠时优先作为 VISUAL_TARGET 映射源；
+            // 可靠性门槛：ok + confidence ≥ VISUAL_INK_MIN_CONF + coverage 合理 + bbox 有效。
+            const inkV = inkByBlock[bi] || null;
+            const VISUAL_INK_MIN_CONF = 0.30; // 经验下界（component 集中度 + 行带置信度融合），外推验证后按证据收紧
+            const vbBox = (inkV && inkV.ok && inkV.inkBox && typeof inkV.confidence === "number" && inkV.confidence >= VISUAL_INK_MIN_CONF &&
+              inkV.inkBox.width > 0 && inkV.inkBox.height > 0 &&
+              !(inkV.coverage != null && inkV.coverage < 0.02)) ? inkV.inkBox : null;
+            const visualGeomSource = vbBox ? "IMAGE_INK" : "OCR_BBOX_FALLBACK";
+            const srcBox = vbBox || { x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height };
+            const mq = mapRectToCanvas(srcBox, imgT);
             if (mq && Array.isArray(mq.corners) && mq.corners.length === 4) {
               targetQuad = mq.corners;
               imageRuntimeState = { basis: "aCoords", naturalWidth: geo.naturalWidth, naturalHeight: geo.naturalHeight, objectWidth: w, objectHeight: h, sourceWidth: geo.naturalWidth, sourceHeight: geo.naturalHeight };
@@ -1839,6 +1849,9 @@
           : { source: "NONE", blockAngle: null, imageAngle: angle || 0, classification: "UNKNOWN", confidence: 0 },
         // Stage 8D：融合证据（§十四）与 bbox 三层分离（§十二）
         fusion8d: fusion8d ? { reason: fusion8d.reason, confidence: fusion8d.confidence, quality: currentGateScore != null ? Math.round(currentGateScore * 100) / 100 : null, warnings: (fusion8d.warnings || []).slice(0, 4) } : null,
+        // OCR-P1 Commit 4.6-A：视觉几何来源取证（IMAGE_INK 优先 / OCR_BBOX_FALLBACK）+ 源墨迹字段
+        visualGeometrySource: (typeof visualGeomSource !== "undefined") ? visualGeomSource : "OCR_BBOX_FALLBACK",
+        visualInkEvidence: (inkV && inkV.ok) ? { inkBox: inkV.inkBox, inkWidth: inkV.inkWidth, inkHeight: inkV.inkHeight, coverage: inkV.coverage, confidence: inkV.confidence, method: inkV.method, componentCount: inkV.componentCount, dominantComponentRatio: inkV.dominantComponentRatio, rowBandConfidence: inkV.rowBandConfidence } : null,
         bboxSeparation8d: bboxSep ? { visualWidth: bboxSep.textVisualTarget.width, ocrBoxH: Math.round(bboxSep.ocrBBox.height * 100) / 100, layoutW: null } : null,
         // Stage 8D P6-1（§二十一）：Source = OCR bbox（canvas 像素）—— 与 Target(text-fit)/Actual(rendered ink) 三层对比用
         ocrBBox8d: { width: Math.round(bw * 100) / 100, height: Math.round(bh * 100) / 100 },

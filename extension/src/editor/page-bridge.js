@@ -410,43 +410,37 @@ function pageBridge() {
         return;
       }
       if (event.data.type === "inkMeasure") {
-        // Stage 9 P4-B §四/§五：只读 —— 对源图各 OCR block 区域测量「局部 Otsu 少数类前景墨迹 bbox」。
-        // 注：页桥以 toString 注入为自包含字符串，无法引用沙箱 @require 模块；此处内联实现与
-        // extension/src/editor/image-ink-target.js 同构（node 单测以模块为真源）。
-        // 只读不改画布；失败显式 reason（NO_REGION/NO_INK/NO_IMAGE_SOURCE/CROSS_ORIGIN_IMAGE），禁伪造 inkWidth。
-        const resoM = resolveCurrentEditorPage();
-        if (!resoM || resoM.status !== "ok" || !resoM.canvas) { post("inkMeasureResult", { ok: false, reason: "CURRENT_PAGE_UNKNOWN", items: [] }); return; }
-        const canvasM = resoM.canvas;
-        const activeM = canvasM.getActiveObject ? canvasM.getActiveObject() : null;
-        const targetM = (activeM && String(activeM.type) === "image") ? activeM
-          : ((canvasM.backgroundImage && String(canvasM.backgroundImage.type) === "image") ? canvasM.backgroundImage
-            : ((canvasM.getObjects && canvasM.getObjects().find ? canvasM.getObjects().find(function (o) { return o && String(o.type) === "image"; }) : null) || null));
-        if (!targetM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SOURCE", items: [] }); return; }
-        const elM = (targetM._element) || (targetM.getElement && targetM.getElement());
-        if (!elM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_ELEMENT", items: [] }); return; }
-        const iwM = elM.naturalWidth || elM.width || targetM.width;
-        const ihM = elM.naturalHeight || elM.height || targetM.height;
-        if (!iwM || !ihM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SIZE", items: [] }); return; }
-        const cvM = document.createElement("canvas"); cvM.width = iwM; cvM.height = ihM;
-        const c2M = cvM.getContext && cvM.getContext("2d");
-        if (!c2M) { post("inkMeasureResult", { ok: false, reason: "NO_CANVAS_CTX", items: [] }); return; }
-        let dM = null;
-        try { c2M.drawImage(elM, 0, 0); dM = c2M.getImageData(0, 0, iwM, ihM).data; } catch (e) { dM = null; }
-        if (!dM) { post("inkMeasureResult", { ok: false, reason: "CROSS_ORIGIN_IMAGE", items: [] }); return; }
-        const grayM = new Uint8Array(iwM * ihM);
-        for (let iM = 0; iM < iwM * ihM; iM += 1) { const jM = iM * 4; grayM[iM] = Math.round(0.299 * dM[jM] + 0.587 * dM[jM + 1] + 0.114 * dM[jM + 2]); }
-        const reqInk = Array.isArray(event.data.items) ? event.data.items : [];
-        const itemsM = reqInk.map(function (it) {
-          const bb = it.bbox || {};
-          const x0 = Math.max(0, Math.floor(bb.x || 0)), y0 = Math.max(0, Math.floor(bb.y || 0));
-          const x1 = Math.min(iwM - 1, Math.ceil((bb.x || 0) + (bb.width || 0)));
-          const y1 = Math.min(ihM - 1, Math.ceil((bb.y || 0) + (bb.height || 0)));
-          const ws = x1 - x0, hs = y1 - y0;
-          const base = { blockIndex: it.blockIndex != null ? it.blockIndex : null, lineIndex: it.lineIndex != null ? it.lineIndex : null };
-          if (ws < 2 || hs < 2 || x1 < x0 || y1 < y0) return Object.assign(base, { ok: false, reason: "NO_REGION", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+        // Stage 9 P4-B §四/§五 + OCR-P1 Commit 4.6-A：只读 —— 对源图各 OCR block 区域测量
+        // 「防污染视觉墨迹 bbox」。页桥以 toString 注入为自包含字符串，无法引用沙箱 @require 模块，
+        // 此处内联镜像与 extension/src/editor/image-ink-visual.js 逐逻辑一致（node 单测以模块为真源）。
+        // 概念：OCR_BBOX（搜索区域）→ SOURCE_INK_BOX（本函数视觉墨迹）→ VISUAL_TARGET_BOX（最终目标）。
+        // 只读不改画布；失败显式 reason（NO_REGION/NO_INK/NO_BAND...），禁伪造 inkBox。
+        const resoV = resolveCurrentEditorPage();
+        if (!resoV || resoV.status !== "ok" || !resoV.canvas) { post("inkMeasureResult", { ok: false, reason: "CURRENT_PAGE_UNKNOWN", items: [] }); return; }
+        const canvasV = resoV.canvas;
+        const activeV = canvasV.getActiveObject ? canvasV.getActiveObject() : null;
+        const targetV = (activeV && String(activeV.type) === "image") ? activeV
+          : ((canvasV.backgroundImage && String(canvasV.backgroundImage.type) === "image") ? canvasV.backgroundImage
+            : ((canvasV.getObjects && canvasV.getObjects().find ? canvasV.getObjects().find(function (o) { return o && String(o.type) === "image"; }) : null) || null));
+        if (!targetV) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SOURCE", items: [] }); return; }
+        const elV = (targetV._element) || (targetV.getElement && targetV.getElement());
+        if (!elV) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_ELEMENT", items: [] }); return; }
+        const iwV = elV.naturalWidth || elV.width || targetV.width;
+        const ihV = elV.naturalHeight || elV.height || targetV.height;
+        if (!iwV || !ihV) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SIZE", items: [] }); return; }
+        const cvV = document.createElement("canvas"); cvV.width = iwV; cvV.height = ihV;
+        const c2V = cvV.getContext && cvV.getContext("2d");
+        if (!c2V) { post("inkMeasureResult", { ok: false, reason: "NO_CANVAS_CTX", items: [] }); return; }
+        let dV = null;
+        try { c2V.drawImage(elV, 0, 0); dV = c2V.getImageData(0, 0, iwV, ihV).data; } catch (e) { dV = null; }
+        if (!dV) { post("inkMeasureResult", { ok: false, reason: "CROSS_ORIGIN_IMAGE", items: [] }); return; }
+        const grayV = new Uint8Array(iwV * ihV);
+        for (let iV = 0; iV < iwV * ihV; iV += 1) { const jV = iV * 4; grayV[iV] = Math.round(0.299 * dV[jV] + 0.587 * dV[jV + 1] + 0.114 * dV[jV + 2]); }
+        // ---- 防污染视觉墨迹（与 image-ink-visual.js 逐逻辑一致）----
+        function voOtsu(x0, y0, x1, y1) {
           const hist = new Array(256).fill(0); let sum = 0, total = 0;
-          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) { const g = grayM[y * iwM + x]; hist[g] += 1; total += 1; sum += g; }
-          if (total < 16) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) { const g = grayV[y * iwV + x]; hist[g] += 1; total += 1; sum += g; }
+          if (total < 24) return null;
           let sumB = 0, wB = 0, maxVar = 0, th = 128, found = false;
           for (let t = 0; t < 256; t += 1) {
             wB += hist[t]; if (wB === 0) continue;
@@ -456,26 +450,119 @@ function pageBridge() {
             const v = wB * wF * (mB - mF) * (mB - mF);
             if (v > maxVar) { maxVar = v; th = t; found = true; }
           }
-          if (!found) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
-          let dark = 0;
-          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) if (grayM[y * iwM + x] <= th) dark += 1;
-          const takeDark = dark <= total - dark;
-          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, cnt = 0;
-          for (let y = y0; y < y1; y += 1) {
-            for (let x = x0; x < x1; x += 1) {
-              const g = grayM[y * iwM + x];
-              const fg = takeDark ? (g <= th) : (g > th);
-              if (!fg) continue;
-              cnt += 1;
-              if (x < minX) minX = x; if (x > maxX) maxX = x;
-              if (y < minY) minY = y; if (y > maxY) maxY = y;
+          return found ? th : null;
+        }
+        function voClean(bin, x0, y0, x1, y1) {
+          const out = new Uint8Array(iwV * ihV);
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) {
+            let n = 0, cnt = 0;
+            for (let dy = -1; dy <= 1; dy += 1) for (let dx = -1; dx <= 1; dx += 1) {
+              const ny = y + dy, nx = x + dx;
+              if (ny < y0 || ny >= y1 || nx < x0 || nx >= x1) continue;
+              n += bin[ny * iwV + nx]; cnt += 1;
             }
+            out[y * iwV + x] = (cnt > 0 && n >= Math.ceil(cnt / 2)) ? 1 : 0;
           }
-          if (!(cnt >= 6 && maxX >= minX && maxY >= minY) || !isFinite(minX)) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
-          const inkW = maxX - minX + 1, inkH = maxY - minY + 1;
-          return Object.assign(base, { ok: true, reason: "OK", inkWidth: inkW, inkHeight: inkH, inkBox: { x: minX, y: minY, width: inkW, height: inkH }, coverage: Math.round((cnt / total) * 10000) / 10000 });
+          return out;
+        }
+        function voRowBands(rowCount, y0, y1) {
+          const bands = []; let curY0 = null, lastY = null, emptyRun = 0;
+          for (let y = y0; y < y1; y += 1) {
+            if (rowCount[y] > 0) { if (curY0 === null) curY0 = y; lastY = y; emptyRun = 0; }
+            else if (curY0 !== null) { emptyRun += 1; if (emptyRun > 2) { bands.push({ y0: curY0, y1: lastY + 1, count: 0 }); curY0 = null; lastY = null; emptyRun = 0; } }
+          }
+          if (curY0 !== null && lastY !== null) bands.push({ y0: curY0, y1: lastY + 1, count: 0 });
+          bands.forEach(function (b) { let n = 0; for (let yy = b.y0; yy < b.y1; yy += 1) n += rowCount[yy]; b.count = n; });
+          let best = null, total = 0;
+          bands.forEach(function (b) { total += b.count; if (!best || b.count > best.count) best = b; });
+          return { bands: bands, best: best, total: total, rowBandConfidence: (best && total > 0) ? best.count / total : 0 };
+        }
+        function voColSpan(colCount, x0, x1) {
+          const segs = []; let curX0 = null, lastX = null;
+          for (let x = x0; x < x1; x += 1) {
+            if (colCount[x] > 0) {
+              if (curX0 === null) curX0 = x;
+              if (lastX !== null && (x - lastX) > 2) { segs.push({ x0: curX0, x1: lastX + 1, count: 0 }); curX0 = x; }
+              lastX = x;
+            } else if (curX0 !== null && lastX !== null && (x - lastX) > 2) { segs.push({ x0: curX0, x1: lastX + 1, count: 0 }); curX0 = null; lastX = null; }
+          }
+          if (curX0 !== null && lastX !== null) segs.push({ x0: curX0, x1: lastX + 1, count: 0 });
+          let best = null;
+          segs.forEach(function (s) { if (!best || (s.x1 - s.x0) > (best.x1 - best.x0)) best = s; });
+          return best;
+        }
+        function voConn(bin, bx0, by0, bx1, by1, rx0, ry0, rx1, ry1) {
+          const visited = new Uint8Array(iwV * ihV); const sizes = [];
+          for (let y = by0; y < by1; y += 1) for (let x = bx0; x < bx1; x += 1) {
+            if (!bin[y * iwV + x] || visited[y * iwV + x]) continue;
+            const q = [[x, y]]; let head = 0, size = 0;
+            visited[y * iwV + x] = 1;
+            while (head < q.length) {
+              const p = q[head]; head += 1; size += 1;
+              for (let dy = -1; dy <= 1; dy += 1) for (let dx = -1; dx <= 1; dx += 1) {
+                const nx = p[0] + dx, ny = p[1] + dy;
+                if (nx < rx0 || nx >= rx1 || ny < ry0 || ny >= ry1) continue;
+                if (nx >= bx0 && nx < bx1 && ny >= by0 && ny < by1 && bin[ny * iwV + nx] && !visited[ny * iwV + nx]) { visited[ny * iwV + nx] = 1; q.push([nx, ny]); }
+              }
+            }
+            sizes.push(size);
+          }
+          let total = 0, max = 0;
+          sizes.forEach(function (s) { total += s; if (s > max) max = s; });
+          return { componentCount: sizes.length, dominantComponentRatio: total > 0 ? max / total : 0 };
+        }
+        const reqV = Array.isArray(event.data.items) ? event.data.items : [];
+        const itemsV = reqV.map(function (it) {
+          const bb = it.bbox || {};
+          const base = { blockIndex: it.blockIndex != null ? it.blockIndex : null, lineIndex: it.lineIndex != null ? it.lineIndex : null };
+          const x0 = Math.max(0, Math.floor(bb.x || 0)), y0 = Math.max(0, Math.floor(bb.y || 0));
+          const x1 = Math.min(iwV - 1, Math.ceil((bb.x || 0) + (bb.width || 0)));
+          const y1 = Math.min(ihV - 1, Math.ceil((bb.y || 0) + (bb.height || 0)));
+          const ws = x1 - x0, hs = y1 - y0;
+          if (ws < 4 || hs < 4 || x1 < x0 || y1 < y0) return Object.assign(base, { ok: false, reason: "NO_REGION", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: null, confidence: null, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const th = voOtsu(x0, y0, x1, y1);
+          if (th == null) return Object.assign(base, { ok: false, reason: "NO_INK_OTSU", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: null, confidence: null, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const bin = new Uint8Array(iwV * ihV);
+          let dark = 0; const total = ws * hs;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) if (grayV[y * iwV + x] <= th) dark += 1;
+          const takeDark = dark <= total - dark;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) { const g = grayV[y * iwV + x]; bin[y * iwV + x] = takeDark ? ((g <= th) ? 1 : 0) : ((g > th) ? 1 : 0); }
+          let fgCnt = 0;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) fgCnt += bin[y * iwV + x] ? 1 : 0;
+          if (fgCnt < 8) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: th, confidence: 0, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const clean = voClean(bin, x0, y0, x1, y1);
+          let cCnt = 0;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) cCnt += clean[y * iwV + x] ? 1 : 0;
+          if (cCnt < 8) return Object.assign(base, { ok: false, reason: "NO_INK_AFTER_CLEAN", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: th, confidence: 0, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const rowCount = new Array(ihV).fill(0);
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) if (clean[y * iwV + x]) rowCount[y] += 1;
+          const rb = voRowBands(rowCount, y0, y1);
+          if (!rb.best) return Object.assign(base, { ok: false, reason: "NO_BAND", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: th, confidence: 0, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const band0 = rb.best.y0, band1 = rb.best.y1;
+          const colCount = new Array(iwV).fill(0);
+          for (let y = band0; y < band1; y += 1) for (let x = x0; x < x1; x += 1) if (clean[y * iwV + x]) colCount[x] += 1;
+          const cs = voColSpan(colCount, x0, x1);
+          if (!cs) return Object.assign(base, { ok: false, reason: "NO_SPAN", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: th, confidence: 0, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const vx0 = cs.x0, vx1 = cs.x1, vy0 = band0, vy1 = band1;
+          const cc = voConn(clean, vx0, vy0, vx1, vy1, x0, y0, x1, y1);
+          const inkW = vx1 - vx0, inkH = vy1 - vy0;
+          let vCnt = 0;
+          for (let y = vy0; y < vy1; y += 1) for (let x = vx0; x < vx1; x += 1) vCnt += clean[y * iwV + x] ? 1 : 0;
+          const covTotal = cCnt > 0 ? cCnt : 1;
+          return Object.assign(base, {
+            ok: true, reason: "OK",
+            inkWidth: inkW, inkHeight: inkH,
+            inkBox: { x: vx0, y: vy0, width: inkW, height: inkH },
+            coverage: Math.round((vCnt / covTotal) * 10000) / 10000,
+            threshold: th,
+            confidence: Math.round(Math.min(1, cc.dominantComponentRatio * 0.6 + rb.rowBandConfidence * 0.4) * 100) / 100,
+            componentCount: cc.componentCount,
+            dominantComponentRatio: Math.round(cc.dominantComponentRatio * 10000) / 10000,
+            rowBandConfidence: Math.round(rb.rowBandConfidence * 10000) / 10000,
+            method: "VISUAL_MORPH_PROJECTION"
+          });
         });
-        post("inkMeasureResult", { ok: true, reason: "OK", imageWidth: iwM, imageHeight: ihM, items: itemsM });
+        post("inkMeasureResult", { ok: true, reason: "OK", imageWidth: iwV, imageHeight: ihV, items: itemsV });
         return;
       }
       if (event.data.type === "ocrCalibrate") {
