@@ -1,6 +1,6 @@
 {
   "case": "V0",
-  "ab": "B",
+  "ab": "A",
   "steps": [
     {
       "step": "editor-ready",
@@ -55,25 +55,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 248.66,
-          "y": 9.65
+          "x": 187.03,
+          "y": 8.58
         },
         {
-          "x": 301.71,
-          "y": 9.65
+          "x": 363.34,
+          "y": 8.58
         },
         {
-          "x": 301.71,
+          "x": 363.34,
           "y": 69.14
         },
         {
-          "x": 248.66,
+          "x": 187.03,
           "y": 69.14
         }
       ],
       "targetGeometry": {
-        "left": 248.66,
-        "top": 9.65,
+        "left": 187.03,
+        "top": 8.58,
         "width": 204,
         "height": 81,
         "angle": 0
@@ -95,7 +95,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "0a4a4776-ddc1-4a60-a585-9f4b7d65150b"
+      "anchorObjectUuid": "7be0f68b-56e1-47bc-8322-022738220437"
     },
     {
       "blockIndex": 1,
@@ -121,25 +121,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 327.44,
-          "y": 99.69
+          "x": 311.36,
+          "y": 97.55
         },
         {
-          "x": 341.37,
-          "y": 99.69
+          "x": 349.41,
+          "y": 97.55
         },
         {
-          "x": 341.37,
+          "x": 349.41,
           "y": 113.09
         },
         {
-          "x": 327.44,
+          "x": 311.36,
           "y": 113.09
         }
       ],
       "targetGeometry": {
-        "left": 327.44,
-        "top": 99.69,
+        "left": 311.36,
+        "top": 97.55,
         "width": 60,
         "height": 25,
         "angle": 0
@@ -161,7 +161,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5fff86c9-1cc5-4965-8644-58fb6a161855"
+      "anchorObjectUuid": "f21f3e46-29b3-4e37-a45d-52b17cd56d0e"
     },
     {
       "blockIndex": 2,
@@ -187,25 +187,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 394.42,
-          "y": 102.37
+          "x": 356.91,
+          "y": 100.77
         },
         {
-          "x": 403,
-          "y": 102.37
+          "x": 459.27,
+          "y": 100.77
         },
         {
-          "x": 403,
+          "x": 459.27,
           "y": 118.45
         },
         {
-          "x": 394.42,
+          "x": 356.91,
           "y": 118.45
         }
       ],
       "targetGeometry": {
-        "left": 394.42,
-        "top": 102.37,
+        "left": 356.91,
+        "top": 100.77,
         "width": 113,
         "height": 28,
         "angle": 0
@@ -227,7 +227,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "2c6e3765-30e0-4516-bb50-5237680083f1"
+      "anchorObjectUuid": "a3b3762f-a0a4-40c4-aa26-25a03edbe773"
     },
     {
       "blockIndex": 3,
@@ -253,25 +253,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 312.97,
-          "y": 115.77
+          "x": 311.36,
+          "y": 114.17
         },
         {
           "x": 342.44,
-          "y": 115.77
+          "y": 114.17
         },
         {
           "x": 342.44,
           "y": 123.81
         },
         {
-          "x": 312.97,
+          "x": 311.36,
           "y": 123.81
         }
       ],
       "targetGeometry": {
-        "left": 312.97,
-        "top": 115.77,
+        "left": 311.36,
+        "top": 114.17,
         "width": 60,
         "height": 20,
         "angle": 0
@@ -293,7 +293,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "187ee1a1-3cab-4e11-920a-40644aefe695"
+      "anchorObjectUuid": "23dbbc81-2bde-41e5-8b40-7f753429c2f0"
     },
     {
       "blockIndex": 4,
@@ -319,25 +319,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 312.43,
-          "y": 130.25
+          "x": 310.82,
+          "y": 128.1
         },
         {
-          "x": 326.9,
-          "y": 130.25
+          "x": 349.41,
+          "y": 128.1
         },
         {
-          "x": 326.9,
+          "x": 349.41,
           "y": 143.64
         },
         {
-          "x": 312.43,
+          "x": 310.82,
           "y": 143.64
         }
       ],
       "targetGeometry": {
-        "left": 312.43,
-        "top": 130.25,
+        "left": 310.82,
+        "top": 128.1,
         "width": 60,
         "height": 25,
         "angle": 0
@@ -359,7 +359,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9489cca5-6487-4554-890e-dd7b016d7e62"
+      "anchorObjectUuid": "887621ff-d63b-4d4c-90f9-2a54beed7146"
     },
     {
       "blockIndex": 5,
@@ -385,25 +385,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 452.3,
-          "y": 131.32
+          "x": 357.98,
+          "y": 129.17
         },
         {
           "x": 461.41,
-          "y": 131.32
+          "y": 129.17
         },
         {
           "x": 461.41,
           "y": 147.93
         },
         {
-          "x": 452.3,
+          "x": 357.98,
           "y": 147.93
         }
       ],
       "targetGeometry": {
-        "left": 452.3,
-        "top": 131.32,
+        "left": 357.98,
+        "top": 129.17,
         "width": 113.43,
         "height": 28,
         "angle": 0
@@ -425,7 +425,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5a6aec55-c791-4eda-ba91-b1a190eaa5de"
+      "anchorObjectUuid": "d0812351-f68a-430f-8381-d9e9a075aa1b"
     },
     {
       "blockIndex": 6,
@@ -451,25 +451,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 309.75,
-          "y": 146.86
+          "x": 308.14,
+          "y": 144.72
         },
         {
           "x": 343.51,
-          "y": 146.86
+          "y": 144.72
         },
         {
           "x": 343.51,
           "y": 154.9
         },
         {
-          "x": 309.75,
+          "x": 308.14,
           "y": 154.9
         }
       ],
       "targetGeometry": {
-        "left": 309.75,
-        "top": 146.86,
+        "left": 308.14,
+        "top": 144.72,
         "width": 60,
         "height": 20,
         "angle": 0
@@ -491,7 +491,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "25aa3a8c-900f-4c41-b28f-cb471a284abf"
+      "anchorObjectUuid": "daf341c9-8ae9-4dc9-aed3-06fe79db7126"
     },
     {
       "blockIndex": 7,
@@ -517,25 +517,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 43.41,
-          "y": 188.13
+          "x": 40.19,
+          "y": 184.92
         },
         {
-          "x": 66.99,
-          "y": 188.13
+          "x": 127.54,
+          "y": 184.92
         },
         {
-          "x": 66.99,
-          "y": 220.29
+          "x": 127.54,
+          "y": 221.9
         },
         {
-          "x": 43.41,
-          "y": 220.29
+          "x": 40.19,
+          "y": 221.9
         }
       ],
       "targetGeometry": {
-        "left": 43.41,
-        "top": 188.13,
+        "left": 40.19,
+        "top": 184.92,
         "width": 99.35,
         "height": 48,
         "angle": 0
@@ -557,7 +557,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "1874579a-010b-4d6a-ad52-6b1297185968"
+      "anchorObjectUuid": "033c7447-f9ca-4107-b2ca-44c9ce6f36f5"
     },
     {
       "blockIndex": 8,
@@ -623,7 +623,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "ce5b1236-89a8-44f3-b2ce-c1f0f8f4581e"
+      "anchorObjectUuid": "96a034eb-890f-4413-857f-c88e6b2c9627"
     },
     {
       "blockIndex": 9,
@@ -653,11 +653,11 @@
           "y": 235.3
         },
         {
-          "x": 252.41,
+          "x": 469.45,
           "y": 235.3
         },
         {
-          "x": 252.41,
+          "x": 469.45,
           "y": 255.13
         },
         {
@@ -689,7 +689,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "452697ea-b537-489a-8b9a-e5aaf814646b"
+      "anchorObjectUuid": "7d552206-9e91-46bd-be32-86aadcbef09c"
     },
     {
       "blockIndex": 10,
@@ -716,24 +716,24 @@
       "targetQuad": [
         {
           "x": 214.36,
-          "y": 256.74
+          "y": 254.06
         },
         {
-          "x": 240.62,
-          "y": 256.74
+          "x": 403,
+          "y": 254.06
         },
         {
-          "x": 240.62,
-          "y": 270.67
+          "x": 403,
+          "y": 271.75
         },
         {
           "x": 214.36,
-          "y": 270.67
+          "y": 271.75
         }
       ],
       "targetGeometry": {
         "left": 214.36,
-        "top": 256.74,
+        "top": 254.06,
         "width": 242,
         "height": 25,
         "angle": 0
@@ -755,7 +755,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5ca5a290-c6d8-4401-acfd-43b49036ac1f"
+      "anchorObjectUuid": "61bd880d-51a9-47ad-bee1-07b61de82cd1"
     },
     {
       "blockIndex": 11,
@@ -785,11 +785,11 @@
           "y": 275.5
         },
         {
-          "x": 311.9,
+          "x": 474.81,
           "y": 275.5
         },
         {
-          "x": 311.9,
+          "x": 474.81,
           "y": 294.26
         },
         {
@@ -821,7 +821,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "f2657a4d-700b-4d67-8929-8cad6731c83b"
+      "anchorObjectUuid": "ca32c128-0521-48b6-b4d4-79f28ad0bffa"
     },
     {
       "blockIndex": 12,
@@ -847,25 +847,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 322.08,
-          "y": 70.21
+          "x": 317.79,
+          "y": 68.61
         },
         {
-          "x": 335.48,
-          "y": 70.21
+          "x": 371.92,
+          "y": 68.61
         },
         {
-          "x": 335.48,
-          "y": 88.44
+          "x": 371.92,
+          "y": 91.12
         },
         {
-          "x": 322.08,
-          "y": 88.44
+          "x": 317.79,
+          "y": 91.12
         }
       ],
       "targetGeometry": {
-        "left": 322.08,
-        "top": 70.21,
+        "left": 317.79,
+        "top": 68.61,
         "width": 137,
         "height": 31,
         "angle": 0
@@ -887,7 +887,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "8c72a6a4-e098-49f2-843c-95c19428540f"
+      "anchorObjectUuid": "35c348e3-aa9d-4d2a-a934-54650c6e1afc"
     },
     {
       "blockIndex": 13,
@@ -913,25 +913,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 302.79,
-          "y": 156.51
+          "x": 189.71,
+          "y": 152.22
         },
         {
-          "x": 321.54,
-          "y": 156.51
+          "x": 478.56,
+          "y": 152.22
         },
         {
-          "x": 321.54,
+          "x": 478.56,
           "y": 184.92
         },
         {
-          "x": 302.79,
+          "x": 189.71,
           "y": 184.92
         }
       ],
       "targetGeometry": {
-        "left": 302.79,
-        "top": 156.51,
+        "left": 189.71,
+        "top": 152.22,
         "width": 387,
         "height": 43,
         "angle": 0
@@ -953,7 +953,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "57b506eb-7896-4639-bbb2-4f1b009c14de"
+      "anchorObjectUuid": "707cf2d8-6b97-4914-bbb5-c9e5bbc9a160"
     },
     {
       "blockIndex": 14,
@@ -979,25 +979,25 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 445.34,
-          "y": 217.08
+          "x": 178.46,
+          "y": 214.4
         },
         {
           "x": 478.56,
-          "y": 217.08
+          "y": 214.4
         },
         {
           "x": 478.56,
           "y": 237.98
         },
         {
-          "x": 445.34,
+          "x": 178.46,
           "y": 237.98
         }
       ],
       "targetGeometry": {
-        "left": 445.34,
-        "top": 217.08,
+        "left": 178.46,
+        "top": 214.4,
         "width": 544,
         "height": 34,
         "angle": 0
@@ -1019,7 +1019,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9be5ba9f-b5ec-464d-9f9d-791cefcec879"
+      "anchorObjectUuid": "15f94e89-e73c-4208-b402-be9edb32fd97"
     }
   ],
   "renderedInkCompare": [
@@ -1029,12 +1029,12 @@
       "fontSize": 61,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 248.66,
-      "targetTop": 9.65,
+      "targetLeft": 187.03,
+      "targetTop": 8.58,
       "actualLeft": 173,
-      "actualTop": 4,
-      "dx": -75.66,
-      "dy": -5.65,
+      "actualTop": 3,
+      "dx": -14.03,
+      "dy": -5.58,
       "widthGap": -22,
       "heightGap": -23,
       "actualInkWidth": 182,
@@ -1047,12 +1047,12 @@
       "fontSize": 14,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 327.44,
-      "targetTop": 99.69,
-      "actualLeft": 304,
-      "actualTop": 98,
-      "dx": -23.44,
-      "dy": -1.69,
+      "targetLeft": 311.36,
+      "targetTop": 97.55,
+      "actualLeft": 300,
+      "actualTop": 97,
+      "dx": -11.36,
+      "dy": -0.55,
       "widthGap": -28,
       "heightGap": -11,
       "actualInkWidth": 32,
@@ -1065,12 +1065,12 @@
       "fontSize": 17,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 394.42,
-      "targetTop": 102.37,
-      "actualLeft": 342,
-      "actualTop": 96,
-      "dx": -52.42,
-      "dy": -6.37,
+      "targetLeft": 356.91,
+      "targetTop": 100.77,
+      "actualLeft": 351,
+      "actualTop": 95,
+      "dx": -5.91,
+      "dy": -5.77,
       "widthGap": -4,
       "heightGap": -14,
       "actualInkWidth": 109,
@@ -1083,12 +1083,12 @@
       "fontSize": 10,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 312.97,
-      "targetTop": 115.77,
-      "actualLeft": 297,
-      "actualTop": 114,
-      "dx": -15.97,
-      "dy": -1.77,
+      "targetLeft": 311.36,
+      "targetTop": 114.17,
+      "actualLeft": 296,
+      "actualTop": 113,
+      "dx": -15.36,
+      "dy": -1.17,
       "widthGap": -31,
       "heightGap": -12,
       "actualInkWidth": 29,
@@ -1101,12 +1101,12 @@
       "fontSize": 14,
       "fillGate": "FOREGROUND_RELIABLE",
       "anchorUsed": false,
-      "targetLeft": 312.43,
-      "targetTop": 130.25,
-      "actualLeft": 289,
-      "actualTop": 129,
-      "dx": -23.43,
-      "dy": -1.25,
+      "targetLeft": 310.82,
+      "targetTop": 128.1,
+      "actualLeft": 300,
+      "actualTop": 127,
+      "dx": -10.82,
+      "dy": -1.1,
       "widthGap": -28,
       "heightGap": -11,
       "actualInkWidth": 32,
@@ -1119,12 +1119,12 @@
       "fontSize": 17,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 452.3,
-      "targetTop": 131.32,
-      "actualLeft": 400,
-      "actualTop": 125,
-      "dx": -52.3,
-      "dy": -6.32,
+      "targetLeft": 357.98,
+      "targetTop": 129.17,
+      "actualLeft": 352,
+      "actualTop": 124,
+      "dx": -5.98,
+      "dy": -5.17,
       "widthGap": -13.43,
       "heightGap": -14,
       "actualInkWidth": 100,
@@ -1137,12 +1137,12 @@
       "fontSize": 10,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 309.75,
-      "targetTop": 146.86,
-      "actualLeft": 296,
-      "actualTop": 145,
-      "dx": -13.75,
-      "dy": -1.86,
+      "targetLeft": 308.14,
+      "targetTop": 144.72,
+      "actualLeft": 295,
+      "actualTop": 144,
+      "dx": -13.14,
+      "dy": -0.72,
       "widthGap": -27,
       "heightGap": -12,
       "actualInkWidth": 33,
@@ -1155,12 +1155,12 @@
       "fontSize": 33,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 43.41,
-      "targetTop": 188.13,
-      "actualLeft": 5,
-      "actualTop": 186,
-      "dx": -38.41,
-      "dy": -2.13,
+      "targetLeft": 40.19,
+      "targetTop": 184.92,
+      "actualLeft": 34,
+      "actualTop": 185,
+      "dx": -6.19,
+      "dy": 0.08,
       "widthGap": -35.35,
       "heightGap": -16,
       "actualInkWidth": 64,
@@ -1173,12 +1173,12 @@
       "fontSize": 19,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 322.08,
-      "targetTop": 70.21,
-      "actualLeft": 260,
-      "actualTop": 63,
-      "dx": -62.08,
-      "dy": -7.21,
+      "targetLeft": 317.79,
+      "targetTop": 68.61,
+      "actualLeft": 276,
+      "actualTop": 64,
+      "dx": -41.79,
+      "dy": -4.61,
       "widthGap": -24,
       "heightGap": -15,
       "actualInkWidth": 113,
@@ -1191,12 +1191,12 @@
       "fontSize": 29,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 302.79,
-      "targetTop": 156.51,
-      "actualLeft": 118,
-      "actualTop": 154,
-      "dx": -184.79,
-      "dy": -2.51,
+      "targetLeft": 189.71,
+      "targetTop": 152.22,
+      "actualLeft": 140,
+      "actualTop": 152,
+      "dx": -49.71,
+      "dy": -0.22,
       "widthGap": -12,
       "heightGap": -15,
       "actualInkWidth": 375,
@@ -1209,27 +1209,27 @@
     "rows": [
       {
         "block": "夏祝莲",
-        "dx": -75.66
+        "dx": -14.03
       },
       {
         "block": "手机:",
-        "dx": -23.44
+        "dx": -11.36
       },
       {
         "block": "13719111188",
-        "dx": -52.42
+        "dx": -5.91
       },
       {
         "block": "Mobile",
-        "dx": -15.97
+        "dx": -15.36
       },
       {
         "block": "微信:",
-        "dx": -23.43
+        "dx": -10.82
       },
       {
         "block": "2287483098",
-        "dx": -52.3
+        "dx": -5.98
       }
     ]
   },

@@ -1,6 +1,6 @@
 {
-  "case": "V0",
-  "ab": "B",
+  "case": "V15",
+  "ab": "A",
   "steps": [
     {
       "step": "editor-ready",
@@ -22,14 +22,14 @@
     {
       "step": "ocr-done",
       "done": true,
-      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+      "status": "几何校验完成：通过 0 个，保留 12 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATC"
     },
     {
       "step": "rollback",
       "ok": true
     }
   ],
-  "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC",
+  "status": "几何校验完成：通过 0 个，保留 12 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATC",
   "visualRows": [
     {
       "blockIndex": 0,
@@ -55,28 +55,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 248.66,
-          "y": 9.65
+          "x": 178.44,
+          "y": 56.69
         },
         {
-          "x": 301.71,
-          "y": 9.65
+          "x": 348.74,
+          "y": 102.32
         },
         {
-          "x": 301.71,
-          "y": 69.14
+          "x": 333.07,
+          "y": 160.83
         },
         {
-          "x": 248.66,
-          "y": 69.14
+          "x": 162.76,
+          "y": 115.19
         }
       ],
       "targetGeometry": {
-        "left": 248.66,
-        "top": 9.65,
+        "left": 162.76,
+        "top": 56.69,
         "width": 204,
         "height": 81,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 61,
       "fontSource": "ink-height-primary",
@@ -95,7 +95,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "0a4a4776-ddc1-4a60-a585-9f4b7d65150b"
+      "anchorObjectUuid": "c45b2e98-a43f-4f38-b2c4-10f579d61169"
     },
     {
       "blockIndex": 1,
@@ -121,28 +121,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 327.44,
-          "y": 99.69
+          "x": 275.5,
+          "y": 174.81
         },
         {
-          "x": 341.37,
-          "y": 99.69
+          "x": 312.26,
+          "y": 184.66
         },
         {
-          "x": 341.37,
-          "y": 113.09
+          "x": 308.23,
+          "y": 199.67
         },
         {
-          "x": 327.44,
-          "y": 113.09
+          "x": 271.48,
+          "y": 189.83
         }
       ],
       "targetGeometry": {
-        "left": 327.44,
-        "top": 99.69,
+        "left": 271.48,
+        "top": 174.81,
         "width": 60,
         "height": 25,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 14,
       "fontSource": "ink-height-primary",
@@ -161,7 +161,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5fff86c9-1cc5-4965-8644-58fb6a161855"
+      "anchorObjectUuid": "a70a1c3c-d106-453a-bafb-4fc8b28f9d41"
     },
     {
       "blockIndex": 2,
@@ -187,28 +187,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 394.42,
-          "y": 102.37
+          "x": 318.67,
+          "y": 189.71
         },
         {
-          "x": 403,
-          "y": 102.37
+          "x": 417.54,
+          "y": 216.2
         },
         {
-          "x": 403,
-          "y": 118.45
+          "x": 412.96,
+          "y": 233.28
         },
         {
-          "x": 394.42,
-          "y": 118.45
+          "x": 314.09,
+          "y": 206.79
         }
       ],
       "targetGeometry": {
-        "left": 394.42,
-        "top": 102.37,
+        "left": 314.09,
+        "top": 189.71,
         "width": 113,
         "height": 28,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 17,
       "fontSource": "ink-height-primary",
@@ -227,7 +227,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "2c6e3765-30e0-4516-bb50-5237680083f1"
+      "anchorObjectUuid": "be504b9e-0045-4b02-9700-d1ecf2df4ead"
     },
     {
       "blockIndex": 3,
@@ -253,28 +253,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 312.97,
-          "y": 115.77
+          "x": 271.2,
+          "y": 190.86
         },
         {
-          "x": 342.44,
-          "y": 115.77
+          "x": 301.23,
+          "y": 198.91
         },
         {
-          "x": 342.44,
-          "y": 123.81
+          "x": 298.73,
+          "y": 208.22
         },
         {
-          "x": 312.97,
-          "y": 123.81
+          "x": 268.71,
+          "y": 200.18
         }
       ],
       "targetGeometry": {
-        "left": 312.97,
-        "top": 115.77,
+        "left": 268.71,
+        "top": 190.86,
         "width": 60,
         "height": 20,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 10,
       "fontSource": "ink-height-primary",
@@ -293,7 +293,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "187ee1a1-3cab-4e11-920a-40644aefe695"
+      "anchorObjectUuid": "dc51cf04-3741-4e0c-ade1-14c0ef9ec66d"
     },
     {
       "blockIndex": 4,
@@ -319,28 +319,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 312.43,
-          "y": 130.25
+          "x": 267.08,
+          "y": 204.18
         },
         {
-          "x": 326.9,
-          "y": 130.25
+          "x": 304.35,
+          "y": 214.17
         },
         {
-          "x": 326.9,
-          "y": 143.64
+          "x": 300.32,
+          "y": 229.18
         },
         {
-          "x": 312.43,
-          "y": 143.64
+          "x": 263.05,
+          "y": 219.2
         }
       ],
       "targetGeometry": {
-        "left": 312.43,
-        "top": 130.25,
+        "left": 263.05,
+        "top": 204.18,
         "width": 60,
         "height": 25,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 14,
       "fontSource": "ink-height-primary",
@@ -359,7 +359,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9489cca5-6487-4554-890e-dd7b016d7e62"
+      "anchorObjectUuid": "981028db-823a-44ba-a6ba-16100ee5d0f3"
     },
     {
       "blockIndex": 5,
@@ -385,28 +385,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 452.3,
-          "y": 131.32
+          "x": 312.35,
+          "y": 217.42
         },
         {
-          "x": 461.41,
-          "y": 131.32
+          "x": 412.26,
+          "y": 244.19
         },
         {
-          "x": 461.41,
-          "y": 147.93
+          "x": 407.4,
+          "y": 262.31
         },
         {
-          "x": 452.3,
-          "y": 147.93
+          "x": 307.5,
+          "y": 235.54
         }
       ],
       "targetGeometry": {
-        "left": 452.3,
-        "top": 131.32,
+        "left": 307.5,
+        "top": 217.42,
         "width": 113.43,
         "height": 28,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 17,
       "fontSource": "ink-height-primary",
@@ -425,7 +425,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5a6aec55-c791-4eda-ba91-b1a190eaa5de"
+      "anchorObjectUuid": "26b28438-32b2-438b-a463-ba4ed70158b0"
     },
     {
       "blockIndex": 6,
@@ -451,28 +451,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 309.75,
-          "y": 146.86
+          "x": 260.19,
+          "y": 219.54
         },
         {
-          "x": 343.51,
-          "y": 146.86
+          "x": 294.35,
+          "y": 228.69
         },
         {
-          "x": 343.51,
-          "y": 154.9
+          "x": 291.72,
+          "y": 238.53
         },
         {
-          "x": 309.75,
-          "y": 154.9
+          "x": 257.55,
+          "y": 229.38
         }
       ],
       "targetGeometry": {
-        "left": 309.75,
-        "top": 146.86,
+        "left": 257.55,
+        "top": 219.54,
         "width": 60,
         "height": 20,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 10,
       "fontSource": "ink-height-primary",
@@ -491,7 +491,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "25aa3a8c-900f-4c41-b28f-cb471a284abf"
+      "anchorObjectUuid": "b6e33e8a-bde4-417f-8487-a24b37ab7105"
     },
     {
       "blockIndex": 7,
@@ -517,28 +517,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 43.41,
-          "y": 188.13
+          "x": -9.04,
+          "y": 189.02
         },
         {
-          "x": 66.99,
-          "y": 188.13
+          "x": 75.34,
+          "y": 211.63
         },
         {
-          "x": 66.99,
-          "y": 220.29
+          "x": 65.77,
+          "y": 247.35
         },
         {
-          "x": 43.41,
-          "y": 220.29
+          "x": -18.61,
+          "y": 224.74
         }
       ],
       "targetGeometry": {
-        "left": 43.41,
-        "top": 188.13,
+        "left": -18.61,
+        "top": 189.02,
         "width": 99.35,
         "height": 48,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 33,
       "fontSource": "ink-height-primary",
@@ -557,7 +557,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "1874579a-010b-4d6a-ad52-6b1297185968"
+      "anchorObjectUuid": "5780feff-290e-4d7a-b422-475ffe72a895"
     },
     {
       "blockIndex": 8,
@@ -583,28 +583,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 193.46,
-          "y": 178.48
+          "x": 140.67,
+          "y": 222.47
         },
         {
-          "x": 481.24,
-          "y": 178.48
+          "x": 418.65,
+          "y": 296.96
         },
         {
-          "x": 481.24,
-          "y": 201
+          "x": 412.82,
+          "y": 318.7
         },
         {
-          "x": 193.46,
-          "y": 201
+          "x": 134.85,
+          "y": 244.22
         }
       ],
       "targetGeometry": {
-        "left": 193.46,
-        "top": 178.48,
+        "left": 134.85,
+        "top": 222.47,
         "width": 613,
         "height": 36,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 23,
       "fontSource": "ink-height-primary",
@@ -623,205 +623,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "ce5b1236-89a8-44f3-b2ce-c1f0f8f4581e"
-    },
-    {
-      "blockIndex": 9,
-      "nativeText": "Add:2B059, Area B, Wanling Toy Boutique Plaza,",
-      "ocrBBox": {
-        "left": 187.03,
-        "width": 282.42,
-        "height": 19.83
-      },
-      "imageInkBox": {
-        "x": 349,
-        "y": 439,
-        "width": 122,
-        "height": 37
-      },
-      "imageInkWidth": 122,
-      "imageInkHeight": 37,
-      "imageInkCoverage": 0.4325,
-      "inkConfidence": 0.73,
-      "inkComponentCount": 10,
-      "inkDominantRatio": 0.5417,
-      "inkRowBandConfidence": 1,
-      "visualGeometrySource": "OCR_BBOX_FALLBACK",
-      "targetQuad": [
-        {
-          "x": 187.03,
-          "y": 235.3
-        },
-        {
-          "x": 252.41,
-          "y": 235.3
-        },
-        {
-          "x": 252.41,
-          "y": 255.13
-        },
-        {
-          "x": 187.03,
-          "y": 255.13
-        }
-      ],
-      "targetGeometry": {
-        "left": 187.03,
-        "top": 235.3,
-        "width": 520,
-        "height": 32,
-        "angle": 0
-      },
-      "fontSize": 20,
-      "fontSource": "ink-height-primary",
-      "fontSizeEvidence": {
-        "status": "NORMAL",
-        "fontEvidenceStatus": "NORMAL",
-        "diagnosis": null,
-        "inkToOcrRatio": 0.9999,
-        "advanceFontSize": null,
-        "inkFontSize": 20,
-        "inkHeight": 19.83,
-        "ocrHeight": 19.831561053240737
-      },
-      "fill": null,
-      "fillConfidence": 0.5351,
-      "fillGate": "MULTI_MODAL",
-      "fontFamily": "sans-serif",
-      "anchorUsed": false,
-      "anchorObjectUuid": "452697ea-b537-489a-8b9a-e5aaf814646b"
-    },
-    {
-      "blockIndex": 10,
-      "nativeText": "East Yide Rd, Guangzhou, China",
-      "ocrBBox": {
-        "left": 214.36,
-        "width": 188.64,
-        "height": 17.69
-      },
-      "imageInkBox": {
-        "x": 400,
-        "y": 479,
-        "width": 49,
-        "height": 26
-      },
-      "imageInkWidth": 49,
-      "imageInkHeight": 26,
-      "imageInkCoverage": 0.2298,
-      "inkConfidence": 0.91,
-      "inkComponentCount": 2,
-      "inkDominantRatio": 0.8565,
-      "inkRowBandConfidence": 0.9996,
-      "visualGeometrySource": "OCR_BBOX_FALLBACK",
-      "targetQuad": [
-        {
-          "x": 214.36,
-          "y": 256.74
-        },
-        {
-          "x": 240.62,
-          "y": 256.74
-        },
-        {
-          "x": 240.62,
-          "y": 270.67
-        },
-        {
-          "x": 214.36,
-          "y": 270.67
-        }
-      ],
-      "targetGeometry": {
-        "left": 214.36,
-        "top": 256.74,
-        "width": 242,
-        "height": 25,
-        "angle": 0
-      },
-      "fontSize": 14,
-      "fontSource": "ink-height-primary",
-      "fontSizeEvidence": {
-        "status": "NORMAL",
-        "fontEvidenceStatus": "NORMAL",
-        "diagnosis": null,
-        "inkToOcrRatio": 0.7881,
-        "advanceFontSize": null,
-        "inkFontSize": 14,
-        "inkHeight": 13.94,
-        "ocrHeight": 17.68760850694444
-      },
-      "fill": null,
-      "fillConfidence": 0.5282,
-      "fillGate": "MULTI_MODAL",
-      "fontFamily": "sans-serif",
-      "anchorUsed": false,
-      "anchorObjectUuid": "5ca5a290-c6d8-4401-acfd-43b49036ac1f"
-    },
-    {
-      "blockIndex": 11,
-      "nativeText": "Tel:+86-020-81060778E-mail:aikaqi@foxmail.com",
-      "ocrBBox": {
-        "left": 183.28,
-        "width": 291.53,
-        "height": 18.76
-      },
-      "imageInkBox": {
-        "x": 342,
-        "y": 514,
-        "width": 240,
-        "height": 35
-      },
-      "imageInkWidth": 240,
-      "imageInkHeight": 35,
-      "imageInkCoverage": 0.7457,
-      "inkConfidence": 1,
-      "inkComponentCount": 1,
-      "inkDominantRatio": 1,
-      "inkRowBandConfidence": 1,
-      "visualGeometrySource": "OCR_BBOX_FALLBACK",
-      "targetQuad": [
-        {
-          "x": 183.28,
-          "y": 275.5
-        },
-        {
-          "x": 311.9,
-          "y": 275.5
-        },
-        {
-          "x": 311.9,
-          "y": 294.26
-        },
-        {
-          "x": 183.28,
-          "y": 294.26
-        }
-      ],
-      "targetGeometry": {
-        "left": 183.28,
-        "top": 275.5,
-        "width": 495,
-        "height": 31,
-        "angle": 0
-      },
-      "fontSize": 19,
-      "fontSource": "ink-height-primary",
-      "fontSizeEvidence": {
-        "status": "NORMAL",
-        "fontEvidenceStatus": "NORMAL",
-        "diagnosis": null,
-        "inkToOcrRatio": 1,
-        "advanceFontSize": null,
-        "inkFontSize": 19,
-        "inkHeight": 18.76,
-        "ocrHeight": 18.759584780092588
-      },
-      "fill": null,
-      "fillConfidence": 0.52,
-      "fillGate": "MULTI_MODAL",
-      "fontFamily": "sans-serif",
-      "anchorUsed": false,
-      "anchorObjectUuid": "f2657a4d-700b-4d67-8929-8cad6731c83b"
+      "anchorObjectUuid": "1df69ca4-fe28-4aba-abb4-58dcd6b37084"
     },
     {
       "blockIndex": 12,
@@ -847,28 +649,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 322.08,
-          "y": 70.21
+          "x": 289.21,
+          "y": 148.52
         },
         {
-          "x": 335.48,
-          "y": 70.21
+          "x": 341.49,
+          "y": 162.53
         },
         {
-          "x": 335.48,
-          "y": 88.44
+          "x": 335.66,
+          "y": 184.27
         },
         {
-          "x": 322.08,
-          "y": 88.44
+          "x": 283.38,
+          "y": 170.26
         }
       ],
       "targetGeometry": {
-        "left": 322.08,
-        "top": 70.21,
+        "left": 283.38,
+        "top": 148.52,
         "width": 137,
         "height": 31,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 19,
       "fontSource": "ink-height-primary",
@@ -887,7 +689,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "8c72a6a4-e098-49f2-843c-95c19428540f"
+      "anchorObjectUuid": "51f2dd3f-44a2-4897-a54e-99195ee0678c"
     },
     {
       "blockIndex": 13,
@@ -913,28 +715,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 302.79,
-          "y": 156.51
+          "x": 143.85,
+          "y": 196.13
         },
         {
-          "x": 321.54,
-          "y": 156.51
+          "x": 422.86,
+          "y": 270.89
         },
         {
-          "x": 321.54,
-          "y": 184.92
+          "x": 414.39,
+          "y": 302.48
         },
         {
-          "x": 302.79,
-          "y": 184.92
+          "x": 135.39,
+          "y": 227.72
         }
       ],
       "targetGeometry": {
-        "left": 302.79,
-        "top": 156.51,
+        "left": 135.39,
+        "top": 196.13,
         "width": 387,
         "height": 43,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 29,
       "fontSource": "ink-height-primary",
@@ -953,7 +755,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "57b506eb-7896-4639-bbb2-4f1b009c14de"
+      "anchorObjectUuid": "6b6727db-411d-4b43-bbad-d0feacfbf485"
     },
     {
       "blockIndex": 14,
@@ -979,28 +781,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 445.34,
-          "y": 217.08
+          "x": 116.89,
+          "y": 253.28
         },
         {
-          "x": 478.56,
-          "y": 217.08
+          "x": 406.77,
+          "y": 330.95
         },
         {
-          "x": 478.56,
-          "y": 237.98
+          "x": 400.66,
+          "y": 353.73
         },
         {
-          "x": 445.34,
-          "y": 237.98
+          "x": 110.78,
+          "y": 276.06
         }
       ],
       "targetGeometry": {
-        "left": 445.34,
-        "top": 217.08,
+        "left": 110.78,
+        "top": 253.28,
         "width": 544,
         "height": 34,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 22,
       "fontSource": "ink-height-primary",
@@ -1019,7 +821,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9be5ba9f-b5ec-464d-9f9d-791cefcec879"
+      "anchorObjectUuid": "172dcf19-8959-4805-97e3-331cc906d0a4"
     }
   ],
   "renderedInkCompare": [
@@ -1029,12 +831,12 @@
       "fontSize": 61,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 248.66,
-      "targetTop": 9.65,
-      "actualLeft": 173,
-      "actualTop": 4,
-      "dx": -75.66,
-      "dy": -5.65,
+      "targetLeft": 162.76,
+      "targetTop": 56.69,
+      "actualLeft": 166,
+      "actualTop": 48,
+      "dx": 3.24,
+      "dy": -8.69,
       "widthGap": -22,
       "heightGap": -23,
       "actualInkWidth": 182,
@@ -1047,12 +849,12 @@
       "fontSize": 14,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 327.44,
-      "targetTop": 99.69,
-      "actualLeft": 304,
-      "actualTop": 98,
-      "dx": -23.44,
-      "dy": -1.69,
+      "targetLeft": 271.48,
+      "targetTop": 174.81,
+      "actualLeft": 265,
+      "actualTop": 171,
+      "dx": -6.48,
+      "dy": -3.81,
       "widthGap": -28,
       "heightGap": -11,
       "actualInkWidth": 32,
@@ -1065,12 +867,12 @@
       "fontSize": 17,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 394.42,
-      "targetTop": 102.37,
-      "actualLeft": 342,
-      "actualTop": 96,
-      "dx": -52.42,
-      "dy": -6.37,
+      "targetLeft": 314.09,
+      "targetTop": 189.71,
+      "actualLeft": 315,
+      "actualTop": 183,
+      "dx": 0.91,
+      "dy": -6.71,
       "widthGap": -4,
       "heightGap": -14,
       "actualInkWidth": 109,
@@ -1083,12 +885,12 @@
       "fontSize": 10,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 312.97,
-      "targetTop": 115.77,
-      "actualLeft": 297,
-      "actualTop": 114,
-      "dx": -15.97,
-      "dy": -1.77,
+      "targetLeft": 268.71,
+      "targetTop": 190.86,
+      "actualLeft": 257,
+      "actualTop": 186,
+      "dx": -11.71,
+      "dy": -4.86,
       "widthGap": -31,
       "heightGap": -12,
       "actualInkWidth": 29,
@@ -1101,12 +903,12 @@
       "fontSize": 14,
       "fillGate": "FOREGROUND_RELIABLE",
       "anchorUsed": false,
-      "targetLeft": 312.43,
-      "targetTop": 130.25,
-      "actualLeft": 289,
-      "actualTop": 129,
-      "dx": -23.43,
-      "dy": -1.25,
+      "targetLeft": 263.05,
+      "targetTop": 204.18,
+      "actualLeft": 256,
+      "actualTop": 201,
+      "dx": -7.05,
+      "dy": -3.18,
       "widthGap": -28,
       "heightGap": -11,
       "actualInkWidth": 32,
@@ -1119,12 +921,12 @@
       "fontSize": 17,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 452.3,
-      "targetTop": 131.32,
-      "actualLeft": 400,
-      "actualTop": 125,
-      "dx": -52.3,
-      "dy": -6.32,
+      "targetLeft": 307.5,
+      "targetTop": 217.42,
+      "actualLeft": 308,
+      "actualTop": 211,
+      "dx": 0.5,
+      "dy": -6.42,
       "widthGap": -13.43,
       "heightGap": -14,
       "actualInkWidth": 100,
@@ -1137,12 +939,12 @@
       "fontSize": 10,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 309.75,
-      "targetTop": 146.86,
-      "actualLeft": 296,
-      "actualTop": 145,
-      "dx": -13.75,
-      "dy": -1.86,
+      "targetLeft": 257.55,
+      "targetTop": 219.54,
+      "actualLeft": 248,
+      "actualTop": 216,
+      "dx": -9.55,
+      "dy": -3.54,
       "widthGap": -27,
       "heightGap": -12,
       "actualInkWidth": 33,
@@ -1155,12 +957,12 @@
       "fontSize": 33,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 43.41,
-      "targetTop": 188.13,
-      "actualLeft": 5,
-      "actualTop": 186,
-      "dx": -38.41,
-      "dy": -2.13,
+      "targetLeft": -18.61,
+      "targetTop": 189.02,
+      "actualLeft": -15,
+      "actualTop": 187,
+      "dx": 3.61,
+      "dy": -2.02,
       "widthGap": -35.35,
       "heightGap": -16,
       "actualInkWidth": 64,
@@ -1173,12 +975,12 @@
       "fontSize": 19,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 322.08,
-      "targetTop": 70.21,
-      "actualLeft": 260,
-      "actualTop": 63,
-      "dx": -62.08,
-      "dy": -7.21,
+      "targetLeft": 283.38,
+      "targetTop": 148.52,
+      "actualLeft": 250,
+      "actualTop": 133,
+      "dx": -33.38,
+      "dy": -15.52,
       "widthGap": -24,
       "heightGap": -15,
       "actualInkWidth": 113,
@@ -1191,12 +993,12 @@
       "fontSize": 29,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 302.79,
-      "targetTop": 156.51,
-      "actualLeft": 118,
-      "actualTop": 154,
-      "dx": -184.79,
-      "dy": -2.51,
+      "targetLeft": 135.39,
+      "targetTop": 196.13,
+      "actualLeft": 96,
+      "actualTop": 183,
+      "dx": -39.39,
+      "dy": -13.13,
       "widthGap": -12,
       "heightGap": -15,
       "actualInkWidth": 375,
@@ -1205,31 +1007,31 @@
     }
   ],
   "leftShiftObserved": {
-    "count": 10,
+    "count": 6,
     "rows": [
       {
-        "block": "夏祝莲",
-        "dx": -75.66
-      },
-      {
         "block": "手机:",
-        "dx": -23.44
-      },
-      {
-        "block": "13719111188",
-        "dx": -52.42
+        "dx": -6.48
       },
       {
         "block": "Mobile",
-        "dx": -15.97
+        "dx": -11.71
       },
       {
         "block": "微信:",
-        "dx": -23.43
+        "dx": -7.05
       },
       {
-        "block": "2287483098",
-        "dx": -52.3
+        "block": "Wechat",
+        "dx": -9.55
+      },
+      {
+        "block": "Xia Zhu Lian",
+        "dx": -33.38
+      },
+      {
+        "block": "广州爱卡奇硅胶制品有限公司",
+        "dx": -39.39
       }
     ]
   },

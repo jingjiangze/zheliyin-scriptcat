@@ -1,0 +1,299 @@
+{
+  "case": "V45",
+  "ab": "A",
+  "steps": [
+    {
+      "step": "editor-ready",
+      "ok": true,
+      "bridge": true
+    },
+    {
+      "step": "bg-inject",
+      "ok": true
+    },
+    {
+      "step": "ocr-prepare",
+      "ok": true
+    },
+    {
+      "step": "click-ocr",
+      "clicked": true
+    },
+    {
+      "step": "ocr-done",
+      "done": true,
+      "status": "几何校验完成：通过 0 个，保留 3 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH），拒绝 0 个（细节见控制台 zy-ocr GEOMETRY）"
+    },
+    {
+      "step": "rollback",
+      "ok": true
+    }
+  ],
+  "status": "几何校验完成：通过 0 个，保留 3 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH），拒绝 0 个（细节见控制台 zy-ocr GEOMETRY）",
+  "visualRows": [
+    {
+      "blockIndex": 0,
+      "nativeText": "夏祝莲",
+      "ocrBBox": {
+        "left": 187.03,
+        "width": 176.31,
+        "height": 60.57
+      },
+      "imageInkBox": {
+        "x": 464,
+        "y": 18,
+        "width": 99,
+        "height": 111
+      },
+      "imageInkWidth": 99,
+      "imageInkHeight": 111,
+      "imageInkCoverage": 0.3489,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 126.19,
+          "y": 138.31
+        },
+        {
+          "x": 250.86,
+          "y": 262.99
+        },
+        {
+          "x": 208.03,
+          "y": 305.81
+        },
+        {
+          "x": 83.36,
+          "y": 181.14
+        }
+      ],
+      "targetGeometry": {
+        "left": 83.36,
+        "top": 138.31,
+        "width": 204,
+        "height": 81,
+        "angle": 45
+      },
+      "fontSize": 61,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.9822,
+        "advanceFontSize": null,
+        "inkFontSize": 61,
+        "inkHeight": 59.49,
+        "ocrHeight": 60.56665943287036
+      },
+      "fill": null,
+      "fillConfidence": 0.5008,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "a063e3a9-0554-40a6-85d9-4bad8eba44a9"
+    },
+    {
+      "blockIndex": 1,
+      "nativeText": "手机:",
+      "ocrBBox": {
+        "left": 311.36,
+        "width": 38.05,
+        "height": 15.54
+      },
+      "imageInkBox": {
+        "x": 611,
+        "y": 186,
+        "width": 26,
+        "height": 25
+      },
+      "imageInkWidth": 26,
+      "imageInkHeight": 25,
+      "imageInkCoverage": 0.5458,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 151.19,
+          "y": 289.14
+        },
+        {
+          "x": 178.09,
+          "y": 316.05
+        },
+        {
+          "x": 167.1,
+          "y": 327.04
+        },
+        {
+          "x": 140.2,
+          "y": 300.13
+        }
+      ],
+      "targetGeometry": {
+        "left": 140.2,
+        "top": 289.14,
+        "width": 60,
+        "height": 25,
+        "angle": 45
+      },
+      "fontSize": 14,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8621,
+        "advanceFontSize": null,
+        "inkFontSize": 14,
+        "inkHeight": 13.4,
+        "ocrHeight": 15.543655960648145
+      },
+      "fill": null,
+      "fillConfidence": 0.5344,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "0ba44ae5-d022-4d88-ac30-9b0a0f400f93"
+    },
+    {
+      "blockIndex": 12,
+      "nativeText": "Xia Zhu Lian",
+      "ocrBBox": {
+        "left": 317.79,
+        "width": 54.13,
+        "height": 22.51
+      },
+      "imageInkBox": {
+        "x": 601,
+        "y": 131,
+        "width": 25,
+        "height": 34
+      },
+      "imageInkWidth": 25,
+      "imageInkHeight": 34,
+      "imageInkCoverage": 0.3742,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 176.2,
+          "y": 273.22
+        },
+        {
+          "x": 214.47,
+          "y": 311.5
+        },
+        {
+          "x": 198.55,
+          "y": 327.41
+        },
+        {
+          "x": 160.28,
+          "y": 289.14
+        }
+      ],
+      "targetGeometry": {
+        "left": 160.28,
+        "top": 273.22,
+        "width": 137,
+        "height": 31,
+        "angle": 45
+      },
+      "fontSize": 19,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8094,
+        "advanceFontSize": null,
+        "inkFontSize": 19,
+        "inkHeight": 18.22,
+        "ocrHeight": 22.511501736111107
+      },
+      "fill": null,
+      "fillConfidence": 0.3656,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "d11606ee-337c-49a6-9933-1f2ef690c1b6"
+    }
+  ],
+  "renderedInkCompare": [
+    {
+      "block": "夏祝莲",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 61,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 83.36,
+      "targetTop": 138.31,
+      "actualLeft": 120,
+      "actualTop": 124,
+      "dx": 36.64,
+      "dy": -14.31,
+      "widthGap": -22,
+      "heightGap": -23,
+      "actualInkWidth": 182,
+      "actualInkHeight": 58,
+      "sourceInkLeft": 464
+    },
+    {
+      "block": "手机:",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 14,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 140.2,
+      "targetTop": 289.14,
+      "actualLeft": 144,
+      "actualTop": 281,
+      "dx": 3.8,
+      "dy": -8.14,
+      "widthGap": -28,
+      "heightGap": -11,
+      "actualInkWidth": 32,
+      "actualInkHeight": 14,
+      "sourceInkLeft": 611
+    },
+    {
+      "block": "Xia Zhu Lian",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 19,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 160.28,
+      "targetTop": 273.22,
+      "actualLeft": 150,
+      "actualTop": 240,
+      "dx": -10.28,
+      "dy": -33.22,
+      "widthGap": -24,
+      "heightGap": -15,
+      "actualInkWidth": 113,
+      "actualInkHeight": 16,
+      "sourceInkLeft": 601
+    }
+  ],
+  "leftShiftObserved": {
+    "count": 1,
+    "rows": [
+      {
+        "block": "Xia Zhu Lian",
+        "dx": -10.28
+      }
+    ]
+  },
+  "errors": []
+}

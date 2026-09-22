@@ -1,5 +1,5 @@
 {
-  "case": "V0",
+  "case": "V15",
   "ab": "B",
   "steps": [
     {
@@ -22,14 +22,14 @@
     {
       "step": "ocr-done",
       "done": true,
-      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+      "status": "几何校验完成：通过 0 个，保留 11 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH），拒绝 0 个（细节见控制"
     },
     {
       "step": "rollback",
       "ok": true
     }
   ],
-  "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC",
+  "status": "几何校验完成：通过 0 个，保留 11 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH），拒绝 0 个（细节见控制",
   "visualRows": [
     {
       "blockIndex": 0,
@@ -55,28 +55,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 248.66,
-          "y": 9.65
+          "x": 237.69,
+          "y": 73.68
         },
         {
-          "x": 301.71,
-          "y": 9.65
+          "x": 288.94,
+          "y": 87.41
         },
         {
-          "x": 301.71,
-          "y": 69.14
+          "x": 273.54,
+          "y": 144.88
         },
         {
-          "x": 248.66,
-          "y": 69.14
+          "x": 222.29,
+          "y": 131.14
         }
       ],
       "targetGeometry": {
-        "left": 248.66,
-        "top": 9.65,
+        "left": 222.29,
+        "top": 73.68,
         "width": 204,
         "height": 81,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 61,
       "fontSource": "ink-height-primary",
@@ -95,7 +95,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "0a4a4776-ddc1-4a60-a585-9f4b7d65150b"
+      "anchorObjectUuid": "b094bd73-ee22-4ed2-835a-37f851f29e0b"
     },
     {
       "blockIndex": 1,
@@ -121,28 +121,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 327.44,
-          "y": 99.69
+          "x": 290.48,
+          "y": 181.04
         },
         {
-          "x": 341.37,
-          "y": 99.69
+          "x": 303.94,
+          "y": 184.65
         },
         {
-          "x": 341.37,
-          "y": 113.09
+          "x": 300.47,
+          "y": 197.59
         },
         {
-          "x": 327.44,
-          "y": 113.09
+          "x": 287.01,
+          "y": 193.99
         }
       ],
       "targetGeometry": {
-        "left": 327.44,
-        "top": 99.69,
+        "left": 287.01,
+        "top": 181.04,
         "width": 60,
         "height": 25,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 14,
       "fontSource": "ink-height-primary",
@@ -161,7 +161,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5fff86c9-1cc5-4965-8644-58fb6a161855"
+      "anchorObjectUuid": "fa9ee4e8-eb5b-4953-a35b-83f3a1e9a21f"
     },
     {
       "blockIndex": 2,
@@ -187,28 +187,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 394.42,
-          "y": 102.37
+          "x": 354.49,
+          "y": 200.97
         },
         {
-          "x": 403,
-          "y": 102.37
+          "x": 362.77,
+          "y": 203.19
         },
         {
-          "x": 403,
-          "y": 118.45
+          "x": 358.61,
+          "y": 218.72
         },
         {
-          "x": 394.42,
-          "y": 118.45
+          "x": 350.33,
+          "y": 216.5
         }
       ],
       "targetGeometry": {
-        "left": 394.42,
-        "top": 102.37,
+        "left": 350.33,
+        "top": 200.97,
         "width": 113,
         "height": 28,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 17,
       "fontSource": "ink-height-primary",
@@ -227,7 +227,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "2c6e3765-30e0-4516-bb50-5237680083f1"
+      "anchorObjectUuid": "7214984c-778d-4a3b-bc98-4c9f53f278ef"
     },
     {
       "blockIndex": 3,
@@ -253,28 +253,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 312.97,
-          "y": 115.77
+          "x": 272.34,
+          "y": 192.83
         },
         {
-          "x": 342.44,
-          "y": 115.77
+          "x": 300.81,
+          "y": 200.46
         },
         {
-          "x": 342.44,
-          "y": 123.81
+          "x": 298.73,
+          "y": 208.22
         },
         {
-          "x": 312.97,
-          "y": 123.81
+          "x": 270.26,
+          "y": 200.6
         }
       ],
       "targetGeometry": {
-        "left": 312.97,
-        "top": 115.77,
+        "left": 270.26,
+        "top": 192.83,
         "width": 60,
         "height": 20,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 10,
       "fontSource": "ink-height-primary",
@@ -293,7 +293,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "187ee1a1-3cab-4e11-920a-40644aefe695"
+      "anchorObjectUuid": "1ba7791a-0f8b-4646-b227-2cbedd445984"
     },
     {
       "blockIndex": 4,
@@ -319,28 +319,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 312.43,
-          "y": 130.25
+          "x": 268.08,
+          "y": 206.67
         },
         {
-          "x": 326.9,
-          "y": 130.25
+          "x": 282.05,
+          "y": 210.42
         },
         {
-          "x": 326.9,
-          "y": 143.64
+          "x": 278.58,
+          "y": 223.36
         },
         {
-          "x": 312.43,
-          "y": 143.64
+          "x": 264.61,
+          "y": 219.61
         }
       ],
       "targetGeometry": {
-        "left": 312.43,
-        "top": 130.25,
+        "left": 264.61,
+        "top": 206.67,
         "width": 60,
         "height": 25,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 14,
       "fontSource": "ink-height-primary",
@@ -359,7 +359,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9489cca5-6487-4554-890e-dd7b016d7e62"
+      "anchorObjectUuid": "c7bbb706-da63-488b-920e-7f98eaadf49f"
     },
     {
       "blockIndex": 5,
@@ -385,28 +385,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 452.3,
-          "y": 131.32
+          "x": 402.9,
+          "y": 243.91
         },
         {
-          "x": 461.41,
-          "y": 131.32
+          "x": 411.7,
+          "y": 246.26
         },
         {
-          "x": 461.41,
-          "y": 147.93
+          "x": 407.4,
+          "y": 262.31
         },
         {
-          "x": 452.3,
-          "y": 147.93
+          "x": 398.6,
+          "y": 259.96
         }
       ],
       "targetGeometry": {
-        "left": 452.3,
-        "top": 131.32,
+        "left": 398.6,
+        "top": 243.91,
         "width": 113.43,
         "height": 28,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 17,
       "fontSource": "ink-height-primary",
@@ -425,7 +425,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5a6aec55-c791-4eda-ba91-b1a190eaa5de"
+      "anchorObjectUuid": "551602be-515a-4785-addc-b2319e1a705d"
     },
     {
       "blockIndex": 6,
@@ -451,28 +451,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 309.75,
-          "y": 146.86
+          "x": 261.19,
+          "y": 222.03
         },
         {
-          "x": 343.51,
-          "y": 146.86
+          "x": 293.8,
+          "y": 230.76
         },
         {
-          "x": 343.51,
-          "y": 154.9
+          "x": 291.72,
+          "y": 238.53
         },
         {
-          "x": 309.75,
-          "y": 154.9
+          "x": 259.11,
+          "y": 229.79
         }
       ],
       "targetGeometry": {
-        "left": 309.75,
-        "top": 146.86,
+        "left": 259.11,
+        "top": 222.03,
         "width": 60,
         "height": 20,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 10,
       "fontSource": "ink-height-primary",
@@ -491,73 +491,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "25aa3a8c-900f-4c41-b28f-cb471a284abf"
-    },
-    {
-      "blockIndex": 7,
-      "nativeText": "Kaqi",
-      "ocrBBox": {
-        "left": 40.19,
-        "width": 87.35,
-        "height": 36.98
-      },
-      "imageInkBox": {
-        "x": 81,
-        "y": 351,
-        "width": 44,
-        "height": 60
-      },
-      "imageInkWidth": 44,
-      "imageInkHeight": 60,
-      "imageInkCoverage": 0.3241,
-      "inkConfidence": 1,
-      "inkComponentCount": 1,
-      "inkDominantRatio": 1,
-      "inkRowBandConfidence": 0.9963,
-      "visualGeometrySource": "OCR_BBOX_FALLBACK",
-      "targetQuad": [
-        {
-          "x": 43.41,
-          "y": 188.13
-        },
-        {
-          "x": 66.99,
-          "y": 188.13
-        },
-        {
-          "x": 66.99,
-          "y": 220.29
-        },
-        {
-          "x": 43.41,
-          "y": 220.29
-        }
-      ],
-      "targetGeometry": {
-        "left": 43.41,
-        "top": 188.13,
-        "width": 99.35,
-        "height": 48,
-        "angle": 0
-      },
-      "fontSize": 33,
-      "fontSource": "ink-height-primary",
-      "fontSizeEvidence": {
-        "status": "NORMAL",
-        "fontEvidenceStatus": "NORMAL",
-        "diagnosis": null,
-        "inkToOcrRatio": 0.8696,
-        "advanceFontSize": null,
-        "inkFontSize": 33,
-        "inkHeight": 32.16,
-        "ocrHeight": 36.9831814236111
-      },
-      "fill": null,
-      "fillConfidence": 0.647,
-      "fillGate": "MULTI_MODAL",
-      "fontFamily": "sans-serif",
-      "anchorUsed": false,
-      "anchorObjectUuid": "1874579a-010b-4d6a-ad52-6b1297185968"
+      "anchorObjectUuid": "eca11955-c4a9-421e-95b2-47d9e697e0c7"
     },
     {
       "blockIndex": 8,
@@ -583,28 +517,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 193.46,
-          "y": 178.48
+          "x": 140.67,
+          "y": 222.47
         },
         {
-          "x": 481.24,
-          "y": 178.48
+          "x": 418.65,
+          "y": 296.96
         },
         {
-          "x": 481.24,
-          "y": 201
+          "x": 412.82,
+          "y": 318.7
         },
         {
-          "x": 193.46,
-          "y": 201
+          "x": 134.85,
+          "y": 244.22
         }
       ],
       "targetGeometry": {
-        "left": 193.46,
-        "top": 178.48,
+        "left": 134.85,
+        "top": 222.47,
         "width": 613,
         "height": 36,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 23,
       "fontSource": "ink-height-primary",
@@ -623,7 +557,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "ce5b1236-89a8-44f3-b2ce-c1f0f8f4581e"
+      "anchorObjectUuid": "0843322e-ffde-4730-9f90-ea794dcfaee6"
     },
     {
       "blockIndex": 9,
@@ -649,28 +583,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 187.03,
-          "y": 235.3
+          "x": 119.76,
+          "y": 275.69
         },
         {
-          "x": 252.41,
-          "y": 235.3
+          "x": 182.91,
+          "y": 292.61
         },
         {
-          "x": 252.41,
-          "y": 255.13
+          "x": 177.78,
+          "y": 311.77
         },
         {
-          "x": 187.03,
-          "y": 255.13
+          "x": 114.62,
+          "y": 294.84
         }
       ],
       "targetGeometry": {
-        "left": 187.03,
-        "top": 235.3,
+        "left": 114.62,
+        "top": 275.69,
         "width": 520,
         "height": 32,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 20,
       "fontSource": "ink-height-primary",
@@ -689,139 +623,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "452697ea-b537-489a-8b9a-e5aaf814646b"
-    },
-    {
-      "blockIndex": 10,
-      "nativeText": "East Yide Rd, Guangzhou, China",
-      "ocrBBox": {
-        "left": 214.36,
-        "width": 188.64,
-        "height": 17.69
-      },
-      "imageInkBox": {
-        "x": 400,
-        "y": 479,
-        "width": 49,
-        "height": 26
-      },
-      "imageInkWidth": 49,
-      "imageInkHeight": 26,
-      "imageInkCoverage": 0.2298,
-      "inkConfidence": 0.91,
-      "inkComponentCount": 2,
-      "inkDominantRatio": 0.8565,
-      "inkRowBandConfidence": 0.9996,
-      "visualGeometrySource": "OCR_BBOX_FALLBACK",
-      "targetQuad": [
-        {
-          "x": 214.36,
-          "y": 256.74
-        },
-        {
-          "x": 240.62,
-          "y": 256.74
-        },
-        {
-          "x": 240.62,
-          "y": 270.67
-        },
-        {
-          "x": 214.36,
-          "y": 270.67
-        }
-      ],
-      "targetGeometry": {
-        "left": 214.36,
-        "top": 256.74,
-        "width": 242,
-        "height": 25,
-        "angle": 0
-      },
-      "fontSize": 14,
-      "fontSource": "ink-height-primary",
-      "fontSizeEvidence": {
-        "status": "NORMAL",
-        "fontEvidenceStatus": "NORMAL",
-        "diagnosis": null,
-        "inkToOcrRatio": 0.7881,
-        "advanceFontSize": null,
-        "inkFontSize": 14,
-        "inkHeight": 13.94,
-        "ocrHeight": 17.68760850694444
-      },
-      "fill": null,
-      "fillConfidence": 0.5282,
-      "fillGate": "MULTI_MODAL",
-      "fontFamily": "sans-serif",
-      "anchorUsed": false,
-      "anchorObjectUuid": "5ca5a290-c6d8-4401-acfd-43b49036ac1f"
-    },
-    {
-      "blockIndex": 11,
-      "nativeText": "Tel:+86-020-81060778E-mail:aikaqi@foxmail.com",
-      "ocrBBox": {
-        "left": 183.28,
-        "width": 291.53,
-        "height": 18.76
-      },
-      "imageInkBox": {
-        "x": 342,
-        "y": 514,
-        "width": 240,
-        "height": 35
-      },
-      "imageInkWidth": 240,
-      "imageInkHeight": 35,
-      "imageInkCoverage": 0.7457,
-      "inkConfidence": 1,
-      "inkComponentCount": 1,
-      "inkDominantRatio": 1,
-      "inkRowBandConfidence": 1,
-      "visualGeometrySource": "OCR_BBOX_FALLBACK",
-      "targetQuad": [
-        {
-          "x": 183.28,
-          "y": 275.5
-        },
-        {
-          "x": 311.9,
-          "y": 275.5
-        },
-        {
-          "x": 311.9,
-          "y": 294.26
-        },
-        {
-          "x": 183.28,
-          "y": 294.26
-        }
-      ],
-      "targetGeometry": {
-        "left": 183.28,
-        "top": 275.5,
-        "width": 495,
-        "height": 31,
-        "angle": 0
-      },
-      "fontSize": 19,
-      "fontSource": "ink-height-primary",
-      "fontSizeEvidence": {
-        "status": "NORMAL",
-        "fontEvidenceStatus": "NORMAL",
-        "diagnosis": null,
-        "inkToOcrRatio": 1,
-        "advanceFontSize": null,
-        "inkFontSize": 19,
-        "inkHeight": 18.76,
-        "ocrHeight": 18.759584780092588
-      },
-      "fill": null,
-      "fillConfidence": 0.52,
-      "fillGate": "MULTI_MODAL",
-      "fontFamily": "sans-serif",
-      "anchorUsed": false,
-      "anchorObjectUuid": "f2657a4d-700b-4d67-8929-8cad6731c83b"
+      "anchorObjectUuid": "88556e98-d57e-4390-a114-4e50714e7d6a"
     },
     {
       "blockIndex": 12,
@@ -847,28 +649,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 322.08,
-          "y": 70.21
+          "x": 292.93,
+          "y": 151.18
         },
         {
-          "x": 335.48,
-          "y": 70.21
+          "x": 305.87,
+          "y": 154.65
         },
         {
-          "x": 335.48,
-          "y": 88.44
+          "x": 301.15,
+          "y": 172.25
         },
         {
-          "x": 322.08,
-          "y": 88.44
+          "x": 288.21,
+          "y": 168.78
         }
       ],
       "targetGeometry": {
-        "left": 322.08,
-        "top": 70.21,
+        "left": 288.21,
+        "top": 151.18,
         "width": 137,
         "height": 31,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 19,
       "fontSource": "ink-height-primary",
@@ -887,7 +689,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "8c72a6a4-e098-49f2-843c-95c19428540f"
+      "anchorObjectUuid": "6176138a-4616-4955-831f-f0f0a9901bce"
     },
     {
       "blockIndex": 13,
@@ -913,28 +715,28 @@
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
-          "x": 302.79,
-          "y": 156.51
+          "x": 251.96,
+          "y": 229.54
         },
         {
-          "x": 321.54,
-          "y": 156.51
+          "x": 270.08,
+          "y": 234.4
         },
         {
-          "x": 321.54,
-          "y": 184.92
+          "x": 262.73,
+          "y": 261.84
         },
         {
-          "x": 302.79,
-          "y": 184.92
+          "x": 244.61,
+          "y": 256.98
         }
       ],
       "targetGeometry": {
-        "left": 302.79,
-        "top": 156.51,
+        "left": 244.61,
+        "top": 229.54,
         "width": 387,
         "height": 43,
-        "angle": 0
+        "angle": 15
       },
       "fontSize": 29,
       "fontSource": "ink-height-primary",
@@ -953,73 +755,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "57b506eb-7896-4639-bbb2-4f1b009c14de"
-    },
-    {
-      "blockIndex": 14,
-      "nativeText": "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
-      "ocrBBox": {
-        "left": 178.46,
-        "width": 300.11,
-        "height": 23.58
-      },
-      "imageInkBox": {
-        "x": 831,
-        "y": 405,
-        "width": 62,
-        "height": 39
-      },
-      "imageInkWidth": 62,
-      "imageInkHeight": 39,
-      "imageInkCoverage": 0.0975,
-      "inkConfidence": 0.99,
-      "inkComponentCount": 2,
-      "inkDominantRatio": 0.9884,
-      "inkRowBandConfidence": 0.9998,
-      "visualGeometrySource": "OCR_BBOX_FALLBACK",
-      "targetQuad": [
-        {
-          "x": 445.34,
-          "y": 217.08
-        },
-        {
-          "x": 478.56,
-          "y": 217.08
-        },
-        {
-          "x": 478.56,
-          "y": 237.98
-        },
-        {
-          "x": 445.34,
-          "y": 237.98
-        }
-      ],
-      "targetGeometry": {
-        "left": 445.34,
-        "top": 217.08,
-        "width": 544,
-        "height": 34,
-        "angle": 0
-      },
-      "fontSize": 22,
-      "fontSource": "ink-height-primary",
-      "fontSizeEvidence": {
-        "status": "NORMAL",
-        "fontEvidenceStatus": "NORMAL",
-        "diagnosis": null,
-        "inkToOcrRatio": 0.8862,
-        "advanceFontSize": null,
-        "inkFontSize": 22,
-        "inkHeight": 20.9,
-        "ocrHeight": 23.583478009259252
-      },
-      "fill": null,
-      "fillConfidence": 0.4501,
-      "fillGate": "MULTI_MODAL",
-      "fontFamily": "sans-serif",
-      "anchorUsed": false,
-      "anchorObjectUuid": "9be5ba9f-b5ec-464d-9f9d-791cefcec879"
+      "anchorObjectUuid": "0832781b-84dd-4324-b1a6-7a37b73d954d"
     }
   ],
   "renderedInkCompare": [
@@ -1029,12 +765,12 @@
       "fontSize": 61,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 248.66,
-      "targetTop": 9.65,
-      "actualLeft": 173,
-      "actualTop": 4,
-      "dx": -75.66,
-      "dy": -5.65,
+      "targetLeft": 222.29,
+      "targetTop": 73.68,
+      "actualLeft": 166,
+      "actualTop": 48,
+      "dx": -56.29,
+      "dy": -25.68,
       "widthGap": -22,
       "heightGap": -23,
       "actualInkWidth": 182,
@@ -1047,12 +783,12 @@
       "fontSize": 14,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 327.44,
-      "targetTop": 99.69,
-      "actualLeft": 304,
-      "actualTop": 98,
-      "dx": -23.44,
-      "dy": -1.69,
+      "targetLeft": 287.01,
+      "targetTop": 181.04,
+      "actualLeft": 268,
+      "actualTop": 173,
+      "dx": -19.01,
+      "dy": -8.04,
       "widthGap": -28,
       "heightGap": -11,
       "actualInkWidth": 32,
@@ -1065,12 +801,12 @@
       "fontSize": 17,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 394.42,
-      "targetTop": 102.37,
-      "actualLeft": 342,
-      "actualTop": 96,
-      "dx": -52.42,
-      "dy": -6.37,
+      "targetLeft": 350.33,
+      "targetTop": 200.97,
+      "actualLeft": 305,
+      "actualTop": 181,
+      "dx": -45.33,
+      "dy": -19.97,
       "widthGap": -4,
       "heightGap": -14,
       "actualInkWidth": 109,
@@ -1083,12 +819,12 @@
       "fontSize": 10,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 312.97,
-      "targetTop": 115.77,
-      "actualLeft": 297,
-      "actualTop": 114,
-      "dx": -15.97,
-      "dy": -1.77,
+      "targetLeft": 270.26,
+      "targetTop": 192.83,
+      "actualLeft": 258,
+      "actualTop": 187,
+      "dx": -12.26,
+      "dy": -5.83,
       "widthGap": -31,
       "heightGap": -12,
       "actualInkWidth": 29,
@@ -1101,12 +837,12 @@
       "fontSize": 14,
       "fillGate": "FOREGROUND_RELIABLE",
       "anchorUsed": false,
-      "targetLeft": 312.43,
-      "targetTop": 130.25,
-      "actualLeft": 289,
-      "actualTop": 129,
-      "dx": -23.43,
-      "dy": -1.25,
+      "targetLeft": 264.61,
+      "targetTop": 206.67,
+      "actualLeft": 246,
+      "actualTop": 199,
+      "dx": -18.61,
+      "dy": -7.67,
       "widthGap": -28,
       "heightGap": -11,
       "actualInkWidth": 32,
@@ -1119,12 +855,12 @@
       "fontSize": 17,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 452.3,
-      "targetTop": 131.32,
-      "actualLeft": 400,
-      "actualTop": 125,
-      "dx": -52.3,
-      "dy": -6.32,
+      "targetLeft": 398.6,
+      "targetTop": 243.91,
+      "actualLeft": 354,
+      "actualTop": 224,
+      "dx": -44.6,
+      "dy": -19.91,
       "widthGap": -13.43,
       "heightGap": -14,
       "actualInkWidth": 100,
@@ -1137,12 +873,12 @@
       "fontSize": 10,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 309.75,
-      "targetTop": 146.86,
-      "actualLeft": 296,
-      "actualTop": 145,
-      "dx": -13.75,
-      "dy": -1.86,
+      "targetLeft": 259.11,
+      "targetTop": 222.03,
+      "actualLeft": 248,
+      "actualTop": 217,
+      "dx": -11.11,
+      "dy": -5.03,
       "widthGap": -27,
       "heightGap": -12,
       "actualInkWidth": 33,
@@ -1150,35 +886,17 @@
       "sourceInkLeft": 578
     },
     {
-      "block": "Kaqi",
-      "visualGeomSource": "OCR_BBOX_FALLBACK",
-      "fontSize": 33,
-      "fillGate": "MULTI_MODAL",
-      "anchorUsed": false,
-      "targetLeft": 43.41,
-      "targetTop": 188.13,
-      "actualLeft": 5,
-      "actualTop": 186,
-      "dx": -38.41,
-      "dy": -2.13,
-      "widthGap": -35.35,
-      "heightGap": -16,
-      "actualInkWidth": 64,
-      "actualInkHeight": 32,
-      "sourceInkLeft": 81
-    },
-    {
       "block": "Xia Zhu Lian",
       "visualGeomSource": "OCR_BBOX_FALLBACK",
       "fontSize": 19,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 322.08,
-      "targetTop": 70.21,
-      "actualLeft": 260,
-      "actualTop": 63,
-      "dx": -62.08,
-      "dy": -7.21,
+      "targetLeft": 288.21,
+      "targetTop": 151.18,
+      "actualLeft": 235,
+      "actualTop": 128,
+      "dx": -53.21,
+      "dy": -23.18,
       "widthGap": -24,
       "heightGap": -15,
       "actualInkWidth": 113,
@@ -1191,12 +909,12 @@
       "fontSize": 29,
       "fillGate": "MULTI_MODAL",
       "anchorUsed": false,
-      "targetLeft": 302.79,
-      "targetTop": 156.51,
-      "actualLeft": 118,
-      "actualTop": 154,
-      "dx": -184.79,
-      "dy": -2.51,
+      "targetLeft": 244.61,
+      "targetTop": 229.54,
+      "actualLeft": 74,
+      "actualTop": 179,
+      "dx": -170.61,
+      "dy": -50.54,
       "widthGap": -12,
       "heightGap": -15,
       "actualInkWidth": 375,
@@ -1205,31 +923,31 @@
     }
   ],
   "leftShiftObserved": {
-    "count": 10,
+    "count": 9,
     "rows": [
       {
         "block": "夏祝莲",
-        "dx": -75.66
+        "dx": -56.29
       },
       {
         "block": "手机:",
-        "dx": -23.44
+        "dx": -19.01
       },
       {
         "block": "13719111188",
-        "dx": -52.42
+        "dx": -45.33
       },
       {
         "block": "Mobile",
-        "dx": -15.97
+        "dx": -12.26
       },
       {
         "block": "微信:",
-        "dx": -23.43
+        "dx": -18.61
       },
       {
         "block": "2287483098",
-        "dx": -52.3
+        "dx": -44.6
       }
     ]
   },
