@@ -48,6 +48,10 @@
       "imageInkWidth": 99,
       "imageInkHeight": 111,
       "imageInkCoverage": 0.3489,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -91,7 +95,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "61c59f63-1c6d-45a3-aa7b-fdbfb84c0c4b"
+      "anchorObjectUuid": "db0962cd-b0f8-4d42-b741-c47a7e65ea41"
     },
     {
       "blockIndex": 1,
@@ -110,6 +114,10 @@
       "imageInkWidth": 26,
       "imageInkHeight": 25,
       "imageInkCoverage": 0.5458,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -153,7 +161,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "ab0c27fb-ed30-4d7d-9471-6cf2bf0957c9"
+      "anchorObjectUuid": "072562c0-2ac0-41de-b9cd-e80dca9d4431"
     },
     {
       "blockIndex": 2,
@@ -172,6 +180,10 @@
       "imageInkWidth": 16,
       "imageInkHeight": 30,
       "imageInkCoverage": 0.1206,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -215,7 +227,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "41390d02-1362-443f-80a3-25ce77c88cd7"
+      "anchorObjectUuid": "4e29f469-ad82-4701-a97f-e246cf1e5797"
     },
     {
       "blockIndex": 3,
@@ -234,6 +246,10 @@
       "imageInkWidth": 55,
       "imageInkHeight": 15,
       "imageInkCoverage": 1,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -277,7 +293,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "a08673d6-e2bb-48c3-a956-c31474066fb3"
+      "anchorObjectUuid": "8c38c4e3-35fb-40e7-9e85-8422c4b271e4"
     },
     {
       "blockIndex": 4,
@@ -296,6 +312,10 @@
       "imageInkWidth": 27,
       "imageInkHeight": 25,
       "imageInkCoverage": 0.5507,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -339,7 +359,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5e255749-1227-4442-a583-4231100aaa3d"
+      "anchorObjectUuid": "1fb2c635-73b5-42bf-928f-f1f36ef7cdc7"
     },
     {
       "blockIndex": 5,
@@ -358,6 +378,10 @@
       "imageInkWidth": 17,
       "imageInkHeight": 31,
       "imageInkCoverage": 0.1176,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -401,7 +425,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "11ad5e6c-1e7f-49a2-8724-c740fc089079"
+      "anchorObjectUuid": "edb4fe82-e216-4e28-af4e-7a099e91258a"
     },
     {
       "blockIndex": 6,
@@ -420,6 +444,10 @@
       "imageInkWidth": 63,
       "imageInkHeight": 15,
       "imageInkCoverage": 1,
+      "inkConfidence": 0.83,
+      "inkComponentCount": 2,
+      "inkDominantRatio": 0.718,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -463,7 +491,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "0c7a602e-fa1c-4a4e-b1c1-fbdd1c213aca"
+      "anchorObjectUuid": "763929aa-1d21-4292-bb18-0a454a401a5a"
     },
     {
       "blockIndex": 7,
@@ -482,6 +510,10 @@
       "imageInkWidth": 44,
       "imageInkHeight": 60,
       "imageInkCoverage": 0.3241,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 0.9963,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -525,7 +557,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "034c1369-e31b-4c34-a505-ae074a8a2794"
+      "anchorObjectUuid": "bac10110-113b-44c7-a27f-c43ada50cb5a"
     },
     {
       "blockIndex": 8,
@@ -544,6 +576,10 @@
       "imageInkWidth": 537,
       "imageInkHeight": 42,
       "imageInkCoverage": 1,
+      "inkConfidence": 0.59,
+      "inkComponentCount": 53,
+      "inkDominantRatio": 0.318,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -587,7 +623,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "e841bb6e-6105-4061-80fb-eec3aef17183"
+      "anchorObjectUuid": "10bcc221-3118-4b9d-9ed6-693f8b81f98f"
     },
     {
       "blockIndex": 9,
@@ -606,6 +642,10 @@
       "imageInkWidth": 122,
       "imageInkHeight": 37,
       "imageInkCoverage": 0.4325,
+      "inkConfidence": 0.73,
+      "inkComponentCount": 10,
+      "inkDominantRatio": 0.5417,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -649,7 +689,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "f6649720-5bd8-4d18-aad6-a20bffea2e00"
+      "anchorObjectUuid": "ee2d8f0f-5cc6-41f5-ba89-65c8173e099a"
     },
     {
       "blockIndex": 10,
@@ -668,6 +708,10 @@
       "imageInkWidth": 49,
       "imageInkHeight": 26,
       "imageInkCoverage": 0.2298,
+      "inkConfidence": 0.91,
+      "inkComponentCount": 2,
+      "inkDominantRatio": 0.8565,
+      "inkRowBandConfidence": 0.9996,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -711,7 +755,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "20966e52-29bc-4c97-9b86-25c7db71e255"
+      "anchorObjectUuid": "087638c7-46ed-46b3-b5ce-af5c8bf2ba93"
     },
     {
       "blockIndex": 11,
@@ -730,6 +774,10 @@
       "imageInkWidth": 240,
       "imageInkHeight": 35,
       "imageInkCoverage": 0.7457,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -773,7 +821,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "7e4e956a-a7fc-45d4-84b6-f1ac6abd2751"
+      "anchorObjectUuid": "4b35b1e6-7adc-4406-8d74-77f70f0358b2"
     },
     {
       "blockIndex": 12,
@@ -792,6 +840,10 @@
       "imageInkWidth": 25,
       "imageInkHeight": 34,
       "imageInkCoverage": 0.3742,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -835,7 +887,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5b6d65c4-9433-4da2-b570-5f1e3cbe98b2"
+      "anchorObjectUuid": "4fbe53c0-3f93-4f17-97ea-45d24db89307"
     },
     {
       "blockIndex": 13,
@@ -854,6 +906,10 @@
       "imageInkWidth": 35,
       "imageInkHeight": 53,
       "imageInkCoverage": 0.0996,
+      "inkConfidence": 0.99,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 0.9762,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -897,7 +953,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "7baafcdb-7d38-4582-b700-e164957e72c8"
+      "anchorObjectUuid": "38742172-2245-4c01-b2e2-b2daa5cbab7f"
     },
     {
       "blockIndex": 14,
@@ -916,6 +972,10 @@
       "imageInkWidth": 62,
       "imageInkHeight": 39,
       "imageInkCoverage": 0.0975,
+      "inkConfidence": 0.99,
+      "inkComponentCount": 2,
+      "inkDominantRatio": 0.9884,
+      "inkRowBandConfidence": 0.9998,
       "visualGeometrySource": "OCR_BBOX_FALLBACK",
       "targetQuad": [
         {
@@ -959,7 +1019,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "51cb9d3e-e368-4476-9ef2-1e1af0fdc987"
+      "anchorObjectUuid": "3a7589d6-a660-450a-8575-689108cfd6cd"
     }
   ],
   "renderedInkCompare": [

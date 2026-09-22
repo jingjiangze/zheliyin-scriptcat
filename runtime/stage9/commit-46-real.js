@@ -22,10 +22,10 @@ const USERSCRIPT_PATH = path.join(ROOT, "zheliyin-card-assistant.user.js");
 const REPORT_DIR = path.join(ROOT, "runtime", "reports", "stage-9");
 const { createBaiduProvider } = require(path.join(ROOT, "extension", "src", "ocr", "baidu-provider.js"));
 const adapter = require("../scriptcat-adapter");
+const probeMod = require("./session-probe");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const CARD = process.env.ZY_BG_FILE || path.join(ROOT, "runtime", "stage8b", "assets", "real-card-xiazhu.png");
-const COOKIE_RAW = process.env.ZY_STAGE9_COOKIE || "";
 const BAIDU_AK = process.env.ZY_BAIDU_AK || "";
 const BAIDU_SK = process.env.ZY_BAIDU_SK || "";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
@@ -102,7 +102,7 @@ function selfTest() {
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
-if (!COOKIE_RAW || !BAIDU_AK || !BAIDU_SK) { console.error("[commit-46-real] 缺少凭据 env（cookie/ak/sk）"); process.exit(2); }
+if (!BAIDU_AK || !BAIDU_SK) { console.error("[commit-46-real] 缺少凭据 env（baidu ak/sk）"); process.exit(2); }
 function pageWorldPayloadFor(cond, ab) {
   const parts = [GM_SHIM_SOURCE];
   const norm = conditionCode(cond, ab);
@@ -128,7 +128,10 @@ async function baiduRecognizeExternal(dataUrl, mode) {
 }
 (async () => {
   fs.mkdirSync(REPORT_DIR, { recursive: true });
-  const out = { ts: new Date().toISOString(), stage: "OCR-P1-COMMIT4_6-REAL", cases: CASE_DEFS, image: path.basename(CARD), cookiePresent: !!COOKIE_RAW, abModes: AB_MODE.length ? AB_MODE : ["B"], runs: [], errors: [] };
+  const sessCookie = await probeMod.resolveStage9Cookie();
+  const COOKIE_RAW = sessCookie.raw || "";
+  if (!COOKIE_RAW) { console.error("[commit-46-real] 会话 cookie 解析失败：" + (sessCookie.error || "NO_COOKIE") + "（已尝试 显式 env → 自动抓取 OCRTool.do；请注入 ZY_STAGE9_COOKIE 或确保持久 profile 已登录）"); process.exit(2); }
+  const out = { ts: new Date().toISOString(), stage: "OCR-P1-COMMIT4_6-REAL", cases: CASE_DEFS, image: path.basename(CARD), cookiePresent: !!COOKIE_RAW, cookieSource: sessCookie.source || null, cookieWarning: sessCookie.warning || null, cookieNote: sessCookie.note || null, abModes: AB_MODE.length ? AB_MODE : ["B"], runs: [], errors: [] };
   let browser = null;
   try {
     browser = await chromium.launchPersistentContext(PROFILE, { channel: "chromium", headless: false, ignoreDefaultArgs: ["--enable-automation", "--disable-extensions"], args: ["--disable-features=DisableLoadExtensionCommandLineSwitch", "--enable-unsafe-extension-debugging", "--disable-extensions-except=" + SC_DIR, "--load-extension=" + SC_DIR], viewport: { width: 1280, height: 900 } });
