@@ -31,7 +31,11 @@
   **没有任何「墨迹盒 vs OCR bbox」一致性门禁**。
 - 墨迹算法（image-ink-visual.js）：行/列投影挑「主文字带×主列段」，对含图标行、中英混排行、多元素行容易挑错 span
   → 一旦触发，target 右移几十 px → 文字与背景原字错位 →「重影/多层叠加」。
-- 证据：夏祝莲卡真机 15/15 行 confidence<0.30 回落 OCR_BBOX（未触发）；但打印体高对比卡（如盈通启富）触发概率高。
+- 证据（2026-09-22 det-n-run 实测已纠正）：**ink 实际一直在触发** —— B 模式全部行 inkConfidence=1（≥0.30 门槛放行），
+  墨迹盒几何错误（数字行 16×30 单字形碎片 / 姓名行 99×111 跨行团块）→ target.left 确定性 +1.6~+94px 偏移。
+- **掩盖性诊断 bug**：`visualGeomSource` 为 if(imgT) 块内 const，diag 块外 typeof 访问恒为 undefined → 恒记 OCR_BBOX_FALLBACK，
+  此前「15/15 未触发」结论错误（详见 STAGE9_GEOMETRY_AUTHORITY_AUDIT.md §7）。
+- 运行时「漂移」判定纠正：模式内 range=0/stdev=0（确定性成立）；早先 A/B target 差异 = ink 接管模式差异，非运行噪音。
 
 ### 3.2 真机运行几何不稳定（新增实测证据）
 

@@ -98,3 +98,46 @@ flowchart LR
 1. 用户卡（盈通启富）实测：墨迹接管在真实卡上的触发与偏移量（需用户提供卡图或 thirdDiyAdd.do URL）。
 2. runner 的 anchorUsed 回填未生效（diag 采集后未回填）→ Commit C 前修复采集。
 3. 字体回退（fallback vs real font）对测量的影响：Commit B 需增加 fontlist 冻结/探测。
+
+## 7. 实测结论（2026-09-22，det-n-run harness：V0 × B=10 / A=3，子进程隔离）
+
+证据文件：runtime/reports/stage-9/det-9.9/determinism-summary.json + det-run-{ab}-{i}.json（本审计入库）
+
+### 7.1 Determinism（模式内）：variance ≈ 0 —— 「运行时漂移」假设被推翻
+
+- 全部 13 次运行 exit=0、15 行、Native OCR 通过（保留 15 个）。
+- target.left/top/width/height/angle、fontSize、ocrBBox 在 **B×10 内 range=0/stdev=0**，**A×3 内同样 range=0**。
+- fontFamily 恒为 sans-serif。→ 同一模式下几何求解**完全确定**。
+- 早先「同卡 A/B 两次 run target 漂 1.6~94px」的判断错误：那是**模式差异**（B 的 ink 接管），不是运行噪音。
+
+### 7.2 模式分隔（Ink 接管开启 vs 关闭）：同输入 → 两类稳定几何
+
+| block | ocrBBox.left(输入, 两模式相同) | A target.left(ink 关) | B target.left(ink 开) | Δleft |
+|-------|--------------------------------|----------------------|----------------------|-------|
+| 夏祝莲 | 187.03 | 187.03 | 248.66 | **+61.63** |
+| 13719111188 | 356.91 | 356.91 | 394.42 | **+37.51** |
+| 2287483098 | 357.98 | 357.98 | 452.30 | **+94.32** |
+| Mobile | 311.36 | 311.36 | 312.97 | +1.61 |
+| 微信: | 310.82 | 310.82 | 312.43 | +1.61 |
+
+- fontSize（61/17/10/14）、fontFamily、target.width 两模式**完全一致** → 仅 left 被改写，纯平移。
+- A 模式的 target==OCR bbox 输入（锁定：A 正确地把 OCR bbox 作为目标源）。
+
+### 7.3 根因（证据 + 一个掩盖性诊断 bug）
+
+1. **ink 接管真实触发且几何错误**：B 模式全部行 inkConfidence=1（≥0.30 门槛放行），
+   但墨迹盒与文字行严重不符 —— 13719111188 inkBox=16×30（单字形碎片）、夏祝莲 inkBox=99×111（跨行大团块）、
+   2287483098 inkBox=17×31。行/列投影对数字串、多字形混排挑错 span。
+2. **无任何「墨迹盒 vs OCR bbox」一致性校验**：confidence 是墨迹算法自评（dominantRatio/rowBandConfidence 融合），
+   对「region 是否真的就是该行文字」零外部验证 → 自评 1.0 的错误盒直接被当作 target 源。
+3. **诊断掩盖**：userscript L1715 `const visualGeomSource = …` 是 `if(imgT)` 块内 const，
+   diag 采集（L1859）在块外以 `typeof visualGeomSource !== "undefined"` 访问 → 恒为 undefined → 恒记为
+   `OCR_BBOX_FALLBACK`。→ 此前「真机 15/15 全 FALLBACK、ink 未触发」的结论错误，掩盖了 ink 一直在线接管。
+
+### 7.4 对执行计划的修正（确认用户排序）
+
+- Commit A 优先级再次确认：**墨迹位置接管必须停止直写 position**；第一步包含两件诊断修正：
+  a) 把 visualGeomSource/srcBox 提升到函数外层作用域（诊断如实上报 IMAGE_INK）；
+  b) 几何唯一权威回退 OCR bbox → imgT → targetQuad（= demo 模型），ink 仅输出 confidence/region/mask。
+- Commit B（determinism harness）已完成基线：det-n-run.js + N=10 口径固化；判定门槛（模式内 range≤3px/0.5°/1px）已用本数据验证可用。
+- Commit E 重新开启墨迹辅助时，把 7.3-2 的「一致性校验」列为强制门禁（inkBox 与 bbox 目标差超阈值 → 拒绝，仅作信噪提示）。
