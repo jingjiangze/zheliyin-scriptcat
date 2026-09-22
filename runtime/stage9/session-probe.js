@@ -25,6 +25,8 @@ const PROFILE = process.env.P0_PROFILE || path.join(ROOT, "runtime", "browser", 
 const INDEX_URL = "https://diy.zheliyin.com/siteWeb/jsj/index.do";
 const OCR_URL = "https://diy.zheliyin.com/siteWeb/userCenterJsj/OCRTool.do";
 const LOGIN_URL = "https://diy.zheliyin.com/siteWeb/login.do";
+// 门店设计页：登录后的重定向目标（签发 diy-User-third 身份 cookie；与 commit-46-real 同门店）
+const STORE_URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const OUT_FILE = path.join(os.tmpdir(), "zy_stage9_cookie.txt");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -78,7 +80,10 @@ function readOutFile() {
   try { return String(fs.readFileSync(OUT_FILE, "utf8") || "").trim(); } catch (e) { return ""; }
 }
 
-// 自动登录：依赖 P0_LOGIN_USER / P0_LOGIN_PASS（登录页 login.do：#userAccount + #userPassword + #accountLogin）
+// 自动登录：依赖 P0_LOGIN_USER / P0_LOGIN_PASS
+// 登录弹窗结构（login.do / diyWeb 门户）：.mask-bg.zLoginOut（display:none）包裹 .zLoginTan 面板，
+// 面板未展开时 #userAccount/#userPassword 存在但 0×0 不可交互 → 先翻转 mask 层级再填表；
+// 填表走原生 setter + input/change（React 受控输入），提交优先 #accountLogin 否则匹配可见「登录/确定」文本。
 async function tryAutoLogin(page, out) {
   const user = (process.env && process.env.P0_LOGIN_USER) || "";
   const pass = (process.env && process.env.P0_LOGIN_PASS) || "";
@@ -86,13 +91,73 @@ async function tryAutoLogin(page, out) {
   try {
     const r = await page.goto(LOGIN_URL, { waitUntil: "domcontentloaded", timeout: 40000 }).catch((e) => ({ status: 0 }));
     out.steps.push({ step: "login-do", status: r && r.status ? r.status() : 0 });
-    await SLEEP(2000);
-    await page.fill("#userAccount", user).catch(() => out.errors.push("LOGIN_FILL_USER_FAIL"));
-    await page.fill("#userPassword", pass).catch(() => out.errors.push("LOGIN_FILL_PASS_FAIL"));
-    await page.click("#accountLogin").catch(() => out.errors.push("LOGIN_CLICK_FAIL"));
-    // 等待登录跳转与会话建立（SESSION + diy-User-third）
+    await SLEEP(3000);
+    // 1) 展开登录面板：翻转 mask 层级（autologin3.js 成熟做法）
+    await page.evaluate(() => {
+      const open = (el) => { try { el.style.display = "block"; } catch (e) {} };
+      document.querySelectorAll(".mask-bg.zLoginOut, .zLoginOut").forEach(open);
+      const tan = document.querySelector(".zLoginTan");
+      if (tan) open(tan);
+      const opener = document.querySelector("[class*='zLoginIn']");
+      if (opener && opener.offsetParent !== null) { try { opener.click(); } catch (e) {} }
+      const tab = Array.from(document.querySelectorAll("a,span,div,li,em,b")).find((el) => /账户登录|密码登录|账号登录/.test(String(el.textContent || "").trim()) && el.offsetParent);
+      if (tab) { try { tab.click(); } catch (e) {} }
+      return true;
+    }).catch(() => {});
+    await SLEEP(1200);
+    // 2) 填表：优先 page.fill，失败走原生 setter（React 值受控输入必须走 setter + input/change）
+    let filled = false;
+    try { await page.fill("#userAccount", user); await page.fill("#userPassword", pass); filled = true; } catch (e) {}
+    if (!filled) {
+      const fr = await page.evaluate((arg) => {
+        const el = (id) => document.getElementById(id);
+        const setVal = (node, v) => {
+          const proto = (node instanceof HTMLTextAreaElement) ? HTMLTextAreaElement.prototype : (node instanceof HTMLInputElement ? HTMLInputElement.prototype : null);
+          if (!proto) return false;
+          const setter = Object.getOwnPropertyDescriptor(proto, "value").set;
+          try { setter.call(node, v); } catch (e) { node.value = v; }
+          node.dispatchEvent(new Event("input", { bubbles: true }));
+          node.dispatchEvent(new Event("change", { bubbles: true }));
+          return true;
+        };
+        const u = el("userAccount"); const p = el("userPassword");
+        if (!u || !p) return { ok: false, reason: "inputs-missing" };
+        try { u.focus(); if (u.select) u.select(); } catch (e) {}
+        setVal(u, arg.u);
+        try { p.focus(); if (p.select) p.select(); } catch (e) {}
+        setVal(p, arg.p);
+        return { ok: true };
+      }, { u: user, p: pass }).catch(() => ({ ok: false, reason: "eval-fail" }));
+      if (!fr.ok) out.errors.push("LOGIN_FILL_FAIL: " + (fr.reason || ""));
+    }
+    // 3) 提交：优先 #accountLogin；否则选可见的 登录/确定 文本元素（p0/runner.js 成熟做法）
+    const clicked = await page.evaluate(() => {
+      const cands = [];
+      const el = document.getElementById("accountLogin");
+      if (el) cands.push(el);
+      document.querySelectorAll("a, button, span, div").forEach((x) => {
+        const t = String(x.textContent || "").trim();
+        if (/^登录$|^登\s*录$|^确定$/.test(t) && x.offsetParent) cands.push(x);
+      });
+      for (const c of cands) { try { c.click(); return { ok: true, sel: (c.id || c.tagName) }; } catch (e) {} }
+      return { ok: false, reason: "no-submit-btn" };
+    }).catch(() => ({ ok: false, reason: "eval-fail" }));
+    if (!clicked.ok) out.errors.push("LOGIN_CLICK_FAIL: " + (clicked.reason || ""));
+    // 4) 先等 SESSION 建立（登录成功判定）→ 再跳门店页签发 diy-User-third 身份 cookie
+    //    真机经验：login.do 登录成功仅发 SESSION；diy-User-third 需请求门店设计页才 Set-Cookie
+    let sessionSeen = false;
+    for (let i = 0; i < 10; i += 1) {
+      await SLEEP(1200);
+      const ck = await page.context().cookies().catch(() => []);
+      const sess = (ck || []).find((c) => c.name === "SESSION");
+      if (sess && String(sess.value).length >= 30) { sessionSeen = true; break; }
+    }
+    if (sessionSeen) {
+      await page.goto(STORE_URL, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => out.errors.push("LOGIN_STORE_HOP_FAIL"));
+      await SLEEP(4000);
+    }
     for (let i = 0; i < 12; i += 1) {
-      await SLEEP(1500);
+      await SLEEP(1200);
       const ck = await page.context().cookies().catch(() => []);
       const sess = (ck || []).find((c) => c.name === "SESSION");
       if (hasIdentityCookies(ck) && sess && String(sess.value).length >= 30) {
@@ -101,7 +166,7 @@ async function tryAutoLogin(page, out) {
         return true;
       }
     }
-    out.errors.push("AUTO_LOGIN_FAILED: 登录后仍未建立 diy-User-third/SESSION（账号或密码错误？）");
+    out.errors.push(sessionSeen ? "AUTO_LOGIN_FAILED: SESSION 已建立但门店页未签发 diy-User-third" : "AUTO_LOGIN_FAILED: SESSION 未建立（账号或密码错误？）");
     return false;
   } catch (e) { out.errors.push("AUTO_LOGIN_ERR: " + String(e && e.message || e).slice(0, 200)); return false; }
 }
