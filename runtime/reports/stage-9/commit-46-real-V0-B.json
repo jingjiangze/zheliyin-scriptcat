@@ -95,7 +95,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "0a4a4776-ddc1-4a60-a585-9f4b7d65150b"
+      "anchorObjectUuid": "25b631b3-d990-4f4c-a183-26fa7a442e87"
     },
     {
       "blockIndex": 1,
@@ -161,7 +161,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5fff86c9-1cc5-4965-8644-58fb6a161855"
+      "anchorObjectUuid": "39e2acd1-2f63-4529-b2e8-7703a88f48ae"
     },
     {
       "blockIndex": 2,
@@ -227,7 +227,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "2c6e3765-30e0-4516-bb50-5237680083f1"
+      "anchorObjectUuid": "d4a636b1-3f6a-4c95-accf-2cdc30d00dee"
     },
     {
       "blockIndex": 3,
@@ -293,7 +293,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "187ee1a1-3cab-4e11-920a-40644aefe695"
+      "anchorObjectUuid": "9435db33-4566-4044-95d9-96e78a187226"
     },
     {
       "blockIndex": 4,
@@ -359,7 +359,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9489cca5-6487-4554-890e-dd7b016d7e62"
+      "anchorObjectUuid": "1f84f43e-98b2-4e72-b834-42cefb325d65"
     },
     {
       "blockIndex": 5,
@@ -425,7 +425,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5a6aec55-c791-4eda-ba91-b1a190eaa5de"
+      "anchorObjectUuid": "38e28942-aeef-40d9-b9dc-9eb090e0eff4"
     },
     {
       "blockIndex": 6,
@@ -491,7 +491,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "25aa3a8c-900f-4c41-b28f-cb471a284abf"
+      "anchorObjectUuid": "d6d99b70-c448-4b76-8460-b7babeef0bd3"
     },
     {
       "blockIndex": 7,
@@ -557,7 +557,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "1874579a-010b-4d6a-ad52-6b1297185968"
+      "anchorObjectUuid": "220c21cc-3a90-4bd6-9588-24e4bb3c1e99"
     },
     {
       "blockIndex": 8,
@@ -623,7 +623,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "ce5b1236-89a8-44f3-b2ce-c1f0f8f4581e"
+      "anchorObjectUuid": "dbbacdc8-9706-4d36-938b-440a7ba1f793"
     },
     {
       "blockIndex": 9,
@@ -689,7 +689,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "452697ea-b537-489a-8b9a-e5aaf814646b"
+      "anchorObjectUuid": "114980de-ac81-4e8d-86b8-044d9571ffc6"
     },
     {
       "blockIndex": 10,
@@ -755,7 +755,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5ca5a290-c6d8-4401-acfd-43b49036ac1f"
+      "anchorObjectUuid": "891d46d8-80f0-48fe-94f4-dcbe6ec673e9"
     },
     {
       "blockIndex": 11,
@@ -821,7 +821,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "f2657a4d-700b-4d67-8929-8cad6731c83b"
+      "anchorObjectUuid": "4a56c753-0170-4365-8284-3fbc06ac85e1"
     },
     {
       "blockIndex": 12,
@@ -887,7 +887,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "8c72a6a4-e098-49f2-843c-95c19428540f"
+      "anchorObjectUuid": "2d1a4219-30ec-447a-8715-95b354aaf072"
     },
     {
       "blockIndex": 13,
@@ -953,7 +953,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "57b506eb-7896-4639-bbb2-4f1b009c14de"
+      "anchorObjectUuid": "6c52a52c-6ab3-4c88-9922-1f7dd0b2d6ee"
     },
     {
       "blockIndex": 14,
@@ -1019,7 +1019,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9be5ba9f-b5ec-464d-9f9d-791cefcec879"
+      "anchorObjectUuid": "8382b3de-0e0f-4119-bb08-0f1af05cdf56"
     }
   ],
   "renderedInkCompare": [

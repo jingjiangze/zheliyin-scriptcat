@@ -22,14 +22,14 @@
     {
       "step": "ocr-done",
       "done": true,
-      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+      "status": "已生成 15 个文字（可双击编辑）"
     },
     {
       "step": "rollback",
       "ok": true
     }
   ],
-  "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC",
+  "status": "已生成 15 个文字（可双击编辑）",
   "visualRows": [
     {
       "blockIndex": 0,
@@ -95,7 +95,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "7be0f68b-56e1-47bc-8322-022738220437"
+      "anchorObjectUuid": "0b2cebe2-b692-4906-b055-7e0257b67e30"
     },
     {
       "blockIndex": 1,
@@ -161,7 +161,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "f21f3e46-29b3-4e37-a45d-52b17cd56d0e"
+      "anchorObjectUuid": "778d989a-d832-4e69-a9f1-20033db4381d"
     },
     {
       "blockIndex": 2,
@@ -227,7 +227,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "a3b3762f-a0a4-40c4-aa26-25a03edbe773"
+      "anchorObjectUuid": "a0bb4356-4d0f-4102-ba1b-4729b5cb2191"
     },
     {
       "blockIndex": 3,
@@ -293,7 +293,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "23dbbc81-2bde-41e5-8b40-7f753429c2f0"
+      "anchorObjectUuid": "def9ce6b-f3ce-418e-af58-36cc380daec0"
     },
     {
       "blockIndex": 4,
@@ -359,7 +359,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "887621ff-d63b-4d4c-90f9-2a54beed7146"
+      "anchorObjectUuid": "4bad7662-2c87-44e0-9932-2431a41ea2d6"
     },
     {
       "blockIndex": 5,
@@ -425,7 +425,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "d0812351-f68a-430f-8381-d9e9a075aa1b"
+      "anchorObjectUuid": "7ca6f137-000d-44e7-9733-1968479bd897"
     },
     {
       "blockIndex": 6,
@@ -491,7 +491,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "daf341c9-8ae9-4dc9-aed3-06fe79db7126"
+      "anchorObjectUuid": "f7007606-2276-45ea-baf8-9a4ee0e07106"
     },
     {
       "blockIndex": 7,
@@ -557,7 +557,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "033c7447-f9ca-4107-b2ca-44c9ce6f36f5"
+      "anchorObjectUuid": "49feb217-473d-4a35-b77b-1e3754666ae7"
     },
     {
       "blockIndex": 8,
@@ -623,7 +623,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "96a034eb-890f-4413-857f-c88e6b2c9627"
+      "anchorObjectUuid": "2986a9af-dae6-4c06-ae08-c119a9af613d"
     },
     {
       "blockIndex": 9,
@@ -689,7 +689,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "7d552206-9e91-46bd-be32-86aadcbef09c"
+      "anchorObjectUuid": "fecdb491-baa4-4a9c-8843-53264c32d364"
     },
     {
       "blockIndex": 10,
@@ -755,7 +755,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "61bd880d-51a9-47ad-bee1-07b61de82cd1"
+      "anchorObjectUuid": "837ad58f-132c-408c-b3b5-f54ece725299"
     },
     {
       "blockIndex": 11,
@@ -821,7 +821,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "ca32c128-0521-48b6-b4d4-79f28ad0bffa"
+      "anchorObjectUuid": "23846b66-4b94-41f4-8810-99d606b7f688"
     },
     {
       "blockIndex": 12,
@@ -887,7 +887,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "35c348e3-aa9d-4d2a-a934-54650c6e1afc"
+      "anchorObjectUuid": "0ed59552-3138-4b54-9019-0b4c771da825"
     },
     {
       "blockIndex": 13,
@@ -953,7 +953,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "707cf2d8-6b97-4914-bbb5-c9e5bbc9a160"
+      "anchorObjectUuid": "dc7c7ec7-cf72-4d7d-8008-1356b5953d53"
     },
     {
       "blockIndex": 14,
@@ -1019,7 +1019,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "15f94e89-e73c-4208-b402-be9edb32fd97"
+      "anchorObjectUuid": "4b4dbd85-a1cd-46ae-a3cc-e8e9f9279729"
     }
   ],
   "renderedInkCompare": [
