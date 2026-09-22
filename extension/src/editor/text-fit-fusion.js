@@ -138,7 +138,10 @@ function solveFontSizeFusion(input) {
     }
   } else if (ink && !inkTrusted) {
     warnings.push("ink rejected for font-size: " + String(inkEval ? (inkEval.fontEvidenceStatus + " " + (inkEval.diagnosis || "")) : "eval-unavailable"));
-    if (adv) { fs = adv.fontSize; reason = "advance-width-primary-ink-invalid"; }
+    // Commit A2：INK_TOO_SMALL = OCR bbox 是合并/含 padding 的巨块（ink << ocr），小墨迹才是真实单行高
+    // → 信任墨迹行高，禁止用合并盒高度推大字（真机：盈通启富卡 理财顾问 ocr 高84 → 曾错误 59px）
+    if (inkEval && inkEval.status === "INK_TOO_SMALL") { fs = ink.fontSize; reason = "ink-height-primary-merged-block-ink-too-small"; warnings.push("merged/padded block: ocrHeight inflates font; trust ink line height"); }
+    else if (adv) { fs = adv.fontSize; reason = "advance-width-primary-ink-invalid"; }
     else if (ocrSrc) { fs = Math.max(FS_MIN, Math.min(FS_MAX, Math.round(ocrSrc.ocrHeight / 1.425))); reason = "ocr-height-sanity-ink-invalid"; }
   } else if (adv) { fs = adv.fontSize; reason = "advance-width-primary"; }
 

@@ -66,5 +66,14 @@ t("fusion: ink 异常但无 advance → 用 OCR height sanity（不静默 clamp�
   assert.ok(r.fontSize < 60, "fontSize=" + r.fontSize);
 });
 
+t("fusion(A2): INK_TOO_SMALL 合并块（ink<<ocr）→ 信任墨迹行高，禁止巨盒推大字", () => {
+  const r = FT.solveFontSizeFusion({ text: "理财顾问", targetVisualWidth: 190, inkHeight: 12, ocrHeight: 84, fontFamily: "sans-serif", quality: 0.9, measurer: null });
+  assert.strictEqual(r.ok, true);
+  assert.ok(r.fontSize <= 14, "A2 merged-block fs=" + r.fontSize);
+  assert.ok(r.reason.indexOf("ink-too-small") >= 0, "A2 reason=" + r.reason);
+  assert.strictEqual(r.reason, "ink-height-primary-merged-block-ink-too-small");
+  assert.ok(r.fontEvidence && r.fontEvidence.status === "INK_TOO_SMALL");
+});
+
 console.log("text-fit-ink-safety.test: pass=" + passed + " fail=" + failed);
 process.exit(failed ? 1 : 0);
