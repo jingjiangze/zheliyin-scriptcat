@@ -1670,7 +1670,12 @@
             const ink = inkByBlock[i] || null;
             const region = (ink && ink.inkBox) ? ink.inkBox : { x: b.bbox.x, y: b.bbox.y, width: b.bbox.width, height: b.bbox.height };
             const o = extractForegroundColor({ data: rgbaDec.data, width: rgbaDec.width, height: rgbaDec.height, bbox: region });
-            if (o && o.ok) colorByBlock[i] = { color: o.color, confidence: o.confidence, sampleCount: o.sampleCount, coverage: o.coverage, source: o.source, method: o.method };
+            // Commit 4.6-D（§12）：生产应用门禁 —— 前景可靠 + 主色集中 + 非多峰才设置 fill；否则保留 Native 默认色
+            if (typeof shouldApplyFill === "function") {
+              const fgGate = shouldApplyFill(o);
+              if (fgGate.apply) colorByBlock[i] = { color: o.color, confidence: o.confidence, sampleCount: o.sampleCount, coverage: o.coverage, source: o.source, method: o.method, dominance: o.dominance, ambiguity: o.ambiguity, multiModal: !!o.multiModal, gate: fgGate.reason };
+              else colorByBlock[i] = { color: o.color, confidence: o.confidence, sampleCount: o.sampleCount, coverage: o.coverage, source: o.source, method: o.method, dominance: o.dominance, ambiguity: o.ambiguity, multiModal: !!o.multiModal, gate: fgGate.reason, skipped: true }; // 弱证据：作为证据保留但不下发 fill（不设 base.fill）
+            } else if (o && o.ok) colorByBlock[i] = { color: o.color, confidence: o.confidence, sampleCount: o.sampleCount, coverage: o.coverage, source: o.source, method: o.method };
           });
         }
       } catch (eColor) { ocrLog("COLOR", "extract exception " + String(eColor && eColor.message || eColor).slice(0, 120)); }
@@ -1868,7 +1873,7 @@
       const base = { text: srcText, blockIndex: bi, fontFamily: fontFamilyCandidate || "sans-serif", diagnostics: diagnostics, pageId: srcPageId, side: srcSide, transactionId: srcTxId, imageFingerprint: srcTxFp, canvasId: srcTxCanvas, zy8bFontMismatch: !fontFamilyCandidate };
       // Stage 10-A：颜色证据附到 item（fill 仅在有可靠前景证据时设置；UNKNOWN 保留 Native default）
       const ce10 = colorByBlock[bi] || null;
-      if (ce10) base.fill = ce10.color;
+      if (ce10 && ce10.skipped !== true) base.fill = ce10.color; // Commit 4.6-D：弱颜色证据（skipped）保留 Native 默认色，不强制设色
       base.zy8bFillEvidence = ce10 || { missing: true };
       if (lineQuadsC7 && lineQuadsC7.length) base.zy8bLineQuads = lineQuadsC7; // Commit 7 C：逐行 quad 证据
       if (containRes) base.zy8bContainment = containRes; // Commit 7：创建前 containment / repair 证据
