@@ -141,7 +141,7 @@ dx/dy/widthGap/heightGap + leftShiftObserved（任务书 §18/§19）。
 
 ## 11. Git SHA
 
-- test = stage 本地 HEAD：56ed36e（含 4.6-A … 4.6-0b、4.6-SESSION、4.6-SESSION-b 全部子提交）
+- test = stage 本地 HEAD：cc99f43（含 4.6-A … 4.6-0b、4.6-SESSION、4.6-SESSION-b 全部子提交）
 - 推送状态：4.6-SESSION 系列（552a4ce/726bdeb）已双推；本报告随 4.6-SESSION-b（56ed36e）的 docs 子提交推送
 - main / demo 未动（任务书 §0 约束保持）
 
