@@ -14,6 +14,8 @@
 | 4.6-D | 58a0f3c | 颜色 Confidence 门禁（dominance/ambiguity/multiModal + shouldApplyFill）+ color-confidence.test.js |
 | 4.6-E | 8545e44 | 升版 0.3.11.56（@version/@require?v=/const VERSION 统一）+ UI 状态文案「保留=创建成功」 |
 | 4.6-0 | 79854b2 | 真机只读证据采集（__zyStage9VisualDiag）+ commit-46-real.js（A/B runner） |
+| 4.6-0b | 27cb187 | 真机回退修复：inkV 作用域 ReferenceError（inkByBlock 安全访问）+ diag confidence 字段 + V0/B 报告输出 |
+| 4.6-SESSION | 552a4ce | 会话 cookie 自动续期：session-probe（OCRTool.do 抓取 + 自动登录 + 保守合并）+ commit-46-real 主循环前内嵌 |
 
 ## 1. 左移根因
 
@@ -118,7 +120,8 @@ dx/dy/widthGap/heightGap + leftShiftObserved（任务书 §18/§19）。
 
 ## 10. unresolved
 
-- Native OCR 会话过期：真机 A/B 全量证据待会话重建（环境变量注入即可，runner 已就绪）。
+- ~~Native OCR 会话过期（真机 A/B 全量证据受阻）~~ ✅ 已解除（4.6-SESSION，见 §13）：
+  resolveStage9Cookie() 自动抓取/合并已内嵌 runner，真机 V0/B 走 probe 路径跑通（cookieSource=merged，Native OCR 保留 15 行）。
 - IMAGE_INK 可靠性门槛 0.30 为「经验下界」（任务书 §5 明示不设未经实验的极端固定阈值）；
   真机复跑后按实测 dominance/rowBandConfidence 分布收紧或补充证据。
 - GitHub 网络（github.com:443）间歇不可达：本次多笔提交已本地 commit 完成，
@@ -126,8 +129,8 @@ dx/dy/widthGap/heightGap + leftShiftObserved（任务书 §18/§19）。
 
 ## 11. Git SHA
 
-- test = stage 本地 HEAD：79854b2（含 4.6-A … 4.6-0 全部子提交）
-- 推送状态：4.6-A/B 已双推（d42f0e2）；4.6-C/D/E/0 本地 commit，GitHub 网络恢复后双推
+- test = stage 本地 HEAD：552a4ce（含 4.6-A … 4.6-0b、4.6-SESSION 全部子提交）
+- 推送状态：全部子提交已双推至 test 与 stage-9-altq-baidu-reconstruction（GitHub 网络已恢复，工作树 clean）
 - main / demo 未动（任务书 §0 约束保持）
 
 ## 12. 禁止项合规声明
@@ -135,3 +138,20 @@ dx/dy/widthGap/heightGap + leftShiftObserved（任务书 §18/§19）。
 本 Commit 未使用：全局字号 multiplier / 全局 left offset / 全局颜色替换 / 固定 fontSize /
 固定 bbox 缩放 / 随机微调 / 手工 case-by-case 坐标；未修改 Native OCR Truth、textType=2、
 Native Create 主入口、Native Layer Contract、Page Ownership、Partial Create semantics。
+## 13. 会话自动续期（4.6-SESSION）
+
+- 需求（用户）：会话 cookie 过期时，自动去 `https://diy.zheliyin.com/siteWeb/userCenterJsj/OCRTool.do` 抓取最新，并内嵌到脚本。
+- 实现（`runtime/stage9/session-probe.js`，可 require 模块）：
+  - `probe()`：playwright 持久 profile → index.do + OCRTool.do → `browser.cookies()` 全域抓取 zheliyin 域 cookie（含 httpOnly）→ 拼串。
+  - `tryAutoLogin()`：缺身份 cookie 且注入 `P0_LOGIN_USER/P0_LOGIN_PASS` 时，自动填表 `login.do`（#userAccount / #userPassword / #accountLogin）重建会话。
+  - `mergeCookies(base, fresh, freshHasIdentity)`：fresh 带完整身份 → 整体采用 fresh（SESSION 与身份同源最新）；fresh 缺身份（匿名）→ 保守保留 base 已验证 SESSION，仅补齐 fresh 新增字段（Hm_* 等）。
+  - `resolveStage9Cookie()`：env ZY_STAGE9_COOKIE（显式优先）→ probe 自动抓取（ZY_SESSION_REFRESH=1 或未注入 env 时执行）→ 上次已知全量兜底（标记可能过期）。
+- 接线（`runtime/stage9/commit-46-real.js`）：主循环前 `await probeMod.resolveStage9Cookie()`；报告记录 cookieSource / cookieWarning（cookie 只记名，不落库）。
+- 真机验证（V0/B，无 env cookie，走 probe 自动抓取路径）：
+  - cookieSource=merged；Native OCR **通过**：「几何校验完成：通过 0 个，保留 15 个」；visualRows=15；renderedInkCompare=10。
+  - leftShift 证据复现（与手动注入 cookie 结果一致）：夏祝莲 dx=-75.66、13719111188 dx=-52.42、微信: dx=-23.43 等，供 Commit 4.6 修复对照。
+- 真机经验事实（2026-09-22）：
+  1. 持久 profile 未登录时（缺 `diy-User-third`）→ Native OCR SESSION_EXPIRED；匿名新 SESSION 会**破坏**已验证 cookie → 合并必须保守（保留已验证 SESSION）。
+  2. `browser.addCookies()` 注入的 cookie **不跨重启持久** → probe 每次运行重新抓取/合并；profile 是否登录决定产出「probe（完整身份）」或「merged（保守兜底）」。
+  3. 注入 `P0_LOGIN_USER/P0_LOGIN_PASS` 后，probe 可自动登录 `login.do` 重建完整身份（自愈路径；本次未注入凭据故未实测自动登录结果）。
+- 复现命令：`node runtime/stage9/commit-46-real.js --selftest` → `node runtime/stage9/commit-46-real.js`（可选 `ZY_SESSION_REFRESH=1`、`ZY_CASE`/`ZY_AB`）。
