@@ -169,8 +169,9 @@ async function baiduRecognizeExternal(dataUrl, mode) {
       set("zyStage9LocalSidecar", a.local ? "1" : "0");
       set("zyOcrMode", "baidu");
       set("zyStage9InkGeometry", "0"); // Commit A：墨迹位置接管默认关（B 亦回退 OCR bbox；如需复审接管可注入 "1"）
+      set("zyCalibrate8B", a.calibrate ? "1" : "0"); // Commit C bisect: calibration on/off
       return true;
-    }, { local });
+    }, { local, calibrate: process.env.ZY_NO_CALIBRATE !== "1" });
     const injectPageWorld = (payload) => page.evaluate((code) => { const s = document.createElement("script"); s.textContent = code; (document.head || document.documentElement).appendChild(s); }, payload);
     const waitEditorReady = async (tries) => {
       for (let i = 0; i < (tries || 16); i += 1) {
@@ -233,8 +234,16 @@ async function baiduRecognizeExternal(dataUrl, mode) {
         if (typeof o.text !== "string") return;
         let ink = null;
         try { if (window.__zy8dInk && typeof window.__zy8dInk.measureFabricObjectInk === "function") ink = window.__zy8dInk.measureFabricObjectInk(o); } catch (e) {}
-        const quad = null;
-        try { if (o.aCoords && o.aCoords.tl) out.push({ text: String(o.text || "").slice(0, 24), left: DEC2(o.left), top: DEC2(o.top), angle: DEC2(o.angle), ink: ink && ink.ok ? { inkWidth: DEC2(ink.inkWidth), inkHeight: DEC2(ink.inkHeight) } : null, cached: false }); } catch (e) {}
+        let quad = null;
+        try {
+          const vt = (typeof c.viewportTransform === "function") ? c.viewportTransform() : (c.viewportTransform || null);
+          const acTL = (o.aCoords && o.aCoords.tl && typeof o.aCoords.tl.x === "number") ? { x: Math.round(o.aCoords.tl.x * 100) / 100, y: Math.round(o.aCoords.tl.y * 100) / 100 } : null;
+          let entry = null;
+          try { entry = o.zyOcrEntry || null; } catch (eX) {}
+          let entR = null;
+          try { entR = { zyOcrKey: o.zyOcrKey || null, byAssistant: !!o.zyCreatedByAssistant }; } catch (eZ) {}
+          out.push({ text: String(o.text || "").slice(0, 24), left: DEC2(o.left), top: DEC2(o.top), angle: DEC2(o.angle), originX: o.originX || null, scaleX: DEC2(o.scaleX), scaleY: DEC2(o.scaleY), fontSize: DEC2(o.fontSize), padding: DEC2(o.padding), paddingLeft: DEC2(o.paddingLeft), charSpacing: DEC2(o.charSpacing), textAlign: o.textAlign || null, strokeWidth: DEC2(o.strokeWidth), width: DEC2(o.width), aCoordsTL: acTL, entry: entry, identity: entR, viewport: vt ? [DEC2(vt[4]), DEC2(vt[5])] : null, ink: ink && ink.ok ? { inkWidth: DEC2(ink.inkWidth), inkHeight: DEC2(ink.inkHeight) } : null, cached: false });
+        } catch (e) {}
       });
       function DEC2(v) { return (v != null && isFinite(v)) ? Math.round(v * 100) / 100 : null; }
       return out;
@@ -295,6 +304,8 @@ async function baiduRecognizeExternal(dataUrl, mode) {
           rec.status = doneW.st || null;
           rec.ocrSamples = (doneW && doneW.samples) ? doneW.samples.slice(0, 8) : null;
           if (!doneW.done) { rec.errors.push("OCR_TIMEOUT"); }
+          // Commit C: wait for post-create stabilization (1200ms) to settle before sampling final geometry
+          await SLEEP(1600);
           const diag = await readVisualDiag();
           rec.diag = diag;
           const lastTx = diag && diag.length ? diag[diag.length - 1] : null;

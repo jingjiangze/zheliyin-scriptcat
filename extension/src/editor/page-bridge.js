@@ -268,9 +268,31 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
                   //   对象同时挂 zyOcrObjectId（transactionId/pageId/blockId/objectUuid 完整身份）。
                   const bIdxNat = it.blockIndex != null ? it.blockIndex : idx;
                   obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat) : ("zy-ocr-" + bIdxNat);
+                  // Commit C forensics: capture requested vs actual geometry (read-only diag)
+                  try { obj.zyOcrEntry = { inputLeft: it.left != null ? it.left : null, inputTop: it.top != null ? it.top : null, entryX: entry && entry.location ? entry.location.x : null, entryY: entry && entry.location ? entry.location.y : null, afterDrawLeft: obj.left != null ? obj.left : null, afterDrawTop: obj.top != null ? obj.top : null }; } catch (eE) {}
                   obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat, objectUuid: obj.uuid || obj.multiUuid || null };
                   const gNat = measureObjectGeometry(diy.canvas, obj);
                   syncBusinessFieldsFromObject(obj);
+                  try {
+                    // Commit C fix: post-create stabilization — restore geometry authority after site async commands.
+                    (function (obj3, reqLeft, reqTop) {
+                      setTimeout(function () {
+                        try {
+                          var dL = Math.abs(obj3.left - reqLeft);
+                          var dT = Math.abs(obj3.top - reqTop);
+                          if (dL > 6 || dT > 6) {
+                            if (typeof obj3.set === "function") obj3.set({ left: reqLeft, top: reqTop });
+                            else { obj3.left = reqLeft; obj3.top = reqTop; }
+                            try { if (typeof obj3.setCoords === "function") obj3.setCoords(); } catch (eS1) {}
+                            syncBusinessFieldsFromObject(obj3);
+                            obj3.zyOcrEntry.stabilized = { devLeft: Math.round(dL * 100) / 100, devTop: Math.round(dT * 100) / 100, restored: true, restoredAt: Date.now() };
+                          } else {
+                            obj3.zyOcrEntry.stabilized = { devLeft: Math.round(dL * 100) / 100, devTop: Math.round(dT * 100) / 100, restored: false };
+                          }
+                        } catch (eSt) {}
+                      }, 1200);
+                    })(obj, it.left != null ? it.left : obj.left, it.top != null ? it.top : obj.top);
+                  } catch (eStb) {}
                   createdNat.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: diy.canvas.getObjects().indexOf(obj), uuid: obj ? (obj.uuid || obj.multiUuid || null) : null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gNat });
                 }
               } catch (e2) {
