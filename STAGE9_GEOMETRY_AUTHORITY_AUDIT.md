@@ -141,3 +141,29 @@ flowchart LR
   b) 几何唯一权威回退 OCR bbox → imgT → targetQuad（= demo 模型），ink 仅输出 confidence/region/mask。
 - Commit B（determinism harness）已完成基线：det-n-run.js + N=10 口径固化；判定门槛（模式内 range≤3px/0.5°/1px）已用本数据验证可用。
 - Commit E 重新开启墨迹辅助时，把 7.3-2 的「一致性校验」列为强制门禁（inkBox 与 bbox 目标差超阈值 → 拒绝，仅作信噪提示）。
+
+## 8. Commit A 已实施（2026-09-22，版本 0.3.11.58）
+
+- **墨迹位置接管默认关闭**：`STAGE9_INK_GEOMETRY = GM_getValue("zyStage9InkGeometry", "0") === "1"`；
+  Ink 不再直写 position/size/rotation（仅保留 confidence/region/mask 供诊断与门禁）。
+- **唯一几何权威 = OCR bbox → imgT → targetQuad**（= demo 同模型）：新纯模块
+  `extension/src/editor/visual-geometry-resolver.js` 裁定 `{srcBox, authority, reason}`：
+  disabled → OCR_BBOX（reason=INK_GEOMETRY_DISABLED）；enabled+一致性门禁（tolPx=8，中心/尺度差）
+  → IMAGE_INK，拒合回落 bbox（INK_CONSISTENCY_FAIL / INK_NO_VALID_CANDIDATE / INK_LOW_CONFIDENCE）。
+- **诊断作用域修复**：`visualGeomSource / inkGeometryReason / visualSrcBoxUsed` hoist 到 buildItemsFromOcr 外层；
+  diag 新增 `inkGeometryReason`（实际值如 INK_GEOMETRY_DISABLED）与 `visualSrcBoxUsed` —— 此前「恒记 OCR_BBOX_FALLBACK」的
+  掩盖性 bug 修复，audit log 现在如实上报。
+- **runner**：setGm 注入 `zyStage9InkGeometry="0"`；A/B 注入语义更新（A = STAGE9_INK_GEOMETRY=false）；selftest 更新。
+- **单测**：`runtime/stage9/visual-geometry-resolver.test.js` 7/7 PASS（disabled/no-ink/low-conf/gate-pass/gate-fail/size-fail/candidate-keep）。
+- **真机验证（V0，P0 自动登录）**：A≈B 完全收敛，偏移消除：
+
+| block | 旧 B(ink 开) | 新 B(ink 关)=A | Δ 消除 |
+|-------|--------------|----------------|--------|
+| 夏祝莲 | 248.66 | 187.03 | -61.63 |
+| 13719111188 | 394.42 | 356.91 | -37.51 |
+| 2287483098 | 452.30 | 357.98 | -94.32 |
+| Mobile | 312.97 | 311.36 | -1.61 |
+
+  dx 回到 demo 水平（夏祝莲 -14.03）；diag reason=INK_GEOMETRY_DISABLED 如实上报。
+- **遗留（按序执行）**：Commit B determinism 基线已建（det-n-run.js）→ Commit C Anchor hardening →
+  Commit D Native Truth promotion gate → Commit E 墨迹辅助复开（必须携带 7.3-2 一致性门禁）。

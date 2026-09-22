@@ -71,11 +71,10 @@ function injectUserscript(ab) {
   });
   // Commit 4.6 A/B 对照：A 模式强制 vbBox=null（OCR_BBOX_FALLBACK），B 模式保留默认（IMAGE_INK 优先）
   if (ab === "A") {
-    const ANCH = "const vbBox = (inkV && inkV.ok && inkV.inkBox && typeof inkV.confidence === \"number\" &&";
+    // Commit A：vbBox 直写位置已移除；A/B-A 改为强制墨迹位置接管关闭（与 B 默认一致，均可再注入 zyStage9InkGeometry=1 复审）
+    const ANCH = "const STAGE9_INK_GEOMETRY = GM_getValue(\"zyStage9InkGeometry\", \"0\") === \"1\";";
     if (code.indexOf(ANCH) >= 0) {
-      const start = code.indexOf("const vbBox = ");
-      const end = code.indexOf("const visualGeomSource = ", start);
-      if (end > start) code = code.slice(0, start) + "const vbBox = null; // A/B-A: 强制 OCR_BBOX_FALLBACK\n            " + code.slice(end);
+      code = code.split(ANCH).join("const STAGE9_INK_GEOMETRY = false; // A/B-A: 强制墨迹位置接管关闭");
       injectUserscript.patched = true;
     }
   }
@@ -96,8 +95,8 @@ function conditionCode(cond, ab) {
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   t("cases-3", CASE_DEFS.length === 3 && CASE_DEFS.map((c) => c.id).join() === "V0,V15,V45");
-  t("ab-patch-A", injectUserscript("A").indexOf("const vbBox = null;") >= 0);
-  t("ab-patch-B", injectUserscript("B").indexOf("const vbBox = null;") < 0);
+  t("ab-patch-A", injectUserscript("A").indexOf("STAGE9_INK_GEOMETRY = false;") >= 0);
+  t("ab-patch-B", injectUserscript("B").indexOf("STAGE9_INK_GEOMETRY = false;") < 0);
   t("code-anchor", conditionCode({ local: false }, "B").indexOf("NATIVE_ANCHOR") >= 0);
   console.log("[selftest] ALL PASS");
 }
@@ -169,6 +168,7 @@ async function baiduRecognizeExternal(dataUrl, mode) {
       set("zyStage9NativeTruth", "1");
       set("zyStage9LocalSidecar", a.local ? "1" : "0");
       set("zyOcrMode", "baidu");
+      set("zyStage9InkGeometry", "0"); // Commit A：墨迹位置接管默认关（B 亦回退 OCR bbox；如需复审接管可注入 "1"）
       return true;
     }, { local });
     const injectPageWorld = (payload) => page.evaluate((code) => { const s = document.createElement("script"); s.textContent = code; (document.head || document.documentElement).appendChild(s); }, payload);

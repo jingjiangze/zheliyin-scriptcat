@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-22T08:00:05.455Z",
+  "ts": "2026-09-22T08:46:44.708Z",
   "stage": "OCR-P1-COMMIT4_6-REAL",
   "cases": [
     {
@@ -22,17 +22,17 @@
   ],
   "image": "real-card-xiazhu.png",
   "cookiePresent": true,
-  "cookieSource": "env",
+  "cookieSource": "probe",
   "cookieWarning": null,
   "cookieNote": null,
   "abModes": [
-    "A"
+    "B"
   ],
   "runs": [
     {
       "case": "V0",
-      "ab": "A",
-      "note": "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy（旧 OCR bbox geometry）",
+      "ab": "B",
+      "note": "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy（新 Visual Ink geometry）",
       "rot": 0,
       "steps": [
         {
@@ -55,7 +55,7 @@
         {
           "step": "ocr-done",
           "done": true,
-          "status": "已生成 15 个文字（可双击编辑）"
+          "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
         },
         {
           "step": "rollback",
@@ -65,8 +65,8 @@
       "errors": [],
       "diag": [
         {
-          "ts": 1790064018113,
-          "txId": "tx-mucdwazr-tv2t7vza",
+          "ts": 1790066816408,
+          "txId": "tx-mucfkaqi-kjt6y9ui",
           "side": "FRONT",
           "imageFingerprint": "img-ef6650d8-1228270",
           "rows": [
@@ -91,7 +91,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 349,
+                "y": 16,
+                "width": 329,
+                "height": 113
+              },
               "targetQuad": [
                 {
                   "x": 187.03,
@@ -134,7 +141,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "0b2cebe2-b692-4906-b055-7e0257b67e30"
+              "anchorObjectUuid": "f81e7d82-3b75-44fb-9af6-4f4ff29709a8"
             },
             {
               "blockIndex": 1,
@@ -157,7 +164,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 581,
+                "y": 182,
+                "width": 71,
+                "height": 29
+              },
               "targetQuad": [
                 {
                   "x": 311.36,
@@ -200,7 +214,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "778d989a-d832-4e69-a9f1-20033db4381d"
+              "anchorObjectUuid": "a12503d4-f75d-47fb-9af3-fcb215e7c13d"
             },
             {
               "blockIndex": 2,
@@ -223,7 +237,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 666,
+                "y": 188,
+                "width": 191,
+                "height": 33
+              },
               "targetQuad": [
                 {
                   "x": 356.91,
@@ -266,7 +287,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "a0bb4356-4d0f-4102-ba1b-4729b5cb2191"
+              "anchorObjectUuid": "25e70ef0-8485-442e-878a-eb5f3701a548"
             },
             {
               "blockIndex": 3,
@@ -289,7 +310,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 581,
+                "y": 213,
+                "width": 58,
+                "height": 18
+              },
               "targetQuad": [
                 {
                   "x": 311.36,
@@ -332,7 +360,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "def9ce6b-f3ce-418e-af58-36cc380daec0"
+              "anchorObjectUuid": "ed678667-e998-47d1-9c5c-46660999558e"
             },
             {
               "blockIndex": 4,
@@ -355,7 +383,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 580,
+                "y": 239,
+                "width": 72,
+                "height": 29
+              },
               "targetQuad": [
                 {
                   "x": 310.82,
@@ -398,7 +433,7 @@
               "fillGate": "FOREGROUND_RELIABLE",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "4bad7662-2c87-44e0-9932-2431a41ea2d6"
+              "anchorObjectUuid": "74338a8a-69c4-48ee-b1b3-4317d4e31d1e"
             },
             {
               "blockIndex": 5,
@@ -421,7 +456,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 668,
+                "y": 241,
+                "width": 193,
+                "height": 35
+              },
               "targetQuad": [
                 {
                   "x": 357.98,
@@ -464,7 +506,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "7ca6f137-000d-44e7-9733-1968479bd897"
+              "anchorObjectUuid": "88e77241-92c8-40f0-ac92-6f387caddb37"
             },
             {
               "blockIndex": 6,
@@ -487,7 +529,14 @@
               "inkComponentCount": 2,
               "inkDominantRatio": 0.718,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 575,
+                "y": 270,
+                "width": 66,
+                "height": 19
+              },
               "targetQuad": [
                 {
                   "x": 308.14,
@@ -530,7 +579,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "f7007606-2276-45ea-baf8-9a4ee0e07106"
+              "anchorObjectUuid": "614d756a-7651-47bc-aa96-4bbe8eedca0b"
             },
             {
               "blockIndex": 7,
@@ -553,7 +602,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 0.9963,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 75,
+                "y": 345,
+                "width": 163,
+                "height": 69
+              },
               "targetQuad": [
                 {
                   "x": 40.19,
@@ -596,7 +652,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "49feb217-473d-4a35-b77b-1e3754666ae7"
+              "anchorObjectUuid": "a456b012-c912-4d71-a056-9d355caa57b1"
             },
             {
               "blockIndex": 8,
@@ -619,7 +675,14 @@
               "inkComponentCount": 53,
               "inkDominantRatio": 0.318,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 361,
+                "y": 333,
+                "width": 537,
+                "height": 42
+              },
               "targetQuad": [
                 {
                   "x": 193.46,
@@ -662,7 +725,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "2986a9af-dae6-4c06-ae08-c119a9af613d"
+              "anchorObjectUuid": "dfd1b6ca-0b7f-4cbd-affa-97910d4b35df"
             },
             {
               "blockIndex": 9,
@@ -685,7 +748,14 @@
               "inkComponentCount": 10,
               "inkDominantRatio": 0.5417,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 349,
+                "y": 439,
+                "width": 527,
+                "height": 37
+              },
               "targetQuad": [
                 {
                   "x": 187.03,
@@ -728,7 +798,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "fecdb491-baa4-4a9c-8843-53264c32d364"
+              "anchorObjectUuid": "72c40186-8f1b-4383-88e9-229f479f8b4f"
             },
             {
               "blockIndex": 10,
@@ -751,7 +821,14 @@
               "inkComponentCount": 2,
               "inkDominantRatio": 0.8565,
               "inkRowBandConfidence": 0.9996,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 400,
+                "y": 474,
+                "width": 352,
+                "height": 33
+              },
               "targetQuad": [
                 {
                   "x": 214.36,
@@ -794,7 +871,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "837ad58f-132c-408c-b3b5-f54ece725299"
+              "anchorObjectUuid": "4ad50ab3-c837-4dfe-a03d-a8bb62cbc3b6"
             },
             {
               "blockIndex": 11,
@@ -817,7 +894,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 342,
+                "y": 514,
+                "width": 544,
+                "height": 35
+              },
               "targetQuad": [
                 {
                   "x": 183.28,
@@ -860,7 +944,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "23846b66-4b94-41f4-8810-99d606b7f688"
+              "anchorObjectUuid": "6af094f6-54c9-428f-a679-90a4f693bdb9"
             },
             {
               "blockIndex": 12,
@@ -883,7 +967,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 1,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 593,
+                "y": 128,
+                "width": 101,
+                "height": 42
+              },
               "targetQuad": [
                 {
                   "x": 317.79,
@@ -926,7 +1017,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "0ed59552-3138-4b54-9019-0b4c771da825"
+              "anchorObjectUuid": "00d87ffd-77d3-4fd9-8fce-f3c02c194417"
             },
             {
               "blockIndex": 13,
@@ -949,7 +1040,14 @@
               "inkComponentCount": 1,
               "inkDominantRatio": 1,
               "inkRowBandConfidence": 0.9762,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 354,
+                "y": 284,
+                "width": 539,
+                "height": 61
+              },
               "targetQuad": [
                 {
                   "x": 189.71,
@@ -992,7 +1090,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "dc7c7ec7-cf72-4d7d-8008-1356b5953d53"
+              "anchorObjectUuid": "9c829fa7-1302-45fd-ae88-fd93308c882e"
             },
             {
               "blockIndex": 14,
@@ -1015,7 +1113,14 @@
               "inkComponentCount": 2,
               "inkDominantRatio": 0.9884,
               "inkRowBandConfidence": 0.9998,
-              "visualGeometrySource": "OCR_BBOX_FALLBACK",
+              "visualGeometrySource": "OCR_BBOX",
+              "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+              "visualSrcBoxUsed": {
+                "x": 333,
+                "y": 400,
+                "width": 560,
+                "height": 44
+              },
               "targetQuad": [
                 {
                   "x": 178.46,
@@ -1058,7 +1163,7 @@
               "fillGate": "MULTI_MODAL",
               "fontFamily": "sans-serif",
               "anchorUsed": false,
-              "anchorObjectUuid": "4b4dbd85-a1cd-46ae-a3cc-e8e9f9279729"
+              "anchorObjectUuid": "11b8d50d-5b22-4949-8cd7-11d63d0a3ac9"
             }
           ]
         }
@@ -1252,7 +1357,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 349,
+            "y": 16,
+            "width": 329,
+            "height": 113
+          },
           "targetQuad": [
             {
               "x": 187.03,
@@ -1295,7 +1407,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "0b2cebe2-b692-4906-b055-7e0257b67e30"
+          "anchorObjectUuid": "f81e7d82-3b75-44fb-9af6-4f4ff29709a8"
         },
         {
           "blockIndex": 1,
@@ -1318,7 +1430,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 581,
+            "y": 182,
+            "width": 71,
+            "height": 29
+          },
           "targetQuad": [
             {
               "x": 311.36,
@@ -1361,7 +1480,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "778d989a-d832-4e69-a9f1-20033db4381d"
+          "anchorObjectUuid": "a12503d4-f75d-47fb-9af3-fcb215e7c13d"
         },
         {
           "blockIndex": 2,
@@ -1384,7 +1503,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 666,
+            "y": 188,
+            "width": 191,
+            "height": 33
+          },
           "targetQuad": [
             {
               "x": 356.91,
@@ -1427,7 +1553,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "a0bb4356-4d0f-4102-ba1b-4729b5cb2191"
+          "anchorObjectUuid": "25e70ef0-8485-442e-878a-eb5f3701a548"
         },
         {
           "blockIndex": 3,
@@ -1450,7 +1576,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 581,
+            "y": 213,
+            "width": 58,
+            "height": 18
+          },
           "targetQuad": [
             {
               "x": 311.36,
@@ -1493,7 +1626,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "def9ce6b-f3ce-418e-af58-36cc380daec0"
+          "anchorObjectUuid": "ed678667-e998-47d1-9c5c-46660999558e"
         },
         {
           "blockIndex": 4,
@@ -1516,7 +1649,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 580,
+            "y": 239,
+            "width": 72,
+            "height": 29
+          },
           "targetQuad": [
             {
               "x": 310.82,
@@ -1559,7 +1699,7 @@
           "fillGate": "FOREGROUND_RELIABLE",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "4bad7662-2c87-44e0-9932-2431a41ea2d6"
+          "anchorObjectUuid": "74338a8a-69c4-48ee-b1b3-4317d4e31d1e"
         },
         {
           "blockIndex": 5,
@@ -1582,7 +1722,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 668,
+            "y": 241,
+            "width": 193,
+            "height": 35
+          },
           "targetQuad": [
             {
               "x": 357.98,
@@ -1625,7 +1772,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "7ca6f137-000d-44e7-9733-1968479bd897"
+          "anchorObjectUuid": "88e77241-92c8-40f0-ac92-6f387caddb37"
         },
         {
           "blockIndex": 6,
@@ -1648,7 +1795,14 @@
           "inkComponentCount": 2,
           "inkDominantRatio": 0.718,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 575,
+            "y": 270,
+            "width": 66,
+            "height": 19
+          },
           "targetQuad": [
             {
               "x": 308.14,
@@ -1691,7 +1845,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "f7007606-2276-45ea-baf8-9a4ee0e07106"
+          "anchorObjectUuid": "614d756a-7651-47bc-aa96-4bbe8eedca0b"
         },
         {
           "blockIndex": 7,
@@ -1714,7 +1868,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 0.9963,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 75,
+            "y": 345,
+            "width": 163,
+            "height": 69
+          },
           "targetQuad": [
             {
               "x": 40.19,
@@ -1757,7 +1918,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "49feb217-473d-4a35-b77b-1e3754666ae7"
+          "anchorObjectUuid": "a456b012-c912-4d71-a056-9d355caa57b1"
         },
         {
           "blockIndex": 8,
@@ -1780,7 +1941,14 @@
           "inkComponentCount": 53,
           "inkDominantRatio": 0.318,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 361,
+            "y": 333,
+            "width": 537,
+            "height": 42
+          },
           "targetQuad": [
             {
               "x": 193.46,
@@ -1823,7 +1991,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "2986a9af-dae6-4c06-ae08-c119a9af613d"
+          "anchorObjectUuid": "dfd1b6ca-0b7f-4cbd-affa-97910d4b35df"
         },
         {
           "blockIndex": 9,
@@ -1846,7 +2014,14 @@
           "inkComponentCount": 10,
           "inkDominantRatio": 0.5417,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 349,
+            "y": 439,
+            "width": 527,
+            "height": 37
+          },
           "targetQuad": [
             {
               "x": 187.03,
@@ -1889,7 +2064,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "fecdb491-baa4-4a9c-8843-53264c32d364"
+          "anchorObjectUuid": "72c40186-8f1b-4383-88e9-229f479f8b4f"
         },
         {
           "blockIndex": 10,
@@ -1912,7 +2087,14 @@
           "inkComponentCount": 2,
           "inkDominantRatio": 0.8565,
           "inkRowBandConfidence": 0.9996,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 400,
+            "y": 474,
+            "width": 352,
+            "height": 33
+          },
           "targetQuad": [
             {
               "x": 214.36,
@@ -1955,7 +2137,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "837ad58f-132c-408c-b3b5-f54ece725299"
+          "anchorObjectUuid": "4ad50ab3-c837-4dfe-a03d-a8bb62cbc3b6"
         },
         {
           "blockIndex": 11,
@@ -1978,7 +2160,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 342,
+            "y": 514,
+            "width": 544,
+            "height": 35
+          },
           "targetQuad": [
             {
               "x": 183.28,
@@ -2021,7 +2210,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "23846b66-4b94-41f4-8810-99d606b7f688"
+          "anchorObjectUuid": "6af094f6-54c9-428f-a679-90a4f693bdb9"
         },
         {
           "blockIndex": 12,
@@ -2044,7 +2233,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 1,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 593,
+            "y": 128,
+            "width": 101,
+            "height": 42
+          },
           "targetQuad": [
             {
               "x": 317.79,
@@ -2087,7 +2283,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "0ed59552-3138-4b54-9019-0b4c771da825"
+          "anchorObjectUuid": "00d87ffd-77d3-4fd9-8fce-f3c02c194417"
         },
         {
           "blockIndex": 13,
@@ -2110,7 +2306,14 @@
           "inkComponentCount": 1,
           "inkDominantRatio": 1,
           "inkRowBandConfidence": 0.9762,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 354,
+            "y": 284,
+            "width": 539,
+            "height": 61
+          },
           "targetQuad": [
             {
               "x": 189.71,
@@ -2153,7 +2356,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "dc7c7ec7-cf72-4d7d-8008-1356b5953d53"
+          "anchorObjectUuid": "9c829fa7-1302-45fd-ae88-fd93308c882e"
         },
         {
           "blockIndex": 14,
@@ -2176,7 +2379,14 @@
           "inkComponentCount": 2,
           "inkDominantRatio": 0.9884,
           "inkRowBandConfidence": 0.9998,
-          "visualGeometrySource": "OCR_BBOX_FALLBACK",
+          "visualGeometrySource": "OCR_BBOX",
+          "inkGeometryReason": "INK_GEOMETRY_DISABLED",
+          "visualSrcBoxUsed": {
+            "x": 333,
+            "y": 400,
+            "width": 560,
+            "height": 44
+          },
           "targetQuad": [
             {
               "x": 178.46,
@@ -2219,7 +2429,7 @@
           "fillGate": "MULTI_MODAL",
           "fontFamily": "sans-serif",
           "anchorUsed": false,
-          "anchorObjectUuid": "4b4dbd85-a1cd-46ae-a3cc-e8e9f9279729"
+          "anchorObjectUuid": "11b8d50d-5b22-4949-8cd7-11d63d0a3ac9"
         }
       ],
       "abCompare": null,
@@ -2252,18 +2462,18 @@
           }
         ]
       },
-      "status": "已生成 15 个文字（可双击编辑）",
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC",
       "pageId": "canvas:c0",
       "baiduCount": 17,
       "ocrSamples": [
         "正在准备图片…",
-        "百度云端识别中…",
-        "已生成 15 个文字（可双击编辑）"
+        "识别到 15 个文字区域，正在生成（BUILDING）…",
+        "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
       ],
       "renderedInkCompare": [
         {
           "block": "夏祝莲",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 61,
           "fillGate": "MULTI_MODAL",
           "anchorUsed": false,
@@ -2281,7 +2491,7 @@
         },
         {
           "block": "手机:",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 14,
           "fillGate": "MULTI_MODAL",
           "anchorUsed": false,
@@ -2299,7 +2509,7 @@
         },
         {
           "block": "13719111188",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 17,
           "fillGate": "MULTI_MODAL",
           "anchorUsed": false,
@@ -2317,7 +2527,7 @@
         },
         {
           "block": "Mobile",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 10,
           "fillGate": "MULTI_MODAL",
           "anchorUsed": false,
@@ -2335,7 +2545,7 @@
         },
         {
           "block": "微信:",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 14,
           "fillGate": "FOREGROUND_RELIABLE",
           "anchorUsed": false,
@@ -2353,7 +2563,7 @@
         },
         {
           "block": "2287483098",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 17,
           "fillGate": "MULTI_MODAL",
           "anchorUsed": false,
@@ -2371,7 +2581,7 @@
         },
         {
           "block": "Wechat",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 10,
           "fillGate": "MULTI_MODAL",
           "anchorUsed": false,
@@ -2389,7 +2599,7 @@
         },
         {
           "block": "Kaqi",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 33,
           "fillGate": "MULTI_MODAL",
           "anchorUsed": false,
@@ -2407,7 +2617,7 @@
         },
         {
           "block": "Xia Zhu Lian",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 19,
           "fillGate": "MULTI_MODAL",
           "anchorUsed": false,
@@ -2425,7 +2635,7 @@
         },
         {
           "block": "广州爱卡奇硅胶制品有限公司",
-          "visualGeomSource": "OCR_BBOX_FALLBACK",
+          "visualGeomSource": "OCR_BBOX",
           "fontSize": 29,
           "fillGate": "MULTI_MODAL",
           "anchorUsed": false,
