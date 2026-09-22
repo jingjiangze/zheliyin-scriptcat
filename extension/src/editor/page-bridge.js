@@ -1616,5 +1616,6 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now() };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.61'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.61' };
   }

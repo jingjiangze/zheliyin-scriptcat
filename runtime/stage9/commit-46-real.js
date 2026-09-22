@@ -175,11 +175,11 @@ async function baiduRecognizeExternal(dataUrl, mode) {
     const injectPageWorld = (payload) => page.evaluate((code) => { const s = document.createElement("script"); s.textContent = code; (document.head || document.documentElement).appendChild(s); }, payload);
     const waitEditorReady = async (tries) => {
       for (let i = 0; i < (tries || 16); i += 1) {
-        const r = await page.evaluate(() => ({ ok: !!(window.CanvasObjVO || (window.requirejs && window.requirejs.s)), bridge: !!(window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed) })).catch(() => ({}));
+        const r = await page.evaluate(() => ({ ok: !!(window.CanvasObjVO || (window.requirejs && window.requirejs.s)), bridge: !!(window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed), bver: (window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.ver) || window.__ZY_BRIDGE_VERSION__ || null })).catch(() => ({}));
         if (r && r.ok && r.bridge) return r;
         await SLEEP(1200);
       }
-      return page.evaluate(() => ({ ok: !!(window.CanvasObjVO || (window.requirejs && window.requirejs.s)), bridge: !!(window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed) })).catch(() => ({}));
+      return page.evaluate(() => ({ ok: !!(window.CanvasObjVO || (window.requirejs && window.requirejs.s)), bridge: !!(window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed), bver: (window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.ver) || window.__ZY_BRIDGE_VERSION__ || null })).catch(() => ({}));
     };
     const setBg = (angleDeg) => page.evaluate((arg) => new Promise((res) => {
       const req = window.requirejs || window.require;
@@ -280,7 +280,8 @@ async function baiduRecognizeExternal(dataUrl, mode) {
             await SLEEP(1600);
             ready = await waitEditorReady(4);
           }
-          rec.steps.push({ step: "editor-ready", ok: !!(ready && ready.ok), bridge: !!(ready && ready.bridge) });
+          rec.steps.push({ step: "editor-ready", ok: !!(ready && ready.ok), bridge: !!(ready && ready.bridge), bver: (ready && ready.bver) || null });
+          if (ready && ready.bver && ready.bver !== "0.3.11.61") rec.errors.push("BRIDGE_VERSION_MISMATCH(" + String(ready.bver).slice(0, 40) + ") — 扩展缓存旧 page-bridge 抢占安装，本地稳定化可能未生效");
           if (!(ready && ready.bridge)) { rec.errors.push("BRIDGE_UNAVAILABLE"); continue; }
           const cp = await bridgeCall("getCurrentPage", {}, "getCurrentPageResult", 6000).catch(() => null);
           rec.pageId = (cp && cp.pageId) || null;
