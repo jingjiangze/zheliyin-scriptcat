@@ -5,7 +5,8 @@
     {
       "step": "editor-ready",
       "ok": true,
-      "bridge": true
+      "bridge": true,
+      "bver": "0.3.11.61"
     },
     {
       "step": "bg-inject",
@@ -22,14 +23,14 @@
     {
       "step": "ocr-done",
       "done": true,
-      "status": "几何校验完成：通过 0 个，保留 9 个（保留=创建成功，仅备注：STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH），拒绝 0 个（细节见控制台 zy-ocr GEOMETRY）"
+      "status": "已生成 9 个文字（可双击编辑）"
     },
     {
       "step": "rollback",
       "ok": true
     }
   ],
-  "status": "几何校验完成：通过 0 个，保留 9 个（保留=创建成功，仅备注：STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH），拒绝 0 个（细节见控制台 zy-ocr GEOMETRY）",
+  "status": "已生成 9 个文字（可双击编辑）",
   "visualRows": [
     {
       "blockIndex": 0,
@@ -105,7 +106,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "5ceb0656-7115-408c-9e10-dec49327160a"
+      "anchorObjectUuid": "0654fcb7-d83b-4ab7-a833-8aa7aa204981"
     },
     {
       "blockIndex": 1,
@@ -181,7 +182,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "6fbb1fcd-f677-445a-91d5-a40c35c3171a"
+      "anchorObjectUuid": "01242ef4-7ffa-469f-a72e-e1a9cb50b78a"
     },
     {
       "blockIndex": 2,
@@ -257,7 +258,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "921b5286-c8de-4c9c-841e-02a6c9e232b5"
+      "anchorObjectUuid": "60b2e2c2-79c9-4293-ae9b-7e8663c1f905"
     },
     {
       "blockIndex": 3,
@@ -333,7 +334,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "3cf54877-83cd-465f-a5a5-4db418909633"
+      "anchorObjectUuid": "48413e0e-562d-496e-9342-c333192b2c47"
     },
     {
       "blockIndex": 4,
@@ -409,7 +410,7 @@
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "cd5e5095-a702-4fa2-ab20-a4d4ae3c98bf"
+      "anchorObjectUuid": "369a1732-12d0-4627-972c-2edf41011c7c"
     },
     {
       "blockIndex": 5,
@@ -485,7 +486,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "2524531f-4fcc-40db-9e30-e8ad6c244cd2"
+      "anchorObjectUuid": "7df6eaec-0a6f-4a91-926d-6eeb2493f7dc"
     },
     {
       "blockIndex": 6,
@@ -561,7 +562,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "9d9b0c05-df43-419f-8638-7ff2143afb92"
+      "anchorObjectUuid": "434469f5-d692-47e2-b60c-04871aba263d"
     },
     {
       "blockIndex": 7,
@@ -637,7 +638,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "daf98d45-004b-4bed-884f-0351cefd9436"
+      "anchorObjectUuid": "a945d9d4-00c3-4905-bd6f-eb2644f1b47b"
     },
     {
       "blockIndex": 8,
@@ -713,7 +714,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "28bbb9a6-881c-4b1f-815e-08d6c220abbf"
+      "anchorObjectUuid": "1b10923d-cc67-4ac7-b50c-d26b626cedb8"
     }
   ],
   "renderedInkCompare": [
@@ -725,10 +726,10 @@
       "anchorUsed": false,
       "targetLeft": 378.35,
       "targetTop": 36.38,
-      "actualLeft": 373,
-      "actualTop": 35,
-      "dx": -5.35,
-      "dy": -1.38,
+      "actualLeft": 378,
+      "actualTop": 36,
+      "dx": -0.35,
+      "dy": -0.38,
       "widthGap": -11.61,
       "heightGap": -11,
       "actualInkWidth": 97,
@@ -743,10 +744,10 @@
       "anchorUsed": false,
       "targetLeft": 28.94,
       "targetTop": 73.84,
-      "actualLeft": 23,
-      "actualTop": 73,
-      "dx": -5.94,
-      "dy": -0.84,
+      "actualLeft": 29,
+      "actualTop": 74,
+      "dx": 0.06,
+      "dy": 0.16,
       "widthGap": -16.53,
       "heightGap": -15,
       "actualInkWidth": 76,
@@ -761,10 +762,10 @@
       "anchorUsed": false,
       "targetLeft": 32.15,
       "targetTop": 192.62,
-      "actualLeft": 27,
-      "actualTop": 191,
-      "dx": -5.15,
-      "dy": -1.62,
+      "actualLeft": 32,
+      "actualTop": 193,
+      "dx": -0.15,
+      "dy": 0.38,
       "widthGap": -20.54,
       "heightGap": -12,
       "actualInkWidth": 214,
@@ -779,10 +780,10 @@
       "anchorUsed": false,
       "targetLeft": 423.9,
       "targetTop": 225.26,
-      "actualLeft": 403,
-      "actualTop": 228,
-      "dx": -20.9,
-      "dy": 2.74,
+      "actualLeft": 424,
+      "actualTop": 225,
+      "dx": 0.1,
+      "dy": -0.26,
       "widthGap": -47,
       "heightGap": -12,
       "actualInkWidth": 13,
@@ -797,10 +798,10 @@
       "anchorUsed": false,
       "targetLeft": 51.45,
       "targetTop": 243.45,
-      "actualLeft": 46,
-      "actualTop": 242,
-      "dx": -5.45,
-      "dy": -1.45,
+      "actualLeft": 51,
+      "actualTop": 243,
+      "dx": -0.45,
+      "dy": -0.45,
       "widthGap": -24.06,
       "heightGap": -9,
       "actualInkWidth": 151,
@@ -815,10 +816,10 @@
       "anchorUsed": false,
       "targetLeft": 51.45,
       "targetTop": 264.85,
-      "actualLeft": 46,
-      "actualTop": 264,
-      "dx": -5.45,
-      "dy": -0.85,
+      "actualLeft": 51,
+      "actualTop": 265,
+      "dx": -0.45,
+      "dy": 0.15,
       "widthGap": -30.1,
       "heightGap": -12,
       "actualInkWidth": 71,
@@ -833,10 +834,10 @@
       "anchorUsed": false,
       "targetLeft": 27.87,
       "targetTop": 107.01,
-      "actualLeft": 22,
-      "actualTop": 106,
-      "dx": -5.87,
-      "dy": -1.01,
+      "actualLeft": 28,
+      "actualTop": 107,
+      "dx": 0.13,
+      "dy": -0.01,
       "widthGap": -137.24,
       "heightGap": -10,
       "actualInkWidth": 48,
@@ -851,10 +852,10 @@
       "anchorUsed": false,
       "targetLeft": 51.98,
       "targetTop": 222.05,
-      "actualLeft": 46,
-      "actualTop": 221,
-      "dx": -5.98,
-      "dy": -1.05,
+      "actualLeft": 52,
+      "actualTop": 222,
+      "dx": 0.02,
+      "dy": -0.05,
       "widthGap": -63.34,
       "heightGap": -10,
       "actualInkWidth": 213,
@@ -863,33 +864,8 @@
     }
   ],
   "leftShiftObserved": {
-    "count": 8,
-    "rows": [
-      {
-        "block": "盈通启富证券",
-        "dx": -5.35
-      },
-      {
-        "block": "张 天天",
-        "dx": -5.94
-      },
-      {
-        "block": "山东盈通启富证券投资集团",
-        "dx": -5.15
-      },
-      {
-        "block": "简",
-        "dx": -20.9
-      },
-      {
-        "block": "www.jiansheji@36",
-        "dx": -5.45
-      },
-      {
-        "block": "0531-88888888",
-        "dx": -5.45
-      }
-    ]
+    "count": 0,
+    "rows": []
   },
   "errors": []
 }
