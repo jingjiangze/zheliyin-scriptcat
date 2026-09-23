@@ -213,6 +213,7 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       set("zyStage9LocalSidecar", "0");
       set("zyOcrMode", "baidu");
       set("zyStage9InkGeometry", "0");
+      set("zyShowTemplatePanel", "1"); // 真实配置：启用套版浮窗（默认 "0"=OCR-only，浮窗含 #zy-apply-front）
       return true;
     });
     const injectPageWorld = (payload) => page.evaluate((code) => { const s = document.createElement("script"); s.textContent = code; (document.head || document.documentElement).appendChild(s); }, payload);
@@ -224,7 +225,8 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       }
       return page.evaluate(() => ({ ok: !!(window.CanvasObjVO || (window.requirejs && window.requirejs.s)), bridge: !!(window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed), bver: (window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.ver) || window.__ZY_BRIDGE_VERSION__ || null })).catch(() => ({}));
     };
-    const injectSlots = (slotDefs) => page.evaluate((defs) => {
+    const injectSlots = (slotDefs) => page.evaluate((json) => {
+      const defs = JSON.parse(json);
       const req2 = window.requirejs || window.require;
       const vo2 = ((req2 && req2.s && req2.s.contexts && req2.s.contexts._ && req2.s.contexts._.defined && req2.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
       const d2 = vo2 && vo2.totalCanvasArray && vo2.totalCanvasArray[0];
@@ -245,7 +247,7 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       });
       try { d2.canvas.requestRenderAll(); } catch (e) {}
       return { ok: made === defs.length, made: made, total: defs.length, canvasW: cw, canvasH: ch, errs: errs };
-    }).catch((e) => ({ ok: false, reason: String(e && e.message || e).slice(0, 100) }));
+    }, JSON.stringify(slotDefs)).catch((e) => ({ ok: false, reason: String(e && e.message || e).slice(0, 100) }));
     const readTextObjects = () => page.evaluate(() => {
       const req = window.requirejs || window.require;
       const vo = ((req && req.s && req.s.contexts && req.s.contexts._ && req.s.contexts._.defined && req.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
@@ -323,9 +325,11 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       const rec = { case: def.id, note: def.note, steps: [], errors: [], runs: [], asserts: [], status: null };
       out.runs.push(rec);
       try {
-        await setGm();
+        // 先 goto 到目标域，再写配置（localStorage 为源域隔离，写错源会导致 OCR_ONLY_MODE 误判面板不渲染）
         await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 60000 }).catch((e) => rec.errors.push("GOTO: " + String(e && e.message || e).slice(0, 120)));
-        await SLEEP(2500);
+        await SLEEP(2000);
+        await setGm();
+        await SLEEP(400);
         await injectPageWorld(pageWorldPayloadFor());
         await SLEEP(1400);
         await page.evaluate((dk) => { try { window[dk] = []; } catch (e) {} }, DIAG_KEY);
