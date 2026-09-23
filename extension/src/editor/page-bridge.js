@@ -56,6 +56,41 @@ function pageBridge() {
         }
         post("applyResult", applyFields(canvas, event.data.fields || {}, side));
       }
+    // Stage 10-E Commit G-2：执行单侧槽位套版（状态校验 + 逐槽 setText，无 create）—— 单侧与 both 共用。
+    function zyExecTemplateMatches(canvasObj, plan, sideLabel) {
+      const mkErr = function (code, message) { return { ok: false, code: code, message: message, side: sideLabel, applied: [], unmatchedFields: (plan && plan.unmatchedFields) || [], unusedSlots: (plan && plan.unusedSlots) || [] }; };
+      if (!canvasObj) return mkErr("TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", "未找到" + (sideLabel === "back" ? "反面" : "正面") + "画布，已停止套版。");
+      const tmObjs = getTextObjects(canvasObj);
+      const tmPlannedSlots = Array.isArray(plan.slots) ? plan.slots : [];
+      let tmStateChanged = tmPlannedSlots.length !== tmObjs.length;
+      if (!tmStateChanged) {
+        for (let ti = 0; ti < tmPlannedSlots.length; ti += 1) {
+          const psobj = tmObjs[ti];
+          const curId = psobj ? (psobj.uuid || psobj.multiUuid || psobj.markuuid || null) : null;
+          const planId = tmPlannedSlots[ti] ? (tmPlannedSlots[ti].objectUuid || null) : null;
+          if (planId && curId && planId !== curId) { tmStateChanged = true; break; }
+        }
+      }
+      if (tmStateChanged) return mkErr("SLOT_STATE_CHANGED", "画布文字层与套版规划不一致（可能已编辑），已停止套版。");
+      let tmU2 = null;
+      try { tmU2 = getNativeUndoInstance(); if (tmU2 && typeof tmU2.save === "function") tmU2.save(); } catch (eU) {}
+      const tmApplied = [];
+      (plan.matches || []).forEach(function (m) {
+        try {
+          const so = tmObjs[m.slotIdx];
+          if (!so) return;
+          const text = String(m.text != null ? m.text : "");
+          setObjectText(so, text); // 只改内容，几何/字体/样式/身份/层序冻结
+          if (typeof so.setCoords === "function") so.setCoords();
+          syncBusinessFieldsFromObject(so);
+          tmApplied.push({ fieldKey: m.fieldKey, text: String(text).slice(0, 24), objectUuid: so.uuid || so.multiUuid || null, geometry: measureObjectGeometry(canvasObj, so) });
+        } catch (eT) { tmApplied.push({ fieldKey: m.fieldKey, updated: false, error: String(eT && eT.message || eT).slice(0, 120) }); }
+      });
+      if (tmU2 && typeof tmU2.save === "function") { try { tmU2.save(); } catch (eU2) {} }
+      if (canvasObj.requestRenderAll) canvasObj.requestRenderAll();
+      else if (canvasObj.renderAll) canvasObj.renderAll();
+      return { ok: true, side: sideLabel, applied: tmApplied, unmatchedFields: plan.unmatchedFields || [], unusedSlots: plan.unusedSlots || [] };
+    }
       if (event.data.type === "templateApply") {
         // Stage 10-D Commit F：新套版引擎执行侧 —— 只做两件事：状态校验 + 逐槽 setText。
         // 规划（planTemplateApply，纯模块）在 userscript 侧完成；本侧严禁新建（无 create 路径）。
@@ -63,6 +98,29 @@ function pageBridge() {
         const tpPlan = event.data.plan || null;
         const tpSide = event.data.side || "front";
         const tpPageId = event.data.pageId || null;
+        const tpBothPlans = (event.data.plans && typeof event.data.plans === "object") ? event.data.plans : null;
+        if (tpSide === "both") {
+          // Stage 10-E Commit G-2：正反同填 —— plans{front,back} 各执行；单侧行为零改动。
+          if (!tpBothPlans) {
+            post("templateApplyResult", { ok: false, code: "BAD_PLAN", message: "正反套版规划无效，已停止。", applied: [], unmatchedFields: [], unusedSlots: [] });
+            return;
+          }
+          const resBoth = [];
+          ["front", "back"].forEach(function (sd) {
+            const pl = tpBothPlans[sd];
+            if (!pl || !Array.isArray(pl.matches)) { resBoth.push({ ok: true, side: sd, applied: [], unmatchedFields: (pl && pl.unmatchedFields) || [], unusedSlots: (pl && pl.unusedSlots) || [], skipped: "EMPTY_OR_BAD" }); return; }
+            if (!pl.matches.length) { resBoth.push({ ok: true, side: sd, applied: [], unmatchedFields: pl.unmatchedFields || [], unusedSlots: pl.unusedSlots || [], skipped: "EMPTY_MATCHES" }); return; }
+            const cvs = findCanvasForSide(sd);
+            resBoth.push(zyExecTemplateMatches(cvs, pl, sd));
+          });
+          const appliedAll = [], unAll = [];
+          resBoth.forEach(function (r) { appliedAll.push.apply(appliedAll, r.applied || []); unAll.push.apply(unAll, r.unmatchedFields || []); });
+          const anyFail = resBoth.some(function (r) { return !r.ok; });
+          const cnt = function (sd) { const x = resBoth.find(function (r) { return r.side === sd; }); return x ? (x.applied || []).length : 0; };
+          const msg = anyFail ? "正反套版部分失败（" + resBoth.map(function (r) { return r.side + (r.ok ? " " + (r.applied || []).length + " 槽" : " 失败:" + String(r.code || "ERR")); }).join(" / ") + "）" : "模板套版：正面更新 " + cnt("front") + " 槽 / 反面更新 " + cnt("back") + " 槽（几何/字体/样式/身份/层序冻结）。未匹配 " + unAll.length + " 项。";
+          post("templateApplyResult", { ok: !anyFail, mode: "template", code: anyFail ? "PARTIAL" : "OK", side: "both", applied: appliedAll, unmatchedFields: unAll, unusedSlots: [].concat.apply([], resBoth.map(function (r) { return r.unusedSlots || []; })), sides: resBoth, message: msg });
+          return;
+        }
         if (!tpPlan || !Array.isArray(tpPlan.matches)) {
           post("templateApplyResult", { ok: false, code: "BAD_PLAN", message: "套版规划无效，已停止。", applied: [], unmatchedFields: [], unusedSlots: [] });
           return;
@@ -106,25 +164,9 @@ function pageBridge() {
           post("templateApplyResult", { ok: false, code: "SLOT_STATE_CHANGED", message: "画布文字层与套版规划不一致（可能已编辑），已停止套版并回退旧方式。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
           return;
         }
-        let tpU2 = null;
-        try { tpU2 = getNativeUndoInstance(); if (tpU2 && typeof tpU2.save === "function") tpU2.save(); } catch (eUTP) {}
-        const tpApplied = [];
-        (tpPlan.matches || []).forEach(function (m) {
-          try {
-            const so = tpObjs[m.slotIdx];
-            if (!so) return;
-            const text = String(m.text != null ? m.text : "");
-            setObjectText(so, text); // 只改内容，几何/字体/样式/身份/层序冻结
-            if (typeof so.setCoords === "function") so.setCoords();
-            syncBusinessFieldsFromObject(so);
-            tpApplied.push({ fieldKey: m.fieldKey, text: String(text).slice(0, 24), objectUuid: so.uuid || so.multiUuid || null, geometry: measureObjectGeometry(tpCanvas, so) });
-          } catch (eTP) { tpApplied.push({ fieldKey: m.fieldKey, updated: false, error: String(eTP && eTP.message || eTP).slice(0, 120) }); }
-        });
-        if (tpU2 && typeof tpU2.save === "function") { try { tpU2.save(); } catch (eUTP2) {} }
-        if (tpCanvas.requestRenderAll) tpCanvas.requestRenderAll();
-        else if (tpCanvas.renderAll) tpCanvas.renderAll();
-        const tpUnmatched = tpPlan.unmatchedFields || [];
-        post("templateApplyResult", { ok: tpApplied.length > 0, mode: "template", code: "OK", side: tpSide, applied: tpApplied, unmatchedFields: tpUnmatched, unusedSlots: tpPlan.unusedSlots || [], message: "模板套版：更新 " + tpApplied.length + "/" + (tpPlan.matches || []).length + " 个槽位内容（几何/字体/样式/身份/层序冻结）。未匹配 " + tpUnmatched.length + " 项。" });
+        const tpExec = zyExecTemplateMatches(tpCanvas, tpPlan, tpSide);
+        const tpUnm = (tpExec && tpExec.unmatchedFields) || [];
+        post("templateApplyResult", { ok: !!(tpExec && tpExec.applied.length > 0), mode: "template", code: (tpExec && tpExec.code) || "OK", side: tpSide, applied: (tpExec && tpExec.applied) || [], unmatchedFields: tpUnm, unusedSlots: (tpExec && tpExec.unusedSlots) || [], message: (tpExec && tpExec.ok) ? "模板套版：更新 " + tpExec.applied.length + "/" + (tpPlan.matches || []).length + " 个槽位内容（几何/字体/样式/身份/层序冻结）。未匹配 " + tpUnm.length + " 项。" : ((tpExec && tpExec.message) || "模板套版失败。") });
         return;
       }
       if (event.data.type === "ocrCreate") {
@@ -521,6 +563,47 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
           };
         });
         post("getTextInventoryResult", { ok: true, code: "OK", pageId: (function () { const cInv = buildCurrentPageInfo(); return (cInv && cInv.pageId) || resoInv.pageId; })(), side: resoInv.side, canvas: { width: typeof resoInv.canvas.width === "number" ? resoInv.canvas.width : (resoInv.canvas.getWidth ? resoInv.canvas.getWidth() : null), height: typeof resoInv.canvas.height === "number" ? resoInv.canvas.height : (resoInv.canvas.getHeight ? resoInv.canvas.getHeight() : null) }, items: invItems });
+        return;
+      }
+    // Stage 10-E Commit G-2：与 getTextInventory 同取证口径的单对象/单侧快照（只读）
+    function zyInventoryItem(o) {
+      const cx = typeof o.left === "number" ? o.left + (typeof o.width === "number" ? o.width / 2 : 0) : null;
+      const cy = typeof o.top === "number" ? o.top + (typeof o.height === "number" ? o.height / 2 : 0) : null;
+      return {
+        objectUuid: o.uuid || o.multiUuid || o.markuuid || null,
+        text: String(o.text != null ? o.text : ""),
+        left: typeof o.left === "number" ? o.left : null,
+        top: typeof o.top === "number" ? o.top : null,
+        width: typeof o.width === "number" ? o.width : null,
+        height: typeof o.height === "number" ? o.height : null,
+        fontSize: typeof o.fontSize === "number" ? o.fontSize : null,
+        fontFamily: o.fontFamily != null ? String(o.fontFamily) : null,
+        fontWeight: o.fontWeight != null ? String(o.fontWeight) : null,
+        fontStyle: o.fontStyle != null ? String(o.fontStyle) : null,
+        angle: typeof o.angle === "number" ? o.angle : 0,
+        center: (cx != null && cy != null) ? { x: cx, y: cy } : null,
+        fontId: o.mediafontId != null ? String(o.mediafontId) : null,
+        markuuid: o.markuuid != null ? String(o.markuuid) : null,
+        layerNum: typeof o.layerNum === "number" ? o.layerNum : null,
+        fill: o.fill != null ? String(o.fill) : null,
+        charSpacing: typeof o.charSpacing === "number" ? o.charSpacing : null,
+        lineHeight: typeof o.lineHeight === "number" ? o.lineHeight : null,
+        fontName: o.fontFamily != null ? String(o.fontFamily) : null
+      };
+    }
+    function zyInventorySide(canvasObj, side) {
+      if (!canvasObj) return null;
+      return {
+        side: side,
+        canvas: { width: typeof canvasObj.width === "number" ? canvasObj.width : (canvasObj.getWidth ? canvasObj.getWidth() : null), height: typeof canvasObj.height === "number" ? canvasObj.height : (canvasObj.getHeight ? canvasObj.getHeight() : null) },
+        items: getTextObjects(canvasObj).map(zyInventoryItem)
+      };
+    }
+      if (event.data.type === "getTextInventoryAll") {
+        // Stage 10-E Commit G-2：正反面双画布文字快照（只读）—— 供「一键智能填充」一次性取两侧槽位。
+        const frontCanvasA = findCanvasForSide("front");
+        const backCanvasA = findCanvasForSide("back");
+        post("getTextInventoryAllResult", { ok: true, front: zyInventorySide(frontCanvasA, "front"), back: zyInventorySide(backCanvasA, "back") });
         return;
       }
       if (event.data.type === "inkMeasure") {
@@ -1801,6 +1884,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.64'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.64' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.65'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.65' };
   }
