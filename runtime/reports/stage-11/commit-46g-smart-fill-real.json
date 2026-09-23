@@ -1,0 +1,2332 @@
+{
+  "ts": "2026-09-23T05:54:51.528Z",
+  "stage": "STAGE10-E-COMMIT-G-SMART-FILL-REAL",
+  "cases": [
+    "T-ALL",
+    "R-ALL",
+    "NK"
+  ],
+  "cookiePresent": true,
+  "cookieSource": "probe",
+  "cookieWarning": null,
+  "cookieNote": null,
+  "bverExpect": "0.3.11.65",
+  "runs": [
+    {
+      "case": "T-ALL",
+      "note": "一键智能填充：正 5 槽+反 4 槽，粘贴含正面:/反面: 标记文本 → 点 #zy-smart-fill → both 套版（只 setText 冻结，对象数恒定）× 3 轮",
+      "steps": [
+        {
+          "step": "editor-ready",
+          "bver": "0.3.11.65"
+        },
+        {
+          "step": "inject",
+          "made": 10,
+          "backAbsent": true
+        },
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [
+        "ASSERT_FAIL r1: FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular",
+        "ASSERT_FAIL r2: FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular",
+        "ASSERT_FAIL r3: FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
+      ],
+      "runs": [
+        {
+          "rnd": 1,
+          "status": "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。",
+          "samples": [
+            "已用本地规则一键填充（未配置 AI Key）：待正反面槽位更新…",
+            "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。"
+          ],
+          "invFront": [
+            {
+              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "思源黑体 Regular",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "556",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "思源黑体 Regular"
+            },
+            {
+              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "invBack": [
+            {
+              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "思源黑体 Regular",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "556",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "思源黑体 Regular"
+            },
+            {
+              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "aiAttempt": true,
+          "updatedFront": 5,
+          "updatedBack": -1,
+          "assertFails": [
+            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
+          ]
+        },
+        {
+          "rnd": 2,
+          "status": "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。",
+          "samples": [
+            "已用本地规则一键填充（未配置 AI Key）：待正反面槽位更新…",
+            "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。"
+          ],
+          "invFront": [
+            {
+              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "思源黑体 Regular",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "556",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "思源黑体 Regular"
+            },
+            {
+              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "invBack": [
+            {
+              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "思源黑体 Regular",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "556",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "思源黑体 Regular"
+            },
+            {
+              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "aiAttempt": true,
+          "updatedFront": 5,
+          "updatedBack": -1,
+          "assertFails": [
+            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
+          ]
+        },
+        {
+          "rnd": 3,
+          "status": "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。",
+          "samples": [
+            "已用本地规则一键填充（未配置 AI Key）：待正反面槽位更新…",
+            "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。"
+          ],
+          "invFront": [
+            {
+              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "思源黑体 Regular",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "556",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "思源黑体 Regular"
+            },
+            {
+              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "invBack": [
+            {
+              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "思源黑体 Regular",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "556",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "思源黑体 Regular"
+            },
+            {
+              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "aiAttempt": true,
+          "updatedFront": 5,
+          "updatedBack": -1,
+          "assertFails": [
+            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
+          ]
+        }
+      ],
+      "asserts": [
+        {
+          "rnd": 1,
+          "fails": [
+            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
+          ]
+        },
+        {
+          "rnd": 2,
+          "fails": [
+            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
+          ]
+        },
+        {
+          "rnd": 3,
+          "fails": [
+            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
+          ]
+        }
+      ],
+      "status": null,
+      "pageId": "canvas:c0",
+      "canvasCount": 1,
+      "backAbsent": true,
+      "baseInv": {
+        "front": [
+          {
+            "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+            "text": "占位公司",
+            "left": 60.89999999999999,
+            "top": 30.872916666666665,
+            "width": 160,
+            "height": 36,
+            "fontSize": 14,
+            "fontFamily": "胡晓波刻本宋简",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 140.89999999999998,
+              "y": 48.87291666666667
+            },
+            "fontId": "800",
+            "markuuid": "",
+            "layerNum": 1,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波刻本宋简"
+          },
+          {
+            "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+            "text": "占位姓名",
+            "left": 68.89999999999999,
+            "top": 54.02760416666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 18,
+            "fontFamily": "胡晓波猫粮体Ligh",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 148.89999999999998,
+              "y": 72.02760416666666
+            },
+            "fontId": "801",
+            "markuuid": "",
+            "layerNum": 2,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波猫粮体Ligh"
+          },
+          {
+            "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+            "text": "占位职位",
+            "left": 76.89999999999999,
+            "top": 77.18229166666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 24,
+            "fontFamily": "胡晓波刷刷体",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 156.89999999999998,
+              "y": 95.18229166666666
+            },
+            "fontId": "802",
+            "markuuid": "",
+            "layerNum": 3,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波刷刷体"
+          },
+          {
+            "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+            "text": "占位电话",
+            "left": 60.89999999999999,
+            "top": 100.33697916666667,
+            "width": 160,
+            "height": 36,
+            "fontSize": 15,
+            "fontFamily": "胡晓波威武宋简体",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 140.89999999999998,
+              "y": 118.33697916666667
+            },
+            "fontId": "803",
+            "markuuid": "",
+            "layerNum": 4,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波威武宋简体"
+          },
+          {
+            "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+            "text": "占位地址",
+            "left": 68.89999999999999,
+            "top": 123.49166666666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 11,
+            "fontFamily": "Helvetica Bold",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 148.89999999999998,
+              "y": 141.49166666666667
+            },
+            "fontId": "804",
+            "markuuid": "",
+            "layerNum": 5,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "Helvetica Bold"
+          }
+        ],
+        "back": [
+          {
+            "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+            "text": "占位公司",
+            "left": 60.89999999999999,
+            "top": 30.872916666666665,
+            "width": 160,
+            "height": 36,
+            "fontSize": 14,
+            "fontFamily": "胡晓波刻本宋简",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 140.89999999999998,
+              "y": 48.87291666666667
+            },
+            "fontId": "800",
+            "markuuid": "",
+            "layerNum": 1,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波刻本宋简"
+          },
+          {
+            "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+            "text": "占位姓名",
+            "left": 68.89999999999999,
+            "top": 54.02760416666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 18,
+            "fontFamily": "胡晓波猫粮体Ligh",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 148.89999999999998,
+              "y": 72.02760416666666
+            },
+            "fontId": "801",
+            "markuuid": "",
+            "layerNum": 2,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波猫粮体Ligh"
+          },
+          {
+            "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+            "text": "占位职位",
+            "left": 76.89999999999999,
+            "top": 77.18229166666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 24,
+            "fontFamily": "胡晓波刷刷体",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 156.89999999999998,
+              "y": 95.18229166666666
+            },
+            "fontId": "802",
+            "markuuid": "",
+            "layerNum": 3,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波刷刷体"
+          },
+          {
+            "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+            "text": "占位电话",
+            "left": 60.89999999999999,
+            "top": 100.33697916666667,
+            "width": 160,
+            "height": 36,
+            "fontSize": 15,
+            "fontFamily": "胡晓波威武宋简体",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 140.89999999999998,
+              "y": 118.33697916666667
+            },
+            "fontId": "803",
+            "markuuid": "",
+            "layerNum": 4,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波威武宋简体"
+          },
+          {
+            "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+            "text": "占位地址",
+            "left": 68.89999999999999,
+            "top": 123.49166666666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 11,
+            "fontFamily": "Helvetica Bold",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 148.89999999999998,
+              "y": 141.49166666666667
+            },
+            "fontId": "804",
+            "markuuid": "",
+            "layerNum": 5,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "Helvetica Bold"
+          }
+        ]
+      }
+    },
+    {
+      "case": "R-ALL",
+      "note": "重建回归：清空两侧全部文字层 → 无槽位 → legacy apply both（空白画布重建，byAssistant 判别，套版消息不得出现）",
+      "steps": [
+        {
+          "step": "editor-ready",
+          "bver": "0.3.11.65"
+        },
+        {
+          "step": "inject",
+          "made": 0,
+          "backAbsent": false
+        },
+        {
+          "step": "clear-texts",
+          "removed": 0
+        },
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [
+        "ASSERT_FAIL R-ALL: legacy both 重建未见助手新建产出（byAssistant=3 tplMsg=false）"
+      ],
+      "runs": [
+        {
+          "rnd": 1,
+          "status": null,
+          "samples": [
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务",
+            "正面 职位 -> 销售\n正面 电话 -> 电话：13800138000\n正面 微信 -> 微信：qicheng_wx\n正面 网址 -> 网址：www.qicheng.cn\n正面 地址 -> 地址：北京市朝阳区建国路88号\n反面 主营范围 -> 主营范围：企业信息化咨询、软件定制开发服务\n反面 主营范围 -> 企业信息化咨询\n反面 主营范围 -> 软件定制开发服务"
+          ],
+          "invFront": [
+            {
+              "objectUuid": null,
+              "text": "主营范围：企业信息化咨询、软件定制开发服务",
+              "left": 50.75,
+              "top": 37.04749999999999,
+              "width": 406,
+              "height": 18.08,
+              "fontSize": 16,
+              "fontFamily": "Microsoft YaHei, Arial",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 253.75,
+                "y": 46.08749999999999
+              },
+              "fontId": null,
+              "markuuid": null,
+              "layerNum": null,
+              "fill": "#1f2937",
+              "charSpacing": 0,
+              "lineHeight": 1.25,
+              "fontName": "Microsoft YaHei, Arial"
+            },
+            {
+              "objectUuid": null,
+              "text": "企业信息化咨询",
+              "left": 50.75,
+              "top": 61.8475,
+              "width": 406,
+              "height": 18.08,
+              "fontSize": 16,
+              "fontFamily": "Microsoft YaHei, Arial",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 253.75,
+                "y": 70.88749999999999
+              },
+              "fontId": null,
+              "markuuid": null,
+              "layerNum": null,
+              "fill": "#1f2937",
+              "charSpacing": 0,
+              "lineHeight": 1.25,
+              "fontName": "Microsoft YaHei, Arial"
+            },
+            {
+              "objectUuid": null,
+              "text": "软件定制开发服务",
+              "left": 50.75,
+              "top": 86.6475,
+              "width": 406,
+              "height": 18.08,
+              "fontSize": 16,
+              "fontFamily": "Microsoft YaHei, Arial",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 253.75,
+                "y": 95.6875
+              },
+              "fontId": null,
+              "markuuid": null,
+              "layerNum": null,
+              "fill": "#1f2937",
+              "charSpacing": 0,
+              "lineHeight": 1.25,
+              "fontName": "Microsoft YaHei, Arial"
+            }
+          ],
+          "invBack": [
+            {
+              "objectUuid": null,
+              "text": "主营范围：企业信息化咨询、软件定制开发服务",
+              "left": 50.75,
+              "top": 37.04749999999999,
+              "width": 406,
+              "height": 18.08,
+              "fontSize": 16,
+              "fontFamily": "Microsoft YaHei, Arial",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 253.75,
+                "y": 46.08749999999999
+              },
+              "fontId": null,
+              "markuuid": null,
+              "layerNum": null,
+              "fill": "#1f2937",
+              "charSpacing": 0,
+              "lineHeight": 1.25,
+              "fontName": "Microsoft YaHei, Arial"
+            },
+            {
+              "objectUuid": null,
+              "text": "企业信息化咨询",
+              "left": 50.75,
+              "top": 61.8475,
+              "width": 406,
+              "height": 18.08,
+              "fontSize": 16,
+              "fontFamily": "Microsoft YaHei, Arial",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 253.75,
+                "y": 70.88749999999999
+              },
+              "fontId": null,
+              "markuuid": null,
+              "layerNum": null,
+              "fill": "#1f2937",
+              "charSpacing": 0,
+              "lineHeight": 1.25,
+              "fontName": "Microsoft YaHei, Arial"
+            },
+            {
+              "objectUuid": null,
+              "text": "软件定制开发服务",
+              "left": 50.75,
+              "top": 86.6475,
+              "width": 406,
+              "height": 18.08,
+              "fontSize": 16,
+              "fontFamily": "Microsoft YaHei, Arial",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 253.75,
+                "y": 95.6875
+              },
+              "fontId": null,
+              "markuuid": null,
+              "layerNum": null,
+              "fill": "#1f2937",
+              "charSpacing": 0,
+              "lineHeight": 1.25,
+              "fontName": "Microsoft YaHei, Arial"
+            }
+          ],
+          "aiAttempt": true,
+          "objCount": 3,
+          "byAssistant": 3,
+          "tplMsgShown": false
+        }
+      ],
+      "asserts": [],
+      "status": null,
+      "pageId": "canvas:c0",
+      "canvasCount": 1,
+      "baseInv": {
+        "front": [],
+        "back": []
+      }
+    },
+    {
+      "case": "NK",
+      "note": "无 key 规则兜底：强制清空 API Key（shim + 面板输入）→ 本地规则拆正反 → both 套版，槽位不变更新 × 3 轮",
+      "steps": [
+        {
+          "step": "editor-ready",
+          "bver": "0.3.11.65"
+        },
+        {
+          "step": "inject",
+          "made": 10,
+          "backAbsent": true
+        },
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [],
+      "runs": [
+        {
+          "rnd": 1,
+          "status": "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 9 项。",
+          "samples": [
+            "已用本地规则一键填充（未配置 AI Key）：待正反面槽位更新…",
+            "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 9 项。"
+          ],
+          "invFront": [
+            {
+              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "胡晓波刷刷体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "802",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刷刷体"
+            },
+            {
+              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "invBack": [
+            {
+              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "胡晓波刷刷体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "802",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刷刷体"
+            },
+            {
+              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "aiAttempt": false,
+          "updatedFront": 5,
+          "updatedBack": -1,
+          "assertFails": []
+        },
+        {
+          "rnd": 2,
+          "status": "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 9 项。",
+          "samples": [
+            "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 9 项。"
+          ],
+          "invFront": [
+            {
+              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "胡晓波刷刷体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "802",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刷刷体"
+            },
+            {
+              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "invBack": [
+            {
+              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "胡晓波刷刷体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "802",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刷刷体"
+            },
+            {
+              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "aiAttempt": false,
+          "updatedFront": 5,
+          "updatedBack": -1,
+          "assertFails": []
+        },
+        {
+          "rnd": 3,
+          "status": "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 9 项。",
+          "samples": [
+            "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 9 项。"
+          ],
+          "invFront": [
+            {
+              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "胡晓波刷刷体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "802",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刷刷体"
+            },
+            {
+              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "invBack": [
+            {
+              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "text": "山东启诚信息技术有限公司",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "胡晓波刻本宋简",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 38.782916666666665
+              },
+              "fontId": "800",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刻本宋简"
+            },
+            {
+              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "text": "王小明",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 20.339999999999996,
+              "fontSize": 18,
+              "fontFamily": "胡晓波猫粮体Ligh",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 64.19760416666666
+              },
+              "fontId": "801",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波猫粮体Ligh"
+            },
+            {
+              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "text": "销售",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 27.119999999999997,
+              "fontSize": 24,
+              "fontFamily": "胡晓波刷刷体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 90.74229166666666
+              },
+              "fontId": "802",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波刷刷体"
+            },
+            {
+              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "text": "13800138000",
+              "left": 60.89999999999999,
+              "top": 100.33697916666667,
+              "width": 160,
+              "height": 16.95,
+              "fontSize": 15,
+              "fontFamily": "胡晓波威武宋简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 108.81197916666666
+              },
+              "fontId": "803",
+              "markuuid": "",
+              "layerNum": 4,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "胡晓波威武宋简体"
+            },
+            {
+              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "text": "北京市朝阳区建国路88号",
+              "left": 68.89999999999999,
+              "top": 123.49166666666666,
+              "width": 160,
+              "height": 12.43,
+              "fontSize": 11,
+              "fontFamily": "Helvetica Bold",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 129.70666666666665
+              },
+              "fontId": "804",
+              "markuuid": "",
+              "layerNum": 5,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "Helvetica Bold"
+            }
+          ],
+          "aiAttempt": false,
+          "updatedFront": 5,
+          "updatedBack": -1,
+          "assertFails": []
+        }
+      ],
+      "asserts": [],
+      "status": null,
+      "pageId": "canvas:c0",
+      "canvasCount": 1,
+      "backAbsent": true,
+      "baseInv": {
+        "front": [
+          {
+            "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+            "text": "占位公司",
+            "left": 60.89999999999999,
+            "top": 30.872916666666665,
+            "width": 160,
+            "height": 36,
+            "fontSize": 14,
+            "fontFamily": "胡晓波刻本宋简",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 140.89999999999998,
+              "y": 48.87291666666667
+            },
+            "fontId": "800",
+            "markuuid": "",
+            "layerNum": 1,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波刻本宋简"
+          },
+          {
+            "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+            "text": "占位姓名",
+            "left": 68.89999999999999,
+            "top": 54.02760416666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 18,
+            "fontFamily": "胡晓波猫粮体Ligh",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 148.89999999999998,
+              "y": 72.02760416666666
+            },
+            "fontId": "801",
+            "markuuid": "",
+            "layerNum": 2,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波猫粮体Ligh"
+          },
+          {
+            "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+            "text": "占位职位",
+            "left": 76.89999999999999,
+            "top": 77.18229166666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 24,
+            "fontFamily": "胡晓波刷刷体",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 156.89999999999998,
+              "y": 95.18229166666666
+            },
+            "fontId": "802",
+            "markuuid": "",
+            "layerNum": 3,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波刷刷体"
+          },
+          {
+            "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+            "text": "占位电话",
+            "left": 60.89999999999999,
+            "top": 100.33697916666667,
+            "width": 160,
+            "height": 36,
+            "fontSize": 15,
+            "fontFamily": "胡晓波威武宋简体",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 140.89999999999998,
+              "y": 118.33697916666667
+            },
+            "fontId": "803",
+            "markuuid": "",
+            "layerNum": 4,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波威武宋简体"
+          },
+          {
+            "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+            "text": "占位地址",
+            "left": 68.89999999999999,
+            "top": 123.49166666666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 11,
+            "fontFamily": "Helvetica Bold",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 148.89999999999998,
+              "y": 141.49166666666667
+            },
+            "fontId": "804",
+            "markuuid": "",
+            "layerNum": 5,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "Helvetica Bold"
+          }
+        ],
+        "back": [
+          {
+            "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+            "text": "占位公司",
+            "left": 60.89999999999999,
+            "top": 30.872916666666665,
+            "width": 160,
+            "height": 36,
+            "fontSize": 14,
+            "fontFamily": "胡晓波刻本宋简",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 140.89999999999998,
+              "y": 48.87291666666667
+            },
+            "fontId": "800",
+            "markuuid": "",
+            "layerNum": 1,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波刻本宋简"
+          },
+          {
+            "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+            "text": "占位姓名",
+            "left": 68.89999999999999,
+            "top": 54.02760416666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 18,
+            "fontFamily": "胡晓波猫粮体Ligh",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 148.89999999999998,
+              "y": 72.02760416666666
+            },
+            "fontId": "801",
+            "markuuid": "",
+            "layerNum": 2,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波猫粮体Ligh"
+          },
+          {
+            "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+            "text": "占位职位",
+            "left": 76.89999999999999,
+            "top": 77.18229166666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 24,
+            "fontFamily": "胡晓波刷刷体",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 156.89999999999998,
+              "y": 95.18229166666666
+            },
+            "fontId": "802",
+            "markuuid": "",
+            "layerNum": 3,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波刷刷体"
+          },
+          {
+            "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+            "text": "占位电话",
+            "left": 60.89999999999999,
+            "top": 100.33697916666667,
+            "width": 160,
+            "height": 36,
+            "fontSize": 15,
+            "fontFamily": "胡晓波威武宋简体",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 140.89999999999998,
+              "y": 118.33697916666667
+            },
+            "fontId": "803",
+            "markuuid": "",
+            "layerNum": 4,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "胡晓波威武宋简体"
+          },
+          {
+            "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+            "text": "占位地址",
+            "left": 68.89999999999999,
+            "top": 123.49166666666666,
+            "width": 160,
+            "height": 36,
+            "fontSize": 11,
+            "fontFamily": "Helvetica Bold",
+            "fontWeight": "normal",
+            "fontStyle": "normal",
+            "angle": 0,
+            "center": {
+              "x": 148.89999999999998,
+              "y": 141.49166666666667
+            },
+            "fontId": "804",
+            "markuuid": "",
+            "layerNum": 5,
+            "fill": "#111111",
+            "charSpacing": 0,
+            "lineHeight": 1.2,
+            "fontName": "Helvetica Bold"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": []
+}
