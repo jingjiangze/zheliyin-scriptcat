@@ -33,6 +33,7 @@ const DROP_PREFIX = process.env.ZY_DROP || "";
 const ROT_ANGLE = Number(process.env.ZY_IMG_ANGLE || 0);
 const AB_MODE = (process.env.ZY_AB || "").split(",").map((s) => s.trim()).filter(Boolean);
 const DIAG_KEY = process.env.ZY_DIAG_KEY || "__zyStage9VisualDiag";
+const TIMELINE_ENABLED = process.env.ZY_TIMELINE === "1";
 const CASE_DEFS = [
   { id: "V0", sidecar: "0", note: "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy" },
   { id: "V15", sidecar: "0", rot: 15, note: "旋转 15°：visual bbox 四角 affine → targetQuad，位置/字号/颜色同源" },
@@ -82,7 +83,9 @@ function injectUserscript(ab) {
 }
 function conditionCode(cond, ab) {
   let code = injectUserscript(ab);
-  const repl = (o, n) => { if (code.indexOf(o) < 0) throw new Error("code anchor not found: " + o); code = code.split(o).join(n); };
+  // 容错 repl（test vs demo 对照）：锚点缺失（demo 0.3.11.49 无 localSidecar/inkGeometry 等）时跳过并告警，不抛错。
+  // test 分支自身锚点齐全，行为不变；demo 分支按 demo 自身语义运行（缺的配置不替换）。
+  const repl = (o, n) => { if (code.indexOf(o) < 0) { console.warn("[conditionCode] anchor missing (skip): " + o.slice(0, 60)); return; } code = code.split(o).join(n); };
   repl('GM_getValue("zyBaiduOcrMode", "standard")', JSON.stringify("standard"));
   repl('GM_getValue("zyStage9NativeOcrMode", "2")', JSON.stringify("2"));
   repl('GM_getValue("zyStage9NativeTruth", "1") === "1"', "true");
@@ -242,7 +245,7 @@ async function baiduRecognizeExternal(dataUrl, mode) {
           try { entry = o.zyOcrEntry || null; } catch (eX) {}
           let entR = null;
           try { entR = { zyOcrKey: o.zyOcrKey || null, byAssistant: !!o.zyCreatedByAssistant }; } catch (eZ) {}
-          out.push({ text: String(o.text || "").slice(0, 24), left: DEC2(o.left), top: DEC2(o.top), angle: DEC2(o.angle), originX: o.originX || null, scaleX: DEC2(o.scaleX), scaleY: DEC2(o.scaleY), fontSize: DEC2(o.fontSize), padding: DEC2(o.padding), paddingLeft: DEC2(o.paddingLeft), charSpacing: DEC2(o.charSpacing), textAlign: o.textAlign || null, strokeWidth: DEC2(o.strokeWidth), width: DEC2(o.width), aCoordsTL: acTL, entry: entry, identity: entR, viewport: vt ? [DEC2(vt[4]), DEC2(vt[5])] : null, ink: ink && ink.ok ? { inkWidth: DEC2(ink.inkWidth), inkHeight: DEC2(ink.inkHeight) } : null, cached: false });
+          out.push({ text: String(o.text || "").slice(0, 24), left: DEC2(o.left), top: DEC2(o.top), angle: DEC2(o.angle), originX: o.originX || null, scaleX: DEC2(o.scaleX), scaleY: DEC2(o.scaleY), fontSize: DEC2(o.fontSize), fill: (o.fill != null ? String(o.fill).slice(0, 40) : null), padding: DEC2(o.padding), paddingLeft: DEC2(o.paddingLeft), charSpacing: DEC2(o.charSpacing), textAlign: o.textAlign || null, strokeWidth: DEC2(o.strokeWidth), width: DEC2(o.width), aCoordsTL: acTL, entry: entry, identity: entR, viewport: vt ? [DEC2(vt[4]), DEC2(vt[5])] : null, ink: ink && ink.ok ? { inkWidth: DEC2(ink.inkWidth), inkHeight: DEC2(ink.inkHeight) } : null, cached: false });
         } catch (e) {}
       });
       function DEC2(v) { return (v != null && isFinite(v)) ? Math.round(v * 100) / 100 : null; }
@@ -305,6 +308,15 @@ async function baiduRecognizeExternal(dataUrl, mode) {
           rec.status = doneW.st || null;
           rec.ocrSamples = (doneW && doneW.samples) ? doneW.samples.slice(0, 8) : null;
           if (!doneW.done) { rec.errors.push("OCR_TIMEOUT"); }
+          // ZY_TIMELINE=1：创建完成(waitOcrDone)后 0/300/600/1200/2400ms 逐点采样对象几何（坐实站点 thumbnail 瞬态与稳定化拨回时序）
+          if (TIMELINE_ENABLED) {
+            rec.actualInkTimeline = [];
+            let prevStep = 0;
+            for (const t of [0, 300, 600, 1200, 2400]) {
+              await SLEEP(t - prevStep); prevStep = t;
+              rec.actualInkTimeline.push({ step: t, objects: await readActualInk() });
+            }
+          }
           // Commit C: wait for post-create stabilization (1200ms) to settle before sampling final geometry
           await SLEEP(1600);
           const diag = await readVisualDiag();

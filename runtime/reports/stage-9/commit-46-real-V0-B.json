@@ -106,7 +106,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "3d097cec-09a3-41e0-a30e-8bd37754206e"
+      "anchorObjectUuid": "3911de1c-cc69-45aa-9f3d-4bf3e722855a"
     },
     {
       "blockIndex": 1,
@@ -177,12 +177,12 @@
         "inkHeight": 8.03,
         "ocrHeight": 10.701184286539572
       },
-      "fill": null,
+      "fill": "#9b6741",
       "fillConfidence": 0.362,
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "c21da510-df44-445f-acf6-057702592ab0"
+      "anchorObjectUuid": "c32904fb-b7a7-41fc-80b7-199ed216f9a7"
     },
     {
       "blockIndex": 2,
@@ -258,7 +258,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "6d2d015e-04fe-4c7f-a9cd-b78c1d3ec0e5"
+      "anchorObjectUuid": "41980663-718c-46ff-aa40-8f855b69b166"
     },
     {
       "blockIndex": 3,
@@ -334,7 +334,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "44c1707f-1e01-47ee-91d1-dc18d3294701"
+      "anchorObjectUuid": "0d353296-5e94-4bab-b9e0-a142932aa633"
     },
     {
       "blockIndex": 4,
@@ -405,12 +405,12 @@
         "inkHeight": 12.84,
         "ocrHeight": 21.402368573079144
       },
-      "fill": null,
+      "fill": "#110c0c",
       "fillConfidence": 0.4444,
       "fillGate": "MULTI_MODAL",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "40089bc5-ee80-492d-9a2c-6dfcf3b7ce9f"
+      "anchorObjectUuid": "3d90ff8a-3300-41f9-9233-97787cee3b1d"
     },
     {
       "blockIndex": 5,
@@ -486,7 +486,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "60db8e51-8e7a-4b42-b12b-1f8eaf3a164f"
+      "anchorObjectUuid": "ebf297bf-abdc-419b-a795-7f9354fc00e7"
     },
     {
       "blockIndex": 6,
@@ -562,7 +562,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "6576db70-56dc-4aa2-bb1b-5c5b1ca8bddb"
+      "anchorObjectUuid": "f36cabd8-416e-471f-af0d-d08bce608c4e"
     },
     {
       "blockIndex": 7,
@@ -638,7 +638,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "cd63a1af-1164-47dc-824f-0b9dba4cac54"
+      "anchorObjectUuid": "f49a9aad-5b76-48aa-bb14-2c36af4b0969"
     },
     {
       "blockIndex": 8,
@@ -714,7 +714,7 @@
       "fillGate": "FOREGROUND_RELIABLE",
       "fontFamily": "sans-serif",
       "anchorUsed": false,
-      "anchorObjectUuid": "041780c7-d5a5-4e4f-9969-d24d0e67ff81"
+      "anchorObjectUuid": "bbb8c7d8-5be6-42ed-80ac-57535b108d4b"
     }
   ],
   "renderedInkCompare": [
