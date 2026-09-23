@@ -56,6 +56,77 @@ function pageBridge() {
         }
         post("applyResult", applyFields(canvas, event.data.fields || {}, side));
       }
+      if (event.data.type === "templateApply") {
+        // Stage 10-D Commit F：新套版引擎执行侧 —— 只做两件事：状态校验 + 逐槽 setText。
+        // 规划（planTemplateApply，纯模块）在 userscript 侧完成；本侧严禁新建（无 create 路径）。
+        // 硬规则：几何/字号/字体/样式/身份/层序全冻结；无错槽 / 覆盖 / 重复 / 无故新建。
+        const tpPlan = event.data.plan || null;
+        const tpSide = event.data.side || "front";
+        const tpPageId = event.data.pageId || null;
+        if (!tpPlan || !Array.isArray(tpPlan.matches)) {
+          post("templateApplyResult", { ok: false, code: "BAD_PLAN", message: "套版规划无效，已停止。", applied: [], unmatchedFields: [], unusedSlots: [] });
+          return;
+        }
+        if (!tpPageId) {
+          post("templateApplyResult", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_NO_PAGE", message: "套版请求缺少 pageId，已停止。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        const tpInv = buildPageInventory();
+        const tpKnown = tpInv.ok && (tpInv.pages || []).some(function (p) { return p.pageId === tpPageId; });
+        if (!tpKnown) {
+          post("templateApplyResult", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_PAGE_NOT_FOUND", message: "套版目标属于未知页面（" + tpPageId + "），已停止（禁止跨页写入）。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        const tpCur = buildCurrentPageInfo();
+        const tpGate = validatePageOwnership(tpPageId, tpCur);
+        if (!tpGate.ok) {
+          const codeTP = tpGate.code === "CREATE_BLOCKED_WRONG_PAGE" ? "PAGE_IDENTITY_CHANGED" : String(tpGate.code || "TEMPLATE_APPLY_BLOCKED").replace(/^CREATE_BLOCKED_/, "TEMPLATE_APPLY_BLOCKED_");
+          post("templateApplyResult", { ok: false, code: codeTP, message: "套版期间页面已变化或无法验证（" + tpGate.reason + "），已停止（" + codeTP + "）。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        const tpReso = resolveCurrentEditorPage();
+        const tpCanvas = (tpReso && tpReso.canvas) || null;
+        if (!tpCanvas) {
+          post("templateApplyResult", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止套版。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        const tpObjs = getTextObjects(tpCanvas);
+        // 状态一致校验：槽位快照与现场必须逐一对得上（inventory 竞态防线）
+        const tpPlannedSlots = Array.isArray(tpPlan.slots) ? tpPlan.slots : [];
+        let tpStateChanged = tpPlannedSlots.length !== tpObjs.length;
+        if (!tpStateChanged) {
+          for (let ti = 0; ti < tpPlannedSlots.length; ti += 1) {
+            const psobj = tpObjs[ti];
+            const curId = psobj ? (psobj.uuid || psobj.multiUuid || psobj.markuuid || null) : null;
+            const planId = tpPlannedSlots[ti] ? (tpPlannedSlots[ti].objectUuid || null) : null;
+            if (planId && curId && planId !== curId) { tpStateChanged = true; break; }
+          }
+        }
+        if (tpStateChanged) {
+          post("templateApplyResult", { ok: false, code: "SLOT_STATE_CHANGED", message: "画布文字层与套版规划不一致（可能已编辑），已停止套版并回退旧方式。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        let tpU2 = null;
+        try { tpU2 = getNativeUndoInstance(); if (tpU2 && typeof tpU2.save === "function") tpU2.save(); } catch (eUTP) {}
+        const tpApplied = [];
+        (tpPlan.matches || []).forEach(function (m) {
+          try {
+            const so = tpObjs[m.slotIdx];
+            if (!so) return;
+            const text = String(m.text != null ? m.text : "");
+            setObjectText(so, text); // 只改内容，几何/字体/样式/身份/层序冻结
+            if (typeof so.setCoords === "function") so.setCoords();
+            syncBusinessFieldsFromObject(so);
+            tpApplied.push({ fieldKey: m.fieldKey, text: String(text).slice(0, 24), objectUuid: so.uuid || so.multiUuid || null, geometry: measureObjectGeometry(tpCanvas, so) });
+          } catch (eTP) { tpApplied.push({ fieldKey: m.fieldKey, updated: false, error: String(eTP && eTP.message || eTP).slice(0, 120) }); }
+        });
+        if (tpU2 && typeof tpU2.save === "function") { try { tpU2.save(); } catch (eUTP2) {} }
+        if (tpCanvas.requestRenderAll) tpCanvas.requestRenderAll();
+        else if (tpCanvas.renderAll) tpCanvas.renderAll();
+        const tpUnmatched = tpPlan.unmatchedFields || [];
+        post("templateApplyResult", { ok: tpApplied.length > 0, mode: "template", code: "OK", side: tpSide, applied: tpApplied, unmatchedFields: tpUnmatched, unusedSlots: tpPlan.unusedSlots || [], message: "模板套版：更新 " + tpApplied.length + "/" + (tpPlan.matches || []).length + " 个槽位内容（几何/字体/样式/身份/层序冻结）。未匹配 " + tpUnmatched.length + " 项。" });
+        return;
+      }
       if (event.data.type === "ocrCreate") {
         // Stage 5.5A-R2（Demo）：OCR 重建入口 —— 按 OCR TextBlock 在正面画布创建真实 textbox。
         // Stage 5.6 P0（真机 BUILDING 卡死）：任何创建异常都必须兜底回复，禁止让调用方死等。
@@ -449,7 +520,7 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
             fontName: o.fontFamily != null ? String(o.fontFamily) : null
           };
         });
-        post("getTextInventoryResult", { ok: true, code: "OK", pageId: (function () { const cInv = buildCurrentPageInfo(); return (cInv && cInv.pageId) || resoInv.pageId; })(), side: resoInv.side, items: invItems });
+        post("getTextInventoryResult", { ok: true, code: "OK", pageId: (function () { const cInv = buildCurrentPageInfo(); return (cInv && cInv.pageId) || resoInv.pageId; })(), side: resoInv.side, canvas: { width: typeof resoInv.canvas.width === "number" ? resoInv.canvas.width : (resoInv.canvas.getWidth ? resoInv.canvas.getWidth() : null), height: typeof resoInv.canvas.height === "number" ? resoInv.canvas.height : (resoInv.canvas.getHeight ? resoInv.canvas.getHeight() : null) }, items: invItems });
         return;
       }
       if (event.data.type === "inkMeasure") {
@@ -1730,6 +1801,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.63'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.63' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.64'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.64' };
   }
