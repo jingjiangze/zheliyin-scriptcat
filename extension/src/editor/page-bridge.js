@@ -260,6 +260,7 @@ function pageBridge() {
       }
       if (event.data.type === "templateApplySmart") {
         // Stage 10-G Commit I-2（续）：内容相似智能套版执行侧 —— 只 setText(原文逐字)+fontSize 自适应，绝不 create。
+        try {  // Stage 10-G Commit J-1: 执行侧整体兜底 —— 任何异常都必须回包，禁止前端永久卡「智能套版进行中…」
         const smSide = event.data.side || "front";
         const smBothPlans = (event.data.plans && typeof event.data.plans === "object") ? event.data.plans : null;
         if (smSide === "both") {
@@ -287,6 +288,10 @@ function pageBridge() {
         const smExec = zyExecSmartMatches(smCanvas, smPlan, smSide);
         post("templateApplySmartResult", { ok: !!(smExec && smExec.applied.length > 0), code: (smExec && smExec.code) || "OK", side: smSide, applied: (smExec && smExec.applied) || [], unmatched: (smExec && smExec.unmatched) || [], unusedSlots: (smExec && smExec.unusedSlots) || [], fontSizeEvidence: (smExec && smExec.fontSizeEvidence) || [], message: (smExec && smExec.ok) ? "智能套版：更新 " + smExec.applied.length + " 槽（已按容器自适应字号）。未匹配 " + ((smExec.unmatched || []).length) + " 项。" : ((smExec && smExec.message) || "智能套版失败。") });
         return;
+      } catch (smErr) {
+        // Stage 10-G Commit J-1: 执行侧异常 → 保底回包（前端 8s 超时提示「未收到回执」即由此触发）
+        post("templateApplySmartResult", { ok: false, code: "TEMPLATE_APPLY_SMART_THREW", message: "智能套版执行异常：" + String(smErr && smErr.message ? smErr.message : smErr) + "，已停止。请重试或将报错发给我。", applied: [], unmatched: [], unusedSlots: [], fontSizeEvidence: [] });
+      }
       }
       if (event.data.type === "ocrCreate") {
         // Stage 5.5A-R2（Demo）：OCR 重建入口 —— 按 OCR TextBlock 在正面画布创建真实 textbox。
@@ -2003,6 +2008,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.66'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.66' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.67'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.67' };
   }

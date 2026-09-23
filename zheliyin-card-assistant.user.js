@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.66
+// @version      0.3.11.67
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,42 +14,42 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.66
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.66
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.67
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.67
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -68,7 +68,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.66";
+  const VERSION = "0.3.11.67";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -392,7 +392,11 @@
             </div>
             <div class="zy-row">
               <label class="zy-label" for="zy-model">模型</label>
-              <input class="zy-input" id="zy-model" value="${escapeHtml(config.model)}">
+              <select class="zy-input" id="zy-model"><option value="${escapeHtml(config.model)}">${escapeHtml(config.model || "（未配置）")}</option></select>
+              <div class="zy-actions two">
+                <button class="zy-btn secondary" id="zy-load-models" type="button">加载可用模型</button>
+              </div>
+              <div class="zy-note" id="zy-model-status">点「加载可用模型」从接口 /models 读取；接口不支持 /models 时可手动回填模型名。</div>
             </div>
             <div class="zy-row">
               <label class="zy-label" for="zy-ocr-mode">图片识别方式</label>
@@ -456,6 +460,7 @@
     bindPanel(panel);
     makeDraggable(panel);
     checkForUpdateSoon();
+    loadModels(panel);
   }
 
   function renderFieldInputs(fields) {
@@ -499,6 +504,8 @@
     panel.querySelector("#zy-close-btn").addEventListener("click", () => panel.remove());
     panel.querySelector("#zy-smart-fill").addEventListener("click", contentApplyFromPanel);
     panel.querySelector("#zy-append").addEventListener("click", () => parseFields({ append: true, apply: false }));
+    const zyLoadModelsBtn = panel.querySelector("#zy-load-models");
+    if (zyLoadModelsBtn) zyLoadModelsBtn.addEventListener("click", () => loadModels(panel));
     const providerSel = panel.querySelector("#zy-provider");
     if (providerSel) providerSel.addEventListener("change", () => {
       const p = AI_PROVIDERS[providerSel.value];
@@ -508,6 +515,7 @@
       const cur = getConfig();
       if (bu) bu.value = p.baseUrl || cur.baseUrl;
       if (md) md.value = p.defaultModel || cur.model;
+        if (p.baseUrl && p.baseUrl !== cur.baseUrl) loadModels(panel);
       setStatus("已填入「" + (p.label || providerSel.value) + "」接口地址与默认模型，请填写 API Key。");
     });
     panel.querySelector("#zy-apply-front").addEventListener("click", () => {
@@ -532,6 +540,47 @@
 
   // 识别方式下拉 + 百度云 OCR（AK/SK 脱敏存取 + 保存 + 测试连接）统一绑定。
   // suffix: 浮窗 "" / 原生抽屉 "-native"；onSaved: 保存后回调（浮窗需重渲染刷新占位，原生抽屉不需要）。
+
+  // Stage 10-G Commit J-2: 读取接口 /models 可用模型下拉（OpenAI 兼容；GET + Bearer）。
+  let zyModelListCache = null; // { baseUrl, at, ids } 60s 缓存，面板重渲染不重复请求
+  async function loadModels(panel) {
+    const p = panel || document.getElementById("zy-card-assistant");
+    if (!p) return;
+    const sel = p.querySelector("#zy-model");
+    const statusEl = p.querySelector("#zy-model-status");
+    if (!sel) return;
+    const cfg = getConfig();
+    const baseUrl = (p.querySelector("#zy-base-url") ? p.querySelector("#zy-base-url").value.trim() : "") || cfg.baseUrl;
+    const apiKey = (p.querySelector("#zy-api-key") ? p.querySelector("#zy-api-key").value.trim() : "") || cfg.apiKey;
+    const cur = sel.value || cfg.model;
+    const fill = (ids) => {
+      const uniq = [...new Set(ids)].filter(Boolean);
+      if (!uniq.length) { if (statusEl) statusEl.textContent = "接口未返回可用模型（data 为空）。"; return; }
+      sel.innerHTML = uniq.map((id) => "<option value=\"" + escapeHtml(id) + "\">" + escapeHtml(id) + "</option>").join("");
+      sel.value = uniq.indexOf(cur) >= 0 ? cur : uniq[0];
+      if (statusEl) statusEl.textContent = "已加载 " + uniq.length + " 个可用模型。";
+    };
+    if (!String(baseUrl || "").trim()) { if (statusEl) statusEl.textContent = "请先填写接口地址。"; return; }
+    if (!apiKey) { if (statusEl) statusEl.textContent = "填写 API Key 后可加载可用模型列表。"; return; }
+    if (zyModelListCache && zyModelListCache.baseUrl === baseUrl && Date.now() - zyModelListCache.at < 60000) { fill(zyModelListCache.ids); return; }
+    if (statusEl) statusEl.textContent = "正在加载可用模型…";
+    try {
+      const result = await aiRequest({
+        url: String(baseUrl).replace(/\/+$/, "") + "/models",
+        method: "GET",
+        headers: apiKey ? { "Authorization": "Bearer " + apiKey } : {},
+        timeout: 15000,
+        operation: "loadModels"
+      });
+      if (!result.ok) throwAiError(result);
+      const arr = (result.body && Array.isArray(result.body.data)) ? result.body.data : [];
+      const ids = arr.map((m) => String(m && m.id != null ? m.id : "")).filter(Boolean);
+      zyModelListCache = { baseUrl: baseUrl, at: Date.now(), ids: ids };
+      fill(ids);
+    } catch (e) {
+      if (statusEl) statusEl.textContent = "加载模型失败：" + String(e && e.message ? e.message : e);
+    }
+  }
   function bindOcrControls(scope, suffix, onSaved) {
     const q = (id) => scope.querySelector("#" + id + suffix);
     const modeSel = q("zy-ocr-mode");
@@ -2896,6 +2945,7 @@
     for (const k in seen) { if (seen[k]) return null; }
     return { front: f, back: b };
   }
+  let smSmartTimeout = null; // Stage 10-G Commit J-1: 智能套版 postMessage 后回包超时兜底（8s 无回执 → 提示刷新/重装）
   async function applyContentSimilar(rawText) {
     if (!String(rawText || "").trim()) { setStatus("请先粘贴客户文字。"); return; }
     setBusy(true);
@@ -2916,6 +2966,11 @@
         plans[sd] = planContentSimilar({ slots: slots, rows: rows, side: sd });
       });
       window.postMessage({ source: BRIDGE_SOURCE, type: "templateApplySmart", plans: plans, side: "both" }, location.origin);
+      if (smSmartTimeout) clearTimeout(smSmartTimeout);
+      smSmartTimeout = setTimeout(function () {
+        smSmartTimeout = null;
+        setStatus("智能套版未见画布回执…若一直无响应：请刷新页面后重试；仍不行需重新安装本脚本（升级后桥接版本须与脚本一致）。");
+      }, 8000);
       setStatus(config.apiKey ? "智能套版进行中（AI 已分类正反，仅分组不改文本）…" : "智能套版进行中（本地标记分类正反）…");
     } catch (e) {
       setStatus("智能套版失败：" + String(e && e.message ? e.message : e));
@@ -3000,6 +3055,7 @@
       return;
     }
     if (event.data.type === "templateApplySmartResult") {
+      if (smSmartTimeout) { clearTimeout(smSmartTimeout); smSmartTimeout = null; }
       setStatus(event.data.message || "智能套版完成。");
       return;
     }
