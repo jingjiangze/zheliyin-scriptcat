@@ -71,8 +71,8 @@
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
-  // GM 开关 zyShowTemplatePanel="1" 可恢复旧套版浮窗（豆包 AI 设置/字段/正反面/诊断/更新提示）。
-  const OCR_ONLY_MODE = GM_getValue("zyShowTemplatePanel", "0") !== "1";
+  // GM 开关 zyShowTemplatePanel（默认空/0/1=显示浮窗；存 "2"=OCR-only 仅原生抽屉；历史 "1" 兼容）。
+  const OCR_ONLY_MODE = GM_getValue("zyShowTemplatePanel", "0") === "2"; // 默认显示套版浮窗（含一键智能填充）；显式存 "2" 才回到 OCR-only（仅原生抽屉）
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   // DEFAULT_BASE_URL / DEFAULT_MODEL 已迁移至 config-core（@require 加载，作用域共享，单一来源）
