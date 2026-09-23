@@ -277,26 +277,24 @@
       }
       .zy-status {
         min-height: 20px;
+        max-height: 140px;
+        overflow-y: auto;
         font-size: 12px;
         color: #667085;
         white-space: pre-wrap;
+        word-break: break-word;
       }
       .zy-divider {
         height: 1px;
         background: #e4e7ec;
         margin: 2px 0;
       }
-      .zy-url {
-        display: grid;
-        gap: 3px;
-        padding: 7px;
-        border: 1px solid #e4e7ec;
-        border-radius: 6px;
-        background: #fbfcfe;
-        color: #667085;
+      .zy-ver {
         font-size: 11px;
-        line-height: 1.35;
-        word-break: break-all;
+        font-weight: 400;
+        color: rgba(255,255,255,.88);
+        margin-left: 6px;
+        vertical-align: 1px;
       }
       .zy-note {
         font-size: 11px;
@@ -358,17 +356,13 @@
     applySavedPanelPosition(panel);
     panel.innerHTML = `
       <div class="zy-head">
-        <div class="zy-title">名片套版助手</div>
+        <div class="zy-title">名片套版助手<span class="zy-ver">v${VERSION}</span></div>
         <div class="zy-head-actions">
           <button class="zy-icon-btn" id="zy-min-btn" title="收起/展开">${state.minimized ? "+" : "-"}</button>
           <button class="zy-icon-btn" id="zy-close-btn" title="关闭">×</button>
         </div>
       </div>
       <div class="zy-body">
-        <div class="zy-url">
-          <div>当前网址：${escapeHtml(location.href)}</div>
-          <div>版本：${VERSION}</div>
-        </div>
         <details class="zy-settings">
           <summary>识别设置（智能接口）</summary>
           <div class="zy-settings-body">

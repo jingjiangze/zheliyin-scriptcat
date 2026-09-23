@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-23T09:00:20.021Z",
+  "ts": "2026-09-23T09:07:02.934Z",
   "stage": "STAGE10-G-COMMIT-J-AI-MODELS-REAL",
   "cases": [
     "AI-SMART",
@@ -39,19 +39,19 @@
               "kind": "models",
               "url": "https://api.siliconflow.cn/v1/models",
               "model": null,
-              "ts": 1790154028361
+              "ts": 1790154431317
             },
             {
               "kind": "chat",
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790154031283
+              "ts": 1790154434235
             }
           ],
           "frontCount": 5,
           "invFront": [
             {
-              "objectUuid": "a6c717ef-3c9c-42f3-89cd-4b0a41f722dd",
+              "objectUuid": "1fc0859a-e98d-4e09-8dca-8384bc7b6c49",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -75,7 +75,7 @@
               "fontName": "方正黑体简体"
             },
             {
-              "objectUuid": "9dcb276f-bb75-4d43-aa36-43993092d0a3",
+              "objectUuid": "ec362128-31ad-4df8-8416-3cedf8a85f0e",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -99,7 +99,7 @@
               "fontName": "方正黑体简体"
             },
             {
-              "objectUuid": "118dadd2-21e8-44c1-a605-6534ad6a4752",
+              "objectUuid": "571b8f0f-5b41-417e-8fde-f98092c732dc",
               "text": "销售总监",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
@@ -123,7 +123,7 @@
               "fontName": "方正黑体简体"
             },
             {
-              "objectUuid": "123db11e-b887-4543-b4d8-f30b385ec60f",
+              "objectUuid": "8b004e49-0ad2-41d6-8413-ade20ce11a2e",
               "text": "电话：13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -147,7 +147,7 @@
               "fontName": "方正黑体简体"
             },
             {
-              "objectUuid": "9b9153d1-df01-4a0c-b519-8683fec6f017",
+              "objectUuid": "21f843ef-afef-437c-afe0-bd0e6c91e320",
               "text": "地址：北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
