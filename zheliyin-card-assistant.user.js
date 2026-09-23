@@ -443,6 +443,7 @@
         </details>
         <div class="zy-actions">
           <button class="zy-btn zy-ocr" id="zy-ocr-btn">识别图片文字</button>
+          <button class="zy-btn secondary" id="zy-copy-texts" title="把画布上全部文字图层内容复制到剪贴板">复制图层文字</button>
           <button class="zy-btn secondary" id="zy-probe" title="检测画布与桥接状态">诊断</button>
         </div>
         <div class="zy-divider"></div>
@@ -520,6 +521,8 @@
     // 防御性绑定：单按钮缺失不再拖垮整块面板（优先绑定 OCR，诊断其次）。
     const ocrBtn = panel.querySelector("#zy-ocr-btn");
     if (ocrBtn) ocrBtn.addEventListener("click", handleOcrImage);
+    const copyBtn = panel.querySelector("#zy-copy-texts");
+    if (copyBtn) copyBtn.addEventListener("click", copyLayerTexts);
     const probeBtn = panel.querySelector("#zy-probe");
     if (probeBtn) probeBtn.addEventListener("click", probeCanvas);
     // Stage 5.5B P4 / P2-B：识别方式 + 百度设置共用绑定（suffix 区分浮窗面板与原生抽屉，单一来源）
@@ -2802,6 +2805,50 @@
     });
   }
 
+  // Stage 10-F Commit H：一键复制图层文字 —— 取正反面全部文字图层内容拼接到剪贴板
+  // （GM_setClipboard 优先，页面 Clipboard API / execCommand 兜底；只读不触画布）。
+  async function copyLayerTexts() {
+    setBusy(true);
+    try {
+      const invAll = await bridgeCall("getTextInventoryAll", 8000).catch(() => null);
+      const sideText = (sd, items) => {
+        if (!Array.isArray(items) || !items.length) return null;
+        return (sd === "back" ? "【反面】" : "【正面】") + "\n" + items.map((it) => String(it && it.text != null ? it.text : "")).filter(Boolean).join("\n");
+      };
+      const parts = [];
+      const f = sideText("front", invAll && invAll.front && invAll.front.items);
+      const b = sideText("back", invAll && invAll.back && invAll.back.items);
+      if (f) parts.push(f);
+      if (b) parts.push(b);
+      const text = parts.join("\n\n");
+      if (!text) { setStatus("画布上暂无文字图层可复制。"); return; }
+      let copied = false;
+      try { if (typeof GM_setClipboard === "function") { GM_setClipboard(text); copied = true; } } catch (e1) { copied = false; }
+      if (!copied) {
+        try {
+          await navigator.clipboard.writeText(text);
+          copied = true;
+        } catch (e2) {
+          try {
+            const tmp = document.createElement("textarea");
+            tmp.value = text;
+            tmp.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none;";
+            (document.body || document.documentElement).appendChild(tmp);
+            tmp.select();
+            copied = document.execCommand("copy");
+            tmp.remove();
+          } catch (e3) { copied = false; }
+        }
+      }
+      const lineCount = text.split("\n").filter(Boolean).length;
+      setStatus(copied ? "已复制 " + lineCount + " 行图层文字到剪贴板。" : "复制失败：浏览器阻止了剪贴板访问。");
+    } catch (e) {
+      setStatus("复制图层文字失败：" + String(e && e.message ? e.message : e));
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function applyFieldsToPage(fields, side) {
     const targetSide = side || "front";
     lastApplySide = targetSide;
@@ -2964,13 +3011,16 @@
     installPageBridge();
     // P0 诊断：init 时打印 @require 依赖加载状态（无敏感信息），故障时便于远程定位
     console.info("[zy-ocr][INIT] pageBridge=" + (typeof pageBridge) + " unifyCandidates=" + (typeof unifyCandidates) + " baiduProvider=" + (typeof createBaiduProvider) + " credCrypto=" + (typeof encryptSecret));
-    // P2-B：原生右栏存在则优先原生化（Demo 主 UI）；rightBar 晚到时由 observer 补挂
-    const nativeOk = mountNativeOcrPanel();
-    observeNativeRemount();
+    // Stage 10-F Commit H：套版浮窗与文字识别合并为单窗口（用户指定「只保留图中 UI」）。
+    // 默认不挂原生 OCR 抽屉，识别入口 = 浮窗内「识别图片文字」按钮；显式 GM zyShowTemplatePanel="2" 才回到旧 OCR-only（原生抽屉）。
+    if (OCR_ONLY_MODE) {
+      const nativeOkH = mountNativeOcrPanel();
+      observeNativeRemount();
+    }
     // P4+：凭据加密配置预载（README 不落明文；解密后缓存）
     loadBaiduConfig().catch((e) => ocrLog && ocrLog("ERROR", "credential load: " + String(e && e.message || e)));
-    // 旧浮窗（套版等全部功能，代码保留）：非 OCR-only 模式，或原生右栏缺失（页面变体）时挂载
-    if (!OCR_ONLY_MODE || !nativeOk) renderPanel();
+    // 套版浮窗为唯一主 UI（图中形态）：一键智能填充 + 识别图片文字 + 复制图层文字
+    renderPanel();
     checkForUpdateSoon();
   }
   if (document.readyState === "loading") {

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-23T05:54:51.528Z",
+  "ts": "2026-09-23T07:25:44.536Z",
   "stage": "STAGE10-E-COMMIT-G-SMART-FILL-REAL",
   "cases": [
     "T-ALL",
@@ -30,22 +30,17 @@
           "ok": true
         }
       ],
-      "errors": [
-        "ASSERT_FAIL r1: FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular",
-        "ASSERT_FAIL r2: FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular",
-        "ASSERT_FAIL r3: FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
-      ],
+      "errors": [],
       "runs": [
         {
           "rnd": 1,
           "status": "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。",
           "samples": [
-            "已用本地规则一键填充（未配置 AI Key）：待正反面槽位更新…",
             "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。"
           ],
           "invFront": [
             {
-              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "objectUuid": "6663604f-3d9a-42db-8d67-c592067d19ba",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -69,7 +64,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "objectUuid": "d916aebf-f5ff-450a-8928-4d964a1af252",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -93,14 +88,14 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "objectUuid": "d22a4f2a-8bcb-4433-9dec-2329394ae20e",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
               "width": 160,
               "height": 27.119999999999997,
               "fontSize": 24,
-              "fontFamily": "思源黑体 Regular",
+              "fontFamily": "胡晓波刷刷体",
               "fontWeight": "normal",
               "fontStyle": "normal",
               "angle": 0,
@@ -108,16 +103,16 @@
                 "x": 156.89999999999998,
                 "y": 90.74229166666666
               },
-              "fontId": "556",
+              "fontId": "802",
               "markuuid": "",
               "layerNum": 3,
               "fill": "#111111",
               "charSpacing": 0,
               "lineHeight": 1.2,
-              "fontName": "思源黑体 Regular"
+              "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "objectUuid": "4868dcaf-2d7f-41df-9d74-b8110ef78175",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -141,7 +136,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "objectUuid": "5e6ef775-40ba-4aae-bf7f-c712c14f8abf",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -167,7 +162,7 @@
           ],
           "invBack": [
             {
-              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "objectUuid": "6663604f-3d9a-42db-8d67-c592067d19ba",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -191,7 +186,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "objectUuid": "d916aebf-f5ff-450a-8928-4d964a1af252",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -215,14 +210,14 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "objectUuid": "d22a4f2a-8bcb-4433-9dec-2329394ae20e",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
               "width": 160,
               "height": 27.119999999999997,
               "fontSize": 24,
-              "fontFamily": "思源黑体 Regular",
+              "fontFamily": "胡晓波刷刷体",
               "fontWeight": "normal",
               "fontStyle": "normal",
               "angle": 0,
@@ -230,16 +225,16 @@
                 "x": 156.89999999999998,
                 "y": 90.74229166666666
               },
-              "fontId": "556",
+              "fontId": "802",
               "markuuid": "",
               "layerNum": 3,
               "fill": "#111111",
               "charSpacing": 0,
               "lineHeight": 1.2,
-              "fontName": "思源黑体 Regular"
+              "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "objectUuid": "4868dcaf-2d7f-41df-9d74-b8110ef78175",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -263,7 +258,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "objectUuid": "5e6ef775-40ba-4aae-bf7f-c712c14f8abf",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -290,20 +285,17 @@
           "aiAttempt": true,
           "updatedFront": 5,
           "updatedBack": -1,
-          "assertFails": [
-            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
-          ]
+          "assertFails": []
         },
         {
           "rnd": 2,
           "status": "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。",
           "samples": [
-            "已用本地规则一键填充（未配置 AI Key）：待正反面槽位更新…",
             "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。"
           ],
           "invFront": [
             {
-              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "objectUuid": "6663604f-3d9a-42db-8d67-c592067d19ba",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -327,7 +319,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "objectUuid": "d916aebf-f5ff-450a-8928-4d964a1af252",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -351,14 +343,14 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "objectUuid": "d22a4f2a-8bcb-4433-9dec-2329394ae20e",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
               "width": 160,
               "height": 27.119999999999997,
               "fontSize": 24,
-              "fontFamily": "思源黑体 Regular",
+              "fontFamily": "胡晓波刷刷体",
               "fontWeight": "normal",
               "fontStyle": "normal",
               "angle": 0,
@@ -366,16 +358,16 @@
                 "x": 156.89999999999998,
                 "y": 90.74229166666666
               },
-              "fontId": "556",
+              "fontId": "802",
               "markuuid": "",
               "layerNum": 3,
               "fill": "#111111",
               "charSpacing": 0,
               "lineHeight": 1.2,
-              "fontName": "思源黑体 Regular"
+              "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "objectUuid": "4868dcaf-2d7f-41df-9d74-b8110ef78175",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -399,7 +391,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "objectUuid": "5e6ef775-40ba-4aae-bf7f-c712c14f8abf",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -425,7 +417,7 @@
           ],
           "invBack": [
             {
-              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "objectUuid": "6663604f-3d9a-42db-8d67-c592067d19ba",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -449,7 +441,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "objectUuid": "d916aebf-f5ff-450a-8928-4d964a1af252",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -473,14 +465,14 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "objectUuid": "d22a4f2a-8bcb-4433-9dec-2329394ae20e",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
               "width": 160,
               "height": 27.119999999999997,
               "fontSize": 24,
-              "fontFamily": "思源黑体 Regular",
+              "fontFamily": "胡晓波刷刷体",
               "fontWeight": "normal",
               "fontStyle": "normal",
               "angle": 0,
@@ -488,16 +480,16 @@
                 "x": 156.89999999999998,
                 "y": 90.74229166666666
               },
-              "fontId": "556",
+              "fontId": "802",
               "markuuid": "",
               "layerNum": 3,
               "fill": "#111111",
               "charSpacing": 0,
               "lineHeight": 1.2,
-              "fontName": "思源黑体 Regular"
+              "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "objectUuid": "4868dcaf-2d7f-41df-9d74-b8110ef78175",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -521,7 +513,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "objectUuid": "5e6ef775-40ba-4aae-bf7f-c712c14f8abf",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -548,20 +540,17 @@
           "aiAttempt": true,
           "updatedFront": 5,
           "updatedBack": -1,
-          "assertFails": [
-            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
-          ]
+          "assertFails": []
         },
         {
           "rnd": 3,
           "status": "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。",
           "samples": [
-            "已用本地规则一键填充（未配置 AI Key）：待正反面槽位更新…",
             "模板套版：正面更新 5 槽 / 反面更新 0 槽（几何/字体/样式/身份/层序冻结）。未匹配 10 项。"
           ],
           "invFront": [
             {
-              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "objectUuid": "6663604f-3d9a-42db-8d67-c592067d19ba",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -585,7 +574,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "objectUuid": "d916aebf-f5ff-450a-8928-4d964a1af252",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -609,14 +598,14 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "objectUuid": "d22a4f2a-8bcb-4433-9dec-2329394ae20e",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
               "width": 160,
               "height": 27.119999999999997,
               "fontSize": 24,
-              "fontFamily": "思源黑体 Regular",
+              "fontFamily": "胡晓波刷刷体",
               "fontWeight": "normal",
               "fontStyle": "normal",
               "angle": 0,
@@ -624,16 +613,16 @@
                 "x": 156.89999999999998,
                 "y": 90.74229166666666
               },
-              "fontId": "556",
+              "fontId": "802",
               "markuuid": "",
               "layerNum": 3,
               "fill": "#111111",
               "charSpacing": 0,
               "lineHeight": 1.2,
-              "fontName": "思源黑体 Regular"
+              "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "objectUuid": "4868dcaf-2d7f-41df-9d74-b8110ef78175",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -657,7 +646,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "objectUuid": "5e6ef775-40ba-4aae-bf7f-c712c14f8abf",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -683,7 +672,7 @@
           ],
           "invBack": [
             {
-              "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+              "objectUuid": "6663604f-3d9a-42db-8d67-c592067d19ba",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -707,7 +696,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+              "objectUuid": "d916aebf-f5ff-450a-8928-4d964a1af252",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -731,14 +720,14 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+              "objectUuid": "d22a4f2a-8bcb-4433-9dec-2329394ae20e",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
               "width": 160,
               "height": 27.119999999999997,
               "fontSize": 24,
-              "fontFamily": "思源黑体 Regular",
+              "fontFamily": "胡晓波刷刷体",
               "fontWeight": "normal",
               "fontStyle": "normal",
               "angle": 0,
@@ -746,16 +735,16 @@
                 "x": 156.89999999999998,
                 "y": 90.74229166666666
               },
-              "fontId": "556",
+              "fontId": "802",
               "markuuid": "",
               "layerNum": 3,
               "fill": "#111111",
               "charSpacing": 0,
               "lineHeight": 1.2,
-              "fontName": "思源黑体 Regular"
+              "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+              "objectUuid": "4868dcaf-2d7f-41df-9d74-b8110ef78175",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -779,7 +768,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+              "objectUuid": "5e6ef775-40ba-4aae-bf7f-c712c14f8abf",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -806,31 +795,10 @@
           "aiAttempt": true,
           "updatedFront": 5,
           "updatedBack": -1,
-          "assertFails": [
-            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
-          ]
+          "assertFails": []
         }
       ],
-      "asserts": [
-        {
-          "rnd": 1,
-          "fails": [
-            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
-          ]
-        },
-        {
-          "rnd": 2,
-          "fails": [
-            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
-          ]
-        },
-        {
-          "rnd": 3,
-          "fails": [
-            "FRONT_FONT_CHANGED@2 胡晓波刷刷体->思源黑体 Regular"
-          ]
-        }
-      ],
+      "asserts": [],
       "status": null,
       "pageId": "canvas:c0",
       "canvasCount": 1,
@@ -838,7 +806,7 @@
       "baseInv": {
         "front": [
           {
-            "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+            "objectUuid": "6663604f-3d9a-42db-8d67-c592067d19ba",
             "text": "占位公司",
             "left": 60.89999999999999,
             "top": 30.872916666666665,
@@ -862,7 +830,7 @@
             "fontName": "胡晓波刻本宋简"
           },
           {
-            "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+            "objectUuid": "d916aebf-f5ff-450a-8928-4d964a1af252",
             "text": "占位姓名",
             "left": 68.89999999999999,
             "top": 54.02760416666666,
@@ -886,7 +854,7 @@
             "fontName": "胡晓波猫粮体Ligh"
           },
           {
-            "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+            "objectUuid": "d22a4f2a-8bcb-4433-9dec-2329394ae20e",
             "text": "占位职位",
             "left": 76.89999999999999,
             "top": 77.18229166666666,
@@ -910,7 +878,7 @@
             "fontName": "胡晓波刷刷体"
           },
           {
-            "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+            "objectUuid": "4868dcaf-2d7f-41df-9d74-b8110ef78175",
             "text": "占位电话",
             "left": 60.89999999999999,
             "top": 100.33697916666667,
@@ -934,7 +902,7 @@
             "fontName": "胡晓波威武宋简体"
           },
           {
-            "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+            "objectUuid": "5e6ef775-40ba-4aae-bf7f-c712c14f8abf",
             "text": "占位地址",
             "left": 68.89999999999999,
             "top": 123.49166666666666,
@@ -960,7 +928,7 @@
         ],
         "back": [
           {
-            "objectUuid": "56b8ed83-f389-4744-a9b5-626b3f0c3505",
+            "objectUuid": "6663604f-3d9a-42db-8d67-c592067d19ba",
             "text": "占位公司",
             "left": 60.89999999999999,
             "top": 30.872916666666665,
@@ -984,7 +952,7 @@
             "fontName": "胡晓波刻本宋简"
           },
           {
-            "objectUuid": "55174792-7ed0-4e78-b78f-cdde0247ab83",
+            "objectUuid": "d916aebf-f5ff-450a-8928-4d964a1af252",
             "text": "占位姓名",
             "left": 68.89999999999999,
             "top": 54.02760416666666,
@@ -1008,7 +976,7 @@
             "fontName": "胡晓波猫粮体Ligh"
           },
           {
-            "objectUuid": "2483f6c3-f04e-4e48-9cb2-651c61d605e0",
+            "objectUuid": "d22a4f2a-8bcb-4433-9dec-2329394ae20e",
             "text": "占位职位",
             "left": 76.89999999999999,
             "top": 77.18229166666666,
@@ -1032,7 +1000,7 @@
             "fontName": "胡晓波刷刷体"
           },
           {
-            "objectUuid": "1c5021b0-b993-4739-974d-fa40dd92ccb3",
+            "objectUuid": "4868dcaf-2d7f-41df-9d74-b8110ef78175",
             "text": "占位电话",
             "left": 60.89999999999999,
             "top": 100.33697916666667,
@@ -1056,7 +1024,7 @@
             "fontName": "胡晓波威武宋简体"
           },
           {
-            "objectUuid": "bad561bc-3cdb-4521-8b4f-6710f17303e3",
+            "objectUuid": "5e6ef775-40ba-4aae-bf7f-c712c14f8abf",
             "text": "占位地址",
             "left": 68.89999999999999,
             "top": 123.49166666666666,
@@ -1104,9 +1072,7 @@
           "ok": true
         }
       ],
-      "errors": [
-        "ASSERT_FAIL R-ALL: legacy both 重建未见助手新建产出（byAssistant=3 tplMsg=false）"
-      ],
+      "errors": [],
       "runs": [
         {
           "rnd": 1,
@@ -1317,7 +1283,7 @@
           ],
           "invFront": [
             {
-              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "objectUuid": "01b82383-f64f-4e08-b256-f496882ec28b",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -1341,7 +1307,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "objectUuid": "0a1b6b5b-a13b-433f-ae0c-0f269ecf4f27",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -1365,7 +1331,7 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "objectUuid": "e379caaf-eeab-45b0-b9f4-443543248b10",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
@@ -1389,7 +1355,7 @@
               "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "objectUuid": "f2118167-2203-4b7d-8d18-591e21abecee",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -1413,7 +1379,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "objectUuid": "e7ebf48a-d865-48b2-9ccd-96f14f63d326",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -1439,7 +1405,7 @@
           ],
           "invBack": [
             {
-              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "objectUuid": "01b82383-f64f-4e08-b256-f496882ec28b",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -1463,7 +1429,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "objectUuid": "0a1b6b5b-a13b-433f-ae0c-0f269ecf4f27",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -1487,7 +1453,7 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "objectUuid": "e379caaf-eeab-45b0-b9f4-443543248b10",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
@@ -1511,7 +1477,7 @@
               "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "objectUuid": "f2118167-2203-4b7d-8d18-591e21abecee",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -1535,7 +1501,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "objectUuid": "e7ebf48a-d865-48b2-9ccd-96f14f63d326",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -1572,7 +1538,7 @@
           ],
           "invFront": [
             {
-              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "objectUuid": "01b82383-f64f-4e08-b256-f496882ec28b",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -1596,7 +1562,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "objectUuid": "0a1b6b5b-a13b-433f-ae0c-0f269ecf4f27",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -1620,7 +1586,7 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "objectUuid": "e379caaf-eeab-45b0-b9f4-443543248b10",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
@@ -1644,7 +1610,7 @@
               "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "objectUuid": "f2118167-2203-4b7d-8d18-591e21abecee",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -1668,7 +1634,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "objectUuid": "e7ebf48a-d865-48b2-9ccd-96f14f63d326",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -1694,7 +1660,7 @@
           ],
           "invBack": [
             {
-              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "objectUuid": "01b82383-f64f-4e08-b256-f496882ec28b",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -1718,7 +1684,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "objectUuid": "0a1b6b5b-a13b-433f-ae0c-0f269ecf4f27",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -1742,7 +1708,7 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "objectUuid": "e379caaf-eeab-45b0-b9f4-443543248b10",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
@@ -1766,7 +1732,7 @@
               "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "objectUuid": "f2118167-2203-4b7d-8d18-591e21abecee",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -1790,7 +1756,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "objectUuid": "e7ebf48a-d865-48b2-9ccd-96f14f63d326",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -1827,7 +1793,7 @@
           ],
           "invFront": [
             {
-              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "objectUuid": "01b82383-f64f-4e08-b256-f496882ec28b",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -1851,7 +1817,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "objectUuid": "0a1b6b5b-a13b-433f-ae0c-0f269ecf4f27",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -1875,7 +1841,7 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "objectUuid": "e379caaf-eeab-45b0-b9f4-443543248b10",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
@@ -1899,7 +1865,7 @@
               "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "objectUuid": "f2118167-2203-4b7d-8d18-591e21abecee",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -1923,7 +1889,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "objectUuid": "e7ebf48a-d865-48b2-9ccd-96f14f63d326",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -1949,7 +1915,7 @@
           ],
           "invBack": [
             {
-              "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+              "objectUuid": "01b82383-f64f-4e08-b256-f496882ec28b",
               "text": "山东启诚信息技术有限公司",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -1973,7 +1939,7 @@
               "fontName": "胡晓波刻本宋简"
             },
             {
-              "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+              "objectUuid": "0a1b6b5b-a13b-433f-ae0c-0f269ecf4f27",
               "text": "王小明",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
@@ -1997,7 +1963,7 @@
               "fontName": "胡晓波猫粮体Ligh"
             },
             {
-              "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+              "objectUuid": "e379caaf-eeab-45b0-b9f4-443543248b10",
               "text": "销售",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
@@ -2021,7 +1987,7 @@
               "fontName": "胡晓波刷刷体"
             },
             {
-              "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+              "objectUuid": "f2118167-2203-4b7d-8d18-591e21abecee",
               "text": "13800138000",
               "left": 60.89999999999999,
               "top": 100.33697916666667,
@@ -2045,7 +2011,7 @@
               "fontName": "胡晓波威武宋简体"
             },
             {
-              "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+              "objectUuid": "e7ebf48a-d865-48b2-9ccd-96f14f63d326",
               "text": "北京市朝阳区建国路88号",
               "left": 68.89999999999999,
               "top": 123.49166666666666,
@@ -2083,7 +2049,7 @@
       "baseInv": {
         "front": [
           {
-            "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+            "objectUuid": "01b82383-f64f-4e08-b256-f496882ec28b",
             "text": "占位公司",
             "left": 60.89999999999999,
             "top": 30.872916666666665,
@@ -2107,7 +2073,7 @@
             "fontName": "胡晓波刻本宋简"
           },
           {
-            "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+            "objectUuid": "0a1b6b5b-a13b-433f-ae0c-0f269ecf4f27",
             "text": "占位姓名",
             "left": 68.89999999999999,
             "top": 54.02760416666666,
@@ -2131,7 +2097,7 @@
             "fontName": "胡晓波猫粮体Ligh"
           },
           {
-            "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+            "objectUuid": "e379caaf-eeab-45b0-b9f4-443543248b10",
             "text": "占位职位",
             "left": 76.89999999999999,
             "top": 77.18229166666666,
@@ -2155,7 +2121,7 @@
             "fontName": "胡晓波刷刷体"
           },
           {
-            "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+            "objectUuid": "f2118167-2203-4b7d-8d18-591e21abecee",
             "text": "占位电话",
             "left": 60.89999999999999,
             "top": 100.33697916666667,
@@ -2179,7 +2145,7 @@
             "fontName": "胡晓波威武宋简体"
           },
           {
-            "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+            "objectUuid": "e7ebf48a-d865-48b2-9ccd-96f14f63d326",
             "text": "占位地址",
             "left": 68.89999999999999,
             "top": 123.49166666666666,
@@ -2205,7 +2171,7 @@
         ],
         "back": [
           {
-            "objectUuid": "8360af46-8bab-4104-a5c8-ab46528e6ffe",
+            "objectUuid": "01b82383-f64f-4e08-b256-f496882ec28b",
             "text": "占位公司",
             "left": 60.89999999999999,
             "top": 30.872916666666665,
@@ -2229,7 +2195,7 @@
             "fontName": "胡晓波刻本宋简"
           },
           {
-            "objectUuid": "e7b9e908-3729-4a0d-b138-b3cf95660207",
+            "objectUuid": "0a1b6b5b-a13b-433f-ae0c-0f269ecf4f27",
             "text": "占位姓名",
             "left": 68.89999999999999,
             "top": 54.02760416666666,
@@ -2253,7 +2219,7 @@
             "fontName": "胡晓波猫粮体Ligh"
           },
           {
-            "objectUuid": "3fe2faed-857c-472e-83f9-bf49be427839",
+            "objectUuid": "e379caaf-eeab-45b0-b9f4-443543248b10",
             "text": "占位职位",
             "left": 76.89999999999999,
             "top": 77.18229166666666,
@@ -2277,7 +2243,7 @@
             "fontName": "胡晓波刷刷体"
           },
           {
-            "objectUuid": "b79aa500-cd66-41f1-988e-45f7677f6b5e",
+            "objectUuid": "f2118167-2203-4b7d-8d18-591e21abecee",
             "text": "占位电话",
             "left": 60.89999999999999,
             "top": 100.33697916666667,
@@ -2301,7 +2267,7 @@
             "fontName": "胡晓波威武宋简体"
           },
           {
-            "objectUuid": "f1758b53-8941-442a-b891-a5a77eec5797",
+            "objectUuid": "e7ebf48a-d865-48b2-9ccd-96f14f63d326",
             "text": "占位地址",
             "left": 68.89999999999999,
             "top": 123.49166666666666,
