@@ -9,7 +9,7 @@
 //   A = 旧 OCR bbox geometry（注入 vbBox=null 强制 OCR_BBOX_FALLBACK）
 //   B = Visual Ink geometry（默认：IMAGE_INK 优先，仅可信时切换）
 // 凭据：ZY_STAGE9_COOKIE / ZY_BAIDU_AK / ZY_BAIDU_SK（仅运行时）
-// 报告：runtime/reports/stage-9/commit-46-real.json + per-case（cookie 只记名）
+// 报告：runtime/reports/stage-9/commit-46c-template-real.json + per-case（cookie 只记名）
 "use strict";
 const path = require("path");
 const fs = require("fs");
@@ -104,7 +104,7 @@ function selfTest() {
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
-if (!BAIDU_AK || !BAIDU_SK) { console.error("[commit-46-real] 缺少凭据 env（baidu ak/sk）"); process.exit(2); }
+if (!BAIDU_AK || !BAIDU_SK) { console.error("[commit-46c-template] 缺少凭据 env（baidu ak/sk）"); process.exit(2); }
 function pageWorldPayloadFor(cond, ab) {
   const parts = [GM_SHIM_SOURCE];
   const norm = conditionCode(cond, ab);
@@ -142,8 +142,8 @@ async function baiduRecognizeExternal(dataUrl, mode) {
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   const sessCookie = await probeMod.resolveStage9Cookie();
   const COOKIE_RAW = sessCookie.raw || "";
-  if (!COOKIE_RAW) { console.error("[commit-46-real] 会话 cookie 解析失败：" + (sessCookie.error || "NO_COOKIE") + "（已尝试 显式 env → 自动抓取 OCRTool.do；请注入 ZY_STAGE9_COOKIE 或确保持久 profile 已登录）"); process.exit(2); }
-  const out = { ts: new Date().toISOString(), stage: "OCR-P1-COMMIT4_6-REAL", cases: CASE_DEFS, image: path.basename(CARD), cookiePresent: !!COOKIE_RAW, cookieSource: sessCookie.source || null, cookieWarning: sessCookie.warning || null, cookieNote: sessCookie.note || null, abModes: AB_MODE.length ? AB_MODE : ["B"], runs: [], errors: [] };
+  if (!COOKIE_RAW) { console.error("[commit-46c-template] 会话 cookie 解析失败：" + (sessCookie.error || "NO_COOKIE") + "（已尝试 显式 env → 自动抓取 OCRTool.do；请注入 ZY_STAGE9_COOKIE 或确保持久 profile 已登录）"); process.exit(2); }
+  const out = { ts: new Date().toISOString(), stage: "OCR-P1-COMMIT4_6C-TEMPLATE-REAL", cases: CASE_DEFS, image: path.basename(CARD), cookiePresent: !!COOKIE_RAW, cookieSource: sessCookie.source || null, cookieWarning: sessCookie.warning || null, cookieNote: sessCookie.note || null, abModes: AB_MODE.length ? AB_MODE : ["B"], runs: [], errors: [] };
   let browser = null;
   try {
     browser = await chromium.launchPersistentContext(PROFILE, { channel: "chromium", headless: false, ignoreDefaultArgs: ["--enable-automation", "--disable-extensions"], args: ["--disable-features=DisableLoadExtensionCommandLineSwitch", "--enable-unsafe-extension-debugging", "--disable-extensions-except=" + SC_DIR, "--load-extension=" + SC_DIR], viewport: { width: 1280, height: 900 } });
@@ -157,7 +157,7 @@ async function baiduRecognizeExternal(dataUrl, mode) {
       const allOld = await adapter.getAllScripts(page) || [];
       for (const s of allOld.filter((x) => /zheliyin|折立印/.test(String(JSON.stringify(x) || "")))) { try { await adapter.removeScript(page, s.uuid); } catch (e) {} }
       out.errors = out.errors.filter((x) => x.indexOf("PAGEERROR") < 0);
-      console.log("[commit-46-real] scriptcat cleaned");
+      console.log("[commit-46c-template] scriptcat cleaned");
     } catch (eClean) { out.errors.push("CLEAN: " + String(eClean && eClean.message || eClean).slice(0, 120)); }
     for (const c of parseCookies(COOKIE_RAW)) { try { await browser.addCookies([c]); } catch (e) { out.errors.push("COOKIE:" + c.name + " " + String(e && e.message || e).slice(0, 100)); } }
     const newRunPage = async (payload) => {
@@ -273,98 +273,133 @@ async function baiduRecognizeExternal(dataUrl, mode) {
       try { if (vo && vo.totalCanvasArray[0] && vo.totalCanvasArray[0].canvas) vo.totalCanvasArray[0].canvas.requestRenderAll(); } catch (e) {}
       return { removed };
     });
-    for (const def of CASE_DEFS) { if (WHITELIST.length && WHITELIST.indexOf(def.id) < 0) continue;
-      const runDrop = def.drop != null ? def.drop : DROP_PREFIX;
-      const runRot = def.rot != null ? def.rot : ROT_ANGLE;
-      for (const ab of (AB_MODE.length ? AB_MODE : ["B"])) {
-        const rec = { case: def.id, ab: ab, note: def.note + (ab === "A" ? "（旧 OCR bbox geometry）" : "（新 Visual Ink geometry）"), rot: runRot, steps: [], errors: [], diag: null, actualInk: [], visualRows: [], abCompare: null, leftShiftObserved: null, status: null };
-        out.runs.push(rec);
-        try {
-          await setGm(false);
-          await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 60000 }).catch((e) => rec.errors.push("GOTO: " + String(e && e.message || e).slice(0, 120)));
-          await SLEEP(2500);
-          await injectPageWorld(pageWorldPayloadFor({ local: false }, ab));
+    // Stage 10-D Commit C：模板套版模式（Template First）验收 —— 注入真实文字槽位 → FULL_REAL_PIPELINE → 5 次稳定性
+    // 断言：对象数=槽位数（不新建/删除）、layerNum 对应不变、left/top/width/height/angle/fontSize/fontFamily/fill 冻结，
+    //       text 从占位变为客户内容；R0 空槽 → 重建模式（NEW_RECOGNITION）与 commit-46-real 行为一致。
+    const TPL_CASES = [
+      { id: "T0", slots: 5, note: "模板模式：注入 5 文字槽位 × 5 次识别稳定性（Template First，只改 text）" },
+      { id: "R0", slots: 0, note: "重建回归：空槽（无文字层）→ NEW_RECOGNITION 重建行为不变" }
+    ];
+    for (const def of TPL_CASES) {
+      if (WHITELIST.length && WHITELIST.indexOf(def.id) < 0) continue;
+      const rec = { case: def.id, note: def.note, steps: [], errors: [], runs: [], asserts: [], status: null };
+      out.runs.push(rec);
+      try {
+        await setGm(false);
+        await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 60000 }).catch((e) => rec.errors.push("GOTO: " + String(e && e.message || e).slice(0, 120)));
+        await SLEEP(2500);
+        await injectPageWorld(pageWorldPayloadFor({ local: false }, "B"));
+        await SLEEP(1400);
+        await page.evaluate((dk) => { try { window[dk] = []; } catch (e) {} }, DIAG_KEY);
+        let ready = await waitEditorReady(20);
+        if (!(ready && ready.ok)) { rec.errors.push("EDITOR_UNAVAILABLE"); continue; }
+        rec.steps.push({ step: "editor-ready", bver: (ready && ready.bver) || null });
+        if (ready && ready.bver && ready.bver !== "0.3.11.63") rec.errors.push("BRIDGE_VERSION_MISMATCH(" + String(ready.bver).slice(0, 40) + ") — 期望 0.3.11.63");
+        const cp = await bridgeCall("getCurrentPage", {}, "getCurrentPageResult", 6000).catch(() => null);
+        rec.pageId = (cp && cp.pageId) || null;
+        const bg = await setBg(0);
+        if (!(bg && bg.ok)) { rec.errors.push("BG_INJECT_FAIL"); continue; }
+        const prep = await bridgeCall("ocrPrepare", {}, "ocrPrepareResult", 15000).catch(() => null);
+        if (!(prep && prep.ok && prep.dataUrl)) { rec.errors.push("OCR_PREPARE_FAIL"); continue; }
+        const extRes = await baiduRecognizeExternal(prep.dataUrl, "standard");
+        if (!extRes || extRes.error) { rec.errors.push("BAIDU_EXTERNAL_FAIL"); continue; }
+        const extCands = (Array.isArray(extRes.candidates) ? extRes.candidates : []).slice();
+        rec.baiduCount = extCands.length;
+        await page.evaluate((r) => { try { window.__zyBaiduExternal = { res: r }; } catch (e) {} }, Object.assign({}, extRes, { candidates: extCands }));
+        // --- T0：注入模板槽位（真实媒体对象，drawText；与 getTextInventory 同遍历同序）---
+        let slotBase = [];
+        if (def.slots > 0) {
+          const inj = await page.evaluate(() => {
+            const req2 = window.requirejs || window.require;
+            const vo2 = ((req2 && req2.s && req2.s.contexts && req2.s.contexts._ && req2.s.contexts._.defined && req2.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+            const d2 = vo2 && vo2.totalCanvasArray && vo2.totalCanvasArray[0];
+            if (!d2 || !d2.canvas || !d2.canvasObjInfo || typeof d2.drawText !== "function") return { ok: false, reason: "NO_CANVASDIY" };
+            const baseLayer2 = (d2.canvasObjInfo.canvasToProductObjArr || []).length;
+            const SLOTS = [
+              { text: "占位姓名", left: 100, top: 30, width: 200, height: 40, fontSize: 18, fontFamily: "思源黑体 Regular" },
+              { text: "占位职位", left: 100, top: 80, width: 200, height: 40, fontSize: 24, fontFamily: "思源黑体 Bold" },
+              { text: "占位公司", left: 100, top: 130, width: 260, height: 40, fontSize: 14, fontFamily: "方正黑体简体" },
+              { text: "占位电话", left: 100, top: 180, width: 160, height: 40, fontSize: 15, fontFamily: "思源黑体 Regular" },
+              { text: "占位邮箱", left: 100, top: 230, width: 220, height: 40, fontSize: 12, fontFamily: "思源黑体 Regular" }
+            ];
+            let made = 0;
+            const errs = [];
+            SLOTS.forEach(function (s, i) {
+              try {
+                const entry = { "media": { "mediaType": "text", "text": s.text, "font": { "pointSize": s.fontSize, "fontColor": "#000000", "isHorizontal": 1, "gravity": "left", "id": String(600 + i), "isItalic": 0, "textDecoration": "", "linethrough": 0, "overline": 0, "isBold": 0, "overprintStroke": 0 }, "charSpace": 0, "lineSpace": 1.2, "lineIdType": 0, "isBG": 0, "imgPath": "" }, "location": { "x": s.left, "y": s.top, "width": s.width, "height": s.height, "factWidth": s.width, "factHeight": s.height, "rotation": 0 }, "printLocation": { "x": s.left, "y": s.top, "width": s.width, "height": s.height, "rotation": 0 }, "layer": { "alpha": 1 }, "layerNum": baseLayer2 + i, "isEdit": 1, "isDisplay": 0, "deleteState": 0, "visitLevel": 1, "multiUuid": "tpl-" + String(101 + i), "markuuid": "", "topEnable": 1, "resourceType": 0, "maskEnable": 0, "lowPixelFlag": 0, "selectEnabled": 1, "isDesign": 1, "isComposite": 0, "isPreview": 0, "isDesignShape": 0 };
+                d2.drawText(s.text, null, null, null, entry, baseLayer2 + i);
+                made += 1;
+              } catch (e) { errs.push(String(i) + ":" + String(e && e.message || e).slice(0, 90)); }
+            });
+            try { d2.canvas.requestRenderAll(); } catch (e) {}
+            return { ok: made === SLOTS.length, made: made, total: SLOTS.length, errs: errs };
+          }).catch((e) => ({ ok: false, reason: String(e && e.message || e).slice(0, 100) }));
+          if (!(inj && inj.ok)) { rec.errors.push("SLOT_INJECT_FAIL " + JSON.stringify(inj)); continue; }
+          rec.slotInjected = inj;
           await SLEEP(1400);
-          await page.evaluate((dk) => { try { window[dk] = []; } catch (e) {} }, DIAG_KEY);
-          let ready = await waitEditorReady(20);
-          if (!(ready && ready.ok)) { rec.errors.push("EDITOR_UNAVAILABLE"); continue; }
-          if (!(ready && ready.bridge)) {
-            await page.evaluate(() => { try { if (window.__ZY_DEBUG__ && window.__ZY_DEBUG__.installPageBridge) window.__ZY_DEBUG__.installPageBridge(); } catch (e) {} }).catch(() => {});
-            await SLEEP(1600);
-            ready = await waitEditorReady(4);
-          }
-          rec.steps.push({ step: "editor-ready", ok: !!(ready && ready.ok), bridge: !!(ready && ready.bridge), bver: (ready && ready.bver) || null });
-          if (ready && ready.bver && ready.bver !== "0.3.11.63") rec.errors.push("BRIDGE_VERSION_MISMATCH(" + String(ready.bver).slice(0, 40) + ") — 扩展缓存旧 page-bridge 抢占安装，本地稳定化可能未生效");
-          if (!(ready && ready.bridge)) { rec.errors.push("BRIDGE_UNAVAILABLE"); continue; }
-          const cp = await bridgeCall("getCurrentPage", {}, "getCurrentPageResult", 6000).catch(() => null);
-          rec.pageId = (cp && cp.pageId) || null;
-          const bg = await setBg(runRot);
-          rec.steps.push({ step: "bg-inject", ok: !!(bg && bg.ok) });
-          if (!(bg && bg.ok)) { rec.errors.push("BG_INJECT_FAIL"); continue; }
-          const prep = await bridgeCall("ocrPrepare", {}, "ocrPrepareResult", 15000).catch(() => null);
-          rec.steps.push({ step: "ocr-prepare", ok: !!(prep && prep.ok && prep.dataUrl) });
-          if (!(prep && prep.ok && prep.dataUrl)) { rec.errors.push("OCR_PREPARE_FAIL"); continue; }
-          const extRes = await baiduRecognizeExternal(prep.dataUrl, "standard");
-          let extCands = (extRes && !extRes.error && extRes.candidates) ? extRes.candidates.slice() : [];
-          rec.baiduCount = extCands.length;
-          if (runDrop) extCands = extCands.filter((c) => String((c && c.text) || "").indexOf(runDrop) < 0);
-          if (!extRes || extRes.error) { rec.errors.push("BAIDU_EXTERNAL_FAIL"); continue; }
-          await page.evaluate((r) => { try { window.__zyBaiduExternal = { res: r }; } catch (e) {} }, Object.assign({}, extRes, { candidates: extCands }));
+          slotBase = await page.evaluate(() => {
+            const req3 = window.requirejs || window.require;
+            const vo3 = ((req3 && req3.s && req3.s.contexts && req3.s.contexts._ && req3.s.contexts._.defined && req3.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
+            const c3 = vo3 && vo3.totalCanvasArray && vo3.totalCanvasArray[0] && vo3.totalCanvasArray[0].canvas;
+            if (!c3) return [];
+            return c3.getObjects().filter(function (o) { return typeof o.text === "string"; }).map(function (o) { return { text: String(o.text || ""), multiUuid: o.multiUuid != null ? String(o.multiUuid) : null, markuuid: o.markuuid != null ? String(o.markuuid) : null, layerNum: typeof o.layerNum === "number" ? o.layerNum : null, left: o.left, top: o.top, width: o.width, height: o.height, angle: o.angle, fontSize: o.fontSize, fontFamily: o.fontFamily != null ? String(o.fontFamily) : null, fill: o.fill != null ? String(o.fill) : null }; });
+          }).catch(() => []);
+          rec.slotBase = slotBase;
+          rec.steps.push({ step: "slot-inject", ok: slotBase.length > 0, count: slotBase.length });
+        }
+        // --- 5 次 FULL_PIPELINE 识别 ---
+        for (let rnd = 1; rnd <= 5; rnd += 1) {
+          const runRec = { rnd: rnd, status: null };
+          rec.runs.push(runRec);
           const cl = await clickOcr();
-          rec.steps.push({ step: "click-ocr", clicked: !!(cl && cl.clicked) });
-          if (!(cl && cl.clicked)) { rec.errors.push("OCR_BTN_NOT_FOUND"); continue; }
+          if (!(cl && cl.clicked)) { runRec.error = "OCR_BTN_NOT_FOUND"; continue; }
           const doneW = await waitOcrDone(360000);
-          rec.steps.push({ step: "ocr-done", done: !!doneW.done, status: doneW.st || null });
-          rec.status = doneW.st || null;
-          rec.ocrSamples = (doneW && doneW.samples) ? doneW.samples.slice(0, 8) : null;
-          if (!doneW.done) { rec.errors.push("OCR_TIMEOUT"); }
-          // ZY_TIMELINE=1：创建完成(waitOcrDone)后 0/300/600/1200/2400ms 逐点采样对象几何（坐实站点 thumbnail 瞬态与稳定化拨回时序）
-          if (TIMELINE_ENABLED) {
-            rec.actualInkTimeline = [];
-            let prevStep = 0;
-            for (const t of [0, 300, 600, 1200, 2400]) {
-              await SLEEP(t - prevStep); prevStep = t;
-              rec.actualInkTimeline.push({ step: t, objects: await readActualInk() });
+          runRec.status = doneW.st || null;
+          await SLEEP(1600);
+          const now = await readActualInk();
+          const invNow = await bridgeCall("getTextInventory", {}, "getTextInventoryResult", 6000).catch(() => null);
+          runRec.inventoryCount = (invNow && invNow.ok && Array.isArray(invNow.items)) ? invNow.items.length : -1;
+          runRec.actual = now.map(function (o) { return { text: o.text, left: o.left, top: o.top, fontSize: o.fontSize, fill: o.fill, layerNum: o.layerNum }; });
+          if (!def.slots) { runRec.reconstruction = true; continue; } // R0 只记录
+          // T0 模板断言
+          const fails = [];
+          const nList = now.slice();
+          if (nList.length !== slotBase.length) fails.push("COUNT " + slotBase.length + "->" + nList.length + "（不应新建/删除对象）");
+          for (let si = 0; si < Math.min(slotBase.length, nList.length); si += 1) {
+            const sb = slotBase[si], nn = nList[si];
+            if (String(sb.text) === String(nn.text)) fails.push("TEXT_UNCHANGED[" + String(nn.text).slice(0, 8) + "]（识别未更新内容）");
+            for (const k of ["left", "top", "width", "height", "angle", "fontSize"]) {
+              if (sb[k] != null && nn[k] != null && Math.abs(sb[k] - nn[k]) > 0.01) fails.push("GEOM_CHANGED " + k + " " + sb[k] + "->" + nn[k] + " @ " + String(nn.text).slice(0, 8));
+            }
+            if (sb.fontFamily && nn.fontFamily && String(sb.fontFamily) !== String(nn.fontFamily)) fails.push("FONT_CHANGED @ " + String(nn.text).slice(0, 8));
+            if (sb.fill != null && nn.fill != null && String(sb.fill) !== String(nn.fill)) fails.push("FILL_CHANGED @ " + String(nn.text).slice(0, 8));
+          }
+          if (invNow && invNow.ok && Array.isArray(invNow.items)) {
+            const iv = invNow.items.slice();
+            if (iv.length !== slotBase.length) { /* COUNT 已报 */ }
+            for (let si = 0; si < Math.min(slotBase.length, iv.length); si += 1) {
+              if (slotBase[si].layerNum != null && iv[si] && slotBase[si].layerNum !== iv[si].layerNum) fails.push("LAYER_CHANGED[" + si + "] " + slotBase[si].layerNum + "->" + iv[si].layerNum);
             }
           }
-          // Commit C: wait for post-create stabilization (1200ms) to settle before sampling final geometry
-          await SLEEP(1600);
-          const diag = await readVisualDiag();
-          rec.diag = diag;
-          const lastTx = diag && diag.length ? diag[diag.length - 1] : null;
-          rec.visualRows = (lastTx && lastTx.rows) ? lastTx.rows : [];
-          rec.actualInk = await readActualInk();
-          // §14/§15：Source Visual Ink vs Actual Rendered Ink —— dx/dy/widthGap/heightGap + leftShift
-          try {
-            const visAx = {};
-            rec.visualRows.forEach((r) => { const g = r.targetGeometry || {}; visAx[String(r.nativeText || "")] = r; });
-            const diagArr = [];
-            rec.actualInk.forEach((ai) => {
-              const vr = visAx[String(ai.text || "")] || null;
-              if (!vr || !vr.visualGeometrySource) return;
-              const tg = vr.targetGeometry || null;
-              const inkBox = vr.imageInkBox || null;
-              const row = { block: String(ai.text || "").slice(0, 16), visualGeomSource: vr.visualGeometrySource, fontSize: vr.fontSize, fillGate: vr.fillGate, anchorUsed: vr.anchorUsed, targetLeft: tg ? tg.left : null, targetTop: tg ? tg.top : null, actualLeft: ai.left, actualTop: ai.top, dx: DECIMAL((ai.left != null && tg && tg.left != null) ? ai.left - tg.left : null), dy: DECIMAL((ai.top != null && tg && tg.top != null) ? ai.top - tg.top : null), widthGap: DECIMAL(ai.ink && tg ? ai.ink.inkWidth - tg.width : null), heightGap: DECIMAL(ai.ink && tg ? ai.ink.inkHeight - tg.height : null), actualInkWidth: ai.ink ? ai.ink.inkWidth : null, actualInkHeight: ai.ink ? ai.ink.inkHeight : null, sourceInkLeft: inkBox ? DECIMAL(inkBox.x) : null };
-              diagArr.push(row);
-            });
-            rec.renderedInkCompare = diagArr;
-            // 左移观察：存在 dx<0 且 |dx|>2 的行（多行一致左移 → 系统性）
-            const c = diagArr.filter((r) => r.dx != null && r.dx < -2);
-            rec.leftShiftObserved = { count: c.length, rows: c.map((r) => ({ block: r.block, dx: r.dx })).slice(0, 6) };
-          } catch (eAB) { rec.errors.push("ABCOMPUTE: " + String(eAB && eAB.message || eAB).slice(0, 120)); }
-          rec.steps.push({ step: "rollback", ok: true });
-          await rollback();
-        } catch (e) { rec.errors.push("RUN: " + String(e && (e.message || e) || e).slice(0, 300)); }
-      }
+          runRec.assertFails = fails;
+          if (fails.length) { rec.asserts.push({ rnd: rnd, fails: fails }); rec.errors.push("ASSERT_FAIL r" + rnd + ": " + fails.join(" | ")); }
+        }
+        if (def.slots > 0) {
+          rec.assess = { templateOk: rec.asserts.length === 0, rounds: rec.runs.length - rec.asserts.length, total: rec.runs.length };
+        }
+        rec.steps.push({ step: "rollback", ok: true });
+        await rollback();
+      } catch (e) { rec.errors.push("RUN: " + String(e && (e.message || e) || e).slice(0, 300)); }
     }
+
     out.errors = out.errors.slice(0, 20);
   } catch (e) { out.errors.push("FATAL: " + String(e && (e.message || e) || e).slice(0, 400)); }
   finally { try { await browser.close(); } catch (e) {} }
-  fs.writeFileSync(path.join(REPORT_DIR, "commit-46-real.json"), JSON.stringify(out, null, 2));
+  fs.writeFileSync(path.join(REPORT_DIR, "commit-46c-template-real.json"), JSON.stringify(out, null, 2));
   try {
     for (const rc of out.runs) {
-      fs.writeFileSync(path.join(REPORT_DIR, "commit-46-real-" + rc.case + "-" + rc.ab + ".json"), JSON.stringify({ case: rc.case, ab: rc.ab, steps: rc.steps, status: rc.status, visualRows: rc.visualRows, renderedInkCompare: rc.renderedInkCompare, leftShiftObserved: rc.leftShiftObserved, errors: rc.errors }, null, 2));
+      fs.writeFileSync(path.join(REPORT_DIR, "commit-46c-template-real-" + rc.case + "-" + rc.ab + ".json"), JSON.stringify({ case: rc.case, ab: rc.ab, steps: rc.steps, status: rc.status, visualRows: rc.visualRows, renderedInkCompare: rc.renderedInkCompare, leftShiftObserved: rc.leftShiftObserved, errors: rc.errors }, null, 2));
     }
   } catch (eW) {}
-  console.log("[commit-46-real] report -> runtime/reports/stage-9/commit-46-real.json");
+  console.log("[commit-46c-template] report -> runtime/reports/stage-9/commit-46c-template-real.json");
 })().catch((e) => { console.error("FATAL: " + String(e && (e.message || e) || e).slice(0, 600)); process.exit(1); });

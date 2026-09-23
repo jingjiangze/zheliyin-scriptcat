@@ -97,4 +97,4 @@ function matchSlots(input) {
   return { matches: matches, unmatched: unmatched, unusedSlots: unusedSlots };
 }
 
-module.exports = { matchSlots: matchSlots, spatialScore: spatialScore, fsSim: fsSim, lenSim: lenSim, DEFAULT_MIN_CONF: DEFAULT_MIN_CONF };
+if (typeof module !== "undefined" && module.exports) module.exports= { matchSlots: matchSlots, spatialScore: spatialScore, fsSim: fsSim, lenSim: lenSim, DEFAULT_MIN_CONF: DEFAULT_MIN_CONF };

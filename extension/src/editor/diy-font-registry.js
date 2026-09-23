@@ -92,4 +92,4 @@ function buildRegistry(all) {
   return { byId: byId_, byName: byName_, resolve: resolve, toMinDict: toMinDict, size: list.length };
 }
 
-module.exports = { buildRegistry: buildRegistry, normName: normName, stripParen: stripParen, tokenize: tokenize };
+if (typeof module !== "undefined" && module.exports) module.exports= { buildRegistry: buildRegistry, normName: normName, stripParen: stripParen, tokenize: tokenize };

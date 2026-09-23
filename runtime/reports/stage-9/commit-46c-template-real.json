@@ -1,0 +1,358 @@
+{
+  "ts": "2026-09-23T03:36:15.670Z",
+  "stage": "OCR-P1-COMMIT4_6C-TEMPLATE-REAL",
+  "cases": [
+    {
+      "id": "V0",
+      "sidecar": "0",
+      "note": "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy"
+    },
+    {
+      "id": "V15",
+      "sidecar": "0",
+      "rot": 15,
+      "note": "旋转 15°：visual bbox 四角 affine → targetQuad，位置/字号/颜色同源"
+    },
+    {
+      "id": "V45",
+      "sidecar": "0",
+      "rot": 45,
+      "note": "旋转 45°：验证旋转下 visual geometry 映射不回归"
+    }
+  ],
+  "image": "user-card-yingtong.png",
+  "cookiePresent": true,
+  "cookieSource": "probe",
+  "cookieWarning": null,
+  "cookieNote": null,
+  "abModes": [
+    "B"
+  ],
+  "runs": [
+    {
+      "case": "T0",
+      "note": "模板模式：注入 5 文字槽位 × 5 次识别稳定性（Template First，只改 text）",
+      "steps": [
+        {
+          "step": "editor-ready",
+          "bver": "0.3.11.63"
+        },
+        {
+          "step": "slot-inject",
+          "ok": true,
+          "count": 5
+        },
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [],
+      "runs": [
+        {
+          "rnd": 1,
+          "status": "已校准 5 个文字（未重复创建）",
+          "inventoryCount": 5,
+          "actual": [
+            {
+              "text": "简设计",
+              "left": 100,
+              "top": 30,
+              "fontSize": 18,
+              "fill": "#000000"
+            },
+            {
+              "text": "张 天天",
+              "left": 100,
+              "top": 80,
+              "fontSize": 24,
+              "fill": "#000000"
+            },
+            {
+              "text": "盈通启富证券",
+              "left": 100,
+              "top": 130,
+              "fontSize": 14,
+              "fill": "#000000"
+            },
+            {
+              "text": "山东盈通启富证券投资集团",
+              "left": 100,
+              "top": 180,
+              "fontSize": 15,
+              "fill": "#000000"
+            },
+            {
+              "text": "理财顾问",
+              "left": 100,
+              "top": 230,
+              "fontSize": 12,
+              "fill": "#000000"
+            }
+          ],
+          "assertFails": []
+        },
+        {
+          "rnd": 2,
+          "status": "已校准 5 个文字（未重复创建）",
+          "inventoryCount": 5,
+          "actual": [
+            {
+              "text": "简设计",
+              "left": 100,
+              "top": 30,
+              "fontSize": 18,
+              "fill": "#000000"
+            },
+            {
+              "text": "张 天天",
+              "left": 100,
+              "top": 80,
+              "fontSize": 24,
+              "fill": "#000000"
+            },
+            {
+              "text": "盈通启富证券",
+              "left": 100,
+              "top": 130,
+              "fontSize": 14,
+              "fill": "#000000"
+            },
+            {
+              "text": "山东盈通启富证券投资集团",
+              "left": 100,
+              "top": 180,
+              "fontSize": 15,
+              "fill": "#000000"
+            },
+            {
+              "text": "理财顾问",
+              "left": 100,
+              "top": 230,
+              "fontSize": 12,
+              "fill": "#000000"
+            }
+          ],
+          "assertFails": []
+        },
+        {
+          "rnd": 3,
+          "status": "已校准 5 个文字（未重复创建）",
+          "inventoryCount": 5,
+          "actual": [
+            {
+              "text": "简设计",
+              "left": 100,
+              "top": 30,
+              "fontSize": 18,
+              "fill": "#000000"
+            },
+            {
+              "text": "张 天天",
+              "left": 100,
+              "top": 80,
+              "fontSize": 24,
+              "fill": "#000000"
+            },
+            {
+              "text": "盈通启富证券",
+              "left": 100,
+              "top": 130,
+              "fontSize": 14,
+              "fill": "#000000"
+            },
+            {
+              "text": "山东盈通启富证券投资集团",
+              "left": 100,
+              "top": 180,
+              "fontSize": 15,
+              "fill": "#000000"
+            },
+            {
+              "text": "理财顾问",
+              "left": 100,
+              "top": 230,
+              "fontSize": 12,
+              "fill": "#000000"
+            }
+          ],
+          "assertFails": []
+        },
+        {
+          "rnd": 4,
+          "status": "已校准 5 个文字（未重复创建）",
+          "inventoryCount": 5,
+          "actual": [
+            {
+              "text": "简设计",
+              "left": 100,
+              "top": 30,
+              "fontSize": 18,
+              "fill": "#000000"
+            },
+            {
+              "text": "张 天天",
+              "left": 100,
+              "top": 80,
+              "fontSize": 24,
+              "fill": "#000000"
+            },
+            {
+              "text": "盈通启富证券",
+              "left": 100,
+              "top": 130,
+              "fontSize": 14,
+              "fill": "#000000"
+            },
+            {
+              "text": "山东盈通启富证券投资集团",
+              "left": 100,
+              "top": 180,
+              "fontSize": 15,
+              "fill": "#000000"
+            },
+            {
+              "text": "理财顾问",
+              "left": 100,
+              "top": 230,
+              "fontSize": 12,
+              "fill": "#000000"
+            }
+          ],
+          "assertFails": []
+        },
+        {
+          "rnd": 5,
+          "status": "已校准 5 个文字（未重复创建）",
+          "inventoryCount": 5,
+          "actual": [
+            {
+              "text": "简设计",
+              "left": 100,
+              "top": 30,
+              "fontSize": 18,
+              "fill": "#000000"
+            },
+            {
+              "text": "张 天天",
+              "left": 100,
+              "top": 80,
+              "fontSize": 24,
+              "fill": "#000000"
+            },
+            {
+              "text": "盈通启富证券",
+              "left": 100,
+              "top": 130,
+              "fontSize": 14,
+              "fill": "#000000"
+            },
+            {
+              "text": "山东盈通启富证券投资集团",
+              "left": 100,
+              "top": 180,
+              "fontSize": 15,
+              "fill": "#000000"
+            },
+            {
+              "text": "理财顾问",
+              "left": 100,
+              "top": 230,
+              "fontSize": 12,
+              "fill": "#000000"
+            }
+          ],
+          "assertFails": []
+        }
+      ],
+      "asserts": [],
+      "status": null,
+      "pageId": "canvas:c0",
+      "baiduCount": 14,
+      "slotInjected": {
+        "ok": true,
+        "made": 5,
+        "total": 5,
+        "errs": []
+      },
+      "slotBase": [
+        {
+          "text": "占位姓名",
+          "multiUuid": "tpl-101",
+          "markuuid": "",
+          "layerNum": 1,
+          "left": 100,
+          "top": 30,
+          "width": 200,
+          "height": 40,
+          "angle": 0,
+          "fontSize": 18,
+          "fontFamily": "思源黑体 Regular",
+          "fill": "#000000"
+        },
+        {
+          "text": "占位职位",
+          "multiUuid": "tpl-102",
+          "markuuid": "",
+          "layerNum": 2,
+          "left": 100,
+          "top": 80,
+          "width": 200,
+          "height": 40,
+          "angle": 0,
+          "fontSize": 24,
+          "fontFamily": "思源黑体 Regular",
+          "fill": "#000000"
+        },
+        {
+          "text": "占位公司",
+          "multiUuid": "tpl-103",
+          "markuuid": "",
+          "layerNum": 3,
+          "left": 100,
+          "top": 130,
+          "width": 260,
+          "height": 40,
+          "angle": 0,
+          "fontSize": 14,
+          "fontFamily": "思源黑体 Regular",
+          "fill": "#000000"
+        },
+        {
+          "text": "占位电话",
+          "multiUuid": "tpl-104",
+          "markuuid": "",
+          "layerNum": 4,
+          "left": 100,
+          "top": 180,
+          "width": 160,
+          "height": 40,
+          "angle": 0,
+          "fontSize": 15,
+          "fontFamily": "思源黑体 Medium",
+          "fill": "#000000"
+        },
+        {
+          "text": "占位邮箱",
+          "multiUuid": "tpl-105",
+          "markuuid": "",
+          "layerNum": 5,
+          "left": 100,
+          "top": 230,
+          "width": 220,
+          "height": 40,
+          "angle": 0,
+          "fontSize": 12,
+          "fontFamily": "思源黑体 Bold",
+          "fill": "#000000"
+        }
+      ],
+      "assess": {
+        "templateOk": true,
+        "rounds": 5,
+        "total": 5
+      }
+    }
+  ],
+  "errors": []
+}
