@@ -437,7 +437,16 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
             fontWeight: o.fontWeight != null ? String(o.fontWeight) : null,
             fontStyle: o.fontStyle != null ? String(o.fontStyle) : null,
             angle: typeof o.angle === "number" ? o.angle : 0,
-            center: (cx != null && cy != null) ? { x: cx, y: cy } : null
+            center: (cx != null && cy != null) ? { x: cx, y: cy } : null,
+            // Stage 10-D Commit A：模板槽位快照取证（只读）——fontId 取 drawText 落成的媒体字体 id（mediafontId），
+            // 缺失时由 diy-font-registry 从 fontFamily 推断（userscript 侧）；保留 markuuid/layerNum/fill/字距行高。
+            fontId: o.mediafontId != null ? String(o.mediafontId) : null,
+            markuuid: o.markuuid != null ? String(o.markuuid) : null,
+            layerNum: typeof o.layerNum === "number" ? o.layerNum : null,
+            fill: o.fill != null ? String(o.fill) : null,
+            charSpacing: typeof o.charSpacing === "number" ? o.charSpacing : null,
+            lineHeight: typeof o.lineHeight === "number" ? o.lineHeight : null,
+            fontName: o.fontFamily != null ? String(o.fontFamily) : null
           };
         });
         post("getTextInventoryResult", { ok: true, code: "OK", pageId: (function () { const cInv = buildCurrentPageInfo(); return (cInv && cInv.pageId) || resoInv.pageId; })(), side: resoInv.side, items: invItems });

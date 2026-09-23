@@ -119,14 +119,24 @@ function pageWorldPayloadFor(cond, ab) {
   parts.push(norm);
   return parts.join("\n;\n");
 }
+const BAIDU_CACHE = process.env.ZY_BAIDU_CACHE || "";
 async function baiduRecognizeExternal(dataUrl, mode) {
+  // 同 OCR 输入对照：ZY_BAIDU_CACHE 指向缓存文件（存在即用；否则识别后写入）
+  // 用于 test vs demo 公平对比 —— 消除云端 OCR 跨轮行分割/bbox 随机差异。
+  if (BAIDU_CACHE && fs.existsSync(BAIDU_CACHE)) {
+    try { return JSON.parse(fs.readFileSync(BAIDU_CACHE, "utf8")); } catch (e) { /* fallthrough */ }
+  }
   const provider = createBaiduProvider({
     getConfig: () => ({ apiKey: BAIDU_AK, secretKey: BAIDU_SK }),
     http: { request: async (m, u, o) => { const res = await fetch(u, { method: m, headers: o.headers || {}, body: o.body, signal: AbortSignal.timeout(o.timeout || 30000) }); return { status: res.status, responseText: await res.text() }; } },
     storage: { get: () => "", set: () => {} },
     resizeImage: null
   });
-  return provider.recognize(dataUrl, { imageWidth: null, imageHeight: null, mode }).catch((e) => ({ error: { errorCode: "EXCEPTION", errorMessage: String(e && e.message || e) } }));
+  const res = await provider.recognize(dataUrl, { imageWidth: null, imageHeight: null, mode }).catch((e) => ({ error: { errorCode: "EXCEPTION", errorMessage: String(e && e.message || e) } }));
+  if (BAIDU_CACHE && res && !res.error && Array.isArray(res.candidates) && res.candidates.length) {
+    try { fs.writeFileSync(BAIDU_CACHE, JSON.stringify(res), "utf8"); console.log("[baidu-cache] written -> " + BAIDU_CACHE); } catch (e) {}
+  }
+  return res;
 }
 (async () => {
   fs.mkdirSync(REPORT_DIR, { recursive: true });
