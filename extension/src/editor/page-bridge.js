@@ -715,6 +715,75 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
         fontName: o.fontFamily != null ? String(o.fontFamily) : null
       };
     }
+    // ===== L 阶 Commit 01 内联镜像（与 extension/src/editor/template-snapshot.js 逐字一致；页面 world 无法 require）=====
+    function zyIsNum(v) { return typeof v === "number" && isFinite(v); }
+    function zySnapshotHashOf(items) {
+      let h = 0x811c9dc5;
+      const push = (s) => {
+        const str = String(s == null ? "" : s);
+        for (let i = 0; i < str.length; i += 1) {
+          h ^= str.charCodeAt(i);
+          h = (h * 0x01000193) >>> 0;
+        }
+      };
+      (Array.isArray(items) ? items : []).forEach((it) => {
+        push("|" + String(it && it.objectUuid != null ? it.objectUuid : ""));
+        push("|" + String(it && it.text != null ? it.text : ""));
+        push("|" + (it && zyIsNum(it.left) ? it.left : ""));
+        push("|" + (it && zyIsNum(it.top) ? it.top : ""));
+        push("|" + (it && zyIsNum(it.width) ? it.width : ""));
+        push("|" + (it && zyIsNum(it.height) ? it.height : ""));
+        push("|" + (it && zyIsNum(it.angle) ? it.angle : ""));
+        push("|" + (it && zyIsNum(it.layerNum) ? it.layerNum : ""));
+      });
+      return ("00000000" + h.toString(16)).slice(-8);
+    }
+    function zySnapshotItemWithSlot(item, side, index) {
+      const it = item || {};
+      const id = String(side || "front") + "-" + (Number(index) + 1);
+      it.slotId = id;
+      it.slotIdx = Number(index);
+      it.geometry = {
+        left: zyIsNum(it.left) ? it.left : null,
+        top: zyIsNum(it.top) ? it.top : null,
+        width: zyIsNum(it.width) ? it.width : null,
+        height: zyIsNum(it.height) ? it.height : null,
+        angle: zyIsNum(it.angle) ? it.angle : 0
+      };
+      it.typography = {
+        fontId: it.fontId != null ? String(it.fontId) : null,
+        fontFamily: it.fontFamily != null ? String(it.fontFamily) : null,
+        fontSize: zyIsNum(it.fontSize) ? it.fontSize : null,
+        fontWeight: it.fontWeight != null ? String(it.fontWeight) : null,
+        fontStyle: it.fontStyle != null ? String(it.fontStyle) : null,
+        lineHeight: zyIsNum(it.lineHeight) ? it.lineHeight : null,
+        charSpacing: zyIsNum(it.charSpacing) ? it.charSpacing : null
+      };
+      it.style = { fill: it.fill != null ? String(it.fill) : null };
+      it.identity = {
+        objectUuid: it.objectUuid != null ? String(it.objectUuid) : null,
+        markuuid: it.markuuid != null ? String(it.markuuid) : null,
+        layerNum: zyIsNum(it.layerNum) ? it.layerNum : null
+      };
+      return it;
+    }
+    function zyBuildTemplateSnapshot(input) {
+      const o = input || {};
+      const frontRaw = Array.isArray(o.frontItems) ? o.frontItems : null;
+      const backRaw = Array.isArray(o.backItems) ? o.backItems : null;
+      const frontItems = frontRaw ? frontRaw.map((it, i) => zySnapshotItemWithSlot(it, "front", i)) : null;
+      const backItems = backRaw ? backRaw.map((it, i) => zySnapshotItemWithSlot(it, "back", i)) : null;
+      const page = o.page || null;
+      const snapshotHash = zySnapshotHashOf((frontItems || []).concat(backItems || []));
+      return {
+        ok: true,
+        page: page,
+        front: { exists: !!frontItems, side: "front", items: frontItems },
+        back: { exists: !!backItems, side: "back", items: backItems },
+        snapshotHash: snapshotHash,
+        count: { front: frontItems ? frontItems.length : 0, back: backItems ? backItems.length : 0 }
+      };
+    }
     function zyInventorySide(canvasObj, side) {
       if (!canvasObj) return null;
       return {
@@ -724,10 +793,14 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
       };
     }
       if (event.data.type === "getTextInventoryAll") {
-        // Stage 10-E Commit G-2：正反面双画布文字快照（只读）—— 供「一键智能填充」一次性取两侧槽位。
+        // Stage 10-G L 阶 Commit 01：升级为 TemplateSnapshot —— front/back 严格隔离（back 缺失 = null，
+        // 绝不回退 front，曾致 46g real 中 backAbsent=true 却拿到 front 内容）+ 全量字段 + snapshotHash。
         const frontCanvasA = findCanvasForSide("front");
         const backCanvasA = findCanvasForSide("back");
-        post("getTextInventoryAllResult", { ok: true, front: zyInventorySide(frontCanvasA, "front"), back: zyInventorySide(backCanvasA, "back") });
+        const frontSnapItems = frontCanvasA ? getTextObjects(frontCanvasA).map(zyInventoryItem) : null;
+        const backSnapItems = backCanvasA ? getTextObjects(backCanvasA).map(zyInventoryItem) : null;
+        const pageA = (function () { const pi = buildCurrentPageInfo(); const c = frontCanvasA || backCanvasA; return { pageId: (pi && pi.pageId) || null, canvasId: null, width: c ? (typeof c.width === "number" ? c.width : (c.getWidth ? c.getWidth() : null)) : null, height: c ? (typeof c.height === "number" ? c.height : (c.getHeight ? c.getHeight() : null)) : null }; })();
+        post("getTextInventoryAllResult", zyBuildTemplateSnapshot({ frontItems: frontSnapItems, backItems: backSnapItems, page: pageA }));
         return;
       }
       if (event.data.type === "inkMeasure") {
@@ -1607,6 +1680,7 @@ function matchSlots(input) {
         const selected = unwrapCanvas(total[index]) || findCanvasIn(total[index]);
         if (selected) return selected;
       }
+      if (side === "back") return null; // L 阶 Commit 01：back 绝不回退 front/其它画布（曾把 front 内容冒充 back）
       const CurrentCanvas = getLoadedModule("CurrentCanvas") || window.CurrentCanvas;
       if (side !== "back" && CurrentCanvas && CurrentCanvas.getCurrentCanvas) {
         const current = CurrentCanvas.getCurrentCanvas();
@@ -2008,6 +2082,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.67'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.67' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.68'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.68' };
   }
