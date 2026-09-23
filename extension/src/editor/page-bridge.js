@@ -91,6 +91,95 @@ function pageBridge() {
       else if (canvasObj.renderAll) canvasObj.renderAll();
       return { ok: true, side: sideLabel, applied: tmApplied, unmatchedFields: plan.unmatchedFields || [], unusedSlots: plan.unusedSlots || [] };
     }
+    // ---- Stage 10-G Commit I-2：内容相似智能套版执行侧（userscript 侧用 content-similar-planner 生成 plan）----
+    function zyMakeCanvasMeasurerFor(canvasObj) {
+      return function (text, fontFamily, fontSize) {
+        try {
+          const el = (canvasObj && canvasObj.lowerCanvasEl) || (canvasObj && canvasObj.getElement ? canvasObj.getElement() : null);
+          const ctx = el && el.getContext ? el.getContext("2d") : null;
+          if (!ctx) return null;
+          const fs = (typeof fontSize === "number" && isFinite(fontSize) && fontSize > 0) ? fontSize : 14;
+          ctx.save();
+          ctx.font = fs + "px " + String(fontFamily || "sans-serif");
+          const w = ctx.measureText(String(text || "")).width;
+          ctx.restore();
+          return (typeof w === "number" && isFinite(w)) ? w : null;
+        } catch (eM) { return null; }
+      };
+    }
+    // fontSize 自适应（advance-width 主路径镜像；无源图墨迹场景 → 按容器宽二分解最大不溢出字号）。
+    // 写回只允许 fontSize；lineHeight/charSpacing 由调用方只读取证（Stage 10-C 暂停约束）。
+    function zySolveFontSizeFusion(input) {
+      const o = input || {};
+      const text = String(o.text || "");
+      const targetW = o.targetVisualWidth;
+      const ff = o.fontFamily || "sans-serif";
+      const measurer = o.measurer || null;
+      const warnings = [];
+      if (!text || !measurer || !(typeof targetW === "number" && isFinite(targetW) && targetW > 0)) return { ok: false, reason: "no-evidence", fontSize: null, confidence: 0, sources: {}, warnings: warnings };
+      let lo = 10, hi = 160, best = null, bestW = 0, iter = 0;
+      while (lo <= hi && iter < 24) {
+        iter += 1;
+        const mid = Math.round((lo + hi) / 2);
+        const w = measurer(text, ff, mid);
+        if (w == null) break;
+        if (w <= targetW) { best = mid; bestW = w; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      if (best == null) {
+        const wMin = measurer(text, ff, 10);
+        warnings.push("font size floor reached");
+        return { ok: true, fontSize: 10, reason: "advance-width-primary(FONT_MIN_REACHED)", confidence: 0.6, sources: { advance: { fontSize: 10, width: wMin } }, warnings: warnings };
+      }
+      return { ok: true, fontSize: best, reason: "advance-width-primary", confidence: 0.9, sources: { advance: { fontSize: best, width: bestW } }, warnings: warnings };
+    }
+    function zyExecSmartMatches(canvasObj, plan, sideLabel) {
+      const mkErr = function (code, message) { return { ok: false, code: code, message: message, side: sideLabel, applied: [], unmatched: (plan && plan.unmatched) || [], unusedSlots: (plan && plan.unusedSlots) || [], fontSizeEvidence: [] }; };
+      if (!canvasObj) return mkErr("TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", "未找到" + (sideLabel === "back" ? "反面" : "正面") + "画布，已停止智能套版。");
+      const smObjs = getTextObjects(canvasObj);
+      const smPlans = Array.isArray(plan.matches) ? plan.matches : [];
+      let smStateChanged = false;
+      if (typeof plan.slotsCount === "number" && isFinite(plan.slotsCount) && plan.slotsCount !== smObjs.length) smStateChanged = true;
+      if (!smStateChanged) {
+        for (let bi = 0; bi < smPlans.length; bi += 1) {
+          const m = smPlans[bi];
+          const so = smObjs[m.slotIdx];
+          const curId = so ? (so.uuid || so.multiUuid || so.markuuid || null) : null;
+          if (m.objectUuid && curId && m.objectUuid !== curId) { smStateChanged = true; break; }
+        }
+      }
+      if (smStateChanged) return mkErr("SLOT_STATE_CHANGED", "画布文字层与智能套版规划不一致（可能已编辑），已停止。");
+      let smU2 = null;
+      try { smU2 = getNativeUndoInstance(); if (smU2 && typeof smU2.save === "function") smU2.save(); } catch (eU) {}
+      const measurer = zyMakeCanvasMeasurerFor(canvasObj);
+      const applied = [], evidence = [];
+      (plan.matches || []).forEach(function (m) {
+        try {
+          const so = smObjs[m.slotIdx];
+          if (!so) return;
+          const text = String(m.text != null ? m.text : "");
+          const before = { fontSize: so.fontSize != null ? so.fontSize : null, lineHeight: so.lineHeight != null ? so.lineHeight : null, charSpacing: so.charSpacing != null ? so.charSpacing : null, width: so.width != null ? so.width : null, height: so.height != null ? so.height : null };
+          setObjectText(so, text);
+          if (typeof so.setCoords === "function") so.setCoords();
+          syncBusinessFieldsFromObject(so);
+          let fsResult = null, fsFrom = before.fontSize, fsTo = before.fontSize;
+          const targetW = (typeof so.width === "number" && isFinite(so.width) && so.width > 0) ? so.width : null;
+          if (targetW && measurer) {
+            fsResult = zySolveFontSizeFusion({ text: text, targetVisualWidth: targetW, fontFamily: so.fontFamily || "sans-serif", measurer: measurer });
+            if (fsResult && fsResult.ok && fsResult.fontSize) { fsTo = fsResult.fontSize; if (fsTo !== fsFrom) { try { so.set("fontSize", fsTo); if (typeof so.setCoords === "function") so.setCoords(); syncBusinessFieldsFromObject(so); } catch (eF) { fsTo = fsFrom; } } }
+          }
+          const rendered = measureFabInkFor(so);
+          const sourceLineCount = String(text).split(/\r?\n/).length;
+          evidence.push({ slotIdx: m.slotIdx, text: String(text).slice(0, 24), before: before, fontSizeFrom: fsFrom, fontSizeTo: fsTo, fit: fsResult ? { ok: fsResult.ok, reason: fsResult.reason || null, confidence: fsResult.confidence != null ? fsResult.confidence : null, warnings: fsResult.warnings || [] } : null, sourceLineCount: sourceLineCount, renderedLineCount: (rendered && rendered.lineCount != null) ? rendered.lineCount : null, lineHeightBefore: before.lineHeight, lineHeightAfter: so.lineHeight != null ? so.lineHeight : null, charSpacingBefore: before.charSpacing, charSpacingAfter: so.charSpacing != null ? so.charSpacing : null });
+          applied.push({ slotIdx: m.slotIdx, text: String(text).slice(0, 24), objectUuid: so.uuid || so.multiUuid || null, score: m.score != null ? m.score : null });
+        } catch (eT) { applied.push({ slotIdx: m.slotIdx, updated: false, error: String(eT && eT.message || eT).slice(0, 120) }); }
+      });
+      if (smU2 && typeof smU2.save === "function") { try { smU2.save(); } catch (eU2) {} }
+      if (canvasObj.requestRenderAll) canvasObj.requestRenderAll();
+      else if (canvasObj.renderAll) canvasObj.renderAll();
+      return { ok: true, side: sideLabel, applied: applied, unmatched: plan.unmatched || [], unusedSlots: plan.unusedSlots || [], fontSizeEvidence: evidence };
+    }
+
       if (event.data.type === "templateApply") {
         // Stage 10-D Commit F：新套版引擎执行侧 —— 只做两件事：状态校验 + 逐槽 setText。
         // 规划（planTemplateApply，纯模块）在 userscript 侧完成；本侧严禁新建（无 create 路径）。
@@ -167,6 +256,36 @@ function pageBridge() {
         const tpExec = zyExecTemplateMatches(tpCanvas, tpPlan, tpSide);
         const tpUnm = (tpExec && tpExec.unmatchedFields) || [];
         post("templateApplyResult", { ok: !!(tpExec && tpExec.applied.length > 0), mode: "template", code: (tpExec && tpExec.code) || "OK", side: tpSide, applied: (tpExec && tpExec.applied) || [], unmatchedFields: tpUnm, unusedSlots: (tpExec && tpExec.unusedSlots) || [], message: (tpExec && tpExec.ok) ? "模板套版：更新 " + tpExec.applied.length + "/" + (tpPlan.matches || []).length + " 个槽位内容（几何/字体/样式/身份/层序冻结）。未匹配 " + tpUnm.length + " 项。" : ((tpExec && tpExec.message) || "模板套版失败。") });
+        return;
+      }
+      if (event.data.type === "templateApplySmart") {
+        // Stage 10-G Commit I-2（续）：内容相似智能套版执行侧 —— 只 setText(原文逐字)+fontSize 自适应，绝不 create。
+        const smSide = event.data.side || "front";
+        const smBothPlans = (event.data.plans && typeof event.data.plans === "object") ? event.data.plans : null;
+        if (smSide === "both") {
+          if (!smBothPlans) { post("templateApplySmartResult", { ok: false, code: "BAD_PLAN", message: "智能套版规划无效，已停止。", applied: [], unmatched: [], unusedSlots: [], fontSizeEvidence: [] }); return; }
+          const smResBoth = [];
+          ["front", "back"].forEach(function (sd) {
+            const pl = smBothPlans[sd];
+            if (!pl || !Array.isArray(pl.matches)) { smResBoth.push({ ok: true, side: sd, applied: [], unmatched: (pl && pl.unmatched) || [], unusedSlots: (pl && pl.unusedSlots) || [], skipped: "EMPTY_OR_BAD" }); return; }
+            const cvs = findCanvasForSide(sd);
+            smResBoth.push(zyExecSmartMatches(cvs, pl, sd));
+          });
+          const smAppliedAll = [], smUnAll = [];
+          smResBoth.forEach(function (r) { smAppliedAll.push.apply(smAppliedAll, r.applied || []); smUnAll.push.apply(smUnAll, r.unmatched || []); });
+          const smAnyFail = smResBoth.some(function (r) { return !r.ok; });
+          const smCnt = function (sd) { const x = smResBoth.find(function (r) { return r.side === sd; }); return x ? (x.applied || []).length : 0; };
+          const smMsg = smAnyFail ? "智能套版部分失败（" + smResBoth.map(function (r) { return r.side + (r.ok ? " " + (r.applied || []).length + " 槽" : " 失败:" + String(r.code || "ERR")); }).join(" / ") + "）" : "智能套版：正面更新 " + smCnt("front") + " 槽 / 反面更新 " + smCnt("back") + " 槽（已按容器自适应字号）。未匹配 " + smUnAll.length + " 项。";
+          post("templateApplySmartResult", { ok: !smAnyFail, side: "both", applied: smAppliedAll, unmatched: smUnAll, unusedSlots: [].concat.apply([], smResBoth.map(function (r) { return r.unusedSlots || []; })), fontSizeEvidence: [].concat.apply([], smResBoth.map(function (r) { return r.fontSizeEvidence || []; })), sides: smResBoth, message: smMsg });
+          return;
+        }
+        const smPlan = event.data.plan || null;
+        if (!smPlan || !Array.isArray(smPlan.matches)) { post("templateApplySmartResult", { ok: false, code: "BAD_PLAN", message: "智能套版规划无效，已停止。", applied: [], unmatched: [], unusedSlots: [], fontSizeEvidence: [] }); return; }
+        const smReso = resolveCurrentEditorPage();
+        const smCanvas = (smReso && smReso.canvas) || null;
+        if (!smCanvas) { post("templateApplySmartResult", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止智能套版。", applied: [], unmatched: smPlan.unmatched || [], unusedSlots: smPlan.unusedSlots || [], fontSizeEvidence: [] }); return; }
+        const smExec = zyExecSmartMatches(smCanvas, smPlan, smSide);
+        post("templateApplySmartResult", { ok: !!(smExec && smExec.applied.length > 0), code: (smExec && smExec.code) || "OK", side: smSide, applied: (smExec && smExec.applied) || [], unmatched: (smExec && smExec.unmatched) || [], unusedSlots: (smExec && smExec.unusedSlots) || [], fontSizeEvidence: (smExec && smExec.fontSizeEvidence) || [], message: (smExec && smExec.ok) ? "智能套版：更新 " + smExec.applied.length + " 槽（已按容器自适应字号）。未匹配 " + ((smExec.unmatched || []).length) + " 项。" : ((smExec && smExec.message) || "智能套版失败。") });
         return;
       }
       if (event.data.type === "ocrCreate") {
@@ -1884,6 +2003,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.65'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.65' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.66'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.66' };
   }
