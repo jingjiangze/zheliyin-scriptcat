@@ -1,0 +1,870 @@
+{
+  "ts": "2026-09-21T01:58:52.602Z",
+  "stage": "STAGE-10A-NATIVE-COLOR-MATRIX",
+  "version": "0.3.11.49",
+  "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": false,
+  "cases": [
+    {
+      "case": "C1",
+      "label": "black-white-bg",
+      "detected": {
+        "ok": true,
+        "color": "#121212",
+        "confidence": 0.7069,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 2716,
+        "coverage": 0.2109,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 141,
+        "takeDark": true,
+        "darkish": true,
+        "whitish": false
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 170,
+            "width": 500,
+            "height": 64
+          },
+          "inkHeight": 35,
+          "inkWidth": 368,
+          "inkBox": {
+            "x": 94,
+            "y": 170,
+            "width": 368,
+            "height": 35
+          }
+        }
+      ],
+      "mixed": {
+        "note": "single-line or no-ink",
+        "lineInkHeights": [
+          35
+        ]
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 1,
+        "effectiveScaleY": 1
+      },
+      "imageTransform": {
+        "affine": [
+          1,
+          0,
+          0,
+          1,
+          30,
+          20
+        ]
+      },
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "aCoords": {
+          "tl": [
+            30,
+            20
+          ],
+          "br": [
+            930,
+            580
+          ]
+        }
+      },
+      "errors": [],
+      "deltaRgb": 1.73,
+      "detectedColor": "#121212",
+      "colorLevel": "NEAR",
+      "sourceColor": "#111111",
+      "requestedFill": "#121212",
+      "actualFill": "#121212",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "b6c496a5-d589-45c3-b130-d8c8a71d1e4b",
+      "passed": true
+    },
+    {
+      "case": "C2",
+      "label": "white-dark-bg",
+      "detected": {
+        "ok": true,
+        "color": "#f7f7f7",
+        "confidence": 0.5876,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 3329,
+        "coverage": 0.2613,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 131,
+        "takeDark": false,
+        "darkish": false,
+        "whitish": true
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 170,
+            "width": 500,
+            "height": 64
+          },
+          "inkHeight": 35,
+          "inkWidth": 364,
+          "inkBox": {
+            "x": 98,
+            "y": 170,
+            "width": 364,
+            "height": 35
+          }
+        }
+      ],
+      "mixed": {
+        "note": "single-line or no-ink",
+        "lineInkHeights": [
+          35
+        ]
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 1,
+        "effectiveScaleY": 1
+      },
+      "imageTransform": {
+        "affine": [
+          1,
+          0,
+          0,
+          1,
+          30,
+          20
+        ]
+      },
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "aCoords": {
+          "tl": [
+            30,
+            20
+          ],
+          "br": [
+            930,
+            580
+          ]
+        }
+      },
+      "errors": [],
+      "deltaRgb": 1.73,
+      "detectedColor": "#f7f7f7",
+      "colorLevel": "NEAR",
+      "sourceColor": "#f8f8f8",
+      "requestedFill": "#f7f7f7",
+      "actualFill": "#f7f7f7",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "e5d5edc9-adbd-4e69-b14d-806eacd132a3",
+      "passed": true
+    },
+    {
+      "case": "C3",
+      "label": "blue-light-bg",
+      "detected": {
+        "ok": true,
+        "color": "#0158b8",
+        "confidence": 0.6166,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 2908,
+        "coverage": 0.2246,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 165,
+        "takeDark": true,
+        "darkish": false,
+        "whitish": false
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 170,
+            "width": 500,
+            "height": 64
+          },
+          "inkHeight": 35,
+          "inkWidth": 370,
+          "inkBox": {
+            "x": 93,
+            "y": 170,
+            "width": 370,
+            "height": 35
+          }
+        }
+      ],
+      "mixed": {
+        "note": "single-line or no-ink",
+        "lineInkHeights": [
+          35
+        ]
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 1,
+        "effectiveScaleY": 1
+      },
+      "imageTransform": {
+        "affine": [
+          1,
+          0,
+          0,
+          1,
+          30,
+          20
+        ]
+      },
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "aCoords": {
+          "tl": [
+            30,
+            20
+          ],
+          "br": [
+            930,
+            580
+          ]
+        }
+      },
+      "errors": [],
+      "deltaRgb": 1.41,
+      "detectedColor": "#0158b8",
+      "colorLevel": "NEAR",
+      "sourceColor": "#0057b8",
+      "requestedFill": "#0158b8",
+      "actualFill": "#0158b8",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "4cc69c9d-63c5-465d-96ea-2a60b9f197ed",
+      "passed": true
+    },
+    {
+      "case": "C4",
+      "label": "red-light-bg",
+      "detected": {
+        "ok": true,
+        "color": "#d92e2e",
+        "confidence": 0.6776,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 3136,
+        "coverage": 0.2422,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 178,
+        "takeDark": true,
+        "darkish": false,
+        "whitish": false
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 170,
+            "width": 500,
+            "height": 64
+          },
+          "inkHeight": 35,
+          "inkWidth": 370,
+          "inkBox": {
+            "x": 93,
+            "y": 170,
+            "width": 370,
+            "height": 35
+          }
+        }
+      ],
+      "mixed": {
+        "note": "single-line or no-ink",
+        "lineInkHeights": [
+          35
+        ]
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 1,
+        "effectiveScaleY": 1
+      },
+      "imageTransform": {
+        "affine": [
+          1,
+          0,
+          0,
+          1,
+          30,
+          20
+        ]
+      },
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "aCoords": {
+          "tl": [
+            30,
+            20
+          ],
+          "br": [
+            930,
+            580
+          ]
+        }
+      },
+      "errors": [],
+      "deltaRgb": 4.24,
+      "detectedColor": "#d92e2e",
+      "colorLevel": "NEAR",
+      "sourceColor": "#d92b2b",
+      "requestedFill": "#d92e2e",
+      "actualFill": "#d92e2e",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "78561a2a-d781-4a2f-ae0d-9a23cba2e808",
+      "passed": true
+    },
+    {
+      "case": "C5",
+      "label": "darkgray",
+      "detected": {
+        "ok": true,
+        "color": "#4d4d4d",
+        "confidence": 0.5551,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 2949,
+        "coverage": 0.2277,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 172,
+        "takeDark": true,
+        "darkish": true,
+        "whitish": false
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 170,
+            "width": 500,
+            "height": 64
+          },
+          "inkHeight": 35,
+          "inkWidth": 370,
+          "inkBox": {
+            "x": 92,
+            "y": 170,
+            "width": 370,
+            "height": 35
+          }
+        }
+      ],
+      "mixed": {
+        "note": "single-line or no-ink",
+        "lineInkHeights": [
+          35
+        ]
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 1,
+        "effectiveScaleY": 1
+      },
+      "imageTransform": {
+        "affine": [
+          1,
+          0,
+          0,
+          1,
+          30,
+          20
+        ]
+      },
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "aCoords": {
+          "tl": [
+            30,
+            20
+          ],
+          "br": [
+            930,
+            580
+          ]
+        }
+      },
+      "errors": [],
+      "deltaRgb": 0,
+      "detectedColor": "#4d4d4d",
+      "colorLevel": "EXACT",
+      "sourceColor": "#4d4d4d",
+      "requestedFill": "#4d4d4d",
+      "actualFill": "#4d4d4d",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "722bce1b-702b-4d67-b43a-c0a9b2aa42e1",
+      "passed": true
+    },
+    {
+      "case": "C6",
+      "label": "gold-mottled",
+      "detected": {
+        "ok": true,
+        "color": "#e6b802",
+        "confidence": 0.6863,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 3223,
+        "coverage": 0.2496,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 200,
+        "takeDark": true,
+        "darkish": false,
+        "whitish": false
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 170,
+            "width": 500,
+            "height": 64
+          },
+          "inkHeight": 35,
+          "inkWidth": 369,
+          "inkBox": {
+            "x": 92,
+            "y": 170,
+            "width": 369,
+            "height": 35
+          }
+        }
+      ],
+      "mixed": {
+        "note": "single-line or no-ink",
+        "lineInkHeights": [
+          35
+        ]
+      },
+      "effectiveScale": null,
+      "imageTransform": null,
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "aCoords": null
+      },
+      "errors": [],
+      "deltaRgb": 2,
+      "detectedColor": "#e6b802",
+      "colorLevel": "NEAR",
+      "sourceColor": "#e6b800",
+      "requestedFill": "#e6b802",
+      "actualFill": "#e6b802",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "15072643-d777-450d-857c-c707ceaa98a7",
+      "passed": true
+    },
+    {
+      "case": "C7",
+      "label": "single-line",
+      "detected": {
+        "ok": true,
+        "color": "#1e1e1e",
+        "confidence": 0.565,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 2552,
+        "coverage": 0.2257,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 152,
+        "takeDark": true,
+        "darkish": true,
+        "whitish": false
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 170,
+            "width": 500,
+            "height": 64
+          },
+          "inkHeight": 35,
+          "inkWidth": 323,
+          "inkBox": {
+            "x": 93,
+            "y": 170,
+            "width": 323,
+            "height": 35
+          }
+        }
+      ],
+      "mixed": {
+        "note": "single-line or no-ink",
+        "lineInkHeights": [
+          35
+        ]
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 1,
+        "effectiveScaleY": 1
+      },
+      "imageTransform": {
+        "affine": [
+          1,
+          0,
+          0,
+          1,
+          30,
+          20
+        ]
+      },
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "aCoords": {
+          "tl": [
+            30,
+            20
+          ],
+          "br": [
+            930,
+            580
+          ]
+        }
+      },
+      "errors": [],
+      "deltaRgb": 0,
+      "detectedColor": "#1e1e1e",
+      "colorLevel": "EXACT",
+      "sourceColor": "#1e1e1e",
+      "requestedFill": "#1e1e1e",
+      "actualFill": "#1e1e1e",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "53d30458-5927-4fa0-9b8f-fbbacd3bfea0",
+      "passed": true
+    },
+    {
+      "case": "C8",
+      "label": "multi-line",
+      "detected": {
+        "ok": true,
+        "color": "#191919",
+        "confidence": 0.6097,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 2339,
+        "coverage": 0.0938,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 148,
+        "takeDark": true,
+        "darkish": true,
+        "whitish": false
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 110,
+            "width": 500,
+            "height": 70
+          },
+          "inkHeight": 18,
+          "inkWidth": 275,
+          "inkBox": {
+            "x": 93,
+            "y": 162,
+            "width": 275,
+            "height": 18
+          }
+        },
+        {
+          "line": 1,
+          "bbox": {
+            "x": 80,
+            "y": 182,
+            "width": 500,
+            "height": 70
+          },
+          "inkHeight": 70,
+          "inkWidth": 277,
+          "inkBox": {
+            "x": 92,
+            "y": 182,
+            "width": 277,
+            "height": 70
+          }
+        }
+      ],
+      "mixed": {
+        "lineInkHeights": [
+          18,
+          70
+        ],
+        "inkRatio": 0.257,
+        "suspectedMixedTypography": true
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 1,
+        "effectiveScaleY": 1
+      },
+      "imageTransform": {
+        "affine": [
+          1,
+          0,
+          0,
+          1,
+          30,
+          20
+        ]
+      },
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "aCoords": {
+          "tl": [
+            30,
+            20
+          ],
+          "br": [
+            930,
+            580
+          ]
+        }
+      },
+      "errors": [],
+      "deltaRgb": 0,
+      "detectedColor": "#191919",
+      "colorLevel": "EXACT",
+      "sourceColor": "#191919",
+      "requestedFill": "#191919",
+      "actualFill": "#191919",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "8c01fe57-0f99-4ac3-a878-3219b7027557",
+      "passed": true
+    },
+    {
+      "case": "C9",
+      "label": "rotated-image",
+      "detected": {
+        "ok": true,
+        "color": "#282828",
+        "confidence": 0.5778,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 2982,
+        "coverage": 0.2309,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 156,
+        "takeDark": true,
+        "darkish": true,
+        "whitish": false
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 170,
+            "width": 500,
+            "height": 64
+          },
+          "inkHeight": 35,
+          "inkWidth": 369,
+          "inkBox": {
+            "x": 93,
+            "y": 170,
+            "width": 369,
+            "height": 35
+          }
+        }
+      ],
+      "mixed": {
+        "note": "single-line or no-ink",
+        "lineInkHeights": [
+          35
+        ]
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 1,
+        "effectiveScaleY": 1
+      },
+      "imageTransform": {
+        "affine": [
+          0.866025,
+          0.5,
+          -0.5,
+          0.866025,
+          30,
+          20
+        ]
+      },
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 30,
+        "aCoords": {
+          "tl": [
+            29.99999999999997,
+            20
+          ],
+          "br": [
+            529.4228634059948,
+            954.9742261192856
+          ]
+        }
+      },
+      "errors": [],
+      "deltaRgb": 0,
+      "detectedColor": "#282828",
+      "colorLevel": "EXACT",
+      "sourceColor": "#282828",
+      "requestedFill": "#282828",
+      "actualFill": "#282828",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "f8a89419-2679-42c0-a941-b975c8898a2a",
+      "passed": true
+    },
+    {
+      "case": "C10",
+      "label": "nonuniform-scale",
+      "detected": {
+        "ok": true,
+        "color": "#282828",
+        "confidence": 0.5668,
+        "source": "IMAGE_INK_FOREGROUND",
+        "sampleCount": 3557,
+        "coverage": 0.2437,
+        "method": "LOCAL_OTSU_FG_BUCKET_MERGE",
+        "threshold": 156,
+        "takeDark": true,
+        "darkish": true,
+        "whitish": false
+      },
+      "perLine": [
+        {
+          "line": 0,
+          "bbox": {
+            "x": 80,
+            "y": 170,
+            "width": 500,
+            "height": 64
+          },
+          "inkHeight": 35,
+          "inkWidth": 417,
+          "inkBox": {
+            "x": 93,
+            "y": 170,
+            "width": 417,
+            "height": 35
+          }
+        }
+      ],
+      "mixed": {
+        "note": "single-line or no-ink",
+        "lineInkHeights": [
+          35
+        ]
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 1,
+        "effectiveScaleY": 1
+      },
+      "imageTransform": {
+        "affine": [
+          1,
+          0,
+          0,
+          1,
+          30,
+          20
+        ]
+      },
+      "bgObject": {
+        "left": 30,
+        "top": 20,
+        "width": 900,
+        "height": 560,
+        "scaleX": 0.6,
+        "scaleY": 1.1,
+        "angle": 0,
+        "aCoords": {
+          "tl": [
+            30,
+            20
+          ],
+          "br": [
+            930,
+            580
+          ]
+        }
+      },
+      "errors": [],
+      "deltaRgb": 0,
+      "detectedColor": "#282828",
+      "colorLevel": "EXACT",
+      "sourceColor": "#282828",
+      "requestedFill": "#282828",
+      "actualFill": "#282828",
+      "fillPass": "EXACT",
+      "fillPassOk": true,
+      "createdUuid": "098952fd-5e0a-4779-940c-799124343550",
+      "passed": true
+    }
+  ],
+  "passCount": 10,
+  "failCount": 0,
+  "errors": []
+}

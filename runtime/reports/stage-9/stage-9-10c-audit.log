@@ -1,0 +1,40 @@
+﻿node : [stage-9-9] 未注入 ZY_STAGE9_COOKIE —— 回退持久 profile（可能过期）；cookiePresent=false
+At line:15 char:1665
++ ... udit.json"; node "D:\zheliyin-scriptcat\runtime\stage9\stage-9-9-full ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([stage-9-9] 未注入...iePresent=false:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[stage-9-9] 缺少 ZY_BAIDU_AK/SK —— Part B 真实 Baidu 将 BLOCKED（仅 bridge 驱动验收）
+[stage-9-9] report=D:\zheliyin-scriptcat\runtime\reports\stage-9\stage-9-10c-audit.json version=0.3.11.53
+[stage-9-9] pass=28 fail=0 blocked=1 unresolved=0
+[stage-9-9] PASS  anchor:A1-existing-anchor-reuse
+[stage-9-9] PASS  anchor:A2-no-anchor-create
+[stage-9-9] PASS  anchor:A3-uncertain-no-forced-reuse
+[stage-9-9] PASS  anchor:A4-wrong-page-blocked
+[stage-9-9] PASS  measure-closure
+[stage-9-9] PASS  idempotence
+[stage-9-9] PASS  pageIdentity
+[stage-9-9] PASS  imageSpace:I1-real-transform
+[stage-9-9] PASS  imageSpace:I2-uniform-scale
+[stage-9-9] PASS  imageSpace:I3-rotated-30
+[stage-9-9] PASS  imageSpace:I4-nonuniform-scale
+[stage-9-9] PASS  containment:C-IN
+[stage-9-9] PASS  containment:C-OUT
+[stage-9-9] PASS  containment:C-REPAIR
+[stage-9-9] PASS  containment:C-STILL_OUT
+[stage-9-9] PASS  typography:T1-1line-cn
+[stage-9-9] PASS  typography:T2-2line-cn
+[stage-9-9] PASS  typography:T3-3line-cn
+[stage-9-9] PASS  typography:T4-cn-english
+[stage-9-9] PASS  typography:T5-cn-number
+[stage-9-9] PASS  typography:T6-long-address
+[stage-9-9] PASS  typography:T7-short-phone
+[stage-9-9] PASS  typography:T-collapse-fail
+[stage-9-9] PASS  typography:T-wrap-fail
+[stage-9-9] PASS  p0:P0-1-effectiveScale-into-typography
+[stage-9-9] PASS  p0:P0-2-perline-not-wholeblock
+[stage-9-9] PASS  p0:P0-3-image-pixel-containment
+[stage-9-9] PASS  textToImage
+[stage-9-9] BLOCK partB
+[stage-9-9] nextBlocker=Stage 9.9 BLOCKED：partB —— 补测后重新生成报告

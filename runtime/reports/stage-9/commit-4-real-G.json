@@ -1,0 +1,187 @@
+{
+  "case": "G",
+  "steps": [
+    {
+      "step": "editor-ready",
+      "ok": true,
+      "bridge": true
+    },
+    {
+      "step": "bg-inject",
+      "ok": true
+    },
+    {
+      "step": "ocr-prepare",
+      "ok": true
+    },
+    {
+      "step": "baidu-external",
+      "ok": true,
+      "candidates": 17
+    },
+    {
+      "step": "click-ocr",
+      "clicked": true
+    },
+    {
+      "step": "ocr-done",
+      "done": true,
+      "status": "几何校验完成：通过 0 个，保留 11 个（STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH，仅备注）（细节见控制台 zy-ocr GEOMET"
+    },
+    {
+      "step": "rollback",
+      "ok": true
+    }
+  ],
+  "fields": {
+    "nativeLines": 15,
+    "initialMatched": 14,
+    "initialUnmatched": 1,
+    "finalMatched": 14,
+    "finalUnmatched": 1,
+    "sourcePriority": "none",
+    "geometryRecoverySource": [],
+    "createdCount": 11,
+    "missingTexts": [
+      "夏祝莲"
+    ],
+    "createCalled": true,
+    "nativeLayerCount": 11,
+    "anchorUsed": false,
+    "anchorIdentityReused": null
+  },
+  "acceptance": [
+    {
+      "name": "consistency",
+      "ok": true,
+      "detail": "sum===nativeLines"
+    },
+    {
+      "name": "created-equal-finalMatched",
+      "ok": true,
+      "detail": "旋转 containment：finalM=14 requested=11 created=11 gap=3（越界行由 isQuadInsideImage 硬门禁拒绝）"
+    },
+    {
+      "name": "missing-reported",
+      "ok": true,
+      "detail": "missing length"
+    },
+    {
+      "name": "rot+drop+partial",
+      "ok": true,
+      "detail": "旋转+缺失+partial 同时成立"
+    },
+    {
+      "name": "rot-gap-ok",
+      "ok": true,
+      "detail": "G 创建数不超 finalMatched（越界拒绝已记录）"
+    }
+  ],
+  "errors": [],
+  "gate": {
+    "totalNative": 15,
+    "initialMatched": 14,
+    "initialUnmatched": 1,
+    "finalMatched": 14,
+    "finalUnmatched": 1,
+    "missingTexts": [
+      "夏祝莲"
+    ],
+    "geometryRecovered": 0,
+    "geometryRecoverySource": [],
+    "localSidecar": {
+      "used": true,
+      "candidates": 11,
+      "recovered": 0
+    }
+  },
+  "ev": {
+    "stage": "CREATE",
+    "ocrStart": "2026-09-21T13:46:34.523Z",
+    "kind": "background-image",
+    "natural": "947x576",
+    "sourceImage": "img-ef6650d8-1228270",
+    "updated": 1789998396991,
+    "nativeLines": 15,
+    "ok": true,
+    "code": null,
+    "httpStatus": null,
+    "statusCode": "NATIVE_OK",
+    "raw": 16,
+    "mode": "standard",
+    "qaKept": 16,
+    "unified": 16,
+    "gateKept": 16,
+    "reason": null,
+    "fail": null,
+    "blocks": 14,
+    "nativeMode": "2",
+    "nativeFallback": false,
+    "kept": 14,
+    "nativeBlocks": 16,
+    "unmatchedNative": 1,
+    "unusedGeometry": 2,
+    "oneToMany": 0,
+    "manyToOne": 0,
+    "items": 11,
+    "requested": 11,
+    "created": 11
+  },
+  "created": [
+    {
+      "id": "0f102ed3-af5f-4a88-8ce4-c78057bccb62",
+      "text": "手机:",
+      "angle": 15
+    },
+    {
+      "id": "387dcbed-3289-421c-8d06-0c2ca932c156",
+      "text": "13719111188",
+      "angle": 15
+    },
+    {
+      "id": "84bd5d08-d7b5-4ec6-bf00-77a87238640b",
+      "text": "Mobile",
+      "angle": 15
+    },
+    {
+      "id": "577b2289-7545-40db-bdfd-421b67bd067e",
+      "text": "微信:",
+      "angle": 15
+    },
+    {
+      "id": "6d2b3f12-838f-43b3-8e72-6cd919bb1e88",
+      "text": "2287483098",
+      "angle": 15
+    },
+    {
+      "id": "c1ccb79c-f032-44c4-b77d-6b05f681bb67",
+      "text": "Wechat",
+      "angle": 15
+    },
+    {
+      "id": "ab02010b-6fac-4de3-a7c9-ce7b9ca9407a",
+      "text": "Kaqi",
+      "angle": 15
+    },
+    {
+      "id": "ca2e0cd5-3b1c-467b-b244-6a58a1475a45",
+      "text": "Guangzhou Aikaqi silicone Manufa",
+      "angle": 15
+    },
+    {
+      "id": "c714dcef-61d1-485f-9ec3-1888e22010c4",
+      "text": "Xia Zhu Lian",
+      "angle": 15
+    },
+    {
+      "id": "89523e33-b9ba-496c-9918-76dd26c89af3",
+      "text": "广州爱卡奇硅胶制品有限公司",
+      "angle": 15
+    },
+    {
+      "id": "b114660b-5334-4feb-8399-8f4994b27c96",
+      "text": "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
+      "angle": 15
+    }
+  ]
+}

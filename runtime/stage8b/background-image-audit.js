@@ -29,7 +29,7 @@ const TARGET = process.env.ZY_TARGET || "252438";
 // Stage 9：Native OCR 真机认证/开关（cookie 敏感仅运行时；feature zyStage9NativeTruth）
 const STAGE9_COOKIE = process.env.ZY_STAGE9_COOKIE || "";
 const STAGE9_NATIVE_TRUTH = process.env.ZY_STAGE9_NATIVE_TRUTH === "1";
-const STAGE9_NATIVE_OCR_MODE = process.env.ZY_STAGE9_NATIVE_OCR_MODE || "1"; // textType（取证值 1|2）
+const STAGE9_NATIVE_OCR_MODE = process.env.ZY_STAGE9_NATIVE_OCR_MODE || "2"; // textType：手写体优先（用户实测）
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 // Stage 9：cookie 解析（敏感，仅注入浏览器，绝不落盘报告原值）
 function parseCookies9(raw) {
@@ -220,11 +220,21 @@ function compareQuad(target, actual) {
       // 编辑器就绪后单次注入（页面世界；脚本在页面加载完成后执行，行为等同 document-idle）
       // Stage 9 V3：Native Truth feature 开关（page-world GM shim 读 localStorage zy8dshim:*；值需 JSON 编码，shim 会 JSON.parse）
       if (STAGE9_NATIVE_TRUTH) {
-        await ev(() => { try { localStorage.setItem("zy8dshim:zyStage9NativeTruth", JSON.stringify("1")); localStorage.setItem("zy8dshim:zyStage9NativeOcrMode", JSON.stringify(STAGE9_NATIVE_OCR_MODE)); } catch (e) {} return { ok: true }; });
+        out.flagWrite = await ev(() => {
+          const r = { e1: null, e2: null };
+          try { localStorage.setItem("zy8dshim:zyStage9NativeTruth", JSON.stringify("1")); } catch (e) { r.e1 = String(e && e.message || e).slice(0, 120); }
+          try { localStorage.setItem("zy8dshim:zyStage9NativeOcrMode", JSON.stringify("2")); } catch (e) { r.e2 = String(e && e.message || e).slice(0, 120); }
+          r.raw2 = localStorage.getItem("zy8dshim:zyStage9NativeOcrMode");
+          return r;
+        });
         out.stage9nativeTruth = true;
         out.stage9nativeOcrMode = STAGE9_NATIVE_OCR_MODE;
       }
       await page.addScriptTag({ content: pageWorldPayload() });
+      // 回读 GM shim 注入值（诊断 mode 是否真正送达 userscript）
+      if (STAGE9_NATIVE_TRUTH) {
+        out.modeReadback = await ev(() => { try { return { truth: window.GM_getValue ? window.GM_getValue("zyStage9NativeTruth", "0") : "(no-gm)", mode: window.GM_getValue ? window.GM_getValue("zyStage9NativeOcrMode", "1") : "(no-gm)" }; } catch (e) { return { err: String(e && e.message || e).slice(0, 120) }; } });
+      }
       await SLEEP(2500);
     }
     await SLEEP(4000);

@@ -1,0 +1,1539 @@
+{
+  "ts": "2026-09-21T02:24:02.732Z",
+  "stage": "STAGE-9-9-FULL-PIPELINE",
+  "version": "0.3.11.49",
+  "cookiePresent": false,
+  "baiduPresent": false,
+  "gitBaseline": {
+    "head": "f88a7aa59faef1cec1018e4b382c17f124ecc3aa",
+    "branch": "stage-9-altq-baidu-reconstruction",
+    "clean": false,
+    "stage": "f88a7aa59faef1cec1018e4b382c17f124ecc3aa",
+    "test": "f88a7aa59faef1cec1018e4b382c17f124ecc3aa",
+    "local": "f88a7aa59faef1cec1018e4b382c17f124ecc3aa"
+  },
+  "partA": {
+    "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+    "anchor": [
+      {
+        "case": "A1-existing-anchor-reuse",
+        "ok": true,
+        "reused": true,
+        "createdCount": 1,
+        "textboxCountDelta": 0,
+        "anchorScore": 0.8578,
+        "winnerMargin": 0.29490000000000005,
+        "matchedUuid": "4f69a96e-3d1e-45c3-9975-4539d445ddf2",
+        "matchedMarkuuid": null,
+        "resolver": {
+          "anchorCount": 7,
+          "reused": 1,
+          "created": 0,
+          "uncertain": 0,
+          "unmatched": 0
+        },
+        "passed": true
+      },
+      {
+        "case": "A2-no-anchor-create",
+        "ok": true,
+        "createdCount": 1,
+        "textboxCountDelta": 1,
+        "identity": [
+          {
+            "uuid": "1d0728b4-4c25-4dce-9465-8c2c50e73aea",
+            "text": "ZY_99_PROBE_NEW",
+            "pageId": "canvas:c0",
+            "side": "FRONT",
+            "geometry": {
+              "quad": [
+                {
+                  "x": 220,
+                  "y": 20
+                },
+                {
+                  "x": 438.8203125,
+                  "y": 20
+                },
+                {
+                  "x": 438.8203125,
+                  "y": 45.86
+                },
+                {
+                  "x": 220,
+                  "y": 45.86
+                }
+              ],
+              "center": {
+                "x": 329.41015625,
+                "y": 32.93
+              },
+              "width": 218.8203125,
+              "height": 25.86,
+              "angle": 0,
+              "left": 220,
+              "top": 20,
+              "fontSize": 22,
+              "textboxWidth": 217.8203125,
+              "textboxHeight": 24.86,
+              "lineHeight": 1.2,
+              "renderedLineCount": 1
+            }
+          }
+        ],
+        "resolver": {
+          "anchorCount": 7,
+          "reused": 0,
+          "created": 1,
+          "uncertain": 0,
+          "unmatched": 1
+        },
+        "passed": true
+      },
+      {
+        "case": "A3-uncertain-no-forced-reuse",
+        "ok": true,
+        "uncertain": 1,
+        "reused": 0,
+        "created": 1,
+        "createdCount": 1,
+        "textboxCountDelta": 1,
+        "decidedUncertain": true,
+        "noForcedReuse": true,
+        "passed": true
+      },
+      {
+        "case": "A4-wrong-page-blocked",
+        "blocked": true,
+        "code": "CREATE_BLOCKED_PAGE_NOT_FOUND",
+        "createdCount": 0,
+        "passed": true
+      }
+    ],
+    "idempotence": {
+      "runs": [
+        {
+          "run": 1,
+          "createdCount": 1,
+          "reusedCount": 0,
+          "textboxCount": 8,
+          "dupObjects": 1,
+          "uuids": [
+            "97b38c66-d49e-42ea-853f-3c419025f246"
+          ]
+        },
+        {
+          "run": 2,
+          "createdCount": 1,
+          "reusedCount": 1,
+          "textboxCount": 8,
+          "dupObjects": 1,
+          "uuids": [
+            "97b38c66-d49e-42ea-853f-3c419025f246"
+          ]
+        },
+        {
+          "run": 3,
+          "createdCount": 1,
+          "reusedCount": 1,
+          "textboxCount": 8,
+          "dupObjects": 1,
+          "uuids": [
+            "97b38c66-d49e-42ea-853f-3c419025f246"
+          ]
+        }
+      ],
+      "countBefore": 7,
+      "run1Created": 1,
+      "run1Reused": 0,
+      "run2Reused": 1,
+      "run3Reused": 1,
+      "noDuplicateRun2": true,
+      "noDuplicateRun3": true,
+      "finalSameTextCount": 1,
+      "passed": true
+    },
+    "pageIdentity": {
+      "steps": [
+        {
+          "step": "freeze-front",
+          "pageId": "canvas:c0"
+        },
+        {
+          "step": "active-now-back",
+          "pageId": "canvas:c1"
+        },
+        {
+          "step": "create-with-frozen-front-id",
+          "code": "CREATE_BLOCKED_WRONG_PAGE",
+          "blocked": true
+        }
+      ],
+      "errors": [],
+      "passed": true
+    },
+    "mega": {
+      "image": {
+        "objectCount": 9,
+        "index": 0,
+        "left": -10.872666059389815,
+        "top": -3.9733936666319494,
+        "objectWidth": 621.7453321187796,
+        "objectHeight": 373.16417863761177,
+        "naturalWidth": 1063,
+        "naturalHeight": 638,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "canvasWidth": 507.49999999999994,
+        "canvasHeight": 308.72916666666663
+      },
+      "canvas": {
+        "width": 507.49999999999994,
+        "height": 308.72916666666663,
+        "objectCount": 25,
+        "textboxCount": 7
+      },
+      "effectiveScale": {
+        "effectiveScaleX": 0.584897,
+        "effectiveScaleY": 0.584897
+      },
+      "imageTransform": {
+        "affine": [
+          0.584897,
+          0,
+          0,
+          0.584897,
+          -10.872666,
+          -3.973394
+        ]
+      },
+      "toolFields": {
+        "buildImageTransform": "function",
+        "isQuadInsideImage": "function",
+        "repairQuadCentered": "function",
+        "quadTextGeometry": "function",
+        "effectiveScaleOf": "function",
+        "medianLineInk": "function",
+        "solveMedianInkFontSize": "function",
+        "synthesizeTextLayout": "function",
+        "measureFabricObjectInk": "function",
+        "compareTextGeometry": "function"
+      },
+      "imageSpace": [
+        {
+          "type": "I1-real-natural-neq-object",
+          "naturalWidth": 1063,
+          "naturalHeight": 638,
+          "objectWidth": 621.7453321187796,
+          "objectHeight": 373.16417863761177,
+          "canvasWidth": 507.49999999999994,
+          "canvasHeight": 308.72916666666663,
+          "effectiveScale": {
+            "effectiveScaleX": 0.584897,
+            "effectiveScaleY": 0.584897
+          },
+          "targetQuad": [
+            {
+              "x": 88.61,
+              "y": 55.73
+            },
+            {
+              "x": 275.13,
+              "y": 55.73
+            },
+            {
+              "x": 275.13,
+              "y": 89.32
+            },
+            {
+              "x": 88.61,
+              "y": 89.32
+            }
+          ],
+          "containment": "CONTAINED"
+        },
+        {
+          "type": "I2-uniform-0.7",
+          "effectiveScale": {
+            "effectiveScaleX": 0.409428,
+            "effectiveScaleY": 0.409428
+          },
+          "containment": "CONTAINED"
+        },
+        {
+          "type": "I3-rotated-30",
+          "effectiveScale": {
+            "effectiveScaleX": 0.584897,
+            "effectiveScaleY": 0.584897
+          },
+          "targetQuadAngle": 30,
+          "containment": "CONTAINED"
+        },
+        {
+          "type": "I4-nonuniform",
+          "effectiveScale": {
+            "effectiveScaleX": 0.350938,
+            "effectiveScaleY": 0.643387
+          },
+          "containment": "CONTAINED"
+        }
+      ],
+      "containment": [],
+      "typography": [
+        {
+          "case": "T1-1line-cn",
+          "passed": true,
+          "verdict": "PASS",
+          "created": {
+            "ok": true,
+            "identityMethod": "OBJECT_DELTA",
+            "sourceInk": {
+              "perLineInkHeights": [
+                57
+              ],
+              "medianInkHeight": 57,
+              "medianCanvasPx": 33.34,
+              "requestedFontSize": 34
+            },
+            "actual": {
+              "fontSize": 34,
+              "fontSizeError": 0,
+              "renderedLineCount": 1,
+              "renderedInk": {
+                "inkWidth": 202,
+                "inkHeight": 32,
+                "lineCount": 1
+              },
+              "aCoordsBB": {
+                "left": 51.13,
+                "top": 100.72,
+                "width": 210.88,
+                "height": 49
+              }
+            },
+            "sourceLineCount": 1,
+            "lineCountMatch": true,
+            "cleaned": true
+          }
+        },
+        {
+          "case": "T2-2line-cn",
+          "passed": true,
+          "verdict": "PASS",
+          "created": {
+            "ok": true,
+            "identityMethod": "OBJECT_DELTA",
+            "sourceInk": {
+              "perLineInkHeights": [
+                57,
+                57
+              ],
+              "medianInkHeight": 57,
+              "medianCanvasPx": 33.34,
+              "requestedFontSize": 34
+            },
+            "actual": {
+              "fontSize": 34,
+              "fontSizeError": 0,
+              "renderedLineCount": 2,
+              "renderedInk": {
+                "inkWidth": 168,
+                "inkHeight": 72,
+                "lineCount": 2
+              },
+              "aCoordsBB": {
+                "left": 51.13,
+                "top": 145.18,
+                "width": 216.15,
+                "height": 93
+              }
+            },
+            "sourceLineCount": 2,
+            "lineCountMatch": true,
+            "cleaned": true
+          }
+        },
+        {
+          "case": "T3-3line-cn",
+          "passed": true,
+          "verdict": "PASS",
+          "created": {
+            "ok": true,
+            "identityMethod": "OBJECT_DELTA",
+            "sourceInk": {
+              "perLineInkHeights": [
+                57,
+                57,
+                57
+              ],
+              "medianInkHeight": 57,
+              "medianCanvasPx": 33.34,
+              "requestedFontSize": 34
+            },
+            "actual": {
+              "fontSize": 34,
+              "fontSizeError": 0,
+              "renderedLineCount": 3,
+              "renderedInk": {
+                "inkWidth": 169,
+                "inkHeight": 113,
+                "lineCount": 3
+              },
+              "aCoordsBB": {
+                "left": 51.13,
+                "top": 33.46,
+                "width": 284.58,
+                "height": 284.58
+              }
+            },
+            "sourceLineCount": 3,
+            "lineCountMatch": true,
+            "cleaned": true
+          }
+        },
+        {
+          "case": "T4-cn-english",
+          "passed": true,
+          "verdict": "PASS",
+          "created": {
+            "ok": true,
+            "identityMethod": "OBJECT_DELTA",
+            "sourceInk": {
+              "perLineInkHeights": [
+                57
+              ],
+              "medianInkHeight": 57,
+              "medianCanvasPx": 33.34,
+              "requestedFontSize": 34
+            },
+            "actual": {
+              "fontSize": 34,
+              "fontSizeError": 0,
+              "renderedLineCount": 1,
+              "renderedInk": {
+                "inkWidth": 270,
+                "inkHeight": 32,
+                "lineCount": 1
+              },
+              "aCoordsBB": {
+                "left": 51.13,
+                "top": 313.04,
+                "width": 273.6,
+                "height": 39.42
+              }
+            },
+            "sourceLineCount": 1,
+            "lineCountMatch": true,
+            "cleaned": true
+          }
+        },
+        {
+          "case": "T5-cn-number",
+          "passed": true,
+          "verdict": "PASS",
+          "created": {
+            "ok": true,
+            "identityMethod": "OBJECT_DELTA",
+            "sourceInk": {
+              "perLineInkHeights": [
+                57
+              ],
+              "medianInkHeight": 57,
+              "medianCanvasPx": 33.34,
+              "requestedFontSize": 34
+            },
+            "actual": {
+              "fontSize": 34,
+              "fontSizeError": 0,
+              "renderedLineCount": 1,
+              "renderedInk": {
+                "inkWidth": 352,
+                "inkHeight": 32,
+                "lineCount": 1
+              },
+              "aCoordsBB": {
+                "left": 51.13,
+                "top": 100.72,
+                "width": 354.88,
+                "height": 39.42
+              }
+            },
+            "sourceLineCount": 1,
+            "lineCountMatch": true,
+            "cleaned": true
+          }
+        },
+        {
+          "case": "T6-long-address",
+          "passed": true,
+          "verdict": "PASS",
+          "created": {
+            "ok": true,
+            "identityMethod": "OBJECT_DELTA",
+            "sourceInk": {
+              "perLineInkHeights": [
+                57,
+                57
+              ],
+              "medianInkHeight": 57,
+              "medianCanvasPx": 33.34,
+              "requestedFontSize": 34
+            },
+            "actual": {
+              "fontSize": 34,
+              "fontSizeError": 0,
+              "renderedLineCount": 2,
+              "renderedInk": {
+                "inkWidth": 475,
+                "inkHeight": 72,
+                "lineCount": 2
+              },
+              "aCoordsBB": {
+                "left": 51.13,
+                "top": 145.18,
+                "width": 478,
+                "height": 85.52
+              }
+            },
+            "sourceLineCount": 2,
+            "lineCountMatch": true,
+            "cleaned": true
+          }
+        },
+        {
+          "case": "T7-short-phone",
+          "passed": true,
+          "verdict": "PASS",
+          "created": {
+            "ok": true,
+            "identityMethod": "OBJECT_DELTA",
+            "sourceInk": {
+              "perLineInkHeights": [
+                57
+              ],
+              "medianInkHeight": 57,
+              "medianCanvasPx": 33.34,
+              "requestedFontSize": 34
+            },
+            "actual": {
+              "fontSize": 34,
+              "fontSizeError": 0,
+              "renderedLineCount": 1,
+              "renderedInk": {
+                "inkWidth": 223,
+                "inkHeight": 25,
+                "lineCount": 1
+              },
+              "aCoordsBB": {
+                "left": 51.13,
+                "top": 33.46,
+                "width": 229.6,
+                "height": 49
+              }
+            },
+            "sourceLineCount": 1,
+            "lineCountMatch": true,
+            "cleaned": true
+          }
+        },
+        {
+          "case": "T-collapse-fail",
+          "passed": true,
+          "verdict": "FAIL_DETECTED",
+          "evidence": {
+            "realRenderedLineCount": 2,
+            "targetLineCount": 2,
+            "realCompareStatus": "GEOMETRY_TYPOGRAPHY_FAIL",
+            "realFailures": [
+              "center",
+              "width"
+            ],
+            "gate": {
+              "compareStatus": "GEOMETRY_TYPOGRAPHY_FAIL",
+              "collapseDetected": true,
+              "typographyPass": false,
+              "failures": [
+                "center",
+                "collapse",
+                "width"
+              ],
+              "note": "collapse 通过 failures 上报（typography 对象仅暴露 wrapDetected 字段——Commit 8 诊断 API 不对称，非行为缺陷；生产与单测均以 failures/status 判定）"
+            }
+          }
+        },
+        {
+          "case": "T-wrap-fail",
+          "passed": true,
+          "verdict": "FAIL_DETECTED",
+          "evidence": {
+            "realRenderedLineCount": 1,
+            "targetLineCount": 1,
+            "realCompareStatus": "GEOMETRY_TYPOGRAPHY_FAIL",
+            "realFailures": [
+              "center",
+              "width"
+            ],
+            "gate": {
+              "compareStatus": "GEOMETRY_TYPOGRAPHY_FAIL",
+              "wrapDetected": true,
+              "typographyPass": false,
+              "failures": [
+                "center",
+                "wrap",
+                "width"
+              ]
+            }
+          }
+        }
+      ],
+      "p0": {
+        "grayInk": {
+          "grayOk": true,
+          "grayReason": null,
+          "bandsFound": 0,
+          "inkSource": "fixed-rows-fallback"
+        },
+        "bandsFound": 7,
+        "p01": {
+          "naturalNeqObject": true,
+          "natural": {
+            "width": 1063,
+            "height": 638
+          },
+          "object": {
+            "width": 621.75,
+            "height": 373.16
+          },
+          "effectiveScale": {
+            "effectiveScaleX": 0.584897,
+            "effectiveScaleY": 0.584897
+          },
+          "chain": {
+            "perLineInkHeights": [
+              57
+            ],
+            "medianInkHeight": 57,
+            "medianCanvasPx": 33.34,
+            "requestedFontSize": 34,
+            "actualFontSize": 34,
+            "fontSizeError": 0,
+            "renderedLineCount": 1
+          }
+        },
+        "p02": {
+          "perLineInkHeights": [
+            57,
+            57
+          ],
+          "medianInkHeight": 57,
+          "medianFs": 34,
+          "actualFontSize": 34,
+          "note": "per-line chain 来自真实逐行 ink 测量（median，非 whole-block）"
+        },
+        "p03": {
+          "ocrBBoxImage": {
+            "x": 943,
+            "y": -160,
+            "width": 60,
+            "height": 25
+          },
+          "classification": "OUT_OF_IMAGE",
+          "imagePts": [
+            {
+              "x": 943,
+              "y": -160
+            },
+            {
+              "x": 1003,
+              "y": -160
+            },
+            {
+              "x": 1003,
+              "y": -135
+            },
+            {
+              "x": 943,
+              "y": -135
+            }
+          ],
+          "canvasAABBInside": false,
+          "frame": "IMAGE_PIXEL (inverse imageTransform)"
+        }
+      },
+      "textToImage": {
+        "layers": {
+          "L1_UI": {
+            "hits": [
+              "正在合成图片...",
+              " 对于外部用户自己上传的素材，若作商业用途，需要自行确认是否有版权，世纪开元不承",
+              "素材",
+              "素材格式：",
+              "标题素材",
+              "组合素材",
+              "官方素材",
+              "我的素材"
+            ]
+          },
+          "L2_Event": {
+            "eventTypes": [
+              "added",
+              "removed",
+              "mousedown",
+              "mousedown:before",
+              "mouseup",
+              "mousedblclick"
+            ]
+          },
+          "L3_Network": {
+            "batchSaveKeepMaterial": true,
+            "evidence": "Commit 2 已有批保存接口证据（native 素材保存能力），本轮只读不再请求"
+          },
+          "L4_Module": {
+            "hits": [],
+            "hitCount": 0,
+            "drawImgFunctions": []
+          },
+          "L5_Object": {
+            "imageObjectCount": 9,
+            "textObjectCount": 7
+          }
+        },
+        "serializerHits": [
+          {
+            "mod": "MediaTypeInfo",
+            "key": "ProductDataType",
+            "type": "object"
+          }
+        ],
+        "drawImg": false,
+        "serializer": true,
+        "saveReload": false,
+        "productionReady": false,
+        "note": "productionReady 保持 false —— 本轮仅 capability evidence，不做生产接线"
+      },
+      "scenarios": [
+        {
+          "case": "I1-real-transform",
+          "verdict": "CONTAINED",
+          "reason": "CONTAINED",
+          "passed": true,
+          "natural": {
+            "width": 1063,
+            "height": 638
+          },
+          "object": {
+            "width": 621.75,
+            "height": 373.16
+          },
+          "canvas": {
+            "width": 507.49999999999994,
+            "height": 308.72916666666663
+          },
+          "effectiveScale": {
+            "effectiveScaleX": 0.584897,
+            "effectiveScaleY": 0.584897
+          },
+          "naturalNeqObject": true
+        },
+        {
+          "case": "I2-uniform-scale",
+          "verdict": "CONTAINED",
+          "reason": "CONTAINED",
+          "passed": true,
+          "effectiveScale": {
+            "effectiveScaleX": 0.409428,
+            "effectiveScaleY": 0.409428
+          },
+          "expectedSx": 0.41,
+          "expectedSy": 0.41,
+          "containment": "CONTAINED"
+        },
+        {
+          "case": "I3-rotated-30",
+          "verdict": "CONTAINED",
+          "reason": "CONTAINED",
+          "passed": true,
+          "effectiveScale": {
+            "effectiveScaleX": 0.584897,
+            "effectiveScaleY": 0.584897
+          },
+          "targetQuadAngle": 30,
+          "containment": "CONTAINED"
+        },
+        {
+          "case": "I4-nonuniform-scale",
+          "verdict": "CONTAINED",
+          "reason": "CONTAINED",
+          "passed": true,
+          "effectiveScale": {
+            "effectiveScaleX": 0.350938,
+            "effectiveScaleY": 0.643387
+          },
+          "expectedSx": 0.35,
+          "expectedSy": 0.64,
+          "containment": "CONTAINED"
+        },
+        {
+          "case": "C-IN",
+          "verdict": "CONTAINED",
+          "reason": "all-corners-and-aabb-inside",
+          "passed": true,
+          "ocrBBox": {
+            "x": 191.34,
+            "y": 114.83999999999999,
+            "width": 265.75,
+            "height": 44.660000000000004
+          },
+          "targetQuad": [
+            {
+              "x": 101.04,
+              "y": 63.2
+            },
+            {
+              "x": 256.48,
+              "y": 63.2
+            },
+            {
+              "x": 256.48,
+              "y": 89.32
+            },
+            {
+              "x": 101.04,
+              "y": 89.32
+            }
+          ],
+          "createAllowed": true
+        },
+        {
+          "case": "C-OUT",
+          "verdict": "OUT_OF_IMAGE",
+          "reason": "no-overlap",
+          "passed": true,
+          "ocrBBox": {
+            "x": 1363,
+            "y": 838,
+            "width": 160,
+            "height": 40
+          },
+          "createAllowed": false
+        },
+        {
+          "case": "C-REPAIR",
+          "verdict": "NEEDS_REPAIR",
+          "reason": "partial-outside",
+          "passed": true,
+          "before": {
+            "verdict": "NEEDS_REPAIR",
+            "outsideCount": 2
+          },
+          "repair": {
+            "imageShift": {
+              "x": -140,
+              "y": 0
+            },
+            "canvasShift": {
+              "x": -81.886,
+              "y": 0
+            },
+            "afterVerdict": "CONTAINED"
+          },
+          "after": {
+            "verdict": "CONTAINED"
+          },
+          "createAllowed": true
+        },
+        {
+          "case": "C-STILL_OUT",
+          "verdict": "OUT_OF_IMAGE",
+          "reason": "no-overlap",
+          "passed": true,
+          "before": {
+            "verdict": "OUT_OF_IMAGE"
+          },
+          "repair": null,
+          "after": null,
+          "createAllowed": false
+        },
+        {
+          "case": "P0-1-effectiveScale-into-typography",
+          "verdict": "PASS",
+          "reason": null,
+          "passed": true,
+          "naturalNeqObject": true,
+          "natural": {
+            "width": 1063,
+            "height": 638
+          },
+          "object": {
+            "width": 621.75,
+            "height": 373.16
+          },
+          "effectiveScale": {
+            "effectiveScaleX": 0.584897,
+            "effectiveScaleY": 0.584897
+          },
+          "chain": {
+            "perLineInkHeights": [
+              57
+            ],
+            "medianInkHeight": 57,
+            "medianCanvasPx": 33.34,
+            "requestedFontSize": 34,
+            "actualFontSize": 34,
+            "fontSizeError": 0,
+            "renderedLineCount": 1
+          }
+        },
+        {
+          "case": "P0-2-perline-not-wholeblock",
+          "verdict": "PASS",
+          "reason": null,
+          "passed": true,
+          "perLineInkHeights": [
+            57,
+            57
+          ],
+          "medianInkHeight": 57,
+          "medianFs": 34,
+          "actualFontSize": 34,
+          "note": "per-line chain 来自真实逐行 ink 测量（median，非 whole-block）"
+        },
+        {
+          "case": "P0-3-image-pixel-containment",
+          "verdict": "PASS",
+          "reason": "no-overlap",
+          "passed": true,
+          "ocrBBoxImage": {
+            "x": 943,
+            "y": -160,
+            "width": 60,
+            "height": 25
+          },
+          "classification": "OUT_OF_IMAGE",
+          "imagePts": [
+            {
+              "x": 943,
+              "y": -160
+            },
+            {
+              "x": 1003,
+              "y": -160
+            },
+            {
+              "x": 1003,
+              "y": -135
+            },
+            {
+              "x": 943,
+              "y": -135
+            }
+          ],
+          "canvasAABBInside": false,
+          "frame": "IMAGE_PIXEL (inverse imageTransform)"
+        },
+        {
+          "case": "X-text-to-image-capability",
+          "verdict": "EVIDENCE_ONLY",
+          "reason": null,
+          "passed": true,
+          "drawImg": false,
+          "serializer": true,
+          "saveReload": false,
+          "productionReady": false,
+          "moduleHitCount": 0
+        }
+      ]
+    },
+    "snapshots": [
+      {
+        "step": "initial-stable",
+        "state": {
+          "ok": true,
+          "objectCount": 25,
+          "textboxCount": 7,
+          "texts": [
+            {
+              "index": 5,
+              "text": "山东东方美学美妆工作室",
+              "left": 36.817010105103535,
+              "top": 227.81805568477637,
+              "width": 242.45616746899415,
+              "height": 23.96183863348625,
+              "fontSize": 21.20516693228872,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "a14049c4-aabb-4206-b2e6-15f8d5bdeb87",
+              "center": {
+                "x": 158.54509383960064,
+                "y": 240.29897500151952
+              }
+            },
+            {
+              "index": 6,
+              "text": "Email:dongfang@163.com",
+              "left": 65.23551898883466,
+              "top": 268.0979727938663,
+              "width": 162.59076694614362,
+              "height": 14.639646744951577,
+              "fontSize": 12.95543959730228,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "edd92d74-b6b8-40a7-a07f-2fc960d616b4",
+              "center": {
+                "x": 147.03090246190646,
+                "y": 275.9177961663421
+              }
+            },
+            {
+              "index": 7,
+              "text": "Tel:400-8888 8888",
+              "left": 65.4782911174476,
+              "top": 291.06923284110303,
+              "width": 130.93629622420954,
+              "height": 14.69,
+              "fontSize": 13,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "c275a94f-5a63-4056-8577-93fc8fa7c32d",
+              "center": {
+                "x": 131.44643922955237,
+                "y": 298.91423284110306
+              }
+            },
+            {
+              "index": 8,
+              "text": "Add:XX市XX区XX广场A座15层（地铁X号线XX站C口步行300米）",
+              "left": 66.26866668380183,
+              "top": 314.09084614338815,
+              "width": 384,
+              "height": 14.69,
+              "fontSize": 13,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "c0465e1a-253f-41f9-8a26-8e10364263c6",
+              "center": {
+                "x": 258.7686666838018,
+                "y": 321.9358461433882
+              }
+            },
+            {
+              "index": 9,
+              "text": "主理人",
+              "left": 36.817010105103506,
+              "top": 106.4997871695657,
+              "width": 49.748025660582265,
+              "height": 18.397724398840783,
+              "fontSize": 16.28117203437238,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "a50598a8-cc66-4a9f-9149-c3906dd27cfd",
+              "center": {
+                "x": 62.19102293539464,
+                "y": 116.19864936898608
+              }
+            },
+            {
+              "index": 10,
+              "text": "188 8888 6666",
+              "left": 113.43023192467909,
+              "top": 106.4997871695657,
+              "width": 113.50974740684731,
+              "height": 17.89758342833546,
+              "fontSize": 15.838569405606602,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "62f30457-52db-4914-a937-eecd4f47074b",
+              "center": {
+                "x": 170.68510562810275,
+                "y": 115.94857888373343
+              }
+            },
+            {
+              "index": 11,
+              "text": "简 小设",
+              "left": 36.81701010510352,
+              "top": 60.40998332559245,
+              "width": 199.22690661591815,
+              "height": 34.78082434831301,
+              "fontSize": 30.779490573728324,
+              "fontFamily": "OPPOSans-M",
+              "zyOcrKey": null,
+              "uuid": "4f69a96e-3d1e-45c3-9975-4539d445ddf2",
+              "center": {
+                "x": 136.9304634130626,
+                "y": 78.30039549974896
+              }
+            }
+          ]
+        }
+      },
+      {
+        "step": "after-mega",
+        "state": {
+          "ok": true,
+          "objectCount": 25,
+          "textboxCount": 7,
+          "texts": [
+            {
+              "index": 5,
+              "text": "山东东方美学美妆工作室",
+              "left": 36.817010105103535,
+              "top": 227.81805568477637,
+              "width": 242.45616746899415,
+              "height": 23.96183863348625,
+              "fontSize": 21.20516693228872,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "a14049c4-aabb-4206-b2e6-15f8d5bdeb87",
+              "center": {
+                "x": 158.54509383960064,
+                "y": 240.29897500151952
+              }
+            },
+            {
+              "index": 6,
+              "text": "Email:dongfang@163.com",
+              "left": 65.23551898883466,
+              "top": 268.0979727938663,
+              "width": 162.59076694614362,
+              "height": 14.639646744951577,
+              "fontSize": 12.95543959730228,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "edd92d74-b6b8-40a7-a07f-2fc960d616b4",
+              "center": {
+                "x": 147.03090246190646,
+                "y": 275.9177961663421
+              }
+            },
+            {
+              "index": 7,
+              "text": "Tel:400-8888 8888",
+              "left": 65.4782911174476,
+              "top": 291.06923284110303,
+              "width": 130.93629622420954,
+              "height": 14.69,
+              "fontSize": 13,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "c275a94f-5a63-4056-8577-93fc8fa7c32d",
+              "center": {
+                "x": 131.44643922955237,
+                "y": 298.91423284110306
+              }
+            },
+            {
+              "index": 8,
+              "text": "Add:XX市XX区XX广场A座15层（地铁X号线XX站C口步行300米）",
+              "left": 66.26866668380183,
+              "top": 314.09084614338815,
+              "width": 384,
+              "height": 14.69,
+              "fontSize": 13,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "c0465e1a-253f-41f9-8a26-8e10364263c6",
+              "center": {
+                "x": 258.7686666838018,
+                "y": 321.9358461433882
+              }
+            },
+            {
+              "index": 9,
+              "text": "主理人",
+              "left": 36.817010105103506,
+              "top": 106.4997871695657,
+              "width": 49.748025660582265,
+              "height": 18.397724398840783,
+              "fontSize": 16.28117203437238,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "a50598a8-cc66-4a9f-9149-c3906dd27cfd",
+              "center": {
+                "x": 62.19102293539464,
+                "y": 116.19864936898608
+              }
+            },
+            {
+              "index": 10,
+              "text": "188 8888 6666",
+              "left": 113.43023192467909,
+              "top": 106.4997871695657,
+              "width": 113.50974740684731,
+              "height": 17.89758342833546,
+              "fontSize": 15.838569405606602,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "62f30457-52db-4914-a937-eecd4f47074b",
+              "center": {
+                "x": 170.68510562810275,
+                "y": 115.94857888373343
+              }
+            },
+            {
+              "index": 11,
+              "text": "简 小设",
+              "left": 36.81701010510352,
+              "top": 60.40998332559245,
+              "width": 199.22690661591815,
+              "height": 34.78082434831301,
+              "fontSize": 30.779490573728324,
+              "fontFamily": "OPPOSans-M",
+              "zyOcrKey": null,
+              "uuid": "4f69a96e-3d1e-45c3-9975-4539d445ddf2",
+              "center": {
+                "x": 136.9304634130626,
+                "y": 78.30039549974896
+              }
+            }
+          ]
+        }
+      },
+      {
+        "step": "force-front",
+        "ok": true,
+        "pageId": "canvas:c0"
+      },
+      {
+        "step": "after-A2-cleanup",
+        "state": {
+          "ok": true,
+          "objectCount": 25,
+          "textboxCount": 7,
+          "texts": [
+            {
+              "index": 5,
+              "text": "山东东方美学美妆工作室",
+              "left": 36.817010105103535,
+              "top": 227.81805568477637,
+              "width": 242.45616746899415,
+              "height": 23.96183863348625,
+              "fontSize": 21.20516693228872,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "a14049c4-aabb-4206-b2e6-15f8d5bdeb87",
+              "center": {
+                "x": 158.54509383960064,
+                "y": 240.29897500151952
+              }
+            },
+            {
+              "index": 6,
+              "text": "Email:dongfang@163.com",
+              "left": 65.23551898883466,
+              "top": 268.0979727938663,
+              "width": 162.59076694614362,
+              "height": 14.639646744951577,
+              "fontSize": 12.95543959730228,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "edd92d74-b6b8-40a7-a07f-2fc960d616b4",
+              "center": {
+                "x": 147.03090246190646,
+                "y": 275.9177961663421
+              }
+            },
+            {
+              "index": 7,
+              "text": "Tel:400-8888 8888",
+              "left": 65.4782911174476,
+              "top": 291.06923284110303,
+              "width": 130.93629622420954,
+              "height": 14.69,
+              "fontSize": 13,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "c275a94f-5a63-4056-8577-93fc8fa7c32d",
+              "center": {
+                "x": 131.44643922955237,
+                "y": 298.91423284110306
+              }
+            },
+            {
+              "index": 8,
+              "text": "Add:XX市XX区XX广场A座15层（地铁X号线XX站C口步行300米）",
+              "left": 66.26866668380183,
+              "top": 314.09084614338815,
+              "width": 384,
+              "height": 14.69,
+              "fontSize": 13,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "c0465e1a-253f-41f9-8a26-8e10364263c6",
+              "center": {
+                "x": 258.7686666838018,
+                "y": 321.9358461433882
+              }
+            },
+            {
+              "index": 9,
+              "text": "主理人",
+              "left": 36.817010105103506,
+              "top": 106.4997871695657,
+              "width": 49.748025660582265,
+              "height": 18.397724398840783,
+              "fontSize": 16.28117203437238,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "a50598a8-cc66-4a9f-9149-c3906dd27cfd",
+              "center": {
+                "x": 62.19102293539464,
+                "y": 116.19864936898608
+              }
+            },
+            {
+              "index": 10,
+              "text": "188 8888 6666",
+              "left": 113.43023192467909,
+              "top": 106.4997871695657,
+              "width": 113.50974740684731,
+              "height": 17.89758342833546,
+              "fontSize": 15.838569405606602,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "62f30457-52db-4914-a937-eecd4f47074b",
+              "center": {
+                "x": 170.68510562810275,
+                "y": 115.94857888373343
+              }
+            },
+            {
+              "index": 11,
+              "text": "简 小设",
+              "left": 36.81701010510352,
+              "top": 60.40998332559245,
+              "width": 199.22690661591815,
+              "height": 34.78082434831301,
+              "fontSize": 30.779490573728324,
+              "fontFamily": "OPPOSans-M",
+              "zyOcrKey": "zy-ocr-tx-muamgiuj-xv3wvj-0",
+              "uuid": "4f69a96e-3d1e-45c3-9975-4539d445ddf2",
+              "center": {
+                "x": 136.9304634130626,
+                "y": 78.30039549974896
+              }
+            }
+          ]
+        }
+      },
+      {
+        "step": "after-A3",
+        "state": {
+          "ok": true,
+          "objectCount": 25,
+          "textboxCount": 7,
+          "texts": [
+            {
+              "index": 5,
+              "text": "山东东方美学美妆工作室",
+              "left": 36.817010105103535,
+              "top": 227.81805568477637,
+              "width": 242.45616746899415,
+              "height": 23.96183863348625,
+              "fontSize": 21.20516693228872,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "a14049c4-aabb-4206-b2e6-15f8d5bdeb87",
+              "center": {
+                "x": 158.54509383960064,
+                "y": 240.29897500151952
+              }
+            },
+            {
+              "index": 6,
+              "text": "Email:dongfang@163.com",
+              "left": 65.23551898883466,
+              "top": 268.0979727938663,
+              "width": 162.59076694614362,
+              "height": 14.639646744951577,
+              "fontSize": 12.95543959730228,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "edd92d74-b6b8-40a7-a07f-2fc960d616b4",
+              "center": {
+                "x": 147.03090246190646,
+                "y": 275.9177961663421
+              }
+            },
+            {
+              "index": 7,
+              "text": "Tel:400-8888 8888",
+              "left": 65.4782911174476,
+              "top": 291.06923284110303,
+              "width": 130.93629622420954,
+              "height": 14.69,
+              "fontSize": 13,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "c275a94f-5a63-4056-8577-93fc8fa7c32d",
+              "center": {
+                "x": 131.44643922955237,
+                "y": 298.91423284110306
+              }
+            },
+            {
+              "index": 8,
+              "text": "Add:XX市XX区XX广场A座15层（地铁X号线XX站C口步行300米）",
+              "left": 66.26866668380183,
+              "top": 314.09084614338815,
+              "width": 384,
+              "height": 14.69,
+              "fontSize": 13,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "c0465e1a-253f-41f9-8a26-8e10364263c6",
+              "center": {
+                "x": 258.7686666838018,
+                "y": 321.9358461433882
+              }
+            },
+            {
+              "index": 9,
+              "text": "主理人",
+              "left": 36.817010105103506,
+              "top": 106.4997871695657,
+              "width": 49.748025660582265,
+              "height": 18.397724398840783,
+              "fontSize": 16.28117203437238,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "a50598a8-cc66-4a9f-9149-c3906dd27cfd",
+              "center": {
+                "x": 62.19102293539464,
+                "y": 116.19864936898608
+              }
+            },
+            {
+              "index": 10,
+              "text": "188 8888 6666",
+              "left": 113.43023192467909,
+              "top": 106.4997871695657,
+              "width": 113.50974740684731,
+              "height": 17.89758342833546,
+              "fontSize": 15.838569405606602,
+              "fontFamily": "OPPOSans-R",
+              "zyOcrKey": null,
+              "uuid": "62f30457-52db-4914-a937-eecd4f47074b",
+              "center": {
+                "x": 170.68510562810275,
+                "y": 115.94857888373343
+              }
+            },
+            {
+              "index": 11,
+              "text": "简 小设",
+              "left": 36.81701010510352,
+              "top": 60.40998332559245,
+              "width": 199.22690661591815,
+              "height": 34.78082434831301,
+              "fontSize": 30.779490573728324,
+              "fontFamily": "OPPOSans-M",
+              "zyOcrKey": "zy-ocr-tx-muamgiuj-xv3wvj-0",
+              "uuid": "4f69a96e-3d1e-45c3-9975-4539d445ddf2",
+              "center": {
+                "x": 136.9304634130626,
+                "y": 78.30039549974896
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "errors": [],
+    "baseState": {
+      "objectCount": 25,
+      "textboxCount": 7
+    },
+    "measureClosure": {
+      "requested": {
+        "left": 220,
+        "top": 20,
+        "width": 180,
+        "height": 34,
+        "fontSize": 22
+      },
+      "actual": {
+        "aCoordsBB": {
+          "left": 220,
+          "top": 20,
+          "width": 218.82,
+          "height": 25.86
+        },
+        "left": 220,
+        "top": 20,
+        "width": 217.8203125,
+        "height": 24.86,
+        "angle": 0,
+        "fontSize": 22,
+        "renderedLineCount": 1,
+        "ink": {
+          "inkWidth": 217,
+          "inkHeight": 20,
+          "lineCount": 1,
+          "method": "FABRIC_OBJECT_LINES"
+        },
+        "location": null
+      },
+      "topLeftError": {
+        "x": 0,
+        "y": 0
+      },
+      "locationNote": "对象模型未暴露 location 访问器（o.location/o.media.location/o.get(location) 均为 null）—— 以 aCoords/width/height/angle/renderedLineCount 为最终实测几何",
+      "passed": true
+    },
+    "cleanupRestored": true,
+    "finalState": {
+      "objectCount": 25,
+      "textboxCount": 7
+    }
+  },
+  "partB": {
+    "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+    "card": "real-card-shengying.png",
+    "runs": [],
+    "errors": []
+  },
+  "summary": {
+    "pass": [
+      "anchor:A1-existing-anchor-reuse",
+      "anchor:A2-no-anchor-create",
+      "anchor:A3-uncertain-no-forced-reuse",
+      "anchor:A4-wrong-page-blocked",
+      "measure-closure",
+      "idempotence",
+      "pageIdentity",
+      "imageSpace:I1-real-transform",
+      "imageSpace:I2-uniform-scale",
+      "imageSpace:I3-rotated-30",
+      "imageSpace:I4-nonuniform-scale",
+      "containment:C-IN",
+      "containment:C-OUT",
+      "containment:C-REPAIR",
+      "containment:C-STILL_OUT",
+      "typography:T1-1line-cn",
+      "typography:T2-2line-cn",
+      "typography:T3-3line-cn",
+      "typography:T4-cn-english",
+      "typography:T5-cn-number",
+      "typography:T6-long-address",
+      "typography:T7-short-phone",
+      "typography:T-collapse-fail",
+      "typography:T-wrap-fail",
+      "p0:P0-1-effectiveScale-into-typography",
+      "p0:P0-2-perline-not-wholeblock",
+      "p0:P0-3-image-pixel-containment",
+      "textToImage"
+    ],
+    "fail": [],
+    "blocked": [
+      "partB"
+    ],
+    "unknown": [],
+    "unresolved": [],
+    "partB-detail": "ZY_SKIP_B=1"
+  },
+  "nextBlocker": "Stage 9.9 BLOCKED：partB —— 补测后重新生成报告",
+  "console": [],
+  "errors": []
+}

@@ -1,0 +1,472 @@
+{
+  "ts": "2026-09-23T02:53:22.883Z",
+  "stage": "OCR-P1-COMMIT4_6-REAL",
+  "cases": [
+    {
+      "id": "V0",
+      "sidecar": "0",
+      "note": "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy"
+    },
+    {
+      "id": "V15",
+      "sidecar": "0",
+      "rot": 15,
+      "note": "旋转 15°：visual bbox 四角 affine → targetQuad，位置/字号/颜色同源"
+    },
+    {
+      "id": "V45",
+      "sidecar": "0",
+      "rot": 45,
+      "note": "旋转 45°：验证旋转下 visual geometry 映射不回归"
+    }
+  ],
+  "image": "user-card-yingtong.png",
+  "cookiePresent": true,
+  "cookieSource": "probe",
+  "cookieWarning": null,
+  "cookieNote": null,
+  "abModes": [
+    "B"
+  ],
+  "runs": [
+    {
+      "case": "V0",
+      "ab": "B",
+      "note": "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy（新 Visual Ink geometry）",
+      "rot": 0,
+      "steps": [
+        {
+          "step": "editor-ready",
+          "ok": true,
+          "bridge": true,
+          "bver": null
+        },
+        {
+          "step": "bg-inject",
+          "ok": true
+        },
+        {
+          "step": "ocr-prepare",
+          "ok": true
+        },
+        {
+          "step": "click-ocr",
+          "clicked": true
+        },
+        {
+          "step": "ocr-done",
+          "done": true,
+          "status": "已生成 11 个文字（可双击编辑）"
+        },
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [],
+      "diag": [],
+      "actualInk": [
+        {
+          "text": "简设计",
+          "left": 325,
+          "top": 33,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 19,
+          "fill": "#976139",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 67,
+          "aCoordsTL": {
+            "x": 325,
+            "y": 33
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-0",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 57,
+            "inkHeight": 18
+          },
+          "cached": false
+        },
+        {
+          "text": "盈通启富证券",
+          "left": 369,
+          "top": 36,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 14,
+          "fill": "#98633c",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 94,
+          "aCoordsTL": {
+            "x": 369,
+            "y": 36
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-1",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 85,
+            "inkHeight": 14
+          },
+          "cached": false
+        },
+        {
+          "text": "YOUR LOGO YINGTONG SECUR",
+          "left": 378,
+          "top": 36,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 16,
+          "fill": "#fefdfd",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 325,
+          "aCoordsTL": {
+            "x": 378,
+            "y": 36
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-2",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 264,
+            "inkHeight": 12
+          },
+          "cached": false
+        },
+        {
+          "text": "张 天天",
+          "left": 325,
+          "top": 55,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 10,
+          "fill": "#a77a58",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 163.27,
+          "aCoordsTL": {
+            "x": 325,
+            "y": 55
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-3",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 33,
+            "inkHeight": 10
+          },
+          "cached": false
+        },
+        {
+          "text": "理财顾问",
+          "left": 29,
+          "top": 74,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 23,
+          "fill": "#966139",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 102,
+          "aCoordsTL": {
+            "x": 29,
+            "y": 74
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-4",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 91,
+            "inkHeight": 21
+          },
+          "cached": false
+        },
+        {
+          "text": "1888888 6666",
+          "left": 28,
+          "top": 107,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 12,
+          "fill": "#9a663f",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 185.24,
+          "aCoordsTL": {
+            "x": 28,
+            "y": 107
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-5",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 77,
+            "inkHeight": 9
+          },
+          "cached": false
+        },
+        {
+          "text": "山东盈通启富证券投资集团",
+          "left": 32,
+          "top": 193,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 18,
+          "fill": "#fefdfd",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 234.54,
+          "aCoordsTL": {
+            "x": 32,
+            "y": 193
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-6",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 214,
+            "inkHeight": 18
+          },
+          "cached": false
+        },
+        {
+          "text": "山东省济南市历城区开元路XX号XX财富中心",
+          "left": 392,
+          "top": 194,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 22,
+          "fill": "#fefefe",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 448,
+          "aCoordsTL": {
+            "x": 392,
+            "y": 194
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-7",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 423,
+            "inkHeight": 21
+          },
+          "cached": false
+        },
+        {
+          "text": "简",
+          "left": 52,
+          "top": 222,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 11,
+          "fill": "#0b0b0b",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 276.34,
+          "aCoordsTL": {
+            "x": 52,
+            "y": 222
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-8",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 11,
+            "inkHeight": 10
+          },
+          "cached": false
+        },
+        {
+          "text": "www.jiansheji@36588.com",
+          "left": 424,
+          "top": 225,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 22,
+          "fill": "#110c0c",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 292,
+          "aCoordsTL": {
+            "x": 424,
+            "y": 225
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-9",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 276,
+            "inkHeight": 23
+          },
+          "cached": false
+        },
+        {
+          "text": "0531-88888888",
+          "left": 31,
+          "top": 243,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 13,
+          "fill": "#fcfcfc",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 104,
+          "aCoordsTL": {
+            "x": 31,
+            "y": 243
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudidq1d-m5o1ckk7-10",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 92,
+            "inkHeight": 10
+          },
+          "cached": false
+        }
+      ],
+      "visualRows": [],
+      "abCompare": null,
+      "leftShiftObserved": {
+        "count": 0,
+        "rows": []
+      },
+      "status": "已生成 11 个文字（可双击编辑）",
+      "pageId": "canvas:c0",
+      "baiduCount": 14,
+      "ocrSamples": [
+        "正在准备图片…",
+        "已生成 11 个文字（可双击编辑）"
+      ],
+      "renderedInkCompare": []
+    }
+  ],
+  "errors": []
+}

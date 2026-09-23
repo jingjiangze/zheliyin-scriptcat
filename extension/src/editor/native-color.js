@@ -174,17 +174,48 @@ function extractForegroundColor(input) {
   var coverage = Math.round((fg.length / total) * 10000) / 10000;
   var sampleCount = fg.length;
   var confidence = Math.round((accN / sampleCount) * 10000) / 10000;
+  // Commit 4.6-D（§12）：第二主桶（多模态检测）—— 邻域合并前的原始桶规模对比
+  var secondKey = null, secondCount = 0;
+  for (var k2 = 0; k2 < keys.length; k2 += 1) {
+    var k2b = bins[keys[k2]];
+    if (keys[k2] === topKey) continue;
+    if (k2b.count > secondCount) { secondCount = k2b.count; secondKey = keys[k2]; }
+  }
+  // Commit 4.6-D（§12）：颜色证据可靠性派生值
+  var dominance = confidence;
+  var ambiguity = (secondCount > 0 && topCount > 0) ? Math.round((secondCount / topCount) * 10000) / 10000 : 0;
+  var multiModal = ambiguity >= 0.6;
   // 黑/白紧凑度：主色本身黑/白时置信度按暗/亮浓度强化（不做平均化）
   var maxC = Math.max(accR, accG, accB) / accN, minC = Math.min(accR, accG, accB) / accN;
   var darkish = maxC < 110, whitish = minC > 170;
   return {
     ok: true, color: color, confidence: confidence, source: "IMAGE_INK_FOREGROUND",
     sampleCount: sampleCount, coverage: coverage, method: "LOCAL_OTSU_FG_BUCKET_MERGE", threshold: th,
-    takeDark: takeDark, darkish: darkish, whitish: whitish
+    takeDark: takeDark, darkish: darkish, whitish: whitish,
+    // Commit 4.6-D（§12）：颜色证据可靠性字段 ——
+    //   dominance     主色簇（合并后）占全部前景的比例（集中度）
+    //   ambiguity     第二主桶规模 / 主桶规模（多峰程度；0=单一, →1=近似双峰）
+    //   multiModal    ambiguity 高于阈值时显式标记（不得依赖单一主色）
+    dominance: dominance, ambiguity: ambiguity, multiModal: multiModal
   };
 }
 
+// Commit 4.6-D（§12）：生产应用门禁 —— 颜色证据弱时「不得设置 fill，保留 Native 默认色」。
+// 必须满足：foreground 可靠（ok）＋ 主色充分集中（dominance ≥ 门槛）＋ 非明显多峰（!multiModal）。
+// 门槛温和可调（opts.minDominance / opts.maxAmbiguity）；不设极端固定阈值。
+function shouldApplyFill(o, opts) {
+  var opt = opts || {};
+  var minD = typeof opt.minDominance === "number" ? opt.minDominance : 0.35;
+  var maxA = typeof opt.maxAmbiguity === "number" ? opt.maxAmbiguity : 0.6;
+  if (!o || o.ok !== true || !o.color) return { apply: false, reason: "NO_EVIDENCE" };
+  if (o.multiModal === true) return { apply: false, reason: "MULTI_MODAL", dominance: o.dominance, ambiguity: o.ambiguity };
+  if (typeof o.dominance === "number" && o.dominance < minD) return { apply: false, reason: "DOMINANCE_LOW", dominance: o.dominance, ambiguity: o.ambiguity };
+  if (typeof o.ambiguity === "number" && o.ambiguity > maxA) return { apply: false, reason: "AMBIGUITY_HIGH", dominance: o.dominance, ambiguity: o.ambiguity };
+  return { apply: true, reason: "FOREGROUND_RELIABLE", dominance: o.dominance, ambiguity: o.ambiguity };
+}
+
 if (typeof module !== "undefined" && module.exports) module.exports = {
+  shouldApplyFill: shouldApplyFill,
   normalizeColor: normalizeColor, isValidColor: isValidColor, extractFill: extractFill,
   compareColor: compareColor, extractForegroundColor: extractForegroundColor, hexToRgb: hexToRgb
 };

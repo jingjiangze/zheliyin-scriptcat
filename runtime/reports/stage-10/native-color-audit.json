@@ -1,0 +1,669 @@
+{
+  "ts": "2026-09-21T01:37:29.616Z",
+  "stage": "STAGE-10A-NATIVE-COLOR-AUDIT",
+  "version": "0.3.11.48",
+  "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": false,
+  "phases": {
+    "A": {
+      "existing": [
+        {
+          "index": 0,
+          "text": "山东东方美学美妆工作室",
+          "fill": "#000000",
+          "stroke": "null",
+          "strokeWidth": 1,
+          "opacity": 1,
+          "shadow": null,
+          "fontColor": null,
+          "font": null,
+          "fontColorProp": null,
+          "mediaKeys": null,
+          "location": {
+            "locationX": 36.817010105103535,
+            "locationY": 227.81805568477637,
+            "locationWidth": 242.45616746899415,
+            "locationHeight": 23.96183863348625,
+            "locationRotation": 0,
+            "loc": null
+          },
+          "canvasToProductObjArrIdx": 5
+        },
+        {
+          "index": 1,
+          "text": "Email:dongfang@163.c",
+          "fill": "#000000",
+          "stroke": "null",
+          "strokeWidth": 1,
+          "opacity": 1,
+          "shadow": null,
+          "fontColor": null,
+          "font": null,
+          "fontColorProp": null,
+          "mediaKeys": null,
+          "location": {
+            "locationX": 65.23551898883466,
+            "locationY": 268.0979727938663,
+            "locationWidth": 162.59076694614362,
+            "locationHeight": 14.639646744951577,
+            "locationRotation": 0,
+            "loc": null
+          },
+          "canvasToProductObjArrIdx": 6
+        },
+        {
+          "index": 2,
+          "text": "Tel:400-8888 8888",
+          "fill": "#000000",
+          "stroke": "null",
+          "strokeWidth": 1,
+          "opacity": 1,
+          "shadow": null,
+          "fontColor": null,
+          "font": null,
+          "fontColorProp": null,
+          "mediaKeys": null,
+          "location": {
+            "locationX": 65.4782911174476,
+            "locationY": 291.06923284110303,
+            "locationWidth": 130.93629622420954,
+            "locationHeight": 14.69,
+            "locationRotation": 0,
+            "loc": null
+          },
+          "canvasToProductObjArrIdx": 7
+        }
+      ],
+      "modules": [
+        {
+          "name": "MediaTypeInfo",
+          "sig": "object:IAMGE,TEXT,ADVANCED_IMAGE_MASK,SVG_TEXT,SVG,SHAPE,PHOTO_IMAGE_MASK,IMAGE_MASK,UNKNOWN,GROUP,GROUP_MASK,TABLE"
+        },
+        {
+          "name": "ProductDataModel",
+          "sig": "object:getInstance"
+        }
+      ],
+      "serializer": {},
+      "qFound": false,
+      "productDataHits": [],
+      "uiColorControls": [
+        {
+          "tag": "INPUT",
+          "cls": "colorInput",
+          "type": "text",
+          "val": null
+        },
+        {
+          "tag": "INPUT",
+          "cls": "colorInput",
+          "type": "text",
+          "val": null
+        },
+        {
+          "tag": "INPUT",
+          "cls": "colorInput",
+          "type": "text",
+          "val": null
+        },
+        {
+          "tag": "INPUT",
+          "cls": "colorInput",
+          "type": "text",
+          "val": null
+        },
+        {
+          "tag": "DIV",
+          "cls": "colorPickerBox abs",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "INPUT",
+          "cls": "colorPicker minicolors-input",
+          "type": "text",
+          "val": "#ff0000"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "ui-color-input",
+          "type": "color",
+          "val": "#000000"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "ui-color-input",
+          "type": "color",
+          "val": "#000000"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "ui-color-input",
+          "type": "color",
+          "val": "#000000"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "colorPicker minicolors-input",
+          "type": "text",
+          "val": "#ff0000"
+        }
+      ],
+      "errors": []
+    },
+    "B": {
+      "mapping": [
+        {
+          "colorHex": "#ff0000",
+          "identity": "OBJECT_DELTA",
+          "requestedFontColor": "#ff0000",
+          "actualFill": "#ff0000",
+          "actualMediaFontColor": null,
+          "actualStroke": "null",
+          "opacity": 1,
+          "found": true,
+          "exact": true
+        },
+        {
+          "colorHex": "#00ff00",
+          "identity": "OBJECT_DELTA",
+          "requestedFontColor": "#00ff00",
+          "actualFill": "#00ff00",
+          "actualMediaFontColor": null,
+          "actualStroke": "null",
+          "opacity": 1,
+          "found": true,
+          "exact": true
+        },
+        {
+          "colorHex": "#0000ff",
+          "identity": "OBJECT_DELTA",
+          "requestedFontColor": "#0000ff",
+          "actualFill": "#0000ff",
+          "actualMediaFontColor": null,
+          "actualStroke": "null",
+          "opacity": 1,
+          "found": true,
+          "exact": true
+        },
+        {
+          "colorHex": "#000000",
+          "identity": "OBJECT_DELTA",
+          "requestedFontColor": "#000000",
+          "actualFill": "#000000",
+          "actualMediaFontColor": null,
+          "actualStroke": "null",
+          "opacity": 1,
+          "found": true,
+          "exact": true
+        },
+        {
+          "colorHex": "#ffffff",
+          "identity": "OBJECT_DELTA",
+          "requestedFontColor": "#ffffff",
+          "actualFill": "#ffffff",
+          "actualMediaFontColor": null,
+          "actualStroke": "null",
+          "opacity": 1,
+          "found": true,
+          "exact": true
+        },
+        {
+          "colorHex": "#ffd700",
+          "identity": "OBJECT_DELTA",
+          "requestedFontColor": "#ffd700",
+          "actualFill": "#ffd700",
+          "actualMediaFontColor": null,
+          "actualStroke": "null",
+          "opacity": 1,
+          "found": true,
+          "exact": true
+        }
+      ],
+      "errors": []
+    },
+    "C": {
+      "fillMutation": [
+        {
+          "identity": "OBJECT_DELTA",
+          "before": {
+            "fill": "#000000",
+            "stroke": "null",
+            "region": {
+              "l": 298,
+              "t": 28,
+              "w": 211.49999999999994,
+              "h": 37,
+              "hash": "a35f4c27"
+            }
+          },
+          "after": {
+            "fill": "#00aa33",
+            "stroke": "#00aa33",
+            "strokeWidth": 1,
+            "region": {
+              "l": 298,
+              "t": 28,
+              "w": 211.49999999999994,
+              "h": 37,
+              "hash": "cb12c787"
+            }
+          },
+          "fillChanged": true,
+          "renderChanged": true
+        }
+      ],
+      "errors": []
+    },
+    "D": {
+      "controls": [
+        {
+          "tag": "SPAN",
+          "cls": "color-item",
+          "id": "bgcolor",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "A",
+          "cls": "",
+          "id": "printColorCheck",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "A",
+          "cls": "icon-interchange ml10 mr10",
+          "id": "change-color",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "DIV",
+          "cls": "pageColorSelect abs",
+          "id": "pageColorSelect",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "UL",
+          "cls": "fileColor",
+          "id": "canvasFileColor",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "A",
+          "cls": "icon-interchange ml10 ",
+          "id": "change-bgcolor",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "DIV",
+          "cls": "subItem",
+          "id": "colorvalueCheck",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "INPUT",
+          "cls": "sValue",
+          "id": "rgbColor",
+          "type": null,
+          "val": ""
+        },
+        {
+          "tag": "SPAN",
+          "cls": "icon-dropper dropperclz colorCheck",
+          "id": "colorCheckDropper",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "INPUT",
+          "cls": "sValue mr5 not-edit",
+          "id": "cymkColor-C",
+          "type": "number",
+          "val": ""
+        },
+        {
+          "tag": "INPUT",
+          "cls": "sValue mr5 not-edit",
+          "id": "cymkColor-M",
+          "type": "number",
+          "val": ""
+        },
+        {
+          "tag": "INPUT",
+          "cls": "sValue mr5 not-edit",
+          "id": "cymkColor-Y",
+          "type": "number",
+          "val": ""
+        },
+        {
+          "tag": "INPUT",
+          "cls": "sValue mr5 not-edit",
+          "id": "cymkColor-K",
+          "type": "number",
+          "val": ""
+        },
+        {
+          "tag": "A",
+          "cls": "btn",
+          "id": "adjustColor",
+          "type": null,
+          "val": null
+        },
+        {
+          "tag": "LI",
+          "cls": "",
+          "id": "adjustRowColor",
+          "type": null,
+          "val": "0"
+        },
+        {
+          "tag": "LI",
+          "cls": "",
+          "id": "adjustColColor",
+          "type": null,
+          "val": "0"
+        },
+        {
+          "tag": "LI",
+          "cls": "",
+          "id": "adjustOddEvenRowColor",
+          "type": null,
+          "val": "0"
+        },
+        {
+          "tag": "LI",
+          "cls": "",
+          "id": "adjustOddEvenColColor",
+          "type": null,
+          "val": "0"
+        },
+        {
+          "tag": "INPUT",
+          "cls": "colorInput",
+          "id": "",
+          "type": "text",
+          "val": ""
+        },
+        {
+          "tag": "INPUT",
+          "cls": "colorInput",
+          "id": "",
+          "type": "text",
+          "val": ""
+        }
+      ],
+      "events": [],
+      "errors": [],
+      "controlsCount": 40,
+      "colorBindings": [
+        {
+          "mod": "ColorValueConversion",
+          "key": "colorHex",
+          "type": "function"
+        },
+        {
+          "mod": "ColorValueConversion",
+          "key": "colorRgb",
+          "type": "function"
+        },
+        {
+          "mod": "ColorValueConversion",
+          "key": "colorDecimal",
+          "type": "function"
+        },
+        {
+          "mod": "fabric",
+          "key": "Color",
+          "type": "function"
+        },
+        {
+          "mod": "ItemDataModel",
+          "key": "setObjectFill",
+          "type": "function"
+        },
+        {
+          "mod": "THREE",
+          "key": "ColorKeyframeTrack",
+          "type": "function"
+        },
+        {
+          "mod": "table",
+          "key": "setCellBgColor",
+          "type": "function"
+        },
+        {
+          "mod": "table",
+          "key": "setCellBkColor",
+          "type": "function"
+        },
+        {
+          "mod": "sundry",
+          "key": "colorArray",
+          "type": "object"
+        },
+        {
+          "mod": "sundry",
+          "key": "colorBGJbArray",
+          "type": "object"
+        },
+        {
+          "mod": "sundry",
+          "key": "colorBGArray",
+          "type": "object"
+        },
+        {
+          "mod": "sundry",
+          "key": "xnColorBGArray",
+          "type": "object"
+        },
+        {
+          "mod": "sundry",
+          "key": "xnColorArray",
+          "type": "object"
+        },
+        {
+          "mod": "sundry",
+          "key": "historyColor",
+          "type": "function"
+        },
+        {
+          "mod": "sundry",
+          "key": "historyBgJbColor",
+          "type": "function"
+        },
+        {
+          "mod": "sundry",
+          "key": "xnCPHistoryColor",
+          "type": "function"
+        },
+        {
+          "mod": "ColorSet",
+          "key": "setPixelColor",
+          "type": "function"
+        },
+        {
+          "mod": "ColorSet",
+          "key": "ColorRender",
+          "type": "function"
+        },
+        {
+          "mod": "ColorSet",
+          "key": "restoreColorRender",
+          "type": "function"
+        },
+        {
+          "mod": "CustomerHeadMenuBar",
+          "key": "initColor",
+          "type": "function"
+        }
+      ]
+    },
+    "E": {
+      "serializerProbes": [
+        {
+          "objFill": "#ff6600",
+          "fabricJson": {
+            "keys": [
+              "type",
+              "version",
+              "originX",
+              "originY",
+              "left",
+              "top",
+              "width",
+              "height",
+              "fill",
+              "stroke",
+              "strokeWidth",
+              "strokeDashArray",
+              "strokeLineCap",
+              "strokeDashOffset",
+              "strokeLineJoin",
+              "strokeMiterLimit",
+              "scaleX",
+              "scaleY",
+              "angle",
+              "flipX",
+              "flipY",
+              "opacity",
+              "shadow",
+              "visible",
+              "clipTo",
+              "backgroundColor",
+              "fillRule",
+              "paintFirst",
+              "globalCompositeOperation",
+              "transformMatrix",
+              "skewX",
+              "skewY",
+              "text",
+              "fontSize",
+              "fontWeight",
+              "fontFamily",
+              "fontStyle",
+              "lineHeight",
+              "underline",
+              "overline"
+            ],
+            "fill": "#ff6600",
+            "styles": {}
+          },
+          "qKeys": null,
+          "qErr": null,
+          "canvasObjInfoKeys": [
+            "bleedLinesArr",
+            "canvasToProductObjArr",
+            "copyAndRedoCanvas",
+            "canvasPackingBoxArray",
+            "diyCanvasW"
+          ],
+          "canvasToProductObjHost": null,
+          "mediaFontColor": null,
+          "multiUuid": "ce272ffd-f31c-4f0b-8fd3-9c2328a35793-muaksk0u",
+          "markuuid": null
+        }
+      ],
+      "errors": []
+    },
+    "F": {
+      "saveButtons": [
+        {
+          "tag": "A",
+          "cls": "table-btn table-temp",
+          "text": "暂时保存",
+          "visible": false
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "save-btn",
+          "text": "保存",
+          "visible": false
+        },
+        {
+          "tag": "BUTTON",
+          "cls": "zy-btn",
+          "text": "保存",
+          "visible": true
+        }
+      ],
+      "errors": []
+    },
+    "F2": {
+      "button": "保存",
+      "clicked": {
+        "clicked": true,
+        "text": "保存"
+      },
+      "saveNetwork": [
+        {
+          "status": null,
+          "method": "GET",
+          "path": "chrome-extension://ndcooeababalnlpkfedmmbbbgkljhpjf/src/options.html"
+        },
+        {
+          "status": 200,
+          "method": "GET",
+          "path": "chrome-extension://ndcooeababalnlpkfedmmbbbgkljhpjf/src/options.html",
+          "kind": "response"
+        }
+      ]
+    },
+    "G": {
+      "steps": [
+        {
+          "step": "g1-create-probe",
+          "ok": true,
+          "rec": {
+            "uuid": "c7761c21-d81e-4314-90fb-f07dbe2f49b2",
+            "fill": "#3366cc",
+            "identity": "LOOKUP"
+          }
+        },
+        {
+          "step": "g2-save",
+          "clicked": true,
+          "netAfterSave": [
+            {
+              "status": null,
+              "method": "GET",
+              "path": "chrome-extension://ndcooeababalnlpkfedmmbbbgkljhpjf/src/options.html"
+            },
+            {
+              "status": 200,
+              "method": "GET",
+              "path": "chrome-extension://ndcooeababalnlpkfedmmbbbgkljhpjf/src/options.html",
+              "kind": "response"
+            }
+          ]
+        },
+        {
+          "step": "g3-reload-ready",
+          "ok": true
+        },
+        {
+          "step": "g4-read-after-reload",
+          "ok": true,
+          "foundCount": 0,
+          "found": []
+        },
+        {
+          "step": "g5-cleanup-save",
+          "removed": 0,
+          "clicked": true
+        }
+      ],
+      "errors": [],
+      "netAfterSave": [],
+      "probeUuid": "c7761c21-d81e-4314-90fb-f07dbe2f49b2",
+      "persisted": false,
+      "cleanupRestored": false
+    }
+  },
+  "errors": []
+}

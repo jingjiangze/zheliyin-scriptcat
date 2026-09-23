@@ -1,0 +1,375 @@
+{
+  "ts": "2026-09-23T08:10:08.265Z",
+  "stage": "STAGE10-G-COMMIT-I-CONTENT-SIMILAR-REAL",
+  "cases": [
+    "C-MAIN",
+    "C-NO_MATCH",
+    "C-EMPTY"
+  ],
+  "cookiePresent": true,
+  "cookieSource": "probe",
+  "cookieWarning": null,
+  "cookieNote": null,
+  "bverExpect": "0.3.11.66",
+  "runs": [
+    {
+      "case": "C-MAIN",
+      "note": "内容相似套版：3 槽（姓名/带空格电话/地址）← 原文 3 行（电话无格式）→ text=原文逐字 + fontSize 自适应 + lineHeight/charSpacing 不变 + 不新建",
+      "steps": [
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [],
+      "runs": [
+        {
+          "rnd": 1,
+          "status": "智能套版：正面更新 3 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 0 项。",
+          "samples": [
+            "智能套版：正面更新 3 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 0 项。"
+          ],
+          "frontCount": 3,
+          "invFront": [
+            {
+              "objectUuid": "eeebf7e6-1f75-4d16-b293-0ecdff1f9f3a",
+              "text": "王小明",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 59.889999999999986,
+              "fontSize": 53,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 60.81791666666666
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            },
+            {
+              "objectUuid": "1dce8f2f-549e-4d6a-83f7-7f71f6952923",
+              "text": "13800138000",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 29.379999999999995,
+              "fontSize": 26,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 68.71760416666666
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            },
+            {
+              "objectUuid": "6f495ae3-4410-45a5-97e5-55d57ff0376a",
+              "text": "北京市朝阳区建国路88号",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 85.09229166666665
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            }
+          ],
+          "assertFails": []
+        },
+        {
+          "rnd": 2,
+          "status": "智能套版：正面更新 3 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 0 项。",
+          "samples": [
+            "智能套版：正面更新 3 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 0 项。"
+          ],
+          "frontCount": 3,
+          "invFront": [
+            {
+              "objectUuid": "eeebf7e6-1f75-4d16-b293-0ecdff1f9f3a",
+              "text": "王小明",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 59.889999999999986,
+              "fontSize": 53,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 60.81791666666666
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            },
+            {
+              "objectUuid": "1dce8f2f-549e-4d6a-83f7-7f71f6952923",
+              "text": "13800138000",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 29.379999999999995,
+              "fontSize": 26,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 68.71760416666666
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            },
+            {
+              "objectUuid": "6f495ae3-4410-45a5-97e5-55d57ff0376a",
+              "text": "北京市朝阳区建国路88号",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 85.09229166666665
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            }
+          ],
+          "assertFails": []
+        },
+        {
+          "rnd": 3,
+          "status": "智能套版：正面更新 3 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 0 项。",
+          "samples": [
+            "智能套版：正面更新 3 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 0 项。"
+          ],
+          "frontCount": 3,
+          "invFront": [
+            {
+              "objectUuid": "eeebf7e6-1f75-4d16-b293-0ecdff1f9f3a",
+              "text": "王小明",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 59.889999999999986,
+              "fontSize": 53,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 60.81791666666666
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            },
+            {
+              "objectUuid": "1dce8f2f-549e-4d6a-83f7-7f71f6952923",
+              "text": "13800138000",
+              "left": 68.89999999999999,
+              "top": 54.02760416666666,
+              "width": 160,
+              "height": 29.379999999999995,
+              "fontSize": 26,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 148.89999999999998,
+                "y": 68.71760416666666
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 2,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            },
+            {
+              "objectUuid": "6f495ae3-4410-45a5-97e5-55d57ff0376a",
+              "text": "北京市朝阳区建国路88号",
+              "left": 76.89999999999999,
+              "top": 77.18229166666666,
+              "width": 160,
+              "height": 15.819999999999999,
+              "fontSize": 14,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 156.89999999999998,
+                "y": 85.09229166666665
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 3,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            }
+          ],
+          "assertFails": []
+        }
+      ],
+      "asserts": [],
+      "status": null,
+      "bver": "0.3.11.66",
+      "baseCount": {
+        "front": 3,
+        "back": 3
+      }
+    },
+    {
+      "case": "C-NO_MATCH",
+      "note": "无相似图层：1 槽（电话占位）+ 无关行 → 0 套版、未匹配上报、图层零变化",
+      "steps": [
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [],
+      "runs": [
+        {
+          "rnd": 1,
+          "status": "智能套版：正面更新 0 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 1 项。",
+          "samples": [
+            "智能套版：正面更新 0 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 1 项。"
+          ],
+          "frontCount": 1,
+          "invFront": [
+            {
+              "objectUuid": "301c56b5-fdd5-4c48-b292-20245fb43be9",
+              "text": "占位电话",
+              "left": 60.89999999999999,
+              "top": 30.872916666666665,
+              "width": 160,
+              "height": 36,
+              "fontSize": 15,
+              "fontFamily": "方正黑体简体",
+              "fontWeight": "normal",
+              "fontStyle": "normal",
+              "angle": 0,
+              "center": {
+                "x": 140.89999999999998,
+                "y": 48.87291666666667
+              },
+              "fontId": "248",
+              "markuuid": "",
+              "layerNum": 1,
+              "fill": "#111111",
+              "charSpacing": 0,
+              "lineHeight": 1.2,
+              "fontName": "方正黑体简体"
+            }
+          ],
+          "assertFails": []
+        }
+      ],
+      "asserts": [],
+      "status": null,
+      "bver": "0.3.11.66",
+      "baseCount": {
+        "front": 1,
+        "back": 1
+      }
+    },
+    {
+      "case": "C-EMPTY",
+      "note": "空画布：无图层 → 0 套版，绝不 OCR/字段重建（对象数为 0）",
+      "steps": [
+        {
+          "step": "clear-texts",
+          "removed": 0
+        },
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [],
+      "runs": [
+        {
+          "rnd": 1,
+          "status": "智能套版：正面更新 0 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 0 项。",
+          "samples": [
+            "智能套版：正面更新 0 槽 / 反面更新 0 槽（已按容器自适应字号）。未匹配 0 项。"
+          ],
+          "frontCount": 0,
+          "invFront": [],
+          "assertFails": []
+        }
+      ],
+      "asserts": [],
+      "status": null,
+      "bver": "0.3.11.66",
+      "baseCount": {
+        "front": 0,
+        "back": 0
+      }
+    }
+  ],
+  "errors": []
+}

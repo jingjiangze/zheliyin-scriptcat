@@ -1,0 +1,1577 @@
+{
+  "ts": "2026-09-20T13:58:19.877Z",
+  "stage": "STAGE-9-V7-NATIVE-CREATE-MEASURE",
+  "userscriptVersion": "0.3.11.42",
+  "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": true,
+  "note": "Native Create → Measure（只读探针 + 可恢复 sentinel 创建）；OCR pipeline 未改动；SAVE_UNPROBED",
+  "template": {
+    "url": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+    "third": "1234075",
+    "product": "2114747",
+    "detail": "999",
+    "pageCount": 1,
+    "currentCanvasNum": 1,
+    "canvasPagesNum": 0,
+    "multiCanvas": true,
+    "frontImg": true,
+    "backImg": false,
+    "pages": [
+      {
+        "pageIndex": 0,
+        "idName": "c0",
+        "hasDrawText": true,
+        "canvasWidth": 507.49999999999994,
+        "canvasHeight": 308.72916666666663,
+        "objectCount": 25,
+        "registryLen": 17
+      }
+    ],
+    "currentCanvasFn": true
+  },
+  "pages": [
+    {
+      "pageIndex": 0,
+      "idName": "c0",
+      "hasDrawText": true,
+      "canvasWidth": 507.49999999999994,
+      "canvasHeight": 308.72916666666663,
+      "objectCount": 25,
+      "registryLen": 17
+    }
+  ],
+  "nativeApi": {
+    "found": true,
+    "chainDepth": 4,
+    "lv_instance": {
+      "level": "instance",
+      "ownNamesSample": [
+        "idName",
+        "canvas",
+        "replaceTemplatFal",
+        "bgShapeObj",
+        "_scaleMode",
+        "initTrue",
+        "tWidthMM",
+        "tHeightMM",
+        "initRatio",
+        "currentSize",
+        "inchMM",
+        "bleedLineWidth",
+        "bleedLineColor",
+        "thumbnailWidth",
+        "imgScaleB",
+        "minMediaSideDistance",
+        "maxMediaSidePecent",
+        "fontNameArr",
+        "svgTextNameArr",
+        "canvasDrawComplete",
+        "cutImgNum",
+        "drawCutImgCompleteNum",
+        "cutImgsLayerArr",
+        "cutImgsArr",
+        "objWidth",
+        "objHeight",
+        "drawSvgCount",
+        "firstSvgColor",
+        "mSelectCurvedImgOldArr",
+        "mSelectCurvedImgNewArr",
+        "isChangeSize",
+        "itemEdition",
+        "bleedStroke",
+        "markedId",
+        "init",
+        "initDrawingPen",
+        "rTrim",
+        "reLine",
+        "getCurrentSize",
+        "getCanvasId",
+        "getCurrentFactWidth",
+        "getCurrentFactHeight",
+        "canvasObjInfo",
+        "currCanvasObjInfo",
+        "defaulFontName",
+        "defaultFontId",
+        "bleedWidth",
+        "bleedHeight",
+        "safeWidth",
+        "safeHeight"
+      ],
+      "hasOwnDrawText": false,
+      "drawTextType": "object",
+      "drawTextLength": null,
+      "drawTextSrc": null,
+      "ownerName": "a"
+    },
+    "lv_prototype-1": {
+      "level": "prototype-1",
+      "ownNamesSample": [
+        "replaceTemplatFal",
+        "bgShapeObj",
+        "_scaleMode",
+        "initTrue",
+        "tWidthMM",
+        "tHeightMM",
+        "initRatio",
+        "currentSize",
+        "inchMM",
+        "bleedLineWidth",
+        "bleedLineColor",
+        "thumbnailWidth",
+        "imgScaleB",
+        "minMediaSideDistance",
+        "maxMediaSidePecent",
+        "fontNameArr",
+        "svgTextNameArr",
+        "canvasDrawComplete",
+        "cutImgNum",
+        "drawCutImgCompleteNum",
+        "cutImgsLayerArr",
+        "cutImgsArr",
+        "objWidth",
+        "objHeight",
+        "drawSvgCount",
+        "firstSvgColor",
+        "mSelectCurvedImgOldArr",
+        "mSelectCurvedImgNewArr",
+        "isChangeSize",
+        "itemEdition",
+        "bleedStroke",
+        "markedId",
+        "init",
+        "initDrawingPen",
+        "rTrim",
+        "reLine",
+        "getCurrentSize",
+        "getCanvasId",
+        "getCurrentFactWidth",
+        "getCurrentFactHeight",
+        "constructor",
+        "canvas"
+      ],
+      "hasOwnDrawText": false,
+      "drawTextType": "object",
+      "drawTextLength": null,
+      "drawTextSrc": null,
+      "ownerName": "a"
+    },
+    "lv_prototype-2": {
+      "level": "prototype-2",
+      "ownNamesSample": [
+        "constructor",
+        "unActiveGroup",
+        "updateTextAndContainer",
+        "checkOldTextWidth",
+        "changeCursor",
+        "updatePropPanel",
+        "setCornerAndBorderSize",
+        "CheckImgPixel",
+        "callMediaTypeCheckPixelFun",
+        "setSize",
+        "initSize",
+        "setDemension",
+        "updateRuler",
+        "initRuler",
+        "reSetSize",
+        "setCanvasBgColor",
+        "setGradientBg",
+        "drawGrid",
+        "drawPaperCupGrid",
+        "drawPlaneCupGrid",
+        "drawPlasticCupGrid",
+        "checkObjsInProductJson",
+        "clearUnnecessaryObj",
+        "clearUndoArr",
+        "setCanvasSize",
+        "drawBleedLine",
+        "drawSafeLine",
+        "drawBleedCircleLine",
+        "stickerBorderShade",
+        "drawEnvironmentLogo",
+        "drawFoldLine",
+        "drawOtherLineInRegularPackage",
+        "setCanvasBgSvg",
+        "setCanvasBgImg",
+        "updateCanvasBgImgSize",
+        "updateCanvasBgColorSize",
+        "drawShadow",
+        "drawObjShadow",
+        "updateLayerOrderThumbnail",
+        "drawCurvedImg",
+        "edgeOptimization",
+        "drawImg",
+        "drawAndReturnImg",
+        "drawCurvedCutImg",
+        "drawCutImg",
+        "deepCopy",
+        "drawContainer",
+        "removeContainerMask",
+        "drawAdvanceContainer",
+        "onChangeForMoving"
+      ],
+      "hasOwnDrawText": true,
+      "drawTextType": "function",
+      "drawTextLength": 10,
+      "drawTextSrc": "function(a,b,f,d,h,e,g,k,l,t){var q=this;this.deepCopy(E.prototype,u.Textbox.prototype);var A;if(a.gildMaterial||a.duplicateEncoded)A=JSON.parse(JSON.stringify(a)), a=A.text,b=A.fontSize,f=A.x,d=A.y;v",
+      "ownerName": "v"
+    },
+    "lv_Object.prototype": {
+      "level": "Object.prototype",
+      "hasOwnDrawText": false
+    },
+    "drawTextOwner": "prototype-2",
+    "related": [
+      "CalculatePartPage",
+      "CalculationDesignAreaPixel",
+      "CalculationCoordsSize",
+      "SimpleCommandManager",
+      "ProductJsonObjAssignment",
+      "CalcuNewXYInPartPage",
+      "DeleteCommand",
+      "SetSize",
+      "LoadFromProductJsonCommand"
+    ],
+    "saveProbed": false,
+    "saveStatus": "SAVE_UNPROBED",
+    "note": "§十四 未触发真实保存；DeleteCommand/ProductJson 模块名仅登记"
+  },
+  "dimensionContract": {
+    "canvasWidth": 507.49999999999994,
+    "canvasHeight": 308.72916666666663,
+    "orientation": "LANDSCAPE",
+    "conversion": {
+      "sundryFound": true,
+      "mmToPX": {
+        "width": "NaN",
+        "height": "NaN"
+      },
+      "pxToMM": {
+        "canvasW": "NaN",
+        "canvasH": "NaN"
+      },
+      "roundtrip": {
+        "widthPx": "NaN",
+        "heightPx": "NaN",
+        "recoveredWidthMm": "NaN",
+        "recoveredHeightMm": "NaN"
+      },
+      "businessFields": {}
+    },
+    "roundtrip": {
+      "widthMm": 92,
+      "heightMm": 56,
+      "widthPx": null,
+      "heightPx": null,
+      "recoveredWidthMm": null,
+      "recoveredHeightMm": null,
+      "widthErrorMm": null,
+      "heightErrorMm": null,
+      "roundTripOk": false
+    },
+    "sources": [
+      {
+        "sourceModule": "CanvasObjVO",
+        "field": "currentCanvasNum",
+        "rawType": "number",
+        "value": "1"
+      },
+      {
+        "sourceModule": "CanvasObjVO",
+        "field": "multiCanvas",
+        "rawType": "boolean",
+        "value": "true"
+      }
+    ],
+    "note": "物理尺寸真值来源待 Commit 4；比例仅为 CORROBORATION"
+  },
+  "probes": [
+    {
+      "case": "A",
+      "requestedGeometry": {
+        "text": "ZY_NATIVE_PROBE_A",
+        "fontSize": 24,
+        "left": 50,
+        "top": 50,
+        "width": 160,
+        "height": 34,
+        "angle": 0
+      },
+      "errors": [],
+      "before": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "create": {
+        "ok": true,
+        "drewDelta": 1,
+        "retIdentity": null,
+        "reason": null
+      },
+      "recoverySource": "REGISTRY_DELTA",
+      "registryDelta": {
+        "before": 17,
+        "after": 18,
+        "delta": 1,
+        "addedIds": [
+          "b20cdeff-51c7-f05c-908f-9c2abc161a11"
+        ],
+        "removedIds": []
+      },
+      "objectDelta": {
+        "before": 25,
+        "after": 26,
+        "delta": 1,
+        "addedIds": [
+          "b20cdeff-51c7-f05c-908f-9c2abc161a11",
+          "t:line:25"
+        ],
+        "removedIds": [
+          "t:line:17"
+        ]
+      },
+      "canvasRegistration": {
+        "canvasDelta": 1,
+        "registryDelta": 1,
+        "mismatch": false,
+        "code": "OK"
+      },
+      "identityResolved": true,
+      "identityMeasured": {
+        "uuid": "70448edd-863d-421f-8a5e-df9ff0ad8907",
+        "multiUuid": "b20cdeff-51c7-f05c-908f-9c2abc161a11",
+        "markuuid": "",
+        "layerNum": 17,
+        "text": "ZY_NATIVE_PROBE_A"
+      },
+      "actualGeometry": {
+        "left": 50,
+        "top": 50,
+        "width": 241.51991271972656,
+        "height": 27.119999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "fontSize": 24,
+        "aCoords": {
+          "center": {
+            "x": 171.25995635986328,
+            "y": 64.06
+          },
+          "visualWidth": 242.51991271972656,
+          "visualHeight": 28.120000000000005,
+          "angle": 0
+        }
+      },
+      "fabricPosition": {
+        "left": 50,
+        "top": 50,
+        "width": 241.51991271972656,
+        "height": 27.119999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "originX": "left",
+        "originY": "top"
+      },
+      "locationPosition": {
+        "locationX": 50,
+        "locationY": 50,
+        "locationWidth": 160,
+        "locationHeight": 34,
+        "locationRotation": 0
+      },
+      "style": {
+        "fontFamily": "思源黑体 Regular",
+        "fontSize": 24,
+        "lineHeight": 1.2,
+        "charSpacing": 0,
+        "textAlign": "left"
+      },
+      "geometry": {
+        "requested": {
+          "text": "ZY_NATIVE_PROBE_A",
+          "fontSize": 24,
+          "left": 50,
+          "top": 50,
+          "width": 160,
+          "height": 34,
+          "angle": 0
+        },
+        "actual": {
+          "left": 50,
+          "top": 50,
+          "width": 241.51991271972656,
+          "height": 27.119999999999997,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "fontSize": 24,
+          "aCoords": {
+            "center": {
+              "x": 171.25995635986328,
+              "y": 64.06
+            },
+            "visualWidth": 242.51991271972656,
+            "visualHeight": 28.120000000000005,
+            "angle": 0
+          },
+          "center": {
+            "x": 171.25995635986328,
+            "y": 64.06
+          },
+          "visualWidth": 242.51991271972656,
+          "visualHeight": 28.120000000000005
+        },
+        "requestedCenter": {
+          "x": 130,
+          "y": 67
+        },
+        "actualCenter": {
+          "x": 171.25995635986328,
+          "y": 64.06
+        },
+        "leftError": 0,
+        "topError": 0,
+        "centerError": 41.36456936579689,
+        "placementError": 41.36456936579689,
+        "widthError": 82.51991271972656,
+        "heightError": -5.8799999999999955,
+        "angleError": 0,
+        "fontSizeError": 0,
+        "actualVisualWidth": 242.51991271972656,
+        "actualVisualHeight": 28.120000000000005
+      },
+      "consistency": {
+        "consistent": false,
+        "issues": [
+          {
+            "pair": "ACOORDS_LOCATION",
+            "dx": -41.25995635986328,
+            "dy": 2.9399999999999977,
+            "code": "NATIVE_GEOMETRY_INCONSISTENT"
+          }
+        ]
+      },
+      "cleanup": {
+        "method": "canvas.remove + registry splice (native objects)",
+        "removed": true,
+        "registryHandled": true,
+        "registryBefore": 18,
+        "registryAfter": 17,
+        "reason": null
+      },
+      "afterCleanup": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "cleanupVerify": {
+        "restored": true,
+        "objectRestored": true,
+        "registryRestored": true,
+        "textAnchorRestored": true,
+        "diffs": {
+          "objectCount": 0,
+          "registryCount": 0,
+          "textAnchorCount": 0
+        }
+      }
+    },
+    {
+      "case": "B",
+      "requestedGeometry": {
+        "text": "ZY_NATIVE_PROBE_B",
+        "fontSize": 24,
+        "left": 200,
+        "top": 120,
+        "width": 160,
+        "height": 34,
+        "angle": 0
+      },
+      "errors": [],
+      "before": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "create": {
+        "ok": true,
+        "drewDelta": 1,
+        "retIdentity": null,
+        "reason": null
+      },
+      "recoverySource": "REGISTRY_DELTA",
+      "registryDelta": {
+        "before": 17,
+        "after": 18,
+        "delta": 1,
+        "addedIds": [
+          "40aecc5d-b69b-bf90-00e5-5d5be478f23c"
+        ],
+        "removedIds": []
+      },
+      "objectDelta": {
+        "before": 25,
+        "after": 26,
+        "delta": 1,
+        "addedIds": [
+          "40aecc5d-b69b-bf90-00e5-5d5be478f23c",
+          "t:line:25"
+        ],
+        "removedIds": [
+          "t:line:17"
+        ]
+      },
+      "canvasRegistration": {
+        "canvasDelta": 1,
+        "registryDelta": 1,
+        "mismatch": false,
+        "code": "OK"
+      },
+      "identityResolved": true,
+      "identityMeasured": {
+        "uuid": "bd8b1aee-b69c-4307-9102-18f3a1b64171",
+        "multiUuid": "40aecc5d-b69b-bf90-00e5-5d5be478f23c",
+        "markuuid": "",
+        "layerNum": 17,
+        "text": "ZY_NATIVE_PROBE_B"
+      },
+      "actualGeometry": {
+        "left": 200,
+        "top": 120,
+        "width": 242.71990966796875,
+        "height": 27.119999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "fontSize": 24,
+        "aCoords": {
+          "center": {
+            "x": 321.8599548339844,
+            "y": 134.06
+          },
+          "visualWidth": 243.71990966796875,
+          "visualHeight": 28.120000000000005,
+          "angle": 0
+        }
+      },
+      "fabricPosition": {
+        "left": 200,
+        "top": 120,
+        "width": 242.71990966796875,
+        "height": 27.119999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "originX": "left",
+        "originY": "top"
+      },
+      "locationPosition": {
+        "locationX": 200,
+        "locationY": 120,
+        "locationWidth": 160,
+        "locationHeight": 34,
+        "locationRotation": 0
+      },
+      "style": {
+        "fontFamily": "思源黑体 Regular",
+        "fontSize": 24,
+        "lineHeight": 1.2,
+        "charSpacing": 0,
+        "textAlign": "left"
+      },
+      "geometry": {
+        "requested": {
+          "text": "ZY_NATIVE_PROBE_B",
+          "fontSize": 24,
+          "left": 200,
+          "top": 120,
+          "width": 160,
+          "height": 34,
+          "angle": 0
+        },
+        "actual": {
+          "left": 200,
+          "top": 120,
+          "width": 242.71990966796875,
+          "height": 27.119999999999997,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "fontSize": 24,
+          "aCoords": {
+            "center": {
+              "x": 321.8599548339844,
+              "y": 134.06
+            },
+            "visualWidth": 243.71990966796875,
+            "visualHeight": 28.120000000000005,
+            "angle": 0
+          },
+          "center": {
+            "x": 321.8599548339844,
+            "y": 134.06
+          },
+          "visualWidth": 243.71990966796875,
+          "visualHeight": 28.120000000000005
+        },
+        "requestedCenter": {
+          "x": 280,
+          "y": 137
+        },
+        "actualCenter": {
+          "x": 321.8599548339844,
+          "y": 134.06
+        },
+        "leftError": 0,
+        "topError": 0,
+        "centerError": 41.963072083716796,
+        "placementError": 41.963072083716796,
+        "widthError": 83.71990966796875,
+        "heightError": -5.8799999999999955,
+        "angleError": 0,
+        "fontSizeError": 0,
+        "actualVisualWidth": 243.71990966796875,
+        "actualVisualHeight": 28.120000000000005
+      },
+      "consistency": {
+        "consistent": false,
+        "issues": [
+          {
+            "pair": "ACOORDS_LOCATION",
+            "dx": -41.859954833984375,
+            "dy": 2.9399999999999977,
+            "code": "NATIVE_GEOMETRY_INCONSISTENT"
+          }
+        ]
+      },
+      "cleanup": {
+        "method": "canvas.remove + registry splice (native objects)",
+        "removed": true,
+        "registryHandled": true,
+        "registryBefore": 18,
+        "registryAfter": 17,
+        "reason": null
+      },
+      "afterCleanup": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "cleanupVerify": {
+        "restored": true,
+        "objectRestored": true,
+        "registryRestored": true,
+        "textAnchorRestored": true,
+        "diffs": {
+          "objectCount": 0,
+          "registryCount": 0,
+          "textAnchorCount": 0
+        }
+      }
+    },
+    {
+      "case": "C",
+      "requestedGeometry": {
+        "text": "ZY_NATIVE_PROBE_C",
+        "fontSize": 24,
+        "left": 50,
+        "top": 50,
+        "width": 160,
+        "height": 34,
+        "angle": 90
+      },
+      "errors": [],
+      "before": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "create": {
+        "ok": true,
+        "drewDelta": 1,
+        "retIdentity": null,
+        "reason": null
+      },
+      "recoverySource": "REGISTRY_DELTA",
+      "registryDelta": {
+        "before": 17,
+        "after": 18,
+        "delta": 1,
+        "addedIds": [
+          "99656cfc-0ad3-2684-e9a3-68eee9d047f4"
+        ],
+        "removedIds": []
+      },
+      "objectDelta": {
+        "before": 25,
+        "after": 26,
+        "delta": 1,
+        "addedIds": [
+          "99656cfc-0ad3-2684-e9a3-68eee9d047f4",
+          "t:line:25"
+        ],
+        "removedIds": [
+          "t:line:17"
+        ]
+      },
+      "canvasRegistration": {
+        "canvasDelta": 1,
+        "registryDelta": 1,
+        "mismatch": false,
+        "code": "OK"
+      },
+      "identityResolved": true,
+      "identityMeasured": {
+        "uuid": "0af7dd81-e19e-4d5f-a0d2-b5f956ed3423",
+        "multiUuid": "99656cfc-0ad3-2684-e9a3-68eee9d047f4",
+        "markuuid": "",
+        "layerNum": 17,
+        "text": "ZY_NATIVE_PROBE_C"
+      },
+      "actualGeometry": {
+        "left": 50,
+        "top": 50,
+        "width": 242.263916015625,
+        "height": 27.119999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 90,
+        "fontSize": 24,
+        "aCoords": {
+          "center": {
+            "x": 35.94,
+            "y": 171.6319580078125
+          },
+          "visualWidth": 243.263916015625,
+          "visualHeight": 28.12,
+          "angle": 90
+        }
+      },
+      "fabricPosition": {
+        "left": 50,
+        "top": 50,
+        "width": 242.263916015625,
+        "height": 27.119999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 90,
+        "originX": "left",
+        "originY": "top"
+      },
+      "locationPosition": {
+        "locationX": 50,
+        "locationY": 50,
+        "locationWidth": 160,
+        "locationHeight": 34,
+        "locationRotation": 90
+      },
+      "style": {
+        "fontFamily": "思源黑体 Regular",
+        "fontSize": 24,
+        "lineHeight": 1.2,
+        "charSpacing": 0,
+        "textAlign": "left"
+      },
+      "geometry": {
+        "requested": {
+          "text": "ZY_NATIVE_PROBE_C",
+          "fontSize": 24,
+          "left": 50,
+          "top": 50,
+          "width": 160,
+          "height": 34,
+          "angle": 90
+        },
+        "actual": {
+          "left": 50,
+          "top": 50,
+          "width": 242.263916015625,
+          "height": 27.119999999999997,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 90,
+          "fontSize": 24,
+          "aCoords": {
+            "center": {
+              "x": 35.94,
+              "y": 171.6319580078125
+            },
+            "visualWidth": 243.263916015625,
+            "visualHeight": 28.12,
+            "angle": 90
+          },
+          "center": {
+            "x": 35.94,
+            "y": 171.6319580078125
+          },
+          "visualWidth": 243.263916015625,
+          "visualHeight": 28.12
+        },
+        "requestedCenter": {
+          "x": 130,
+          "y": 67
+        },
+        "actualCenter": {
+          "x": 35.94,
+          "y": 171.6319580078125
+        },
+        "leftError": 0,
+        "topError": 0,
+        "centerError": 140.69516777966697,
+        "placementError": 140.69516777966697,
+        "widthError": 83.263916015625,
+        "heightError": -5.879999999999999,
+        "angleError": 0,
+        "fontSizeError": 0,
+        "actualVisualWidth": 243.263916015625,
+        "actualVisualHeight": 28.12
+      },
+      "consistency": {
+        "consistent": false,
+        "issues": [
+          {
+            "pair": "FABRIC_ACOORDS",
+            "dx": -135.1919580078125,
+            "dy": 108.0719580078125,
+            "code": "NATIVE_GEOMETRY_INCONSISTENT"
+          },
+          {
+            "pair": "ACOORDS_LOCATION",
+            "dx": 94.06,
+            "dy": -104.6319580078125,
+            "code": "NATIVE_GEOMETRY_INCONSISTENT"
+          }
+        ]
+      },
+      "angleApplied": "native-applied",
+      "cleanup": {
+        "method": "canvas.remove + registry splice (native objects)",
+        "removed": true,
+        "registryHandled": true,
+        "registryBefore": 18,
+        "registryAfter": 17,
+        "reason": null
+      },
+      "afterCleanup": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "cleanupVerify": {
+        "restored": true,
+        "objectRestored": true,
+        "registryRestored": true,
+        "textAnchorRestored": true,
+        "diffs": {
+          "objectCount": 0,
+          "registryCount": 0,
+          "textAnchorCount": 0
+        }
+      }
+    },
+    {
+      "case": "D",
+      "requestedGeometry": {
+        "text": "ZY_NATIVE_PROBE_D",
+        "fontSize": 60,
+        "left": 50,
+        "top": 50,
+        "width": 300,
+        "height": 80,
+        "angle": 0
+      },
+      "errors": [],
+      "before": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "create": {
+        "ok": true,
+        "drewDelta": 1,
+        "retIdentity": null,
+        "reason": null
+      },
+      "recoverySource": "REGISTRY_DELTA",
+      "registryDelta": {
+        "before": 17,
+        "after": 18,
+        "delta": 1,
+        "addedIds": [
+          "066b6913-2874-9b71-ee77-b6a720f0c9fc"
+        ],
+        "removedIds": []
+      },
+      "objectDelta": {
+        "before": 25,
+        "after": 26,
+        "delta": 1,
+        "addedIds": [
+          "066b6913-2874-9b71-ee77-b6a720f0c9fc",
+          "t:line:25"
+        ],
+        "removedIds": [
+          "t:line:17"
+        ]
+      },
+      "canvasRegistration": {
+        "canvasDelta": 1,
+        "registryDelta": 1,
+        "mismatch": false,
+        "code": "OK"
+      },
+      "identityResolved": true,
+      "identityMeasured": {
+        "uuid": "b0aa2f50-836a-4c4e-af20-bdf228f90eb2",
+        "multiUuid": "066b6913-2874-9b71-ee77-b6a720f0c9fc",
+        "markuuid": "",
+        "layerNum": 17,
+        "text": "ZY_NATIVE_PROBE_D"
+      },
+      "actualGeometry": {
+        "left": 50,
+        "top": 50,
+        "width": 604.5999145507812,
+        "height": 149.15999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "fontSize": 60,
+        "aCoords": {
+          "center": {
+            "x": 352.7999572753906,
+            "y": 125.07999999999998
+          },
+          "visualWidth": 605.5999145507812,
+          "visualHeight": 150.15999999999997,
+          "angle": 0
+        }
+      },
+      "fabricPosition": {
+        "left": 50,
+        "top": 50,
+        "width": 604.5999145507812,
+        "height": 149.15999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "originX": "left",
+        "originY": "top"
+      },
+      "locationPosition": {
+        "locationX": 50,
+        "locationY": 50,
+        "locationWidth": 300,
+        "locationHeight": 80,
+        "locationRotation": 0
+      },
+      "style": {
+        "fontFamily": "思源黑体 Regular",
+        "fontSize": 60,
+        "lineHeight": 1.2,
+        "charSpacing": 0,
+        "textAlign": "left"
+      },
+      "geometry": {
+        "requested": {
+          "text": "ZY_NATIVE_PROBE_D",
+          "fontSize": 60,
+          "left": 50,
+          "top": 50,
+          "width": 300,
+          "height": 80,
+          "angle": 0
+        },
+        "actual": {
+          "left": 50,
+          "top": 50,
+          "width": 604.5999145507812,
+          "height": 149.15999999999997,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "fontSize": 60,
+          "aCoords": {
+            "center": {
+              "x": 352.7999572753906,
+              "y": 125.07999999999998
+            },
+            "visualWidth": 605.5999145507812,
+            "visualHeight": 150.15999999999997,
+            "angle": 0
+          },
+          "center": {
+            "x": 352.7999572753906,
+            "y": 125.07999999999998
+          },
+          "visualWidth": 605.5999145507812,
+          "visualHeight": 150.15999999999997
+        },
+        "requestedCenter": {
+          "x": 200,
+          "y": 90
+        },
+        "actualCenter": {
+          "x": 352.7999572753906,
+          "y": 125.07999999999998
+        },
+        "leftError": 0,
+        "topError": 0,
+        "centerError": 156.77510434811134,
+        "placementError": 156.77510434811134,
+        "widthError": 305.59991455078125,
+        "heightError": 70.15999999999997,
+        "angleError": 0,
+        "fontSizeError": 0,
+        "actualVisualWidth": 605.5999145507812,
+        "actualVisualHeight": 150.15999999999997
+      },
+      "consistency": {
+        "consistent": false,
+        "issues": [
+          {
+            "pair": "ACOORDS_LOCATION",
+            "dx": -152.79995727539062,
+            "dy": -35.079999999999984,
+            "code": "NATIVE_GEOMETRY_INCONSISTENT"
+          }
+        ]
+      },
+      "cleanup": {
+        "method": "canvas.remove + registry splice (native objects)",
+        "removed": true,
+        "registryHandled": true,
+        "registryBefore": 18,
+        "registryAfter": 17,
+        "reason": null
+      },
+      "afterCleanup": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "cleanupVerify": {
+        "restored": true,
+        "objectRestored": true,
+        "registryRestored": true,
+        "textAnchorRestored": true,
+        "diffs": {
+          "objectCount": 0,
+          "registryCount": 0,
+          "textAnchorCount": 0
+        }
+      }
+    },
+    {
+      "case": "E",
+      "requestedGeometry": {
+        "text": "ZY_NATIVE_PROBE_中文字ABC123",
+        "fontSize": 24,
+        "left": 50,
+        "top": 50,
+        "width": 240,
+        "height": 34,
+        "angle": 0
+      },
+      "errors": [],
+      "before": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "create": {
+        "ok": true,
+        "drewDelta": 1,
+        "retIdentity": null,
+        "reason": null
+      },
+      "recoverySource": "REGISTRY_DELTA",
+      "registryDelta": {
+        "before": 17,
+        "after": 18,
+        "delta": 1,
+        "addedIds": [
+          "2e7b4cba-3e89-fa52-669f-bb3a230c268b"
+        ],
+        "removedIds": []
+      },
+      "objectDelta": {
+        "before": 25,
+        "after": 26,
+        "delta": 1,
+        "addedIds": [
+          "2e7b4cba-3e89-fa52-669f-bb3a230c268b",
+          "t:line:25"
+        ],
+        "removedIds": [
+          "t:line:17"
+        ]
+      },
+      "canvasRegistration": {
+        "canvasDelta": 1,
+        "registryDelta": 1,
+        "mismatch": false,
+        "code": "OK"
+      },
+      "identityResolved": true,
+      "identityMeasured": {
+        "uuid": "1d20bb3b-c965-4118-aaf1-6ca672870e76",
+        "multiUuid": "2e7b4cba-3e89-fa52-669f-bb3a230c268b",
+        "markuuid": "",
+        "layerNum": 17,
+        "text": "ZY_NATIVE_PROBE_中文字ABC123"
+      },
+      "actualGeometry": {
+        "left": 50,
+        "top": 50,
+        "width": 384.55987548828125,
+        "height": 27.119999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "fontSize": 24,
+        "aCoords": {
+          "center": {
+            "x": 242.77993774414062,
+            "y": 64.06
+          },
+          "visualWidth": 385.55987548828125,
+          "visualHeight": 28.120000000000005,
+          "angle": 0
+        }
+      },
+      "fabricPosition": {
+        "left": 50,
+        "top": 50,
+        "width": 384.55987548828125,
+        "height": 27.119999999999997,
+        "scaleX": 1,
+        "scaleY": 1,
+        "angle": 0,
+        "originX": "left",
+        "originY": "top"
+      },
+      "locationPosition": {
+        "locationX": 50,
+        "locationY": 50,
+        "locationWidth": 240,
+        "locationHeight": 34,
+        "locationRotation": 0
+      },
+      "style": {
+        "fontFamily": "思源黑体 Regular",
+        "fontSize": 24,
+        "lineHeight": 1.2,
+        "charSpacing": 0,
+        "textAlign": "left"
+      },
+      "geometry": {
+        "requested": {
+          "text": "ZY_NATIVE_PROBE_中文字ABC123",
+          "fontSize": 24,
+          "left": 50,
+          "top": 50,
+          "width": 240,
+          "height": 34,
+          "angle": 0
+        },
+        "actual": {
+          "left": 50,
+          "top": 50,
+          "width": 384.55987548828125,
+          "height": 27.119999999999997,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "fontSize": 24,
+          "aCoords": {
+            "center": {
+              "x": 242.77993774414062,
+              "y": 64.06
+            },
+            "visualWidth": 385.55987548828125,
+            "visualHeight": 28.120000000000005,
+            "angle": 0
+          },
+          "center": {
+            "x": 242.77993774414062,
+            "y": 64.06
+          },
+          "visualWidth": 385.55987548828125,
+          "visualHeight": 28.120000000000005
+        },
+        "requestedCenter": {
+          "x": 170,
+          "y": 67
+        },
+        "actualCenter": {
+          "x": 242.77993774414062,
+          "y": 64.06
+        },
+        "leftError": 0,
+        "topError": 0,
+        "centerError": 72.83929528792125,
+        "placementError": 72.83929528792125,
+        "widthError": 145.55987548828125,
+        "heightError": -5.8799999999999955,
+        "angleError": 0,
+        "fontSizeError": 0,
+        "actualVisualWidth": 385.55987548828125,
+        "actualVisualHeight": 28.120000000000005
+      },
+      "consistency": {
+        "consistent": false,
+        "issues": [
+          {
+            "pair": "ACOORDS_LOCATION",
+            "dx": -72.77993774414062,
+            "dy": 2.9399999999999977,
+            "code": "NATIVE_GEOMETRY_INCONSISTENT"
+          }
+        ]
+      },
+      "cleanup": {
+        "method": "canvas.remove + registry splice (native objects)",
+        "removed": true,
+        "registryHandled": true,
+        "registryBefore": 18,
+        "registryAfter": 17,
+        "reason": null
+      },
+      "afterCleanup": {
+        "objectCount": 25,
+        "registryCount": 17,
+        "textAnchorCount": 7,
+        "objectTypes": {
+          "image": 9,
+          "textbox": 7,
+          "path": 1,
+          "line": 8
+        }
+      },
+      "cleanupVerify": {
+        "restored": true,
+        "objectRestored": true,
+        "registryRestored": true,
+        "textAnchorRestored": true,
+        "diffs": {
+          "objectCount": 0,
+          "registryCount": 0,
+          "textAnchorCount": 0
+        }
+      }
+    }
+  ],
+  "mutationProbes": {
+    "setText": {
+      "which": "M",
+      "rows": [
+        {
+          "left": 50,
+          "top": 50,
+          "width": 246.43991088867188,
+          "height": 27.119999999999997,
+          "fontSize": 24,
+          "angle": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "center": {
+            "x": 173.71995544433594,
+            "y": 64.06
+          },
+          "visualWidth": 247.43991088867188,
+          "visualHeight": 28.120000000000005
+        },
+        {
+          "left": 50,
+          "top": 50,
+          "width": 246.43991088867188,
+          "height": 27.119999999999997,
+          "fontSize": 24,
+          "angle": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "center": {
+            "x": 173.71995544433594,
+            "y": 64.06
+          },
+          "visualWidth": 247.43991088867188,
+          "visualHeight": 28.120000000000005
+        },
+        {
+          "left": 50,
+          "top": 50,
+          "width": 246.43991088867188,
+          "height": 27.119999999999997,
+          "fontSize": 24,
+          "angle": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "center": {
+            "x": 173.71995544433594,
+            "y": 64.06
+          },
+          "visualWidth": 247.43991088867188,
+          "visualHeight": 28.120000000000005
+        }
+      ],
+      "classified": {
+        "mutation": "setText",
+        "steps": 3,
+        "deltas": {
+          "left": 0,
+          "top": 0,
+          "width": 0,
+          "height": 0,
+          "fontSize": 0,
+          "angle": 0
+        },
+        "positionVerdict": "Native_FontMutation_PositionStable",
+        "sizeVerdict": "heightStable",
+        "widthDelta": 0,
+        "heightDelta": 0
+      },
+      "cleanup": {
+        "removed": true,
+        "reason": null
+      }
+    },
+    "fontSize": {
+      "which": "F",
+      "rows": [
+        {
+          "left": 50,
+          "top": 50,
+          "width": 240.1999053955078,
+          "height": 27.119999999999997,
+          "fontSize": 24,
+          "angle": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "center": {
+            "x": 170.5999526977539,
+            "y": 64.06
+          },
+          "visualWidth": 241.1999053955078,
+          "visualHeight": 28.120000000000005
+        },
+        {
+          "left": 50,
+          "top": 50,
+          "width": 240.1999053955078,
+          "height": 27.119999999999997,
+          "fontSize": 36,
+          "angle": 0,
+          "scaleX": 1,
+          "scaleY": 1,
+          "center": {
+            "x": 170.5999526977539,
+            "y": 64.06
+          },
+          "visualWidth": 241.1999053955078,
+          "visualHeight": 28.120000000000005
+        }
+      ],
+      "classified": {
+        "mutation": "fontSize",
+        "steps": 2,
+        "deltas": {
+          "left": 0,
+          "top": 0,
+          "width": 0,
+          "height": 0,
+          "fontSize": 12,
+          "angle": 0
+        },
+        "positionVerdict": "Native_FontMutation_PositionStable",
+        "sizeVerdict": "heightStable",
+        "widthDelta": 0,
+        "heightDelta": 0
+      },
+      "cleanup": {
+        "removed": true,
+        "reason": null
+      }
+    },
+    "rotation": {
+      "which": "R",
+      "rows": [
+        {
+          "originX": "left",
+          "originY": "top",
+          "angle": 0,
+          "left": 50,
+          "top": 50,
+          "center": {
+            "x": 171.59595489501953,
+            "y": 64.06
+          },
+          "visualWidth": 243.19190979003906,
+          "visualHeight": 28.120000000000005
+        },
+        {
+          "originX": "left",
+          "originY": "top",
+          "angle": 45,
+          "left": 50,
+          "top": 50,
+          "center": {
+            "x": 126.039402927639,
+            "y": 145.92324561460472
+          },
+          "visualWidth": 243.19190979003903,
+          "visualHeight": 28.120000000000008
+        },
+        {
+          "originX": "left",
+          "originY": "top",
+          "angle": 90,
+          "left": 50,
+          "top": 50,
+          "center": {
+            "x": 35.94,
+            "y": 171.59595489501953
+          },
+          "visualWidth": 243.19190979003906,
+          "visualHeight": 28.12
+        }
+      ],
+      "cleanup": {
+        "removed": true,
+        "reason": null
+      }
+    }
+  },
+  "summary": {
+    "recoverySources": [
+      "A:REGISTRY_DELTA",
+      "B:REGISTRY_DELTA",
+      "C:REGISTRY_DELTA",
+      "D:REGISTRY_DELTA",
+      "E:REGISTRY_DELTA"
+    ],
+    "registryMismatches": [],
+    "geometryInconsistencies": [
+      "A:ACOORDS_LOCATION",
+      "B:ACOORDS_LOCATION",
+      "C:FABRIC_ACOORDS+ACOORDS_LOCATION",
+      "D:ACOORDS_LOCATION",
+      "E:ACOORDS_LOCATION"
+    ],
+    "mutationVerdicts": {
+      "setText": {
+        "mutation": "setText",
+        "steps": 3,
+        "deltas": {
+          "left": 0,
+          "top": 0,
+          "width": 0,
+          "height": 0,
+          "fontSize": 0,
+          "angle": 0
+        },
+        "positionVerdict": "Native_FontMutation_PositionStable",
+        "sizeVerdict": "heightStable",
+        "widthDelta": 0,
+        "heightDelta": 0
+      },
+      "fontSize": {
+        "mutation": "fontSize",
+        "steps": 2,
+        "deltas": {
+          "left": 0,
+          "top": 0,
+          "width": 0,
+          "height": 0,
+          "fontSize": 12,
+          "angle": 0
+        },
+        "positionVerdict": "Native_FontMutation_PositionStable",
+        "sizeVerdict": "heightStable",
+        "widthDelta": 0,
+        "heightDelta": 0
+      }
+    }
+  },
+  "errors": [],
+  "bridgingEvidence": {
+    "capabilityMethod": {
+      "module": "CanvasDiy",
+      "method": "drawText"
+    },
+    "create": "PASS",
+    "objectRecovery": "PASS",
+    "canvasRegistration": "PASS",
+    "businessRegistration": "PASS",
+    "geometry": "PASS",
+    "identity": "PASS",
+    "cleanup": "PASS",
+    "verdict": "NATIVE_CREATE_MEASURE_READY",
+    "counts": {
+      "cases": 5,
+      "create": 5,
+      "recovery": 5,
+      "canvasRegistration": 5,
+      "businessRegistration": 5,
+      "geometry": 5,
+      "identity": 5,
+      "cleanup": 5
+    }
+  }
+}

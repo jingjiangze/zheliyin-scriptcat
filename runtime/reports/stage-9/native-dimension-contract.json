@@ -1,0 +1,1345 @@
+{
+  "ts": "2026-09-20T14:55:10.939Z",
+  "version": "0.3.11.44",
+  "stage": "STAGE-9-V8-NATIVE-DIMENSION-CONTRACT",
+  "template": {
+    "urlPath": "https://diy.zheliyin.com/diyWeb/third/1234075/2114747/999/thirdDiyAdd.do",
+    "third": "1234075",
+    "product": "2114747",
+    "detail": "999"
+  },
+  "cookiePresent": true,
+  "note": "READ-ONLY dimension contract audit; 无对象创建/修改/保存; mm<=>px 候选调用仅纯计算; verdict 全部证据型",
+  "dimensionEvidence": {
+    "canvasDiyInventory": {
+      "found": true,
+      "source": "CanvasDiy.getInstance",
+      "fields": {
+        "tWidthMM": {
+          "protoLevel": 0,
+          "value": "92.0",
+          "type": "string"
+        },
+        "tHeightMM": {
+          "protoLevel": 0,
+          "value": "56.0",
+          "type": "string"
+        },
+        "width": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "height": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "canvasWidth": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "canvasHeight": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "zoom": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "scale": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "currentCanvasNum": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "canvasPagesNum": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "multiCanvas": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "objWidth": {
+          "protoLevel": 0,
+          "value": 0,
+          "type": "number"
+        },
+        "objHeight": {
+          "protoLevel": 0,
+          "value": 0,
+          "type": "number"
+        },
+        "currentSize": {
+          "protoLevel": 0,
+          "value": 1,
+          "type": "number"
+        },
+        "initRatio": {
+          "protoLevel": 0,
+          "value": 0.7,
+          "type": "number"
+        },
+        "inchMM": {
+          "protoLevel": 0,
+          "value": 25.4,
+          "type": "number"
+        },
+        "getCurrentSize": {
+          "protoLevel": 0,
+          "value": "(fn)",
+          "type": "fn"
+        },
+        "getCanvasId": {
+          "protoLevel": 0,
+          "value": "(fn)",
+          "type": "fn"
+        },
+        "getCurrentFactWidth": {
+          "protoLevel": 0,
+          "value": "(fn)",
+          "type": "fn"
+        },
+        "getCurrentFactHeight": {
+          "protoLevel": 0,
+          "value": "(fn)",
+          "type": "fn"
+        },
+        "safeWidth": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "safeHeight": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "bleedWidth": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        },
+        "bleedHeight": {
+          "protoLevel": null,
+          "value": null,
+          "type": "absent"
+        }
+      },
+      "physicalCandidates": {
+        "tWidthMM": 92,
+        "tHeightMM": 56
+      }
+    }
+  },
+  "conversionEvidence": {
+    "sundryFound": true,
+    "meta": {
+      "mmToPX": {
+        "available": true,
+        "protoLevel": 0,
+        "functionLength": 2,
+        "src": "function(a,c){return(a/25.4*c).toFixed(2)}"
+      },
+      "pxToMM": {
+        "available": true,
+        "protoLevel": 0,
+        "functionLength": 2,
+        "src": "function(a,c){return(a/c*25.4).toFixed(2)}"
+      },
+      "CalculationCoordsSize": {
+        "present": false,
+        "protoLevel": null,
+        "functionLength": null
+      },
+      "SetSize": {
+        "present": false,
+        "protoLevel": null,
+        "functionLength": null
+      }
+    },
+    "mmToPX": {
+      "attempts": [
+        {
+          "shape": "scalar(mm)",
+          "result": "NaN"
+        },
+        {
+          "shape": "scalar,sid",
+          "result": "NaN"
+        },
+        {
+          "shape": "scalar,scale",
+          "result": 10.87
+        }
+      ],
+      "resolved": {
+        "shape": "scalar,scale",
+        "argsCount": 2,
+        "argsFor": [
+          92,
+          3
+        ],
+        "result": 10.87
+      }
+    },
+    "pxToMM": {
+      "attempts": [
+        {
+          "shape": "scalar(mm)",
+          "result": "NaN"
+        },
+        {
+          "shape": "scalar,sid",
+          "result": "NaN"
+        },
+        {
+          "shape": "scalar,scale",
+          "result": 778.93
+        }
+      ],
+      "resolved": {
+        "shape": "scalar,scale",
+        "argsCount": 2,
+        "argsFor": [
+          92,
+          3
+        ],
+        "result": 778.93
+      }
+    },
+    "roundtrip": {
+      "mm": 92,
+      "px": 10.87,
+      "backMm": 92.03,
+      "errMm": 0.03
+    }
+  },
+  "pageEvidence": {
+    "ok": true,
+    "pageCount": 1,
+    "currentCanvasNum": 1,
+    "canvasPagesNum": 0,
+    "multiCanvas": true,
+    "frontImg": true,
+    "backImg": false,
+    "pages": [
+      {
+        "pageIndex": 0,
+        "idName": "c0",
+        "hasDrawText": true,
+        "canvasWidth": 507.49999999999994,
+        "canvasHeight": 308.72916666666663,
+        "objectCount": 25,
+        "tWidthMM": 92,
+        "tHeightMM": 56
+      }
+    ],
+    "modules": {
+      "CanvasDiy": {
+        "present": true,
+        "type": "object",
+        "keyCount": 2,
+        "hits": []
+      },
+      "CanvasObjVO": {
+        "present": true,
+        "type": "object",
+        "keyCount": 50,
+        "hits": [
+          {
+            "key": "multiCanvas",
+            "type": "boolean",
+            "prim": "true"
+          },
+          {
+            "key": "currentCanvasNum",
+            "type": "number",
+            "prim": "1"
+          }
+        ]
+      },
+      "CurrentCanvas": {
+        "present": true,
+        "type": "object",
+        "keyCount": 2,
+        "hits": []
+      },
+      "MultiCanvasDiy": {
+        "present": true,
+        "type": "object",
+        "keyCount": 1,
+        "hits": []
+      },
+      "PageVO": {
+        "present": true,
+        "type": "object",
+        "keyCount": 1,
+        "hits": []
+      },
+      "DesignPageVO": {
+        "present": true,
+        "type": "object",
+        "keyCount": 1,
+        "hits": []
+      },
+      "CurrentCanvasInfo": {
+        "present": true,
+        "type": "object",
+        "keyCount": 2,
+        "hits": []
+      },
+      "ProductVO": {
+        "present": true,
+        "type": "object",
+        "keyCount": 6,
+        "hits": [
+          {
+            "key": "pageList",
+            "type": "object",
+            "prim": "arr:2"
+          }
+        ]
+      },
+      "MasterVO": {
+        "present": true,
+        "type": "object",
+        "keyCount": 1,
+        "hits": []
+      },
+      "ProductDataModel": {
+        "present": true,
+        "type": "object",
+        "keyCount": 1,
+        "hits": []
+      },
+      "DesignVO": {
+        "present": true,
+        "type": "object",
+        "keyCount": 5,
+        "hits": [
+          {
+            "key": "pageList",
+            "type": "object",
+            "prim": "arr:0"
+          }
+        ]
+      }
+    }
+  },
+  "frontPage": {
+    "ok": true,
+    "pageIndex": 0,
+    "currentCanvasNum": 1,
+    "idName": "c0",
+    "hasDrawText": true,
+    "canvasWidth": 507.49999999999994,
+    "canvasHeight": 308.72916666666663,
+    "tWidthMM": 92,
+    "tHeightMM": 56,
+    "objectCount": 25,
+    "byType": {
+      "image": 9,
+      "textbox": 7,
+      "path": 1,
+      "line": 8
+    },
+    "verticalTextCandidates": [
+      {
+        "index": 5,
+        "type": "textbox",
+        "text": "山东东方美学美妆工作室",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 242.45616746899415,
+        "height": 23.96183863348625,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 243.45616746899418,
+        "visualHeight": 24.961838633486252
+      },
+      {
+        "index": 6,
+        "type": "textbox",
+        "text": "Email:dongfang@163.c",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 162.59076694614362,
+        "height": 14.639646744951577,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 163.59076694614362,
+        "visualHeight": 15.63964674495162
+      },
+      {
+        "index": 7,
+        "type": "textbox",
+        "text": "Tel:400-8888 8888",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 130.93629622420954,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 131.9362962242095,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 8,
+        "type": "textbox",
+        "text": "Add:XX市XX区XX广场A座15层（",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 384,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 385,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 9,
+        "type": "textbox",
+        "text": "主理人",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 49.748025660582265,
+        "height": 18.397724398840783,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 50.74802566058227,
+        "visualHeight": 19.39772439884078
+      },
+      {
+        "index": 10,
+        "type": "textbox",
+        "text": "188 8888 6666",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 113.50974740684731,
+        "height": 17.89758342833546,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 114.5097474068473,
+        "visualHeight": 18.89758342833545
+      },
+      {
+        "index": 11,
+        "type": "textbox",
+        "text": "简 小设",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 199.22690661591815,
+        "height": 34.78082434831301,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 200.22690661591815,
+        "visualHeight": 35.78082434831302
+      }
+    ]
+  },
+  "backPage": {
+    "ok": true,
+    "pageIndex": 0,
+    "currentCanvasNum": 2,
+    "idName": "c0",
+    "hasDrawText": true,
+    "canvasWidth": 507.49999999999994,
+    "canvasHeight": 308.72916666666663,
+    "tWidthMM": 92,
+    "tHeightMM": 56,
+    "objectCount": 25,
+    "byType": {
+      "image": 9,
+      "textbox": 7,
+      "path": 1,
+      "line": 8
+    },
+    "verticalTextCandidates": [
+      {
+        "index": 5,
+        "type": "textbox",
+        "text": "山东东方美学美妆工作室",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 242.45616746899415,
+        "height": 23.96183863348625,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 243.45616746899418,
+        "visualHeight": 24.961838633486252
+      },
+      {
+        "index": 6,
+        "type": "textbox",
+        "text": "Email:dongfang@163.c",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 162.59076694614362,
+        "height": 14.639646744951577,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 163.59076694614362,
+        "visualHeight": 15.63964674495162
+      },
+      {
+        "index": 7,
+        "type": "textbox",
+        "text": "Tel:400-8888 8888",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 130.93629622420954,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 131.9362962242095,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 8,
+        "type": "textbox",
+        "text": "Add:XX市XX区XX广场A座15层（",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 384,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 385,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 9,
+        "type": "textbox",
+        "text": "主理人",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 49.748025660582265,
+        "height": 18.397724398840783,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 50.74802566058227,
+        "visualHeight": 19.39772439884078
+      },
+      {
+        "index": 10,
+        "type": "textbox",
+        "text": "188 8888 6666",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 113.50974740684731,
+        "height": 17.89758342833546,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 114.5097474068473,
+        "visualHeight": 18.89758342833545
+      },
+      {
+        "index": 11,
+        "type": "textbox",
+        "text": "简 小设",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 199.22690661591815,
+        "height": 34.78082434831301,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 200.22690661591815,
+        "visualHeight": 35.78082434831302
+      }
+    ]
+  },
+  "sourceImageEvidence": {
+    "naturalWidthPx": 1063,
+    "naturalHeightPx": 638,
+    "objectWidthPx": 621.7453321187796,
+    "objectHeightPx": 373.16417863761177,
+    "scaleX": 1,
+    "scaleY": 1,
+    "scaledWidthPx": 621.7453321187796,
+    "scaledHeightPx": 373.16417863761177,
+    "kind": "largest-image-object"
+  },
+  "viewportEvidence": {
+    "boundingRect": {
+      "width": 507.5,
+      "height": 308.7250061035156,
+      "left": 478.75,
+      "top": 321.125
+    },
+    "zoom": 0.8458333333333332,
+    "canvasGetWidth": 507.49999999999994,
+    "canvasGetHeight": 308.72916666666663,
+    "note": "canvas logical W/H 与 display rect 分离记录"
+  },
+  "verticalTextEvidence": {
+    "front": [
+      {
+        "index": 5,
+        "type": "textbox",
+        "text": "山东东方美学美妆工作室",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 242.45616746899415,
+        "height": 23.96183863348625,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 243.45616746899418,
+        "visualHeight": 24.961838633486252
+      },
+      {
+        "index": 6,
+        "type": "textbox",
+        "text": "Email:dongfang@163.c",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 162.59076694614362,
+        "height": 14.639646744951577,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 163.59076694614362,
+        "visualHeight": 15.63964674495162
+      },
+      {
+        "index": 7,
+        "type": "textbox",
+        "text": "Tel:400-8888 8888",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 130.93629622420954,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 131.9362962242095,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 8,
+        "type": "textbox",
+        "text": "Add:XX市XX区XX广场A座15层（",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 384,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 385,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 9,
+        "type": "textbox",
+        "text": "主理人",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 49.748025660582265,
+        "height": 18.397724398840783,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 50.74802566058227,
+        "visualHeight": 19.39772439884078
+      },
+      {
+        "index": 10,
+        "type": "textbox",
+        "text": "188 8888 6666",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 113.50974740684731,
+        "height": 17.89758342833546,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 114.5097474068473,
+        "visualHeight": 18.89758342833545
+      },
+      {
+        "index": 11,
+        "type": "textbox",
+        "text": "简 小设",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 199.22690661591815,
+        "height": 34.78082434831301,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 200.22690661591815,
+        "visualHeight": 35.78082434831302
+      }
+    ],
+    "back": [
+      {
+        "index": 5,
+        "type": "textbox",
+        "text": "山东东方美学美妆工作室",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 242.45616746899415,
+        "height": 23.96183863348625,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 243.45616746899418,
+        "visualHeight": 24.961838633486252
+      },
+      {
+        "index": 6,
+        "type": "textbox",
+        "text": "Email:dongfang@163.c",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 162.59076694614362,
+        "height": 14.639646744951577,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 163.59076694614362,
+        "visualHeight": 15.63964674495162
+      },
+      {
+        "index": 7,
+        "type": "textbox",
+        "text": "Tel:400-8888 8888",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 130.93629622420954,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 131.9362962242095,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 8,
+        "type": "textbox",
+        "text": "Add:XX市XX区XX广场A座15层（",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 384,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 385,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 9,
+        "type": "textbox",
+        "text": "主理人",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 49.748025660582265,
+        "height": 18.397724398840783,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 50.74802566058227,
+        "visualHeight": 19.39772439884078
+      },
+      {
+        "index": 10,
+        "type": "textbox",
+        "text": "188 8888 6666",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 113.50974740684731,
+        "height": 17.89758342833546,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 114.5097474068473,
+        "visualHeight": 18.89758342833545
+      },
+      {
+        "index": 11,
+        "type": "textbox",
+        "text": "简 小设",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 199.22690661591815,
+        "height": 34.78082434831301,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 200.22690661591815,
+        "visualHeight": 35.78082434831302
+      }
+    ],
+    "note": "只读真实对象；angle/origin/aCoords 不预设竖版实现方式"
+  },
+  "divergenceEvidence": {
+    "ok": true,
+    "total": 7,
+    "diverged": 0,
+    "samples": [
+      {
+        "objectIndex": 5,
+        "text": "山东东方美学美妆工作室",
+        "nativeRequestedSize": {
+          "width": 242.45616746899415,
+          "height": 23.96183863348625
+        },
+        "actualObjectSize": {
+          "width": 242.45616746899415,
+          "height": 23.96183863348625
+        },
+        "aCoordsSize": {
+          "width": 243.45616746899418,
+          "height": 24.961838633486252
+        },
+        "angle": 0,
+        "consistency": "MATCH"
+      },
+      {
+        "objectIndex": 6,
+        "text": "Email:dongfang@163.com",
+        "nativeRequestedSize": {
+          "width": 162.59076694614362,
+          "height": 14.639646744951577
+        },
+        "actualObjectSize": {
+          "width": 162.59076694614362,
+          "height": 14.639646744951577
+        },
+        "aCoordsSize": {
+          "width": 163.59076694614362,
+          "height": 15.63964674495162
+        },
+        "angle": 0,
+        "consistency": "MATCH"
+      },
+      {
+        "objectIndex": 7,
+        "text": "Tel:400-8888 8888",
+        "nativeRequestedSize": {
+          "width": 130.93629622420954,
+          "height": 14.69
+        },
+        "actualObjectSize": {
+          "width": 130.93629622420954,
+          "height": 14.69
+        },
+        "aCoordsSize": {
+          "width": 131.9362962242095,
+          "height": 15.690000000000055
+        },
+        "angle": 0,
+        "consistency": "MATCH"
+      },
+      {
+        "objectIndex": 8,
+        "text": "Add:XX市XX区XX广场A座15层（地铁X号",
+        "nativeRequestedSize": {
+          "width": 384,
+          "height": 14.69
+        },
+        "actualObjectSize": {
+          "width": 384,
+          "height": 14.69
+        },
+        "aCoordsSize": {
+          "width": 385,
+          "height": 15.690000000000055
+        },
+        "angle": 0,
+        "consistency": "MATCH"
+      },
+      {
+        "objectIndex": 9,
+        "text": "主理人",
+        "nativeRequestedSize": {
+          "width": 49.748025660582265,
+          "height": 18.397724398840783
+        },
+        "actualObjectSize": {
+          "width": 49.748025660582265,
+          "height": 18.397724398840783
+        },
+        "aCoordsSize": {
+          "width": 50.74802566058227,
+          "height": 19.39772439884078
+        },
+        "angle": 0,
+        "consistency": "MATCH"
+      },
+      {
+        "objectIndex": 10,
+        "text": "188 8888 6666",
+        "nativeRequestedSize": {
+          "width": 113.50974740684731,
+          "height": 17.89758342833546
+        },
+        "actualObjectSize": {
+          "width": 113.50974740684731,
+          "height": 17.89758342833546
+        },
+        "aCoordsSize": {
+          "width": 114.5097474068473,
+          "height": 18.89758342833545
+        },
+        "angle": 0,
+        "consistency": "MATCH"
+      },
+      {
+        "objectIndex": 11,
+        "text": "简 小设",
+        "nativeRequestedSize": {
+          "width": 199.22690661591815,
+          "height": 34.78082434831301
+        },
+        "actualObjectSize": {
+          "width": 199.22690661591815,
+          "height": 34.78082434831301
+        },
+        "aCoordsSize": {
+          "width": 200.22690661591815,
+          "height": 35.78082434831302
+        },
+        "angle": 0,
+        "consistency": "MATCH"
+      }
+    ]
+  },
+  "contracts": {
+    "front": {
+      "physical": {
+        "widthMM": 92,
+        "heightMM": 56,
+        "source": "CanvasDiy.t*MM"
+      },
+      "canvas": {
+        "widthPx": 507.49999999999994,
+        "heightPx": 308.72916666666663,
+        "source": "native"
+      },
+      "sourceImage": {
+        "naturalWidthPx": 1063,
+        "naturalHeightPx": 638,
+        "objectWidthPx": 621.7453321187796,
+        "objectHeightPx": 373.16417863761177,
+        "scaleX": 1,
+        "scaleY": 1
+      },
+      "viewport": {
+        "widthPx": 507.5,
+        "heightPx": 308.7250061035156,
+        "zoom": 0.8458333333333332,
+        "scale": null
+      },
+      "orientation": "landscape",
+      "pxPerMM": {
+        "width": 5.516304347826086,
+        "height": 5.513020833333333
+      },
+      "mmPerPx": {
+        "width": 0.18128078817733992,
+        "height": 0.18138875767595655
+      },
+      "uniformScale": false,
+      "pageIdentity": "canvas:c0",
+      "canvasIdentity": "c0",
+      "conversion": {
+        "status": "NATIVE_CONVERSION_SIGNATURE_CONFIRMED",
+        "api": "sundry.mmToPX/pxToMM",
+        "confidence": "HIGH",
+        "sample": null
+      },
+      "sizeDivergence": {
+        "consistency": "UNKNOWN",
+        "nativeRequestedSize": null,
+        "actualObjectSize": null,
+        "locationSize": null,
+        "aCoordsSize": null
+      }
+    },
+    "back": {
+      "physical": {
+        "widthMM": 92,
+        "heightMM": 56,
+        "source": "CanvasDiy.t*MM"
+      },
+      "canvas": {
+        "widthPx": 507.49999999999994,
+        "heightPx": 308.72916666666663,
+        "source": "native"
+      },
+      "sourceImage": {
+        "naturalWidthPx": 1063,
+        "naturalHeightPx": 638,
+        "objectWidthPx": 621.7453321187796,
+        "objectHeightPx": 373.16417863761177,
+        "scaleX": 1,
+        "scaleY": 1
+      },
+      "viewport": {
+        "widthPx": 507.5,
+        "heightPx": 308.7250061035156,
+        "zoom": 0.8458333333333332,
+        "scale": null
+      },
+      "orientation": "landscape",
+      "pxPerMM": {
+        "width": 5.516304347826086,
+        "height": 5.513020833333333
+      },
+      "mmPerPx": {
+        "width": 0.18128078817733992,
+        "height": 0.18138875767595655
+      },
+      "uniformScale": false,
+      "pageIdentity": "canvas:c0",
+      "canvasIdentity": "c0",
+      "conversion": {
+        "status": "NATIVE_CONVERSION_SIGNATURE_CONFIRMED",
+        "api": "sundry.mmToPX/pxToMM",
+        "confidence": "HIGH",
+        "sample": null
+      },
+      "sizeDivergence": {
+        "consistency": "UNKNOWN",
+        "nativeRequestedSize": null,
+        "actualObjectSize": null,
+        "locationSize": null,
+        "aCoordsSize": null
+      }
+    },
+    "frontAfterSwitch": {
+      "physical": {
+        "widthMM": 92,
+        "heightMM": 56,
+        "source": "CanvasDiy.t*MM"
+      },
+      "canvas": {
+        "widthPx": 507.49999999999994,
+        "heightPx": 308.72916666666663,
+        "source": "native"
+      },
+      "sourceImage": {
+        "naturalWidthPx": 1063,
+        "naturalHeightPx": 638,
+        "objectWidthPx": 621.7453321187796,
+        "objectHeightPx": 373.16417863761177,
+        "scaleX": 1,
+        "scaleY": 1
+      },
+      "viewport": {
+        "widthPx": 507.5,
+        "heightPx": 308.7250061035156,
+        "zoom": 0.8458333333333332,
+        "scale": null
+      },
+      "orientation": "landscape",
+      "pxPerMM": {
+        "width": 5.516304347826086,
+        "height": 5.513020833333333
+      },
+      "mmPerPx": {
+        "width": 0.18128078817733992,
+        "height": 0.18138875767595655
+      },
+      "uniformScale": false,
+      "pageIdentity": "canvas:c0",
+      "canvasIdentity": "c0",
+      "conversion": {
+        "status": "NATIVE_CONVERSION_SIGNATURE_CONFIRMED",
+        "api": "sundry.mmToPX/pxToMM",
+        "confidence": "HIGH",
+        "sample": null
+      },
+      "sizeDivergence": {
+        "consistency": "UNKNOWN",
+        "nativeRequestedSize": null,
+        "actualObjectSize": null,
+        "locationSize": null,
+        "aCoordsSize": null
+      }
+    }
+  },
+  "verdict": {
+    "keys": [
+      "NATIVE_DIMENSION_CONFIRMED",
+      "NATIVE_CONVERSION_SIGNATURE_CONFIRMED",
+      "MULTI_PAGE_STRUCTURE_UNRESOLVED",
+      "SOURCE_IMAGE_CONFIRMED",
+      "VIEWPORT_SEPARATED",
+      "VERTICAL_TEXT_UNRESOLVED_OR_NONE"
+    ],
+    "physicalWidthMM": 92,
+    "physicalHeightMM": 56,
+    "canvasWidthPx": 507.49999999999994,
+    "canvasHeightPx": 308.72916666666663
+  },
+  "errors": [],
+  "deepPagePath": {
+    "pageListEntries": [
+      {
+        "index": 0,
+        "ownKeys": [
+          "errDesignFlag",
+          "tshirtImagePath",
+          "diyDisplayHeight",
+          "diyType",
+          "bleedWidth",
+          "previewImagePath",
+          "minPage",
+          "bleedHeight",
+          "pageGroup",
+          "diyWorkAreaHeight",
+          "templateID",
+          "title",
+          "content",
+          "workAreaHeight",
+          "diyDisplayWidth",
+          "changeFontId",
+          "pageOrder",
+          "warnText",
+          "diyWorkAreaWidth",
+          "designModel",
+          "id",
+          "workAreaWidth",
+          "maxPage",
+          "resourceType"
+        ],
+        "entry": {
+          "id": "2459103",
+          "title": "正面"
+        }
+      },
+      {
+        "index": 1,
+        "ownKeys": [
+          "errDesignFlag",
+          "tshirtImagePath",
+          "diyDisplayHeight",
+          "diyType",
+          "bleedWidth",
+          "previewImagePath",
+          "minPage",
+          "bleedHeight",
+          "pageGroup",
+          "diyWorkAreaHeight",
+          "templateID",
+          "title",
+          "content",
+          "workAreaHeight",
+          "diyDisplayWidth",
+          "changeFontId",
+          "pageOrder",
+          "warnText",
+          "diyWorkAreaWidth",
+          "designModel",
+          "id",
+          "workAreaWidth",
+          "maxPage",
+          "resourceType"
+        ],
+        "entry": {
+          "id": "2459104",
+          "title": "背面"
+        }
+      }
+    ],
+    "currentCanvasShape": {
+      "type": "object",
+      "ownKeys": [
+        "getCurrentCanvas",
+        "getCanvasFromArray"
+      ],
+      "protoKeys": []
+    },
+    "multiCanvasDiy": {
+      "type": "object",
+      "ownKeys": [
+        "MultiCanvasDiy"
+      ],
+      "protoKeys": []
+    },
+    "pageTabEvidence": [
+      {
+        "tag": "DIV",
+        "text": "正面"
+      },
+      {
+        "tag": "DIV",
+        "text": "背面"
+      }
+    ],
+    "canvasPagesNum": 0,
+    "multiCanvas": true,
+    "pageListLength": 2
+  },
+  "materializationProbe": {
+    "pagesBefore": 1,
+    "pagesAfterBack": 1,
+    "worked": false,
+    "currentCanvasNumAfter": 2,
+    "note": "不以 currentCanvasNum 变化判定切换成功；以第二 Canvas 是否真实 materialize 为准"
+  },
+  "frontPageAfterSwitch": {
+    "ok": true,
+    "pageIndex": 0,
+    "currentCanvasNum": 1,
+    "idName": "c0",
+    "hasDrawText": true,
+    "canvasWidth": 507.49999999999994,
+    "canvasHeight": 308.72916666666663,
+    "tWidthMM": 92,
+    "tHeightMM": 56,
+    "objectCount": 25,
+    "byType": {
+      "image": 9,
+      "textbox": 7,
+      "path": 1,
+      "line": 8
+    },
+    "verticalTextCandidates": [
+      {
+        "index": 5,
+        "type": "textbox",
+        "text": "山东东方美学美妆工作室",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 242.45616746899415,
+        "height": 23.96183863348625,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 243.45616746899418,
+        "visualHeight": 24.961838633486252
+      },
+      {
+        "index": 6,
+        "type": "textbox",
+        "text": "Email:dongfang@163.c",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 162.59076694614362,
+        "height": 14.639646744951577,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 163.59076694614362,
+        "visualHeight": 15.63964674495162
+      },
+      {
+        "index": 7,
+        "type": "textbox",
+        "text": "Tel:400-8888 8888",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 130.93629622420954,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 131.9362962242095,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 8,
+        "type": "textbox",
+        "text": "Add:XX市XX区XX广场A座15层（",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 384,
+        "height": 14.69,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 385,
+        "visualHeight": 15.690000000000055
+      },
+      {
+        "index": 9,
+        "type": "textbox",
+        "text": "主理人",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 49.748025660582265,
+        "height": 18.397724398840783,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 50.74802566058227,
+        "visualHeight": 19.39772439884078
+      },
+      {
+        "index": 10,
+        "type": "textbox",
+        "text": "188 8888 6666",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 113.50974740684731,
+        "height": 17.89758342833546,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 114.5097474068473,
+        "visualHeight": 18.89758342833545
+      },
+      {
+        "index": 11,
+        "type": "textbox",
+        "text": "简 小设",
+        "angle": 0,
+        "originX": "left",
+        "originY": "top",
+        "width": 199.22690661591815,
+        "height": 34.78082434831301,
+        "scaleX": 1,
+        "scaleY": 1,
+        "visualWidth": 200.22690661591815,
+        "visualHeight": 35.78082434831302
+      }
+    ]
+  },
+  "pageSwitch": {
+    "attempts": [
+      {
+        "method": "ui-click-back",
+        "ok": false
+      },
+      {
+        "method": "native-currentCanvasNum=2",
+        "ok": true
+      }
+    ],
+    "switchMethod": "native-currentCanvasNum=2",
+    "errors": [],
+    "identityRestored": true,
+    "objectCountUnchanged": true,
+    "switchVerified": false
+  }
+}

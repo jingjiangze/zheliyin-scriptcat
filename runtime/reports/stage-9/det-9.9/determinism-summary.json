@@ -1,0 +1,5309 @@
+{
+  "ts": "2026-09-22T07:57:13.532Z",
+  "card": "runtime/stage8b/assets/real-card-xiazhu.png",
+  "cookieSource": "probe",
+  "gitHead": "9b8bfc24bfef453b21e641c30e5ff03517c8e57a",
+  "plan": {
+    "B": 10,
+    "A": 3
+  },
+  "runs": [
+    {
+      "tag": "det-run-B-1",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 14607,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-B-2",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 14379,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-B-3",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 14402,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-B-4",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 14847,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-B-5",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 15555,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-B-6",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 13811,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-B-7",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 13792,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-B-8",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 13776,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-B-9",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 13660,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-B-10",
+      "ab": "B",
+      "exit": 0,
+      "durMs": 13872,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-A-1",
+      "ab": "A",
+      "exit": 0,
+      "durMs": 14066,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-A-2",
+      "ab": "A",
+      "exit": 0,
+      "durMs": 14742,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "tag": "det-run-A-3",
+      "ab": "A",
+      "exit": 0,
+      "durMs": 13743,
+      "rows": 15,
+      "sources": {
+        "OCR_BBOX_FALLBACK": 15
+      },
+      "status": "已生成 15 个文字（可双击编辑）"
+    }
+  ],
+  "blocks": {
+    "2287483098": {
+      "target.left": {
+        "B": [
+          452.3,
+          452.3,
+          452.3,
+          452.3,
+          452.3,
+          452.3,
+          452.3,
+          452.3,
+          452.3,
+          452.3
+        ],
+        "A": [
+          357.98,
+          357.98,
+          357.98
+        ]
+      },
+      "target.top": {
+        "B": [
+          131.32,
+          131.32,
+          131.32,
+          131.32,
+          131.32,
+          131.32,
+          131.32,
+          131.32,
+          131.32,
+          131.32
+        ],
+        "A": [
+          129.17,
+          129.17,
+          129.17
+        ]
+      },
+      "target.width": {
+        "B": [
+          113.43,
+          113.43,
+          113.43,
+          113.43,
+          113.43,
+          113.43,
+          113.43,
+          113.43,
+          113.43,
+          113.43
+        ],
+        "A": [
+          113.43,
+          113.43,
+          113.43
+        ]
+      },
+      "target.height": {
+        "B": [
+          28,
+          28,
+          28,
+          28,
+          28,
+          28,
+          28,
+          28,
+          28,
+          28
+        ],
+        "A": [
+          28,
+          28,
+          28
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17
+        ],
+        "A": [
+          17,
+          17,
+          17
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          357.98,
+          357.98,
+          357.98,
+          357.98,
+          357.98,
+          357.98,
+          357.98,
+          357.98,
+          357.98,
+          357.98
+        ],
+        "A": [
+          357.98,
+          357.98,
+          357.98
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          103.43,
+          103.43,
+          103.43,
+          103.43,
+          103.43,
+          103.43,
+          103.43,
+          103.43,
+          103.43,
+          103.43
+        ],
+        "A": [
+          103.43,
+          103.43,
+          103.43
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76
+        ],
+        "A": [
+          18.76,
+          18.76,
+          18.76
+        ]
+      }
+    },
+    "夏祝莲": {
+      "target.left": {
+        "B": [
+          248.66,
+          248.66,
+          248.66,
+          248.66,
+          248.66,
+          248.66,
+          248.66,
+          248.66,
+          248.66,
+          248.66
+        ],
+        "A": [
+          187.03,
+          187.03,
+          187.03
+        ]
+      },
+      "target.top": {
+        "B": [
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65
+        ],
+        "A": [
+          8.58,
+          8.58,
+          8.58
+        ]
+      },
+      "target.width": {
+        "B": [
+          204,
+          204,
+          204,
+          204,
+          204,
+          204,
+          204,
+          204,
+          204,
+          204
+        ],
+        "A": [
+          204,
+          204,
+          204
+        ]
+      },
+      "target.height": {
+        "B": [
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81,
+          81
+        ],
+        "A": [
+          81,
+          81,
+          81
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          61,
+          61,
+          61,
+          61,
+          61,
+          61,
+          61,
+          61,
+          61,
+          61
+        ],
+        "A": [
+          61,
+          61,
+          61
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03
+        ],
+        "A": [
+          187.03,
+          187.03,
+          187.03
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          176.31,
+          176.31,
+          176.31,
+          176.31,
+          176.31,
+          176.31,
+          176.31,
+          176.31,
+          176.31,
+          176.31
+        ],
+        "A": [
+          176.31,
+          176.31,
+          176.31
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          60.57,
+          60.57,
+          60.57,
+          60.57,
+          60.57,
+          60.57,
+          60.57,
+          60.57,
+          60.57,
+          60.57
+        ],
+        "A": [
+          60.57,
+          60.57,
+          60.57
+        ]
+      }
+    },
+    "手机:": {
+      "target.left": {
+        "B": [
+          327.44,
+          327.44,
+          327.44,
+          327.44,
+          327.44,
+          327.44,
+          327.44,
+          327.44,
+          327.44,
+          327.44
+        ],
+        "A": [
+          311.36,
+          311.36,
+          311.36
+        ]
+      },
+      "target.top": {
+        "B": [
+          99.69,
+          99.69,
+          99.69,
+          99.69,
+          99.69,
+          99.69,
+          99.69,
+          99.69,
+          99.69,
+          99.69
+        ],
+        "A": [
+          97.55,
+          97.55,
+          97.55
+        ]
+      },
+      "target.width": {
+        "B": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "A": [
+          60,
+          60,
+          60
+        ]
+      },
+      "target.height": {
+        "B": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "A": [
+          25,
+          25,
+          25
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "A": [
+          14,
+          14,
+          14
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36
+        ],
+        "A": [
+          311.36,
+          311.36,
+          311.36
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          38.05,
+          38.05,
+          38.05,
+          38.05,
+          38.05,
+          38.05,
+          38.05,
+          38.05,
+          38.05,
+          38.05
+        ],
+        "A": [
+          38.05,
+          38.05,
+          38.05
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54
+        ],
+        "A": [
+          15.54,
+          15.54,
+          15.54
+        ]
+      }
+    },
+    "13719111188": {
+      "target.left": {
+        "B": [
+          394.42,
+          394.42,
+          394.42,
+          394.42,
+          394.42,
+          394.42,
+          394.42,
+          394.42,
+          394.42,
+          394.42
+        ],
+        "A": [
+          356.91,
+          356.91,
+          356.91
+        ]
+      },
+      "target.top": {
+        "B": [
+          102.37,
+          102.37,
+          102.37,
+          102.37,
+          102.37,
+          102.37,
+          102.37,
+          102.37,
+          102.37,
+          102.37
+        ],
+        "A": [
+          100.77,
+          100.77,
+          100.77
+        ]
+      },
+      "target.width": {
+        "B": [
+          113,
+          113,
+          113,
+          113,
+          113,
+          113,
+          113,
+          113,
+          113,
+          113
+        ],
+        "A": [
+          113,
+          113,
+          113
+        ]
+      },
+      "target.height": {
+        "B": [
+          28,
+          28,
+          28,
+          28,
+          28,
+          28,
+          28,
+          28,
+          28,
+          28
+        ],
+        "A": [
+          28,
+          28,
+          28
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17,
+          17
+        ],
+        "A": [
+          17,
+          17,
+          17
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          356.91,
+          356.91,
+          356.91,
+          356.91,
+          356.91,
+          356.91,
+          356.91,
+          356.91,
+          356.91,
+          356.91
+        ],
+        "A": [
+          356.91,
+          356.91,
+          356.91
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          102.36,
+          102.36,
+          102.36,
+          102.36,
+          102.36,
+          102.36,
+          102.36,
+          102.36,
+          102.36,
+          102.36
+        ],
+        "A": [
+          102.36,
+          102.36,
+          102.36
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69
+        ],
+        "A": [
+          17.69,
+          17.69,
+          17.69
+        ]
+      }
+    },
+    "Mobile": {
+      "target.left": {
+        "B": [
+          312.97,
+          312.97,
+          312.97,
+          312.97,
+          312.97,
+          312.97,
+          312.97,
+          312.97,
+          312.97,
+          312.97
+        ],
+        "A": [
+          311.36,
+          311.36,
+          311.36
+        ]
+      },
+      "target.top": {
+        "B": [
+          115.77,
+          115.77,
+          115.77,
+          115.77,
+          115.77,
+          115.77,
+          115.77,
+          115.77,
+          115.77,
+          115.77
+        ],
+        "A": [
+          114.17,
+          114.17,
+          114.17
+        ]
+      },
+      "target.width": {
+        "B": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "A": [
+          60,
+          60,
+          60
+        ]
+      },
+      "target.height": {
+        "B": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "A": [
+          20,
+          20,
+          20
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "A": [
+          10,
+          10,
+          10
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36,
+          311.36
+        ],
+        "A": [
+          311.36,
+          311.36,
+          311.36
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          31.08,
+          31.08,
+          31.08,
+          31.08,
+          31.08,
+          31.08,
+          31.08,
+          31.08,
+          31.08,
+          31.08
+        ],
+        "A": [
+          31.08,
+          31.08,
+          31.08
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65,
+          9.65
+        ],
+        "A": [
+          9.65,
+          9.65,
+          9.65
+        ]
+      }
+    },
+    "微信:": {
+      "target.left": {
+        "B": [
+          312.43,
+          312.43,
+          312.43,
+          312.43,
+          312.43,
+          312.43,
+          312.43,
+          312.43,
+          312.43,
+          312.43
+        ],
+        "A": [
+          310.82,
+          310.82,
+          310.82
+        ]
+      },
+      "target.top": {
+        "B": [
+          130.25,
+          130.25,
+          130.25,
+          130.25,
+          130.25,
+          130.25,
+          130.25,
+          130.25,
+          130.25,
+          130.25
+        ],
+        "A": [
+          128.1,
+          128.1,
+          128.1
+        ]
+      },
+      "target.width": {
+        "B": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "A": [
+          60,
+          60,
+          60
+        ]
+      },
+      "target.height": {
+        "B": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "A": [
+          25,
+          25,
+          25
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "A": [
+          14,
+          14,
+          14
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          310.82,
+          310.82,
+          310.82,
+          310.82,
+          310.82,
+          310.82,
+          310.82,
+          310.82,
+          310.82,
+          310.82
+        ],
+        "A": [
+          310.82,
+          310.82,
+          310.82
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          38.59,
+          38.59,
+          38.59,
+          38.59,
+          38.59,
+          38.59,
+          38.59,
+          38.59,
+          38.59,
+          38.59
+        ],
+        "A": [
+          38.59,
+          38.59,
+          38.59
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54,
+          15.54
+        ],
+        "A": [
+          15.54,
+          15.54,
+          15.54
+        ]
+      }
+    },
+    "Wechat": {
+      "target.left": {
+        "B": [
+          309.75,
+          309.75,
+          309.75,
+          309.75,
+          309.75,
+          309.75,
+          309.75,
+          309.75,
+          309.75,
+          309.75
+        ],
+        "A": [
+          308.14,
+          308.14,
+          308.14
+        ]
+      },
+      "target.top": {
+        "B": [
+          146.86,
+          146.86,
+          146.86,
+          146.86,
+          146.86,
+          146.86,
+          146.86,
+          146.86,
+          146.86,
+          146.86
+        ],
+        "A": [
+          144.72,
+          144.72,
+          144.72
+        ]
+      },
+      "target.width": {
+        "B": [
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60,
+          60
+        ],
+        "A": [
+          60,
+          60,
+          60
+        ]
+      },
+      "target.height": {
+        "B": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "A": [
+          20,
+          20,
+          20
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "A": [
+          10,
+          10,
+          10
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          308.14,
+          308.14,
+          308.14,
+          308.14,
+          308.14,
+          308.14,
+          308.14,
+          308.14,
+          308.14,
+          308.14
+        ],
+        "A": [
+          308.14,
+          308.14,
+          308.14
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          35.37,
+          35.37,
+          35.37,
+          35.37,
+          35.37,
+          35.37,
+          35.37,
+          35.37,
+          35.37,
+          35.37
+        ],
+        "A": [
+          35.37,
+          35.37,
+          35.37
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          10.18,
+          10.18,
+          10.18,
+          10.18,
+          10.18,
+          10.18,
+          10.18,
+          10.18,
+          10.18,
+          10.18
+        ],
+        "A": [
+          10.18,
+          10.18,
+          10.18
+        ]
+      }
+    },
+    "Kaqi": {
+      "target.left": {
+        "B": [
+          43.41,
+          43.41,
+          43.41,
+          43.41,
+          43.41,
+          43.41,
+          43.41,
+          43.41,
+          43.41,
+          43.41
+        ],
+        "A": [
+          40.19,
+          40.19,
+          40.19
+        ]
+      },
+      "target.top": {
+        "B": [
+          188.13,
+          188.13,
+          188.13,
+          188.13,
+          188.13,
+          188.13,
+          188.13,
+          188.13,
+          188.13,
+          188.13
+        ],
+        "A": [
+          184.92,
+          184.92,
+          184.92
+        ]
+      },
+      "target.width": {
+        "B": [
+          99.35,
+          99.35,
+          99.35,
+          99.35,
+          99.35,
+          99.35,
+          99.35,
+          99.35,
+          99.35,
+          99.35
+        ],
+        "A": [
+          99.35,
+          99.35,
+          99.35
+        ]
+      },
+      "target.height": {
+        "B": [
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48,
+          48
+        ],
+        "A": [
+          48,
+          48,
+          48
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          33,
+          33,
+          33,
+          33,
+          33,
+          33,
+          33,
+          33,
+          33,
+          33
+        ],
+        "A": [
+          33,
+          33,
+          33
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          40.19,
+          40.19,
+          40.19,
+          40.19,
+          40.19,
+          40.19,
+          40.19,
+          40.19,
+          40.19,
+          40.19
+        ],
+        "A": [
+          40.19,
+          40.19,
+          40.19
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          87.35,
+          87.35,
+          87.35,
+          87.35,
+          87.35,
+          87.35,
+          87.35,
+          87.35,
+          87.35,
+          87.35
+        ],
+        "A": [
+          87.35,
+          87.35,
+          87.35
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          36.98,
+          36.98,
+          36.98,
+          36.98,
+          36.98,
+          36.98,
+          36.98,
+          36.98,
+          36.98,
+          36.98
+        ],
+        "A": [
+          36.98,
+          36.98,
+          36.98
+        ]
+      }
+    },
+    "Guangzhou Aikaqi silicone Manufacturing Co. Ltd.": {
+      "target.left": {
+        "B": [
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46
+        ],
+        "A": [
+          193.46,
+          193.46,
+          193.46
+        ]
+      },
+      "target.top": {
+        "B": [
+          178.48,
+          178.48,
+          178.48,
+          178.48,
+          178.48,
+          178.48,
+          178.48,
+          178.48,
+          178.48,
+          178.48
+        ],
+        "A": [
+          178.48,
+          178.48,
+          178.48
+        ]
+      },
+      "target.width": {
+        "B": [
+          613,
+          613,
+          613,
+          613,
+          613,
+          613,
+          613,
+          613,
+          613,
+          613
+        ],
+        "A": [
+          613,
+          613,
+          613
+        ]
+      },
+      "target.height": {
+        "B": [
+          36,
+          36,
+          36,
+          36,
+          36,
+          36,
+          36,
+          36,
+          36,
+          36
+        ],
+        "A": [
+          36,
+          36,
+          36
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          23,
+          23,
+          23,
+          23,
+          23,
+          23,
+          23,
+          23,
+          23,
+          23
+        ],
+        "A": [
+          23,
+          23,
+          23
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46,
+          193.46
+        ],
+        "A": [
+          193.46,
+          193.46,
+          193.46
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          287.78,
+          287.78,
+          287.78,
+          287.78,
+          287.78,
+          287.78,
+          287.78,
+          287.78,
+          287.78,
+          287.78
+        ],
+        "A": [
+          287.78,
+          287.78,
+          287.78
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51
+        ],
+        "A": [
+          22.51,
+          22.51,
+          22.51
+        ]
+      }
+    },
+    "Add:2B059, Area B, Wanling Toy Boutique Plaza,": {
+      "target.left": {
+        "B": [
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03
+        ],
+        "A": [
+          187.03,
+          187.03,
+          187.03
+        ]
+      },
+      "target.top": {
+        "B": [
+          235.3,
+          235.3,
+          235.3,
+          235.3,
+          235.3,
+          235.3,
+          235.3,
+          235.3,
+          235.3,
+          235.3
+        ],
+        "A": [
+          235.3,
+          235.3,
+          235.3
+        ]
+      },
+      "target.width": {
+        "B": [
+          520,
+          520,
+          520,
+          520,
+          520,
+          520,
+          520,
+          520,
+          520,
+          520
+        ],
+        "A": [
+          520,
+          520,
+          520
+        ]
+      },
+      "target.height": {
+        "B": [
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32,
+          32
+        ],
+        "A": [
+          32,
+          32,
+          32
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "A": [
+          20,
+          20,
+          20
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03,
+          187.03
+        ],
+        "A": [
+          187.03,
+          187.03,
+          187.03
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          282.42,
+          282.42,
+          282.42,
+          282.42,
+          282.42,
+          282.42,
+          282.42,
+          282.42,
+          282.42,
+          282.42
+        ],
+        "A": [
+          282.42,
+          282.42,
+          282.42
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          19.83,
+          19.83,
+          19.83,
+          19.83,
+          19.83,
+          19.83,
+          19.83,
+          19.83,
+          19.83,
+          19.83
+        ],
+        "A": [
+          19.83,
+          19.83,
+          19.83
+        ]
+      }
+    },
+    "East Yide Rd, Guangzhou, China": {
+      "target.left": {
+        "B": [
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36
+        ],
+        "A": [
+          214.36,
+          214.36,
+          214.36
+        ]
+      },
+      "target.top": {
+        "B": [
+          256.74,
+          256.74,
+          256.74,
+          256.74,
+          256.74,
+          256.74,
+          256.74,
+          256.74,
+          256.74,
+          256.74
+        ],
+        "A": [
+          254.06,
+          254.06,
+          254.06
+        ]
+      },
+      "target.width": {
+        "B": [
+          242,
+          242,
+          242,
+          242,
+          242,
+          242,
+          242,
+          242,
+          242,
+          242
+        ],
+        "A": [
+          242,
+          242,
+          242
+        ]
+      },
+      "target.height": {
+        "B": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "A": [
+          25,
+          25,
+          25
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14,
+          14
+        ],
+        "A": [
+          14,
+          14,
+          14
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36,
+          214.36
+        ],
+        "A": [
+          214.36,
+          214.36,
+          214.36
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          188.64,
+          188.64,
+          188.64,
+          188.64,
+          188.64,
+          188.64,
+          188.64,
+          188.64,
+          188.64,
+          188.64
+        ],
+        "A": [
+          188.64,
+          188.64,
+          188.64
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69,
+          17.69
+        ],
+        "A": [
+          17.69,
+          17.69,
+          17.69
+        ]
+      }
+    },
+    "Tel:+86-020-81060778E-mail:aikaqi@foxmail.com": {
+      "target.left": {
+        "B": [
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28
+        ],
+        "A": [
+          183.28,
+          183.28,
+          183.28
+        ]
+      },
+      "target.top": {
+        "B": [
+          275.5,
+          275.5,
+          275.5,
+          275.5,
+          275.5,
+          275.5,
+          275.5,
+          275.5,
+          275.5,
+          275.5
+        ],
+        "A": [
+          275.5,
+          275.5,
+          275.5
+        ]
+      },
+      "target.width": {
+        "B": [
+          495,
+          495,
+          495,
+          495,
+          495,
+          495,
+          495,
+          495,
+          495,
+          495
+        ],
+        "A": [
+          495,
+          495,
+          495
+        ]
+      },
+      "target.height": {
+        "B": [
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        "A": [
+          31,
+          31,
+          31
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19
+        ],
+        "A": [
+          19,
+          19,
+          19
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28,
+          183.28
+        ],
+        "A": [
+          183.28,
+          183.28,
+          183.28
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          291.53,
+          291.53,
+          291.53,
+          291.53,
+          291.53,
+          291.53,
+          291.53,
+          291.53,
+          291.53,
+          291.53
+        ],
+        "A": [
+          291.53,
+          291.53,
+          291.53
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76,
+          18.76
+        ],
+        "A": [
+          18.76,
+          18.76,
+          18.76
+        ]
+      }
+    },
+    "Xia Zhu Lian": {
+      "target.left": {
+        "B": [
+          322.08,
+          322.08,
+          322.08,
+          322.08,
+          322.08,
+          322.08,
+          322.08,
+          322.08,
+          322.08,
+          322.08
+        ],
+        "A": [
+          317.79,
+          317.79,
+          317.79
+        ]
+      },
+      "target.top": {
+        "B": [
+          70.21,
+          70.21,
+          70.21,
+          70.21,
+          70.21,
+          70.21,
+          70.21,
+          70.21,
+          70.21,
+          70.21
+        ],
+        "A": [
+          68.61,
+          68.61,
+          68.61
+        ]
+      },
+      "target.width": {
+        "B": [
+          137,
+          137,
+          137,
+          137,
+          137,
+          137,
+          137,
+          137,
+          137,
+          137
+        ],
+        "A": [
+          137,
+          137,
+          137
+        ]
+      },
+      "target.height": {
+        "B": [
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31,
+          31
+        ],
+        "A": [
+          31,
+          31,
+          31
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19,
+          19
+        ],
+        "A": [
+          19,
+          19,
+          19
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          317.79,
+          317.79,
+          317.79,
+          317.79,
+          317.79,
+          317.79,
+          317.79,
+          317.79,
+          317.79,
+          317.79
+        ],
+        "A": [
+          317.79,
+          317.79,
+          317.79
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          54.13,
+          54.13,
+          54.13,
+          54.13,
+          54.13,
+          54.13,
+          54.13,
+          54.13,
+          54.13,
+          54.13
+        ],
+        "A": [
+          54.13,
+          54.13,
+          54.13
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51,
+          22.51
+        ],
+        "A": [
+          22.51,
+          22.51,
+          22.51
+        ]
+      }
+    },
+    "广州爱卡奇硅胶制品有限公司": {
+      "target.left": {
+        "B": [
+          302.79,
+          302.79,
+          302.79,
+          302.79,
+          302.79,
+          302.79,
+          302.79,
+          302.79,
+          302.79,
+          302.79
+        ],
+        "A": [
+          189.71,
+          189.71,
+          189.71
+        ]
+      },
+      "target.top": {
+        "B": [
+          156.51,
+          156.51,
+          156.51,
+          156.51,
+          156.51,
+          156.51,
+          156.51,
+          156.51,
+          156.51,
+          156.51
+        ],
+        "A": [
+          152.22,
+          152.22,
+          152.22
+        ]
+      },
+      "target.width": {
+        "B": [
+          387,
+          387,
+          387,
+          387,
+          387,
+          387,
+          387,
+          387,
+          387,
+          387
+        ],
+        "A": [
+          387,
+          387,
+          387
+        ]
+      },
+      "target.height": {
+        "B": [
+          43,
+          43,
+          43,
+          43,
+          43,
+          43,
+          43,
+          43,
+          43,
+          43
+        ],
+        "A": [
+          43,
+          43,
+          43
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29,
+          29
+        ],
+        "A": [
+          29,
+          29,
+          29
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          189.71,
+          189.71,
+          189.71,
+          189.71,
+          189.71,
+          189.71,
+          189.71,
+          189.71,
+          189.71,
+          189.71
+        ],
+        "A": [
+          189.71,
+          189.71,
+          189.71
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          288.85,
+          288.85,
+          288.85,
+          288.85,
+          288.85,
+          288.85,
+          288.85,
+          288.85,
+          288.85,
+          288.85
+        ],
+        "A": [
+          288.85,
+          288.85,
+          288.85
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          32.7,
+          32.7,
+          32.7,
+          32.7,
+          32.7,
+          32.7,
+          32.7,
+          32.7,
+          32.7,
+          32.7
+        ],
+        "A": [
+          32.7,
+          32.7,
+          32.7
+        ]
+      }
+    },
+    "地址;广州市一德东路万菱玩具精品广场二楼B区2B059": {
+      "target.left": {
+        "B": [
+          445.34,
+          445.34,
+          445.34,
+          445.34,
+          445.34,
+          445.34,
+          445.34,
+          445.34,
+          445.34,
+          445.34
+        ],
+        "A": [
+          178.46,
+          178.46,
+          178.46
+        ]
+      },
+      "target.top": {
+        "B": [
+          217.08,
+          217.08,
+          217.08,
+          217.08,
+          217.08,
+          217.08,
+          217.08,
+          217.08,
+          217.08,
+          217.08
+        ],
+        "A": [
+          214.4,
+          214.4,
+          214.4
+        ]
+      },
+      "target.width": {
+        "B": [
+          544,
+          544,
+          544,
+          544,
+          544,
+          544,
+          544,
+          544,
+          544,
+          544
+        ],
+        "A": [
+          544,
+          544,
+          544
+        ]
+      },
+      "target.height": {
+        "B": [
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34,
+          34
+        ],
+        "A": [
+          34,
+          34,
+          34
+        ]
+      },
+      "target.angle": {
+        "B": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "A": [
+          0,
+          0,
+          0
+        ]
+      },
+      "fontSize": {
+        "B": [
+          22,
+          22,
+          22,
+          22,
+          22,
+          22,
+          22,
+          22,
+          22,
+          22
+        ],
+        "A": [
+          22,
+          22,
+          22
+        ]
+      },
+      "fontFamily": {
+        "B": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ],
+        "A": [
+          "sans-serif",
+          "sans-serif",
+          "sans-serif"
+        ]
+      },
+      "ocrBBox.left": {
+        "B": [
+          178.46,
+          178.46,
+          178.46,
+          178.46,
+          178.46,
+          178.46,
+          178.46,
+          178.46,
+          178.46,
+          178.46
+        ],
+        "A": [
+          178.46,
+          178.46,
+          178.46
+        ]
+      },
+      "ocrBBox.width": {
+        "B": [
+          300.11,
+          300.11,
+          300.11,
+          300.11,
+          300.11,
+          300.11,
+          300.11,
+          300.11,
+          300.11,
+          300.11
+        ],
+        "A": [
+          300.11,
+          300.11,
+          300.11
+        ]
+      },
+      "ocrBBox.height": {
+        "B": [
+          23.58,
+          23.58,
+          23.58,
+          23.58,
+          23.58,
+          23.58,
+          23.58,
+          23.58,
+          23.58,
+          23.58
+        ],
+        "A": [
+          23.58,
+          23.58,
+          23.58
+        ]
+      }
+    }
+  },
+  "failures": [],
+  "aggregate": {
+    "pass": true,
+    "degradedFields": [],
+    "perBlock": [
+      {
+        "block": "13719111188",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 394.42,
+            "max": 394.42,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 356.91,
+            "max": 356.91,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 102.37,
+            "max": 102.37,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 100.77,
+            "max": 100.77,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 113,
+            "max": 113,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 113,
+            "max": 113,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 28,
+            "max": 28,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 28,
+            "max": 28,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 17,
+            "max": 17,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 17,
+            "max": 17,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 356.91,
+            "max": 356.91,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 356.91,
+            "max": 356.91,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 102.36,
+            "max": 102.36,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 102.36,
+            "max": 102.36,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 17.69,
+            "max": 17.69,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 17.69,
+            "max": 17.69,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "2287483098",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 452.3,
+            "max": 452.3,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 357.98,
+            "max": 357.98,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 131.32,
+            "max": 131.32,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 129.17,
+            "max": 129.17,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 113.43,
+            "max": 113.43,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 113.43,
+            "max": 113.43,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 28,
+            "max": 28,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 28,
+            "max": 28,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 17,
+            "max": 17,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 17,
+            "max": 17,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 357.98,
+            "max": 357.98,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 357.98,
+            "max": 357.98,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 103.43,
+            "max": 103.43,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 103.43,
+            "max": 103.43,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 18.76,
+            "max": 18.76,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 18.76,
+            "max": 18.76,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "Add:2B059, Area B, Wanling Toy Boutique Plaza,",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 187.03,
+            "max": 187.03,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 187.03,
+            "max": 187.03,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 235.3,
+            "max": 235.3,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 235.3,
+            "max": 235.3,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 520,
+            "max": 520,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 520,
+            "max": 520,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 32,
+            "max": 32,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 32,
+            "max": 32,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 20,
+            "max": 20,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 20,
+            "max": 20,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 187.03,
+            "max": 187.03,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 187.03,
+            "max": 187.03,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 282.42,
+            "max": 282.42,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 282.42,
+            "max": 282.42,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 19.83,
+            "max": 19.83,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 19.83,
+            "max": 19.83,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "East Yide Rd, Guangzhou, China",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 214.36,
+            "max": 214.36,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 214.36,
+            "max": 214.36,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 256.74,
+            "max": 256.74,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 254.06,
+            "max": 254.06,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 242,
+            "max": 242,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 242,
+            "max": 242,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 25,
+            "max": 25,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 25,
+            "max": 25,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 14,
+            "max": 14,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 14,
+            "max": 14,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 214.36,
+            "max": 214.36,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 214.36,
+            "max": 214.36,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 188.64,
+            "max": 188.64,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 188.64,
+            "max": 188.64,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 17.69,
+            "max": 17.69,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 17.69,
+            "max": 17.69,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "Guangzhou Aikaqi silicone Manufacturing Co. Ltd.",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 193.46,
+            "max": 193.46,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 193.46,
+            "max": 193.46,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 178.48,
+            "max": 178.48,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 178.48,
+            "max": 178.48,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 613,
+            "max": 613,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 613,
+            "max": 613,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 36,
+            "max": 36,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 36,
+            "max": 36,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 23,
+            "max": 23,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 23,
+            "max": 23,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 193.46,
+            "max": 193.46,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 193.46,
+            "max": 193.46,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 287.78,
+            "max": 287.78,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 287.78,
+            "max": 287.78,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 22.51,
+            "max": 22.51,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 22.51,
+            "max": 22.51,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "Kaqi",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 43.41,
+            "max": 43.41,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 40.19,
+            "max": 40.19,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 188.13,
+            "max": 188.13,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 184.92,
+            "max": 184.92,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 99.35,
+            "max": 99.35,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 99.35,
+            "max": 99.35,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 48,
+            "max": 48,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 48,
+            "max": 48,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 33,
+            "max": 33,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 33,
+            "max": 33,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 40.19,
+            "max": 40.19,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 40.19,
+            "max": 40.19,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 87.35,
+            "max": 87.35,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 87.35,
+            "max": 87.35,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 36.98,
+            "max": 36.98,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 36.98,
+            "max": 36.98,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "Mobile",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 312.97,
+            "max": 312.97,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 311.36,
+            "max": 311.36,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 115.77,
+            "max": 115.77,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 114.17,
+            "max": 114.17,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 60,
+            "max": 60,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 60,
+            "max": 60,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 20,
+            "max": 20,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 20,
+            "max": 20,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 10,
+            "max": 10,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 10,
+            "max": 10,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 311.36,
+            "max": 311.36,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 311.36,
+            "max": 311.36,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 31.08,
+            "max": 31.08,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 31.08,
+            "max": 31.08,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 9.65,
+            "max": 9.65,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 9.65,
+            "max": 9.65,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "Tel:+86-020-81060778E-mail:aikaqi@foxmail.com",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 183.28,
+            "max": 183.28,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 183.28,
+            "max": 183.28,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 275.5,
+            "max": 275.5,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 275.5,
+            "max": 275.5,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 495,
+            "max": 495,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 495,
+            "max": 495,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 31,
+            "max": 31,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 31,
+            "max": 31,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 19,
+            "max": 19,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 19,
+            "max": 19,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 183.28,
+            "max": 183.28,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 183.28,
+            "max": 183.28,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 291.53,
+            "max": 291.53,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 291.53,
+            "max": 291.53,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 18.76,
+            "max": 18.76,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 18.76,
+            "max": 18.76,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "Wechat",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 309.75,
+            "max": 309.75,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 308.14,
+            "max": 308.14,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 146.86,
+            "max": 146.86,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 144.72,
+            "max": 144.72,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 60,
+            "max": 60,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 60,
+            "max": 60,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 20,
+            "max": 20,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 20,
+            "max": 20,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 10,
+            "max": 10,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 10,
+            "max": 10,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 308.14,
+            "max": 308.14,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 308.14,
+            "max": 308.14,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 35.37,
+            "max": 35.37,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 35.37,
+            "max": 35.37,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 10.18,
+            "max": 10.18,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 10.18,
+            "max": 10.18,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "Xia Zhu Lian",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 322.08,
+            "max": 322.08,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 317.79,
+            "max": 317.79,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 70.21,
+            "max": 70.21,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 68.61,
+            "max": 68.61,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 137,
+            "max": 137,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 137,
+            "max": 137,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 31,
+            "max": 31,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 31,
+            "max": 31,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 19,
+            "max": 19,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 19,
+            "max": 19,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 317.79,
+            "max": 317.79,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 317.79,
+            "max": 317.79,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 54.13,
+            "max": 54.13,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 54.13,
+            "max": 54.13,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 22.51,
+            "max": 22.51,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 22.51,
+            "max": 22.51,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 445.34,
+            "max": 445.34,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 178.46,
+            "max": 178.46,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 217.08,
+            "max": 217.08,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 214.4,
+            "max": 214.4,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 544,
+            "max": 544,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 544,
+            "max": 544,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 34,
+            "max": 34,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 34,
+            "max": 34,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 22,
+            "max": 22,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 22,
+            "max": 22,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 178.46,
+            "max": 178.46,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 178.46,
+            "max": 178.46,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 300.11,
+            "max": 300.11,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 300.11,
+            "max": 300.11,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 23.58,
+            "max": 23.58,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 23.58,
+            "max": 23.58,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "夏祝莲",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 248.66,
+            "max": 248.66,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 187.03,
+            "max": 187.03,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 9.65,
+            "max": 9.65,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 8.58,
+            "max": 8.58,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 204,
+            "max": 204,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 204,
+            "max": 204,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 81,
+            "max": 81,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 81,
+            "max": 81,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 61,
+            "max": 61,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 61,
+            "max": 61,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 187.03,
+            "max": 187.03,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 187.03,
+            "max": 187.03,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 176.31,
+            "max": 176.31,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 176.31,
+            "max": 176.31,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 60.57,
+            "max": 60.57,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 60.57,
+            "max": 60.57,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "广州爱卡奇硅胶制品有限公司",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 302.79,
+            "max": 302.79,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 189.71,
+            "max": 189.71,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 156.51,
+            "max": 156.51,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 152.22,
+            "max": 152.22,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 387,
+            "max": 387,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 387,
+            "max": 387,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 43,
+            "max": 43,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 43,
+            "max": 43,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 29,
+            "max": 29,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 29,
+            "max": 29,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 189.71,
+            "max": 189.71,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 189.71,
+            "max": 189.71,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 288.85,
+            "max": 288.85,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 288.85,
+            "max": 288.85,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 32.7,
+            "max": 32.7,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 32.7,
+            "max": 32.7,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "微信:",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 312.43,
+            "max": 312.43,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 310.82,
+            "max": 310.82,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 130.25,
+            "max": 130.25,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 128.1,
+            "max": 128.1,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 60,
+            "max": 60,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 60,
+            "max": 60,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 25,
+            "max": 25,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 25,
+            "max": 25,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 14,
+            "max": 14,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 14,
+            "max": 14,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 310.82,
+            "max": 310.82,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 310.82,
+            "max": 310.82,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 38.59,
+            "max": 38.59,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 38.59,
+            "max": 38.59,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 15.54,
+            "max": 15.54,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 15.54,
+            "max": 15.54,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      },
+      {
+        "block": "手机:",
+        "target.left": {
+          "B": {
+            "range": 0,
+            "min": 327.44,
+            "max": 327.44,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 311.36,
+            "max": 311.36,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.top": {
+          "B": {
+            "range": 0,
+            "min": 99.69,
+            "max": 99.69,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 97.55,
+            "max": 97.55,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.width": {
+          "B": {
+            "range": 0,
+            "min": 60,
+            "max": 60,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 60,
+            "max": 60,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.height": {
+          "B": {
+            "range": 0,
+            "min": 25,
+            "max": 25,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 25,
+            "max": 25,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "target.angle": {
+          "B": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 0,
+            "max": 0,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontSize": {
+          "B": {
+            "range": 0,
+            "min": 14,
+            "max": 14,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 14,
+            "max": 14,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.left": {
+          "B": {
+            "range": 0,
+            "min": 311.36,
+            "max": 311.36,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 311.36,
+            "max": 311.36,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.width": {
+          "B": {
+            "range": 0,
+            "min": 38.05,
+            "max": 38.05,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 38.05,
+            "max": 38.05,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "ocrBBox.height": {
+          "B": {
+            "range": 0,
+            "min": 15.54,
+            "max": 15.54,
+            "stdev": 0,
+            "n": 10
+          },
+          "A": {
+            "range": 0,
+            "min": 15.54,
+            "max": 15.54,
+            "stdev": 0,
+            "n": 3
+          }
+        },
+        "fontFamilyB": [
+          "sans-serif"
+        ],
+        "fontFamilyACount": 3
+      }
+    ]
+  }
+}

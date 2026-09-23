@@ -1,0 +1,20 @@
+{
+  "case": "T0",
+  "steps": [
+    {
+      "step": "editor-ready",
+      "bver": "0.3.11.63"
+    },
+    {
+      "step": "slot-inject",
+      "ok": true,
+      "count": 5
+    },
+    {
+      "step": "rollback",
+      "ok": true
+    }
+  ],
+  "status": null,
+  "errors": []
+}

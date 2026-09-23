@@ -1,0 +1,72 @@
+{
+  "ts": "2026-09-20T13:14:22.722Z",
+  "stage": "STAGE-9-V5-NATIVE-ANCHOR-AUDIT",
+  "userscriptVersion": "0.3.11.41",
+  "url": "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do",
+  "cookiePresent": false,
+  "note": "read-only inventory across all editor pages; setCoords only; no create/update/remove/save; P0 aCoords > P1 transform > P2 location*; anchors include only text-type objects (textbox/i-text/text)",
+  "pages": [
+    {
+      "pageIndex": 0,
+      "pageId": "canvas:c0",
+      "side": "FRONT",
+      "registryLen": 1,
+      "canvas": {
+        "width": 507.49999999999994,
+        "height": 308.72916666666663
+      },
+      "objectCounts": {
+        "rect": 1,
+        "line": 8
+      },
+      "background": null,
+      "anchors": [],
+      "summarize": {
+        "total": 0,
+        "textbox": 0,
+        "withACoords": 0,
+        "withLocation": 0,
+        "emptyText": 0,
+        "consistency": 0
+      },
+      "consistency": []
+    },
+    {
+      "pageIndex": 1,
+      "pageId": "canvas:c1",
+      "side": "BACK",
+      "registryLen": 1,
+      "canvas": {
+        "width": 507.49999999999994,
+        "height": 308.72916666666663
+      },
+      "objectCounts": {
+        "rect": 1,
+        "line": 8
+      },
+      "background": null,
+      "anchors": [],
+      "summarize": {
+        "total": 0,
+        "textbox": 0,
+        "withACoords": 0,
+        "withLocation": 0,
+        "emptyText": 0,
+        "consistency": 0
+      },
+      "consistency": []
+    }
+  ],
+  "errors": [],
+  "frontBack": {
+    "frontPageId": "canvas:c0",
+    "backPageId": "canvas:c1"
+  },
+  "bridgeCurrentPage": {
+    "ok": true,
+    "pageId": "canvas:c0",
+    "side": "FRONT",
+    "code": "OK"
+  },
+  "limitation": "本模板无原生文字对象（textbox/i-text/text=0）。Native Canvas Anchor 的 Matcher/Reuse 验证需要一个本身含原生占位文字的模板，或在同图重建后（管线创建对象成为原生 textbox）再采集。另：页面业务对象 d 层级未携带 pageId，pageId 由桥接 getCurrentPage + 页序索引映射得到（本模板 page0 → 正面页，page1 → 背面页）。(报告仅记录页面对象普查，不包含业务数据)"
+}

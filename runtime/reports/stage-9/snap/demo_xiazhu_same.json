@@ -1,0 +1,613 @@
+{
+  "ts": "2026-09-23T02:54:50.462Z",
+  "stage": "OCR-P1-COMMIT4_6-REAL",
+  "cases": [
+    {
+      "id": "V0",
+      "sidecar": "0",
+      "note": "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy"
+    },
+    {
+      "id": "V15",
+      "sidecar": "0",
+      "rot": 15,
+      "note": "旋转 15°：visual bbox 四角 affine → targetQuad，位置/字号/颜色同源"
+    },
+    {
+      "id": "V45",
+      "sidecar": "0",
+      "rot": 45,
+      "note": "旋转 45°：验证旋转下 visual geometry 映射不回归"
+    }
+  ],
+  "image": "real-card-xiazhu.png",
+  "cookiePresent": true,
+  "cookieSource": "probe",
+  "cookieWarning": null,
+  "cookieNote": null,
+  "abModes": [
+    "B"
+  ],
+  "runs": [
+    {
+      "case": "V0",
+      "ab": "B",
+      "note": "直排名片复检：ocrBBox vs visualInk vs targetQuad vs 实际 ink 的 dx/dy（新 Visual Ink geometry）",
+      "rot": 0,
+      "steps": [
+        {
+          "step": "editor-ready",
+          "ok": true,
+          "bridge": true,
+          "bver": null
+        },
+        {
+          "step": "bg-inject",
+          "ok": true
+        },
+        {
+          "step": "ocr-prepare",
+          "ok": true
+        },
+        {
+          "step": "click-ocr",
+          "clicked": true
+        },
+        {
+          "step": "ocr-done",
+          "done": true,
+          "status": "已生成 15 个文字（可双击编辑）"
+        },
+        {
+          "step": "rollback",
+          "ok": true
+        }
+      ],
+      "errors": [],
+      "diag": [],
+      "actualInk": [
+        {
+          "text": "夏祝莲",
+          "left": 187,
+          "top": 9,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 61,
+          "fill": "#68623c",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 204,
+          "aCoordsTL": {
+            "x": 187,
+            "y": 9
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-0",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 179,
+            "inkHeight": 56
+          },
+          "cached": false
+        },
+        {
+          "text": "Xia Zhu Lian",
+          "left": 318,
+          "top": 69,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 19,
+          "fill": "#89772a",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 137,
+          "aCoordsTL": {
+            "x": 318,
+            "y": 69
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-1",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 107,
+            "inkHeight": 16
+          },
+          "cached": false
+        },
+        {
+          "text": "手机:",
+          "left": 236,
+          "top": 70,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 19,
+          "fill": "#5e4d0b",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 75.38,
+          "aCoordsTL": {
+            "x": 236,
+            "y": 70
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-2",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 43,
+            "inkHeight": 18
+          },
+          "cached": false
+        },
+        {
+          "text": "13719111188",
+          "left": 198,
+          "top": 72,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 18,
+          "fill": "#503e05",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 119,
+          "aCoordsTL": {
+            "x": 198,
+            "y": 72
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-3",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 109,
+            "inkHeight": 14
+          },
+          "cached": false
+        },
+        {
+          "text": "Mobile",
+          "left": 311,
+          "top": 98,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 14,
+          "fill": "#897528",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 60,
+          "aCoordsTL": {
+            "x": 311,
+            "y": 98
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-4",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 44,
+            "inkHeight": 12
+          },
+          "cached": false
+        },
+        {
+          "text": "微信:",
+          "left": 311,
+          "top": 114,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 10,
+          "fill": "#cdb24d",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 60,
+          "aCoordsTL": {
+            "x": 311,
+            "y": 114
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-5",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 24,
+            "inkHeight": 10
+          },
+          "cached": false
+        },
+        {
+          "text": "2287483098",
+          "left": 357,
+          "top": 101,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 17,
+          "fill": "#917d2b",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 114.5,
+          "aCoordsTL": {
+            "x": 357,
+            "y": 101
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-6",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 95,
+            "inkHeight": 13
+          },
+          "cached": false
+        },
+        {
+          "text": "Wechat",
+          "left": 311,
+          "top": 128,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 13,
+          "fill": "#74662a",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 60,
+          "aCoordsTL": {
+            "x": 311,
+            "y": 128
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-7",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 46,
+            "inkHeight": 11
+          },
+          "cached": false
+        },
+        {
+          "text": "广州爱卡奇硅胶制品有限公司",
+          "left": 308,
+          "top": 145,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 10,
+          "fill": "#c5ac4c",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 140,
+          "aCoordsTL": {
+            "x": 308,
+            "y": 145
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-8",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 130,
+            "inkHeight": 10
+          },
+          "cached": false
+        },
+        {
+          "text": "Kaqi",
+          "left": 190,
+          "top": 152,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 34,
+          "fill": "#786829",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 300.85,
+          "aCoordsTL": {
+            "x": 190,
+            "y": 152
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-9",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 67,
+            "inkHeight": 34
+          },
+          "cached": false
+        },
+        {
+          "text": "Guangzhou Aikaqi silicon",
+          "left": 193,
+          "top": 178,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 23,
+          "fill": "#9d8633",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 613,
+          "aCoordsTL": {
+            "x": 193,
+            "y": 178
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-10",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 526,
+            "inkHeight": 24
+          },
+          "cached": false
+        },
+        {
+          "text": "地址;广州市一德东路万菱玩具精品广场二楼B区2B",
+          "left": 40,
+          "top": 185,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 37,
+          "fill": "#c8beba",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 910,
+          "aCoordsTL": {
+            "x": 40,
+            "y": 185
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-11",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 879,
+            "inkHeight": 39
+          },
+          "cached": false
+        },
+        {
+          "text": "Add:2B059, Area B, Wanli",
+          "left": 178,
+          "top": 214,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 22,
+          "fill": "#977f31",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 571,
+          "aCoordsTL": {
+            "x": 178,
+            "y": 214
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-12",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 488,
+            "inkHeight": 23
+          },
+          "cached": false
+        },
+        {
+          "text": "East Yide Rd, Guangzhou,",
+          "left": 214,
+          "top": 254,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 17,
+          "fill": "#917726",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 292,
+          "aCoordsTL": {
+            "x": 214,
+            "y": 254
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-13",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 248,
+            "inkHeight": 18
+          },
+          "cached": false
+        },
+        {
+          "text": "Tel:+86-020-81060778E-ma",
+          "left": 183,
+          "top": 275,
+          "angle": 0,
+          "originX": "left",
+          "scaleX": 1,
+          "scaleY": 1,
+          "fontSize": 19,
+          "fill": "#b3911e",
+          "padding": 0,
+          "paddingLeft": null,
+          "charSpacing": 0,
+          "textAlign": "left",
+          "strokeWidth": 1,
+          "width": 495,
+          "aCoordsTL": {
+            "x": 183,
+            "y": 275
+          },
+          "entry": null,
+          "identity": {
+            "zyOcrKey": "zy-ocr-tx-mudifll7-c3ua29fd-14",
+            "byAssistant": false
+          },
+          "viewport": [
+            0,
+            0
+          ],
+          "ink": {
+            "inkWidth": 434,
+            "inkHeight": 20
+          },
+          "cached": false
+        }
+      ],
+      "visualRows": [],
+      "abCompare": null,
+      "leftShiftObserved": {
+        "count": 0,
+        "rows": []
+      },
+      "status": "已生成 15 个文字（可双击编辑）",
+      "pageId": "canvas:c0",
+      "baiduCount": 17,
+      "ocrSamples": [
+        "正在准备图片…",
+        "识别到 15 个文字区域，正在生成（BUILDING）…",
+        "已生成 15 个文字（可双击编辑）"
+      ],
+      "renderedInkCompare": []
+    }
+  ],
+  "errors": []
+}

@@ -14,6 +14,17 @@
 // =====================================================================
 "use strict";
 
+// OCR-P0.5：dataUrl 解码后的 payload 字节数（base64 → bytes）
+function decodedBytes(dataUrl) {
+  var s = String(dataUrl == null ? "" : dataUrl);
+  var i = s.indexOf(",");
+  var b64 = i >= 0 ? s.slice(i + 1) : "";
+  if (!b64) return -1;
+  var pad = 0;
+  if (b64.charAt(b64.length - 1) === "=") pad += 1;
+  if (b64.charAt(b64.length - 2) === "=") pad += 1;
+  return Math.floor(b64.length * 3 / 4) - pad;
+}
 // §三：图片指纹 —— dataUrl 是唯一种子（同图同字符串 → 同指纹）。仅做身份防串，不用于内容安全。
 function fingerprintImage(dataUrl) {
   var s = String(dataUrl == null ? "" : dataUrl);
@@ -41,8 +52,11 @@ function createTransaction(o) {
     side: side,
     canvasId: opts.canvasId || null,
     imageFingerprint: opts.imageFingerprint || (opts.dataUrl != null ? fingerprintImage(opts.dataUrl) : null),
+    naturalWidth: typeof opts.naturalWidth === "number" ? opts.naturalWidth : (typeof opts.imageWidth === "number" ? opts.imageWidth : null),
+    naturalHeight: typeof opts.naturalHeight === "number" ? opts.naturalHeight : (typeof opts.imageHeight === "number" ? opts.imageHeight : null),
     imageWidth: typeof opts.imageWidth === "number" ? opts.imageWidth : null,
     imageHeight: typeof opts.imageHeight === "number" ? opts.imageHeight : null,
+    payloadBytes: typeof opts.payloadBytes === "number" ? opts.payloadBytes : (opts.dataUrl != null ? decodedBytes(opts.dataUrl) : null),
     createdAt: now
   };
 }
@@ -59,6 +73,7 @@ function validateTransactionIdentity(tx) {
 
 if (typeof module !== "undefined" && module.exports) module.exports = {
   fingerprintImage: fingerprintImage,
+  decodedBytes: decodedBytes,
   createTransaction: createTransaction,
   validateTransactionIdentity: validateTransactionIdentity
 };

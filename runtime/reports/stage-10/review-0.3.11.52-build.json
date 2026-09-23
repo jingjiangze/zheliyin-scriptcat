@@ -1,0 +1,37 @@
+{
+  "stage": "STAGE-10C-REVIEW-0.3.11.52-BUILD",
+  "ts": "2026-09-21T05:18:34.334Z",
+  "base": "6ee36bd(0.3.11.49)",
+  "target": "3be7d0e(0.3.11.52)",
+  "checks": {
+    "runSplitInProduction": {
+      "hasExpandRunItems10B": true,
+      "hasPlanRuns": true,
+      "runIndexSuffixInBridge": true
+    },
+    "hasNativeLayerVerify": {
+      "verifyNativeLayer10C": false,
+      "nativeUnavailable": false,
+      "layerFailed": false
+    },
+    "mirrorFallbackInProduction": {
+      "createTextObjectMirror": true,
+      "mirrorEditorObjectModelCall": 2
+    },
+    "requireMix": {
+      "demo": 5,
+      "test": 25
+    }
+  },
+  "verdict": {
+    "build": "0.3.11.52",
+    "satisfiesStage10C": false,
+    "violations": [
+      "RUN_SPLIT 生产接线（违反 1 Block=1 textbox 契约）",
+      "无 Native Layer 创建后硬校验",
+      "mirror fallback 仍是生产成功路径",
+      "test 轨 userscript 混用 demo @require"
+    ],
+    "conclusion": "0.3.11.52 构建不满足 Stage 10-C Native Layer Contract → 保持 EXPERIMENTAL，不得启用生产"
+  }
+}

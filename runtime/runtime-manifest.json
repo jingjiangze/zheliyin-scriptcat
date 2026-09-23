@@ -1,154 +1,203 @@
 {
-  "generatedAt": "2026-09-20T05:54:43.320Z",
-  "userscriptVersion": "0.3.11.35",
-  "moduleCount": 21,
+  "generatedAt": "2026-09-21T04:49:12.030Z",
+  "userscriptVersion": "0.3.11.53",
+  "moduleCount": 28,
   "modules": [
     {
       "id": "field-core",
-      "branch": "demo",
+      "branch": "test",
       "path": "extension/src/fields/field-core.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/fields/field-core.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.53"
     },
     {
       "id": "config-core",
-      "branch": "demo",
+      "branch": "test",
       "path": "extension/src/core/config-core.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/core/config-core.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.53"
     },
     {
       "id": "ai-client",
-      "branch": "demo",
+      "branch": "test",
       "path": "extension/src/ai/ai-client.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ai/ai-client.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.53"
     },
     {
       "id": "page-bridge",
       "branch": "test",
       "path": "extension/src/editor/page-bridge.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.53"
     },
     {
       "id": "image-transform",
       "branch": "test",
       "path": "extension/src/editor/image-transform.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.53"
     },
     {
       "id": "image-space",
       "branch": "test",
       "path": "extension/src/editor/image-space.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.53"
+    },
+    {
+      "id": "image-containment",
+      "branch": "test",
+      "path": "extension/src/editor/image-containment.js",
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.53"
+    },
+    {
+      "id": "multiline-typography",
+      "branch": "test",
+      "path": "extension/src/editor/multiline-typography.js",
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.53"
     },
     {
       "id": "text-fit",
       "branch": "test",
       "path": "extension/src/editor/text-fit.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.53"
     },
     {
       "id": "text-fit-fusion",
       "branch": "test",
       "path": "extension/src/editor/text-fit-fusion.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.53"
     },
     {
       "id": "ink-measure",
       "branch": "test",
       "path": "extension/src/editor/ink-measure.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.53"
     },
     {
       "id": "baidu-provider",
       "branch": "test",
       "path": "extension/src/ocr/baidu-provider.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.53"
     },
     {
       "id": "native-ocr-provider",
       "branch": "test",
       "path": "extension/src/ocr/native-ocr-provider.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.53"
     },
     {
       "id": "fallback-policy",
-      "branch": "demo",
+      "branch": "test",
       "path": "extension/src/ocr/fallback-policy.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/fallback-policy.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.53"
     },
     {
       "id": "candidate-normalizer",
       "branch": "test",
       "path": "extension/src/ocr/candidate-normalizer.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.53"
     },
     {
       "id": "ocr-candidate-gate",
       "branch": "test",
       "path": "extension/src/ocr/ocr-candidate-gate.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.53"
     },
     {
       "id": "font-source",
       "branch": "test",
       "path": "extension/src/ocr/font-source.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.53"
     },
     {
       "id": "text-truth-gate",
       "branch": "test",
       "path": "extension/src/ocr/text-truth-gate.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.53"
+    },
+    {
+      "id": "transaction-identity",
+      "branch": "test",
+      "path": "extension/src/ocr/transaction-identity.js",
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.53"
+    },
+    {
+      "id": "recognition-mode",
+      "branch": "test",
+      "path": "extension/src/ocr/recognition-mode.js",
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.53"
+    },
+    {
+      "id": "image-ink-target",
+      "branch": "test",
+      "path": "extension/src/editor/image-ink-target.js",
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.53"
+    },
+    {
+      "id": "native-color",
+      "branch": "test",
+      "path": "extension/src/editor/native-color.js",
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.53"
+    },
+    {
+      "id": "font-target-source",
+      "branch": "test",
+      "path": "extension/src/editor/font-target-source.js",
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.53"
     },
     {
       "id": "credential-crypto",
-      "branch": "demo",
+      "branch": "test",
       "path": "extension/src/ocr/credential-crypto.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/extension/src/ocr/credential-crypto.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.53"
     },
     {
       "id": "ocr-quality",
       "branch": "test",
       "path": "extension/src/ocr/ocr-quality.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.53"
     },
     {
       "id": "ocr-text-sanitizer",
       "branch": "test",
       "path": "extension/src/ocr/ocr-text-sanitizer.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.53"
     },
     {
       "id": "ocr-size-analyzer",
       "branch": "test",
       "path": "extension/src/ocr/ocr-size-analyzer.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.53"
     },
     {
       "id": "ocr-text-safety-gate",
       "branch": "test",
       "path": "extension/src/ocr/ocr-text-safety-gate.js",
-      "version": "0.3.11.35",
-      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.35"
+      "version": "0.3.11.53",
+      "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.53"
     }
   ]
 }

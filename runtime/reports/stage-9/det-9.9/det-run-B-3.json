@@ -1,0 +1,1237 @@
+{
+  "case": "V0",
+  "ab": "B",
+  "steps": [
+    {
+      "step": "editor-ready",
+      "ok": true,
+      "bridge": true
+    },
+    {
+      "step": "bg-inject",
+      "ok": true
+    },
+    {
+      "step": "ocr-prepare",
+      "ok": true
+    },
+    {
+      "step": "click-ocr",
+      "clicked": true
+    },
+    {
+      "step": "ocr-done",
+      "done": true,
+      "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC"
+    },
+    {
+      "step": "rollback",
+      "ok": true
+    }
+  ],
+  "status": "几何校验完成：通过 0 个，保留 15 个（保留=创建成功，仅备注：STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|STYLE_MISMATCH|FONT_MODEL|STYLE_MISMATCH|STYLE_MISMATC",
+  "visualRows": [
+    {
+      "blockIndex": 0,
+      "nativeText": "夏祝莲",
+      "ocrBBox": {
+        "left": 187.03,
+        "width": 176.31,
+        "height": 60.57
+      },
+      "imageInkBox": {
+        "x": 464,
+        "y": 18,
+        "width": 99,
+        "height": 111
+      },
+      "imageInkWidth": 99,
+      "imageInkHeight": 111,
+      "imageInkCoverage": 0.3489,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 248.66,
+          "y": 9.65
+        },
+        {
+          "x": 301.71,
+          "y": 9.65
+        },
+        {
+          "x": 301.71,
+          "y": 69.14
+        },
+        {
+          "x": 248.66,
+          "y": 69.14
+        }
+      ],
+      "targetGeometry": {
+        "left": 248.66,
+        "top": 9.65,
+        "width": 204,
+        "height": 81,
+        "angle": 0
+      },
+      "fontSize": 61,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.9822,
+        "advanceFontSize": null,
+        "inkFontSize": 61,
+        "inkHeight": 59.49,
+        "ocrHeight": 60.56665943287036
+      },
+      "fill": null,
+      "fillConfidence": 0.5008,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "ff2d0bbe-43a4-4abd-ac61-638414015290"
+    },
+    {
+      "blockIndex": 1,
+      "nativeText": "手机:",
+      "ocrBBox": {
+        "left": 311.36,
+        "width": 38.05,
+        "height": 15.54
+      },
+      "imageInkBox": {
+        "x": 611,
+        "y": 186,
+        "width": 26,
+        "height": 25
+      },
+      "imageInkWidth": 26,
+      "imageInkHeight": 25,
+      "imageInkCoverage": 0.5458,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 327.44,
+          "y": 99.69
+        },
+        {
+          "x": 341.37,
+          "y": 99.69
+        },
+        {
+          "x": 341.37,
+          "y": 113.09
+        },
+        {
+          "x": 327.44,
+          "y": 113.09
+        }
+      ],
+      "targetGeometry": {
+        "left": 327.44,
+        "top": 99.69,
+        "width": 60,
+        "height": 25,
+        "angle": 0
+      },
+      "fontSize": 14,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8621,
+        "advanceFontSize": null,
+        "inkFontSize": 14,
+        "inkHeight": 13.4,
+        "ocrHeight": 15.543655960648145
+      },
+      "fill": null,
+      "fillConfidence": 0.5344,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "26569cd7-c8ff-40fe-ab90-dae1643800f3"
+    },
+    {
+      "blockIndex": 2,
+      "nativeText": "13719111188",
+      "ocrBBox": {
+        "left": 356.91,
+        "width": 102.36,
+        "height": 17.69
+      },
+      "imageInkBox": {
+        "x": 736,
+        "y": 191,
+        "width": 16,
+        "height": 30
+      },
+      "imageInkWidth": 16,
+      "imageInkHeight": 30,
+      "imageInkCoverage": 0.1206,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 394.42,
+          "y": 102.37
+        },
+        {
+          "x": 403,
+          "y": 102.37
+        },
+        {
+          "x": 403,
+          "y": 118.45
+        },
+        {
+          "x": 394.42,
+          "y": 118.45
+        }
+      ],
+      "targetGeometry": {
+        "left": 394.42,
+        "top": 102.37,
+        "width": 113,
+        "height": 28,
+        "angle": 0
+      },
+      "fontSize": 17,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.9091,
+        "advanceFontSize": null,
+        "inkFontSize": 17,
+        "inkHeight": 16.08,
+        "ocrHeight": 17.68760850694444
+      },
+      "fill": null,
+      "fillConfidence": 0.5567,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "e00b2c98-50d1-446d-989b-8a6a0cf2fa38"
+    },
+    {
+      "blockIndex": 3,
+      "nativeText": "Mobile",
+      "ocrBBox": {
+        "left": 311.36,
+        "width": 31.08,
+        "height": 9.65
+      },
+      "imageInkBox": {
+        "x": 584,
+        "y": 216,
+        "width": 55,
+        "height": 15
+      },
+      "imageInkWidth": 55,
+      "imageInkHeight": 15,
+      "imageInkCoverage": 1,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 312.97,
+          "y": 115.77
+        },
+        {
+          "x": 342.44,
+          "y": 115.77
+        },
+        {
+          "x": 342.44,
+          "y": 123.81
+        },
+        {
+          "x": 312.97,
+          "y": 123.81
+        }
+      ],
+      "targetGeometry": {
+        "left": 312.97,
+        "top": 115.77,
+        "width": 60,
+        "height": 20,
+        "angle": 0
+      },
+      "fontSize": 10,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8334,
+        "advanceFontSize": null,
+        "inkFontSize": 10,
+        "inkHeight": 8.04,
+        "ocrHeight": 9.647786458333332
+      },
+      "fill": null,
+      "fillConfidence": 0.4948,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "9632268d-12e7-4070-aff6-53043cb743d7"
+    },
+    {
+      "blockIndex": 4,
+      "nativeText": "微信:",
+      "ocrBBox": {
+        "left": 310.82,
+        "width": 38.59,
+        "height": 15.54
+      },
+      "imageInkBox": {
+        "x": 583,
+        "y": 243,
+        "width": 27,
+        "height": 25
+      },
+      "imageInkWidth": 27,
+      "imageInkHeight": 25,
+      "imageInkCoverage": 0.5507,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 312.43,
+          "y": 130.25
+        },
+        {
+          "x": 326.9,
+          "y": 130.25
+        },
+        {
+          "x": 326.9,
+          "y": 143.64
+        },
+        {
+          "x": 312.43,
+          "y": 143.64
+        }
+      ],
+      "targetGeometry": {
+        "left": 312.43,
+        "top": 130.25,
+        "width": 60,
+        "height": 25,
+        "angle": 0
+      },
+      "fontSize": 14,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8621,
+        "advanceFontSize": null,
+        "inkFontSize": 14,
+        "inkHeight": 13.4,
+        "ocrHeight": 15.543655960648145
+      },
+      "fill": "#d0b449",
+      "fillConfidence": 0.4299,
+      "fillGate": "FOREGROUND_RELIABLE",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "51d42fa3-04dc-4389-ae37-9063633a7f08"
+    },
+    {
+      "blockIndex": 5,
+      "nativeText": "2287483098",
+      "ocrBBox": {
+        "left": 357.98,
+        "width": 103.43,
+        "height": 18.76
+      },
+      "imageInkBox": {
+        "x": 844,
+        "y": 245,
+        "width": 17,
+        "height": 31
+      },
+      "imageInkWidth": 17,
+      "imageInkHeight": 31,
+      "imageInkCoverage": 0.1176,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 452.3,
+          "y": 131.32
+        },
+        {
+          "x": 461.41,
+          "y": 131.32
+        },
+        {
+          "x": 461.41,
+          "y": 147.93
+        },
+        {
+          "x": 452.3,
+          "y": 147.93
+        }
+      ],
+      "targetGeometry": {
+        "left": 452.3,
+        "top": 131.32,
+        "width": 113.43,
+        "height": 28,
+        "angle": 0
+      },
+      "fontSize": 17,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8859,
+        "advanceFontSize": null,
+        "inkFontSize": 17,
+        "inkHeight": 16.62,
+        "ocrHeight": 18.759584780092588
+      },
+      "fill": null,
+      "fillConfidence": 0.5289,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "caf6fd2e-ad8e-4199-9e0d-d83ea9008da5"
+    },
+    {
+      "blockIndex": 6,
+      "nativeText": "Wechat",
+      "ocrBBox": {
+        "left": 308.14,
+        "width": 35.37,
+        "height": 10.18
+      },
+      "imageInkBox": {
+        "x": 578,
+        "y": 274,
+        "width": 63,
+        "height": 15
+      },
+      "imageInkWidth": 63,
+      "imageInkHeight": 15,
+      "imageInkCoverage": 1,
+      "inkConfidence": 0.83,
+      "inkComponentCount": 2,
+      "inkDominantRatio": 0.718,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 309.75,
+          "y": 146.86
+        },
+        {
+          "x": 343.51,
+          "y": 146.86
+        },
+        {
+          "x": 343.51,
+          "y": 154.9
+        },
+        {
+          "x": 309.75,
+          "y": 154.9
+        }
+      ],
+      "targetGeometry": {
+        "left": 309.75,
+        "top": 146.86,
+        "width": 60,
+        "height": 20,
+        "angle": 0
+      },
+      "fontSize": 10,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.7895,
+        "advanceFontSize": null,
+        "inkFontSize": 10,
+        "inkHeight": 8.04,
+        "ocrHeight": 10.183774594907405
+      },
+      "fill": null,
+      "fillConfidence": 0.7397,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "7220b8ef-41c8-42d1-b138-310d0c7b234f"
+    },
+    {
+      "blockIndex": 7,
+      "nativeText": "Kaqi",
+      "ocrBBox": {
+        "left": 40.19,
+        "width": 87.35,
+        "height": 36.98
+      },
+      "imageInkBox": {
+        "x": 81,
+        "y": 351,
+        "width": 44,
+        "height": 60
+      },
+      "imageInkWidth": 44,
+      "imageInkHeight": 60,
+      "imageInkCoverage": 0.3241,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 0.9963,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 43.41,
+          "y": 188.13
+        },
+        {
+          "x": 66.99,
+          "y": 188.13
+        },
+        {
+          "x": 66.99,
+          "y": 220.29
+        },
+        {
+          "x": 43.41,
+          "y": 220.29
+        }
+      ],
+      "targetGeometry": {
+        "left": 43.41,
+        "top": 188.13,
+        "width": 99.35,
+        "height": 48,
+        "angle": 0
+      },
+      "fontSize": 33,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8696,
+        "advanceFontSize": null,
+        "inkFontSize": 33,
+        "inkHeight": 32.16,
+        "ocrHeight": 36.9831814236111
+      },
+      "fill": null,
+      "fillConfidence": 0.647,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "fdfb5209-72a8-4265-900a-3308bb24b721"
+    },
+    {
+      "blockIndex": 8,
+      "nativeText": "Guangzhou Aikaqi silicone Manufacturing Co. Ltd.",
+      "ocrBBox": {
+        "left": 193.46,
+        "width": 287.78,
+        "height": 22.51
+      },
+      "imageInkBox": {
+        "x": 361,
+        "y": 333,
+        "width": 537,
+        "height": 42
+      },
+      "imageInkWidth": 537,
+      "imageInkHeight": 42,
+      "imageInkCoverage": 1,
+      "inkConfidence": 0.59,
+      "inkComponentCount": 53,
+      "inkDominantRatio": 0.318,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 193.46,
+          "y": 178.48
+        },
+        {
+          "x": 481.24,
+          "y": 178.48
+        },
+        {
+          "x": 481.24,
+          "y": 201
+        },
+        {
+          "x": 193.46,
+          "y": 201
+        }
+      ],
+      "targetGeometry": {
+        "left": 193.46,
+        "top": 178.48,
+        "width": 613,
+        "height": 36,
+        "angle": 0
+      },
+      "fontSize": 23,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.9999,
+        "advanceFontSize": null,
+        "inkFontSize": 23,
+        "inkHeight": 22.51,
+        "ocrHeight": 22.511501736111107
+      },
+      "fill": null,
+      "fillConfidence": 0.3069,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "e31db575-0ae8-4bed-8cf6-7956c38423ce"
+    },
+    {
+      "blockIndex": 9,
+      "nativeText": "Add:2B059, Area B, Wanling Toy Boutique Plaza,",
+      "ocrBBox": {
+        "left": 187.03,
+        "width": 282.42,
+        "height": 19.83
+      },
+      "imageInkBox": {
+        "x": 349,
+        "y": 439,
+        "width": 122,
+        "height": 37
+      },
+      "imageInkWidth": 122,
+      "imageInkHeight": 37,
+      "imageInkCoverage": 0.4325,
+      "inkConfidence": 0.73,
+      "inkComponentCount": 10,
+      "inkDominantRatio": 0.5417,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 187.03,
+          "y": 235.3
+        },
+        {
+          "x": 252.41,
+          "y": 235.3
+        },
+        {
+          "x": 252.41,
+          "y": 255.13
+        },
+        {
+          "x": 187.03,
+          "y": 255.13
+        }
+      ],
+      "targetGeometry": {
+        "left": 187.03,
+        "top": 235.3,
+        "width": 520,
+        "height": 32,
+        "angle": 0
+      },
+      "fontSize": 20,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.9999,
+        "advanceFontSize": null,
+        "inkFontSize": 20,
+        "inkHeight": 19.83,
+        "ocrHeight": 19.831561053240737
+      },
+      "fill": null,
+      "fillConfidence": 0.5351,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "45f31461-0cee-4d46-9c04-01aa1a2295a2"
+    },
+    {
+      "blockIndex": 10,
+      "nativeText": "East Yide Rd, Guangzhou, China",
+      "ocrBBox": {
+        "left": 214.36,
+        "width": 188.64,
+        "height": 17.69
+      },
+      "imageInkBox": {
+        "x": 400,
+        "y": 479,
+        "width": 49,
+        "height": 26
+      },
+      "imageInkWidth": 49,
+      "imageInkHeight": 26,
+      "imageInkCoverage": 0.2298,
+      "inkConfidence": 0.91,
+      "inkComponentCount": 2,
+      "inkDominantRatio": 0.8565,
+      "inkRowBandConfidence": 0.9996,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 214.36,
+          "y": 256.74
+        },
+        {
+          "x": 240.62,
+          "y": 256.74
+        },
+        {
+          "x": 240.62,
+          "y": 270.67
+        },
+        {
+          "x": 214.36,
+          "y": 270.67
+        }
+      ],
+      "targetGeometry": {
+        "left": 214.36,
+        "top": 256.74,
+        "width": 242,
+        "height": 25,
+        "angle": 0
+      },
+      "fontSize": 14,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.7881,
+        "advanceFontSize": null,
+        "inkFontSize": 14,
+        "inkHeight": 13.94,
+        "ocrHeight": 17.68760850694444
+      },
+      "fill": null,
+      "fillConfidence": 0.5282,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "b4e2f784-31cf-460a-b7db-b7fa3673fe22"
+    },
+    {
+      "blockIndex": 11,
+      "nativeText": "Tel:+86-020-81060778E-mail:aikaqi@foxmail.com",
+      "ocrBBox": {
+        "left": 183.28,
+        "width": 291.53,
+        "height": 18.76
+      },
+      "imageInkBox": {
+        "x": 342,
+        "y": 514,
+        "width": 240,
+        "height": 35
+      },
+      "imageInkWidth": 240,
+      "imageInkHeight": 35,
+      "imageInkCoverage": 0.7457,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 183.28,
+          "y": 275.5
+        },
+        {
+          "x": 311.9,
+          "y": 275.5
+        },
+        {
+          "x": 311.9,
+          "y": 294.26
+        },
+        {
+          "x": 183.28,
+          "y": 294.26
+        }
+      ],
+      "targetGeometry": {
+        "left": 183.28,
+        "top": 275.5,
+        "width": 495,
+        "height": 31,
+        "angle": 0
+      },
+      "fontSize": 19,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 1,
+        "advanceFontSize": null,
+        "inkFontSize": 19,
+        "inkHeight": 18.76,
+        "ocrHeight": 18.759584780092588
+      },
+      "fill": null,
+      "fillConfidence": 0.52,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "6ea2e6a4-aeda-40b9-9aee-6c90387e6ad1"
+    },
+    {
+      "blockIndex": 12,
+      "nativeText": "Xia Zhu Lian",
+      "ocrBBox": {
+        "left": 317.79,
+        "width": 54.13,
+        "height": 22.51
+      },
+      "imageInkBox": {
+        "x": 601,
+        "y": 131,
+        "width": 25,
+        "height": 34
+      },
+      "imageInkWidth": 25,
+      "imageInkHeight": 34,
+      "imageInkCoverage": 0.3742,
+      "inkConfidence": 1,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 1,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 322.08,
+          "y": 70.21
+        },
+        {
+          "x": 335.48,
+          "y": 70.21
+        },
+        {
+          "x": 335.48,
+          "y": 88.44
+        },
+        {
+          "x": 322.08,
+          "y": 88.44
+        }
+      ],
+      "targetGeometry": {
+        "left": 322.08,
+        "top": 70.21,
+        "width": 137,
+        "height": 31,
+        "angle": 0
+      },
+      "fontSize": 19,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8094,
+        "advanceFontSize": null,
+        "inkFontSize": 19,
+        "inkHeight": 18.22,
+        "ocrHeight": 22.511501736111107
+      },
+      "fill": null,
+      "fillConfidence": 0.3656,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "a2a5fbf1-c7f7-468e-ac69-f91aed754242"
+    },
+    {
+      "blockIndex": 13,
+      "nativeText": "广州爱卡奇硅胶制品有限公司",
+      "ocrBBox": {
+        "left": 189.71,
+        "width": 288.85,
+        "height": 32.7
+      },
+      "imageInkBox": {
+        "x": 565,
+        "y": 292,
+        "width": 35,
+        "height": 53
+      },
+      "imageInkWidth": 35,
+      "imageInkHeight": 53,
+      "imageInkCoverage": 0.0996,
+      "inkConfidence": 0.99,
+      "inkComponentCount": 1,
+      "inkDominantRatio": 1,
+      "inkRowBandConfidence": 0.9762,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 302.79,
+          "y": 156.51
+        },
+        {
+          "x": 321.54,
+          "y": 156.51
+        },
+        {
+          "x": 321.54,
+          "y": 184.92
+        },
+        {
+          "x": 302.79,
+          "y": 184.92
+        }
+      ],
+      "targetGeometry": {
+        "left": 302.79,
+        "top": 156.51,
+        "width": 387,
+        "height": 43,
+        "angle": 0
+      },
+      "fontSize": 29,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8689,
+        "advanceFontSize": null,
+        "inkFontSize": 29,
+        "inkHeight": 28.41,
+        "ocrHeight": 32.69527633101851
+      },
+      "fill": null,
+      "fillConfidence": 0.4839,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "3e3010fc-5f67-425c-8591-fca71f12b55f"
+    },
+    {
+      "blockIndex": 14,
+      "nativeText": "地址;广州市一德东路万菱玩具精品广场二楼B区2B059",
+      "ocrBBox": {
+        "left": 178.46,
+        "width": 300.11,
+        "height": 23.58
+      },
+      "imageInkBox": {
+        "x": 831,
+        "y": 405,
+        "width": 62,
+        "height": 39
+      },
+      "imageInkWidth": 62,
+      "imageInkHeight": 39,
+      "imageInkCoverage": 0.0975,
+      "inkConfidence": 0.99,
+      "inkComponentCount": 2,
+      "inkDominantRatio": 0.9884,
+      "inkRowBandConfidence": 0.9998,
+      "visualGeometrySource": "OCR_BBOX_FALLBACK",
+      "targetQuad": [
+        {
+          "x": 445.34,
+          "y": 217.08
+        },
+        {
+          "x": 478.56,
+          "y": 217.08
+        },
+        {
+          "x": 478.56,
+          "y": 237.98
+        },
+        {
+          "x": 445.34,
+          "y": 237.98
+        }
+      ],
+      "targetGeometry": {
+        "left": 445.34,
+        "top": 217.08,
+        "width": 544,
+        "height": 34,
+        "angle": 0
+      },
+      "fontSize": 22,
+      "fontSource": "ink-height-primary",
+      "fontSizeEvidence": {
+        "status": "NORMAL",
+        "fontEvidenceStatus": "NORMAL",
+        "diagnosis": null,
+        "inkToOcrRatio": 0.8862,
+        "advanceFontSize": null,
+        "inkFontSize": 22,
+        "inkHeight": 20.9,
+        "ocrHeight": 23.583478009259252
+      },
+      "fill": null,
+      "fillConfidence": 0.4501,
+      "fillGate": "MULTI_MODAL",
+      "fontFamily": "sans-serif",
+      "anchorUsed": false,
+      "anchorObjectUuid": "f22ce982-ced3-4707-be65-3b0c4bfeda45"
+    }
+  ],
+  "renderedInkCompare": [
+    {
+      "block": "夏祝莲",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 61,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 248.66,
+      "targetTop": 9.65,
+      "actualLeft": 173,
+      "actualTop": 4,
+      "dx": -75.66,
+      "dy": -5.65,
+      "widthGap": -22,
+      "heightGap": -23,
+      "actualInkWidth": 182,
+      "actualInkHeight": 58,
+      "sourceInkLeft": 464
+    },
+    {
+      "block": "手机:",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 14,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 327.44,
+      "targetTop": 99.69,
+      "actualLeft": 304,
+      "actualTop": 98,
+      "dx": -23.44,
+      "dy": -1.69,
+      "widthGap": -28,
+      "heightGap": -11,
+      "actualInkWidth": 32,
+      "actualInkHeight": 14,
+      "sourceInkLeft": 611
+    },
+    {
+      "block": "13719111188",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 17,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 394.42,
+      "targetTop": 102.37,
+      "actualLeft": 342,
+      "actualTop": 96,
+      "dx": -52.42,
+      "dy": -6.37,
+      "widthGap": -4,
+      "heightGap": -14,
+      "actualInkWidth": 109,
+      "actualInkHeight": 14,
+      "sourceInkLeft": 736
+    },
+    {
+      "block": "Mobile",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 10,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 312.97,
+      "targetTop": 115.77,
+      "actualLeft": 297,
+      "actualTop": 114,
+      "dx": -15.97,
+      "dy": -1.77,
+      "widthGap": -31,
+      "heightGap": -12,
+      "actualInkWidth": 29,
+      "actualInkHeight": 8,
+      "sourceInkLeft": 584
+    },
+    {
+      "block": "微信:",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 14,
+      "fillGate": "FOREGROUND_RELIABLE",
+      "anchorUsed": false,
+      "targetLeft": 312.43,
+      "targetTop": 130.25,
+      "actualLeft": 289,
+      "actualTop": 129,
+      "dx": -23.43,
+      "dy": -1.25,
+      "widthGap": -28,
+      "heightGap": -11,
+      "actualInkWidth": 32,
+      "actualInkHeight": 14,
+      "sourceInkLeft": 583
+    },
+    {
+      "block": "2287483098",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 17,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 452.3,
+      "targetTop": 131.32,
+      "actualLeft": 400,
+      "actualTop": 125,
+      "dx": -52.3,
+      "dy": -6.32,
+      "widthGap": -13.43,
+      "heightGap": -14,
+      "actualInkWidth": 100,
+      "actualInkHeight": 14,
+      "sourceInkLeft": 844
+    },
+    {
+      "block": "Wechat",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 10,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 309.75,
+      "targetTop": 146.86,
+      "actualLeft": 296,
+      "actualTop": 145,
+      "dx": -13.75,
+      "dy": -1.86,
+      "widthGap": -27,
+      "heightGap": -12,
+      "actualInkWidth": 33,
+      "actualInkHeight": 8,
+      "sourceInkLeft": 578
+    },
+    {
+      "block": "Kaqi",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 33,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 43.41,
+      "targetTop": 188.13,
+      "actualLeft": 5,
+      "actualTop": 186,
+      "dx": -38.41,
+      "dy": -2.13,
+      "widthGap": -35.35,
+      "heightGap": -16,
+      "actualInkWidth": 64,
+      "actualInkHeight": 32,
+      "sourceInkLeft": 81
+    },
+    {
+      "block": "Xia Zhu Lian",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 19,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 322.08,
+      "targetTop": 70.21,
+      "actualLeft": 260,
+      "actualTop": 63,
+      "dx": -62.08,
+      "dy": -7.21,
+      "widthGap": -24,
+      "heightGap": -15,
+      "actualInkWidth": 113,
+      "actualInkHeight": 16,
+      "sourceInkLeft": 601
+    },
+    {
+      "block": "广州爱卡奇硅胶制品有限公司",
+      "visualGeomSource": "OCR_BBOX_FALLBACK",
+      "fontSize": 29,
+      "fillGate": "MULTI_MODAL",
+      "anchorUsed": false,
+      "targetLeft": 302.79,
+      "targetTop": 156.51,
+      "actualLeft": 118,
+      "actualTop": 154,
+      "dx": -184.79,
+      "dy": -2.51,
+      "widthGap": -12,
+      "heightGap": -15,
+      "actualInkWidth": 375,
+      "actualInkHeight": 28,
+      "sourceInkLeft": 565
+    }
+  ],
+  "leftShiftObserved": {
+    "count": 10,
+    "rows": [
+      {
+        "block": "夏祝莲",
+        "dx": -75.66
+      },
+      {
+        "block": "手机:",
+        "dx": -23.44
+      },
+      {
+        "block": "13719111188",
+        "dx": -52.42
+      },
+      {
+        "block": "Mobile",
+        "dx": -15.97
+      },
+      {
+        "block": "微信:",
+        "dx": -23.43
+      },
+      {
+        "block": "2287483098",
+        "dx": -52.3
+      }
+    ]
+  },
+  "errors": []
+}

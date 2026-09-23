@@ -1,4 +1,4 @@
-// =====================================================================
+﻿// =====================================================================
 // 折立印名片套版助手 - Editor 边界（页面侧 Bridge，Stage 3）
 // ---------------------------------------------------------------------
 // 单一事实来源：与 field-core/config-core/ai-client 同模式（userscript
@@ -55,6 +55,243 @@ function pageBridge() {
           return;
         }
         post("applyResult", applyFields(canvas, event.data.fields || {}, side));
+      }
+    // Stage 10-E Commit G-2：执行单侧槽位套版（状态校验 + 逐槽 setText，无 create）—— 单侧与 both 共用。
+    function zyExecTemplateMatches(canvasObj, plan, sideLabel) {
+      const mkErr = function (code, message) { return { ok: false, code: code, message: message, side: sideLabel, applied: [], unmatchedFields: (plan && plan.unmatchedFields) || [], unusedSlots: (plan && plan.unusedSlots) || [] }; };
+      if (!canvasObj) return mkErr("TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", "未找到" + (sideLabel === "back" ? "反面" : "正面") + "画布，已停止套版。");
+      const tmObjs = getTextObjects(canvasObj);
+      const tmPlannedSlots = Array.isArray(plan.slots) ? plan.slots : [];
+      let tmStateChanged = tmPlannedSlots.length !== tmObjs.length;
+      if (!tmStateChanged) {
+        for (let ti = 0; ti < tmPlannedSlots.length; ti += 1) {
+          const psobj = tmObjs[ti];
+          const curId = psobj ? (psobj.uuid || psobj.multiUuid || psobj.markuuid || null) : null;
+          const planId = tmPlannedSlots[ti] ? (tmPlannedSlots[ti].objectUuid || null) : null;
+          if (planId && curId && planId !== curId) { tmStateChanged = true; break; }
+        }
+      }
+      if (tmStateChanged) return mkErr("SLOT_STATE_CHANGED", "画布文字层与套版规划不一致（可能已编辑），已停止套版。");
+      let tmU2 = null;
+      try { tmU2 = getNativeUndoInstance(); if (tmU2 && typeof tmU2.save === "function") tmU2.save(); } catch (eU) {}
+      const tmApplied = [];
+      (plan.matches || []).forEach(function (m) {
+        try {
+          const so = tmObjs[m.slotIdx];
+          if (!so) return;
+          const text = String(m.text != null ? m.text : "");
+          setObjectText(so, text); // 只改内容，几何/字体/样式/身份/层序冻结
+          if (typeof so.setCoords === "function") so.setCoords();
+          syncBusinessFieldsFromObject(so);
+          tmApplied.push({ fieldKey: m.fieldKey, text: String(text).slice(0, 24), objectUuid: so.uuid || so.multiUuid || null, geometry: measureObjectGeometry(canvasObj, so) });
+        } catch (eT) { tmApplied.push({ fieldKey: m.fieldKey, updated: false, error: String(eT && eT.message || eT).slice(0, 120) }); }
+      });
+      if (tmU2 && typeof tmU2.save === "function") { try { tmU2.save(); } catch (eU2) {} }
+      if (canvasObj.requestRenderAll) canvasObj.requestRenderAll();
+      else if (canvasObj.renderAll) canvasObj.renderAll();
+      return { ok: true, side: sideLabel, applied: tmApplied, unmatchedFields: plan.unmatchedFields || [], unusedSlots: plan.unusedSlots || [] };
+    }
+    // ---- Stage 10-G Commit I-2：内容相似智能套版执行侧（userscript 侧用 content-similar-planner 生成 plan）----
+    function zyMakeCanvasMeasurerFor(canvasObj) {
+      return function (text, fontFamily, fontSize) {
+        try {
+          const el = (canvasObj && canvasObj.lowerCanvasEl) || (canvasObj && canvasObj.getElement ? canvasObj.getElement() : null);
+          const ctx = el && el.getContext ? el.getContext("2d") : null;
+          if (!ctx) return null;
+          const fs = (typeof fontSize === "number" && isFinite(fontSize) && fontSize > 0) ? fontSize : 14;
+          ctx.save();
+          ctx.font = fs + "px " + String(fontFamily || "sans-serif");
+          const w = ctx.measureText(String(text || "")).width;
+          ctx.restore();
+          return (typeof w === "number" && isFinite(w)) ? w : null;
+        } catch (eM) { return null; }
+      };
+    }
+    // fontSize 自适应（advance-width 主路径镜像；无源图墨迹场景 → 按容器宽二分解最大不溢出字号）。
+    // 写回只允许 fontSize；lineHeight/charSpacing 由调用方只读取证（Stage 10-C 暂停约束）。
+    function zySolveFontSizeFusion(input) {
+      const o = input || {};
+      const text = String(o.text || "");
+      const targetW = o.targetVisualWidth;
+      const ff = o.fontFamily || "sans-serif";
+      const measurer = o.measurer || null;
+      const warnings = [];
+      if (!text || !measurer || !(typeof targetW === "number" && isFinite(targetW) && targetW > 0)) return { ok: false, reason: "no-evidence", fontSize: null, confidence: 0, sources: {}, warnings: warnings };
+      let lo = 10, hi = 160, best = null, bestW = 0, iter = 0;
+      while (lo <= hi && iter < 24) {
+        iter += 1;
+        const mid = Math.round((lo + hi) / 2);
+        const w = measurer(text, ff, mid);
+        if (w == null) break;
+        if (w <= targetW) { best = mid; bestW = w; lo = mid + 1; }
+        else hi = mid - 1;
+      }
+      if (best == null) {
+        const wMin = measurer(text, ff, 10);
+        warnings.push("font size floor reached");
+        return { ok: true, fontSize: 10, reason: "advance-width-primary(FONT_MIN_REACHED)", confidence: 0.6, sources: { advance: { fontSize: 10, width: wMin } }, warnings: warnings };
+      }
+      return { ok: true, fontSize: best, reason: "advance-width-primary", confidence: 0.9, sources: { advance: { fontSize: best, width: bestW } }, warnings: warnings };
+    }
+    function zyExecSmartMatches(canvasObj, plan, sideLabel) {
+      const mkErr = function (code, message) { return { ok: false, code: code, message: message, side: sideLabel, applied: [], unmatched: (plan && plan.unmatched) || [], unusedSlots: (plan && plan.unusedSlots) || [], fontSizeEvidence: [] }; };
+      if (!canvasObj) return mkErr("TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", "未找到" + (sideLabel === "back" ? "反面" : "正面") + "画布，已停止智能套版。");
+      const smObjs = getTextObjects(canvasObj);
+      const smPlans = Array.isArray(plan.matches) ? plan.matches : [];
+      let smStateChanged = false;
+      if (typeof plan.slotsCount === "number" && isFinite(plan.slotsCount) && plan.slotsCount !== smObjs.length) smStateChanged = true;
+      if (!smStateChanged) {
+        for (let bi = 0; bi < smPlans.length; bi += 1) {
+          const m = smPlans[bi];
+          const so = smObjs[m.slotIdx];
+          const curId = so ? (so.uuid || so.multiUuid || so.markuuid || null) : null;
+          if (m.objectUuid && curId && m.objectUuid !== curId) { smStateChanged = true; break; }
+        }
+      }
+      if (smStateChanged) return mkErr("SLOT_STATE_CHANGED", "画布文字层与智能套版规划不一致（可能已编辑），已停止。");
+      let smU2 = null;
+      try { smU2 = getNativeUndoInstance(); if (smU2 && typeof smU2.save === "function") smU2.save(); } catch (eU) {}
+      const measurer = zyMakeCanvasMeasurerFor(canvasObj);
+      const applied = [], evidence = [];
+      (plan.matches || []).forEach(function (m) {
+        try {
+          const so = smObjs[m.slotIdx];
+          if (!so) return;
+          const text = String(m.text != null ? m.text : "");
+          const before = { fontSize: so.fontSize != null ? so.fontSize : null, lineHeight: so.lineHeight != null ? so.lineHeight : null, charSpacing: so.charSpacing != null ? so.charSpacing : null, width: so.width != null ? so.width : null, height: so.height != null ? so.height : null };
+          setObjectText(so, text);
+          if (typeof so.setCoords === "function") so.setCoords();
+          syncBusinessFieldsFromObject(so);
+          let fsResult = null, fsFrom = before.fontSize, fsTo = before.fontSize;
+          const targetW = (typeof so.width === "number" && isFinite(so.width) && so.width > 0) ? so.width : null;
+          if (targetW && measurer) {
+            fsResult = zySolveFontSizeFusion({ text: text, targetVisualWidth: targetW, fontFamily: so.fontFamily || "sans-serif", measurer: measurer });
+            if (fsResult && fsResult.ok && fsResult.fontSize) { fsTo = fsResult.fontSize; if (fsTo !== fsFrom) { try { so.set("fontSize", fsTo); if (typeof so.setCoords === "function") so.setCoords(); syncBusinessFieldsFromObject(so); } catch (eF) { fsTo = fsFrom; } } }
+          }
+          const rendered = measureFabInkFor(so);
+          const sourceLineCount = String(text).split(/\r?\n/).length;
+          evidence.push({ slotIdx: m.slotIdx, text: String(text).slice(0, 24), before: before, fontSizeFrom: fsFrom, fontSizeTo: fsTo, fit: fsResult ? { ok: fsResult.ok, reason: fsResult.reason || null, confidence: fsResult.confidence != null ? fsResult.confidence : null, warnings: fsResult.warnings || [] } : null, sourceLineCount: sourceLineCount, renderedLineCount: (rendered && rendered.lineCount != null) ? rendered.lineCount : null, lineHeightBefore: before.lineHeight, lineHeightAfter: so.lineHeight != null ? so.lineHeight : null, charSpacingBefore: before.charSpacing, charSpacingAfter: so.charSpacing != null ? so.charSpacing : null });
+          applied.push({ slotIdx: m.slotIdx, text: String(text).slice(0, 24), objectUuid: so.uuid || so.multiUuid || null, score: m.score != null ? m.score : null });
+        } catch (eT) { applied.push({ slotIdx: m.slotIdx, updated: false, error: String(eT && eT.message || eT).slice(0, 120) }); }
+      });
+      if (smU2 && typeof smU2.save === "function") { try { smU2.save(); } catch (eU2) {} }
+      if (canvasObj.requestRenderAll) canvasObj.requestRenderAll();
+      else if (canvasObj.renderAll) canvasObj.renderAll();
+      return { ok: true, side: sideLabel, applied: applied, unmatched: plan.unmatched || [], unusedSlots: plan.unusedSlots || [], fontSizeEvidence: evidence };
+    }
+
+      if (event.data.type === "templateApply") {
+        // Stage 10-D Commit F：新套版引擎执行侧 —— 只做两件事：状态校验 + 逐槽 setText。
+        // 规划（planTemplateApply，纯模块）在 userscript 侧完成；本侧严禁新建（无 create 路径）。
+        // 硬规则：几何/字号/字体/样式/身份/层序全冻结；无错槽 / 覆盖 / 重复 / 无故新建。
+        const tpPlan = event.data.plan || null;
+        const tpSide = event.data.side || "front";
+        const tpPageId = event.data.pageId || null;
+        const tpBothPlans = (event.data.plans && typeof event.data.plans === "object") ? event.data.plans : null;
+        if (tpSide === "both") {
+          // Stage 10-E Commit G-2：正反同填 —— plans{front,back} 各执行；单侧行为零改动。
+          if (!tpBothPlans) {
+            post("templateApplyResult", { ok: false, code: "BAD_PLAN", message: "正反套版规划无效，已停止。", applied: [], unmatchedFields: [], unusedSlots: [] });
+            return;
+          }
+          const resBoth = [];
+          ["front", "back"].forEach(function (sd) {
+            const pl = tpBothPlans[sd];
+            if (!pl || !Array.isArray(pl.matches)) { resBoth.push({ ok: true, side: sd, applied: [], unmatchedFields: (pl && pl.unmatchedFields) || [], unusedSlots: (pl && pl.unusedSlots) || [], skipped: "EMPTY_OR_BAD" }); return; }
+            if (!pl.matches.length) { resBoth.push({ ok: true, side: sd, applied: [], unmatchedFields: pl.unmatchedFields || [], unusedSlots: pl.unusedSlots || [], skipped: "EMPTY_MATCHES" }); return; }
+            const cvs = findCanvasForSide(sd);
+            resBoth.push(zyExecTemplateMatches(cvs, pl, sd));
+          });
+          const appliedAll = [], unAll = [];
+          resBoth.forEach(function (r) { appliedAll.push.apply(appliedAll, r.applied || []); unAll.push.apply(unAll, r.unmatchedFields || []); });
+          const anyFail = resBoth.some(function (r) { return !r.ok; });
+          const cnt = function (sd) { const x = resBoth.find(function (r) { return r.side === sd; }); return x ? (x.applied || []).length : 0; };
+          const msg = anyFail ? "正反套版部分失败（" + resBoth.map(function (r) { return r.side + (r.ok ? " " + (r.applied || []).length + " 槽" : " 失败:" + String(r.code || "ERR")); }).join(" / ") + "）" : "模板套版：正面更新 " + cnt("front") + " 槽 / 反面更新 " + cnt("back") + " 槽（几何/字体/样式/身份/层序冻结）。未匹配 " + unAll.length + " 项。";
+          post("templateApplyResult", { ok: !anyFail, mode: "template", code: anyFail ? "PARTIAL" : "OK", side: "both", applied: appliedAll, unmatchedFields: unAll, unusedSlots: [].concat.apply([], resBoth.map(function (r) { return r.unusedSlots || []; })), sides: resBoth, message: msg });
+          return;
+        }
+        if (!tpPlan || !Array.isArray(tpPlan.matches)) {
+          post("templateApplyResult", { ok: false, code: "BAD_PLAN", message: "套版规划无效，已停止。", applied: [], unmatchedFields: [], unusedSlots: [] });
+          return;
+        }
+        if (!tpPageId) {
+          post("templateApplyResult", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_NO_PAGE", message: "套版请求缺少 pageId，已停止。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        const tpInv = buildPageInventory();
+        const tpKnown = tpInv.ok && (tpInv.pages || []).some(function (p) { return p.pageId === tpPageId; });
+        if (!tpKnown) {
+          post("templateApplyResult", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_PAGE_NOT_FOUND", message: "套版目标属于未知页面（" + tpPageId + "），已停止（禁止跨页写入）。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        const tpCur = buildCurrentPageInfo();
+        const tpGate = validatePageOwnership(tpPageId, tpCur);
+        if (!tpGate.ok) {
+          const codeTP = tpGate.code === "CREATE_BLOCKED_WRONG_PAGE" ? "PAGE_IDENTITY_CHANGED" : String(tpGate.code || "TEMPLATE_APPLY_BLOCKED").replace(/^CREATE_BLOCKED_/, "TEMPLATE_APPLY_BLOCKED_");
+          post("templateApplyResult", { ok: false, code: codeTP, message: "套版期间页面已变化或无法验证（" + tpGate.reason + "），已停止（" + codeTP + "）。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        const tpReso = resolveCurrentEditorPage();
+        const tpCanvas = (tpReso && tpReso.canvas) || null;
+        if (!tpCanvas) {
+          post("templateApplyResult", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止套版。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        const tpObjs = getTextObjects(tpCanvas);
+        // 状态一致校验：槽位快照与现场必须逐一对得上（inventory 竞态防线）
+        const tpPlannedSlots = Array.isArray(tpPlan.slots) ? tpPlan.slots : [];
+        let tpStateChanged = tpPlannedSlots.length !== tpObjs.length;
+        if (!tpStateChanged) {
+          for (let ti = 0; ti < tpPlannedSlots.length; ti += 1) {
+            const psobj = tpObjs[ti];
+            const curId = psobj ? (psobj.uuid || psobj.multiUuid || psobj.markuuid || null) : null;
+            const planId = tpPlannedSlots[ti] ? (tpPlannedSlots[ti].objectUuid || null) : null;
+            if (planId && curId && planId !== curId) { tpStateChanged = true; break; }
+          }
+        }
+        if (tpStateChanged) {
+          post("templateApplyResult", { ok: false, code: "SLOT_STATE_CHANGED", message: "画布文字层与套版规划不一致（可能已编辑），已停止套版并回退旧方式。", applied: [], unmatchedFields: tpPlan.unmatchedFields || [], unusedSlots: tpPlan.unusedSlots || [] });
+          return;
+        }
+        const tpExec = zyExecTemplateMatches(tpCanvas, tpPlan, tpSide);
+        const tpUnm = (tpExec && tpExec.unmatchedFields) || [];
+        post("templateApplyResult", { ok: !!(tpExec && tpExec.applied.length > 0), mode: "template", code: (tpExec && tpExec.code) || "OK", side: tpSide, applied: (tpExec && tpExec.applied) || [], unmatchedFields: tpUnm, unusedSlots: (tpExec && tpExec.unusedSlots) || [], message: (tpExec && tpExec.ok) ? "模板套版：更新 " + tpExec.applied.length + "/" + (tpPlan.matches || []).length + " 个槽位内容（几何/字体/样式/身份/层序冻结）。未匹配 " + tpUnm.length + " 项。" : ((tpExec && tpExec.message) || "模板套版失败。") });
+        return;
+      }
+      if (event.data.type === "templateApplySmart") {
+        // Stage 10-G Commit I-2（续）：内容相似智能套版执行侧 —— 只 setText(原文逐字)+fontSize 自适应，绝不 create。
+        try {  // Stage 10-G Commit J-1: 执行侧整体兜底 —— 任何异常都必须回包，禁止前端永久卡「智能套版进行中…」
+        const smSide = event.data.side || "front";
+        const smBothPlans = (event.data.plans && typeof event.data.plans === "object") ? event.data.plans : null;
+        if (smSide === "both") {
+          if (!smBothPlans) { post("templateApplySmartResult", { ok: false, code: "BAD_PLAN", message: "智能套版规划无效，已停止。", applied: [], unmatched: [], unusedSlots: [], fontSizeEvidence: [] }); return; }
+          const smResBoth = [];
+          ["front", "back"].forEach(function (sd) {
+            const pl = smBothPlans[sd];
+            if (!pl || !Array.isArray(pl.matches)) { smResBoth.push({ ok: true, side: sd, applied: [], unmatched: (pl && pl.unmatched) || [], unusedSlots: (pl && pl.unusedSlots) || [], skipped: "EMPTY_OR_BAD" }); return; }
+            const cvs = findCanvasForSide(sd);
+            smResBoth.push(zyExecSmartMatches(cvs, pl, sd));
+          });
+          const smAppliedAll = [], smUnAll = [];
+          smResBoth.forEach(function (r) { smAppliedAll.push.apply(smAppliedAll, r.applied || []); smUnAll.push.apply(smUnAll, r.unmatched || []); });
+          const smAnyFail = smResBoth.some(function (r) { return !r.ok; });
+          const smCnt = function (sd) { const x = smResBoth.find(function (r) { return r.side === sd; }); return x ? (x.applied || []).length : 0; };
+          const smMsg = smAnyFail ? "智能套版部分失败（" + smResBoth.map(function (r) { return r.side + (r.ok ? " " + (r.applied || []).length + " 槽" : " 失败:" + String(r.code || "ERR")); }).join(" / ") + "）" : "智能套版：正面更新 " + smCnt("front") + " 槽 / 反面更新 " + smCnt("back") + " 槽（已按容器自适应字号）。未匹配 " + smUnAll.length + " 项。";
+          post("templateApplySmartResult", { ok: !smAnyFail, side: "both", applied: smAppliedAll, unmatched: smUnAll, unusedSlots: [].concat.apply([], smResBoth.map(function (r) { return r.unusedSlots || []; })), fontSizeEvidence: [].concat.apply([], smResBoth.map(function (r) { return r.fontSizeEvidence || []; })), sides: smResBoth, message: smMsg });
+          return;
+        }
+        const smPlan = event.data.plan || null;
+        if (!smPlan || !Array.isArray(smPlan.matches)) { post("templateApplySmartResult", { ok: false, code: "BAD_PLAN", message: "智能套版规划无效，已停止。", applied: [], unmatched: [], unusedSlots: [], fontSizeEvidence: [] }); return; }
+        const smReso = resolveCurrentEditorPage();
+        const smCanvas = (smReso && smReso.canvas) || null;
+        if (!smCanvas) { post("templateApplySmartResult", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止智能套版。", applied: [], unmatched: smPlan.unmatched || [], unusedSlots: smPlan.unusedSlots || [], fontSizeEvidence: [] }); return; }
+        const smExec = zyExecSmartMatches(smCanvas, smPlan, smSide);
+        post("templateApplySmartResult", { ok: !!(smExec && smExec.applied.length > 0), code: (smExec && smExec.code) || "OK", side: smSide, applied: (smExec && smExec.applied) || [], unmatched: (smExec && smExec.unmatched) || [], unusedSlots: (smExec && smExec.unusedSlots) || [], fontSizeEvidence: (smExec && smExec.fontSizeEvidence) || [], message: (smExec && smExec.ok) ? "智能套版：更新 " + smExec.applied.length + " 槽（已按容器自适应字号）。未匹配 " + ((smExec.unmatched || []).length) + " 项。" : ((smExec && smExec.message) || "智能套版失败。") });
+        return;
+      } catch (smErr) {
+        // Stage 10-G Commit J-1: 执行侧异常 → 保底回包（前端 8s 超时提示「未收到回执」即由此触发）
+        post("templateApplySmartResult", { ok: false, code: "TEMPLATE_APPLY_SMART_THREW", message: "智能套版执行异常：" + String(smErr && smErr.message ? smErr.message : smErr) + "，已停止。请重试或将报错发给我。", applied: [], unmatched: [], unusedSlots: [], fontSizeEvidence: [] });
+      }
       }
       if (event.data.type === "ocrCreate") {
         // Stage 5.5A-R2（Demo）：OCR 重建入口 —— 按 OCR TextBlock 在正面画布创建真实 textbox。
@@ -203,8 +440,20 @@ function pageBridge() {
                 if (reuseMatch.verdict === "MATCH" && reuseMatch.matchedIndex != null && nativeAnchors[reuseMatch.matchedIndex]) {
                   const reusedObj = nativeAnchors[reuseMatch.matchedIndex].object || null;
                   if (reusedObj) {
-                    try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.text === "string") { if (typeof reusedObj.setText === "function") reusedObj.setText(it.text); else reusedObj.text = it.text; } } catch (eSet) {}
+try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.text === "string") { if (typeof reusedObj.setText === "function") reusedObj.setText(it.text); else reusedObj.text = it.text; } } catch (eSet) {}
+                    // Commit 4.6-C：完整同步目标样式/几何（§10）——identity 保持原生，geometry/typography/style 采用当前 OCR/Visual Target；fill 仅可靠颜色证据更新；禁止删除重建。
+                    try {
+                      var zyCProps = {};
+                      var zyCNum = ["left", "top", "width", "height", "angle", "fontSize"];
+                      for (var zyCi = 0; zyCi < zyCNum.length; zyCi += 1) { var zyCk = zyCNum[zyCi]; var zyCv = it[zyCk]; if (zyCv != null && typeof zyCv === "number" && isFinite(zyCv) && (zyCk === "angle" || zyCk === "left" || zyCk === "top") ? true : (typeof zyCv === "number" && isFinite(zyCv) && zyCv > 0)) zyCProps[zyCk] = zyCv; }
+                      var zyCStr = ["fontFamily", "fontWeight", "fontStyle"];
+                      for (var zyCj = 0; zyCj < zyCStr.length; zyCj += 1) { var zyCsK = zyCStr[zyCj]; var zyCsV = it[zyCsK]; if (zyCsV != null && String(zyCsV).length) zyCProps[zyCsK] = String(zyCsV); }
+                      if (Object.keys(zyCProps).length) { if (typeof reusedObj.set === "function") reusedObj.set(zyCProps); else Object.keys(zyCProps).forEach(function (zyCz) { reusedObj[zyCz] = zyCProps[zyCz]; }); }
+                    } catch (eStyleApply) {}
                     try { if (it.fill && typeof reusedObj.set === "function") reusedObj.set({ fill: it.fill }); else if (it.fill) reusedObj.fill = it.fill; } catch (eFillReuse) {} // Stage 10-A：仅在有前景证据时更新颜色
+                    try { if (typeof reusedObj.setCoords === "function") reusedObj.setCoords(); } catch (eCoords) {}
+                    try { syncBusinessFieldsFromObject(reusedObj); } catch (eBizSync) {} // Commit 4.6-C：几何收敛后同步站点业务字段
+                    try { reusedObj.zyAnchorStyleApplied = { geometry: ["left","top","width","height","angle","fontSize"].filter(function (k) { return zyCProps && k in zyCProps; }), style: ["fontFamily","fontWeight","fontStyle"].filter(function (k) { return zyCProps && k in zyCProps; }), fillUpdated: !!it.fill, identity: "native-preserved" }; } catch (eStylMark) {}
                     const bIdxNat2 = it.blockIndex != null ? it.blockIndex : idx;
                     reusedObj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat2) : ("zy-ocr-" + bIdxNat2);
                     reusedObj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat2, objectUuid: reusedObj.uuid || reusedObj.multiUuid || null };
@@ -227,6 +476,15 @@ function pageBridge() {
                 diy.drawText(String(it.text || ""), null, null, null, entry, layerNum);
                 editorInteg2.drawTextBatch += 1;
                 obj = findOcrObject(diy, it, layerNum);
+                // Stage 10-C：Native Layer Contract 硬校验（创建后立即，§3 A-D；任一失败 → CREATE_NATIVE_LAYER_FAILED + 整批回滚）
+                const layerVerify10C = verifyNativeLayer10C(diy, obj, { registryDelta: diy.canvasObjInfo.canvasToProductObjArr.length - editorInteg2.layerNumBase });
+                if (!layerVerify10C.ok) {
+                  failMsg = "native layer item" + idx + ": " + String(layerVerify10C.failed || []).join("|");
+                  failedBlockIndex = idx;
+                  break;
+                }
+                editorInteg2.layerVerified = (editorInteg2.layerVerified || 0) + 1;
+                editorInteg2.layerVerify = { code: layerVerify10C.code, product: layerVerify10C.checks && layerVerify10C.checks.product ? layerVerify10C.checks.product.code : null };
                 if (obj) {
                   // t4 画后双保险: 原生 drawText 若未透传 entry 顶层字段, 直接补对象字段
                   obj.topEnable = obj.topEnable !== undefined ? obj.topEnable : 1;
@@ -247,9 +505,31 @@ function pageBridge() {
                   //   对象同时挂 zyOcrObjectId（transactionId/pageId/blockId/objectUuid 完整身份）。
                   const bIdxNat = it.blockIndex != null ? it.blockIndex : idx;
                   obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxNat) : ("zy-ocr-" + bIdxNat);
+                  // Commit C forensics: capture requested vs actual geometry (read-only diag)
+                  try { obj.zyOcrEntry = { inputLeft: it.left != null ? it.left : null, inputTop: it.top != null ? it.top : null, entryX: entry && entry.location ? entry.location.x : null, entryY: entry && entry.location ? entry.location.y : null, afterDrawLeft: obj.left != null ? obj.left : null, afterDrawTop: obj.top != null ? obj.top : null }; } catch (eE) {}
                   obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxNat, objectUuid: obj.uuid || obj.multiUuid || null };
                   const gNat = measureObjectGeometry(diy.canvas, obj);
                   syncBusinessFieldsFromObject(obj);
+                  try {
+                    // Commit C fix: post-create stabilization — restore geometry authority after site async commands.
+                    (function (obj3, reqLeft, reqTop) {
+                      setTimeout(function () {
+                        try {
+                          var dL = Math.abs(obj3.left - reqLeft);
+                          var dT = Math.abs(obj3.top - reqTop);
+                          if (dL > 6 || dT > 6) {
+                            if (typeof obj3.set === "function") obj3.set({ left: reqLeft, top: reqTop });
+                            else { obj3.left = reqLeft; obj3.top = reqTop; }
+                            try { if (typeof obj3.setCoords === "function") obj3.setCoords(); } catch (eS1) {}
+                            syncBusinessFieldsFromObject(obj3);
+                            obj3.zyOcrEntry.stabilized = { devLeft: Math.round(dL * 100) / 100, devTop: Math.round(dT * 100) / 100, restored: true, restoredAt: Date.now() };
+                          } else {
+                            obj3.zyOcrEntry.stabilized = { devLeft: Math.round(dL * 100) / 100, devTop: Math.round(dT * 100) / 100, restored: false };
+                          }
+                        } catch (eSt) {}
+                      }, 1200);
+                    })(obj, it.left != null ? it.left : obj.left, it.top != null ? it.top : obj.top);
+                  } catch (eStb) {}
                   createdNat.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: diy.canvas.getObjects().indexOf(obj), uuid: obj ? (obj.uuid || obj.multiUuid || null) : null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, geometry: gNat });
                 }
               } catch (e2) {
@@ -290,84 +570,14 @@ function pageBridge() {
           });
           return;
         }
-        const editorInteg = { mode: "mirror", nativeUndoFound: false, undoSavePre: false, undoSavePost: false, identityApplied: 0, uv4Total: 0, layerMax: -1 };
-        // 编辑器本地能力：native Undo 快照（仅编辑器自身 API，失败静默）
-        try {
-          const U = getNativeUndoInstance();
-          if (U && typeof U.save === "function") {
-            editorInteg.nativeUndoFound = true;
-            U.save(); editorInteg.undoSavePre = true; // 创建前快照（让后续原生 undo 有机会回到创建前）
-          }
-        } catch (eUndo) {}
-        let created = [];
-        const batch = [];
-        let failedBlockIndex = null;
-        let failMsg = "";
-        try {
-          const ref = getTextObjects(canvas)[0] || canvas.getObjects().find(function (o) { return typeof o.text === "string"; }) || null;
-          editorInteg.layerMax = currentLayerMax(canvas);
-          for (let idx = 0; idx < items.length; idx += 1) {
-            const it = items[idx];
-            let obj = null;
-            try {
-              obj = createTextObject(canvas, String(it.text || ""), ref, idx, null);
-              if (!obj) throw new Error("createTextObject returned null");
-              const conf = { left: it.left != null ? it.left : 20, top: it.top != null ? it.top : 20 + idx * 24, width: Math.max(60, it.width || 120), fontSize: it.fontSize || 14, fontFamily: it.fontFamily || "思源黑体 Regular", textAlign: "left", fill: "#000000" };
-              // Stage 5.6 P5-D：旋转场景（Mapper 输出 angle + origin:"center"）——中心即 left/top，绕中心旋转
-              if (it.angle) { conf.angle = it.angle; conf.originX = "center"; conf.originY = "center"; }
-              // Stage 6.1 §13：多行 textbox 高度须容纳 lineCount×lineHeight（Mapper 已按行数计算）
-              if (it.height != null && isFinite(it.height) && it.height > 0) conf.height = it.height;
-              obj.set(conf);
-              setObjectText(obj, String(it.text || ""));
-              obj.zyFieldKey = "ocr_demo_" + String(it.text || "").slice(0, 4);
-              // §18：换行诊断挂载到对象（用于真实渲染行数校验）
-              if (it.diagnostics) { obj.zyOcrDiagnostics = it.diagnostics; }
-              // Stage 6 P0：编辑器对象模型镜像（native 字段，多数字段为审计所得 252438 真机 schema）
-              try { if (mirrorEditorObjectModel(canvas, obj)) editorInteg.identityApplied += 1; } catch (eMirror) { console.warn("[zy-ocr][ocrCreate] mirror err=" + String(eMirror && eMirror.message || eMirror).slice(0, 120)); }
-              if (typeof obj.multiUuid === "string" && /^[0-9a-fA-F-]{20,}$/.test(obj.multiUuid)) editorInteg.uv4Total += 1;
-              // Stage 8B STEP 4（Phase B/C）：测量本对象真实几何 + 定位 key（供 ocrAdjust 校正）
-              // Stage 9 V4 P1（§六）：key 升级 zy-ocr-{transactionId}-{blockIndex} + 对象完整身份
-              const bIdxMir = it.blockIndex != null ? it.blockIndex : idx;
-              obj.zyOcrKey = txId ? ("zy-ocr-" + txId + "-" + bIdxMir) : ("zy-ocr-" + bIdxMir);
-              obj.zyOcrObjectId = { transactionId: txId, pageId: sourcePageId, blockId: bIdxMir, objectUuid: obj.uuid || obj.multiUuid || obj.markuuid || null };
-              const gObj = measureObjectGeometry(canvas, obj);
-              created.push({ blockIndex: it.blockIndex != null ? it.blockIndex : idx, objectIndex: canvas.getObjects().indexOf(obj), uuid: obj.uuid || obj.markuuid || obj.zyFieldKey || null, text: String(it.text || "").slice(0, 16), pageId: sourcePageId, side: sourceSide, ink: measureFabInkFor(obj), geometry: gObj });
-              batch.push(obj);
-            } catch (e2) {
-              // §16 事务：第一个失败即终止，全量回滚本批已建对象，恢复创建前状态（created=0）
-              failMsg = "item" + idx + ": " + String(e2 && e2.message || e2).slice(0, 120);
-              console.warn("[zy-ocr][ocrCreate] item error stack=" + String(e2 && e2.stack || e2).slice(0, 500));
-              failedBlockIndex = idx;
-              batch.forEach(function (o) { try { if (o && canvas.remove) canvas.remove(o); } catch (_e) {} });
-              created = [];
-              break;
-            }
-          }
-        } catch (e) {
-          failMsg = "ocrCreate: " + String(e && e.message || e).slice(0, 160);
-          console.warn("[zy-ocr][ocrCreate] batch error stack=" + String(e && e.stack || e).slice(0, 500));
-          failedBlockIndex = failedBlockIndex != null ? failedBlockIndex : (items.length - 1);
-          batch.forEach(function (o) { try { if (o && canvas.remove) canvas.remove(o); } catch (_e) {} });
-          created = [];
-        }
-        // Stage 6 P0：创建后再快照（若前置快照生效，undo/redo 可由原生管线闭环）
-        try {
-          const U = getNativeUndoInstance();
-          if (U && typeof U.save === "function") { U.save(); editorInteg.undoSavePost = true; }
-        } catch (eUndo2) {}
-        if (canvas.requestRenderAll) canvas.requestRenderAll();
-        const detectedBlocks = items.length;
-        const createdCount = created.length;
+        // Stage 10-C: OCR auto-create is Native-only; diy unavailable => CREATE_NATIVE_UNAVAILABLE stop
         post("ocrCreateResult", {
-          ok: createdCount === detectedBlocks && detectedBlocks > 0,
-          detectedBlocks: detectedBlocks,
-          createdCount: createdCount,
-          created: created,
-          failedBlockIndex: failedBlockIndex,
-          error: failMsg || (detectedBlocks === 0 ? "empty items" : undefined),
-          pageId: sourcePageId, side: sourceSide,
+          ok: false, code: "CREATE_NATIVE_UNAVAILABLE",
+          message: "native text entry (CanvasDiy.drawText) unavailable, OCR auto-create stopped",
+          detectedBlocks: items.length, createdCount: 0, created: [], failedBlockIndex: 0,
+          error: "CREATE_NATIVE_UNAVAILABLE", pageId: sourcePageId, side: sourceSide,
           transactionId: txId, imageFingerprint: txFp,
-          editorIntegration: editorInteg
+          editorIntegration: { mode: "native-unavailable", mirrorFallbackForbidden: true }
         });
         return;
       }
@@ -464,50 +674,94 @@ function pageBridge() {
             fontWeight: o.fontWeight != null ? String(o.fontWeight) : null,
             fontStyle: o.fontStyle != null ? String(o.fontStyle) : null,
             angle: typeof o.angle === "number" ? o.angle : 0,
-            center: (cx != null && cy != null) ? { x: cx, y: cy } : null
+            center: (cx != null && cy != null) ? { x: cx, y: cy } : null,
+            // Stage 10-D Commit A：模板槽位快照取证（只读）——fontId 取 drawText 落成的媒体字体 id（mediafontId），
+            // 缺失时由 diy-font-registry 从 fontFamily 推断（userscript 侧）；保留 markuuid/layerNum/fill/字距行高。
+            fontId: o.mediafontId != null ? String(o.mediafontId) : null,
+            markuuid: o.markuuid != null ? String(o.markuuid) : null,
+            layerNum: typeof o.layerNum === "number" ? o.layerNum : null,
+            fill: o.fill != null ? String(o.fill) : null,
+            charSpacing: typeof o.charSpacing === "number" ? o.charSpacing : null,
+            lineHeight: typeof o.lineHeight === "number" ? o.lineHeight : null,
+            fontName: o.fontFamily != null ? String(o.fontFamily) : null
           };
         });
-        post("getTextInventoryResult", { ok: true, code: "OK", pageId: (function () { const cInv = buildCurrentPageInfo(); return (cInv && cInv.pageId) || resoInv.pageId; })(), side: resoInv.side, items: invItems });
+        post("getTextInventoryResult", { ok: true, code: "OK", pageId: (function () { const cInv = buildCurrentPageInfo(); return (cInv && cInv.pageId) || resoInv.pageId; })(), side: resoInv.side, canvas: { width: typeof resoInv.canvas.width === "number" ? resoInv.canvas.width : (resoInv.canvas.getWidth ? resoInv.canvas.getWidth() : null), height: typeof resoInv.canvas.height === "number" ? resoInv.canvas.height : (resoInv.canvas.getHeight ? resoInv.canvas.getHeight() : null) }, items: invItems });
+        return;
+      }
+    // Stage 10-E Commit G-2：与 getTextInventory 同取证口径的单对象/单侧快照（只读）
+    function zyInventoryItem(o) {
+      const cx = typeof o.left === "number" ? o.left + (typeof o.width === "number" ? o.width / 2 : 0) : null;
+      const cy = typeof o.top === "number" ? o.top + (typeof o.height === "number" ? o.height / 2 : 0) : null;
+      return {
+        objectUuid: o.uuid || o.multiUuid || o.markuuid || null,
+        text: String(o.text != null ? o.text : ""),
+        left: typeof o.left === "number" ? o.left : null,
+        top: typeof o.top === "number" ? o.top : null,
+        width: typeof o.width === "number" ? o.width : null,
+        height: typeof o.height === "number" ? o.height : null,
+        fontSize: typeof o.fontSize === "number" ? o.fontSize : null,
+        fontFamily: o.fontFamily != null ? String(o.fontFamily) : null,
+        fontWeight: o.fontWeight != null ? String(o.fontWeight) : null,
+        fontStyle: o.fontStyle != null ? String(o.fontStyle) : null,
+        angle: typeof o.angle === "number" ? o.angle : 0,
+        center: (cx != null && cy != null) ? { x: cx, y: cy } : null,
+        fontId: o.mediafontId != null ? String(o.mediafontId) : null,
+        markuuid: o.markuuid != null ? String(o.markuuid) : null,
+        layerNum: typeof o.layerNum === "number" ? o.layerNum : null,
+        fill: o.fill != null ? String(o.fill) : null,
+        charSpacing: typeof o.charSpacing === "number" ? o.charSpacing : null,
+        lineHeight: typeof o.lineHeight === "number" ? o.lineHeight : null,
+        fontName: o.fontFamily != null ? String(o.fontFamily) : null
+      };
+    }
+    function zyInventorySide(canvasObj, side) {
+      if (!canvasObj) return null;
+      return {
+        side: side,
+        canvas: { width: typeof canvasObj.width === "number" ? canvasObj.width : (canvasObj.getWidth ? canvasObj.getWidth() : null), height: typeof canvasObj.height === "number" ? canvasObj.height : (canvasObj.getHeight ? canvasObj.getHeight() : null) },
+        items: getTextObjects(canvasObj).map(zyInventoryItem)
+      };
+    }
+      if (event.data.type === "getTextInventoryAll") {
+        // Stage 10-E Commit G-2：正反面双画布文字快照（只读）—— 供「一键智能填充」一次性取两侧槽位。
+        const frontCanvasA = findCanvasForSide("front");
+        const backCanvasA = findCanvasForSide("back");
+        post("getTextInventoryAllResult", { ok: true, front: zyInventorySide(frontCanvasA, "front"), back: zyInventorySide(backCanvasA, "back") });
         return;
       }
       if (event.data.type === "inkMeasure") {
-        // Stage 9 P4-B §四/§五：只读 —— 对源图各 OCR block 区域测量「局部 Otsu 少数类前景墨迹 bbox」。
-        // 注：页桥以 toString 注入为自包含字符串，无法引用沙箱 @require 模块；此处内联实现与
-        // extension/src/editor/image-ink-target.js 同构（node 单测以模块为真源）。
-        // 只读不改画布；失败显式 reason（NO_REGION/NO_INK/NO_IMAGE_SOURCE/CROSS_ORIGIN_IMAGE），禁伪造 inkWidth。
-        const resoM = resolveCurrentEditorPage();
-        if (!resoM || resoM.status !== "ok" || !resoM.canvas) { post("inkMeasureResult", { ok: false, reason: "CURRENT_PAGE_UNKNOWN", items: [] }); return; }
-        const canvasM = resoM.canvas;
-        const activeM = canvasM.getActiveObject ? canvasM.getActiveObject() : null;
-        const targetM = (activeM && String(activeM.type) === "image") ? activeM
-          : ((canvasM.backgroundImage && String(canvasM.backgroundImage.type) === "image") ? canvasM.backgroundImage
-            : ((canvasM.getObjects && canvasM.getObjects().find ? canvasM.getObjects().find(function (o) { return o && String(o.type) === "image"; }) : null) || null));
-        if (!targetM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SOURCE", items: [] }); return; }
-        const elM = (targetM._element) || (targetM.getElement && targetM.getElement());
-        if (!elM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_ELEMENT", items: [] }); return; }
-        const iwM = elM.naturalWidth || elM.width || targetM.width;
-        const ihM = elM.naturalHeight || elM.height || targetM.height;
-        if (!iwM || !ihM) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SIZE", items: [] }); return; }
-        const cvM = document.createElement("canvas"); cvM.width = iwM; cvM.height = ihM;
-        const c2M = cvM.getContext && cvM.getContext("2d");
-        if (!c2M) { post("inkMeasureResult", { ok: false, reason: "NO_CANVAS_CTX", items: [] }); return; }
-        let dM = null;
-        try { c2M.drawImage(elM, 0, 0); dM = c2M.getImageData(0, 0, iwM, ihM).data; } catch (e) { dM = null; }
-        if (!dM) { post("inkMeasureResult", { ok: false, reason: "CROSS_ORIGIN_IMAGE", items: [] }); return; }
-        const grayM = new Uint8Array(iwM * ihM);
-        for (let iM = 0; iM < iwM * ihM; iM += 1) { const jM = iM * 4; grayM[iM] = Math.round(0.299 * dM[jM] + 0.587 * dM[jM + 1] + 0.114 * dM[jM + 2]); }
-        const reqInk = Array.isArray(event.data.items) ? event.data.items : [];
-        const itemsM = reqInk.map(function (it) {
-          const bb = it.bbox || {};
-          const x0 = Math.max(0, Math.floor(bb.x || 0)), y0 = Math.max(0, Math.floor(bb.y || 0));
-          const x1 = Math.min(iwM - 1, Math.ceil((bb.x || 0) + (bb.width || 0)));
-          const y1 = Math.min(ihM - 1, Math.ceil((bb.y || 0) + (bb.height || 0)));
-          const ws = x1 - x0, hs = y1 - y0;
-          const base = { blockIndex: it.blockIndex != null ? it.blockIndex : null, lineIndex: it.lineIndex != null ? it.lineIndex : null };
-          if (ws < 2 || hs < 2 || x1 < x0 || y1 < y0) return Object.assign(base, { ok: false, reason: "NO_REGION", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+        // Stage 9 P4-B §四/§五 + OCR-P1 Commit 4.6-A：只读 —— 对源图各 OCR block 区域测量
+        // 「防污染视觉墨迹 bbox」。页桥以 toString 注入为自包含字符串，无法引用沙箱 @require 模块，
+        // 此处内联镜像与 extension/src/editor/image-ink-visual.js 逐逻辑一致（node 单测以模块为真源）。
+        // 概念：OCR_BBOX（搜索区域）→ SOURCE_INK_BOX（本函数视觉墨迹）→ VISUAL_TARGET_BOX（最终目标）。
+        // 只读不改画布；失败显式 reason（NO_REGION/NO_INK/NO_BAND...），禁伪造 inkBox。
+        const resoV = resolveCurrentEditorPage();
+        if (!resoV || resoV.status !== "ok" || !resoV.canvas) { post("inkMeasureResult", { ok: false, reason: "CURRENT_PAGE_UNKNOWN", items: [] }); return; }
+        const canvasV = resoV.canvas;
+        const activeV = canvasV.getActiveObject ? canvasV.getActiveObject() : null;
+        const targetV = (activeV && String(activeV.type) === "image") ? activeV
+          : ((canvasV.backgroundImage && String(canvasV.backgroundImage.type) === "image") ? canvasV.backgroundImage
+            : ((canvasV.getObjects && canvasV.getObjects().find ? canvasV.getObjects().find(function (o) { return o && String(o.type) === "image"; }) : null) || null));
+        if (!targetV) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SOURCE", items: [] }); return; }
+        const elV = (targetV._element) || (targetV.getElement && targetV.getElement());
+        if (!elV) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_ELEMENT", items: [] }); return; }
+        const iwV = elV.naturalWidth || elV.width || targetV.width;
+        const ihV = elV.naturalHeight || elV.height || targetV.height;
+        if (!iwV || !ihV) { post("inkMeasureResult", { ok: false, reason: "NO_IMAGE_SIZE", items: [] }); return; }
+        const cvV = document.createElement("canvas"); cvV.width = iwV; cvV.height = ihV;
+        const c2V = cvV.getContext && cvV.getContext("2d");
+        if (!c2V) { post("inkMeasureResult", { ok: false, reason: "NO_CANVAS_CTX", items: [] }); return; }
+        let dV = null;
+        try { c2V.drawImage(elV, 0, 0); dV = c2V.getImageData(0, 0, iwV, ihV).data; } catch (e) { dV = null; }
+        if (!dV) { post("inkMeasureResult", { ok: false, reason: "CROSS_ORIGIN_IMAGE", items: [] }); return; }
+        const grayV = new Uint8Array(iwV * ihV);
+        for (let iV = 0; iV < iwV * ihV; iV += 1) { const jV = iV * 4; grayV[iV] = Math.round(0.299 * dV[jV] + 0.587 * dV[jV + 1] + 0.114 * dV[jV + 2]); }
+        // ---- 防污染视觉墨迹（与 image-ink-visual.js 逐逻辑一致）----
+        function voOtsu(x0, y0, x1, y1) {
           const hist = new Array(256).fill(0); let sum = 0, total = 0;
-          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) { const g = grayM[y * iwM + x]; hist[g] += 1; total += 1; sum += g; }
-          if (total < 16) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) { const g = grayV[y * iwV + x]; hist[g] += 1; total += 1; sum += g; }
+          if (total < 24) return null;
           let sumB = 0, wB = 0, maxVar = 0, th = 128, found = false;
           for (let t = 0; t < 256; t += 1) {
             wB += hist[t]; if (wB === 0) continue;
@@ -517,28 +771,204 @@ function pageBridge() {
             const v = wB * wF * (mB - mF) * (mB - mF);
             if (v > maxVar) { maxVar = v; th = t; found = true; }
           }
-          if (!found) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
-          let dark = 0;
-          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) if (grayM[y * iwM + x] <= th) dark += 1;
-          const takeDark = dark <= total - dark;
-          let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity, cnt = 0;
-          for (let y = y0; y < y1; y += 1) {
-            for (let x = x0; x < x1; x += 1) {
-              const g = grayM[y * iwM + x];
-              const fg = takeDark ? (g <= th) : (g > th);
-              if (!fg) continue;
-              cnt += 1;
-              if (x < minX) minX = x; if (x > maxX) maxX = x;
-              if (y < minY) minY = y; if (y > maxY) maxY = y;
+          return found ? th : null;
+        }
+        function voClean(bin, x0, y0, x1, y1) {
+          const out = new Uint8Array(iwV * ihV);
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) {
+            let n = 0, cnt = 0;
+            for (let dy = -1; dy <= 1; dy += 1) for (let dx = -1; dx <= 1; dx += 1) {
+              const ny = y + dy, nx = x + dx;
+              if (ny < y0 || ny >= y1 || nx < x0 || nx >= x1) continue;
+              n += bin[ny * iwV + nx]; cnt += 1;
             }
+            out[y * iwV + x] = (cnt > 0 && n >= Math.ceil(cnt / 2)) ? 1 : 0;
           }
-          if (!(cnt >= 6 && maxX >= minX && maxY >= minY) || !isFinite(minX)) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null });
-          const inkW = maxX - minX + 1, inkH = maxY - minY + 1;
-          return Object.assign(base, { ok: true, reason: "OK", inkWidth: inkW, inkHeight: inkH, inkBox: { x: minX, y: minY, width: inkW, height: inkH }, coverage: Math.round((cnt / total) * 10000) / 10000 });
+          return out;
+        }
+        function voRowBands(rowCount, y0, y1) {
+          const bands = []; let curY0 = null, lastY = null, emptyRun = 0;
+          for (let y = y0; y < y1; y += 1) {
+            if (rowCount[y] > 0) { if (curY0 === null) curY0 = y; lastY = y; emptyRun = 0; }
+            else if (curY0 !== null) { emptyRun += 1; if (emptyRun > 2) { bands.push({ y0: curY0, y1: lastY + 1, count: 0 }); curY0 = null; lastY = null; emptyRun = 0; } }
+          }
+          if (curY0 !== null && lastY !== null) bands.push({ y0: curY0, y1: lastY + 1, count: 0 });
+          bands.forEach(function (b) { let n = 0; for (let yy = b.y0; yy < b.y1; yy += 1) n += rowCount[yy]; b.count = n; });
+          let best = null, total = 0;
+          bands.forEach(function (b) { total += b.count; if (!best || b.count > best.count) best = b; });
+          return { bands: bands, best: best, total: total, rowBandConfidence: (best && total > 0) ? best.count / total : 0 };
+        }
+        function voColSpan(colCount, x0, x1) {
+          const segs = []; let curX0 = null, lastX = null;
+          for (let x = x0; x < x1; x += 1) {
+            if (colCount[x] > 0) {
+              if (curX0 === null) curX0 = x;
+              if (lastX !== null && (x - lastX) > 2) { segs.push({ x0: curX0, x1: lastX + 1, count: 0 }); curX0 = x; }
+              lastX = x;
+            } else if (curX0 !== null && lastX !== null && (x - lastX) > 2) { segs.push({ x0: curX0, x1: lastX + 1, count: 0 }); curX0 = null; lastX = null; }
+          }
+          if (curX0 !== null && lastX !== null) segs.push({ x0: curX0, x1: lastX + 1, count: 0 });
+          let best = null;
+          segs.forEach(function (s) { if (!best || (s.x1 - s.x0) > (best.x1 - best.x0)) best = s; });
+          return best;
+        }
+        function voConn(bin, bx0, by0, bx1, by1, rx0, ry0, rx1, ry1) {
+          const visited = new Uint8Array(iwV * ihV); const sizes = [];
+          for (let y = by0; y < by1; y += 1) for (let x = bx0; x < bx1; x += 1) {
+            if (!bin[y * iwV + x] || visited[y * iwV + x]) continue;
+            const q = [[x, y]]; let head = 0, size = 0;
+            visited[y * iwV + x] = 1;
+            while (head < q.length) {
+              const p = q[head]; head += 1; size += 1;
+              for (let dy = -1; dy <= 1; dy += 1) for (let dx = -1; dx <= 1; dx += 1) {
+                const nx = p[0] + dx, ny = p[1] + dy;
+                if (nx < rx0 || nx >= rx1 || ny < ry0 || ny >= ry1) continue;
+                if (nx >= bx0 && nx < bx1 && ny >= by0 && ny < by1 && bin[ny * iwV + nx] && !visited[ny * iwV + nx]) { visited[ny * iwV + nx] = 1; q.push([nx, ny]); }
+              }
+            }
+            sizes.push(size);
+          }
+          let total = 0, max = 0;
+          sizes.forEach(function (s) { total += s; if (s > max) max = s; });
+          return { componentCount: sizes.length, dominantComponentRatio: total > 0 ? max / total : 0 };
+        }
+        const reqV = Array.isArray(event.data.items) ? event.data.items : [];
+        const itemsV = reqV.map(function (it) {
+          const bb = it.bbox || {};
+          const base = { blockIndex: it.blockIndex != null ? it.blockIndex : null, lineIndex: it.lineIndex != null ? it.lineIndex : null };
+          const x0 = Math.max(0, Math.floor(bb.x || 0)), y0 = Math.max(0, Math.floor(bb.y || 0));
+          const x1 = Math.min(iwV - 1, Math.ceil((bb.x || 0) + (bb.width || 0)));
+          const y1 = Math.min(ihV - 1, Math.ceil((bb.y || 0) + (bb.height || 0)));
+          const ws = x1 - x0, hs = y1 - y0;
+          if (ws < 4 || hs < 4 || x1 < x0 || y1 < y0) return Object.assign(base, { ok: false, reason: "NO_REGION", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: null, confidence: null, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const th = voOtsu(x0, y0, x1, y1);
+          if (th == null) return Object.assign(base, { ok: false, reason: "NO_INK_OTSU", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: null, confidence: null, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const bin = new Uint8Array(iwV * ihV);
+          let dark = 0; const total = ws * hs;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) if (grayV[y * iwV + x] <= th) dark += 1;
+          const takeDark = dark <= total - dark;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) { const g = grayV[y * iwV + x]; bin[y * iwV + x] = takeDark ? ((g <= th) ? 1 : 0) : ((g > th) ? 1 : 0); }
+          let fgCnt = 0;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) fgCnt += bin[y * iwV + x] ? 1 : 0;
+          if (fgCnt < 8) return Object.assign(base, { ok: false, reason: "NO_INK", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: th, confidence: 0, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const clean = voClean(bin, x0, y0, x1, y1);
+          let cCnt = 0;
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) cCnt += clean[y * iwV + x] ? 1 : 0;
+          if (cCnt < 8) return Object.assign(base, { ok: false, reason: "NO_INK_AFTER_CLEAN", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: th, confidence: 0, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const rowCount = new Array(ihV).fill(0);
+          for (let y = y0; y < y1; y += 1) for (let x = x0; x < x1; x += 1) if (clean[y * iwV + x]) rowCount[y] += 1;
+          const rb = voRowBands(rowCount, y0, y1);
+          if (!rb.best) return Object.assign(base, { ok: false, reason: "NO_BAND", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: th, confidence: 0, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const band0 = rb.best.y0, band1 = rb.best.y1;
+          const colCount = new Array(iwV).fill(0);
+          for (let y = band0; y < band1; y += 1) for (let x = x0; x < x1; x += 1) if (clean[y * iwV + x]) colCount[x] += 1;
+          const cs = voColSpan(colCount, x0, x1);
+          if (!cs) return Object.assign(base, { ok: false, reason: "NO_SPAN", inkWidth: null, inkHeight: null, inkBox: null, coverage: null, threshold: th, confidence: 0, componentCount: null, dominantComponentRatio: null, rowBandConfidence: null });
+          const vx0 = cs.x0, vx1 = cs.x1, vy0 = band0, vy1 = band1;
+          const cc = voConn(clean, vx0, vy0, vx1, vy1, x0, y0, x1, y1);
+          const inkW = vx1 - vx0, inkH = vy1 - vy0;
+          let vCnt = 0;
+          for (let y = vy0; y < vy1; y += 1) for (let x = vx0; x < vx1; x += 1) vCnt += clean[y * iwV + x] ? 1 : 0;
+          const covTotal = cCnt > 0 ? cCnt : 1;
+          return Object.assign(base, {
+            ok: true, reason: "OK",
+            inkWidth: inkW, inkHeight: inkH,
+            inkBox: { x: vx0, y: vy0, width: inkW, height: inkH },
+            coverage: Math.round((vCnt / covTotal) * 10000) / 10000,
+            threshold: th,
+            confidence: Math.round(Math.min(1, cc.dominantComponentRatio * 0.6 + rb.rowBandConfidence * 0.4) * 100) / 100,
+            componentCount: cc.componentCount,
+            dominantComponentRatio: Math.round(cc.dominantComponentRatio * 10000) / 10000,
+            rowBandConfidence: Math.round(rb.rowBandConfidence * 10000) / 10000,
+            method: "VISUAL_MORPH_PROJECTION"
+          });
         });
-        post("inkMeasureResult", { ok: true, reason: "OK", imageWidth: iwM, imageHeight: ihM, items: itemsM });
+        post("inkMeasureResult", { ok: true, reason: "OK", imageWidth: iwV, imageHeight: ihV, items: itemsV });
         return;
       }
+      // Stage 10-D Commit C：模板槽位匹配器内联镜像（与 extension/src/editor/template-slot-matcher.js 逐字一致）
+
+
+function nz(v) { return (typeof v === "number" && isFinite(v)) ? v : null; }
+function cx(b) { return nz(b.left) != null ? nz(b.left) + (nz(b.width) || 0) / 2 : null; }
+function cy(b) { return nz(b.top) != null ? nz(b.top) + (nz(b.height) || 0) / 2 : null; }
+function lenSim(a, b) { return 1 / (1 + Math.abs(String(a || "").length - String(b || "").length) / 8); }
+function fsSim(x, y) { const fx = nz(x), fy = nz(y); if (fx == null || fy == null || fx <= 0 || fy <= 0) return 0.5; return 1 / (1 + Math.abs(Math.log(fx) - Math.log(fy)) * 4); }
+function spatialScore(row, slot, scale) {
+  const rx = cx(row), ry = cy(row), sx = cx(slot), sy = cy(slot);
+  if (rx == null || ry == null || sx == null || sy == null) return 0.5;
+  const d = Math.hypot(rx - sx, ry - sy);
+  const sc = (nz(scale) != null && nz(scale) > 0) ? nz(scale) : ((nz(slot.width) || nz(row.width)) || 100);
+  return 1 / (1 + d / sc);
+}
+
+const DEFAULT_WEIGHTS = { spatial: 0.45, size: 0.25, order: 0.15, len: 0.15 };
+const DEFAULT_MIN_CONF = 0.45;
+
+function yRank(list) {
+  // 返回每个 index 的 y 序 rank（稳定，相同 y 按 x）
+  const idx = list.map(function (_, i) { return i; });
+  idx.sort(function (a, b) {
+    const ya = nz(list[a].top) != null ? nz(list[a].top) : 0, yb = nz(list[b].top) != null ? nz(list[b].top) : 0;
+    if (ya !== yb) return ya - yb;
+    const xa = nz(list[a].left) != null ? nz(list[a].left) : 0, xb = nz(list[b].left) != null ? nz(list[b].left) : 0;
+    return xa - xb;
+  });
+  const rank = new Array(list.length);
+  idx.forEach(function (i, r) { rank[i] = r; });
+  return rank;
+}
+
+function matchSlots(input) {
+  const o = input || {};
+  const slots = Array.isArray(o.slots) ? o.slots.slice() : [];
+  const rows = Array.isArray(o.rows) ? o.rows.slice() : [];
+  if (!slots.length) return { matches: [], unmatched: rows.map(function (_, i) { return { rowIdx: i, reason: "NO_SLOT" }; }), unusedSlots: [] };
+  if (!rows.length) return { matches: [], unmatched: [], unusedSlots: slots.map(function (_, i) { return i; }) };
+  const opts = Object.assign({}, DEFAULT_WEIGHTS, o.opts || {});
+  const minConf = typeof opts.minConfidence === "number" ? opts.minConfidence : DEFAULT_MIN_CONF;
+  const rowRank = yRank(rows);
+  const slotRank = yRank(slots);
+
+  // 候选构建
+  const cands = [];
+  for (let ri = 0; ri < rows.length; ri += 1) {
+    const row = rows[ri];
+    if (row == null || !String(row.text || "").trim()) continue;
+    for (let si = 0; si < slots.length; si += 1) {
+      const slot = slots[si];
+      if (slot == null) continue;
+      const spatial = spatialScore(row, slot, slot.width);
+      if (spatial <= 0.05) continue; // 明显跨区（左右栏/上下块）直接不连
+      const size = fsSim(row.fontSize, slot.fontSize);
+      const len = lenSim(row.text, slot.text);
+      const order = (Math.abs(rowRank[ri] - slotRank[si]) <= 1) ? 1 : (Math.abs(rowRank[ri] - slotRank[si]) <= 2 ? 0.6 : 0.25);
+      const score = opts.spatial * spatial + opts.size * size + opts.order * order + opts.len * len;
+      cands.push({ ri: ri, si: si, score: score, spatial: Math.round(spatial * 1000) / 1000, size: Math.round(size * 1000) / 1000, order: Math.round(order * 1000) / 1000, len: Math.round(len * 1000) / 1000 });
+    }
+  }
+  // cost 升序（score 降序）→ 稳定排序（先 row 后 score）
+  cands.sort(function (a, b) { return (b.score - a.score) || (a.ri - b.ri) || (a.si - b.si); });
+
+  const boundRow = {}, boundSlot = {};
+  const matches = [];
+  cands.forEach(function (c) {
+    if (boundRow[c.ri] || boundSlot[c.si]) return; // 冲突回退
+    if (c.score < minConf) return;
+    boundRow[c.ri] = 1; boundSlot[c.si] = 1;
+    matches.push({ rowIdx: c.ri, slotIdx: c.si, confidence: Math.round(c.score * 10000) / 10000, factors: ["spatial=" + c.spatial, "size=" + c.size, "order=" + c.order, "len=" + c.len] });
+  });
+
+  const unmatched = [];
+  rows.forEach(function (row, ri) {
+    if (row == null || !String(row.text || "").trim()) { unmatched.push({ rowIdx: ri, reason: "EMPTY_TEXT" }); return; }
+    if (boundRow[ri]) return;
+    unmatched.push({ rowIdx: ri, reason: "NO_SLOT" });
+  });
+  const unusedSlots = [];
+  slots.forEach(function (_, si) { if (!boundSlot[si]) unusedSlots.push(si); });
+  return { matches: matches, unmatched: unmatched, unusedSlots: unusedSlots };
+}
       if (event.data.type === "ocrCalibrate") {
         // Stage 9 V4 §二十/§二十四：CALIBRATION_RECOGNITION / RECOGNITION_RETRY —— 更新现有 textbox，
         // 不创建重复对象。错误行为：删除 A 重建 B（禁止）——保持 object identity，只改 text/样式/几何。
@@ -570,6 +1000,28 @@ function pageBridge() {
         const canvasCal = (resoCal && resoCal.canvas) || null;
         if (!canvasCal) {
           post("ocrCalibrateResult", { ok: false, code: "CALIBRATE_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止校准。", items: [], pageId: calPageId, transactionId: calTxId, imageFingerprint: calFp });
+          return;
+        }
+        // Stage 10-D Commit C：TEMPLATE_MODE —— 画布已有文字槽位（slotsSnapshot 非空）时：
+        //   用 Slot Matcher（纯函数镜像 zyMatchSlots）替代 index 配对，命中槽只 setText（几何/字体/样式/身份/层序冻结），
+        //   未命中行不新建（模板套版只改内容，不误伤槽位）；RECONSTRUCTION（无 slotsSnapshot）保持原 index 配对行为不变。
+        const calSlotsRaw = event.data.slotsSnapshot || null;
+        const templateMode = Array.isArray(calSlotsRaw) && calSlotsRaw.length > 0;
+        if (templateMode) {
+          const slotObjsT = getTextObjects(canvasCal); // 与 getTextInventory 同序遍历同序（含取证字段的仅存于 snapshot）
+          const mt = matchSlots({ slots: calSlotsRaw, rows: calItems, opts: {} });
+          const calOutT = [], createdOutT = [];
+          (mt.matches || []).forEach(function (m) {
+            const so = slotObjsT && slotObjsT[m.slotIdx] ? slotObjsT[m.slotIdx] : null;
+            if (!so) return;
+            const row = calItems[m.rowIdx] || null;
+            const text = String(row && row.text != null ? row.text : "");
+            setObjectText(so, text); // 只改内容
+            try { if (typeof so.setCoords === "function") so.setCoords(); } catch (eT2) {}
+            syncBusinessFieldsFromObject(so);
+            calOutT.push({ blockIndex: (row && row.blockIndex != null) ? row.blockIndex : m.rowIdx, objectUuid: so.uuid || so.multiUuid || null, text: String(text).slice(0, 16), updated: true, templateOnly: true, geometry: measureObjectGeometry(canvasCal, so) });
+          });
+          post("ocrCalibrateResult", { ok: true, calibrated: calOutT, created: createdOutT, templateMode: true, templateUnmatched: mt.unmatched || [], unusedSlots: mt.unusedSlots || [], pageId: calPageId, side: event.data.side || null, transactionId: calTxId, imageFingerprint: calFp, message: "模板模式：更新 " + calOutT.length + " 个槽位内容（几何/字体/样式冻结）" });
           return;
         }
         // 阅读序对象池（top 升序；对 zyOcrKey 助手对象与模板对象一视同仁）
@@ -907,6 +1359,48 @@ function pageBridge() {
       }
       return found;
     }
+    // ---- Stage 10-C：Native Layer Contract 硬校验（页面世界镜像，逻辑与 native-layer-contract.js 逐字一致）----
+    // Canvas textbox ≠ Native Layer：仅看清画布对象不算创建成功；必须 canvasObject +
+    // 原生图层数组（canvasToProductObjArr）包含 / 原生身份字段 / 产品序列化链可见。
+    // 字段名以既有真机审计为准（252438 schema，见 STAGE_8A2 系列与 stage-6-2 报告）；禁止猜测。
+    // D 层（product/serializer）在页面世界可验证时判定；不可验证记为 UNKNOWN（不误杀），
+    // 由真机审计补测（契约 §3 D/E；本轮 A/B/C 为硬门禁）。
+    function verifyNativeLayer10C(diy, obj, o) {
+      const e = o || {};
+      try {
+        const canvas = diy && diy.canvas;
+        const layerArr = (diy && diy.canvasObjInfo && Array.isArray(diy.canvasObjInfo.canvasToProductObjArr)) ? diy.canvasObjInfo.canvasToProductObjArr : null;
+        const canvasObject = !!(canvas && obj && canvas.getObjects().indexOf(obj) >= 0);
+        const layerArrayHas = !!layerArr && obj != null && layerArr.indexOf(obj) >= 0;
+        const registryDelta = (e.registryDelta != null) ? e.registryDelta : null;
+        const layerOk = canvasObject && (layerArrayHas || registryDelta === 1);
+        const uuid = obj && obj.uuid != null ? String(obj.uuid) : null;
+        const multiUuid = obj && obj.multiUuid != null ? String(obj.multiUuid) : null;
+        const markuuid = obj && obj.markuuid != null ? String(obj.markuuid) : null;
+        const layerNum = (obj && typeof obj.layerNum === "number" && isFinite(obj.layerNum)) ? obj.layerNum : null;
+        const identityOk = !!(uuid || multiUuid || layerNum || (markuuid && markuuid !== ""));
+        // D 层：产品序列化链可见性探测（真机审计所得，不可验证 → UNKNOWN 不误杀）
+        let product = { ok: null, productRegistered: null, code: "PRODUCT_UNKNOWN" };
+        try {
+          const pi = diy && diy.canvasObjInfo;
+          const probeFn = (pi && typeof pi.checkObjsInProductJson === "function") ? pi.checkObjsInProductJson : null;
+          if (typeof probeFn === "function") {
+            const c1 = probeFn.call(pi);
+            const c2 = (Array.isArray(pi.canvasToProductObjArr) && pi.canvasToProductObjArr.indexOf(obj) >= 0);
+            product = { ok: !!(c1 !== false || c2), productRegistered: !!(c1 !== false || c2), code: c1 !== false ? "PRODUCT_REGISTERED" : (c2 ? "PRODUCT_REGISTERED_VIA_LAYER" : "PRODUCT_NOT_REGISTERED") };
+          }
+        } catch (eProd) { product = { ok: null, productRegistered: null, code: "PRODUCT_UNKNOWN" }; }
+        const checks = { layer: { ok: layerOk, canvasObject: canvasObject, nativeLayerRegistered: layerArrayHas, registryDelta: registryDelta }, identity: { ok: identityOk, uuid: uuid, multiUuid: multiUuid, layerNum: layerNum, markuuid: markuuid }, product: product };
+        const failed = [];
+        if (!layerOk) failed.push("LAYER:" + (canvasObject ? (layerArrayHas ? "REGISTRY_NO_LAYER_ARR" : "CANVAS_WITHOUT_LAYER") : "NO_CANVAS_OBJECT"));
+        if (!identityOk) failed.push("IDENTITY:NO_IDENTITY_FIELD");
+        if (product.code === "PRODUCT_NOT_REGISTERED") failed.push("PRODUCT:NOT_REGISTERED");
+        if (failed.length) return { ok: false, code: "CREATE_NATIVE_LAYER_FAILED", failed: failed, checks: checks, layerNum: layerNum, uuid: uuid, multiUuid: multiUuid };
+        return { ok: true, code: "OK", productUnknown: product.ok === null, failed: [], checks: checks, layerNum: layerNum, uuid: uuid, multiUuid: multiUuid };
+      } catch (eL) {
+        return { ok: false, code: "CREATE_NATIVE_LAYER_FAILED", failed: ["VERIFY_EXCEPTION:" + String(eL && eL.message || eL).slice(0, 80)], checks: null };
+      }
+    }
 
     // ---- Stage 8B STEP 4（Phase B/D）：创建后实测与业务字段同步 ----
     // aCoords 为 CANVAS_LOGICAL 真值（fabric calcCoords 不含 viewportTransform）。仅序列化数字，禁止回传对象。
@@ -1023,12 +1517,35 @@ function pageBridge() {
           };
         }
       } catch (eAc) { aCoords = null; }
+      // OCR-P0.1：IMAGE_PREP 只读诊断 —— 证明"发给 Native OCR 的图片"是当前选中图片的完整像素数据。
+      // 六不保证（不裁剪/不缩放/不 JPEG 压缩/不改 orientation/不改自然尺寸/Baidu 与 Native 同 dataUrl）。
+      // 指纹算法与 transaction-identity.js fingerprintImage（FNV-1a）保持一致，供事务关联。
+      var dmp = /^data:([^;,]+)/i.exec(dataUrl || "");
+      var b64 = (dataUrl && dataUrl.indexOf(",") >= 0) ? dataUrl.slice(dataUrl.indexOf(",") + 1) : "";
+      var decodedBytes = -1;
+      try { decodedBytes = atob(b64).length; } catch (eD) { decodedBytes = -1; }
+      var fp = 0x811c9dc5;
+      for (var fpi = 0; fpi < dataUrl.length; fpi += 1) { fp ^= dataUrl.charCodeAt(fpi); fp = Math.imul(fp, 0x01000193) >>> 0; }
+      var fingerprint = "img-" + fp.toString(16) + "-" + dataUrl.length;
       return {
         ok: true,
         kind: kind,
         dataUrl: dataUrl,
         width: w,
         height: h,
+        imagePrep: {
+          kind: kind,
+          naturalWidth: w,
+          naturalHeight: h,
+          dataUrlMime: dmp ? dmp[1].toLowerCase() : "image/png",
+          decodedBytes: decodedBytes,
+          dataUrlChars: dataUrl.length,
+          fingerprint: fingerprint,
+          sourceElementType: el && el.tagName ? String(el.tagName).toUpperCase() : null,
+          transformPolicy: "pass-through", // 等尺寸 canvas + toDataURL("image/png")，无缩放/裁剪/JPEG
+          sameDataUrlForAllProviders: true
+        },
+        fingerprint: fingerprint,
         geometry: {
           left: left, top: top,
           width: target.width, height: target.height,
@@ -1491,5 +2008,6 @@ function pageBridge() {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now() };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.67'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.67' };
   }
