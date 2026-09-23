@@ -144,7 +144,7 @@
         position: fixed;
         top: 80px;
         right: 14px;
-        width: 390px;
+        width: 364px;
         max-height: calc(100vh - 96px);
         z-index: 2147483647;
         background: #ffffff;
