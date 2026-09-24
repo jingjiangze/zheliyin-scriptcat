@@ -145,7 +145,8 @@ function zyNormalizeLabeledText(templateText, customerText) {
 }
 
 // 主入口：V2 硬校验
-// input: { plan, snapshot, rawText, minConfidence?, typeDetector?, lines?, expectSide? }
+// input: { plan, snapshot, rawText, minConfidence?, typeDetector?, lines?, expectSide?, expectVersion? }
+//   expectVersion：本次校验所属版（P1 多版）；未传时取 snapshot.version，再退化 0（单版语义）
 //   expectSide：分面调用时传入本次请求的面（"front"/"back"）；
 //   任何块/槽位越出该面 → SIDE_OUT_OF_SCOPE 硬错误（结构性防串面）。
 function zyValidateTemplateMatchPlan(input) {
@@ -155,6 +156,7 @@ function zyValidateTemplateMatchPlan(input) {
   const minConfidence = zyIsNum(o.minConfidence) ? o.minConfidence : 0.5;
   const typeDetector = (typeof o.typeDetector === "function") ? o.typeDetector : null;
   const expectSide = (o.expectSide === "back" || o.expectSide === "front") ? o.expectSide : null;
+  const expectVersion = zyIsNum(o.expectVersion) ? o.expectVersion : (zyIsNum(snapshot.version) ? snapshot.version : 0);
   const allLines = Array.isArray(o.lines) ? o.lines : zySplitLinesLocal(o.rawText);
   const lineMap = {};
   allLines.forEach((l) => { lineMap[Number(l.lineNo)] = l; });
@@ -245,6 +247,7 @@ function zyValidateTemplateMatchPlan(input) {
     // 值来源 = blockId 回填（忽略 AI 在 match 里给的任何文本）+ 标签规范化（随模板标签约定）
     const normed = zyNormalizeLabeledText(slot.text, block.text);
     refined.push({
+      version: expectVersion,
       slotId: slotId, slotIdx: slot.index, side: slot.side, objectUuid: slot.objectUuid,
       customerText: normed.text, confidence: confidence, reason: reason,
       blockId: blockId, blockType: block.aiType || block.localType || null, semanticVerified: semanticVerified,

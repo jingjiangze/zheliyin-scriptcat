@@ -311,12 +311,30 @@ function pageBridge() {
         const v2Reso = resolveCurrentEditorPage();
         const v2Canvas = (v2Reso && v2Reso.canvas) || null;
         if (!v2Canvas) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止 AI 槽位应用。", applied: [], sides: [] }); return; }
+        // P1 多版：命令必须携带一致的 version（本批只允许作用于同一版），且该版必须等于「当前版」——
+        // 防「预览的是 A 版、用户切到 B 版后点确认」把文字写到错误版；跨版一律拒绝。
+        const v2Versions = {};
+        v2Cmds.forEach(function (c) { const vv = Number(c && c.version); v2Versions[isFinite(vv) ? vv : 0] = 1; });
+        const v2VerList = Object.keys(v2Versions).map(Number);
+        if (v2VerList.length > 1) { post("templateApplyV2Result", { ok: false, code: "VERSION_MISMATCH", message: "AI 槽位应用指令混含多个版（" + v2VerList.join(",") + "），已停止（禁止跨版批写）。", applied: [], sides: [] }); return; }
+        const v2Version = v2VerList.length ? v2VerList[0] : 0;
+        const v2LayoutPre = zyCanvasLayout();
+        if (v2Version !== v2LayoutPre.current.vIdx) { post("templateApplyV2Result", { ok: false, code: "VERSION_MISMATCH", message: "指令版本(" + v2Version + ")与当前版(" + v2LayoutPre.current.vIdx + ")不一致（可能已切换多版），已停止。", applied: [], sides: [] }); return; }
         // Stage 10-G L 阶 Commit 05：Snapshot Concurrency Guard —— 执行前再次按 getTextInventoryAll 同口径重算快照 hash，
         // 与调用方冻结的 planHash 比对；不一致（预览期间画布被编辑/并发变化）→ SLOT_STATE_CHANGED 停止，绝不执行。
+        // P1 多版：hash 口径覆盖全部版（任一版变化 → 拦截）。
         if (v2PlanHash) {
-          const frCvs3 = findCanvasForSide("front") || v2Canvas;
-          const baCvs3 = findCanvasForSide("back");
-          const curHash = zyBuildTemplateSnapshot({ frontItems: getTextObjects(frCvs3).map(zyInventoryItem), backItems: baCvs3 ? getTextObjects(baCvs3).map(zyInventoryItem) : null, page: null }).snapshotHash;
+          const v2LayoutH = zyCanvasLayout();
+          const allSidesH = [];
+          for (let v6 = 0; v6 < v2LayoutH.versionCount; v6 += 1) {
+            ["front", "back"].forEach(function (sd6) {
+              const cvs6 = findCanvasForSide(sd6, v6);
+              if (cvs6) allSidesH.push({ version: v6, side: sd6, items: getTextObjects(cvs6).map(zyInventoryItem) });
+            });
+          }
+          const frCvs3 = findCanvasForSide("front", v2Version) || v2Canvas;
+          const baCvs3 = findCanvasForSide("back", v2Version);
+          const curHash = zyBuildTemplateSnapshot({ frontItems: getTextObjects(frCvs3).map(zyInventoryItem), backItems: baCvs3 ? getTextObjects(baCvs3).map(zyInventoryItem) : null, page: null, version: v2Version, versionCount: v2LayoutH.versionCount, allSidesItems: allSidesH }).snapshotHash;
           if (curHash !== v2PlanHash) {
             post("templateApplyV2Result", { ok: false, code: "SLOT_STATE_CHANGED", message: "执行前快照比对不一致（快照已变化，可能已被编辑），已停止：planHash=" + v2PlanHash + " 现场=" + curHash + "。", applied: [], sides: [] });
             return;
@@ -328,8 +346,8 @@ function pageBridge() {
         ["front", "back"].forEach(function (sd) {
           const group = v2Cmds.filter(function (c) { return c.side === sd; }).sort(function (a, b) { return Number(a.slotIdx) - Number(b.slotIdx); });
           if (!group.length) return;
-          const cvs = findCanvasForSide(sd);
-          if (!cvs) { v2AnyFail = true; v2Fails.push(sd + ":NO_CANVAS"); v2Groups.push({ side: sd, ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", applied: [] }); return; }
+          const cvs = findCanvasForSide(sd, v2Version);
+          if (!cvs) { v2AnyFail = true; v2Fails.push(sd + ":NO_CANVAS"); v2Groups.push({ side: sd, version: v2Version, ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", applied: [] }); return; }
           const objs = getTextObjects(cvs);
           // 对象总数一致性（可选防线：调用方提供 slotsCount 时，该面文字对象数必须与槽位规划一致）
           let changed = false;
@@ -344,7 +362,7 @@ function pageBridge() {
               if (curId && curId !== g.objectUuid) { changed = true; break; }
             }
           }
-          if (changed) { v2AnyFail = true; v2Fails.push(sd + ":SLOT_STATE_CHANGED"); v2Groups.push({ side: sd, ok: false, code: "SLOT_STATE_CHANGED", message: "画布文字层与 AI 槽位应用指令不一致（可能已编辑），已停止该面。", applied: [] }); return; }
+          if (changed) { v2AnyFail = true; v2Fails.push(sd + ":SLOT_STATE_CHANGED"); v2Groups.push({ side: sd, version: v2Version, ok: false, code: "SLOT_STATE_CHANGED", message: "画布文字层与 AI 槽位应用指令不一致（可能已编辑），已停止该面。", applied: [] }); return; }
           let u2 = null;
           try { u2 = getNativeUndoInstance(); if (u2 && typeof u2.save === "function") u2.save(); } catch (eU) {}
           const applied = [];
@@ -356,13 +374,13 @@ function pageBridge() {
               setObjectText(so, text); // 只改内容，几何/字体/样式/身份/层序冻结
               if (typeof so.setCoords === "function") so.setCoords();
               syncBusinessFieldsFromObject(so);
-              applied.push({ side: sd, slotId: g.slotId, slotIdx: g.slotIdx, objectUuid: so.uuid || so.multiUuid || null, text: String(text).slice(0, 24) });
+              applied.push({ side: sd, version: v2Version, slotId: g.slotId, slotIdx: g.slotIdx, objectUuid: so.uuid || so.multiUuid || null, text: String(text).slice(0, 24) });
             } catch (eT) { v2AnyFail = true; v2Fails.push(sd + ":" + g.slotId + ":" + String(eT && eT.message || eT).slice(0, 80)); }
           });
           if (u2 && typeof u2.save === "function") { try { u2.save(); } catch (eU2) {} }
           if (cvs.requestRenderAll) cvs.requestRenderAll();
           else if (cvs.renderAll) cvs.renderAll();
-          v2Groups.push({ side: sd, ok: true, count: applied.length, applied: applied });
+          v2Groups.push({ side: sd, version: v2Version, ok: true, count: applied.length, applied: applied });
         });
         const v2AppliedAll = [];
         v2Groups.forEach(function (g) { v2AppliedAll.push.apply(v2AppliedAll, g.applied || []); });
@@ -815,6 +833,18 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
       });
       return ("00000000" + h.toString(16)).slice(-8);
     }
+    // P1 多版：全版 hash 口径 —— allSidesItems = [{version, side, items}] 按 canvasIdx 顺序传入，
+    // 展开后统一 hash；未提供时退化为「本版 front + 本版 back」（单版下两者等价，hash 值不变）。
+    function zySnapshotHashItems(input) {
+      const o = input || {};
+      const all = Array.isArray(o.allSidesItems) ? o.allSidesItems : null;
+      if (all) {
+        const flat = [];
+        all.forEach(function (g) { (g && Array.isArray(g.items) ? g.items : []).forEach(function (it) { flat.push(it); }); });
+        return flat;
+      }
+      return (Array.isArray(o.frontItems) ? o.frontItems : []).concat(Array.isArray(o.backItems) ? o.backItems : []);
+    }
     function zySnapshotItemWithSlot(item, side, index) {
       const it = item || {};
       const id = String(side || "front") + "-" + (Number(index) + 1);
@@ -851,10 +881,18 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
       const frontItems = frontRaw ? frontRaw.map((it, i) => zySnapshotItemWithSlot(it, "front", i)) : null;
       const backItems = backRaw ? backRaw.map((it, i) => zySnapshotItemWithSlot(it, "back", i)) : null;
       const page = o.page || null;
-      const snapshotHash = zySnapshotHashOf((frontItems || []).concat(backItems || []));
+      // P1 多版：快照声明所属版 + 版本总数 + 当前版诊断；hash 口径 = 全部版按 canvasIdx 顺序展开
+      const version = zyIsNum(o.version) ? o.version : 0;
+      const versionCount = zyIsNum(o.versionCount) ? o.versionCount : 1;
+      const snapshotHash = zySnapshotHashOf(zySnapshotHashItems(o));
       return {
         ok: true,
         page: page,
+        version: version,
+        versionCount: versionCount,
+        multi: (o.multi != null) ? !!o.multi : (versionCount > 1),
+        current: o.current || null,
+        layout: o.layout || null,
         front: { exists: !!frontItems, side: "front", items: frontItems },
         back: { exists: !!backItems, side: "back", items: backItems },
         snapshotHash: snapshotHash,
@@ -872,12 +910,22 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
       if (event.data.type === "getTextInventoryAll") {
         // Stage 10-G L 阶 Commit 01：升级为 TemplateSnapshot —— front/back 严格隔离（back 缺失 = null，
         // 绝不回退 front，曾致 46g real 中 backAbsent=true 却拿到 front 内容）+ 全量字段 + snapshotHash。
-        const frontCanvasA = findCanvasForSide("front");
-        const backCanvasA = findCanvasForSide("back");
+        // P1 多版：默认读取「当前版」；可显式传 version 指定版；hash 口径覆盖全部版（任一版变化即变化）
+        const layoutA = zyCanvasLayout();
+        const reqVA = (event.data.version != null && isFinite(Number(event.data.version))) ? Math.floor(Number(event.data.version)) : layoutA.current.vIdx;
+        const frontCanvasA = findCanvasForSide("front", reqVA);
+        const backCanvasA = findCanvasForSide("back", reqVA);
         const frontSnapItems = frontCanvasA ? getTextObjects(frontCanvasA).map(zyInventoryItem) : null;
         const backSnapItems = backCanvasA ? getTextObjects(backCanvasA).map(zyInventoryItem) : null;
+        const allSidesItemsA = [];
+        for (let v4 = 0; v4 < layoutA.versionCount; v4 += 1) {
+          ["front", "back"].forEach(function (sd4) {
+            const cvs4 = findCanvasForSide(sd4, v4);
+            if (cvs4) allSidesItemsA.push({ version: v4, side: sd4, items: getTextObjects(cvs4).map(zyInventoryItem) });
+          });
+        }
         const pageA = (function () { const pi = buildCurrentPageInfo(); const c = frontCanvasA || backCanvasA; return { pageId: (pi && pi.pageId) || null, canvasId: null, width: c ? (typeof c.width === "number" ? c.width : (c.getWidth ? c.getWidth() : null)) : null, height: c ? (typeof c.height === "number" ? c.height : (c.getHeight ? c.getHeight() : null)) : null }; })();
-        post("getTextInventoryAllResult", zyBuildTemplateSnapshot({ frontItems: frontSnapItems, backItems: backSnapItems, page: pageA }));
+        post("getTextInventoryAllResult", zyBuildTemplateSnapshot({ frontItems: frontSnapItems, backItems: backSnapItems, page: pageA, version: reqVA, versionCount: layoutA.versionCount, multi: layoutA.multi, current: layoutA.current, layout: { ok: layoutA.ok, code: layoutA.code, conflicts: layoutA.conflicts, hardConflicts: layoutA.hardConflicts, dom: layoutA.dom, totalLen: layoutA.totalLen }, allSidesItems: allSidesItemsA }));
         return;
       }
       if (event.data.type === "inkMeasure") {
@@ -1235,6 +1283,18 @@ function matchSlots(input) {
       if (event.data.type === "getPages") {
         // Stage 7.6 只读：Page 清单（动态 materialize 全量枚举，pageId 稳定身份）
         post("getPagesResult", buildPageInventory());
+        return;
+      }
+      if (event.data.type === "getMultiVersionInfo") {
+        // P1 多版只读：版布局 + 每版正反槽位计数（不修改画布）
+        const L1 = zyCanvasLayout();
+        const versions1 = [];
+        for (let v5 = 0; v5 < L1.versionCount; v5 += 1) {
+          const f5 = findCanvasForSide("front", v5);
+          const b5 = findCanvasForSide("back", v5);
+          versions1.push({ vIdx: v5, frontExists: !!f5, backExists: !!b5, frontCount: f5 ? getTextObjects(f5).length : null, backCount: b5 ? getTextObjects(b5).length : null });
+        }
+        post("getMultiVersionInfoResult", { ok: L1.ok, code: L1.code, multi: L1.multi, versionCount: L1.versionCount, totalLen: L1.totalLen, current: L1.current, dom: L1.dom, conflicts: L1.conflicts, hardConflicts: L1.hardConflicts, versions: versions1 });
         return;
       }
       if (event.data.type === "getCurrentPage") {
@@ -1749,14 +1809,106 @@ function matchSlots(input) {
         };
       } catch (e) { return null; }
     }
-    function findCanvasForSide(side) {
+    // ===== P1 多版地基 =====
+    // 站点 totalCanvasArray 为扁平数组，每版占 2 个连续条目（真机探测，见 runtime/reports/stage-11/multiversion-probe.json）：
+    //   [v1正面c0, v1背面c1, v2正面c2, v2背面c3, ...]
+    //   第 vIdx 版第 side 面 → canvasIdx = 2*vIdx + (side==='back' ? 1 : 0)
+    // 以下 5 个函数为 extension/src/editor/template-snapshot.js 同名纯函数的**逐字内联镜像**
+    // （页面 world 无法 require；镜像保持逐字一致，node 单测以模块为真源）。
+    function zyCanvasIndexOf(version, side) {
+      return Math.max(0, Math.floor(Number(version) || 0)) * 2 + (side === "back" ? 1 : 0);
+    }
+    function zyVersionOfCanvasIndex(canvasIdx) {
+      return Math.max(0, Math.floor((Number(canvasIdx) || 0) / 2));
+    }
+    function zySideOfCanvasIndex(canvasIdx) {
+      return ((Number(canvasIdx) || 0) % 2 === 1) ? "back" : "front";
+    }
+    function zyVersionCountOf(totalLen) {
+      return Math.max(1, Math.ceil((Number(totalLen) || 0) / 2));
+    }
+    function zyDecideLayout(input) {
+      const o = input || {};
+      // 本函数位于 pageBridge 直接层级（depth 1），而 zyIsNum 定义在 message handler 内部（depth 2）不可见，
+      // 故内联等价数值判断（isNum 语义与 zyIsNum 完全一致：typeof number && isFinite）。
+      const isNum = function (v) { return typeof v === "number" && isFinite(v); };
+      const out = {
+        ok: true, code: "OK", multi: false, versionCount: 1, totalLen: 0,
+        current: { vIdx: 0, side: "front", canvasIdx: 0, source: null, materialized: false },
+        dom: { liCount: null, currentLiIdx: null, currentGroupIdx: null },
+        conflicts: [], hardConflicts: []
+      };
+      const totalLen = (isNum(o.totalLen) && o.totalLen >= 0) ? o.totalLen : 0;
+      out.totalLen = totalLen;
+      const liCount = isNum(o.domLiCount) && o.domLiCount > 0 ? o.domLiCount : null;
+      const curLiIdx = isNum(o.domCurrentLiIdx) && o.domCurrentLiIdx >= 0 ? o.domCurrentLiIdx : null;
+      const curGroupIdx = isNum(o.domCurrentGroupIdx) && o.domCurrentGroupIdx >= 0 ? o.domCurrentGroupIdx : null;
+      out.dom.liCount = liCount;
+      out.dom.currentLiIdx = curLiIdx;
+      out.dom.currentGroupIdx = curGroupIdx;
+      const arrVersionCount = zyVersionCountOf(totalLen);
+      // 版数唯一真源 = totalCanvasArray 长度（硬事实：每版占 2 个连续条目）。
+      // DOM .pageWrapMulti li 数量仅作软冲突告警 —— 站点可能存在额外/隐藏的 .pageWrapMulti 容器（幽灵 li），
+      // 以 DOM 优先会把单版误判为多版（P1 首版曾在真机偶发触发）。
+      const versionCount = arrVersionCount;
+      out.versionCount = versionCount;
+      out.multi = versionCount > 1;
+      const cc = (isNum(o.currentCanvasNum) && o.currentCanvasNum >= 1) ? (o.currentCanvasNum - 1) : null;
+      let canvasIdx = cc;
+      let cs = cc != null ? "canvasObjVO.currentCanvasNum" : null;
+      if (canvasIdx == null && curGroupIdx != null) { canvasIdx = curGroupIdx; cs = "domCurrentGroup"; }
+      if (canvasIdx == null) { canvasIdx = 0; cs = "default0"; }
+      out.current.canvasIdx = canvasIdx;
+      out.current.vIdx = zyVersionOfCanvasIndex(canvasIdx);
+      out.current.side = zySideOfCanvasIndex(canvasIdx);
+      out.current.source = cs;
+      out.current.materialized = (canvasIdx >= 0 && canvasIdx < totalLen);
+      if (cc != null && curGroupIdx != null && cc !== curGroupIdx) out.hardConflicts.push("currentCanvasNum(" + cc + ")!=domCurrentGroup(" + curGroupIdx + ")");
+      if (!out.current.materialized) out.hardConflicts.push("CURRENT_VERSION_NOT_MATERIALIZED(idx=" + canvasIdx + ",len=" + totalLen + ")");
+      if (curLiIdx != null && curLiIdx !== out.current.vIdx) out.conflicts.push("liCurrent(" + curLiIdx + ")!=vIdx(" + out.current.vIdx + ")");
+      if (liCount != null && arrVersionCount !== liCount) out.conflicts.push("domLiCount(" + liCount + ")!=arrVersionCount(" + arrVersionCount + ")");
+      if (out.hardConflicts.length) { out.ok = false; out.code = "MULTI_LAYOUT_CONFLICT:" + out.hardConflicts.join("|"); }
+      return out;
+    }
+    // 采集现场值（CanvasObjVO + 站点 UI DOM）→ 交纯函数判定；冲突显式记录，不猜。
+    function zyCanvasLayout() {
+      const CV = getLoadedModule("CanvasObjVO") || window.CanvasObjVO || null;
+      if (!CV || !Array.isArray(CV.totalCanvasArray)) { const e0 = zyDecideLayout({ totalLen: 0 }); e0.ok = false; e0.code = "NO_CANVAS_OBJ_VO"; return e0; }
+      let liCount = null, curLiIdx = null, curGroupIdx = null;
+      try {
+        // 只取第一个 .pageWrapMulti 容器（站点主 UI）；排除额外/隐藏容器的幽灵 li
+        const wrapEl = document.querySelector(".pageWrapMulti");
+        const lis = wrapEl ? wrapEl.querySelectorAll("li") : document.querySelectorAll(".pageWrapMulti li");
+        liCount = lis.length;
+        const curLi = wrapEl ? wrapEl.querySelector("li.currentLi") : document.querySelector(".pageWrapMulti li.currentLi");
+        curLiIdx = curLi ? Array.prototype.indexOf.call(lis, curLi) : null;
+        const gs = wrapEl ? wrapEl.querySelectorAll(".page-group") : document.querySelectorAll(".pageWrapMulti .page-group");
+        const curG = wrapEl ? wrapEl.querySelector(".page-group.current") : document.querySelector(".pageWrapMulti .page-group.current");
+        curGroupIdx = curG ? Array.prototype.indexOf.call(gs, curG) : null;
+      } catch (eDom) {}
+      return zyDecideLayout({
+        totalLen: CV.totalCanvasArray.length,
+        currentCanvasNum: (typeof CV.currentCanvasNum === "number") ? CV.currentCanvasNum : null,
+        domLiCount: liCount,
+        domCurrentLiIdx: (curLiIdx != null && curLiIdx >= 0) ? curLiIdx : null,
+        domCurrentGroupIdx: (curGroupIdx != null && curGroupIdx >= 0) ? curGroupIdx : null
+      });
+    }
+    function findCanvasForSide(side, vIdxOpt) {
+      const explicit = (typeof vIdxOpt === "number" && isFinite(vIdxOpt) && vIdxOpt >= 0);
+      let vIdx = explicit ? Math.floor(vIdxOpt) : null;
+      if (vIdx == null) { const L0 = zyCanvasLayout(); vIdx = (L0.current && L0.current.vIdx >= 0) ? L0.current.vIdx : 0; }
       const CanvasObjVO = getLoadedModule("CanvasObjVO") || window.CanvasObjVO;
       const total = CanvasObjVO && CanvasObjVO.totalCanvasArray;
-      const index = side === "back" ? 1 : 0;
+      const index = vIdx * 2 + (side === "back" ? 1 : 0);
+      // 1) 目标版精确命中
       if (Array.isArray(total) && total[index]) {
         const selected = unwrapCanvas(total[index]) || findCanvasIn(total[index]);
         if (selected) return selected;
       }
+      // 2) 非首版缺失 → 不回退（禁止跨版冒充）
+      if (vIdx !== 0) return null;
+      // 3) 首版（单版/首版）保持既有回退链
       if (side === "back") return null; // L 阶 Commit 01：back 绝不回退 front/其它画布（曾把 front 内容冒充 back）
       const CurrentCanvas = getLoadedModule("CurrentCanvas") || window.CurrentCanvas;
       if (side !== "back" && CurrentCanvas && CurrentCanvas.getCurrentCanvas) {
@@ -2159,6 +2311,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.76'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.76' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.77'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.77' };
   }

@@ -1,0 +1,623 @@
+{
+  "ts": "2026-09-24T08:13:46.412Z",
+  "stage": "STAGE10-G-P1-MULTIVERSION-LAYOUT",
+  "cookieSource": "merged",
+  "bverExpect": "0.3.11.77",
+  "rounds": 2,
+  "runs": [
+    {
+      "round": 1,
+      "errors": [],
+      "steps": {
+        "L1": {
+          "source": "zy-card-assistant-page",
+          "type": "getMultiVersionInfoResult",
+          "ok": true,
+          "code": "OK",
+          "multi": false,
+          "versionCount": 1,
+          "totalLen": 1,
+          "current": {
+            "vIdx": 0,
+            "side": "front",
+            "canvasIdx": 0,
+            "source": "canvasObjVO.currentCanvasNum",
+            "materialized": true
+          },
+          "dom": {
+            "liCount": 1,
+            "currentLiIdx": 0,
+            "currentGroupIdx": 0
+          },
+          "conflicts": [],
+          "hardConflicts": [],
+          "versions": [
+            {
+              "vIdx": 0,
+              "frontExists": true,
+              "backExists": false,
+              "frontCount": 0,
+              "backCount": null
+            }
+          ]
+        },
+        "L2": {
+          "source": "zy-card-assistant-page",
+          "type": "getMultiVersionInfoResult",
+          "ok": true,
+          "code": "OK",
+          "multi": false,
+          "versionCount": 1,
+          "totalLen": 2,
+          "current": {
+            "vIdx": 0,
+            "side": "back",
+            "canvasIdx": 1,
+            "source": "canvasObjVO.currentCanvasNum",
+            "materialized": true
+          },
+          "dom": {
+            "liCount": 1,
+            "currentLiIdx": 0,
+            "currentGroupIdx": 1
+          },
+          "conflicts": [],
+          "hardConflicts": [],
+          "versions": [
+            {
+              "vIdx": 0,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            }
+          ]
+        },
+        "L3_apply": {
+          "ok": true,
+          "modleNum": 1,
+          "multiNum": 1
+        },
+        "L3": {
+          "source": "zy-card-assistant-page",
+          "type": "getMultiVersionInfoResult",
+          "ok": true,
+          "code": "OK",
+          "multi": true,
+          "versionCount": 2,
+          "totalLen": 4,
+          "current": {
+            "vIdx": 0,
+            "side": "back",
+            "canvasIdx": 1,
+            "source": "canvasObjVO.currentCanvasNum",
+            "materialized": true
+          },
+          "dom": {
+            "liCount": 2,
+            "currentLiIdx": 0,
+            "currentGroupIdx": 1
+          },
+          "conflicts": [],
+          "hardConflicts": [],
+          "versions": [
+            {
+              "vIdx": 0,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            },
+            {
+              "vIdx": 1,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            }
+          ]
+        },
+        "L4": {
+          "layout": {
+            "source": "zy-card-assistant-page",
+            "type": "getMultiVersionInfoResult",
+            "ok": true,
+            "code": "OK",
+            "multi": true,
+            "versionCount": 2,
+            "totalLen": 4,
+            "current": {
+              "vIdx": 1,
+              "side": "front",
+              "canvasIdx": 2,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "dom": {
+              "liCount": 2,
+              "currentLiIdx": 1,
+              "currentGroupIdx": 2
+            },
+            "conflicts": [],
+            "hardConflicts": [],
+            "versions": [
+              {
+                "vIdx": 0,
+                "frontExists": true,
+                "backExists": true,
+                "frontCount": 0,
+                "backCount": 0
+              },
+              {
+                "vIdx": 1,
+                "frontExists": true,
+                "backExists": true,
+                "frontCount": 0,
+                "backCount": 0
+              }
+            ]
+          },
+          "snap": {
+            "version": 1,
+            "versionCount": 2,
+            "multi": true,
+            "texts": [],
+            "snapshotHash": "811c9dc5",
+            "pageId": "canvas:c2",
+            "current": {
+              "vIdx": 1,
+              "side": "front",
+              "canvasIdx": 2,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "layout": {
+              "ok": true,
+              "code": "OK",
+              "conflicts": [],
+              "hardConflicts": [],
+              "dom": {
+                "liCount": 2,
+                "currentLiIdx": 1,
+                "currentGroupIdx": 2
+              },
+              "totalLen": 4
+            }
+          }
+        },
+        "L5": {
+          "source": "zy-card-assistant-page",
+          "type": "getMultiVersionInfoResult",
+          "ok": true,
+          "code": "OK",
+          "multi": true,
+          "versionCount": 2,
+          "totalLen": 4,
+          "current": {
+            "vIdx": 1,
+            "side": "back",
+            "canvasIdx": 3,
+            "source": "canvasObjVO.currentCanvasNum",
+            "materialized": true
+          },
+          "dom": {
+            "liCount": 2,
+            "currentLiIdx": 1,
+            "currentGroupIdx": 3
+          },
+          "conflicts": [],
+          "hardConflicts": [],
+          "versions": [
+            {
+              "vIdx": 0,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            },
+            {
+              "vIdx": 1,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            }
+          ]
+        },
+        "L6": {
+          "layout": {
+            "source": "zy-card-assistant-page",
+            "type": "getMultiVersionInfoResult",
+            "ok": true,
+            "code": "OK",
+            "multi": true,
+            "versionCount": 2,
+            "totalLen": 4,
+            "current": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "dom": {
+              "liCount": 2,
+              "currentLiIdx": 0,
+              "currentGroupIdx": 0
+            },
+            "conflicts": [],
+            "hardConflicts": [],
+            "versions": [
+              {
+                "vIdx": 0,
+                "frontExists": true,
+                "backExists": true,
+                "frontCount": 0,
+                "backCount": 0
+              },
+              {
+                "vIdx": 1,
+                "frontExists": true,
+                "backExists": true,
+                "frontCount": 0,
+                "backCount": 0
+              }
+            ]
+          },
+          "snap": {
+            "version": 0,
+            "versionCount": 2,
+            "multi": true,
+            "texts": [],
+            "snapshotHash": "811c9dc5",
+            "pageId": "canvas:c0",
+            "current": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "layout": {
+              "ok": true,
+              "code": "OK",
+              "conflicts": [],
+              "hardConflicts": [],
+              "dom": {
+                "liCount": 2,
+                "currentLiIdx": 0,
+                "currentGroupIdx": 0
+              },
+              "totalLen": 4
+            }
+          }
+        },
+        "L7": {
+          "switchToV2": {
+            "ok": true,
+            "text": "第2版正面"
+          },
+          "applyResult": {
+            "source": "zy-card-assistant-page",
+            "type": "templateApplyV2Result",
+            "ok": false,
+            "code": "TEMPLATE_APPLY_BLOCKED_PAGE_CHANGED",
+            "message": "套版期间页面已变化或无法验证（OCR source page differs active page），已停止。",
+            "applied": [],
+            "sides": []
+          },
+          "afterV1": [],
+          "afterV0": []
+        }
+      },
+      "bver": "0.3.11.77"
+    },
+    {
+      "round": 2,
+      "errors": [],
+      "steps": {
+        "L1": {
+          "source": "zy-card-assistant-page",
+          "type": "getMultiVersionInfoResult",
+          "ok": true,
+          "code": "OK",
+          "multi": false,
+          "versionCount": 1,
+          "totalLen": 1,
+          "current": {
+            "vIdx": 0,
+            "side": "front",
+            "canvasIdx": 0,
+            "source": "canvasObjVO.currentCanvasNum",
+            "materialized": true
+          },
+          "dom": {
+            "liCount": 1,
+            "currentLiIdx": 0,
+            "currentGroupIdx": 0
+          },
+          "conflicts": [],
+          "hardConflicts": [],
+          "versions": [
+            {
+              "vIdx": 0,
+              "frontExists": true,
+              "backExists": false,
+              "frontCount": 0,
+              "backCount": null
+            }
+          ]
+        },
+        "L2": {
+          "source": "zy-card-assistant-page",
+          "type": "getMultiVersionInfoResult",
+          "ok": true,
+          "code": "OK",
+          "multi": false,
+          "versionCount": 1,
+          "totalLen": 2,
+          "current": {
+            "vIdx": 0,
+            "side": "back",
+            "canvasIdx": 1,
+            "source": "canvasObjVO.currentCanvasNum",
+            "materialized": true
+          },
+          "dom": {
+            "liCount": 1,
+            "currentLiIdx": 0,
+            "currentGroupIdx": 1
+          },
+          "conflicts": [],
+          "hardConflicts": [],
+          "versions": [
+            {
+              "vIdx": 0,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            }
+          ]
+        },
+        "L3_apply": {
+          "ok": true,
+          "modleNum": 1,
+          "multiNum": 1
+        },
+        "L3": {
+          "source": "zy-card-assistant-page",
+          "type": "getMultiVersionInfoResult",
+          "ok": true,
+          "code": "OK",
+          "multi": true,
+          "versionCount": 2,
+          "totalLen": 4,
+          "current": {
+            "vIdx": 0,
+            "side": "back",
+            "canvasIdx": 1,
+            "source": "canvasObjVO.currentCanvasNum",
+            "materialized": true
+          },
+          "dom": {
+            "liCount": 2,
+            "currentLiIdx": 0,
+            "currentGroupIdx": 1
+          },
+          "conflicts": [],
+          "hardConflicts": [],
+          "versions": [
+            {
+              "vIdx": 0,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            },
+            {
+              "vIdx": 1,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            }
+          ]
+        },
+        "L4": {
+          "layout": {
+            "source": "zy-card-assistant-page",
+            "type": "getMultiVersionInfoResult",
+            "ok": true,
+            "code": "OK",
+            "multi": true,
+            "versionCount": 2,
+            "totalLen": 4,
+            "current": {
+              "vIdx": 1,
+              "side": "front",
+              "canvasIdx": 2,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "dom": {
+              "liCount": 2,
+              "currentLiIdx": 1,
+              "currentGroupIdx": 2
+            },
+            "conflicts": [],
+            "hardConflicts": [],
+            "versions": [
+              {
+                "vIdx": 0,
+                "frontExists": true,
+                "backExists": true,
+                "frontCount": 0,
+                "backCount": 0
+              },
+              {
+                "vIdx": 1,
+                "frontExists": true,
+                "backExists": true,
+                "frontCount": 0,
+                "backCount": 0
+              }
+            ]
+          },
+          "snap": {
+            "version": 1,
+            "versionCount": 2,
+            "multi": true,
+            "texts": [],
+            "snapshotHash": "811c9dc5",
+            "pageId": "canvas:c2",
+            "current": {
+              "vIdx": 1,
+              "side": "front",
+              "canvasIdx": 2,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "layout": {
+              "ok": true,
+              "code": "OK",
+              "conflicts": [],
+              "hardConflicts": [],
+              "dom": {
+                "liCount": 2,
+                "currentLiIdx": 1,
+                "currentGroupIdx": 2
+              },
+              "totalLen": 4
+            }
+          }
+        },
+        "L5": {
+          "source": "zy-card-assistant-page",
+          "type": "getMultiVersionInfoResult",
+          "ok": true,
+          "code": "OK",
+          "multi": true,
+          "versionCount": 2,
+          "totalLen": 4,
+          "current": {
+            "vIdx": 1,
+            "side": "back",
+            "canvasIdx": 3,
+            "source": "canvasObjVO.currentCanvasNum",
+            "materialized": true
+          },
+          "dom": {
+            "liCount": 2,
+            "currentLiIdx": 1,
+            "currentGroupIdx": 3
+          },
+          "conflicts": [],
+          "hardConflicts": [],
+          "versions": [
+            {
+              "vIdx": 0,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            },
+            {
+              "vIdx": 1,
+              "frontExists": true,
+              "backExists": true,
+              "frontCount": 0,
+              "backCount": 0
+            }
+          ]
+        },
+        "L6": {
+          "layout": {
+            "source": "zy-card-assistant-page",
+            "type": "getMultiVersionInfoResult",
+            "ok": true,
+            "code": "OK",
+            "multi": true,
+            "versionCount": 2,
+            "totalLen": 4,
+            "current": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "dom": {
+              "liCount": 2,
+              "currentLiIdx": 0,
+              "currentGroupIdx": 0
+            },
+            "conflicts": [],
+            "hardConflicts": [],
+            "versions": [
+              {
+                "vIdx": 0,
+                "frontExists": true,
+                "backExists": true,
+                "frontCount": 0,
+                "backCount": 0
+              },
+              {
+                "vIdx": 1,
+                "frontExists": true,
+                "backExists": true,
+                "frontCount": 0,
+                "backCount": 0
+              }
+            ]
+          },
+          "snap": {
+            "version": 0,
+            "versionCount": 2,
+            "multi": true,
+            "texts": [],
+            "snapshotHash": "811c9dc5",
+            "pageId": "canvas:c0",
+            "current": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "layout": {
+              "ok": true,
+              "code": "OK",
+              "conflicts": [],
+              "hardConflicts": [],
+              "dom": {
+                "liCount": 2,
+                "currentLiIdx": 0,
+                "currentGroupIdx": 0
+              },
+              "totalLen": 4
+            }
+          }
+        },
+        "L7": {
+          "switchToV2": {
+            "ok": true,
+            "text": "第2版正面"
+          },
+          "applyResult": {
+            "source": "zy-card-assistant-page",
+            "type": "templateApplyV2Result",
+            "ok": false,
+            "code": "TEMPLATE_APPLY_BLOCKED_PAGE_CHANGED",
+            "message": "套版期间页面已变化或无法验证（OCR source page differs active page），已停止。",
+            "applied": [],
+            "sides": []
+          },
+          "afterV1": [],
+          "afterV0": []
+        }
+      }
+    }
+  ],
+  "errors": []
+}
