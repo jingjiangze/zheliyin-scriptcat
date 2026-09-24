@@ -133,8 +133,15 @@ onnxruntime-web（WASM，CSP 已放行 wasm-unsafe-eval）
 | M1 det 后处理内核 | 概率图 → 行级框：尺寸规划与反变换、二值化（严格 >）、8 邻域连通域、凸包、最小面积外接矩形、框内均值评分门、unclip 解析式外扩、阅读顺序排序、候选上限 | `extension/src/ocr/db-det-postprocess.js` | `runtime/stage12/db-det-postprocess.test.js`（**11/11**） | ✅ 已实现（未接线） |
 | M2 参数与调优逻辑 | 档位基线（tiny/small/medium）、场景增量（card/dense/tilted/qrNoise/lowContrast）、小字放大派生（目标行高 16px 反推 limitSideLen）、长边预算夹紧、人工覆盖、越界夹紧；网格调优 + IoU 指标 | `extension/src/ocr/det-params.js` | `runtime/stage12/det-params.test.js`（**10/10**） | ✅ 已实现（未接线） |
 | M3 provider 装配（离线可测） | 图像预处理与旋转感知裁切（det/rec/cls 张量、BGR 默认、两套 mean/std）、字典组装 + CTC 贪心解码 + cls 判定、模型清单解析/SHA-256 校验/缓存加载、provider 端到端编排（det→后处理→映射→cls→rec→候选契约，假 session 可测） | `ppocr-image-ops.js` / `ppocr-rec-decode.js` / `ppocr-engine-loader.js` / `ppocr-provider.js` | `runtime/stage12/ppocr-*.test.js`（8+8+7+5=**28/28**） | ✅ 已实现（未接线） |
-| M3b ORT 真实接线 | onnxruntime-web 会话适配（`ort.InferenceSession` → session 接口）、`GM_xmlhttpRequest` 下载器、CacheStorage 适配器、模型清单生成（真实 sha256）、`zyOcrEngine` 开关与降级 | — | — | ⏳ 待做 |
+| M3b 真实模型 + ORT 接线（已验证） | 模型落库（det 1.83MB / rec 4.49MB / dict 27KB / cls 1.02MB，真实 sha256 + `.gitattributes` 字节保护）；ORT 会话适配（`ort.InferenceSession` → session 接口）；真实浏览器验证 harness | `assets/ocr/ppocrv6/**`、`ppocr-ort-session.js`、`runtime/stage12/ppocr-browser-check.js` | 真实 Chrome + ORT 1.30.0：彩色名片样张 4 行 **字符准确率 100%**；端到端 ~0.7–0.9s（WASM 单线程）；`runtime/reports/stage-12/ppocr-browser-check.json` | ✅ 已验证（未接线主链） |
+| M3c userscript 接线 | `@require` 接入 + GM 下载器 / WebCrypto / CacheStorage 适配 + 页面世界执行器 + `zyOcrEngine` 开关（默认关闭）+ 版本五处统一 | — | — | ⏳ 待做（需与另一会话的 userscript 改动协调） |
 | M4 离线 A/B → 真机回归 → 切默认 | 见第 6 节 V2/V3/V4 | — | — | ⏳ 待做 |
+
+**真机实测修正（真实模型 + 真实浏览器暴露，均已落码 + 单测护栏）**：
+1. **det 输入必须 32 对齐**：非 32 倍数在 ORT 内触发 `Shape mismatch attempting to re-use buffer`；修复 = `planDetResize.alignTo=32` + 反变换改为 **按轴** `scaleX/scaleY`（单比例会造成长边方向系统性偏移）。
+2. **provider 必须 await `session.run`**：真实 ORT 返回 Promise，原同步取值路径直接 `DET_FAILED`（单测的同步假 session 曾掩盖该缺陷 → 已补异步回归护栏）。
+3. **cls 输入是 `3×80×160`**：不是 PP-OCRv4 时代的 `48×192`；且宽度固定、不按长宽比（`cropRectBilinear.outWidth`）。
+4. **charset 必须 `useSpaceChar=false`**：PP-OCRv6 tiny 字典第 617 行本身就是全角空格（index 616 = space 类），再前置空格会整体错位一位 → 实测文本全乱码（已对照实证）。
 
 **与 PaddleOCR 的差异（如实声明）**：轮廓用「连通域 + 凸包」替代 `cv2.findContours`（外轮廓语义等价，不做孔洞）；unclip 用矩形解析式 `d = A*r/P` 替代 pyclipper 多边形 offset（对矩形/近矩形文字行等价）；仅实现 `box_score_fast`；像素中心点集 + 0.5px 半径补偿对齐像素外框。
 

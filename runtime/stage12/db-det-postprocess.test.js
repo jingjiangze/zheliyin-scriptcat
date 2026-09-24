@@ -93,28 +93,41 @@ t("T6 45° 斜带 → angle≈±45°，aabb 近似正方（宽度受旋转影响
   assert.ok(Math.abs(b.aabb.width - b.aabb.height) < 3, "w=" + b.aabb.width + " h=" + b.aabb.height);
 });
 
-// ---- T7 尺寸规划 + 反变换 ----
-t("T7 planDetResize(600,400,min 736) → scale 1.84 / 1104x736；mapDetBoxesToImage 还原原图坐标", () => {
+// ---- T7 尺寸规划（32 对齐）+ 按轴反变换 ----
+t("T7 planDetResize(600,400,min 736) → 1120x736（32 对齐）并给出 scaleX/scaleY；mapDetBoxesToImage 按轴还原", () => {
   const rs = D.planDetResize(600, 400, { limitSideLen: 736, limitType: "min" });
   assert.strictEqual(rs.ok, true);
   assert.ok(near(rs.scale, 1.84), "scale=" + rs.scale);
-  assert.strictEqual(rs.width, 1104);
+  assert.strictEqual(rs.alignTo, 32);
+  assert.strictEqual(rs.width, 1120);
   assert.strictEqual(rs.height, 736);
+  assert.strictEqual(rs.width % 32, 0);
+  assert.strictEqual(rs.height % 32, 0);
+  assert.ok(near(rs.scaleX, 600 / 1120), "scaleX=" + rs.scaleX);
+  assert.ok(near(rs.scaleY, 400 / 736), "scaleY=" + rs.scaleY);
   assert.strictEqual(rs.reason, "UPSCALE_MIN_SIDE");
-  const boxes = [{ order: 0, polygon: [{ x: 184, y: 92 }, { x: 920, y: 92 }, { x: 920, y: 184 }, { x: 184, y: 184 }], rect: { angle: 0 }, score: 0.9, area: 1 }];
+  const boxes = [{ order: 0, polygon: [{ x: 184, y: 92 }, { x: 1120, y: 92 }, { x: 1120, y: 184 }, { x: 184, y: 184 }], rect: { angle: 0 }, score: 0.9, area: 1 }];
   const mapped = D.mapDetBoxesToImage(boxes, rs, { width: 600, height: 400 });
-  assert.deepStrictEqual(mapped[0].bbox, { x: 100, y: 50, width: 400, height: 50 });
+  assert.ok(near(mapped[0].bbox.y, 50), "y=" + mapped[0].bbox.y);              // 92 × 400/736 = 50
+  assert.ok(near(mapped[0].bbox.x, 184 * 600 / 1120), "x=" + mapped[0].bbox.x);
+  assert.ok(near(mapped[0].bbox.width, 936 * 600 / 1120), "w=" + mapped[0].bbox.width);
+  assert.ok(near(mapped[0].bbox.height, 92 * 400 / 736), "h=" + mapped[0].bbox.height);
   assert.strictEqual(mapped[0].coordinateSpace, "image-pixel");
   assert.deepStrictEqual(mapped[0].imageSize, { width: 600, height: 400 });
+  // alignTo=0 关闭对齐（向后兼容）
+  const raw = D.planDetResize(600, 400, { limitSideLen: 736, limitType: "min", alignTo: 0 });
+  assert.strictEqual(raw.width, 1104);
+  assert.strictEqual(raw.height, 736);
 });
 
-// ---- T8 max_side_limit 兜底压缩 ----
-t("T8 planDetResize(6000,1000) → 长边受 maxSideLimit 压缩到 4000，maxClamped=true", () => {
+// ---- T8 max_side_limit 兜底压缩（含对齐） ----
+t("T8 planDetResize(6000,1000) → 长边受 maxSideLimit 压缩到 4000×672（32 对齐），maxClamped=true", () => {
   const rs = D.planDetResize(6000, 1000, { limitSideLen: 736, limitType: "min" });
   assert.strictEqual(rs.maxClamped, true);
   assert.strictEqual(rs.width, 4000);
-  assert.strictEqual(rs.height, 667);
-  assert.ok(rs.reason.indexOf("MAX_SIDE_CLAMP") >= 0);
+  assert.strictEqual(rs.height, 672);
+  assert.strictEqual(rs.height % 32, 0);
+  assert.ok(rs.reason.indexOf("MAX_SIDE_CLAMP") >= 0, "reason=" + rs.reason);
 });
 
 // ---- T9 候选上限（按评分保留高分） ----

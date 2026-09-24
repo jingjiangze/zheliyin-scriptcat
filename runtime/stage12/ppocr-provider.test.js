@@ -190,6 +190,24 @@ RUN.push(t("T5 错误路径：无 session→ENGINE_NOT_READY；无 charset→CHA
     });
 }));
 
+// ---- T6 异步 session（真实 ORT 形状：run 返回 Promise）回归护栏 ----
+RUN.push(t("T6 异步 session（run 返回 Promise）→ 与同步等价（真机 bug 回归护栏）", () => {
+  const asyncDet = { run: (input) => Promise.resolve(makeFakeDet().run(input)) };
+  const asyncRec = { run: () => Promise.resolve({ data: REC_PROBS, timeSteps: 3, classes: 4 }) };
+  const asyncCls = { run: () => Promise.resolve({ data: Float32Array.from([0.9, 0.1]) }) };
+  const provider = createPaddleOcrProvider({
+    session: { det: asyncDet, rec: asyncRec, cls: asyncCls },
+    charset: CHARSET, tier: "tiny", params: PARAMS_FIXED, ops: OPS_BUNDLE
+  });
+  return provider.recognize(makeImage(), {}).then((r) => {
+    assert.ok(!r.error, JSON.stringify(r.error));
+    assert.strictEqual(r.candidates.length, 1);
+    assert.strictEqual(r.candidates[0].text, "测试");
+    assert.strictEqual(r.candidates[0].rotation, 0);
+    assert.ok(near(r.candidates[0].confidence, 0.85, 1e-6));
+  });
+}));
+
 Promise.all(RUN).then(() => {
   failures.forEach((f) => console.error("FAIL:", f));
   console.log("ppocr-provider.test: pass=" + passed + " fail=" + failed);

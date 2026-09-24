@@ -86,6 +86,10 @@ t("T7 buildDetTensor / buildRecTensor：dims 与归一化生效", () => {
   assert.deepStrictEqual(det.dims, { channels: 3, width: 2, height: 2 });
   assert.ok(near(det.data[0], (1 - 0.485) / 0.229), "value=" + det.data[0]);
   const rect = { center: { x: 2, y: 2 }, u: { x: 1, y: 0 }, n: { x: 0, y: 1 }, width: 4, height: 4 };
+  const cls = O.buildClsTensor(img, rect, { channelOrder: "rgb" });
+  assert.strictEqual(cls.ok, true);
+  assert.strictEqual(cls.dims.height, 80);
+  assert.strictEqual(cls.dims.width, 160);
   const rec = O.buildRecTensor(img, rect, { channelOrder: "rgb" });
   assert.strictEqual(rec.ok, true);
   assert.strictEqual(rec.dims.height, 48);

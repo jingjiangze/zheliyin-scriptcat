@@ -39,7 +39,10 @@ function zyDetClamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
 
 // ---------------------------------------------------------------------
 // 1. 输入尺寸规划：limit_type "min"（放大短边）/ "max"（压缩长边）+ max_side_limit 兜底
-//    返回 {scale, width, height, ...}；反变换 = 坐标 ÷ scale（planDetResize.scale）
+//    + alignTo（默认 32：DBNet 内部按 32 下采样，非 32 倍数会在 ORT 内触发
+//      "Shape mismatch attempting to re-use buffer" 真机错误，RapidOCR 同款对齐策略）
+//    返回 {scale（规划比例，仅报告）、scaleX/scaleY（按轴反变换比例）、width/height}
+//    反变换 = 坐标 × scaleX/scaleY（对齐使两轴比例略有差异，禁止只用单比例）
 // ---------------------------------------------------------------------
 function planDetResize(imageWidth, imageHeight, opts) {
   var o = opts || {};
@@ -49,6 +52,7 @@ function planDetResize(imageWidth, imageHeight, opts) {
   var limitSideLen = zyDetIsNum(o.limitSideLen) && o.limitSideLen > 0 ? o.limitSideLen : 736;
   var limitType = o.limitType === "max" ? "max" : "min";
   var maxSideLimit = zyDetIsNum(o.maxSideLimit) && o.maxSideLimit > 0 ? o.maxSideLimit : 4000;
+  var align = o.alignTo === 0 ? 0 : (zyDetIsNum(o.alignTo) && o.alignTo > 0 ? o.alignTo : 32);
   var minSide = Math.min(w, h);
   var maxSide = Math.max(w, h);
   var scale = 1;
@@ -66,11 +70,22 @@ function planDetResize(imageWidth, imageHeight, opts) {
     maxClamped = true;
     reason += "+MAX_SIDE_CLAMP";
   }
+  var alignUp = function (v) { return align ? Math.max(align, Math.round(v / align) * align) : Math.max(1, Math.round(v)); };
+  var outW = alignUp(w * scale);
+  var outH = alignUp(h * scale);
+  if (align && Math.max(outW, outH) > maxSideLimit) { // 对齐可能略微越界 → 回退到向下取整对齐
+    outW = Math.max(align, Math.floor(w * scale / align) * align);
+    outH = Math.max(align, Math.floor(h * scale / align) * align);
+    reason += "+ALIGN_FIT";
+  }
   return {
     ok: true,
     scale: scale,
-    width: Math.max(1, Math.round(w * scale)),
-    height: Math.max(1, Math.round(h * scale)),
+    scaleX: w / outW,
+    scaleY: h / outH,
+    width: outW,
+    height: outH,
+    alignTo: align,
     limitSideLen: limitSideLen,
     limitType: limitType,
     maxSideLimit: maxSideLimit,
@@ -370,17 +385,21 @@ function dbDetPostprocess(probMap, dims, params) {
 }
 
 // ---------------------------------------------------------------------
-// 9. 检测坐标系 → 原图像素坐标系（÷scale + 图内 clamp）
+// 9. 检测坐标系 → 原图像素坐标系（按轴 × scaleX/scaleY + 图内 clamp）
+//    按轴而非单一比例：对齐（alignTo=32）后两轴比例略有差异，用单比例会造成
+//    长边方向系统性偏移（真机表现：右侧文字框整体左/右移）。
 //    imageSize: {width, height}（原图自然尺寸）
 // ---------------------------------------------------------------------
 function mapDetBoxesToImage(boxes, resize, imageSize) {
-  var scale = resize && zyDetIsNum(resize.scale) && resize.scale > 0 ? resize.scale : 1;
+  var sx = resize && zyDetIsNum(resize.scaleX) && resize.scaleX > 0 ? resize.scaleX
+    : (resize && zyDetIsNum(resize.scale) && resize.scale > 0 ? resize.scale : 1);
+  var sy = resize && zyDetIsNum(resize.scaleY) && resize.scaleY > 0 ? resize.scaleY : sx;
   var iw = imageSize && imageSize.width ? imageSize.width : 0;
   var ih = imageSize && imageSize.height ? imageSize.height : 0;
   var clampX = function (v) { return iw ? zyDetClamp(v, 0, iw) : v; };
   var clampY = function (v) { return ih ? zyDetClamp(v, 0, ih) : v; };
   return (boxes || []).map(function (b) {
-    var poly = b.polygon.map(function (pt) { return { x: clampX(pt.x / scale), y: clampY(pt.y / scale) }; });
+    var poly = b.polygon.map(function (pt) { return { x: clampX(pt.x * sx), y: clampY(pt.y * sy) }; });
     var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     for (var i = 0; i < poly.length; i += 1) {
       var q = poly[i];

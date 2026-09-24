@@ -1,0 +1,3 @@
+# Stage 12：OCR 资产字节稳定性（SHA-256 校验依赖原始字节，禁止换行归一化）
+assets/ocr/**/*.onnx binary
+assets/ocr/**/*.txt text eol=lf

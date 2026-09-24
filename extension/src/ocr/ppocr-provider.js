@@ -114,78 +114,95 @@ function createPaddleOcrProvider(opts) {
           });
           params = tuned.params;
         }
-        // ---- 2/3/4. 预处理 → det 推理 ----
+        // ---- 2/3/4. 预处理 → det 推理（真实 ORT session.run 返回 Promise，必须 await） ----
         var resize = deps.planDetResize(imageSize.width, imageSize.height, params);
         if (!resize.ok) return ppocrError("IMAGE_INVALID", "planDetResize 失败: " + resize.errorCode, { provider: providerName });
         var detTensor = deps.buildDetTensor(image, resize, { channelOrder: o.channelOrder });
         if (!detTensor.ok) return ppocrError("IMAGE_INVALID", "buildDetTensor 失败: " + detTensor.errorCode, { provider: providerName });
-        var detOut = sess.det.run(detTensor);
-        if (!detOut || !detOut.probMap || !detOut.dims) return ppocrError("DET_FAILED", "det 输出为空（probMap/dims 缺失）", { provider: providerName });
-        // ---- 5/6. 后处理 → 原图像素坐标 ----
-        var detRes = deps.dbDetPostprocess(detOut.probMap, detOut.dims, params);
-        if (!detRes.ok) return ppocrError("DET_FAILED", "det 后处理失败: " + detRes.errorCode, { provider: providerName });
-        // det 实际输出尺寸可能与规划不同（动态 shape）→ 以实际输出为准计算反变换比例
-        var effResize = detOut.dims.width === resize.width ? resize : { scale: imageSize.width / detOut.dims.width, width: detOut.dims.width, height: detOut.dims.height };
-        var mapped = deps.mapDetBoxesToImage(detRes.boxes, effResize, imageSize);
-        // ---- 7. 逐框：cls → 裁切 → rec → 解码 ----
-        var candidates = [];
-        var skipped = [];
-        for (var k = 0; k < mapped.length; k += 1) {
-          var box = mapped[k];
-          var rect = deps.rectFromPolygon(box.polygon);
-          if (!rect) { skipped.push({ order: box.order, reason: "no-rect" }); continue; }
-          var rotation = 0;
-          if (sess.cls && typeof sess.cls.run === "function" && typeof deps.buildClsTensor === "function" && typeof deps.clsDecode === "function") {
-            var clsTensor = deps.buildClsTensor(image, rect, { channelOrder: o.channelOrder });
-            if (clsTensor.ok) {
-              var clsOut = sess.cls.run(clsTensor);
-              var cls = deps.clsDecode(clsOut);
-              if (cls.ok) rotation = cls.rotation;
-            }
-          }
-          var recTensor = deps.buildRecTensor(image, rect, { flip180: rotation === 180, channelOrder: o.channelOrder });
-          if (!recTensor.ok) { skipped.push({ order: box.order, reason: "crop-failed:" + recTensor.errorCode }); continue; }
-          var recOut = sess.rec.run(recTensor);
-          if (!recOut) { skipped.push({ order: box.order, reason: "rec-empty" }); continue; }
-          var decoded = deps.ctcGreedyDecode(recOut, { charset: charset, applySoftmax: !!(recOut.applySoftmax || o.applySoftmax) });
-          if (!decoded.ok) { skipped.push({ order: box.order, reason: "decode-failed:" + decoded.errorCode }); continue; }
-          if (!decoded.text) { skipped.push({ order: box.order, reason: "empty-text", confidence: decoded.confidence }); continue; }
-          if (decoded.confidence < minRecScore) { skipped.push({ order: box.order, reason: "low-score", confidence: decoded.confidence }); continue; }
-          candidates.push({
-            id: providerName + "-" + box.order,
-            text: decoded.text,
-            bbox: box.bbox,
-            confidence: decoded.confidence,
-            rotation: rotation,
-            coordinateSpace: "image-pixel",
-            imageSize: imageSize,
-            rawMeta: {
-              sourceProvider: providerName,
-              detScore: box.score,
-              angle: box.angle,
-              polygon: box.polygon,
-              recMinProb: decoded.minCharProb
-            }
+        return Promise.resolve(sess.det.run(detTensor)).then(function (detOut) {
+          if (!detOut || !detOut.probMap || !detOut.dims) return ppocrError("DET_FAILED", "det 输出为空（probMap/dims 缺失）", { provider: providerName });
+          // ---- 5/6. 后处理 → 原图像素坐标 ----
+          var detRes = deps.dbDetPostprocess(detOut.probMap, detOut.dims, params);
+          if (!detRes.ok) return ppocrError("DET_FAILED", "det 后处理失败: " + detRes.errorCode, { provider: providerName });
+          // det 实际输出尺寸可能与规划不同（动态 shape / 32 对齐）→ 按轴反算比例
+          var sameDims = detOut.dims.width === resize.width && detOut.dims.height === resize.height;
+          var effResize = sameDims ? resize : {
+            scaleX: imageSize.width / detOut.dims.width,
+            scaleY: imageSize.height / detOut.dims.height,
+            scale: imageSize.width / detOut.dims.width,
+            width: detOut.dims.width,
+            height: detOut.dims.height
+          };
+          var mapped = deps.mapDetBoxesToImage(detRes.boxes, effResize, imageSize);
+          // ---- 7. 逐框（顺序）：cls → 裁切 → rec → 解码 ----
+          var candidates = [];
+          var skipped = [];
+          var chain = Promise.resolve();
+          mapped.forEach(function (box) {
+            chain = chain.then(function () {
+              var rect = deps.rectFromPolygon(box.polygon);
+              if (!rect) { skipped.push({ order: box.order, reason: "no-rect" }); return null; }
+              var clsStep = Promise.resolve(null);
+              if (sess.cls && typeof sess.cls.run === "function" && typeof deps.buildClsTensor === "function" && typeof deps.clsDecode === "function") {
+                var clsTensor = deps.buildClsTensor(image, rect, { channelOrder: o.channelOrder });
+                if (clsTensor.ok) clsStep = Promise.resolve(sess.cls.run(clsTensor));
+              }
+              return clsStep.then(function (clsOut) {
+                var rotation = 0;
+                if (clsOut) {
+                  var cls = deps.clsDecode(clsOut);
+                  if (cls && cls.ok) rotation = cls.rotation;
+                }
+                var recTensor = deps.buildRecTensor(image, rect, { flip180: rotation === 180, channelOrder: o.channelOrder });
+                if (!recTensor.ok) { skipped.push({ order: box.order, reason: "crop-failed:" + recTensor.errorCode }); return null; }
+                return Promise.resolve(sess.rec.run(recTensor)).then(function (recOut) {
+                  if (!recOut) { skipped.push({ order: box.order, reason: "rec-empty" }); return null; }
+                  var decoded = deps.ctcGreedyDecode(recOut, { charset: charset, applySoftmax: !!(recOut.applySoftmax || o.applySoftmax) });
+                  if (!decoded.ok) { skipped.push({ order: box.order, reason: "decode-failed:" + decoded.errorCode }); return null; }
+                  if (!decoded.text) { skipped.push({ order: box.order, reason: "empty-text", confidence: decoded.confidence }); return null; }
+                  if (decoded.confidence < minRecScore) { skipped.push({ order: box.order, reason: "low-score", confidence: decoded.confidence }); return null; }
+                  candidates.push({
+                    id: providerName + "-" + box.order,
+                    text: decoded.text,
+                    bbox: box.bbox,
+                    confidence: decoded.confidence,
+                    rotation: rotation,
+                    coordinateSpace: "image-pixel",
+                    imageSize: imageSize,
+                    rawMeta: {
+                      sourceProvider: providerName,
+                      detScore: box.score,
+                      angle: box.angle,
+                      polygon: box.polygon,
+                      recMinProb: decoded.minCharProb
+                    }
+                  });
+                  return null;
+                });
+              });
+            });
           });
-        }
-        return {
-          provider: providerName,
-          providerType: "LOCAL",
-          engine: "onnxruntime-web",
-          candidates: candidates,
-          meta: {
-            tier: c.tier || tier,
-            imageWidth: imageSize.width,
-            imageHeight: imageSize.height,
-            params: params,
-            paramsReasons: tuned ? tuned.reasons : [],
-            resize: { scale: effResize.scale, width: effResize.width, height: effResize.height },
-            det: { boxes: detRes.boxes.length, components: detRes.meta.components, dropped: detRes.dropped.length, droppedReasons: detRes.dropped.map(function (d) { return d.reason; }) },
-            rec: { count: candidates.length, skipped: skipped },
-            channelOrder: detTensor.normalization ? detTensor.normalization.channelOrder : null,
-            elapsed: Date.now() - t0
-          }
-        };
+          return chain.then(function () {
+            return {
+              provider: providerName,
+              providerType: "LOCAL",
+              engine: "onnxruntime-web",
+              candidates: candidates,
+              meta: {
+                tier: c.tier || tier,
+                imageWidth: imageSize.width,
+                imageHeight: imageSize.height,
+                params: params,
+                paramsReasons: tuned ? tuned.reasons : [],
+                resize: { scale: effResize.scale, scaleX: effResize.scaleX, scaleY: effResize.scaleY, width: effResize.width, height: effResize.height },
+                det: { boxes: detRes.boxes.length, components: detRes.meta.components, dropped: detRes.dropped.length, droppedReasons: detRes.dropped.map(function (d) { return d.reason; }) },
+                rec: { count: candidates.length, skipped: skipped },
+                channelOrder: detTensor.normalization ? detTensor.normalization.channelOrder : null,
+                elapsed: Date.now() - t0
+              }
+            };
+          });
+        });
       }).catch(function (e) {
         return ppocrError("PPOCR_THREW", String(e && (e.message || e) || e).slice(0, 200), { provider: providerName, meta: { elapsed: Date.now() - t0 } });
       });

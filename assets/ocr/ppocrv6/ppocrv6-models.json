@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "engine": "onnxruntime-web",
+  "ortVersion": "1.30.0",
+  "modelFamily": "PP-OCRv6",
+  "tiers": {
+    "tiny": {
+      "det": {
+        "id": "PP-OCRv6_det_tiny",
+        "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/stage-12-ocr-local-engine/assets/ocr/ppocrv6/tiny/PP-OCRv6_det_tiny.onnx",
+        "bytes": 1829618,
+        "sha256": "f42c0fbd294d95eac1a550e131b277dac97462c8025fa4b6c3cec1b7894bd3d5"
+      },
+      "rec": {
+        "id": "PP-OCRv6_rec_tiny",
+        "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/stage-12-ocr-local-engine/assets/ocr/ppocrv6/tiny/PP-OCRv6_rec_tiny.onnx",
+        "bytes": 4489813,
+        "sha256": "e16e242de5937ad92609223f19bc2aff3727ee40b095f996907c24749bad251b",
+        "dictUrl": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/stage-12-ocr-local-engine/assets/ocr/ppocrv6/tiny/ppocrv6_tiny_dict.txt",
+        "dictBytes": 27156,
+        "dictSha256": "c5cbe34ef40c29c4df07ed012bf96569cb69a2d2a01a07027e9f13cb832bd9cd"
+      }
+    }
+  },
+  "cls": {
+    "id": "ch_PP-LCNet_x0_25_textline_ori_cls_mobile",
+    "url": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/stage-12-ocr-local-engine/assets/ocr/ppocrv6/cls/ch_PP-LCNet_x0_25_textline_ori_cls_mobile.onnx",
+    "bytes": 1018508,
+    "sha256": "54379ae5174d026780215fc748a7f31910dee36818e63d49e17dc598ecc82df7"
+  },
+  "notes": {
+    "source": "RapidAI/RapidOCR（ModelScope）官方转换 ONNX；cls 采用同源 PP-OCRv5 textline_ori（PP-OCRv6 未提供独立 cls）",
+    "integrity": "bytes/sha256 均来自真实下载字节（Get-FileHash），禁止手改",
+    "dictFormat": "每行一字符，共 6904 字符；第 617 行为全角空格（index 616 = rec 的 space 类）；buildRecCharset 应使用 useSpaceChar=false",
+    "channelOrder": "bgr",
+    "tensorDims": "det 1x3xHxW（H/W 必须 32 对齐，否则 ORT 报 Shape mismatch）；rec 1x3x48xW（W≤320）；cls 1x3x80x160（固定，非 48x192）",
+    "verifiedBy": "runtime/stage12/ppocr-browser-check.js（真实 Chrome + ORT 1.30.0）：彩色名片样张 4 行 100% 字符准确率；useSpaceChar=true 会整体错位（已实证必须 false）",
+    "distribution": "随仓库分支分发，userscript 经 GM_xmlhttpRequest 拉取后 SHA-256 校验（ppocr-engine-loader.js）"
+  }
+}

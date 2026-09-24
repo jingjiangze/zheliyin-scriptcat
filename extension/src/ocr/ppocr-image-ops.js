@@ -21,8 +21,8 @@ var PPOCR_REC_MEAN = [0.5, 0.5, 0.5];
 var PPOCR_REC_STD = [0.5, 0.5, 0.5];
 var PPOCR_REC_HEIGHT = 48;
 var PPOCR_REC_MAX_WIDTH = 320;
-var PPOCR_CLS_HEIGHT = 48;
-var PPOCR_CLS_WIDTH = 192;
+var PPOCR_CLS_HEIGHT = 80;   // 真实 cls 模型输入高（ORT 报错实证：Expected 80）
+var PPOCR_CLS_WIDTH = 160;   // 真实 cls 模型输入宽（固定，不按长宽比）
 var PPOCR_DEFAULT_CHANNEL_ORDER = "bgr";
 
 function zyImgIsNum(v) { return typeof v === "number" && isFinite(v); }
@@ -122,15 +122,20 @@ function rectFromPolygon(polygon) {
 }
 
 // ---- 4. 旋转感知裁切（源：原图像素；rec/cls 输入） ----
-// opts: { outHeight=48, minWidth=16, maxWidth=320, flip180=false }
+// opts: { outHeight=48, outWidth=null（给定则固定宽度，用于 cls 的 160）, minWidth=16, maxWidth=320, flip180=false }
 function cropRectBilinear(image, rect, opts) {
   var o = opts || {};
   if (!image || !image.data || !rect) return { ok: false, errorCode: "IMAGE_INVALID", data: null, width: 0, height: 0 };
   var outH = zyImgIsNum(o.outHeight) && o.outHeight > 0 ? o.outHeight : PPOCR_REC_HEIGHT;
   var minW = zyImgIsNum(o.minWidth) ? o.minWidth : 16;
   var maxW = zyImgIsNum(o.maxWidth) ? o.maxWidth : PPOCR_REC_MAX_WIDTH;
-  var aspect = rect.height > 0 ? rect.width / rect.height : 1;
-  var outW = Math.round(zyImgClamp(outH * aspect, minW, maxW));
+  var outW;
+  if (zyImgIsNum(o.outWidth) && o.outWidth > 0) {
+    outW = Math.round(o.outWidth); // 固定宽度（cls：与长宽比无关）
+  } else {
+    var aspect = rect.height > 0 ? rect.width / rect.height : 1;
+    outW = Math.round(zyImgClamp(outH * aspect, minW, maxW));
+  }
   var flip = !!o.flip180;
   var sw = image.width, sh = image.height, ch = image.channels || 4, src = image.data;
   var u = flip ? { x: -rect.u.x, y: -rect.u.y } : rect.u;
@@ -174,17 +179,22 @@ function buildDetTensor(image, resize, opts) {
 // ---- 便捷：rec 输入张量 ----
 function buildRecTensor(image, rect, opts) {
   var o = opts || {};
-  var crop = cropRectBilinear(image, rect, { outHeight: o.outHeight || PPOCR_REC_HEIGHT, maxWidth: o.maxWidth || PPOCR_REC_MAX_WIDTH, flip180: o.flip180 });
+  var crop = cropRectBilinear(image, rect, { outHeight: o.outHeight || PPOCR_REC_HEIGHT, outWidth: o.outWidth, maxWidth: o.maxWidth || PPOCR_REC_MAX_WIDTH, flip180: o.flip180 });
   if (!crop.ok) return crop;
   var t = toChwTensor(crop, { mean: PPOCR_REC_MEAN, std: PPOCR_REC_STD, channelOrder: o.channelOrder });
   if (!t.ok) return t;
   return { ok: true, data: t.data, dims: t.dims, crop: { width: crop.width, height: crop.height }, normalization: t.normalization };
 }
 
-// ---- 便捷：cls 输入张量（3x48x192，不按长宽比） ----
+// ---- 便捷：cls 输入张量（3x80x160，固定尺寸，不按长宽比） ----
 function buildClsTensor(image, rect, opts) {
   var o = opts || {};
-  return buildRecTensor(image, rect, { outHeight: o.outHeight || PPOCR_CLS_HEIGHT, maxWidth: o.maxWidth || PPOCR_CLS_WIDTH, channelOrder: o.channelOrder });
+  return buildRecTensor(image, rect, {
+    outHeight: o.outHeight || PPOCR_CLS_HEIGHT,
+    outWidth: o.outWidth || PPOCR_CLS_WIDTH,
+    maxWidth: o.outWidth || PPOCR_CLS_WIDTH,
+    channelOrder: o.channelOrder
+  });
 }
 
 if (typeof module !== "undefined" && module.exports) module.exports = {
