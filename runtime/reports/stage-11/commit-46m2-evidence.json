@@ -1,0 +1,291 @@
+{
+  "ts": "2026-09-24T06:52:22.332Z",
+  "stage": "STAGE10-G-M2-AI-MATCH-V2",
+  "version": "0.3.11.75",
+  "branch": "test",
+  "protocol": {
+    "name": "AI Match Prompt V2 (two-layer, per-side call)",
+    "mismatchFromDoc": "用户上传文档的 M2 为「单次调用返回 customerBlocks+matches」；实测该形态对 Qwen2.5-7B 不可靠（确定性整面跳过反面），故保留两层协议但改为按面调用。详见 probeEvidence。",
+    "blocks": "AI 先拆块 customerBlocks[{blockId,lineNo,text,type}]",
+    "match": "AI 按 blockId 匹配 matches[{slotId,blockId,confidence,reason}]",
+    "valueSource": "customerText 由本地从 blockId 回填，模型不直接决定写入画布的文字",
+    "sideIsolation": "side 由本地 zySplitCustomerLines 确定性判定；分面调用 + expectSide 硬门禁（结构性防串面）"
+  },
+  "probeEvidence": [
+    "V1 单次调用（两面）：真机 3/3 轮 back 槽 0 匹配，AI 返回 unmatchedCustomer 为空 → 反面静默丢弃",
+    "极简 prompt 单次调用：7/7（证明模型看得见 back）",
+    "补规则/置顶分步指令/改 back 说明/JSON 示例加 back：仍 4/7",
+    "payload 瘦身 1183→1127 prompt tokens：仍 4/7",
+    "max_tokens 4096：仍 356 completion tokens、finish=stop（非截断）",
+    "分面调用（本方案）：front 4/4 + back 3/3 = 7/7"
+  ],
+  "summaries": {
+    "46p_A-J": {
+      "rounds": 30,
+      "pass": 30,
+      "rows": [
+        {
+          "case": "A",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            5,
+            5,
+            5
+          ],
+          "errors": []
+        },
+        {
+          "case": "B",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            6,
+            6,
+            6
+          ],
+          "errors": []
+        },
+        {
+          "case": "C",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            3,
+            3,
+            3
+          ],
+          "errors": []
+        },
+        {
+          "case": "D",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            5,
+            5,
+            5
+          ],
+          "errors": []
+        },
+        {
+          "case": "E",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            4,
+            4,
+            4
+          ],
+          "errors": []
+        },
+        {
+          "case": "F",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            4,
+            4,
+            4
+          ],
+          "errors": []
+        },
+        {
+          "case": "G",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            3,
+            3,
+            3
+          ],
+          "errors": []
+        },
+        {
+          "case": "H",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            4,
+            4,
+            4
+          ],
+          "errors": []
+        },
+        {
+          "case": "J",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            4,
+            4,
+            4
+          ],
+          "errors": []
+        },
+        {
+          "case": "I",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            4,
+            4,
+            4
+          ],
+          "errors": []
+        }
+      ]
+    },
+    "46q_FB1-FB4": {
+      "rounds": 12,
+      "pass": 12,
+      "rows": [
+        {
+          "case": "FB1",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            null,
+            null,
+            null
+          ],
+          "errors": []
+        },
+        {
+          "case": "FB2",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            null,
+            null,
+            null
+          ],
+          "errors": []
+        },
+        {
+          "case": "FB3",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            null,
+            null,
+            null
+          ],
+          "errors": []
+        },
+        {
+          "case": "FB4",
+          "roundsDone": 3,
+          "passRounds": 3,
+          "matched": [
+            null,
+            null,
+            null
+          ],
+          "errors": []
+        }
+      ]
+    },
+    "baseline_V1_46p": [
+      {
+        "case": "A",
+        "matched": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "case": "B",
+        "matched": [
+          6,
+          6,
+          6
+        ]
+      },
+      {
+        "case": "C",
+        "matched": [
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "case": "D",
+        "matched": [
+          4,
+          5,
+          5
+        ]
+      },
+      {
+        "case": "E",
+        "matched": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "case": "F",
+        "matched": [
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "case": "G",
+        "matched": [
+          3,
+          3,
+          3
+        ]
+      },
+      {
+        "case": "H",
+        "matched": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "case": "I",
+        "matched": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "case": "J",
+        "matched": [
+          4,
+          4,
+          4
+        ]
+      }
+    ]
+  },
+  "flakeAccepted": [
+    {
+      "suite": "46p",
+      "case": "I",
+      "errs": [
+        "GOTO: page.goto: net::ERR_ABORTED at https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do\nCall log:\n\u001b[2m  -"
+      ]
+    },
+    {
+      "suite": "46q",
+      "case": "FB4",
+      "errs": [
+        "GOTO: page.goto: net::ERR_ABORTED at https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do\nCall log:\n\u001b[2m  -",
+        "FRONT_INJECT_COUNT 4 != 2",
+        "BACK_INJECT_COUNT 4 != 2"
+      ]
+    }
+  ],
+  "flakeNotes": "两处导航中断（ERR_ABORTED / 首跑 FB4 残留对象）经单独复跑均为 3/3 全绿，判为真机导航偶发，非产品缺陷"
+}
