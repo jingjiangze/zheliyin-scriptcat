@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-24T08:16:27.484Z",
+  "ts": "2026-09-24T09:36:59.116Z",
   "stage": "STAGE10-G-L9-FRONT-BACK-REAL-ACCEPTANCE",
   "cases": [
     "FB1",
@@ -9,7 +9,7 @@
   ],
   "cookieSource": "merged",
   "aiModel": "Qwen/Qwen2.5-7B-Instruct",
-  "bverExpect": "0.3.11.77",
+  "bverExpect": "0.3.11.78",
   "runs": [
     {
       "case": "FB1",
@@ -125,12 +125,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237805476
+              "ts": 1790240398220
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237815059
+              "ts": 1790240415266
             }
           ],
           "previewFails": [],
@@ -182,7 +182,7 @@
               "地址：建国路88号"
             ],
             "backExists": true,
-            "snapshotHash": "dbfa8308"
+            "snapshotHash": "fa3a47dc"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -310,12 +310,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237836159
+              "ts": 1790240443690
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237846309
+              "ts": 1790240452569
             }
           ],
           "previewFails": [],
@@ -367,7 +367,7 @@
               "地址：建国路88号"
             ],
             "backExists": true,
-            "snapshotHash": "89166874"
+            "snapshotHash": "32dcd230"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -495,12 +495,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237868651
+              "ts": 1790240474826
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237879717
+              "ts": 1790240481370
             }
           ],
           "previewFails": [],
@@ -552,7 +552,7 @@
               "地址：建国路88号"
             ],
             "backExists": true,
-            "snapshotHash": "630a7370"
+            "snapshotHash": "c7be9d20"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -576,561 +576,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
-      "passRounds": 3
-    },
-    {
-      "case": "FB2",
-      "label": "反面独有类型（正面姓名/职位/手机，反面公司/网址/地址）",
-      "rounds": 3,
-      "roundsDone": 3,
-      "note": "正反面真机验收：UI materialize 反面画布 → 双侧注入槽位 → AI 槽位匹配 → 确认填充 → 双侧全字段冻结 + 侧向隔离",
-      "steps": [],
-      "errors": [],
-      "roundsData": [
-        {
-          "round": 1,
-          "errors": [],
-          "canvasBefore": {
-            "ok": true,
-            "count": 1,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0"
-            ]
-          },
-          "clickBack": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterBack": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 2,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "clickFront": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterFront": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "injFront": {
-            "ok": true,
-            "made": 3,
-            "total": 3,
-            "errs": []
-          },
-          "injBack": {
-            "ok": true,
-            "made": 3,
-            "total": 3,
-            "errs": []
-          },
-          "before": {
-            "frontCount": 3,
-            "frontTexts": [
-              "王晓明",
-              "销售总监",
-              "1380 0138 000"
-            ],
-            "backCount": 3,
-            "backTexts": [
-              "启诚纸业有限公司",
-              "www.qdpaper.cn",
-              "北京市朝阳区建国路89号"
-            ],
-            "backExists": true,
-            "invSideCounts": {
-              "front": 3,
-              "back": 3
-            }
-          },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 6）；未匹配 0 项\n[正] 槽 3 / 行 3 → 匹配 3 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n[反] back-1 ← 启诚纸业有限公司\n[反] back-2 ← www.qdpaper.cn\n[反] back-3 ← 北京市朝阳区建国路88号"
-          },
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237902984
-            },
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237909800
-            }
-          ],
-          "previewFails": [],
-          "matchedBySlot": {
-            "front-1": "王小明",
-            "front-2": "销售总监",
-            "front-3": "13800138000",
-            "back-1": "启诚纸业有限公司",
-            "back-2": "www.qdpaper.cn",
-            "back-3": "北京市朝阳区建国路88号"
-          },
-          "backMatched": [
-            "back-1",
-            "back-2",
-            "back-3"
-          ],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
-          "after": {
-            "frontCount": 3,
-            "frontTexts": [
-              "王小明",
-              "销售总监",
-              "13800138000"
-            ],
-            "backCount": 3,
-            "backTexts": [
-              "启诚纸业有限公司",
-              "www.qdpaper.cn",
-              "北京市朝阳区建国路88号"
-            ],
-            "backExists": true,
-            "snapshotHash": "2834dc30"
-          },
-          "frozenFront": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -11.14,
-              -19.05,
-              -21.31
-            ]
-          },
-          "frozenBack": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -17.92,
-              -22.44,
-              -23.57
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 2,
-          "errors": [],
-          "canvasBefore": {
-            "ok": true,
-            "count": 1,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0"
-            ]
-          },
-          "clickBack": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterBack": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 2,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "clickFront": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterFront": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "injFront": {
-            "ok": true,
-            "made": 3,
-            "total": 3,
-            "errs": []
-          },
-          "injBack": {
-            "ok": true,
-            "made": 3,
-            "total": 3,
-            "errs": []
-          },
-          "before": {
-            "frontCount": 3,
-            "frontTexts": [
-              "王晓明",
-              "销售总监",
-              "1380 0138 000"
-            ],
-            "backCount": 3,
-            "backTexts": [
-              "启诚纸业有限公司",
-              "www.qdpaper.cn",
-              "北京市朝阳区建国路89号"
-            ],
-            "backExists": true,
-            "invSideCounts": {
-              "front": 3,
-              "back": 3
-            }
-          },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 5/6 槽（语义校验 5）；未匹配 1 项\n[正] 槽 3 / 行 3 → 匹配 3 ｜ [反] 槽 3 / 行 3 → 匹配 2\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n[反] back-1 ← 启诚纸业有限公司\n[反] back-2 ← www.qdpaper.cn"
-          },
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237941868
-            },
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237946302
-            }
-          ],
-          "previewFails": [],
-          "matchedBySlot": {
-            "front-1": "王小明",
-            "front-2": "销售总监",
-            "front-3": "13800138000",
-            "back-1": "启诚纸业有限公司",
-            "back-2": "www.qdpaper.cn"
-          },
-          "backMatched": [
-            "back-1",
-            "back-2"
-          ],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 5 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
-          "after": {
-            "frontCount": 3,
-            "frontTexts": [
-              "王小明",
-              "销售总监",
-              "13800138000"
-            ],
-            "backCount": 3,
-            "backTexts": [
-              "启诚纸业有限公司",
-              "www.qdpaper.cn",
-              "北京市朝阳区建国路89号"
-            ],
-            "backExists": true,
-            "snapshotHash": "47a91c44"
-          },
-          "frozenFront": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -11.14,
-              -19.05,
-              -21.31
-            ]
-          },
-          "frozenBack": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -17.92,
-              -22.44,
-              0
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 3,
-          "errors": [],
-          "canvasBefore": {
-            "ok": true,
-            "count": 1,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0"
-            ]
-          },
-          "clickBack": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterBack": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 2,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "clickFront": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterFront": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "injFront": {
-            "ok": true,
-            "made": 3,
-            "total": 3,
-            "errs": []
-          },
-          "injBack": {
-            "ok": true,
-            "made": 3,
-            "total": 3,
-            "errs": []
-          },
-          "before": {
-            "frontCount": 3,
-            "frontTexts": [
-              "王晓明",
-              "销售总监",
-              "1380 0138 000"
-            ],
-            "backCount": 3,
-            "backTexts": [
-              "启诚纸业有限公司",
-              "www.qdpaper.cn",
-              "北京市朝阳区建国路89号"
-            ],
-            "backExists": true,
-            "invSideCounts": {
-              "front": 3,
-              "back": 3
-            }
-          },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 6）；未匹配 0 项\n[正] 槽 3 / 行 3 → 匹配 3 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n[反] back-1 ← 启诚纸业有限公司\n[反] back-2 ← www.qdpaper.cn\n[反] back-3 ← 北京市朝阳区建国路88号"
-          },
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237968051
-            },
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237975235
-            }
-          ],
-          "previewFails": [],
-          "matchedBySlot": {
-            "front-1": "王小明",
-            "front-2": "销售总监",
-            "front-3": "13800138000",
-            "back-1": "启诚纸业有限公司",
-            "back-2": "www.qdpaper.cn",
-            "back-3": "北京市朝阳区建国路88号"
-          },
-          "backMatched": [
-            "back-1",
-            "back-2",
-            "back-3"
-          ],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
-          "after": {
-            "frontCount": 3,
-            "frontTexts": [
-              "王小明",
-              "销售总监",
-              "13800138000"
-            ],
-            "backCount": 3,
-            "backTexts": [
-              "启诚纸业有限公司",
-              "www.qdpaper.cn",
-              "北京市朝阳区建国路88号"
-            ],
-            "backExists": true,
-            "snapshotHash": "da14abb8"
-          },
-          "frozenFront": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -11.14,
-              -19.05,
-              -21.31
-            ]
-          },
-          "frozenBack": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -17.92,
-              -22.44,
-              -23.57
-            ]
-          },
-          "applyFails": []
-        }
-      ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "passRounds": 3
     },
     {
@@ -1238,13 +684,13 @@
           },
           "preview": {
             "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 2/4 槽（语义校验 2）；未匹配 2 项\n[正] 槽 2 / 行 4 → 匹配 2 ｜ [反] 槽 2 / 行 0 → 匹配 0（无该面客户内容）\nfront-1 ← 王小明\nfront-2 ← 销售总监\n⚠ 有 2 条客户内容未被 AI 交代（已显式列为未匹配）"
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 2/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 4 → 匹配 2 ｜ [反] 槽 2 / 行 0 → 匹配 0（无该面客户内容）\nfront-1 ← 王小明\nfront-2 ← 销售总监"
           },
           "trace": [
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790237997838
+              "ts": 1790240675088
             }
           ],
           "previewFails": [],
@@ -1284,7 +730,7 @@
               "邮箱：wx@qq.com"
             ],
             "backExists": true,
-            "snapshotHash": "03e701de"
+            "snapshotHash": "958cc408"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -1406,7 +852,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238017553
+              "ts": 1790240696845
             }
           ],
           "previewFails": [],
@@ -1446,7 +892,7 @@
               "邮箱：wx@qq.com"
             ],
             "backExists": true,
-            "snapshotHash": "9ebb1a88"
+            "snapshotHash": "6749fbd2"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -1568,7 +1014,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238038463
+              "ts": 1790240716633
             }
           ],
           "previewFails": [],
@@ -1608,7 +1054,7 @@
               "邮箱：wx@qq.com"
             ],
             "backExists": true,
-            "snapshotHash": "e4e2ec52"
+            "snapshotHash": "e1f7ed6e"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -1629,7 +1075,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "passRounds": 3
     },
     {
@@ -1747,12 +1193,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238058244
+              "ts": 1790240738220
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238062130
+              "ts": 1790240744632
             }
           ],
           "previewFails": [],
@@ -1795,7 +1241,7 @@
               "服务热线：400-888-6666"
             ],
             "backExists": true,
-            "snapshotHash": "f3847ae6"
+            "snapshotHash": "09061638"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -1921,12 +1367,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238081751
+              "ts": 1790240768924
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238088315
+              "ts": 1790240775497
             }
           ],
           "previewFails": [],
@@ -1969,7 +1415,7 @@
               "服务热线：400-888-6666"
             ],
             "backExists": true,
-            "snapshotHash": "9eedb612"
+            "snapshotHash": "b0a8d2ae"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -2095,12 +1541,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238110184
+              "ts": 1790240794099
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238118550
+              "ts": 1790240798619
             }
           ],
           "previewFails": [],
@@ -2143,7 +1589,7 @@
               "服务热线：400-888-6666"
             ],
             "backExists": true,
-            "snapshotHash": "2c3abd58"
+            "snapshotHash": "b826959a"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -2164,7 +1610,563 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
+      "passRounds": 3
+    },
+    {
+      "case": "FB2",
+      "label": "反面独有类型（正面姓名/职位/手机，反面公司/网址/地址）",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "正反面真机验收：UI materialize 反面画布 → 双侧注入槽位 → AI 槽位匹配 → 确认填充 → 双侧全字段冻结 + 侧向隔离",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "canvasBefore": {
+            "ok": true,
+            "count": 1,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0"
+            ]
+          },
+          "clickBack": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterBack": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 2,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "clickFront": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterFront": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "injFront": {
+            "ok": true,
+            "made": 3,
+            "total": 3,
+            "errs": []
+          },
+          "injBack": {
+            "ok": true,
+            "made": 3,
+            "total": 3,
+            "errs": []
+          },
+          "before": {
+            "frontCount": 3,
+            "frontTexts": [
+              "王晓明",
+              "销售总监",
+              "1380 0138 000"
+            ],
+            "backCount": 3,
+            "backTexts": [
+              "启诚纸业有限公司",
+              "www.qdpaper.cn",
+              "北京市朝阳区建国路89号"
+            ],
+            "backExists": true,
+            "invSideCounts": {
+              "front": 3,
+              "back": 3
+            }
+          },
+          "mvInfoBefore": {
+            "ok": true,
+            "code": "OK",
+            "vc": 1,
+            "tl": 2,
+            "cur": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "li": 1,
+            "conflicts": [],
+            "hard": []
+          },
+          "snapVersion": {
+            "version": 0,
+            "versionCount": 1,
+            "multi": false,
+            "current": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 6）；未匹配 0 项\n[正] 槽 3 / 行 3 → 匹配 3 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n[反] back-1 ← 启诚纸业有限公司\n[反] back-2 ← www.qdpaper.cn\n[反] back-3 ← 北京市朝阳区建国路88号"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790242637130
+            },
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790242645559
+            }
+          ],
+          "previewFails": [],
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "front-3": "13800138000",
+            "back-1": "启诚纸业有限公司",
+            "back-2": "www.qdpaper.cn",
+            "back-3": "北京市朝阳区建国路88号"
+          },
+          "backMatched": [
+            "back-1",
+            "back-2",
+            "back-3"
+          ],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "mvInfoAfterConfirm": {
+            "ok": true,
+            "code": "OK",
+            "vc": 1,
+            "tl": 2,
+            "cur": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "conflicts": [],
+            "hard": []
+          },
+          "after": {
+            "frontCount": 3,
+            "frontTexts": [
+              "王小明",
+              "销售总监",
+              "13800138000"
+            ],
+            "backCount": 3,
+            "backTexts": [
+              "启诚纸业有限公司",
+              "www.qdpaper.cn",
+              "北京市朝阳区建国路88号"
+            ],
+            "backExists": true,
+            "snapshotHash": "4b5ee06c"
+          },
+          "frozenFront": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05,
+              -21.31
+            ]
+          },
+          "frozenBack": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -17.92,
+              -22.44,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "canvasBefore": {
+            "ok": true,
+            "count": 1,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0"
+            ]
+          },
+          "clickBack": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterBack": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 2,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "clickFront": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterFront": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "injFront": {
+            "ok": true,
+            "made": 3,
+            "total": 3,
+            "errs": []
+          },
+          "injBack": {
+            "ok": true,
+            "made": 3,
+            "total": 3,
+            "errs": []
+          },
+          "before": {
+            "frontCount": 3,
+            "frontTexts": [
+              "王晓明",
+              "销售总监",
+              "1380 0138 000"
+            ],
+            "backCount": 3,
+            "backTexts": [
+              "启诚纸业有限公司",
+              "www.qdpaper.cn",
+              "北京市朝阳区建国路89号"
+            ],
+            "backExists": true,
+            "invSideCounts": {
+              "front": 3,
+              "back": 3
+            }
+          },
+          "mvInfoBefore": {
+            "ok": true,
+            "code": "OK",
+            "vc": 1,
+            "tl": 2,
+            "cur": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "li": 1,
+            "conflicts": [],
+            "hard": []
+          },
+          "snapVersion": {
+            "version": 0,
+            "versionCount": 1,
+            "multi": false,
+            "current": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 6）；未匹配 0 项\n[正] 槽 3 / 行 3 → 匹配 3 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n[反] back-1 ← 启诚纸业有限公司\n[反] back-2 ← www.qdpaper.cn\n[反] back-3 ← 北京市朝阳区建国路88号"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790242666906
+            },
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790242672506
+            }
+          ],
+          "previewFails": [],
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "front-3": "13800138000",
+            "back-1": "启诚纸业有限公司",
+            "back-2": "www.qdpaper.cn",
+            "back-3": "北京市朝阳区建国路88号"
+          },
+          "backMatched": [
+            "back-1",
+            "back-2",
+            "back-3"
+          ],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "mvInfoAfterConfirm": {
+            "ok": true,
+            "code": "OK",
+            "vc": 1,
+            "tl": 2,
+            "cur": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "conflicts": [],
+            "hard": []
+          },
+          "after": {
+            "frontCount": 3,
+            "frontTexts": [
+              "王小明",
+              "销售总监",
+              "13800138000"
+            ],
+            "backCount": 3,
+            "backTexts": [
+              "启诚纸业有限公司",
+              "www.qdpaper.cn",
+              "北京市朝阳区建国路88号"
+            ],
+            "backExists": true,
+            "snapshotHash": "524f2bd4"
+          },
+          "frozenFront": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05,
+              -21.31
+            ]
+          },
+          "frozenBack": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -17.92,
+              -22.44,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "canvasBefore": {
+            "ok": true,
+            "count": 1,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0"
+            ]
+          },
+          "clickBack": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterBack": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 2,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "clickFront": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterFront": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "injFront": {
+            "ok": true,
+            "made": 3,
+            "total": 3,
+            "errs": []
+          },
+          "injBack": {
+            "ok": true,
+            "made": 3,
+            "total": 3,
+            "errs": []
+          },
+          "before": {
+            "frontCount": 3,
+            "frontTexts": [
+              "王晓明",
+              "销售总监",
+              "1380 0138 000"
+            ],
+            "backCount": 3,
+            "backTexts": [
+              "启诚纸业有限公司",
+              "www.qdpaper.cn",
+              "北京市朝阳区建国路89号"
+            ],
+            "backExists": true,
+            "invSideCounts": {
+              "front": 3,
+              "back": 3
+            }
+          },
+          "mvInfoBefore": {
+            "ok": true,
+            "code": "OK",
+            "vc": 1,
+            "tl": 2,
+            "cur": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "li": 1,
+            "conflicts": [],
+            "hard": []
+          },
+          "snapVersion": {
+            "version": 0,
+            "versionCount": 1,
+            "multi": false,
+            "current": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 6）；未匹配 0 项\n[正] 槽 3 / 行 3 → 匹配 3 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n[反] back-1 ← 启诚纸业有限公司\n[反] back-2 ← www.qdpaper.cn\n[反] back-3 ← 北京市朝阳区建国路88号"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790242692217
+            },
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790242698015
+            }
+          ],
+          "previewFails": [],
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "front-3": "13800138000",
+            "back-1": "启诚纸业有限公司",
+            "back-2": "www.qdpaper.cn",
+            "back-3": "北京市朝阳区建国路88号"
+          },
+          "backMatched": [
+            "back-1",
+            "back-2",
+            "back-3"
+          ],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "mvInfoAfterConfirm": {
+            "ok": true,
+            "code": "OK",
+            "vc": 1,
+            "tl": 2,
+            "cur": {
+              "vIdx": 0,
+              "side": "front",
+              "canvasIdx": 0,
+              "source": "canvasObjVO.currentCanvasNum",
+              "materialized": true
+            },
+            "conflicts": [],
+            "hard": []
+          },
+          "after": {
+            "frontCount": 3,
+            "frontTexts": [
+              "王小明",
+              "销售总监",
+              "13800138000"
+            ],
+            "backCount": 3,
+            "backTexts": [
+              "启诚纸业有限公司",
+              "www.qdpaper.cn",
+              "北京市朝阳区建国路88号"
+            ],
+            "backExists": true,
+            "snapshotHash": "83c9cad5"
+          },
+          "frozenFront": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05,
+              -21.31
+            ]
+          },
+          "frozenBack": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -17.92,
+              -22.44,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.78",
       "passRounds": 3
     }
   ],

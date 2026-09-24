@@ -1,8 +1,8 @@
 {
-  "ts": "2026-09-24T08:13:46.412Z",
+  "ts": "2026-09-24T08:39:06.540Z",
   "stage": "STAGE10-G-P1-MULTIVERSION-LAYOUT",
   "cookieSource": "merged",
-  "bverExpect": "0.3.11.77",
+  "bverExpect": "0.3.11.78",
   "rounds": 2,
   "runs": [
     {
@@ -310,7 +310,7 @@
           "afterV0": []
         }
       },
-      "bver": "0.3.11.77"
+      "bver": "0.3.11.78"
     },
     {
       "round": 2,

@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-24T08:23:05.612Z",
+  "ts": "2026-09-24T08:48:28.696Z",
   "stage": "STAGE10-G-COMMIT-L8-REAL-ACCEPTANCE",
   "cases": [
     "A",
@@ -15,7 +15,7 @@
   ],
   "cookieSource": "merged",
   "aiModel": "Qwen/Qwen2.5-7B-Instruct",
-  "bverExpect": "0.3.11.77",
+  "bverExpect": "0.3.11.78",
   "runs": [
     {
       "case": "A",
@@ -52,7 +52,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238198527
+              "ts": 1790239721430
             }
           ],
           "previewFails": [],
@@ -116,7 +116,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238219267
+              "ts": 1790239740328
             }
           ],
           "previewFails": [],
@@ -180,7 +180,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238242703
+              "ts": 1790239758332
             }
           ],
           "previewFails": [],
@@ -219,7 +219,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -259,7 +259,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238260846
+              "ts": 1790239777350
             }
           ],
           "previewFails": [],
@@ -327,7 +327,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238283308
+              "ts": 1790239800052
             }
           ],
           "previewFails": [],
@@ -395,7 +395,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238307779
+              "ts": 1790239821984
             }
           ],
           "previewFails": [],
@@ -437,7 +437,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -477,7 +477,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238331337
+              "ts": 1790239842919
             }
           ],
           "previewFails": [],
@@ -542,7 +542,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238358473
+              "ts": 1790239862862
             }
           ],
           "previewFails": [],
@@ -607,7 +607,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238381948
+              "ts": 1790239884769
             }
           ],
           "previewFails": [],
@@ -646,7 +646,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -690,7 +690,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238405380
+              "ts": 1790239907265
             }
           ],
           "previewFails": [],
@@ -759,7 +759,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238431509
+              "ts": 1790239932570
             }
           ],
           "previewFails": [],
@@ -828,7 +828,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238454005
+              "ts": 1790239956962
             }
           ],
           "previewFails": [],
@@ -867,7 +867,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -905,7 +905,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238472894
+              "ts": 1790239977644
             }
           ],
           "previewFails": [],
@@ -965,7 +965,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238490091
+              "ts": 1790239996599
             }
           ],
           "previewFails": [],
@@ -1025,7 +1025,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238512025
+              "ts": 1790240012863
             }
           ],
           "previewFails": [],
@@ -1061,7 +1061,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -1099,7 +1099,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238529175
+              "ts": 1790240029985
             }
           ],
           "previewFails": [],
@@ -1159,7 +1159,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238546325
+              "ts": 1790240049801
             }
           ],
           "previewFails": [],
@@ -1219,7 +1219,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238566077
+              "ts": 1790240068682
             }
           ],
           "previewFails": [],
@@ -1255,7 +1255,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -1293,7 +1293,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238585945
+              "ts": 1790240088508
             }
           ],
           "previewFails": [],
@@ -1352,7 +1352,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238600341
+              "ts": 1790240106483
             }
           ],
           "previewFails": [],
@@ -1411,7 +1411,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238615593
+              "ts": 1790240125499
             }
           ],
           "previewFails": [],
@@ -1446,7 +1446,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -1484,7 +1484,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238639114
+              "ts": 1790240145373
             }
           ],
           "previewFails": [],
@@ -1544,7 +1544,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238658960
+              "ts": 1790240163473
             }
           ],
           "previewFails": [],
@@ -1604,7 +1604,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238676193
+              "ts": 1790240184165
             }
           ],
           "previewFails": [],
@@ -1640,7 +1640,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -1678,7 +1678,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238697030
+              "ts": 1790240203935
             }
           ],
           "previewFails": [],
@@ -1738,7 +1738,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238716024
+              "ts": 1790240227285
             }
           ],
           "previewFails": [],
@@ -1798,7 +1798,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238733028
+              "ts": 1790240247949
             }
           ],
           "previewFails": [],
@@ -1834,7 +1834,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -1877,7 +1877,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238749133
+              "ts": 1790240269528
             }
           ],
           "previewFails": [],
@@ -1937,14 +1937,14 @@
           },
           "preview": {
             "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/5 槽（语义校验 4）；未匹配 1 项\n[正] 槽 5 / 行 5 → 匹配 4\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-5 ← 13800138000"
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/5 槽（语义校验 4）；未匹配 1 项\n[正] 槽 5 / 行 5 → 匹配 4\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-5 ← 北京市朝阳区建国路88号"
           },
           "matchedCount": 4,
           "trace": [
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238766234
+              "ts": 1790240292235
             }
           ],
           "previewFails": [],
@@ -1959,14 +1959,14 @@
               "王小明",
               "销售总监",
               " ",
-              "13800138000"
+              "北京市朝阳区建国路88号"
             ]
           },
           "matchedBySlot": {
             "front-1": "山东启诚信息技术有限公司",
             "front-2": "王小明",
             "front-3": "销售总监",
-            "front-5": "13800138000"
+            "front-5": "北京市朝阳区建国路88号"
           },
           "frozen": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -2011,7 +2011,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790238785082
+              "ts": 1790240312885
             }
           ],
           "previewFails": [],
@@ -2049,7 +2049,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.77",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     }
