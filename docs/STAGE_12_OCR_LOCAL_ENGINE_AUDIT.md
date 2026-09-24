@@ -132,9 +132,14 @@ onnxruntime-web（WASM，CSP 已放行 wasm-unsafe-eval）
 |---|---|---|---|---|
 | M1 det 后处理内核 | 概率图 → 行级框：尺寸规划与反变换、二值化（严格 >）、8 邻域连通域、凸包、最小面积外接矩形、框内均值评分门、unclip 解析式外扩、阅读顺序排序、候选上限 | `extension/src/ocr/db-det-postprocess.js` | `runtime/stage12/db-det-postprocess.test.js`（**11/11**） | ✅ 已实现（未接线） |
 | M2 参数与调优逻辑 | 档位基线（tiny/small/medium）、场景增量（card/dense/tilted/qrNoise/lowContrast）、小字放大派生（目标行高 16px 反推 limitSideLen）、长边预算夹紧、人工覆盖、越界夹紧；网格调优 + IoU 指标 | `extension/src/ocr/det-params.js` | `runtime/stage12/det-params.test.js`（**10/10**） | ✅ 已实现（未接线） |
-| M3 provider 接线 | onnxruntime-web 加载/缓存 + OCRCandidate 契约 + `zyOcrEngine` 开关 | — | — | ⏳ 待做 |
+| M3 provider 装配（离线可测） | 图像预处理与旋转感知裁切（det/rec/cls 张量、BGR 默认、两套 mean/std）、字典组装 + CTC 贪心解码 + cls 判定、模型清单解析/SHA-256 校验/缓存加载、provider 端到端编排（det→后处理→映射→cls→rec→候选契约，假 session 可测） | `ppocr-image-ops.js` / `ppocr-rec-decode.js` / `ppocr-engine-loader.js` / `ppocr-provider.js` | `runtime/stage12/ppocr-*.test.js`（8+8+7+5=**28/28**） | ✅ 已实现（未接线） |
+| M3b ORT 真实接线 | onnxruntime-web 会话适配（`ort.InferenceSession` → session 接口）、`GM_xmlhttpRequest` 下载器、CacheStorage 适配器、模型清单生成（真实 sha256）、`zyOcrEngine` 开关与降级 | — | — | ⏳ 待做 |
 | M4 离线 A/B → 真机回归 → 切默认 | 见第 6 节 V2/V3/V4 | — | — | ⏳ 待做 |
 
 **与 PaddleOCR 的差异（如实声明）**：轮廓用「连通域 + 凸包」替代 `cv2.findContours`（外轮廓语义等价，不做孔洞）；unclip 用矩形解析式 `d = A*r/P` 替代 pyclipper 多边形 offset（对矩形/近矩形文字行等价）；仅实现 `box_score_fast`；像素中心点集 + 0.5px 半径补偿对齐像素外框。
 
-**未升版说明**：M1/M2 为新增未接线模块，不进入 userscript `@require` 链、不改任何既有文件 → 版本保持 0.3.11.74（与 Commit L2「未接线，版本保持」同一纪律）。
+**未升版说明**：M1~M3 为新增未接线模块，不进入 userscript `@require` 链、不改任何既有文件 → 版本保持 0.3.11.74（与 Commit L2「未接线，版本保持」同一纪律）。当前单测合计 **49 例全绿**（M1 11 + M2 10 + M3 28）。
+
+**M3 关键接口（供 M4 实现真实适配）**：provider 只依赖 `session = {det, rec, cls?}`：
+`det.run({data, dims}) → {probMap, dims}`；`rec.run(input) → {data|probs, timeSteps, classes, applySoftmax?}`；`cls.run(input) → {data:[p0,p1]}`。
+M4 只需把 `ort.InferenceSession.run` 的输出包成上述形状，并注入 `fetchBytes`（GM_xmlhttpRequest）+ `sha256`（WebCrypto）+ `cache`（CacheStorage）即可打通真实模型。
