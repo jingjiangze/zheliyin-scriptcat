@@ -21,7 +21,7 @@ const probeMod = require("./session-probe");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
-const BVER = "0.3.11.82";
+const BVER = "0.3.11.83";
 
 function parseCookies(raw) {
   const out = [];
@@ -88,7 +88,7 @@ function selfTest() {
   t("build-copy", cc.indexOf("function zyBuildCopyText(") >= 0 && cc.indexOf('mode === "template"') >= 0);
   t("copy-fn", cc.indexOf("async function copyLayerTexts(") >= 0 && cc.indexOf("getCurrentPage") >= 0 && cc.indexOf("GM_setClipboard") >= 0);
   t("template-row", cc.indexOf('" 字号=" + fsV') >= 0 && cc.indexOf('" 位置=(" + x') >= 0 && cc.indexOf('") 尺寸=" + w') >= 0 && cc.indexOf('" 颜色=" + fill') >= 0);
-  t("bver-const", BVER === "0.3.11.82");
+  t("bver-const", BVER === "0.3.11.83");
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
