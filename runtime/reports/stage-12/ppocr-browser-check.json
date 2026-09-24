@@ -1,0 +1,423 @@
+{
+  "ts": "2026-09-24T08:14:42.040Z",
+  "ortUrl": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/ort.min.js",
+  "profile": "profile-ocr12",
+  "lines": [
+    "佛山盛盈包装制品有限公司",
+    "王晓明",
+    "销售总监",
+    "电话：13800138000"
+  ],
+  "variants": [
+    {
+      "channelOrder": "bgr",
+      "useSpaceChar": false,
+      "charsetSize": 6905,
+      "ms": 908,
+      "boxes": 4,
+      "candidates": [
+        {
+          "text": "佛山盛盈包装制品有限公司",
+          "conf": 0.997,
+          "y": 28,
+          "x": 39,
+          "w": 411,
+          "h": 39
+        },
+        {
+          "text": "王晓明",
+          "conf": 0.996,
+          "y": 91,
+          "x": 38,
+          "w": 94,
+          "h": 36
+        },
+        {
+          "text": "销售总监",
+          "conf": 1,
+          "y": 150,
+          "x": 38,
+          "w": 106,
+          "h": 32
+        },
+        {
+          "text": "电话：13800138000",
+          "conf": 0.999,
+          "y": 200,
+          "x": 39,
+          "w": 228,
+          "h": 29
+        }
+      ],
+      "error": null,
+      "params": {
+        "thresh": 0.3,
+        "boxThresh": 0.55,
+        "unclipRatio": 1.5,
+        "limitSideLen": 640,
+        "minSize": 3
+      },
+      "reasons": [],
+      "accuracy": [
+        {
+          "expect": "佛山盛盈包装制品有限公司",
+          "got": "佛山盛盈包装制品有限公司",
+          "acc": 1
+        },
+        {
+          "expect": "王晓明",
+          "got": "王晓明",
+          "acc": 1
+        },
+        {
+          "expect": "销售总监",
+          "got": "销售总监",
+          "acc": 1
+        },
+        {
+          "expect": "电话：13800138000",
+          "got": "电话：13800138000",
+          "acc": 1
+        }
+      ],
+      "meanAcc": 1
+    },
+    {
+      "channelOrder": "rgb",
+      "useSpaceChar": false,
+      "charsetSize": 6905,
+      "ms": 721,
+      "boxes": 4,
+      "candidates": [
+        {
+          "text": "佛山盛盈包装制品有限公司",
+          "conf": 0.999,
+          "y": 27,
+          "x": 37,
+          "w": 413,
+          "h": 42
+        },
+        {
+          "text": "王晓明",
+          "conf": 0.994,
+          "y": 91,
+          "x": 37,
+          "w": 95,
+          "h": 38
+        },
+        {
+          "text": "销售总监",
+          "conf": 1,
+          "y": 150,
+          "x": 38,
+          "w": 107,
+          "h": 32
+        },
+        {
+          "text": "电话：13800138000",
+          "conf": 0.999,
+          "y": 200,
+          "x": 38,
+          "w": 229,
+          "h": 31
+        }
+      ],
+      "error": null,
+      "params": {
+        "thresh": 0.3,
+        "boxThresh": 0.55,
+        "unclipRatio": 1.5,
+        "limitSideLen": 640,
+        "minSize": 3
+      },
+      "reasons": [],
+      "accuracy": [
+        {
+          "expect": "佛山盛盈包装制品有限公司",
+          "got": "佛山盛盈包装制品有限公司",
+          "acc": 1
+        },
+        {
+          "expect": "王晓明",
+          "got": "王晓明",
+          "acc": 1
+        },
+        {
+          "expect": "销售总监",
+          "got": "销售总监",
+          "acc": 1
+        },
+        {
+          "expect": "电话：13800138000",
+          "got": "电话：13800138000",
+          "acc": 1
+        }
+      ],
+      "meanAcc": 1
+    },
+    {
+      "channelOrder": "bgr",
+      "useSpaceChar": true,
+      "charsetSize": 6906,
+      "ms": 732,
+      "boxes": 4,
+      "candidates": [
+        {
+          "text": "佚屯盘盆匀裂到哀月降八号",
+          "conf": 0.997,
+          "y": 28,
+          "x": 39,
+          "w": 411,
+          "h": 39
+        },
+        {
+          "text": "玉晒昌",
+          "conf": 0.996,
+          "y": 91,
+          "x": 38,
+          "w": 94,
+          "h": 36
+        },
+        {
+          "text": "铿唬怯盐",
+          "conf": 1,
+          "y": 150,
+          "x": 38,
+          "w": 106,
+          "h": 32
+        },
+        {
+          "text": "申诛９027~~027~~~",
+          "conf": 0.999,
+          "y": 200,
+          "x": 39,
+          "w": 228,
+          "h": 29
+        }
+      ],
+      "error": null,
+      "params": {
+        "thresh": 0.3,
+        "boxThresh": 0.55,
+        "unclipRatio": 1.5,
+        "limitSideLen": 640,
+        "minSize": 3
+      },
+      "reasons": [],
+      "accuracy": [
+        {
+          "expect": "佛山盛盈包装制品有限公司",
+          "got": "佚屯盘盆匀裂到哀月降八号",
+          "acc": 0
+        },
+        {
+          "expect": "王晓明",
+          "got": "玉晒昌",
+          "acc": 0
+        },
+        {
+          "expect": "销售总监",
+          "got": "铿唬怯盐",
+          "acc": 0
+        },
+        {
+          "expect": "电话：13800138000",
+          "got": "申诛９027~~027~~~",
+          "acc": 0
+        }
+      ],
+      "meanAcc": 0
+    },
+    {
+      "channelOrder": "rgb",
+      "useSpaceChar": true,
+      "charsetSize": 6906,
+      "ms": 702,
+      "boxes": 4,
+      "candidates": [
+        {
+          "text": "佚屯盘盆匀裂到哀月降八号",
+          "conf": 0.999,
+          "y": 27,
+          "x": 37,
+          "w": 413,
+          "h": 42
+        },
+        {
+          "text": "玉晒昌",
+          "conf": 0.994,
+          "y": 91,
+          "x": 37,
+          "w": 95,
+          "h": 38
+        },
+        {
+          "text": "铿唬怯盐",
+          "conf": 1,
+          "y": 150,
+          "x": 38,
+          "w": 107,
+          "h": 32
+        },
+        {
+          "text": "申诛９027~~027~~~",
+          "conf": 0.999,
+          "y": 200,
+          "x": 38,
+          "w": 229,
+          "h": 31
+        }
+      ],
+      "error": null,
+      "params": {
+        "thresh": 0.3,
+        "boxThresh": 0.55,
+        "unclipRatio": 1.5,
+        "limitSideLen": 640,
+        "minSize": 3
+      },
+      "reasons": [],
+      "accuracy": [
+        {
+          "expect": "佛山盛盈包装制品有限公司",
+          "got": "佚屯盘盆匀裂到哀月降八号",
+          "acc": 0
+        },
+        {
+          "expect": "王晓明",
+          "got": "玉晒昌",
+          "acc": 0
+        },
+        {
+          "expect": "销售总监",
+          "got": "铿唬怯盐",
+          "acc": 0
+        },
+        {
+          "expect": "电话：13800138000",
+          "got": "申诛９027~~027~~~",
+          "acc": 0
+        }
+      ],
+      "meanAcc": 0
+    }
+  ],
+  "picked": {
+    "channelOrder": "bgr",
+    "useSpaceChar": false,
+    "charsetSize": 6905,
+    "ms": 908,
+    "boxes": 4,
+    "candidates": [
+      {
+        "text": "佛山盛盈包装制品有限公司",
+        "conf": 0.997,
+        "y": 28,
+        "x": 39,
+        "w": 411,
+        "h": 39
+      },
+      {
+        "text": "王晓明",
+        "conf": 0.996,
+        "y": 91,
+        "x": 38,
+        "w": 94,
+        "h": 36
+      },
+      {
+        "text": "销售总监",
+        "conf": 1,
+        "y": 150,
+        "x": 38,
+        "w": 106,
+        "h": 32
+      },
+      {
+        "text": "电话：13800138000",
+        "conf": 0.999,
+        "y": 200,
+        "x": 39,
+        "w": 228,
+        "h": 29
+      }
+    ],
+    "error": null,
+    "params": {
+      "thresh": 0.3,
+      "boxThresh": 0.55,
+      "unclipRatio": 1.5,
+      "limitSideLen": 640,
+      "minSize": 3
+    },
+    "reasons": [],
+    "accuracy": [
+      {
+        "expect": "佛山盛盈包装制品有限公司",
+        "got": "佛山盛盈包装制品有限公司",
+        "acc": 1
+      },
+      {
+        "expect": "王晓明",
+        "got": "王晓明",
+        "acc": 1
+      },
+      {
+        "expect": "销售总监",
+        "got": "销售总监",
+        "acc": 1
+      },
+      {
+        "expect": "电话：13800138000",
+        "got": "电话：13800138000",
+        "acc": 1
+      }
+    ],
+    "meanAcc": 1
+  },
+  "ok": true,
+  "browserExe": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "ortVersion": "1.30.0",
+  "load": {
+    "loadMs": 171,
+    "cacheHitMs": 22,
+    "downloadedFirst": 4,
+    "cachedSecond": 4,
+    "roles": [
+      {
+        "role": "det",
+        "inputNames": [
+          "x"
+        ],
+        "outputNames": [
+          "fetch_name_0"
+        ],
+        "bytes": 1829618
+      },
+      {
+        "role": "rec",
+        "inputNames": [
+          "x"
+        ],
+        "outputNames": [
+          "fetch_name_0"
+        ],
+        "bytes": 4489813
+      },
+      {
+        "role": "cls",
+        "inputNames": [
+          "x"
+        ],
+        "outputNames": [
+          "fetch_name_0"
+        ],
+        "bytes": 1018508
+      }
+    ]
+  },
+  "imageSize": [
+    700,
+    300
+  ]
+}
