@@ -1,0 +1,2083 @@
+{
+  "ts": "2026-09-24T05:23:20.547Z",
+  "stage": "STAGE10-G-COMMIT-L8-DEMO-REAL-ACCEPTANCE",
+  "demoTrack": true,
+  "version": "0.3.11.74",
+  "branch": "demo",
+  "entry": "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js",
+  "bverExpect": "0.3.11.74",
+  "aiModel": "Qwen/Qwen2.5-7B-Instruct",
+  "cookieSource": "merged",
+  "cases": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J"
+  ],
+  "roundsPerCase": 3,
+  "roundsTotal": 30,
+  "roundsGreen": 30,
+  "errors": [],
+  "firstRun": {
+    "ts": "2026-09-24T05:12:36.199Z",
+    "runs": 10,
+    "roundsGreen": 29,
+    "roundsTotal": 30,
+    "flake": {
+      "case": "J",
+      "round": 1,
+      "errors": [
+        "ASSERT preview: PREVIEW_NOT_DONE"
+      ],
+      "previewFails": [
+        "PREVIEW_NOT_DONE"
+      ],
+      "aiCallObserved": true,
+      "trace": [
+        {
+          "url": "https://api.siliconflow.cn/v1/chat/completions",
+          "model": "Qwen/Qwen2.5-7B-Instruct",
+          "ts": 1790227224599
+        }
+      ],
+      "note": "AI 调用已发出（chat/completions, Qwen2.5-7B-Instruct）但 90s 内未回包 → 判定 AI provider 偶发超时（userscript 走本地规则回退，状态文案不含断言子串）"
+    },
+    "conclusion": "J 单独复跑 3/3 全绿（matched 4/4/4），确认首轮失败为 AI provider 偶发超时，非 demo 版本缺陷"
+  },
+  "runs": [
+    {
+      "case": "A",
+      "label": "普通标准模板",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              "1380 0138 000",
+              "北京市朝阳区建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 5,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 1 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n未匹配: 地址：北京市朝阳区建国路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226769236
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术有限公司",
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "北京市朝阳区建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "山东启诚信息技术有限公司",
+            "front-2": "王小明",
+            "front-3": "销售总监",
+            "front-4": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -1.196,
+              -15.66,
+              -8.88,
+              -19.05,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              "1380 0138 000",
+              "北京市朝阳区建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 5,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 1 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n未匹配: 地址：北京市朝阳区建国路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226788984
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术有限公司",
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "北京市朝阳区建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "山东启诚信息技术有限公司",
+            "front-2": "王小明",
+            "front-3": "销售总监",
+            "front-4": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -1.196,
+              -15.66,
+              -8.88,
+              -19.05,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              "1380 0138 000",
+              "北京市朝阳区建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 5,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 1 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n未匹配: 地址：北京市朝阳区建国路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226808790
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术有限公司",
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "北京市朝阳区建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "山东启诚信息技术有限公司",
+            "front-2": "王小明",
+            "front-3": "销售总监",
+            "front-4": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -1.196,
+              -15.66,
+              -8.88,
+              -19.05,
+              0
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "B",
+      "label": "中英文混合模板",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 6,
+            "texts": [
+              "QD Paper Group",
+              "山东启诚纸业",
+              "Wang Xiaoming",
+              "Sales Director",
+              "1380 0138 000",
+              "www.qdpaper.cn"
+            ],
+            "invSideCounts": {
+              "front": 6,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 6/6 槽；未匹配 0 项\nfront-1 ← 启诚纸业QUEENCHENG CO.,LTD\nfront-2 ← Qingdao Paper Co., Ltd\nfront-3 ← Mary Wang\nfront-4 ← Marketing Manager\nfront-5 ← 1380 0138 000\nfront-6 ← www.qdpaper.cn"
+          },
+          "matchedCount": 6,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226825772
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 6,
+            "texts": [
+              "启诚纸业QUEENCHENG CO.,LTD",
+              "Qingdao Paper Co., Ltd",
+              "Mary Wang",
+              "Marketing Manager",
+              "1380 0138 000",
+              "www.qdpaper.cn"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "启诚纸业QUEENCHENG CO.,LTD",
+            "front-2": "Qingdao Paper Co., Ltd",
+            "front-3": "Mary Wang",
+            "front-4": "Marketing Manager",
+            "front-5": "1380 0138 000",
+            "front-6": "www.qdpaper.cn"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              3.776,
+              -20.18,
+              -15.66,
+              -19.05,
+              -19.05,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 6,
+            "texts": [
+              "QD Paper Group",
+              "山东启诚纸业",
+              "Wang Xiaoming",
+              "Sales Director",
+              "1380 0138 000",
+              "www.qdpaper.cn"
+            ],
+            "invSideCounts": {
+              "front": 6,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 6/6 槽；未匹配 0 项\nfront-1 ← 启诚纸业QUEENCHENG CO.,LTD\nfront-2 ← Qingdao Paper Co., Ltd\nfront-3 ← Mary Wang\nfront-4 ← Marketing Manager\nfront-5 ← 13800138000\nfront-6 ← www.qdpaper.cn"
+          },
+          "matchedCount": 6,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226846703
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 6,
+            "texts": [
+              "启诚纸业QUEENCHENG CO.,LTD",
+              "Qingdao Paper Co., Ltd",
+              "Mary Wang",
+              "Marketing Manager",
+              "13800138000",
+              "www.qdpaper.cn"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "启诚纸业QUEENCHENG CO.,LTD",
+            "front-2": "Qingdao Paper Co., Ltd",
+            "front-3": "Mary Wang",
+            "front-4": "Marketing Manager",
+            "front-5": "13800138000",
+            "front-6": "www.qdpaper.cn"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              3.776,
+              -20.18,
+              -15.66,
+              -19.05,
+              -19.05,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 6,
+            "texts": [
+              "QD Paper Group",
+              "山东启诚纸业",
+              "Wang Xiaoming",
+              "Sales Director",
+              "1380 0138 000",
+              "www.qdpaper.cn"
+            ],
+            "invSideCounts": {
+              "front": 6,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 6/6 槽；未匹配 0 项\nfront-1 ← 启诚纸业QUEENCHENG CO.,LTD\nfront-2 ← Qingdao Paper Co., Ltd\nfront-3 ← Mary Wang\nfront-4 ← Marketing Manager\nfront-5 ← 13800138000\nfront-6 ← www.qdpaper.cn"
+          },
+          "matchedCount": 6,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226865620
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 6,
+            "texts": [
+              "启诚纸业QUEENCHENG CO.,LTD",
+              "Qingdao Paper Co., Ltd",
+              "Mary Wang",
+              "Marketing Manager",
+              "13800138000",
+              "www.qdpaper.cn"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "启诚纸业QUEENCHENG CO.,LTD",
+            "front-2": "Qingdao Paper Co., Ltd",
+            "front-3": "Mary Wang",
+            "front-4": "Marketing Manager",
+            "front-5": "13800138000",
+            "front-6": "www.qdpaper.cn"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              3.776,
+              -20.18,
+              -15.66,
+              -19.05,
+              -19.05,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "C",
+      "label": "左右双栏模板",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 6,
+            "texts": [
+              "王晓明",
+              "销售总监",
+              "电话：1380 0138 000",
+              "邮箱: wx@qq.com",
+              "网址: www.qq.com",
+              "地址：建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 6,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 3/6 槽；未匹配 3 项\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n未匹配: 邮箱：wxm@163.com\n未匹配: 网址：www.163.com\n未匹配: 地址：建国路88号"
+          },
+          "matchedCount": 3,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226881749
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 6,
+            "texts": [
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "邮箱: wx@qq.com",
+              "网址: www.qq.com",
+              "地址：建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "front-3": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -6.62,
+              -17.92,
+              -22.44,
+              0,
+              0,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 6,
+            "texts": [
+              "王晓明",
+              "销售总监",
+              "电话：1380 0138 000",
+              "邮箱: wx@qq.com",
+              "网址: www.qq.com",
+              "地址：建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 6,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 3/6 槽；未匹配 3 项\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n未匹配: 邮箱：wxm@163.com\n未匹配: 网址：www.163.com\n未匹配: 地址：建国路88号"
+          },
+          "matchedCount": 3,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226896100
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 6,
+            "texts": [
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "邮箱: wx@qq.com",
+              "网址: www.qq.com",
+              "地址：建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "front-3": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -6.62,
+              -17.92,
+              -22.44,
+              0,
+              0,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 6,
+            "texts": [
+              "王晓明",
+              "销售总监",
+              "电话：1380 0138 000",
+              "邮箱: wx@qq.com",
+              "网址: www.qq.com",
+              "地址：建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 6,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 3/6 槽；未匹配 3 项\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n未匹配: 邮箱：wxm@163.com\n未匹配: 网址：www.163.com\n未匹配: 地址：建国路88号"
+          },
+          "matchedCount": 3,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226913227
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 6,
+            "texts": [
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "邮箱: wx@qq.com",
+              "网址: www.qq.com",
+              "地址：建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "front-3": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -6.62,
+              -17.92,
+              -22.44,
+              0,
+              0,
+              0
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "D",
+      "label": "正反面模板",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "backInj": {
+            "ok": false,
+            "reason": "NO_CANVAS"
+          },
+          "backAbsent": true,
+          "before": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              "1380 0138 000",
+              "北京市朝阳区建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 5,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 1 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n未匹配: 地址：北京市朝阳区建国路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226932291
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术有限公司",
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "北京市朝阳区建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "山东启诚信息技术有限公司",
+            "front-2": "王小明",
+            "front-3": "销售总监",
+            "front-4": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -1.196,
+              -15.66,
+              -8.88,
+              -19.05,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "backInj": {
+            "ok": false,
+            "reason": "NO_CANVAS"
+          },
+          "backAbsent": true,
+          "before": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              "1380 0138 000",
+              "北京市朝阳区建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 5,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 1 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n未匹配: 地址：北京市朝阳区建国路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226953834
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术有限公司",
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "北京市朝阳区建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "山东启诚信息技术有限公司",
+            "front-2": "王小明",
+            "front-3": "销售总监",
+            "front-4": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -1.196,
+              -15.66,
+              -8.88,
+              -19.05,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "backInj": {
+            "ok": false,
+            "reason": "NO_CANVAS"
+          },
+          "backAbsent": true,
+          "before": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              "1380 0138 000",
+              "北京市朝阳区建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 5,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 5/5 槽；未匹配 0 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\nfront-5 ← 北京市朝阳区建国路88号"
+          },
+          "matchedCount": 5,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226972634
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 5 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术有限公司",
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "北京市朝阳区建国路88号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "山东启诚信息技术有限公司",
+            "front-2": "王小明",
+            "front-3": "销售总监",
+            "front-4": "13800138000",
+            "front-5": "北京市朝阳区建国路88号"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -1.196,
+              -15.66,
+              -8.88,
+              -19.05,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "E",
+      "label": "无反面带（back 必须 null）",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "简小设",
+              "合伙人",
+              "电话: 0531-88886666",
+              "地址：文化东路88号"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/4 槽；未匹配 0 项\nfront-1 ← 江某\nfront-2 ← 高级合伙人\nfront-3 ← 0531-88886666\nfront-4 ← 文化东路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790226989661
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "江某",
+              "高级合伙人",
+              "0531-88886666",
+              "文化东路88号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "江某",
+            "front-2": "高级合伙人",
+            "front-3": "0531-88886666",
+            "front-4": "文化东路88号"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -20.18,
+              -22.44,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "简小设",
+              "合伙人",
+              "电话: 0531-88886666",
+              "地址：文化东路88号"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/4 槽；未匹配 0 项\nfront-1 ← 江某\nfront-2 ← 高级合伙人\nfront-3 ← 0531-88886666\nfront-4 ← 文化东路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227007020
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "江某",
+              "高级合伙人",
+              "0531-88886666",
+              "文化东路88号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "江某",
+            "front-2": "高级合伙人",
+            "front-3": "0531-88886666",
+            "front-4": "文化东路88号"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -20.18,
+              -22.44,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "简小设",
+              "合伙人",
+              "电话: 0531-88886666",
+              "地址：文化东路88号"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/4 槽；未匹配 0 项\nfront-1 ← 江某\nfront-2 ← 高级合伙人\nfront-3 ← 0531-88886666\nfront-4 ← 文化东路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227022209
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "江某",
+              "高级合伙人",
+              "0531-88886666",
+              "文化东路88号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "江某",
+            "front-2": "高级合伙人",
+            "front-3": "0531-88886666",
+            "front-4": "文化东路88号"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -20.18,
+              -22.44,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "F",
+      "label": "多电话模板",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王晓明",
+              "手机: 1380 0138 000",
+              "座机: 0531-88886666",
+              "地址：建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 3/4 槽；未匹配 1 项\nfront-1 ← 王小明\nfront-2 ← 13800138000\nfront-3 ← 0531-88886666\n未匹配: 地址：建国路88号"
+          },
+          "matchedCount": 3,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227037324
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王小明",
+              "13800138000",
+              "0531-88886666",
+              "地址：建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "13800138000",
+            "front-3": "0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -13.4,
+              -21.31,
+              -21.31,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王晓明",
+              "手机: 1380 0138 000",
+              "座机: 0531-88886666",
+              "地址：建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 3/4 槽；未匹配 1 项\nfront-1 ← 王小明\nfront-2 ← 13800138000\nfront-3 ← 0531-88886666\n未匹配: 地址：建国路88号"
+          },
+          "matchedCount": 3,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227055247
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王小明",
+              "13800138000",
+              "0531-88886666",
+              "地址：建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "13800138000",
+            "front-3": "0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -13.4,
+              -21.31,
+              -21.31,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王晓明",
+              "手机: 1380 0138 000",
+              "座机: 0531-88886666",
+              "地址：建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 3/4 槽；未匹配 1 项\nfront-1 ← 王小明\nfront-2 ← 13800138000\nfront-3 ← 0531-88886666\n未匹配: 地址：建国路88号"
+          },
+          "matchedCount": 3,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227068712
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王小明",
+              "13800138000",
+              "0531-88886666",
+              "地址：建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "13800138000",
+            "front-3": "0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -13.4,
+              -21.31,
+              -21.31,
+              0
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "G",
+      "label": "无微信槽（微信须 unmatched）",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王晓明",
+              "销售总监",
+              "电话: 1380 0138 000",
+              "地址：建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 3/4 槽；未匹配 1 项\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n未匹配: 微信：wxm123456"
+          },
+          "matchedCount": 3,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227084914
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "地址：建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "front-3": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -13.4,
+              -17.92,
+              -21.31,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王晓明",
+              "销售总监",
+              "电话: 1380 0138 000",
+              "地址：建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 3/4 槽；未匹配 1 项\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n未匹配: 微信：wxm123456"
+          },
+          "matchedCount": 3,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227099118
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "地址：建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "front-3": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -13.4,
+              -17.92,
+              -21.31,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王晓明",
+              "销售总监",
+              "电话: 1380 0138 000",
+              "地址：建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 3/4 槽；未匹配 1 项\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n未匹配: 微信：wxm123456"
+          },
+          "matchedCount": 3,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227112462
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王小明",
+              "销售总监",
+              "13800138000",
+              "地址：建国路89号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "front-3": "13800138000"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -13.4,
+              -17.92,
+              -21.31,
+              0
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "H",
+      "label": "模板无标签（裸文字）",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王明",
+              "销售经理",
+              "13800001111",
+              "济南高新区海信创智谷1号楼"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/4 槽；未匹配 0 项\nfront-1 ← 王明\nfront-2 ← 销售经理\nfront-3 ← 13800001111\nfront-4 ← 济南高新区海信创智谷1号楼"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227127662
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王明",
+              "销售经理",
+              "13800001111",
+              "济南高新区海信创智谷1号楼"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王明",
+            "front-2": "销售经理",
+            "front-3": "13800001111",
+            "front-4": "济南高新区海信创智谷1号楼"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05,
+              -21.31,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王明",
+              "销售经理",
+              "13800001111",
+              "济南高新区海信创智谷1号楼"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/4 槽；未匹配 0 项\nfront-1 ← 王明\nfront-2 ← 销售经理\nfront-3 ← 13800001111\nfront-4 ← 济南高新区海信创智谷1号楼"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227141898
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王明",
+              "销售经理",
+              "13800001111",
+              "济南高新区海信创智谷1号楼"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王明",
+            "front-2": "销售经理",
+            "front-3": "13800001111",
+            "front-4": "济南高新区海信创智谷1号楼"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05,
+              -21.31,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王明",
+              "销售经理",
+              "13800001111",
+              "济南高新区海信创智谷1号楼"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/4 槽；未匹配 0 项\nfront-1 ← 王明\nfront-2 ← 销售经理\nfront-3 ← 13800001111\nfront-4 ← 济南高新区海信创智谷1号楼"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227155575
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王明",
+              "销售经理",
+              "13800001111",
+              "济南高新区海信创智谷1号楼"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王明",
+            "front-2": "销售经理",
+            "front-3": "13800001111",
+            "front-4": "济南高新区海信创智谷1号楼"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05,
+              -21.31,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "I",
+      "label": "公司/姓名语义相近",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装",
+              "王明",
+              "总经理",
+              "电话: 0531-88886666"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/4 槽；未匹配 0 项\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 0531-88886666"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227175365
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装有限公司",
+              "王明",
+              "总经理",
+              "0531-88886666"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王氏印刷包装有限公司",
+            "front-2": "王明",
+            "front-3": "总经理",
+            "front-4": "0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -19.05,
+              -13.4,
+              -19.05,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装",
+              "王明",
+              "总经理",
+              "电话: 0531-88886666"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/4 槽；未匹配 0 项\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 0531-88886666"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227193264
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装有限公司",
+              "王明",
+              "总经理",
+              "0531-88886666"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王氏印刷包装有限公司",
+            "front-2": "王明",
+            "front-3": "总经理",
+            "front-4": "0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -19.05,
+              -13.4,
+              -19.05,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装",
+              "王明",
+              "总经理",
+              "电话: 0531-88886666"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/4 槽；未匹配 0 项\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 0531-88886666"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227207633
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装有限公司",
+              "王明",
+              "总经理",
+              "0531-88886666"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王氏印刷包装有限公司",
+            "front-2": "王明",
+            "front-3": "总经理",
+            "front-4": "0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -19.05,
+              -13.4,
+              -19.05,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "J",
+      "label": "空文字层（空槽不得误填）",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              " ",
+              "北京市朝阳区建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 5,
+              "back": 0
+            }
+          },
+          "emptySlotBefore": {
+            "text": " ",
+            "isEmpty": true
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 0 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-5 ← 北京市朝阳区建国路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227413124
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术有限公司",
+              "王小明",
+              "销售总监",
+              " ",
+              "北京市朝阳区建国路88号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "山东启诚信息技术有限公司",
+            "front-2": "王小明",
+            "front-3": "销售总监",
+            "front-5": "北京市朝阳区建国路88号"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -1.196,
+              -15.66,
+              -8.88,
+              0,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              " ",
+              "北京市朝阳区建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 5,
+              "back": 0
+            }
+          },
+          "emptySlotBefore": {
+            "text": " ",
+            "isEmpty": true
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 0 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-5 ← 北京市朝阳区建国路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227429287
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术有限公司",
+              "王小明",
+              "销售总监",
+              " ",
+              "北京市朝阳区建国路88号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "山东启诚信息技术有限公司",
+            "front-2": "王小明",
+            "front-3": "销售总监",
+            "front-5": "北京市朝阳区建国路88号"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -1.196,
+              -15.66,
+              -8.88,
+              0,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              " ",
+              "北京市朝阳区建国路89号"
+            ],
+            "invSideCounts": {
+              "front": 5,
+              "back": 0
+            }
+          },
+          "emptySlotBefore": {
+            "text": " ",
+            "isEmpty": true
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 0 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-5 ← 北京市朝阳区建国路88号"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790227446265
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术有限公司",
+              "王小明",
+              "销售总监",
+              " ",
+              "北京市朝阳区建国路88号"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "山东启诚信息技术有限公司",
+            "front-2": "王小明",
+            "front-3": "销售总监",
+            "front-5": "北京市朝阳区建国路88号"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -1.196,
+              -15.66,
+              -8.88,
+              0,
+              -23.57
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.74",
+      "backExists": false,
+      "passRounds": 3
+    }
+  ]
+}
