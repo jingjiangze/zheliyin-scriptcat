@@ -1,10 +1,11 @@
-// runtime/stage9/commit-46n-ui-confirm-apply-real.js — Stage 10-G Commit 06：一键填充 UI 真机验收
-// 目标（端到端）：注入 5 槽 → 粘贴客户原文 → 点真实 #zy-smart-fill（AI 槽位匹配 preview）→
-//   断言：状态「AI 槽位匹配完成（预览，未修改画布）」+ #zy-match-block 可见 + 正反统计 + 确认/取消按钮 → 画布零变化；
-//   点真实 #zy-apply-confirm（templateApplyV2 + planHash）→「AI 填充完成」→ text 更新 + 冻结 + count 不变；
-//   取消路径：重新匹配 → 点 #zy-apply-cancel → 结果块隐藏 +「已取消」+ 画布不被改动。
-// 凭据：ZY_AI_KEY env（硅基流动，绝不落盘）；ZY_STAGE9_COOKIE。
-// 报告：runtime/reports/stage-11/commit-46n-ui-confirm-apply-real.json
+// runtime/stage9/commit-46o-copy-layer-modes-real.js — Stage 10-G Commit 07：图层文字复制三模式真机验收
+// 目标（端到端）：注入 5 槽正面文字层 → 分别点真实 #zy-copy-current/#zy-copy-both/#zy-copy-template →
+//   拦截 navigator.clipboard.writeText / document.execCommand 到 window.__zyLastCopy 读取复制内容断言：
+//   - current（当前面）：含【正面】块 + 注入文本行，不含【反面】；状态「已复制当前面 N 行到剪贴板」
+//   - both（正反面）：含【正面】块（若反面存在则含【反面】块）；状态「已复制正反面 N 行到剪贴板」
+//   - template（套版结构）：含页面 pageId + [front-N] "text" 字号=fs 位置=(x,y) 尺寸=w x h 颜色=fill；状态「已复制套版结构 N 行到剪贴板」
+//   三模式全部来自 TemplateSnapshot（只读，不触画布，前后 count/texts 全等）。
+// 凭据：ZY_STAGE9_COOKIE。报告：runtime/reports/stage-11/commit-46o-copy-layer-modes-real.json
 "use strict";
 const path = require("path");
 const fs = require("fs");
@@ -20,11 +21,7 @@ const probeMod = require("./session-probe");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
-const TRACE_KEY = "__zy7AiTrace";
 const BVER = "0.3.11.73";
-const AI_KEY = process.env.ZY_AI_KEY || "";
-const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
-const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
 
 function parseCookies(raw) {
   const out = [];
@@ -72,29 +69,25 @@ function pageWorldPayloadFor() {
 }
 const P_CASES = [
   {
-    id: "P-UI-APPLY", rounds: 1,
-    pasteRows: [
-      "正面：", "山东启诚信息技术有限公司", "王小明", "销售总监", "电话：13800138000", "地址：北京市朝阳区建国路88号", "反面：", "主营范围：企业信息化咨询、软件定制开发服务"
-    ],
+    id: "P-COPY-MODES", rounds: 1,
     slots: [
       { text: "山东启诚信息技术股份", fontSize: 14, fontFamily: "方正黑体简体" },
       { text: "王晓明", fontSize: 18, fontFamily: "思源黑体 Regular" },
       { text: "销售副总监", fontSize: 24, fontFamily: "思源黑体 Bold" },
       { text: "1380 0138 000", fontSize: 15, fontFamily: "思源黑体 Regular" },
       { text: "北京市朝阳区建国路89号", fontSize: 11, fontFamily: "思源黑体 Regular" }
-    ],
-    wantTexts: ["山东启诚信息技术有限公司", "王小明", "销售总监", "13800138000", "北京市朝阳区建国路88号"],
-    expectMatchedMin: 3
+    ]
   }
 ];
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = injectUserscript();
-  t("cases-1", P_CASES.length === 1 && P_CASES[0].id === "P-UI-APPLY");
-  t("match-block-html", cc.indexOf('id="zy-match-block"') >= 0 && cc.indexOf('id="zy-apply-confirm"') >= 0);
-  t("confirm-fn", cc.indexOf("async function confirmTemplateApply(") >= 0 && cc.indexOf("templateApplyV2") >= 0);
-  t("cancel-fn", cc.indexOf("function cancelTemplateApply(") >= 0);
-  t("plan-cache", cc.indexOf("let lastAiMatch = null") >= 0 && cc.indexOf("planHash") >= 0);
+  t("cases-1", P_CASES.length === 1 && P_CASES[0].id === "P-COPY-MODES");
+  t("html-3btns", cc.indexOf('id="zy-copy-current"') >= 0 && cc.indexOf('id="zy-copy-both"') >= 0 && cc.indexOf('id="zy-copy-template"') >= 0);
+  t("side-block", cc.indexOf("function zySideTextBlock(") >= 0 && cc.indexOf("【正面】") >= 0 && cc.indexOf("【反面】") >= 0);
+  t("build-copy", cc.indexOf("function zyBuildCopyText(") >= 0 && cc.indexOf('mode === "template"') >= 0);
+  t("copy-fn", cc.indexOf("async function copyLayerTexts(") >= 0 && cc.indexOf("getCurrentPage") >= 0 && cc.indexOf("GM_setClipboard") >= 0);
+  t("template-row", cc.indexOf('" 字号=" + fsV') >= 0 && cc.indexOf('" 位置=(" + x') >= 0 && cc.indexOf('") 尺寸=" + w') >= 0 && cc.indexOf('" 颜色=" + fill') >= 0);
   t("bver-const", BVER === "0.3.11.73");
   console.log("[selftest] ALL PASS");
 }
@@ -104,9 +97,8 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   const sessCookie = await probeMod.resolveStage9Cookie();
   const COOKIE_RAW = sessCookie.raw || "";
-  if (!COOKIE_RAW) { console.error("[commit-46n] 会话 cookie 解析失败：" + (sessCookie.error || "NO_COOKIE")); process.exit(2); }
-  if (!AI_KEY) { console.error("[commit-46n] 缺少 ZY_AI_KEY 环境变量（仅临时注入，绝不落盘）。"); process.exit(2); }
-  const out = { ts: new Date().toISOString(), stage: "STAGE10-G-COMMIT-L6-ONE-CLICK-FILL-UI", cases: P_CASES.map((c) => c.id), cookieSource: sessCookie.source || null, aiModel: AI_MODEL, bverExpect: BVER, runs: [], errors: [] };
+  if (!COOKIE_RAW) { console.error("[commit-46o] 会话 cookie 解析失败：" + (sessCookie.error || "NO_COOKIE")); process.exit(2); }
+  const out = { ts: new Date().toISOString(), stage: "STAGE10-G-COMMIT-L7-COPY-LAYER-MODES", cases: P_CASES.map((c) => c.id), cookieSource: sessCookie.source || null, bverExpect: BVER, runs: [], errors: [] };
   let browser = null;
   try {
     browser = await chromium.launchPersistentContext(PROFILE, { channel: "chromium", headless: false, ignoreDefaultArgs: ["--enable-automation", "--disable-extensions"], args: ["--disable-features=DisableLoadExtensionCommandLineSwitch", "--enable-unsafe-extension-debugging", "--disable-extensions-except=" + SC_DIR, "--load-extension=" + SC_DIR], viewport: { width: 1280, height: 900 } });
@@ -114,21 +106,34 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
     let page = browser.pages()[0];
     const onPageErr = (e) => { out.errors.push("PAGEERROR: " + String(e && e.message || e).slice(0, 200)); };
     page.on("pageerror", onPageErr);
-    await page.addInitScript(({ key }) => {
-      const arr = []; window[key] = arr;
-      const oF = window.fetch;
-      window.fetch = function (input, init) {
-        try {
-          const url = (typeof input === "string" ? input : (input && input.url)) || "";
-          if (url.indexOf("chat/completions") >= 0) {
-            let model = null;
-            try { model = JSON.parse(String(init && init.body || "{}")).model || null; } catch (e) {}
-            arr.push({ url: String(url).slice(-60), model: model, ts: Date.now() });
-          }
-        } catch (e) {}
-        return oF.apply(this, arguments);
-      };
-    }, { key: TRACE_KEY });
+    // 拦截剪贴板写入 → window.__zyLastCopy（navigator.clipboard 与 execCommand 双路兜底）
+    await page.addInitScript(() => {
+      try {
+        window.__zyLastCopy = null;
+        const origWrite = window.navigator.clipboard && window.navigator.clipboard.writeText;
+        if (origWrite) {
+          window.navigator.clipboard.writeText = function (text) {
+            window.__zyLastCopy = String(text);
+            return Promise.resolve();
+          };
+        }
+        const origExec = document.execCommand;
+        if (typeof origExec === "function") {
+          document.execCommand = function (cmd) {
+            try {
+              if (String(cmd) === "copy") {
+                let v = null;
+                const el = document.activeElement;
+                if (el && (el.value != null)) v = el.value;
+                if (v == null) { const ta = document.querySelector("textarea"); v = ta ? ta.value : null; }
+                if (v != null) window.__zyLastCopy = String(v);
+              }
+            } catch (e) {}
+            return origExec.apply(this, arguments);
+          };
+        }
+      } catch (e) {}
+    });
     try {
       await page.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
       await SLEEP(1400);
@@ -144,12 +149,11 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       setTimeout(() => { if (!done) { window.removeEventListener("message", on); resolve({ skip: true, timeout: arg.timeoutMs }); } }, arg.timeoutMs);
       window.postMessage(Object.assign({ source: "zy-card-assistant", type: arg.type }, arg.payload || {}), location.origin);
     }), { type: type, payload: payload, replyType: replyType, timeoutMs: timeoutMs || 12000 });
-    const setGm = async () => page.evaluate(({ key, baseUrl, model }) => {
+    const setGm = async () => page.evaluate(() => {
       const set = (k, v) => { try { localStorage.setItem("zy8dshim:" + k, JSON.stringify(v)); } catch (e) {} };
       set("zyBaiduOcrMode", "standard"); set("zyStage9NativeOcrMode", "2"); set("zyStage9NativeTruth", "1"); set("zyStage9LocalSidecar", "0"); set("zyOcrMode", "baidu"); set("zyStage9InkGeometry", "0"); set("zyShowTemplatePanel", "1");
-      set("zyArkApiKey", key); set("zyArkBaseUrl", baseUrl); set("zyArkModel", model);
       return true;
-    }, { key: AI_KEY, baseUrl: AI_BASE_URL, model: AI_MODEL });
+    });
     const injectPageWorld = (payload) => page.evaluate((code) => { const s = document.createElement("script"); s.textContent = code; (document.head || document.documentElement).appendChild(s); }, payload);
     const waitEditorReady = async (tries) => {
       for (let i = 0; i < (tries || 16); i += 1) {
@@ -184,12 +188,13 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
     const readFront = async () => {
       for (let i = 0; i < 3; i += 1) {
         const r = await bridgeCall("getTextInventoryAll", {}, "getTextInventoryAllResult", 8000).catch(() => null);
-        if (r && r.front && Array.isArray(r.front.items)) return { snapshotHash: r.snapshotHash, frontItems: r.front.items };
+        if (r && r.front && Array.isArray(r.front.items)) {
+          return { snapshotHash: r.snapshotHash, page: r.page, frontItems: r.front.items, backItems: (r.back && Array.isArray(r.back.items)) ? r.back.items : [], invSideCounts: { front: r.count ? r.count.front : 0, back: r.count ? r.count.back : 0 } };
+        }
         await SLEEP(1200);
       }
       return {};
     };
-    const fillRawText = (rawLines) => page.evaluate((t) => { const ta = document.querySelector("#zy-raw"); if (!ta) return { ok: false }; ta.value = t; ta.dispatchEvent(new Event("input", { bubbles: true })); return { ok: true }; }, rawLines.join("\n"));
     const clickById = async (selector, timeoutMs) => {
       const t0 = Date.now();
       while (Date.now() - t0 < (timeoutMs || 15000)) {
@@ -210,16 +215,10 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       }
       return { done: false, samples: samples };
     };
-    const matchBlockState = () => page.evaluate(() => {
-      const block = document.querySelector("#zy-match-block");
-      const summaryEl = document.querySelector("#zy-match-summary");
-      const confirmBtn = document.querySelector("#zy-apply-confirm");
-      const cancelBtn = document.querySelector("#zy-apply-cancel");
-      return { visible: !!(block && block.offsetParent), summary: summaryEl ? String(summaryEl.textContent || "").slice(0, 200) : null, hasConfirm: !!(confirmBtn && confirmBtn.offsetParent), hasCancel: !!(cancelBtn && cancelBtn.offsetParent) };
-    }).catch(() => ({}));
+    const readCopy = () => page.evaluate(() => window.__zyLastCopy || null).catch(() => null);
     const waitPanelReady = async (tries) => {
       for (let i = 0; i < (tries || 15); i += 1) {
-        const has = await page.evaluate(() => !!document.querySelector("#zy-raw") && !!document.querySelector("#zy-smart-fill")).catch(() => false);
+        const has = await page.evaluate(() => !!document.querySelector("#zy-copy-current") && !!document.querySelector("#zy-copy-both") && !!document.querySelector("#zy-copy-template")).catch(() => false);
         if (has) return true;
         await SLEEP(900);
       }
@@ -228,7 +227,7 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
 
     for (const def of P_CASES) {
       if (WHITELIST.length && WHITELIST.indexOf(def.id) < 0) continue;
-      const rec = { case: def.id, note: "一键填充 UI 端到端：preview 结果块 → 确认填充 → 画布更新+冻结 → 取消", steps: [], errors: [], runs: [] };
+      const rec = { case: def.id, note: "复制三模式（current/both/template）拦截剪贴板断言 + 画布零变化", steps: [], errors: [], runs: [] };
       out.runs.push(rec);
       try {
         await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 60000 }).catch((e) => rec.errors.push("GOTO: " + String(e && e.message || e).slice(0, 120)));
@@ -246,91 +245,92 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
         await SLEEP(1500);
         if (!(inj && inj.ok)) { rec.errors.push("SLOT_INJECT_FAIL"); continue; }
         await SLEEP(1400);
-        const fill = await fillRawText(def.pasteRows);
-        if (!(fill && fill.ok)) { rec.errors.push("FILL_FAIL"); continue; }
-        // ---- ① 一键智能填充（AI preview）----
-        const cl1 = await clickById("#zy-smart-fill");
-        if (!(cl1 && cl1.clicked)) { rec.errors.push("SMART_FILL_BTN_NOT_FOUND"); continue; }
-        const doneP = await waitStatusContains("AI 槽位匹配完成（预览，未修改画布）", 90000);
-        rec.preview = { done: !!doneP.done, status: doneP.done ? doneP.st.slice(0, 200) : null, samples: (doneP.samples || []).slice(-6) };
-        const mMatch = /匹配 (\d+)\/(\d+) 槽/.exec(doneP.st || "");
-        const matchedCount = mMatch ? Number(mMatch[1]) : 0;
-        rec.matchedCount = matchedCount;
-        const trace = await page.evaluate((k) => window[k] || [], TRACE_KEY).catch(() => []);
-        rec.trace = (trace || []).slice(0, 4);
-        const f1 = [];
-        if (!doneP.done) f1.push("PREVIEW_NOT_DONE");
-        const mBlk = await matchBlockState();
-        rec.matchBlock1 = mBlk;
-        if (!(mBlk && mBlk.visible)) f1.push("MATCH_BLOCK_HIDDEN");
-        if (!(mBlk && mBlk.summary && mBlk.summary.indexOf("正面") >= 0)) f1.push("SUMMARY_MISSING_SIDE");
-        if (!(mBlk && mBlk.hasConfirm && mBlk.hasCancel)) f1.push("CONFIRM_CANCEL_HIDDEN");
-        if (!(rec.trace || []).some((x) => x.model && String(x.model) === String(AI_MODEL))) f1.push("AI_CALL_NOT_OBSERVED(" + AI_MODEL + ")");
         const invB = await readFront();
-        const itemsB = invB.frontItems || [];
-        rec.before = { count: itemsB.length, texts: itemsB.map((it) => it.text) };
-        // preview 零变化（画布仍为注入原值）
-        for (let i = 0; i < def.slots.length && i < itemsB.length; i += 1) { if (String(itemsB[i].text || "") !== def.slots[i].text) { f1.push("PREVIEW_CHANGED_CANVAS[" + i + "]"); break; } }
-        rec.previewFails = f1;
-        if (f1.length) rec.errors.push("ASSERT_FAIL preview: " + f1.join(" | "));
-        // ---- ② 确认填充 ----
-        const cl2 = await clickById("#zy-apply-confirm");
-        if (!(cl2 && cl2.clicked)) { rec.errors.push("CONFIRM_BTN_NOT_FOUND"); continue; }
-        const doneA = await waitStatusContains("AI 填充完成", 30000);
-        rec.apply = { done: !!doneA.done, status: doneA.done ? doneA.st.slice(0, 200) : null };
-        await SLEEP(1200);
-        const invA = await readFront();
-        const itemsA = invA.frontItems || [];
-        const FZ = (it) => { const g = (v) => (typeof v === "number" ? Number(v.toFixed(3)) : v); return { fontSize: g(it.fontSize), left: g(it.left), top: g(it.top), width: g(it.width), angle: g(it.angle), fill: it.fill != null ? String(it.fill) : null }; };
-        rec.after = { count: itemsA.length, texts: itemsA.map((it) => it.text), frozen: itemsA.map(FZ) };
+        rec.before = { count: (invB.frontItems || []).length, texts: (invB.frontItems || []).map((it) => it.text) };
+        rec.invSideCounts = invB.invSideCounts || null;
+        rec.pageOf = invB.page || null;
+        if (rec.before.count !== def.slots.length) rec.errors.push("INJECT_COUNT " + rec.before.count + "!=" + def.slots.length);
+
+        // ---- ① 复制当前面 ----
+        await page.evaluate(() => { try { window.__zyLastCopy = null; } catch (e) {} });
+        const cl1 = await clickById("#zy-copy-current");
+        if (!(cl1 && cl1.clicked)) { rec.errors.push("CURRENT_BTN_NOT_FOUND"); continue; }
+        const st1 = await waitStatusContains("已复制当前面", 12000);
+        await SLEEP(600);
+        const cp1 = await readCopy();
+        rec.current = { clicked: !!(cl1 && cl1.clicked), done: !!st1.done, status: st1.done ? st1.st.slice(0, 120) : null, copied: cp1 ? String(cp1).slice(0, 300) : null, lines: cp1 ? String(cp1).split("\n").filter(Boolean).length : 0 };
+        const f1 = [];
+        if (!st1.done) f1.push("STATUS_MISSING_当前面");
+        if (!cp1) { f1.push("CLIP_EMPTY"); } else {
+          if (cp1.indexOf("【正面】") < 0) f1.push("NO_FRONT_MARKER");
+          if (cp1.indexOf("【反面】") >= 0) f1.push("HAS_BACK_MARKER");
+          for (let i = 0; i < def.slots.length; i += 1) { if (cp1.indexOf(def.slots[i].text) < 0) { f1.push("MISSING_TEXT[" + i + "]"); break; } }
+        }
+        rec.currentFails = f1;
+        if (f1.length) rec.errors.push("ASSERT_FAIL current: " + f1.join(" | "));
+
+        // ---- ② 复制正反面 ----
+        await page.evaluate(() => { try { window.__zyLastCopy = null; } catch (e) {} });
+        const cl2 = await clickById("#zy-copy-both");
+        if (!(cl2 && cl2.clicked)) { rec.errors.push("BOTH_BTN_NOT_FOUND"); continue; }
+        const st2 = await waitStatusContains("已复制正反面", 12000);
+        await SLEEP(600);
+        const cp2 = await readCopy();
+        rec.both = { clicked: !!(cl2 && cl2.clicked), done: !!st2.done, status: st2.done ? st2.st.slice(0, 120) : null, copied: cp2 ? String(cp2).slice(0, 500) : null, lines: cp2 ? String(cp2).split("\n").filter(Boolean).length : 0 };
         const f2 = [];
-        if (!doneA.done) f2.push("APPLY_NOT_DONE");
-        if (rec.after.count !== rec.before.count) f2.push("COUNT_CHANGED " + rec.before.count + "->" + rec.after.count);
-        // 期望：前 matchedCount 槽更新为客户值；未匹配槽保持注入原值（与 AI 实际匹配一致）
-        for (let i = 0; i < def.slots.length && i < itemsA.length; i += 1) {
-          const want = i < matchedCount ? def.wantTexts[i] : def.slots[i].text;
-          if (String(itemsA[i].text || "") !== want) { f2.push("TEXT_MISMATCH[" + i + "] got " + String(itemsA[i].text).slice(0, 14) + " want " + want.slice(0, 14)); break; }
+        if (!st2.done) f2.push("STATUS_MISSING_正反面");
+        if (!cp2) { f2.push("CLIP_EMPTY"); } else {
+          if (cp2.indexOf("【正面】") < 0) f2.push("NO_FRONT_MARKER");
+          for (let i = 0; i < def.slots.length; i += 1) { if (cp2.indexOf(def.slots[i].text) < 0) { f2.push("MISSING_TEXT[" + i + "]"); break; } }
+          // 反面可能不存在（无背面画布）——存在时要求含【反面】，不存在时不作要求
+          const backExists = rec.invSideCounts && rec.invSideCounts.back > 0;
+          if (backExists && cp2.indexOf("【反面】") < 0) f2.push("NO_BACK_MARKER_EXPECTED");
         }
-        if (rec.before.count === itemsA.length) {
-          const frozen0 = itemsB.map(FZ);
-          for (let i = 0; i < frozen0.length; i += 1) {
-            for (const k of ["fontSize", "left", "top", "width", "angle", "fill"]) {
-              if (JSON.stringify(frozen0[i][k]) !== JSON.stringify(rec.after.frozen[i][k])) { f2.push("FROZEN[" + i + "]." + k + " " + JSON.stringify(frozen0[i][k]) + " -> " + JSON.stringify(rec.after.frozen[i][k])); break; }
-            }
-            if (f2.length) break;
-          }
-        }
-        rec.applyFails = f2;
-        if (f2.length) rec.errors.push("ASSERT_FAIL apply: " + f2.join(" | "));
-        // ---- ③ 取消路径：重新匹配 → 取消 → 结果块隐藏 + 画布不变 ----
-        const cl3 = await clickById("#zy-smart-fill");
-        if (!(cl3 && cl3.clicked)) { rec.errors.push("SMART_FILL_RECLICK_FAIL"); continue; }
-        await waitStatusContains("AI 槽位匹配完成（预览，未修改画布）", 90000);
-        const mBlk2 = await matchBlockState();
-        rec.matchBlock2 = mBlk2;
-        const cl4 = await clickById("#zy-apply-cancel");
-        if (!(cl4 && cl4.clicked)) { rec.errors.push("CANCEL_BTN_NOT_FOUND"); continue; }
-        const doneC = await waitStatusContains("已取消 AI 填充预览", 10000);
-        await SLEEP(800);
-        const mBlk3 = await matchBlockState();
-        rec.matchBlock3 = mBlk3;
+        rec.bothFails = f2;
+        if (f2.length) rec.errors.push("ASSERT_FAIL both: " + f2.join(" | "));
+
+        // ---- ③ 复制套版结构 ----
+        await page.evaluate(() => { try { window.__zyLastCopy = null; } catch (e) {} });
+        const cl3 = await clickById("#zy-copy-template");
+        if (!(cl3 && cl3.clicked)) { rec.errors.push("TEMPLATE_BTN_NOT_FOUND"); continue; }
+        const st3 = await waitStatusContains("已复制套版结构", 12000);
+        await SLEEP(600);
+        const cp3 = await readCopy();
+        rec.template = { clicked: !!(cl3 && cl3.clicked), done: !!st3.done, status: st3.done ? st3.st.slice(0, 120) : null, copied: cp3 ? String(cp3).slice(0, 900) : null, lines: cp3 ? String(cp3).split("\n").filter(Boolean).length : 0 };
         const f3 = [];
-        if (!doneC.done) f3.push("CANCEL_STATUS_MISSING");
-        if (mBlk3 && mBlk3.visible) f3.push("BLOCK_STILL_VISIBLE_AFTER_CANCEL");
-        const invE = await readFront();
-        const itemsE = invE.frontItems || [];
-        rec.afterCancel = { count: itemsE.length, texts: itemsE.map((it) => it.text) };
-        for (let i = 0; i < def.slots.length && i < itemsE.length; i += 1) {
-          const want = i < matchedCount ? def.wantTexts[i] : def.slots[i].text;
-          if (String(itemsE[i].text || "") !== want) { f3.push("CANCEL_CHANGED_CANVAS[" + i + "]"); break; }
+        if (!st3.done) f3.push("STATUS_MISSING_套版结构");
+        if (!cp3) { f3.push("CLIP_EMPTY"); } else {
+          if (cp3.indexOf("页面：") < 0) f3.push("NO_PAGE_ID");
+          if (cp3.indexOf("【正面】") < 0) f3.push("NO_FRONT_MARKER");
+          for (let i = 0; i < def.slots.length; i += 1) {
+            const tag = "front-" + (i + 1);
+            if (cp3.indexOf("[" + tag + "]") < 0) { f3.push("NO_SLOT[" + tag + "]"); break; }
+          }
+          if (cp3.indexOf("字号=") < 0) f3.push("NO_FONTSIZE");
+          if (cp3.indexOf("位置=(") < 0) f3.push("NO_POSITION");
+          if (cp3.indexOf("尺寸=") < 0) f3.push("NO_SIZE");
+          if (cp3.indexOf("颜色=") < 0) f3.push("NO_COLOR");
+          const hasFs14 = cp3.indexOf("字号=14 ") >= 0 || cp3.indexOf("字号=14 位置") >= 0;
+          if (!hasFs14) f3.push("NO_FS_14_VALUE");
         }
-        rec.cancelFails = f3;
-        if (f3.length) rec.errors.push("ASSERT_FAIL cancel: " + f3.join(" | "));
+        rec.templateFails = f3;
+        if (f3.length) rec.errors.push("ASSERT_FAIL template: " + f3.join(" | "));
+
+        // ---- ④ 画布零变化 ----
+        const invE = await readFront();
+        rec.after = { count: (invE.frontItems || []).length, texts: (invE.frontItems || []).map((it) => it.text) };
+        const f4 = [];
+        if (rec.after.count !== rec.before.count) f4.push("COUNT_CHANGED " + rec.before.count + "->" + rec.after.count);
+        for (let i = 0; i < rec.before.texts.length && i < (rec.after.texts || []).length; i += 1) {
+          if (String(rec.before.texts[i]) !== String(rec.after.texts[i])) { f4.push("TEXT_CHANGED[" + i + "]"); break; }
+        }
+        rec.canvasFails = f4;
+        if (f4.length) rec.errors.push("ASSERT_FAIL canvas-stable: " + f4.join(" | "));
       } catch (e) { rec.errors.push("RUN: " + String(e && (e.message || e) || e).slice(0, 300)); }
     }
     out.errors = out.errors.slice(0, 20);
   } catch (e) { out.errors.push("FATAL: " + String(e && (e.message || e) || e).slice(0, 400)); }
   finally { try { await browser.close(); } catch (e) {} }
-  fs.writeFileSync(path.join(REPORT_DIR, "commit-46n-ui-confirm-apply-real.json"), JSON.stringify(out, null, 2));
-  console.log("[commit-46n] report -> runtime/reports/stage-11/commit-46n-ui-confirm-apply-real.json");
+  fs.writeFileSync(path.join(REPORT_DIR, "commit-46o-copy-layer-modes-real.json"), JSON.stringify(out, null, 2));
+  console.log("[commit-46o] report -> runtime/reports/stage-11/commit-46o-copy-layer-modes-real.json");
 })().catch((e) => { console.error("FATAL: " + String(e && (e.message || e) || e).slice(0, 600)); process.exit(1); });
