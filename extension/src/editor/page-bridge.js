@@ -299,6 +299,7 @@ function pageBridge() {
         const v2Cmds = (event.data.commands && Array.isArray(event.data.commands)) ? event.data.commands : null;
         const v2SlotsCount = (event.data.slotsCount && typeof event.data.slotsCount === "object") ? event.data.slotsCount : null;
         const v2PageId = event.data.pageId || null;
+        const v2PlanHash = (event.data.planHash && typeof event.data.planHash === "string") ? event.data.planHash : null;
         if (!v2Cmds || !v2Cmds.length) { post("templateApplyV2Result", { ok: false, code: "BAD_COMMANDS", message: "AI 槽位应用指令无效或为空，已停止。", applied: [], sides: [] }); return; }
         if (!v2PageId) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_NO_PAGE", message: "AI 槽位应用缺少 pageId，已停止。", applied: [], sides: [] }); return; }
         const v2Inv = buildPageInventory();
@@ -310,6 +311,17 @@ function pageBridge() {
         const v2Reso = resolveCurrentEditorPage();
         const v2Canvas = (v2Reso && v2Reso.canvas) || null;
         if (!v2Canvas) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止 AI 槽位应用。", applied: [], sides: [] }); return; }
+        // Stage 10-G L 阶 Commit 05：Snapshot Concurrency Guard —— 执行前再次按 getTextInventoryAll 同口径重算快照 hash，
+        // 与调用方冻结的 planHash 比对；不一致（预览期间画布被编辑/并发变化）→ SLOT_STATE_CHANGED 停止，绝不执行。
+        if (v2PlanHash) {
+          const frCvs3 = findCanvasForSide("front") || v2Canvas;
+          const baCvs3 = findCanvasForSide("back");
+          const curHash = zyBuildTemplateSnapshot({ frontItems: getTextObjects(frCvs3).map(zyInventoryItem), backItems: baCvs3 ? getTextObjects(baCvs3).map(zyInventoryItem) : null, page: null }).snapshotHash;
+          if (curHash !== v2PlanHash) {
+            post("templateApplyV2Result", { ok: false, code: "SLOT_STATE_CHANGED", message: "执行前快照比对不一致（快照已变化，可能已被编辑），已停止：planHash=" + v2PlanHash + " 现场=" + curHash + "。", applied: [], sides: [] });
+            return;
+          }
+        }
         const v2Groups = [];
         let v2AnyFail = false;
         const v2Fails = [];
@@ -2147,6 +2159,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.70'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.70' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.71'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.71' };
   }
