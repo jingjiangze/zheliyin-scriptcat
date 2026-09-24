@@ -1,0 +1,138 @@
+{
+  "ts": "2026-09-24T02:41:39.034Z",
+  "stage": "STAGE10-G-COMMIT-L6-ONE-CLICK-FILL-UI",
+  "cases": [
+    "P-UI-APPLY"
+  ],
+  "cookieSource": "probe",
+  "aiModel": "Qwen/Qwen2.5-7B-Instruct",
+  "bverExpect": "0.3.11.72",
+  "runs": [
+    {
+      "case": "P-UI-APPLY",
+      "note": "一键填充 UI 端到端：preview 结果块 → 确认填充 → 画布更新+冻结 → 取消",
+      "steps": [],
+      "errors": [],
+      "runs": [],
+      "bver": "0.3.11.72",
+      "preview": {
+        "done": true,
+        "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 1 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n未匹配: 地址：北京市朝阳区建国路88号",
+        "samples": [
+          "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+          "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+          "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+          "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+          "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+          "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 1 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n未匹配: 地址：北京市朝阳区建国路88号"
+        ]
+      },
+      "matchedCount": 4,
+      "trace": [
+        {
+          "url": "https://api.siliconflow.cn/v1/chat/completions",
+          "model": "Qwen/Qwen2.5-7B-Instruct",
+          "ts": 1790217711773
+        }
+      ],
+      "matchBlock1": {
+        "visible": true,
+        "summary": "匹配结果（预览，未修改画布）：正面 4/5｜未匹配 1 ｜不确定 0",
+        "hasConfirm": true,
+        "hasCancel": true
+      },
+      "before": {
+        "count": 5,
+        "texts": [
+          "山东启诚信息技术股份",
+          "王晓明",
+          "销售副总监",
+          "1380 0138 000",
+          "北京市朝阳区建国路89号"
+        ]
+      },
+      "previewFails": [],
+      "apply": {
+        "done": true,
+        "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+      },
+      "after": {
+        "count": 5,
+        "texts": [
+          "山东启诚信息技术有限公司",
+          "王小明",
+          "销售总监",
+          "13800138000",
+          "北京市朝阳区建国路89号"
+        ],
+        "frozen": [
+          {
+            "fontSize": 14,
+            "left": 60.9,
+            "top": 30.873,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          },
+          {
+            "fontSize": 18,
+            "left": 68.9,
+            "top": 54.028,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          },
+          {
+            "fontSize": 24,
+            "left": 76.9,
+            "top": 77.182,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          },
+          {
+            "fontSize": 15,
+            "left": 60.9,
+            "top": 100.337,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          },
+          {
+            "fontSize": 11,
+            "left": 68.9,
+            "top": 123.492,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          }
+        ]
+      },
+      "applyFails": [],
+      "matchBlock2": {
+        "visible": true,
+        "summary": "匹配结果（预览，未修改画布）：正面 4/5｜未匹配 1 ｜不确定 0",
+        "hasConfirm": true,
+        "hasCancel": true
+      },
+      "matchBlock3": {
+        "visible": false,
+        "summary": "匹配结果（预览，未修改画布）：正面 4/5｜未匹配 1 ｜不确定 0",
+        "hasConfirm": false,
+        "hasCancel": false
+      },
+      "afterCancel": {
+        "count": 5,
+        "texts": [
+          "山东启诚信息技术有限公司",
+          "王小明",
+          "销售总监",
+          "13800138000",
+          "北京市朝阳区建国路89号"
+        ]
+      },
+      "cancelFails": []
+    }
+  ],
+  "errors": []
+}

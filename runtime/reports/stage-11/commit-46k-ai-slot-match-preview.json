@@ -1,0 +1,83 @@
+{
+  "ts": "2026-09-24T01:14:31.684Z",
+  "stage": "STAGE10-G-COMMIT-L3-AI-SLOT-MATCH-PREVIEW",
+  "cases": [
+    "P-SLOT"
+  ],
+  "cookieSource": "probe",
+  "aiKeyPresent": true,
+  "aiModel": "Qwen/Qwen2.5-7B-Instruct",
+  "bverExpect": "0.3.11.69",
+  "runs": [
+    {
+      "case": "P-SLOT",
+      "note": "AI 槽位匹配 preview：正面 5 槽（近似内容）→ 点 #zy-smart-fill → AI(硅基流动) 全量匹配 → 硬校验 → 状态「AI 槽位匹配完成（预览，未修改画布）」；画布文本/fontSize/对象数全程不变",
+      "steps": [],
+      "errors": [],
+      "runs": [
+        {
+          "rnd": 1,
+          "status": "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 1 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n未匹配: 地址：北京市朝阳区建国路88号",
+          "samples": [
+            "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+            "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+            "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+            "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+            "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+            "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+            "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+            "已读取：正面 5 个文字层 / 反面 0 个 → AI 匹配中…",
+            "AI 槽位匹配完成（预览，未修改画布）：\n匹配 4/5 槽；未匹配 1 项\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n未匹配: 地址：北京市朝阳区建国路88号"
+          ],
+          "after": {
+            "count": 5,
+            "texts": [
+              "山东启诚信息技术股份",
+              "王晓明",
+              "销售副总监",
+              "1380 0138 000",
+              "北京市朝阳区建国路89号"
+            ],
+            "fontSizes": [
+              14,
+              18,
+              24,
+              15,
+              11
+            ],
+            "hash": "79af8017"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790212484295
+            }
+          ],
+          "aiCallOk": true,
+          "assertFails": []
+        }
+      ],
+      "bver": "0.3.11.69",
+      "before": {
+        "count": 5,
+        "texts": [
+          "山东启诚信息技术股份",
+          "王晓明",
+          "销售副总监",
+          "1380 0138 000",
+          "北京市朝阳区建国路89号"
+        ],
+        "fontSizes": [
+          14,
+          18,
+          24,
+          15,
+          11
+        ],
+        "hash": "79af8017"
+      }
+    }
+  ],
+  "errors": []
+}

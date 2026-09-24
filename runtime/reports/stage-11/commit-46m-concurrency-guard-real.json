@@ -1,0 +1,115 @@
+{
+  "ts": "2026-09-24T02:26:49.444Z",
+  "stage": "STAGE10-G-COMMIT-L5-SNAPSHOT-CONCURRENCY-GUARD",
+  "cases": [
+    "P-GUARD"
+  ],
+  "cookieSource": "probe",
+  "bverExpect": "0.3.11.71",
+  "runs": [
+    {
+      "case": "P-GUARD",
+      "note": "执行前 planHash 比对（Snapshot Concurrency Guard）",
+      "steps": [],
+      "errors": [],
+      "runs": [],
+      "bver": "0.3.11.71",
+      "plan": {
+        "count": 5,
+        "text0": "山东启诚信息技术股份",
+        "planHash": "88761f1c",
+        "pageId": "canvas:c0"
+      },
+      "cmdPlan": {
+        "ok": true,
+        "toApply": 5,
+        "errors": []
+      },
+      "r1": {
+        "ok": true,
+        "code": "OK",
+        "applied": [
+          "山东启诚信息技术有限公司",
+          "王小明",
+          "销售总监",
+          "13800138000",
+          "北京市朝阳区建国路88号"
+        ],
+        "message": "AI 槽位应用完成：更新 5 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+      },
+      "after1": {
+        "count": 5,
+        "texts": [
+          "山东启诚信息技术有限公司",
+          "王小明",
+          "销售总监",
+          "13800138000",
+          "北京市朝阳区建国路88号"
+        ],
+        "frozen": [
+          {
+            "fontSize": 14,
+            "left": 60.9,
+            "top": 30.873,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          },
+          {
+            "fontSize": 18,
+            "left": 68.9,
+            "top": 54.028,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          },
+          {
+            "fontSize": 24,
+            "left": 76.9,
+            "top": 77.182,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          },
+          {
+            "fontSize": 15,
+            "left": 60.9,
+            "top": 100.337,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          },
+          {
+            "fontSize": 11,
+            "left": 68.9,
+            "top": 123.492,
+            "width": 160,
+            "angle": 0,
+            "fill": "#111111"
+          }
+        ],
+        "hash": "600932c3"
+      },
+      "r1Fails": [],
+      "tamper": {
+        "ok": true,
+        "firstNow": "被手动篡改",
+        "tamperedHash": "304056bc",
+        "hashChanged": true,
+        "text0Now": "被手动篡改"
+      },
+      "r2": {
+        "ok": false,
+        "code": "SLOT_STATE_CHANGED",
+        "applied": [],
+        "message": "执行前快照比对不一致（快照已变化，可能已被编辑），已停止：planHash=88761f1c 现场=304056bc。"
+      },
+      "r2Fails": [],
+      "after2": {
+        "text0": "被手动篡改",
+        "count": 5
+      }
+    }
+  ],
+  "errors": []
+}

@@ -293,6 +293,83 @@ function pageBridge() {
         post("templateApplySmartResult", { ok: false, code: "TEMPLATE_APPLY_SMART_THREW", message: "智能套版执行异常：" + String(smErr && smErr.message ? smErr.message : smErr) + "，已停止。请重试或将报错发给我。", applied: [], unmatched: [], unusedSlots: [], fontSizeEvidence: [] });
       }
       }
+      if (event.data.type === "templateApplyV2") {
+        // Stage 10-G L 阶 Commit 04：AI 槽位匹配执行侧 —— slotId 精确绑定（调用方由 template-apply-v2 纯模块生成 commands）。
+        // 硬规则：只 setText；几何/字体/样式/身份/层序全冻结；不新建/不删除；任一槽状态失配 → 整组停止（SLOT_STATE_CHANGED）。
+        const v2Cmds = (event.data.commands && Array.isArray(event.data.commands)) ? event.data.commands : null;
+        const v2SlotsCount = (event.data.slotsCount && typeof event.data.slotsCount === "object") ? event.data.slotsCount : null;
+        const v2PageId = event.data.pageId || null;
+        const v2PlanHash = (event.data.planHash && typeof event.data.planHash === "string") ? event.data.planHash : null;
+        if (!v2Cmds || !v2Cmds.length) { post("templateApplyV2Result", { ok: false, code: "BAD_COMMANDS", message: "AI 槽位应用指令无效或为空，已停止。", applied: [], sides: [] }); return; }
+        if (!v2PageId) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_NO_PAGE", message: "AI 槽位应用缺少 pageId，已停止。", applied: [], sides: [] }); return; }
+        const v2Inv = buildPageInventory();
+        const v2Known = v2Inv.ok && (v2Inv.pages || []).some(function (p) { return p.pageId === v2PageId; });
+        if (!v2Known) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_PAGE_NOT_FOUND", message: "AI 槽位应用目标属于未知页面，已停止（禁止跨页写入）。", applied: [], sides: [] }); return; }
+        const v2Cur = buildCurrentPageInfo();
+        const v2Gate = validatePageOwnership(v2PageId, v2Cur);
+        if (!v2Gate.ok) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_PAGE_CHANGED", message: "套版期间页面已变化或无法验证（" + v2Gate.reason + "），已停止。", applied: [], sides: [] }); return; }
+        const v2Reso = resolveCurrentEditorPage();
+        const v2Canvas = (v2Reso && v2Reso.canvas) || null;
+        if (!v2Canvas) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止 AI 槽位应用。", applied: [], sides: [] }); return; }
+        // Stage 10-G L 阶 Commit 05：Snapshot Concurrency Guard —— 执行前再次按 getTextInventoryAll 同口径重算快照 hash，
+        // 与调用方冻结的 planHash 比对；不一致（预览期间画布被编辑/并发变化）→ SLOT_STATE_CHANGED 停止，绝不执行。
+        if (v2PlanHash) {
+          const frCvs3 = findCanvasForSide("front") || v2Canvas;
+          const baCvs3 = findCanvasForSide("back");
+          const curHash = zyBuildTemplateSnapshot({ frontItems: getTextObjects(frCvs3).map(zyInventoryItem), backItems: baCvs3 ? getTextObjects(baCvs3).map(zyInventoryItem) : null, page: null }).snapshotHash;
+          if (curHash !== v2PlanHash) {
+            post("templateApplyV2Result", { ok: false, code: "SLOT_STATE_CHANGED", message: "执行前快照比对不一致（快照已变化，可能已被编辑），已停止：planHash=" + v2PlanHash + " 现场=" + curHash + "。", applied: [], sides: [] });
+            return;
+          }
+        }
+        const v2Groups = [];
+        let v2AnyFail = false;
+        const v2Fails = [];
+        ["front", "back"].forEach(function (sd) {
+          const group = v2Cmds.filter(function (c) { return c.side === sd; }).sort(function (a, b) { return Number(a.slotIdx) - Number(b.slotIdx); });
+          if (!group.length) return;
+          const cvs = findCanvasForSide(sd);
+          if (!cvs) { v2AnyFail = true; v2Fails.push(sd + ":NO_CANVAS"); v2Groups.push({ side: sd, ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", applied: [] }); return; }
+          const objs = getTextObjects(cvs);
+          // 对象总数一致性（可选防线：调用方提供 slotsCount 时，该面文字对象数必须与槽位规划一致）
+          let changed = false;
+          if (v2SlotsCount && v2SlotsCount[sd] != null && objs.length !== Number(v2SlotsCount[sd])) { changed = true; }
+          // 全量状态校验：每条指令的槽必须现场存在且身份一致（双因子），任一条失败 → 整组停止，不部分执行
+          for (let ci = 0; ci < group.length && !changed; ci += 1) {
+            const g = group[ci];
+            const so = objs[g.slotIdx];
+            if (!so) { changed = true; break; }
+            if (g.objectUuid) {
+              const curId = so.uuid || so.multiUuid || so.markuuid || null;
+              if (curId && curId !== g.objectUuid) { changed = true; break; }
+            }
+          }
+          if (changed) { v2AnyFail = true; v2Fails.push(sd + ":SLOT_STATE_CHANGED"); v2Groups.push({ side: sd, ok: false, code: "SLOT_STATE_CHANGED", message: "画布文字层与 AI 槽位应用指令不一致（可能已编辑），已停止该面。", applied: [] }); return; }
+          let u2 = null;
+          try { u2 = getNativeUndoInstance(); if (u2 && typeof u2.save === "function") u2.save(); } catch (eU) {}
+          const applied = [];
+          group.forEach(function (g) {
+            try {
+              const so = objs[g.slotIdx];
+              if (!so) return;
+              const text = String(g.customerText != null ? g.customerText : "");
+              setObjectText(so, text); // 只改内容，几何/字体/样式/身份/层序冻结
+              if (typeof so.setCoords === "function") so.setCoords();
+              syncBusinessFieldsFromObject(so);
+              applied.push({ side: sd, slotId: g.slotId, slotIdx: g.slotIdx, objectUuid: so.uuid || so.multiUuid || null, text: String(text).slice(0, 24) });
+            } catch (eT) { v2AnyFail = true; v2Fails.push(sd + ":" + g.slotId + ":" + String(eT && eT.message || eT).slice(0, 80)); }
+          });
+          if (u2 && typeof u2.save === "function") { try { u2.save(); } catch (eU2) {} }
+          if (cvs.requestRenderAll) cvs.requestRenderAll();
+          else if (cvs.renderAll) cvs.renderAll();
+          v2Groups.push({ side: sd, ok: true, count: applied.length, applied: applied });
+        });
+        const v2AppliedAll = [];
+        v2Groups.forEach(function (g) { v2AppliedAll.push.apply(v2AppliedAll, g.applied || []); });
+        const v2BlockedOnly = v2AnyFail && v2Fails.length > 0 && v2Fails.every(function (f) { return f.indexOf("SLOT_STATE_CHANGED") >= 0; });
+        post("templateApplyV2Result", { ok: !v2AnyFail, code: v2BlockedOnly ? "SLOT_STATE_CHANGED" : (v2AnyFail ? "PARTIAL" : "OK"), applied: v2AppliedAll, sides: v2Groups, message: v2AnyFail ? (v2BlockedOnly ? "画布文字层与 AI 槽位应用指令不一致（可能已编辑），已停止。" : "AI 槽位应用部分失败（" + v2Fails.join(" / ") + "）。") : "AI 槽位应用完成：更新 " + v2AppliedAll.length + " 槽（几何/字体/样式/身份/层序冻结，只改文字）。" });
+        return;
+      }
       if (event.data.type === "ocrCreate") {
         // Stage 5.5A-R2（Demo）：OCR 重建入口 —— 按 OCR TextBlock 在正面画布创建真实 textbox。
         // Stage 5.6 P0（真机 BUILDING 卡死）：任何创建异常都必须兜底回复，禁止让调用方死等。
@@ -715,6 +792,75 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
         fontName: o.fontFamily != null ? String(o.fontFamily) : null
       };
     }
+    // ===== L 阶 Commit 01 内联镜像（与 extension/src/editor/template-snapshot.js 逐字一致；页面 world 无法 require）=====
+    function zyIsNum(v) { return typeof v === "number" && isFinite(v); }
+    function zySnapshotHashOf(items) {
+      let h = 0x811c9dc5;
+      const push = (s) => {
+        const str = String(s == null ? "" : s);
+        for (let i = 0; i < str.length; i += 1) {
+          h ^= str.charCodeAt(i);
+          h = (h * 0x01000193) >>> 0;
+        }
+      };
+      (Array.isArray(items) ? items : []).forEach((it) => {
+        push("|" + String(it && it.objectUuid != null ? it.objectUuid : ""));
+        push("|" + String(it && it.text != null ? it.text : ""));
+        push("|" + (it && zyIsNum(it.left) ? it.left : ""));
+        push("|" + (it && zyIsNum(it.top) ? it.top : ""));
+        push("|" + (it && zyIsNum(it.width) ? it.width : ""));
+        push("|" + (it && zyIsNum(it.height) ? it.height : ""));
+        push("|" + (it && zyIsNum(it.angle) ? it.angle : ""));
+        push("|" + (it && zyIsNum(it.layerNum) ? it.layerNum : ""));
+      });
+      return ("00000000" + h.toString(16)).slice(-8);
+    }
+    function zySnapshotItemWithSlot(item, side, index) {
+      const it = item || {};
+      const id = String(side || "front") + "-" + (Number(index) + 1);
+      it.slotId = id;
+      it.slotIdx = Number(index);
+      it.geometry = {
+        left: zyIsNum(it.left) ? it.left : null,
+        top: zyIsNum(it.top) ? it.top : null,
+        width: zyIsNum(it.width) ? it.width : null,
+        height: zyIsNum(it.height) ? it.height : null,
+        angle: zyIsNum(it.angle) ? it.angle : 0
+      };
+      it.typography = {
+        fontId: it.fontId != null ? String(it.fontId) : null,
+        fontFamily: it.fontFamily != null ? String(it.fontFamily) : null,
+        fontSize: zyIsNum(it.fontSize) ? it.fontSize : null,
+        fontWeight: it.fontWeight != null ? String(it.fontWeight) : null,
+        fontStyle: it.fontStyle != null ? String(it.fontStyle) : null,
+        lineHeight: zyIsNum(it.lineHeight) ? it.lineHeight : null,
+        charSpacing: zyIsNum(it.charSpacing) ? it.charSpacing : null
+      };
+      it.style = { fill: it.fill != null ? String(it.fill) : null };
+      it.identity = {
+        objectUuid: it.objectUuid != null ? String(it.objectUuid) : null,
+        markuuid: it.markuuid != null ? String(it.markuuid) : null,
+        layerNum: zyIsNum(it.layerNum) ? it.layerNum : null
+      };
+      return it;
+    }
+    function zyBuildTemplateSnapshot(input) {
+      const o = input || {};
+      const frontRaw = Array.isArray(o.frontItems) ? o.frontItems : null;
+      const backRaw = Array.isArray(o.backItems) ? o.backItems : null;
+      const frontItems = frontRaw ? frontRaw.map((it, i) => zySnapshotItemWithSlot(it, "front", i)) : null;
+      const backItems = backRaw ? backRaw.map((it, i) => zySnapshotItemWithSlot(it, "back", i)) : null;
+      const page = o.page || null;
+      const snapshotHash = zySnapshotHashOf((frontItems || []).concat(backItems || []));
+      return {
+        ok: true,
+        page: page,
+        front: { exists: !!frontItems, side: "front", items: frontItems },
+        back: { exists: !!backItems, side: "back", items: backItems },
+        snapshotHash: snapshotHash,
+        count: { front: frontItems ? frontItems.length : 0, back: backItems ? backItems.length : 0 }
+      };
+    }
     function zyInventorySide(canvasObj, side) {
       if (!canvasObj) return null;
       return {
@@ -724,10 +870,14 @@ try { if (String(reusedObj.text || "") !== String(it.text || "") && typeof it.te
       };
     }
       if (event.data.type === "getTextInventoryAll") {
-        // Stage 10-E Commit G-2：正反面双画布文字快照（只读）—— 供「一键智能填充」一次性取两侧槽位。
+        // Stage 10-G L 阶 Commit 01：升级为 TemplateSnapshot —— front/back 严格隔离（back 缺失 = null，
+        // 绝不回退 front，曾致 46g real 中 backAbsent=true 却拿到 front 内容）+ 全量字段 + snapshotHash。
         const frontCanvasA = findCanvasForSide("front");
         const backCanvasA = findCanvasForSide("back");
-        post("getTextInventoryAllResult", { ok: true, front: zyInventorySide(frontCanvasA, "front"), back: zyInventorySide(backCanvasA, "back") });
+        const frontSnapItems = frontCanvasA ? getTextObjects(frontCanvasA).map(zyInventoryItem) : null;
+        const backSnapItems = backCanvasA ? getTextObjects(backCanvasA).map(zyInventoryItem) : null;
+        const pageA = (function () { const pi = buildCurrentPageInfo(); const c = frontCanvasA || backCanvasA; return { pageId: (pi && pi.pageId) || null, canvasId: null, width: c ? (typeof c.width === "number" ? c.width : (c.getWidth ? c.getWidth() : null)) : null, height: c ? (typeof c.height === "number" ? c.height : (c.getHeight ? c.getHeight() : null)) : null }; })();
+        post("getTextInventoryAllResult", zyBuildTemplateSnapshot({ frontItems: frontSnapItems, backItems: backSnapItems, page: pageA }));
         return;
       }
       if (event.data.type === "inkMeasure") {
@@ -1607,6 +1757,7 @@ function matchSlots(input) {
         const selected = unwrapCanvas(total[index]) || findCanvasIn(total[index]);
         if (selected) return selected;
       }
+      if (side === "back") return null; // L 阶 Commit 01：back 绝不回退 front/其它画布（曾把 front 内容冒充 back）
       const CurrentCanvas = getLoadedModule("CurrentCanvas") || window.CurrentCanvas;
       if (side !== "back" && CurrentCanvas && CurrentCanvas.getCurrentCanvas) {
         const current = CurrentCanvas.getCurrentCanvas();
@@ -2008,6 +2159,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.67'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.67' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.74'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.74' };
   }
