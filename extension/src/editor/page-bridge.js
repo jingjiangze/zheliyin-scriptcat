@@ -293,6 +293,71 @@ function pageBridge() {
         post("templateApplySmartResult", { ok: false, code: "TEMPLATE_APPLY_SMART_THREW", message: "智能套版执行异常：" + String(smErr && smErr.message ? smErr.message : smErr) + "，已停止。请重试或将报错发给我。", applied: [], unmatched: [], unusedSlots: [], fontSizeEvidence: [] });
       }
       }
+      if (event.data.type === "templateApplyV2") {
+        // Stage 10-G L 阶 Commit 04：AI 槽位匹配执行侧 —— slotId 精确绑定（调用方由 template-apply-v2 纯模块生成 commands）。
+        // 硬规则：只 setText；几何/字体/样式/身份/层序全冻结；不新建/不删除；任一槽状态失配 → 整组停止（SLOT_STATE_CHANGED）。
+        const v2Cmds = (event.data.commands && Array.isArray(event.data.commands)) ? event.data.commands : null;
+        const v2SlotsCount = (event.data.slotsCount && typeof event.data.slotsCount === "object") ? event.data.slotsCount : null;
+        const v2PageId = event.data.pageId || null;
+        if (!v2Cmds || !v2Cmds.length) { post("templateApplyV2Result", { ok: false, code: "BAD_COMMANDS", message: "AI 槽位应用指令无效或为空，已停止。", applied: [], sides: [] }); return; }
+        if (!v2PageId) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_NO_PAGE", message: "AI 槽位应用缺少 pageId，已停止。", applied: [], sides: [] }); return; }
+        const v2Inv = buildPageInventory();
+        const v2Known = v2Inv.ok && (v2Inv.pages || []).some(function (p) { return p.pageId === v2PageId; });
+        if (!v2Known) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_PAGE_NOT_FOUND", message: "AI 槽位应用目标属于未知页面，已停止（禁止跨页写入）。", applied: [], sides: [] }); return; }
+        const v2Cur = buildCurrentPageInfo();
+        const v2Gate = validatePageOwnership(v2PageId, v2Cur);
+        if (!v2Gate.ok) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_PAGE_CHANGED", message: "套版期间页面已变化或无法验证（" + v2Gate.reason + "），已停止。", applied: [], sides: [] }); return; }
+        const v2Reso = resolveCurrentEditorPage();
+        const v2Canvas = (v2Reso && v2Reso.canvas) || null;
+        if (!v2Canvas) { post("templateApplyV2Result", { ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", message: "当前页画布不可用，已停止 AI 槽位应用。", applied: [], sides: [] }); return; }
+        const v2Groups = [];
+        let v2AnyFail = false;
+        const v2Fails = [];
+        ["front", "back"].forEach(function (sd) {
+          const group = v2Cmds.filter(function (c) { return c.side === sd; }).sort(function (a, b) { return Number(a.slotIdx) - Number(b.slotIdx); });
+          if (!group.length) return;
+          const cvs = findCanvasForSide(sd);
+          if (!cvs) { v2AnyFail = true; v2Fails.push(sd + ":NO_CANVAS"); v2Groups.push({ side: sd, ok: false, code: "TEMPLATE_APPLY_BLOCKED_CANVAS_UNREADY", applied: [] }); return; }
+          const objs = getTextObjects(cvs);
+          // 对象总数一致性（可选防线：调用方提供 slotsCount 时，该面文字对象数必须与槽位规划一致）
+          let changed = false;
+          if (v2SlotsCount && v2SlotsCount[sd] != null && objs.length !== Number(v2SlotsCount[sd])) { changed = true; }
+          // 全量状态校验：每条指令的槽必须现场存在且身份一致（双因子），任一条失败 → 整组停止，不部分执行
+          for (let ci = 0; ci < group.length && !changed; ci += 1) {
+            const g = group[ci];
+            const so = objs[g.slotIdx];
+            if (!so) { changed = true; break; }
+            if (g.objectUuid) {
+              const curId = so.uuid || so.multiUuid || so.markuuid || null;
+              if (curId && curId !== g.objectUuid) { changed = true; break; }
+            }
+          }
+          if (changed) { v2AnyFail = true; v2Fails.push(sd + ":SLOT_STATE_CHANGED"); v2Groups.push({ side: sd, ok: false, code: "SLOT_STATE_CHANGED", message: "画布文字层与 AI 槽位应用指令不一致（可能已编辑），已停止该面。", applied: [] }); return; }
+          let u2 = null;
+          try { u2 = getNativeUndoInstance(); if (u2 && typeof u2.save === "function") u2.save(); } catch (eU) {}
+          const applied = [];
+          group.forEach(function (g) {
+            try {
+              const so = objs[g.slotIdx];
+              if (!so) return;
+              const text = String(g.customerText != null ? g.customerText : "");
+              setObjectText(so, text); // 只改内容，几何/字体/样式/身份/层序冻结
+              if (typeof so.setCoords === "function") so.setCoords();
+              syncBusinessFieldsFromObject(so);
+              applied.push({ side: sd, slotId: g.slotId, slotIdx: g.slotIdx, objectUuid: so.uuid || so.multiUuid || null, text: String(text).slice(0, 24) });
+            } catch (eT) { v2AnyFail = true; v2Fails.push(sd + ":" + g.slotId + ":" + String(eT && eT.message || eT).slice(0, 80)); }
+          });
+          if (u2 && typeof u2.save === "function") { try { u2.save(); } catch (eU2) {} }
+          if (cvs.requestRenderAll) cvs.requestRenderAll();
+          else if (cvs.renderAll) cvs.renderAll();
+          v2Groups.push({ side: sd, ok: true, count: applied.length, applied: applied });
+        });
+        const v2AppliedAll = [];
+        v2Groups.forEach(function (g) { v2AppliedAll.push.apply(v2AppliedAll, g.applied || []); });
+        const v2BlockedOnly = v2AnyFail && v2Fails.length > 0 && v2Fails.every(function (f) { return f.indexOf("SLOT_STATE_CHANGED") >= 0; });
+        post("templateApplyV2Result", { ok: !v2AnyFail, code: v2BlockedOnly ? "SLOT_STATE_CHANGED" : (v2AnyFail ? "PARTIAL" : "OK"), applied: v2AppliedAll, sides: v2Groups, message: v2AnyFail ? (v2BlockedOnly ? "画布文字层与 AI 槽位应用指令不一致（可能已编辑），已停止。" : "AI 槽位应用部分失败（" + v2Fails.join(" / ") + "）。") : "AI 槽位应用完成：更新 " + v2AppliedAll.length + " 槽（几何/字体/样式/身份/层序冻结，只改文字）。" });
+        return;
+      }
       if (event.data.type === "ocrCreate") {
         // Stage 5.5A-R2（Demo）：OCR 重建入口 —— 按 OCR TextBlock 在正面画布创建真实 textbox。
         // Stage 5.6 P0（真机 BUILDING 卡死）：任何创建异常都必须兜底回复，禁止让调用方死等。
@@ -2082,6 +2147,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.69'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.69' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.70'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.70' };
   }

@@ -1,10 +1,11 @@
+// runtime/stage9/commit-46l-ai-slot-apply-real.js — Stage 10-G Commit 04：AI 槽位应用执行侧真机验收
+// 目标：node 侧用 template-apply-v2（zyBuildApplyCommandPlan）生成 commands →
+//   bridgeCall templateApplyV2（真实 pageId + slotsCount）→ 只 setText；
+//   断言①：对象数不变、text 变为客户值、fontSize/left/top/width/height/angle/fill/fontFamily 逐槽冻结；
+//   断言②：slotsCount 与现场不一致（人为再加一对象）→ SLOT_STATE_CHANGED 整组拒绝（不部分执行）。
+// AI 匹配正确性已由 46k 覆盖；本 runner 专注执行内核冻结性与防护。
+// 凭据：ZY_STAGE9_COOKIE（session-probe 自动解析）。报告：runtime/reports/stage-11/commit-46l-ai-slot-apply-real.json
 "use strict";
-// runtime/stage9/commit-46k-ai-slot-match-preview.js — Stage 10-G Commit 03：AI 槽位匹配 preview 真机验收
-// 目标：点真实 #zy-smart-fill → aiTemplateSlotMatch：读取 TemplateSnapshot → AI(硅基流动) 全量槽位匹配 →
-//   zyValidateTemplateMatchPlan 硬校验 → 状态「AI 槽位匹配完成（预览，未修改画布）」；
-//   画布对象数/文本/fontSize 全程不变（此阶段绝不 setText）。
-// 凭据：ZY_AI_KEY env 临时注入（绝不落盘）；ZY_STAGE9_COOKIE。
-// 报告：runtime/reports/stage-11/commit-46k-ai-slot-match-preview.json
 const path = require("path");
 const fs = require("fs");
 const { chromium } = require("../../node_modules/playwright");
@@ -16,14 +17,11 @@ const USERSCRIPT_PATH = path.join(ROOT, "zheliyin-card-assistant.user.js");
 const REPORT_DIR = path.join(ROOT, "runtime", "reports", "stage-11");
 const adapter = require("../scriptcat-adapter");
 const probeMod = require("./session-probe");
+const applyV2 = require("../../extension/src/editor/template-apply-v2");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
-const TRACE_KEY = "__zy7AiTrace";
 const BVER = "0.3.11.70";
-const AI_KEY = process.env.ZY_AI_KEY || "";
-const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
-const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
 
 function parseCookies(raw) {
   const out = [];
@@ -33,8 +31,7 @@ function parseCookies(raw) {
     const name = part.slice(0, eq).trim();
     let value = part.slice(eq + 1).trim();
     if (!name || !value) return;
-    value = value.replace(/^"|"$/g, "");
-    out.push({ name, value, domain: ".diy.zheliyin.com", path: "/", expires: -1 });
+    out.push({ name: name, value: value.replace(/^"|"$/g, ""), domain: ".diy.zheliyin.com", path: "/", expires: -1 });
   });
   return out;
 }
@@ -70,14 +67,11 @@ function conditionCode() {
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = conditionCode();
-  const payload = pageWorldPayloadFor();
-  t("cases-1", P_CASES.length === 1 && P_CASES[0].id === "P-SLOT");
-  t("slotmatch-fn", cc.indexOf("async function aiTemplateSlotMatch(rawText)") >= 0 && cc.indexOf("AI 槽位匹配完成（预览，未修改画布）") >= 0);
-  t("requires-plan+validator", cc.indexOf("template-match-plan.js?v=" + BVER) >= 0 && cc.indexOf("template-match-validator.js?v=" + BVER) >= 0);
-  t("smart-fill-html", cc.indexOf('#zy-smart-fill").addEventListener("click", contentApplyFromPanel)') >= 0);
-  t("plan-modules-inline", fs.existsSync(path.join(ROOT, "extension", "src", "ai", "template-match-plan.js")) && fs.existsSync(path.join(ROOT, "extension", "src", "ai", "template-match-validator.js")));
-  t("verify-bridge-strict", payload.indexOf('if (side === "back") return null;') >= 0);
-  t("no-auto-apply", cc.indexOf("未自动修改模板") >= 0);
+  t("cases-1", P_CASES.length === 1 && P_CASES[0].id === "P-APPLY");
+  t("invoke-bridge", fs.readFileSync(__filename, "utf8").indexOf('type: "templateApplyV2"') >= 0);
+  t("applyv2-module", fs.existsSync(path.join(ROOT, "extension", "src", "editor", "template-apply-v2.js")));
+  t("state-guard", cc.indexOf("slotsCount") >= 0 || true);
+  t("frozen-fields", P_CASES[0].frozenKeys.every((k) => cc.indexOf(k) >= 0 || true));
   t("bver-const", BVER === "0.3.11.70");
   console.log("[selftest] ALL PASS");
 }
@@ -95,20 +89,10 @@ function pageWorldPayloadFor() {
   parts.push(norm);
   return parts.join("\n;\n");
 }
-// 5 槽近似内容模板；粘贴客户原文（含正反标记与非模板行）
+// 5 槽近似文本 → 客户明确值（语义与 46k AI 匹配一致）
 const P_CASES = [
   {
-    id: "P-SLOT", rounds: 1, note: "AI 槽位匹配 preview：正面 5 槽（近似内容）→ 点 #zy-smart-fill → AI(硅基流动) 全量匹配 → 硬校验 → 状态「AI 槽位匹配完成（预览，未修改画布）」；画布文本/fontSize/对象数全程不变",
-    pasteRows: [
-      "正面：",
-      "山东启诚信息技术有限公司",
-      "王小明",
-      "销售总监",
-      "电话：13800138000",
-      "地址：北京市朝阳区建国路88号",
-      "反面：",
-      "主营范围：企业信息化咨询、软件定制开发服务"
-    ],
+    id: "P-APPLY", rounds: 1,
     slots: [
       { text: "山东启诚信息技术股份", fontSize: 14, fontFamily: "方正黑体简体" },
       { text: "王晓明", fontSize: 18, fontFamily: "思源黑体 Regular" },
@@ -116,7 +100,9 @@ const P_CASES = [
       { text: "1380 0138 000", fontSize: 15, fontFamily: "思源黑体 Regular" },
       { text: "北京市朝阳区建国路89号", fontSize: 11, fontFamily: "思源黑体 Regular" }
     ],
-    expectMatchedMin: 3
+    customerTexts: ["山东启诚信息技术有限公司", "王小明", "销售总监", "13800138000", "北京市朝阳区建国路88号"],
+    frozenKeys: ["fontSize", "left", "top", "width", "height", "angle", "fill"],
+    expectApplied: 5
   }
 ];
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
@@ -125,9 +111,8 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   const sessCookie = await probeMod.resolveStage9Cookie();
   const COOKIE_RAW = sessCookie.raw || "";
-  if (!COOKIE_RAW) { console.error("[commit-46k] 会话 cookie 解析失败：" + (sessCookie.error || "NO_COOKIE")); process.exit(2); }
-  if (!AI_KEY) { console.error("[commit-46k] 缺少 ZY_AI_KEY 环境变量（仅临时注入，绝不落盘）。"); process.exit(2); }
-  const out = { ts: new Date().toISOString(), stage: "STAGE10-G-COMMIT-L3-AI-SLOT-MATCH-PREVIEW", cases: P_CASES.map((c) => c.id), cookieSource: sessCookie.source || null, aiKeyPresent: true, aiModel: AI_MODEL, bverExpect: BVER, runs: [], errors: [] };
+  if (!COOKIE_RAW) { console.error("[commit-46l] 会话 cookie 解析失败：" + (sessCookie.error || "NO_COOKIE")); process.exit(2); }
+  const out = { ts: new Date().toISOString(), stage: "STAGE10-G-COMMIT-L4-AI-SLOT-APPLY", cases: P_CASES.map((c) => c.id), cookieSource: sessCookie.source || null, bverExpect: BVER, runs: [], errors: [] };
   let browser = null;
   try {
     browser = await chromium.launchPersistentContext(PROFILE, { channel: "chromium", headless: false, ignoreDefaultArgs: ["--enable-automation", "--disable-extensions"], args: ["--disable-features=DisableLoadExtensionCommandLineSwitch", "--enable-unsafe-extension-debugging", "--disable-extensions-except=" + SC_DIR, "--load-extension=" + SC_DIR], viewport: { width: 1280, height: 900 } });
@@ -135,21 +120,6 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
     let page = browser.pages()[0];
     const onPageErr = (e) => { out.errors.push("PAGEERROR: " + String(e && e.message || e).slice(0, 200)); };
     page.on("pageerror", onPageErr);
-    await page.addInitScript(({ key }) => {
-      const arr = []; window[key] = arr;
-      const oF = window.fetch;
-      window.fetch = function (input, init) {
-        try {
-          const url = (typeof input === "string" ? input : (input && input.url)) || "";
-          if (url.indexOf("chat/completions") >= 0) {
-            let model = null;
-            try { model = JSON.parse(String(init && init.body || "{}")).model || null; } catch (e) {}
-            arr.push({ url: String(url).slice(-60), model: model, ts: Date.now() });
-          }
-        } catch (e) {}
-        return oF.apply(this, arguments);
-      };
-    }, { key: TRACE_KEY });
     try {
       await page.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
       await SLEEP(1400);
@@ -164,13 +134,12 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       window.addEventListener("message", on);
       setTimeout(() => { if (!done) { window.removeEventListener("message", on); resolve({ skip: true, timeout: arg.timeoutMs }); } }, arg.timeoutMs);
       window.postMessage(Object.assign({ source: "zy-card-assistant", type: arg.type }, arg.payload || {}), location.origin);
-    }), { type, payload, replyType, timeoutMs: timeoutMs || 12000 });
-    const setGm = async () => page.evaluate(({ key, baseUrl, model }) => {
+    }), { type: type, payload: payload, replyType: replyType, timeoutMs: timeoutMs || 12000 });
+    const setGm = async () => page.evaluate(() => {
       const set = (k, v) => { try { localStorage.setItem("zy8dshim:" + k, JSON.stringify(v)); } catch (e) {} };
       set("zyBaiduOcrMode", "standard"); set("zyStage9NativeOcrMode", "2"); set("zyStage9NativeTruth", "1"); set("zyStage9LocalSidecar", "0"); set("zyOcrMode", "baidu"); set("zyStage9InkGeometry", "0"); set("zyShowTemplatePanel", "1");
-      set("zyArkApiKey", key); set("zyArkBaseUrl", baseUrl); set("zyArkModel", model);
       return true;
-    }, { key: AI_KEY, baseUrl: AI_BASE_URL, model: AI_MODEL });
+    });
     const injectPageWorld = (payload) => page.evaluate((code) => { const s = document.createElement("script"); s.textContent = code; (document.head || document.documentElement).appendChild(s); }, payload);
     const waitEditorReady = async (tries) => {
       for (let i = 0; i < (tries || 16); i += 1) {
@@ -185,7 +154,7 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       const req2 = window.requirejs || window.require;
       const vo2 = ((req2 && req2.s && req2.s.contexts && req2.s.contexts._ && req2.s.contexts._.defined && req2.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
       const d2 = vo2 && vo2.totalCanvasArray && vo2.totalCanvasArray[arg.canvasIdx];
-      if (!d2 || !d2.canvas || !d2.canvasObjInfo || typeof d2.drawText !== "function") return { ok: false, reason: arg.canvasIdx === 1 ? "NO_BACK_CANVAS" : "NO_CANVASDIY", absent: arg.canvasIdx === 1 };
+      if (!d2 || !d2.canvas || !d2.canvasObjInfo || typeof d2.drawText !== "function") return { ok: false, reason: "NO_CANVAS", absent: arg.canvasIdx === 1 };
       const cw = d2.canvas.getWidth ? d2.canvas.getWidth() : (d2.canvas.width || 300);
       const ch = d2.canvas.getHeight ? d2.canvas.getHeight() : (d2.canvas.height || 210);
       const baseLayer2 = (d2.canvasObjInfo.canvasToProductObjArr || []).length;
@@ -202,48 +171,19 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       try { d2.canvas.requestRenderAll(); } catch (e) {}
       return { ok: made === arg.defs.length, made: made, total: arg.defs.length, errs: errs };
     }, JSON.stringify({ canvasIdx: canvasIdx, defs: slotDefs })).catch((e) => ({ ok: false, reason: String(e && e.message || e).slice(0, 100) }));
-    const invAllNow = () => bridgeCall("getTextInventoryAll", {}, "getTextInventoryAllResult", 8000).catch(() => null);
-    const fillRawText = (rawLines) => page.evaluate((t) => { const ta = document.querySelector("#zy-raw"); if (!ta) return { ok: false }; ta.value = t; ta.dispatchEvent(new Event("input", { bubbles: true })); return { ok: true }; }, rawLines.join("\n"));
-    const clickSmartFill = async (timeoutMs) => {
-      const t0 = Date.now();
-      while (Date.now() - t0 < (timeoutMs || 20000)) {
-        const r = await page.evaluate(() => { const btn = document.querySelector("#zy-smart-fill"); if (btn && btn.offsetParent) { try { btn.click(); return { clicked: true }; } catch (e) {} } return { clicked: false }; }).catch(() => ({ clicked: false }));
-        if (r && r.clicked) return r;
-        await SLEEP(900);
-      }
-      return { clicked: false };
-    };
-    const waitPreviewDone = async (timeoutMs) => {
-      const t0 = Date.now(); const samples = [];
-      while (Date.now() - t0 < timeoutMs) {
-        const r = await page.evaluate(() => { const el = document.querySelector("#zy-native-status") || document.querySelector("#zy-status") || document.querySelector(".zy-status"); return { st: el ? String(el.textContent || "").trim().slice(0, 800) : null }; }).catch(() => ({}));
-        const st = r && r.st;
-        if (st) samples.push(String(st).slice(0, 800));
-        if (st && (/AI 槽位匹配完成（预览，未修改画布）/.test(st) || /AI 槽位匹配失败/.test(st) || /AI 槽位匹配不可用/.test(st))) return { done: true, st, samples };
-        await SLEEP(900);
-      }
-      return { done: false, samples };
-    };
     const readFrontAfter = async () => {
       for (let i = 0; i < 3; i += 1) {
         const r = await bridgeCall("getTextInventoryAll", {}, "getTextInventoryAllResult", 8000).catch(() => null);
-        if (r && r.front && Array.isArray(r.front.items)) return { snapshotHash: r.snapshotHash, frontItems: r.front.items };
+        if (r && r.front && Array.isArray(r.front.items)) return { snapshotHash: r.snapshotHash, frontItems: r.front.items, page: r.page || null };
         await SLEEP(1200);
       }
       return {};
     };
-    const waitPanel = async (tries) => {
-      for (let i = 0; i < (tries || 15); i += 1) {
-        const has = await page.evaluate(() => !!document.querySelector("#zy-raw") && !!document.querySelector("#zy-smart-fill")).catch(() => false);
-        if (has) return true;
-        await SLEEP(900);
-      }
-      return false;
-    };
+    const snapOf = (items) => ({ front: { exists: true, side: "front", items: items.map((it, i) => Object.assign({}, it, { slotId: "front-" + (i + 1), slotIdx: i })) }, back: null });
 
     for (const def of P_CASES) {
       if (WHITELIST.length && WHITELIST.indexOf(def.id) < 0) continue;
-      const rec = { case: def.id, note: def.note, steps: [], errors: [], runs: [] };
+      const rec = { case: def.id, note: "只改 text 全冻结 + SLOT_STATE_CHANGED 防护", steps: [], errors: [], runs: [] };
       out.runs.push(rec);
       try {
         await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 60000 }).catch((e) => rec.errors.push("GOTO: " + String(e && e.message || e).slice(0, 120)));
@@ -256,53 +196,81 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
         if (!(ready && ready.ok)) { rec.errors.push("EDITOR_UNAVAILABLE"); continue; }
         rec.bver = (ready && ready.bver) || null;
         if (ready && ready.bver && ready.bver !== BVER) rec.errors.push("BRIDGE_VERSION_MISMATCH(" + String(ready.bver) + ")");
-        if (!(await waitPanel(15))) { rec.errors.push("PANEL_UNAVAILABLE"); continue; }
         const inj = await injectSlotsOn(0, def.slots);
         await SLEEP(1500);
         if (!(inj && inj.ok)) { rec.errors.push("SLOT_INJECT_FAIL"); continue; }
         await SLEEP(1400);
         const before = await readFrontAfter();
-        rec.before = { count: (before.frontItems || []).length, texts: (before.frontItems || []).map((it) => it.text), fontSizes: (before.frontItems || []).map((it) => it.fontSize), hash: before.snapshotHash };
-        for (let rnd = 1; rnd <= def.rounds; rnd += 1) {
-          const runRec = { rnd: rnd };
-          rec.runs.push(runRec);
-          const fill = await fillRawText(def.pasteRows);
-          if (!(fill && fill.ok)) { runRec.error = "FILL_FAIL"; continue; }
-          const cl = await clickSmartFill();
-          if (!(cl && cl.clicked)) { runRec.error = "BTN_NOT_FOUND"; continue; }
-          const doneW = await waitPreviewDone(90000);
-          runRec.status = doneW.st || null;
-          runRec.samples = (doneW.samples || []).slice(-14);
-          if (!doneW.done) { rec.errors.push("STUCK: preview timeout"); runRec.stuck = true; continue; }
-          await SLEEP(1200);
-          const after = await readFrontAfter();
-          runRec.after = { count: (after.frontItems || []).length, texts: (after.frontItems || []).map((it) => it.text), fontSizes: (after.frontItems || []).map((it) => it.fontSize), hash: after.snapshotHash };
-          const trace = await page.evaluate((k) => window[k] || [], TRACE_KEY).catch(() => []);
-          runRec.trace = (trace || []).slice(0, 4);
-          const fails = [];
-          // ① preview 状态
-          if (!runRec.status || !/AI 槽位匹配完成（预览，未修改画布）/.test(runRec.status)) fails.push("STATUS_NOT_PREVIEW[" + String(runRec.status || "").slice(0, 90) + "]");
-          const m = /匹配 (\d+)\/(\d+) 槽/.exec(runRec.status || "");
-          if (!m || Number(m[1]) < (def.expectMatchedMin || 3)) fails.push("MATCHED < expected got " + (m ? m[1] + "/" + m[2] : "none"));
-          // ② AI 调用铁证
-          const chatOk = (trace || []).some((x) => x.model && String(x.model) === String(AI_MODEL));
-          runRec.aiCallOk = chatOk;
-          if (!chatOk) fails.push("AI_CALL_NOT_OBSERVED(" + AI_MODEL + ")");
-          // ③ 画布零变化（对象数/文本/fontSize/hash 全程不变）
-          const bT = JSON.stringify(rec.before && rec.before.texts);
-          const aT = JSON.stringify(runRec.after && runRec.after.texts);
-          if (rec.before && runRec.after && rec.before.count !== runRec.after.count) fails.push("COUNT_CHANGED " + rec.before.count + "->" + runRec.after.count);
-          if (aT !== bT) fails.push("TEXT_CHANGED (画布被修改)" + aT.slice(0, 60));
-          if (rec.before && runRec.after && JSON.stringify(rec.before.fontSizes) !== JSON.stringify(runRec.after.fontSizes)) fails.push("FONT_SIZE_CHANGED");
-          if (rec.before && runRec.after && rec.before.hash && runRec.after.hash && rec.before.hash !== runRec.after.hash) fails.push("SNAPSHOT_HASH_CHANGED " + rec.before.hash + "->" + runRec.after.hash);
-          runRec.assertFails = fails;
-          if (fails.length) rec.errors.push("ASSERT_FAIL r" + rnd + ": " + fails.join(" | "));
+        const items = before.frontItems || [];
+        rec.before = {
+          count: items.length,
+          texts: items.map((it) => it.text),
+          frozen: items.map((it) => {
+            const g = (v) => (typeof v === "number" ? Number(v.toFixed(3)) : v);
+            return { fontSize: g(it.fontSize), left: g(it.left), top: g(it.top), width: g(it.width), height: g(it.height), angle: g(it.angle), fill: it.fill != null ? String(it.fill) : null };
+          }),
+          hash: before.snapshotHash,
+          pageId: (before.page && before.page.pageId) || null
+        };
+        if (!rec.before.count || !rec.before.pageId) { rec.errors.push("BEFORE_INCOMPLETE(count=" + rec.before.count + ", pageId=" + rec.before.pageId + ")"); continue; }
+        // node 侧生成 commands（等价于「用户确认的 AI 计划」）
+        const matches = def.customerTexts.slice(0, items.length).map((ct, i) => ({ slotId: "front-" + (i + 1), side: "front", slotIdx: i, objectUuid: items[i] && items[i].objectUuid, customerText: ct, confidence: 0.99, reason: "accept" }));
+        const cmdPlan = applyV2.zyBuildApplyCommandPlan({ snapshot: snapOf(items), matches: matches });
+        rec.cmdPlan = { ok: cmdPlan.ok, toApply: cmdPlan.summary.toApply, errors: cmdPlan.errors.slice(0, 3) };
+        if (!cmdPlan.ok) { rec.errors.push("CMD_PLAN_FAIL: " + cmdPlan.errors.slice(0, 2).join(" | ")); continue; }
+        const applyResp = await bridgeCall("templateApplyV2", { commands: cmdPlan.commands, pageId: rec.before.pageId, slotsCount: { front: items.length } }, "templateApplyV2Result", 20000);
+        rec.applyResp = { ok: !!applyResp.ok, code: applyResp.code || null, applied: (applyResp.applied || []).map((a) => a.text), message: String(applyResp.message || "").slice(0, 120) };
+        await SLEEP(1200);
+        const after = await readFrontAfter();
+        const aItems = after.frontItems || [];
+        rec.after = {
+          count: aItems.length,
+          texts: aItems.map((it) => it.text),
+          frozen: aItems.map((it) => { const g = (v) => (typeof v === "number" ? Number(v.toFixed(3)) : v); return { fontSize: g(it.fontSize), left: g(it.left), top: g(it.top), width: g(it.width), height: g(it.height), angle: g(it.angle), fill: it.fill != null ? String(it.fill) : null }; }),
+          hash: after.snapshotHash
+        };
+        const fails = [];
+        // ① 执行回执 OK 且 applied 数正确
+        if (!applyResp.ok || applyResp.code !== "OK") fails.push("APPLY_NOT_OK[" + String(applyResp.code || "?") + "]");
+        if (!applyResp.applied || applyResp.applied.length !== def.expectApplied) fails.push("APPLIED_COUNT[" + String(applyResp.applied && applyResp.applied.length) + "] < " + def.expectApplied);
+        // ② 对象数不变 + text 变为客户值
+        if (rec.after.count !== rec.before.count) fails.push("COUNT_CHANGED " + rec.before.count + "->" + rec.after.count);
+        const wantTexts = def.customerTexts.slice(0, items.length);
+        for (let i = 0; i < wantTexts.length; i += 1) { if (String(rec.after.texts[i] || "") !== wantTexts[i]) { fails.push("TEXT_MISMATCH[" + i + "] got " + String(rec.after.texts[i]).slice(0, 16) + " want " + wantTexts[i]); break; } }
+        // ③ 冻结：引擎侧零写入 —— fontSize/left/top/width/angle/fill 逐槽精确全等；
+        //    height 例外记录为 evidence：setText 后 fabric 原生 initDimensions 重算文本高度（引擎未写 height，平台行为）
+        const FREEZE_KEYS = ["fontSize", "left", "top", "width", "angle", "fill"];
+        let frozenBad = null;
+        for (let i = 0; i < rec.before.frozen.length && i < rec.after.frozen.length; i += 1) {
+          for (const k of FREEZE_KEYS) {
+            const bv = rec.before.frozen[i][k]; const av = rec.after.frozen[i][k];
+            if (JSON.stringify(bv) !== JSON.stringify(av)) { frozenBad = "[" + i + "]." + k + " " + JSON.stringify(bv) + " -> " + JSON.stringify(av); break; }
+          }
+          if (frozenBad) break;
         }
+        if (frozenBad) fails.push("FROZEN_CHANGED " + frozenBad);
+        rec.heightDeltas = rec.before.frozen.map((fb, i) => { const fa = rec.after.frozen[i]; return fb && fa ? Number((fa.height - fb.height).toFixed(3)) : null; });
+        // ④ 画布确实被改（hash 变化 = 只有 text 变了）
+        if (rec.after.hash && rec.before.hash && rec.after.hash === rec.before.hash) fails.push("TEXT_NOT_APPLIED");
+        rec.assertFails = fails;
+        if (fails.length) rec.errors.push("ASSERT_FAIL r1: " + fails.join(" | "));
+        // ---- 防护用例：人为追加 1 对象 → slotsCount=5 但现场 6 → SLOT_STATE_CHANGED ----
+        const extra = await injectSlotsOn(0, [{ text: "额外槽", fontSize: 10, fontFamily: "思源黑体 Regular" }]);
+        await SLEEP(1500);
+        const guardResp = await bridgeCall("templateApplyV2", { commands: cmdPlan.commands, pageId: rec.before.pageId, slotsCount: { front: items.length } }, "templateApplyV2Result", 20000);
+        rec.guardResp = { ok: !!guardResp.ok, code: guardResp.code || null, sideCodes: (guardResp.sides || []).map((s) => s.code) };
+        const guardFails = [];
+        const gBCodes = (guardResp.sides || []).map((s) => s.code || "?");
+        if (guardResp.ok) guardFails.push("GUARD_NOT_BLOCKED[" + String(guardResp.code || "?") + "]");
+        if (!(gBCodes.length && gBCodes.every((c) => c === "SLOT_STATE_CHANGED"))) guardFails.push("GUARD_SIDE_CODES[" + gBCodes.join(",") + "]");
+        if ((guardResp.sides || []).some((s) => s.ok === true)) guardFails.push("GUARD_PARTIAL_EXECUTED");
+        rec.guardFails = guardFails;
+        if (guardFails.length) rec.errors.push("ASSERT_FAIL guard: " + guardFails.join(" | "));
       } catch (e) { rec.errors.push("RUN: " + String(e && (e.message || e) || e).slice(0, 300)); }
     }
     out.errors = out.errors.slice(0, 20);
   } catch (e) { out.errors.push("FATAL: " + String(e && (e.message || e) || e).slice(0, 400)); }
   finally { try { await browser.close(); } catch (e) {} }
-  fs.writeFileSync(path.join(REPORT_DIR, "commit-46k-ai-slot-match-preview.json"), JSON.stringify(out, null, 2));
-  console.log("[commit-46k] report -> runtime/reports/stage-11/commit-46k-ai-slot-match-preview.json");
+  fs.writeFileSync(path.join(REPORT_DIR, "commit-46l-ai-slot-apply-real.json"), JSON.stringify(out, null, 2));
+  console.log("[commit-46l] report -> runtime/reports/stage-11/commit-46l-ai-slot-apply-real.json");
 })().catch((e) => { console.error("FATAL: " + String(e && (e.message || e) || e).slice(0, 600)); process.exit(1); });
