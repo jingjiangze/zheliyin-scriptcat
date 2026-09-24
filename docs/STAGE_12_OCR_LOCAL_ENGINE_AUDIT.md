@@ -125,3 +125,16 @@ onnxruntime-web（WASM，CSP 已放行 wasm-unsafe-eval）
 - 本分支只动 OCR 引擎相关文件；**不碰**另一会话正在开发的 `template-match-*` / `page-bridge.js` / AI 匹配相关文件。
 - 版本链纪律：切默认时按「每推必升版，五处统一」执行（header/@require?v=/VERSION/page-bridge stamp/runner BVER）。
 - 本文件随审计结论提交；实施阶段另开 commit。
+
+## 9. 实施进度（Stage 12）
+
+| 里程碑 | 内容 | 文件 | 证据 | 状态 |
+|---|---|---|---|---|
+| M1 det 后处理内核 | 概率图 → 行级框：尺寸规划与反变换、二值化（严格 >）、8 邻域连通域、凸包、最小面积外接矩形、框内均值评分门、unclip 解析式外扩、阅读顺序排序、候选上限 | `extension/src/ocr/db-det-postprocess.js` | `runtime/stage12/db-det-postprocess.test.js`（**11/11**） | ✅ 已实现（未接线） |
+| M2 参数与调优逻辑 | 档位基线（tiny/small/medium）、场景增量（card/dense/tilted/qrNoise/lowContrast）、小字放大派生（目标行高 16px 反推 limitSideLen）、长边预算夹紧、人工覆盖、越界夹紧；网格调优 + IoU 指标 | `extension/src/ocr/det-params.js` | `runtime/stage12/det-params.test.js`（**10/10**） | ✅ 已实现（未接线） |
+| M3 provider 接线 | onnxruntime-web 加载/缓存 + OCRCandidate 契约 + `zyOcrEngine` 开关 | — | — | ⏳ 待做 |
+| M4 离线 A/B → 真机回归 → 切默认 | 见第 6 节 V2/V3/V4 | — | — | ⏳ 待做 |
+
+**与 PaddleOCR 的差异（如实声明）**：轮廓用「连通域 + 凸包」替代 `cv2.findContours`（外轮廓语义等价，不做孔洞）；unclip 用矩形解析式 `d = A*r/P` 替代 pyclipper 多边形 offset（对矩形/近矩形文字行等价）；仅实现 `box_score_fast`；像素中心点集 + 0.5px 半径补偿对齐像素外框。
+
+**未升版说明**：M1/M2 为新增未接线模块，不进入 userscript `@require` 链、不改任何既有文件 → 版本保持 0.3.11.74（与 Commit L2「未接线，版本保持」同一纪律）。
