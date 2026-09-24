@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.76
+// @version      0.3.11.77
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,46 +14,46 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-plan.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-validator.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/rule-match.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply-v2.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.76
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.76
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-plan.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-validator.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/rule-match.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply-v2.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.77
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -72,7 +72,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.76";
+  const VERSION = "0.3.11.77";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -401,7 +401,7 @@
             <div class="zy-row">
               <label class="zy-label" for="zy-ocr-mode">图片识别方式</label>
               <select class="zy-input" id="zy-ocr-mode">
-                <option value="auto" ${getOcrMode() === "auto" ? "selected" : ""}>自动（本地优先，失败时用百度云端）</option>
+                <option value="auto" ${getOcrMode() === "auto" ? "selected" : ""}>自动（未配云端 Key 用本地；云端不全用本地补位）</option>
                 <option value="local" ${getOcrMode() === "local" ? "selected" : ""}>仅本地（不联网）</option>
                 <option value="baidu" ${getOcrMode() === "baidu" ? "selected" : ""}>百度云端</option>
               </select>
@@ -606,7 +606,7 @@
   function bindOcrControls(scope, suffix, onSaved) {
     const q = (id) => scope.querySelector("#" + id + suffix);
     const modeSel = q("zy-ocr-mode");
-    if (modeSel) modeSel.addEventListener("change", () => { GM_setValue("zyOcrMode", modeSel.value); setStatus("识别方式已切换为：" + (modeSel.value === "auto" ? "自动（本地优先）" : modeSel.value === "local" ? "仅本地" : "百度云端")); });
+    if (modeSel) modeSel.addEventListener("change", () => { GM_setValue("zyOcrMode", modeSel.value); setStatus("识别方式已切换为：" + (modeSel.value === "auto" ? "自动（有云端 Key 优先云端，否则本地）" : modeSel.value === "local" ? "仅本地" : "百度云端")); });
     const akInput = q("zy-baidu-ak");
     const skInput = q("zy-baidu-sk");
     const bs = q("zy-baidu-status");
@@ -705,7 +705,7 @@
         <div class="zy-row">
           <label class="zy-label" for="zy-ocr-mode-native">识别方式</label>
           <select class="zy-input" id="zy-ocr-mode-native">
-            <option value="auto" ${getOcrMode() === "auto" ? "selected" : ""}>自动（本地优先，失败时用百度云端）</option>
+            <option value="auto" ${getOcrMode() === "auto" ? "selected" : ""}>自动（未配云端 Key 用本地；云端不全用本地补位）</option>
             <option value="local" ${getOcrMode() === "local" ? "selected" : ""}>仅本地（不联网）</option>
             <option value="baidu" ${getOcrMode() === "baidu" ? "selected" : ""}>百度云端</option>
           </select>
@@ -919,6 +919,11 @@
   // Stage 7.2：自动模式 fallback = Cloud PRIMARY → cloud 失败分类 → Local FALLBACK（§8.1）。
   // 决策复用 fallback-policy（@require 注入，与单测同源）；每次 OCR 输出诊断 {engine, attempt, fallback, reason}。
   const FALLBACK_POLICY = (typeof decideFallback === "function") ? decideFallback : null;
+  // Stage 12 单一决策点（同源 fallback-policy，与单测一致）：
+  //   OCR_ROUTE_POLICY   主路由 —— 未输入/未配置云端 API Key → 本地直出（不发起注定失败的云端请求）
+  //   LOCAL_ASSIST_POLICY 本地辅助 —— 云端未返回结果或结果不全 → 本地几何补齐
+  const OCR_ROUTE_POLICY = (typeof decideOcrRoute === "function") ? decideOcrRoute : null;
+  const LOCAL_ASSIST_POLICY = (typeof decideLocalAssist === "function") ? decideLocalAssist : null;
   function classifyBaiduError(code) {
     const s = String(code || "").toUpperCase();
     if (s.indexOf("TIMEOUT") >= 0) return "timeout";
@@ -947,6 +952,8 @@
     }
     setStatus("云端识别失败（" + (failReason || canonical) + "），已切换到本地识别…");
     ocrLog("FALLBACK", "cloud " + canonical + " (" + (failReason || "unknown") + ") → local");
+    // Stage 12：云端未返回结果 / 质量门失败 → 本地几何全量接管（decideLocalAssist scope="all" 的落地路径）
+    pipelineEvidence({ stage: "LOCAL_ASSIST", reason: "cloud-" + String(failReason || canonical), scope: "all", fallback: true, attempt: att });
     runLocalOcr(img, { engine: "local", attempt: "local-fallback", fallback: true, reason: null });
   }
   // ---- OCR-P0.2 / P0.2-A：Native Truth 与 Baidu Geometry 解耦（并列主链）----
@@ -1072,7 +1079,8 @@
   // Stage 9 V4 §十二：百度 OCR 实验模式（standard|accurate）—— 实验开关 zyBaiduOcrMode，不进长期配置系统
   const BAIDU_OCR_MODE = GM_getValue("zyBaiduOcrMode", "standard");
   let OCR_PARTIAL_LAST_MISSING = [];
-  const STAGE9_LOCAL_SIDECAR = GM_getValue("zyStage9LocalSidecar", "0") === "1"; // OCR-P1 Commit 3b：LOCAL geometry sidecar（默认关；unmatched 剩余时同图跑 local 补位置） // OCR-P1 Commit 3a：最近一次部分创建的缺失文字清单（诊断/runner 抓取） // "accurate"=高精度含位置版 /general 之外
+  const STAGE9_LOCAL_SIDECAR = GM_getValue("zyStage9LocalSidecar", "0") === "1"; // OCR-P1 Commit 3b：LOCAL geometry sidecar（默认关；unmatched 剩余时同图跑 local 补位置）
+  const STAGE12_LOCAL_ASSIST = GM_getValue("zyLocalAssist", "1") === "1"; // Stage 12：云端未返回结果/结果不全 → 本地辅助补齐（默认开；zyLocalAssist=0 关闭） // OCR-P1 Commit 3a：最近一次部分创建的缺失文字清单（诊断/runner 抓取） // "accurate"=高精度含位置版 /general 之外
   const STAGE9_NATIVE_TRUTH = GM_getValue("zyStage9NativeTruth", "1") === "1"; // Stage 10-C：强制站点原生 OCRTool.do 手写体为文字真值（> Baidu；接口有则必须全到画布，无则禁止到画布）
   const STAGE9_NATIVE_OCR_MODE = GM_getValue("zyStage9NativeOcrMode", "2"); // "2" 手写体优先（用户实测），"1" 印刷体
   // Stage 9 P4-B §七/§二十一：ImageInk typography target 实验开关（默认 OFF = 保持 OCR bbox target）
@@ -1265,8 +1273,27 @@
       }
       // OCR-P1 Commit 3b：LOCAL sidecar 第二段 —— 第一段(line/word)后仍 unresolved 且开关开启时
       // 对同图跑本地识别拿 line 级几何补位（只提供 geometry；text 恒来自 Native）。
-      try { window.__zySidecarCond = { unmatched: (matched.unmatchedNative || []).length, flag: STAGE9_LOCAL_SIDECAR, fnSide: typeof runLocalGeometrySidecar === "function", fnRec: typeof recoverNativeGeometry === "function" }; } catch (e) {}
-            if ((matched.unmatchedNative || []).length > 0 && STAGE9_LOCAL_SIDECAR && typeof runLocalGeometrySidecar === "function" && typeof recoverNativeGeometry === "function") {
+      // Stage 12：本地辅助决策（decideLocalAssist）——
+      //   auto 已配置云端 + 云端结果不全（native-unmatched）→ 默认触发本地补位（无需 zyStage9LocalSidecar）；
+      //   云端未返回结果/质量门失败已由 cloud-primary 失败路径整批换路，不在此分支；
+      //   manual 模式 → 决策 scope=none → 不触发（零额外开销）。
+      let localAssistScope = "none";
+      try {
+        const assistAllowed = STAGE9_LOCAL_SIDECAR || STAGE12_LOCAL_ASSIST; // 旧开关（强制开）或 Stage 12 默认开
+        const las = (assistAllowed && LOCAL_ASSIST_POLICY)
+          ? LOCAL_ASSIST_POLICY({
+            mode: getOcrMode(),
+            cloudRows: (blocks || []).length,                                   // 云端交付的几何行数（本函数拿到的几何块）
+            cloudQualityOk: true,                                               // 质量门失败已在 cloud-primary 路径整批换路
+            nativeTotal: (matched.gate && matched.gate.totalNative) || (native.texts || []).length,
+            nativeUnmatched: (matched.unmatchedNative || []).length
+          })
+          : null;
+        localAssistScope = (las && las.assist) ? (las.scope || "none") : "none";
+        if (las && las.assist) pipelineEvidence({ stage: "LOCAL_ASSIST", reason: las.reason || "native-unmatched", scope: las.scope, nativeTotal: (matched.gate && matched.gate.totalNative) || (native.texts || []).length, nativeUnmatched: (matched.unmatchedNative || []).length });
+      } catch (eLA) { localAssistScope = "none"; }
+      try { window.__zySidecarCond = Object.assign({}, window.__zySidecarCond || {}, { assistScope: localAssistScope, flag: STAGE9_LOCAL_SIDECAR, fnSide: typeof runLocalGeometrySidecar === "function", fnRec: typeof recoverNativeGeometry === "function" }); } catch (e) {}
+            if ((matched.unmatchedNative || []).length > 0 && localAssistScope !== "none" && typeof runLocalGeometrySidecar === "function" && typeof recoverNativeGeometry === "function") {
       // entered 标记已迁移至 await 后
                 const localCands = await runLocalGeometrySidecar(img);
         matched.gate = matched.gate || {};
@@ -1623,16 +1650,31 @@
       ocrLog("SOURCE_PAGE", "pageId=" + srcPage.pageId + " side=" + srcPage.side + " source=" + (srcPage.sideSource || "n/a") + " tx=" + (ocrTarget.transaction && ocrTarget.transaction.transactionId || "n/a") + " fp=" + (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint || "n/a"));
       const img = { dataUrl: prep.dataUrl, width: prep.width, height: prep.height, naturalWidth: (ocrTarget.transaction && ocrTarget.transaction.naturalWidth) || prep.width, naturalHeight: (ocrTarget.transaction && ocrTarget.transaction.naturalHeight) || prep.height, payloadBytes: (ocrTarget.transaction && ocrTarget.transaction.payloadBytes) || null, pageId: srcPage.pageId, side: ocrTarget.side, canvasId: srcPage.canvasId || null, transactionId: (ocrTarget.transaction && ocrTarget.transaction.transactionId) || null, imageFingerprint: (ocrTarget.transaction && ocrTarget.transaction.imageFingerprint) || null };
       const mode = getOcrMode();
+      // Stage 12 主路由（单一决策点 fallback-policy.decideOcrRoute）：
+      //   未输入/未配置云端 API Key → 本地直出（不再发起注定失败的云端请求）；
+      //   已配置云端 → 云端优先（云端空/不全时由 decideLocalAssist 决策本地辅助）。
+      const routeNow = OCR_ROUTE_POLICY
+        ? OCR_ROUTE_POLICY({ mode: mode, baiduEnabled: baiduConfigured() })
+        : { action: mode === "local" ? "local" : "cloud", route: mode === "local" ? "manual-local" : (mode === "baidu" ? "manual-baidu" : "cloud-primary"), engine: mode === "local" ? "local" : "cloud" };
+      ocrLog("ROUTE", "mode=" + mode + " cloud=" + (baiduConfigured() ? "configured" : "not-configured") + " → " + routeNow.action + "/" + routeNow.route);
+      if (routeNow.action === "local") {
+        // Stage 12：本地直出（manual local / 未配置云端）。站点原生 OCR 是文字真值来源
+        // （站点自有接口，与云端 API Key 无关）→ 必须先执行，再由本地几何接管定位。
+        const diagL = { engine: "local", attempt: routeNow.route, fallback: false, reason: routeNow.route === "local-no-cloud" ? "not-configured" : null };
+        if (routeNow.route === "local-no-cloud") {
+          setStatus("未配置云端 API Key，改用本地识别（首次需下载本地识别库）…");
+          ocrLog("ROUTE", "cloud not-configured → local direct (skip cloud)");
+          pipelineEvidence({ stage: "ROUTE", route: "local-no-cloud", mode: mode });
+        }
+        await runNativeTruth(img, diagL);
+        runLocalOcr(img, diagL);
+        return;
+      }
       if (mode === "baidu") {
         // Stage 7.2：manual baidu → 仅 Cloud（无本地 fallback，§8.1）
         setStatus("百度云端识别中…");
         runBaiduOcr(img, { engine: "cloud", attempt: "manual-baidu", fallback: false })
           .catch((e) => { ocrRunning = false; setStatus("百度识别异常：" + String(e && e.message || e).slice(0, 80)); ocrLog("ERROR", "baidu unexpected: " + e); });
-        return;
-      }
-      if (mode === "local") {
-        // Stage 7.2：manual local → 仅 Local（无云端 fallback，§8.1）
-        runLocalOcr(img, { engine: "local", attempt: "manual-local", fallback: false });
         return;
       }
       // Stage 7.2：auto → Cloud PRIMARY（失败 → Local FALLBACK，见 maybeLocalFallback）

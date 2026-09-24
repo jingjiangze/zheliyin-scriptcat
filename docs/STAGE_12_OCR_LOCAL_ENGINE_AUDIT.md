@@ -132,8 +132,9 @@ onnxruntime-web（WASM，CSP 已放行 wasm-unsafe-eval）
 |---|---|---|---|---|
 | M1 det 后处理内核 | 概率图 → 行级框：尺寸规划与反变换、二值化（严格 >）、8 邻域连通域、凸包、最小面积外接矩形、框内均值评分门、unclip 解析式外扩、阅读顺序排序、候选上限 | `extension/src/ocr/db-det-postprocess.js` | `runtime/stage12/db-det-postprocess.test.js`（**11/11**） | ✅ 已实现（未接线） |
 | M2 参数与调优逻辑 | 档位基线（tiny/small/medium）、场景增量（card/dense/tilted/qrNoise/lowContrast）、小字放大派生（目标行高 16px 反推 limitSideLen）、长边预算夹紧、人工覆盖、越界夹紧；网格调优 + IoU 指标 | `extension/src/ocr/det-params.js` | `runtime/stage12/det-params.test.js`（**10/10**） | ✅ 已实现（未接线） |
-| M3 provider 装配（离线可测） | 图像预处理与旋转感知裁切（det/rec/cls 张量、BGR 默认、两套 mean/std）、字典组装 + CTC 贪心解码 + cls 判定、模型清单解析/SHA-256 校验/缓存加载、provider 端到端编排（det→后处理→映射→cls→rec→候选契约，假 session 可测） | `ppocr-image-ops.js` / `ppocr-rec-decode.js` / `ppocr-engine-loader.js` / `ppocr-provider.js` | `runtime/stage12/ppocr-*.test.js`（8+8+7+5=**28/28**） | ✅ 已实现（未接线） |
+| M3 provider 装配（离线可测） | 图像预处理与旋转感知裁切（det/rec/cls 张量、BGR 默认、两套 mean/std）、字典组装 + CTC 贪心解码 + cls 判定、模型清单解析/SHA-256 校验/缓存加载、provider 端到端编排（det→后处理→映射→cls→rec→候选契约，假 session 可测） | `ppocr-image-ops.js` / `ppocr-rec-decode.js` / `ppocr-engine-loader.js` / `ppocr-provider.js` | `runtime/stage12/ppocr-*.test.js`（8+8+7+6=**29/29**，含真实 ORT 异步回归护栏） | ✅ 已实现（未接线） |
 | M3b 真实模型 + ORT 接线（已验证） | 模型落库（det 1.83MB / rec 4.49MB / dict 27KB / cls 1.02MB，真实 sha256 + `.gitattributes` 字节保护）；ORT 会话适配（`ort.InferenceSession` → session 接口）；真实浏览器验证 harness | `assets/ocr/ppocrv6/**`、`ppocr-ort-session.js`、`runtime/stage12/ppocr-browser-check.js` | 真实 Chrome + ORT 1.30.0：彩色名片样张 4 行 **字符准确率 100%**；端到端 ~0.7–0.9s（WASM 单线程）；`runtime/reports/stage-12/ppocr-browser-check.json` | ✅ 已验证（未接线主链） |
+| M3-P 使用策略改造（已接线） | ① **未输入/未配置云端 API Key → 本地直出**（不再发起注定失败的云端请求，站点原生 OCR 文字真值照常执行）② **云端未返回结果 / 结果不全 → 本地辅助补齐**（cloud 0 行或质量门失败 = 本地几何全量接管；cloud 有行但 Native 行未全定位 = 本地几何补位 unmatched）。单一决策点仍在 `fallback-policy.js`，未新增第二套降级 | `extension/src/ocr/fallback-policy.js`（`decideOcrRoute` / `decideLocalAssist`）+ userscript 路由分发 / 本地辅助接线 / UI 文案 | `runtime/stage12/fallback-policy.test.js`（**12/12**）；开关 `zyLocalAssist`（默认 1）；版本 bump **0.3.11.77** | ✅ 已接线（引擎仍 Tesseract，M3c 后自动切换 ppocr） |
 | M3c userscript 接线 | `@require` 接入 + GM 下载器 / WebCrypto / CacheStorage 适配 + 页面世界执行器 + `zyOcrEngine` 开关（默认关闭）+ 版本五处统一 | — | — | ⏳ 待做（需与另一会话的 userscript 改动协调） |
 | M4 离线 A/B → 真机回归 → 切默认 | 见第 6 节 V2/V3/V4 | — | — | ⏳ 待做 |
 
@@ -145,7 +146,13 @@ onnxruntime-web（WASM，CSP 已放行 wasm-unsafe-eval）
 
 **与 PaddleOCR 的差异（如实声明）**：轮廓用「连通域 + 凸包」替代 `cv2.findContours`（外轮廓语义等价，不做孔洞）；unclip 用矩形解析式 `d = A*r/P` 替代 pyclipper 多边形 offset（对矩形/近矩形文字行等价）；仅实现 `box_score_fast`；像素中心点集 + 0.5px 半径补偿对齐像素外框。
 
-**未升版说明**：M1~M3 为新增未接线模块，不进入 userscript `@require` 链、不改任何既有文件 → 版本保持 0.3.11.74（与 Commit L2「未接线，版本保持」同一纪律）。当前单测合计 **49 例全绿**（M1 11 + M2 10 + M3 28）。
+**未升版说明**：M1~M3 为新增未接线模块，不进入 userscript `@require` 链、不改任何既有文件 → 版本保持 0.3.11.74（与 Commit L2「未接线，版本保持」同一纪律）。**M3-P 已接线**（改 `fallback-policy.js` 既有模块 + userscript 路由/辅助/UI 文案）→ 按纪律五处统一升版 **0.3.11.77**（@version / @require?v= / VERSION / page-bridge stamp / runner BVER）。当前 Stage 12 单测合计 **62 例全绿**（M1 11 + M2 10 + M3 29（8+8+7+6）+ M3-P 12，`node runtime/stage12/<file>.test.js`）。
+
+**M3-P 语义边界（如实声明）**：
+1. **文字真值恒为站点原生 OCR**（与云端 API Key 无关）→ 本地直出/本地辅助都只补几何，不产最终文字；越界由现有 Native Truth Gate 拦截。
+2. **云完整覆盖时零额外开销**：`decideLocalAssist` 返回 `assist=false`，不下载、不运行本地引擎。
+3. **本地辅助只补位不覆盖**：`recoverNativeGeometry(localCandidates)` 只在 unmatched Native 行上恢复几何，已被云端几何命中的行不重算。
+4. **一键回退**：`zyLocalAssist=0` 关闭本地辅助（回到 M3-P 之前行为）；`zyStage9LocalSidecar=1` 仍可强制开（旧开关保留）。
 
 **M3 关键接口（供 M4 实现真实适配）**：provider 只依赖 `session = {det, rec, cls?}`：
 `det.run({data, dims}) → {probMap, dims}`；`rec.run(input) → {data|probs, timeSteps, classes, applySoftmax?}`；`cls.run(input) → {data:[p0,p1]}`。
