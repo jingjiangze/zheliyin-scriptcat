@@ -67,7 +67,6 @@
 // @connect      cdn.jsdelivr.net
 // @connect      aip.baidubce.com
 // @connect      *
-
 // @updateURL    https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
 // @downloadURL  https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/demo/zheliyin-card-assistant.user.js
 // ==/UserScript==
