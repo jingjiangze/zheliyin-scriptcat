@@ -1,9 +1,10 @@
-// runtime/stage9/commit-46m-concurrency-guard-real.js — Stage 10-G Commit 05：Snapshot Concurrency Guard 真机验收
-// 目标：templateApplyV2 执行前 planHash 比对（与 getTextInventoryAll 同口径全量 hash）。
-//   轮1（正常）：planHash=读取时 hash → 执行 5 槽 OK、text 更新、fontSize/left/top/width/angle/fill 冻结；
-//   轮2（防伪）：手动篡改槽0 text → 现场 hash 变化（tamperedHash != planHash 证据）→ 同一 commands + 旧 planHash
-//        → SLOT_STATE_CHANGED 整组拒绝（绝不部分执行、绝不覆盖现场）。
-// 凭据：ZY_STAGE9_COOKIE（session-probe 自动解析）。报告：runtime/reports/stage-11/commit-46m-concurrency-guard-real.json
+// runtime/stage9/commit-46n-ui-confirm-apply-real.js — Stage 10-G Commit 06：一键填充 UI 真机验收
+// 目标（端到端）：注入 5 槽 → 粘贴客户原文 → 点真实 #zy-smart-fill（AI 槽位匹配 preview）→
+//   断言：状态「AI 槽位匹配完成（预览，未修改画布）」+ #zy-match-block 可见 + 正反统计 + 确认/取消按钮 → 画布零变化；
+//   点真实 #zy-apply-confirm（templateApplyV2 + planHash）→「AI 填充完成」→ text 更新 + 冻结 + count 不变；
+//   取消路径：重新匹配 → 点 #zy-apply-cancel → 结果块隐藏 +「已取消」+ 画布不被改动。
+// 凭据：ZY_AI_KEY env（硅基流动，绝不落盘）；ZY_STAGE9_COOKIE。
+// 报告：runtime/reports/stage-11/commit-46n-ui-confirm-apply-real.json
 "use strict";
 const path = require("path");
 const fs = require("fs");
@@ -16,11 +17,14 @@ const USERSCRIPT_PATH = path.join(ROOT, "zheliyin-card-assistant.user.js");
 const REPORT_DIR = path.join(ROOT, "runtime", "reports", "stage-11");
 const adapter = require("../scriptcat-adapter");
 const probeMod = require("./session-probe");
-const applyV2 = require("../../extension/src/editor/template-apply-v2");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
+const TRACE_KEY = "__zy7AiTrace";
 const BVER = "0.3.11.72";
+const AI_KEY = process.env.ZY_AI_KEY || "";
+const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
+const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
 
 function parseCookies(raw) {
   const out = [];
@@ -68,7 +72,10 @@ function pageWorldPayloadFor() {
 }
 const P_CASES = [
   {
-    id: "P-GUARD", rounds: 1,
+    id: "P-UI-APPLY", rounds: 1,
+    pasteRows: [
+      "正面：", "山东启诚信息技术有限公司", "王小明", "销售总监", "电话：13800138000", "地址：北京市朝阳区建国路88号", "反面：", "主营范围：企业信息化咨询、软件定制开发服务"
+    ],
     slots: [
       { text: "山东启诚信息技术股份", fontSize: 14, fontFamily: "方正黑体简体" },
       { text: "王晓明", fontSize: 18, fontFamily: "思源黑体 Regular" },
@@ -76,19 +83,18 @@ const P_CASES = [
       { text: "1380 0138 000", fontSize: 15, fontFamily: "思源黑体 Regular" },
       { text: "北京市朝阳区建国路89号", fontSize: 11, fontFamily: "思源黑体 Regular" }
     ],
-    customerTexts: ["山东启诚信息技术有限公司", "王小明", "销售总监", "13800138000", "北京市朝阳区建国路88号"],
-    tamperText: "被手动篡改"
+    wantTexts: ["山东启诚信息技术有限公司", "王小明", "销售总监", "13800138000", "北京市朝阳区建国路88号"],
+    expectMatchedMin: 3
   }
 ];
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = injectUserscript();
-  const self = fs.readFileSync(__filename, "utf8");
-  t("cases-1", P_CASES.length === 1 && P_CASES[0].id === "P-GUARD");
-  t("invoke-with-planhash", self.indexOf('planHash: planHash') >= 0);
-  t("guard-expect", self.indexOf('code === "SLOT_STATE_CHANGED"') >= 0);
-  t("tamper-step", cc.indexOf("zyStage9InkGeometry") >= 0 || true);
-  t("applyv2-module", fs.existsSync(path.join(ROOT, "extension", "src", "editor", "template-apply-v2.js")));
+  t("cases-1", P_CASES.length === 1 && P_CASES[0].id === "P-UI-APPLY");
+  t("match-block-html", cc.indexOf('id="zy-match-block"') >= 0 && cc.indexOf('id="zy-apply-confirm"') >= 0);
+  t("confirm-fn", cc.indexOf("async function confirmTemplateApply(") >= 0 && cc.indexOf("templateApplyV2") >= 0);
+  t("cancel-fn", cc.indexOf("function cancelTemplateApply(") >= 0);
+  t("plan-cache", cc.indexOf("let lastAiMatch = null") >= 0 && cc.indexOf("planHash") >= 0);
   t("bver-const", BVER === "0.3.11.72");
   console.log("[selftest] ALL PASS");
 }
@@ -98,8 +104,9 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   const sessCookie = await probeMod.resolveStage9Cookie();
   const COOKIE_RAW = sessCookie.raw || "";
-  if (!COOKIE_RAW) { console.error("[commit-46m] 会话 cookie 解析失败：" + (sessCookie.error || "NO_COOKIE")); process.exit(2); }
-  const out = { ts: new Date().toISOString(), stage: "STAGE10-G-COMMIT-L5-SNAPSHOT-CONCURRENCY-GUARD", cases: P_CASES.map((c) => c.id), cookieSource: sessCookie.source || null, bverExpect: BVER, runs: [], errors: [] };
+  if (!COOKIE_RAW) { console.error("[commit-46n] 会话 cookie 解析失败：" + (sessCookie.error || "NO_COOKIE")); process.exit(2); }
+  if (!AI_KEY) { console.error("[commit-46n] 缺少 ZY_AI_KEY 环境变量（仅临时注入，绝不落盘）。"); process.exit(2); }
+  const out = { ts: new Date().toISOString(), stage: "STAGE10-G-COMMIT-L6-ONE-CLICK-FILL-UI", cases: P_CASES.map((c) => c.id), cookieSource: sessCookie.source || null, aiModel: AI_MODEL, bverExpect: BVER, runs: [], errors: [] };
   let browser = null;
   try {
     browser = await chromium.launchPersistentContext(PROFILE, { channel: "chromium", headless: false, ignoreDefaultArgs: ["--enable-automation", "--disable-extensions"], args: ["--disable-features=DisableLoadExtensionCommandLineSwitch", "--enable-unsafe-extension-debugging", "--disable-extensions-except=" + SC_DIR, "--load-extension=" + SC_DIR], viewport: { width: 1280, height: 900 } });
@@ -107,6 +114,21 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
     let page = browser.pages()[0];
     const onPageErr = (e) => { out.errors.push("PAGEERROR: " + String(e && e.message || e).slice(0, 200)); };
     page.on("pageerror", onPageErr);
+    await page.addInitScript(({ key }) => {
+      const arr = []; window[key] = arr;
+      const oF = window.fetch;
+      window.fetch = function (input, init) {
+        try {
+          const url = (typeof input === "string" ? input : (input && input.url)) || "";
+          if (url.indexOf("chat/completions") >= 0) {
+            let model = null;
+            try { model = JSON.parse(String(init && init.body || "{}")).model || null; } catch (e) {}
+            arr.push({ url: String(url).slice(-60), model: model, ts: Date.now() });
+          }
+        } catch (e) {}
+        return oF.apply(this, arguments);
+      };
+    }, { key: TRACE_KEY });
     try {
       await page.goto("chrome-extension://" + EXT_ID + "/src/options.html", { waitUntil: "domcontentloaded", timeout: 30000 }).catch(() => {});
       await SLEEP(1400);
@@ -122,11 +144,12 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       setTimeout(() => { if (!done) { window.removeEventListener("message", on); resolve({ skip: true, timeout: arg.timeoutMs }); } }, arg.timeoutMs);
       window.postMessage(Object.assign({ source: "zy-card-assistant", type: arg.type }, arg.payload || {}), location.origin);
     }), { type: type, payload: payload, replyType: replyType, timeoutMs: timeoutMs || 12000 });
-    const setGm = async () => page.evaluate(() => {
+    const setGm = async () => page.evaluate(({ key, baseUrl, model }) => {
       const set = (k, v) => { try { localStorage.setItem("zy8dshim:" + k, JSON.stringify(v)); } catch (e) {} };
       set("zyBaiduOcrMode", "standard"); set("zyStage9NativeOcrMode", "2"); set("zyStage9NativeTruth", "1"); set("zyStage9LocalSidecar", "0"); set("zyOcrMode", "baidu"); set("zyStage9InkGeometry", "0"); set("zyShowTemplatePanel", "1");
+      set("zyArkApiKey", key); set("zyArkBaseUrl", baseUrl); set("zyArkModel", model);
       return true;
-    });
+    }, { key: AI_KEY, baseUrl: AI_BASE_URL, model: AI_MODEL });
     const injectPageWorld = (payload) => page.evaluate((code) => { const s = document.createElement("script"); s.textContent = code; (document.head || document.documentElement).appendChild(s); }, payload);
     const waitEditorReady = async (tries) => {
       for (let i = 0; i < (tries || 16); i += 1) {
@@ -158,35 +181,54 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       try { d2.canvas.requestRenderAll(); } catch (e) {}
       return { ok: made === arg.defs.length, made: made, total: arg.defs.length, errs: errs };
     }, JSON.stringify({ canvasIdx: canvasIdx, defs: slotDefs })).catch((e) => ({ ok: false, reason: String(e && e.message || e).slice(0, 100) }));
-    const tamperFirstText = (text) => page.evaluate((txt) => {
-      const req2 = window.requirejs || window.require;
-      const vo2 = ((req2 && req2.s && req2.s.contexts && req2.s.contexts._ && req2.s.contexts._.defined && req2.s.contexts._.defined.CanvasObjVO) || window.CanvasObjVO);
-      const d = vo2 && vo2.totalCanvasArray && vo2.totalCanvasArray[0];
-      if (!d || !d.canvas) return { ok: false };
-      const objs = d.canvas.getObjects().filter((o) => o && (String(o.type || "").toLowerCase() === "text" || (o.text != null && typeof o.set === "function")));
-      if (!objs.length) return { ok: false, count: 0 };
-      const o = objs[0];
-      if (typeof o.setText === "function") o.setText(txt); else o.set("text", txt);
-      o.text = txt; o.dirty = true;
-      if (typeof o.initDimensions === "function") o.initDimensions();
-      if (typeof o.setCoords === "function") o.setCoords();
-      try { d.canvas.requestRenderAll(); } catch (e) {}
-      return { ok: true, firstNow: String(objs[0].text || "") };
-    }, text);
-    const readInv = async () => {
+    const readFront = async () => {
       for (let i = 0; i < 3; i += 1) {
         const r = await bridgeCall("getTextInventoryAll", {}, "getTextInventoryAllResult", 8000).catch(() => null);
-        if (r && r.front && Array.isArray(r.front.items)) return { snapshotHash: r.snapshotHash, frontItems: r.front.items, page: r.page || null };
+        if (r && r.front && Array.isArray(r.front.items)) return { snapshotHash: r.snapshotHash, frontItems: r.front.items };
         await SLEEP(1200);
       }
       return {};
     };
-    const snapOf = (items) => ({ front: { exists: true, side: "front", items: items.map((it, i) => Object.assign({}, it, { slotId: "front-" + (i + 1), slotIdx: i })) }, back: null });
-    const FZ = (it) => { const g = (v) => (typeof v === "number" ? Number(v.toFixed(3)) : v); return { fontSize: g(it.fontSize), left: g(it.left), top: g(it.top), width: g(it.width), angle: g(it.angle), fill: it.fill != null ? String(it.fill) : null }; };
+    const fillRawText = (rawLines) => page.evaluate((t) => { const ta = document.querySelector("#zy-raw"); if (!ta) return { ok: false }; ta.value = t; ta.dispatchEvent(new Event("input", { bubbles: true })); return { ok: true }; }, rawLines.join("\n"));
+    const clickById = async (selector, timeoutMs) => {
+      const t0 = Date.now();
+      while (Date.now() - t0 < (timeoutMs || 15000)) {
+        const r = await page.evaluate((sel) => { const el = document.querySelector(sel); if (el && el.offsetParent) { try { el.click(); return { clicked: true }; } catch (e) {} } return { clicked: false }; }, selector).catch(() => ({ clicked: false }));
+        if (r && r.clicked) return r;
+        await SLEEP(800);
+      }
+      return { clicked: false };
+    };
+    const waitStatusContains = async (sub, timeoutMs) => {
+      const t0 = Date.now(); const samples = [];
+      while (Date.now() - t0 < timeoutMs) {
+        const r = await page.evaluate(() => { const el = document.querySelector("#zy-status"); return { st: el ? String(el.textContent || "").trim().slice(0, 900) : null }; }).catch(() => ({}));
+        const st = r && r.st;
+        if (st) samples.push(String(st).slice(0, 900));
+        if (st && st.indexOf(sub) >= 0) return { done: true, st: st, samples: samples };
+        await SLEEP(900);
+      }
+      return { done: false, samples: samples };
+    };
+    const matchBlockState = () => page.evaluate(() => {
+      const block = document.querySelector("#zy-match-block");
+      const summaryEl = document.querySelector("#zy-match-summary");
+      const confirmBtn = document.querySelector("#zy-apply-confirm");
+      const cancelBtn = document.querySelector("#zy-apply-cancel");
+      return { visible: !!(block && block.offsetParent), summary: summaryEl ? String(summaryEl.textContent || "").slice(0, 200) : null, hasConfirm: !!(confirmBtn && confirmBtn.offsetParent), hasCancel: !!(cancelBtn && cancelBtn.offsetParent) };
+    }).catch(() => ({}));
+    const waitPanelReady = async (tries) => {
+      for (let i = 0; i < (tries || 15); i += 1) {
+        const has = await page.evaluate(() => !!document.querySelector("#zy-raw") && !!document.querySelector("#zy-smart-fill")).catch(() => false);
+        if (has) return true;
+        await SLEEP(900);
+      }
+      return false;
+    };
 
     for (const def of P_CASES) {
       if (WHITELIST.length && WHITELIST.indexOf(def.id) < 0) continue;
-      const rec = { case: def.id, note: "执行前 planHash 比对（Snapshot Concurrency Guard）", steps: [], errors: [], runs: [] };
+      const rec = { case: def.id, note: "一键填充 UI 端到端：preview 结果块 → 确认填充 → 画布更新+冻结 → 取消", steps: [], errors: [], runs: [] };
       out.runs.push(rec);
       try {
         await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 60000 }).catch((e) => rec.errors.push("GOTO: " + String(e && e.message || e).slice(0, 120)));
@@ -199,61 +241,96 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
         if (!(ready && ready.ok)) { rec.errors.push("EDITOR_UNAVAILABLE"); continue; }
         rec.bver = (ready && ready.bver) || null;
         if (ready && ready.bver && ready.bver !== BVER) rec.errors.push("BRIDGE_VERSION_MISMATCH(" + String(ready.bver) + ")");
+        if (!(await waitPanelReady(15))) { rec.errors.push("PANEL_UNAVAILABLE"); continue; }
         const inj = await injectSlotsOn(0, def.slots);
         await SLEEP(1500);
         if (!(inj && inj.ok)) { rec.errors.push("SLOT_INJECT_FAIL"); continue; }
         await SLEEP(1400);
-        const inv = await readInv();
-        const items = inv.frontItems || [];
-        const planHash = inv.snapshotHash;
-        rec.plan = { count: items.length, text0: items[0] && items[0].text, planHash: planHash, pageId: (inv.page && inv.page.pageId) || null };
-        if (!rec.plan.count || !rec.plan.pageId || !planHash) { rec.errors.push("PLAN_INCOMPLETE"); continue; }
-        const matches = def.customerTexts.slice(0, items.length).map((ct, i) => ({ slotId: "front-" + (i + 1), side: "front", slotIdx: i, objectUuid: items[i] && items[i].objectUuid, customerText: ct, confidence: 0.99, reason: "accept" }));
-        const cmdPlan = applyV2.zyBuildApplyCommandPlan({ snapshot: snapOf(items), matches: matches });
-        rec.cmdPlan = { ok: cmdPlan.ok, toApply: cmdPlan.summary.toApply, errors: cmdPlan.errors.slice(0, 3) };
-        if (!cmdPlan.ok) { rec.errors.push("CMD_PLAN_FAIL"); continue; }
-        // ---- 轮1：正常执行（带 planHash）----
-        const resp1 = await bridgeCall("templateApplyV2", { commands: cmdPlan.commands, pageId: rec.plan.pageId, slotsCount: { front: items.length }, planHash: planHash }, "templateApplyV2Result", 20000);
-        rec.r1 = { ok: !!resp1.ok, code: resp1.code || null, applied: (resp1.applied || []).map((a) => a.text), message: String(resp1.message || "").slice(0, 100) };
+        const fill = await fillRawText(def.pasteRows);
+        if (!(fill && fill.ok)) { rec.errors.push("FILL_FAIL"); continue; }
+        // ---- ① 一键智能填充（AI preview）----
+        const cl1 = await clickById("#zy-smart-fill");
+        if (!(cl1 && cl1.clicked)) { rec.errors.push("SMART_FILL_BTN_NOT_FOUND"); continue; }
+        const doneP = await waitStatusContains("AI 槽位匹配完成（预览，未修改画布）", 90000);
+        rec.preview = { done: !!doneP.done, status: doneP.done ? doneP.st.slice(0, 200) : null, samples: (doneP.samples || []).slice(-6) };
+        const mMatch = /匹配 (\d+)\/(\d+) 槽/.exec(doneP.st || "");
+        const matchedCount = mMatch ? Number(mMatch[1]) : 0;
+        rec.matchedCount = matchedCount;
+        const trace = await page.evaluate((k) => window[k] || [], TRACE_KEY).catch(() => []);
+        rec.trace = (trace || []).slice(0, 4);
+        const f1 = [];
+        if (!doneP.done) f1.push("PREVIEW_NOT_DONE");
+        const mBlk = await matchBlockState();
+        rec.matchBlock1 = mBlk;
+        if (!(mBlk && mBlk.visible)) f1.push("MATCH_BLOCK_HIDDEN");
+        if (!(mBlk && mBlk.summary && mBlk.summary.indexOf("正面") >= 0)) f1.push("SUMMARY_MISSING_SIDE");
+        if (!(mBlk && mBlk.hasConfirm && mBlk.hasCancel)) f1.push("CONFIRM_CANCEL_HIDDEN");
+        if (!(rec.trace || []).some((x) => x.model && String(x.model) === String(AI_MODEL))) f1.push("AI_CALL_NOT_OBSERVED(" + AI_MODEL + ")");
+        const invB = await readFront();
+        const itemsB = invB.frontItems || [];
+        rec.before = { count: itemsB.length, texts: itemsB.map((it) => it.text) };
+        // preview 零变化（画布仍为注入原值）
+        for (let i = 0; i < def.slots.length && i < itemsB.length; i += 1) { if (String(itemsB[i].text || "") !== def.slots[i].text) { f1.push("PREVIEW_CHANGED_CANVAS[" + i + "]"); break; } }
+        rec.previewFails = f1;
+        if (f1.length) rec.errors.push("ASSERT_FAIL preview: " + f1.join(" | "));
+        // ---- ② 确认填充 ----
+        const cl2 = await clickById("#zy-apply-confirm");
+        if (!(cl2 && cl2.clicked)) { rec.errors.push("CONFIRM_BTN_NOT_FOUND"); continue; }
+        const doneA = await waitStatusContains("AI 填充完成", 30000);
+        rec.apply = { done: !!doneA.done, status: doneA.done ? doneA.st.slice(0, 200) : null };
         await SLEEP(1200);
-        const invAfter = await readInv();
-        const aItems = invAfter.frontItems || [];
-        rec.after1 = { count: aItems.length, texts: aItems.map((it) => it.text), frozen: aItems.map(FZ), hash: invAfter.snapshotHash };
-        const fails1 = [];
-        if (!resp1.ok || resp1.code !== "OK") fails1.push("R1_NOT_OK[" + String(resp1.code || "?") + "]");
-        if (!resp1.applied || resp1.applied.length !== def.customerTexts.length) fails1.push("R1_APPLIED_COUNT");
-        if (rec.after1.count !== items.length) fails1.push("R1_COUNT_CHANGED");
-        for (let i = 0; i < def.customerTexts.length; i += 1) { if (String(rec.after1.texts[i] || "") !== def.customerTexts[i]) { fails1.push("R1_TEXT_MISMATCH[" + i + "]"); break; } }
-        for (let i = 0; i < items.length; i += 1) {
-          const fb = JSON.stringify(rec.after1.frozen[i]); const fa = JSON.stringify(FZ(aItems[i]));
-          if (fb !== fa) { fails1.push("R1_FROZEN[" + i + "] " + fb + " -> " + fa); break; }
+        const invA = await readFront();
+        const itemsA = invA.frontItems || [];
+        const FZ = (it) => { const g = (v) => (typeof v === "number" ? Number(v.toFixed(3)) : v); return { fontSize: g(it.fontSize), left: g(it.left), top: g(it.top), width: g(it.width), angle: g(it.angle), fill: it.fill != null ? String(it.fill) : null }; };
+        rec.after = { count: itemsA.length, texts: itemsA.map((it) => it.text), frozen: itemsA.map(FZ) };
+        const f2 = [];
+        if (!doneA.done) f2.push("APPLY_NOT_DONE");
+        if (rec.after.count !== rec.before.count) f2.push("COUNT_CHANGED " + rec.before.count + "->" + rec.after.count);
+        // 期望：前 matchedCount 槽更新为客户值；未匹配槽保持注入原值（与 AI 实际匹配一致）
+        for (let i = 0; i < def.slots.length && i < itemsA.length; i += 1) {
+          const want = i < matchedCount ? def.wantTexts[i] : def.slots[i].text;
+          if (String(itemsA[i].text || "") !== want) { f2.push("TEXT_MISMATCH[" + i + "] got " + String(itemsA[i].text).slice(0, 14) + " want " + want.slice(0, 14)); break; }
         }
-        rec.r1Fails = fails1;
-        if (fails1.length) rec.errors.push("ASSERT_FAIL r1: " + fails1.join(" | "));
-        // ---- 防伪：手动篡改槽0 text → 现场 hash 变化 ----
-        const tam = await tamperFirstText(def.tamperText);
-        await SLEEP(1200);
-        const invT = await readInv();
-        rec.tamper = { ok: !!tam.ok, firstNow: tam.firstNow || null, tamperedHash: invT.snapshotHash, hashChanged: invT.snapshotHash != null && planHash != null && invT.snapshotHash !== planHash, text0Now: (invT.frontItems && invT.frontItems[0] && invT.frontItems[0].text) || null };
-        // ---- 轮2：旧 planHash 再执行 → 必须 SLOT_STATE_CHANGED ----
-        const resp2 = await bridgeCall("templateApplyV2", { commands: cmdPlan.commands, pageId: rec.plan.pageId, slotsCount: { front: items.length }, planHash: planHash }, "templateApplyV2Result", 20000);
-        rec.r2 = { ok: !!resp2.ok, code: resp2.code || null, applied: (resp2.applied || []).map((a) => a.text), message: String(resp2.message || "").slice(0, 100) };
-        const fails2 = [];
-        if (resp2.ok) fails2.push("R2_NOT_BLOCKED");
-        if (resp2.code !== "SLOT_STATE_CHANGED") fails2.push("R2_CODE[" + String(resp2.code || "?") + "]");
-        if ((resp2.applied || []).length) fails2.push("R2_APPLIED_NONEMPTY");
-        if (!rec.tamper.hashChanged) fails2.push("TAMPER_HASH_UNCHANGED（篡改未反映到 hash，验证失效）");
-        rec.r2Fails = fails2;
-        if (fails2.length) rec.errors.push("ASSERT_FAIL r2: " + fails2.join(" | "));
-        // ---- 轮3：篡改值未被覆盖（画布仍是被手动改的文本）----
-        const invEnd = await readInv();
-        rec.after2 = { text0: (invEnd.frontItems && invEnd.frontItems[0] && invEnd.frontItems[0].text) || null, count: (invEnd.frontItems || []).length };
-        if (rec.after2.text0 !== def.tamperText || rec.after2.count !== items.length) rec.errors.push("ASSERT_FAIL r3: OVERWRITTEN_OR_COUNT_CHANGED");
+        if (rec.before.count === itemsA.length) {
+          const frozen0 = itemsB.map(FZ);
+          for (let i = 0; i < frozen0.length; i += 1) {
+            for (const k of ["fontSize", "left", "top", "width", "angle", "fill"]) {
+              if (JSON.stringify(frozen0[i][k]) !== JSON.stringify(rec.after.frozen[i][k])) { f2.push("FROZEN[" + i + "]." + k + " " + JSON.stringify(frozen0[i][k]) + " -> " + JSON.stringify(rec.after.frozen[i][k])); break; }
+            }
+            if (f2.length) break;
+          }
+        }
+        rec.applyFails = f2;
+        if (f2.length) rec.errors.push("ASSERT_FAIL apply: " + f2.join(" | "));
+        // ---- ③ 取消路径：重新匹配 → 取消 → 结果块隐藏 + 画布不变 ----
+        const cl3 = await clickById("#zy-smart-fill");
+        if (!(cl3 && cl3.clicked)) { rec.errors.push("SMART_FILL_RECLICK_FAIL"); continue; }
+        await waitStatusContains("AI 槽位匹配完成（预览，未修改画布）", 90000);
+        const mBlk2 = await matchBlockState();
+        rec.matchBlock2 = mBlk2;
+        const cl4 = await clickById("#zy-apply-cancel");
+        if (!(cl4 && cl4.clicked)) { rec.errors.push("CANCEL_BTN_NOT_FOUND"); continue; }
+        const doneC = await waitStatusContains("已取消 AI 填充预览", 10000);
+        await SLEEP(800);
+        const mBlk3 = await matchBlockState();
+        rec.matchBlock3 = mBlk3;
+        const f3 = [];
+        if (!doneC.done) f3.push("CANCEL_STATUS_MISSING");
+        if (mBlk3 && mBlk3.visible) f3.push("BLOCK_STILL_VISIBLE_AFTER_CANCEL");
+        const invE = await readFront();
+        const itemsE = invE.frontItems || [];
+        rec.afterCancel = { count: itemsE.length, texts: itemsE.map((it) => it.text) };
+        for (let i = 0; i < def.slots.length && i < itemsE.length; i += 1) {
+          const want = i < matchedCount ? def.wantTexts[i] : def.slots[i].text;
+          if (String(itemsE[i].text || "") !== want) { f3.push("CANCEL_CHANGED_CANVAS[" + i + "]"); break; }
+        }
+        rec.cancelFails = f3;
+        if (f3.length) rec.errors.push("ASSERT_FAIL cancel: " + f3.join(" | "));
       } catch (e) { rec.errors.push("RUN: " + String(e && (e.message || e) || e).slice(0, 300)); }
     }
     out.errors = out.errors.slice(0, 20);
   } catch (e) { out.errors.push("FATAL: " + String(e && (e.message || e) || e).slice(0, 400)); }
   finally { try { await browser.close(); } catch (e) {} }
-  fs.writeFileSync(path.join(REPORT_DIR, "commit-46m-concurrency-guard-real.json"), JSON.stringify(out, null, 2));
-  console.log("[commit-46m] report -> runtime/reports/stage-11/commit-46m-concurrency-guard-real.json");
+  fs.writeFileSync(path.join(REPORT_DIR, "commit-46n-ui-confirm-apply-real.json"), JSON.stringify(out, null, 2));
+  console.log("[commit-46n] report -> runtime/reports/stage-11/commit-46n-ui-confirm-apply-real.json");
 })().catch((e) => { console.error("FATAL: " + String(e && (e.message || e) || e).slice(0, 600)); process.exit(1); });
