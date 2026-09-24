@@ -20,7 +20,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
 const TRACE_KEY = "__zy7AiTrace";
-const BVER = "0.3.11.74";
+const BVER = "0.3.11.75";
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
 const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
@@ -78,7 +78,7 @@ function selfTest() {
   t("plan-modules-inline", fs.existsSync(path.join(ROOT, "extension", "src", "ai", "template-match-plan.js")) && fs.existsSync(path.join(ROOT, "extension", "src", "ai", "template-match-validator.js")));
   t("verify-bridge-strict", payload.indexOf('if (side === "back") return null;') >= 0);
   t("no-auto-apply", cc.indexOf("未自动修改模板") >= 0);
-  t("bver-const", BVER === "0.3.11.74");
+  t("bver-const", BVER === "0.3.11.75");
   console.log("[selftest] ALL PASS");
 }
 function pageWorldPayloadFor() {

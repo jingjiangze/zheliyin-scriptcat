@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-24T06:50:37.517Z",
+  "ts": "2026-09-24T06:40:17.490Z",
   "stage": "STAGE10-G-COMMIT-L8-REAL-ACCEPTANCE",
   "cases": [
     "A",
@@ -1645,6 +1645,202 @@
       "passRounds": 3
     },
     {
+      "case": "I",
+      "label": "公司/姓名语义相近",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [
+            "GOTO: page.goto: net::ERR_ABORTED at https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do\nCall log:\n\u001b[2m  -"
+          ],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装",
+              "王明",
+              "总经理",
+              "电话: 0531-88886666"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790232504778
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装有限公司",
+              "王明",
+              "总经理",
+              "电话：0531-88886666"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王氏印刷包装有限公司",
+            "front-2": "王明",
+            "front-3": "总经理",
+            "front-4": "电话：0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -19.05,
+              -13.4,
+              -19.05,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装",
+              "王明",
+              "总经理",
+              "电话: 0531-88886666"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790232522962
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装有限公司",
+              "王明",
+              "总经理",
+              "电话：0531-88886666"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王氏印刷包装有限公司",
+            "front-2": "王明",
+            "front-3": "总经理",
+            "front-4": "电话：0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -19.05,
+              -13.4,
+              -19.05,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装",
+              "王明",
+              "总经理",
+              "电话: 0531-88886666"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790232541162
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装有限公司",
+              "王明",
+              "总经理",
+              "电话：0531-88886666"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王氏印刷包装有限公司",
+            "front-2": "王明",
+            "front-3": "总经理",
+            "front-4": "电话：0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -19.05,
+              -13.4,
+              -19.05,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.75",
+      "backExists": false,
+      "passRounds": 2
+    },
+    {
       "case": "J",
       "label": "空文字层（空槽不得误填）",
       "rounds": 3,
@@ -1850,200 +2046,6 @@
               -8.88,
               0,
               -23.57
-            ]
-          },
-          "applyFails": []
-        }
-      ],
-      "bver": "0.3.11.75",
-      "backExists": false,
-      "passRounds": 3
-    },
-    {
-      "case": "I",
-      "label": "公司/姓名语义相近",
-      "rounds": 3,
-      "roundsDone": 3,
-      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
-      "steps": [],
-      "errors": [],
-      "roundsData": [
-        {
-          "round": 1,
-          "errors": [],
-          "before": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装",
-              "王明",
-              "总经理",
-              "电话: 0531-88886666"
-            ],
-            "invSideCounts": {
-              "front": 4,
-              "back": 0
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
-          },
-          "matchedCount": 4,
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232650155
-            }
-          ],
-          "previewFails": [],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "after": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装有限公司",
-              "王明",
-              "总经理",
-              "电话：0531-88886666"
-            ]
-          },
-          "matchedBySlot": {
-            "front-1": "王氏印刷包装有限公司",
-            "front-2": "王明",
-            "front-3": "总经理",
-            "front-4": "电话：0531-88886666"
-          },
-          "frozen": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -19.05,
-              -13.4,
-              -19.05,
-              -22.44
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 2,
-          "errors": [],
-          "before": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装",
-              "王明",
-              "总经理",
-              "电话: 0531-88886666"
-            ],
-            "invSideCounts": {
-              "front": 4,
-              "back": 0
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
-          },
-          "matchedCount": 4,
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232668978
-            }
-          ],
-          "previewFails": [],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "after": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装有限公司",
-              "王明",
-              "总经理",
-              "电话：0531-88886666"
-            ]
-          },
-          "matchedBySlot": {
-            "front-1": "王氏印刷包装有限公司",
-            "front-2": "王明",
-            "front-3": "总经理",
-            "front-4": "电话：0531-88886666"
-          },
-          "frozen": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -19.05,
-              -13.4,
-              -19.05,
-              -22.44
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 3,
-          "errors": [],
-          "before": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装",
-              "王明",
-              "总经理",
-              "电话: 0531-88886666"
-            ],
-            "invSideCounts": {
-              "front": 4,
-              "back": 0
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
-          },
-          "matchedCount": 4,
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232686863
-            }
-          ],
-          "previewFails": [],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "after": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装有限公司",
-              "王明",
-              "总经理",
-              "电话：0531-88886666"
-            ]
-          },
-          "matchedBySlot": {
-            "front-1": "王氏印刷包装有限公司",
-            "front-2": "王明",
-            "front-3": "总经理",
-            "front-4": "电话：0531-88886666"
-          },
-          "frozen": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -19.05,
-              -13.4,
-              -19.05,
-              -22.44
             ]
           },
           "applyFails": []
