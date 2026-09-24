@@ -25,7 +25,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
 const DIAG_KEY = process.env.ZY_DIAG_KEY || "__zyStage9VisualDiag";
-const BVER = "0.3.11.81";
+const BVER = "0.3.11.82";
 
 function parseCookies(raw) {
   const out = [];
@@ -73,7 +73,7 @@ function selfTest() {
   t("smart-fill-html", cc.indexOf('id="zy-smart-fill"') >= 0 && cc.indexOf('#zy-smart-fill").addEventListener("click", contentApplyFromPanel)') >= 0);
   t("smart-dispatch", cc.indexOf('type: "templateApplySmart", plans: plans, side: "both"') >= 0);
   t("classify-verbatim", cc.indexOf("绝对禁止修改") >= 0 && cc.indexOf("splitLinesByMarkers") >= 0);
-  t("bver-const", BVER === "0.3.11.81");
+  t("bver-const", BVER === "0.3.11.82");
   console.log("[selftest] ALL PASS");
 }
 

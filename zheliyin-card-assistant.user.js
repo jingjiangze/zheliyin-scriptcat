@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.81
+// @version      0.3.11.82
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,46 +14,47 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-plan.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-validator.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/rule-match.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply-v2.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.81
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.81
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-plan.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-validator.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-workbench.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/rule-match.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply-v2.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.82
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.82
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -72,7 +73,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.81";
+  const VERSION = "0.3.11.82";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -345,6 +346,27 @@
         cursor: pointer;
       }
       #zy-native-ocr-tool-btn:hover { background: #1f6feb; }
+      .zy-match-block { border: 1px solid #d7e2f5; border-radius: 6px; padding: 8px; background: #f7faff; display: grid; gap: 8px; }
+      .zy-match-summary { font-size: 12px; font-weight: 700; color: #1f3b63; }
+      .zy-wb-cols { display: grid; grid-template-columns: 1.35fr 1fr; gap: 8px; }
+      .zy-wb-col { display: grid; gap: 6px; align-content: start; }
+      .zy-wb-h { font-size: 11px; color: #667085; font-weight: 700; }
+      .zy-wb-row { border: 1px solid #e4e7ec; border-radius: 6px; padding: 6px; background: #fff; display: grid; gap: 4px; }
+      .zy-wb-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+      .zy-wb-sid { font-size: 12px; font-weight: 700; color: #1f2937; }
+      .zy-wb-badge { font-size: 10px; padding: 1px 6px; border-radius: 8px; background: #eef2f7; color: #475467; }
+      .zy-wb-badge.ok { background: #e6f4ea; color: #1b7a3d; }
+      .zy-wb-badge.edit { background: #fff4e5; color: #b25e00; }
+      .zy-wb-badge.unclear { background: #fdecef; color: #b42318; }
+      .zy-wb-tpl { font-size: 11px; color: #667085; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .zy-wb-ops { display: grid; grid-template-columns: auto auto 1fr; gap: 4px; }
+      .zy-wb-mini { min-height: 26px !important; padding: 0 6px; font-size: 11px; }
+      .zy-wb-blocks { display: grid; gap: 4px; max-height: 260px; overflow: auto; }
+      .zy-wb-chip { display: grid; gap: 2px; border: 1px solid #e4e7ec; border-radius: 6px; padding: 5px 6px; background: #fff; cursor: pointer; }
+      .zy-wb-chip.sel { border-color: #1f6feb; box-shadow: 0 0 0 2px rgba(31,111,235,.18); }
+      .zy-wb-chip-id { font-size: 10px; color: #667085; }
+      .zy-wb-chip-tx { font-size: 12px; color: #172033; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .zy-wb-chip-st { font-size: 10px; color: #1f6feb; }
     `);
   }
 
@@ -439,23 +461,23 @@
         
         <div class="zy-match-block" id="zy-match-block" style="display:none">
           <div class="zy-match-summary" id="zy-match-summary"></div>
-          <div class="zy-match-rows" id="zy-match-rows"></div>
-          <div class="zy-actions two">
-            <button class="zy-btn" id="zy-apply-confirm">确认填充</button>
-            <button class="zy-btn secondary" id="zy-apply-cancel">取消</button>
-          </div>
-        </div>
-        <details class="zy-settings">
-          <summary>正反面与字段（可编辑）</summary>
-          <div class="zy-settings-body">
-            <div class="zy-side-grid" id="zy-side-texts">${renderSideTextInputs()}</div>
-            <div class="zy-grid" id="zy-fields">${renderFieldInputs(state.fields)}</div>
-            <div class="zy-actions two">
-              <button class="zy-btn" id="zy-apply-front">填正面</button>
-              <button class="zy-btn secondary" id="zy-apply-back">填反面</button>
+          <div class="zy-wb-cols">
+            <div class="zy-wb-col">
+              <div class="zy-wb-h">模板槽位（原模板只读 ／ 客户值可编辑）</div>
+              <div class="zy-match-rows" id="zy-match-rows"></div>
+            </div>
+            <div class="zy-wb-col">
+              <div class="zy-wb-h">客户文字块（点选后到左侧点「分配所选块」）</div>
+              <div class="zy-wb-blocks" id="zy-wb-blocks"></div>
             </div>
           </div>
-        </details>
+          <div class="zy-note" id="zy-wb-unmatched"></div>
+          <div class="zy-actions">
+            <button class="zy-btn" id="zy-apply-confirm">确认套版</button>
+            <button class="zy-btn secondary" id="zy-apply-cancel">取消</button>
+            <button class="zy-btn secondary" id="zy-wb-rematch" type="button">重新 AI 匹配</button>
+          </div>
+        </div>
         ${mvSettingsHtml()}
         <div class="zy-actions">
           <button class="zy-btn zy-ocr" id="zy-ocr-btn">识别图片文字</button>
@@ -538,14 +560,6 @@
         if (p.baseUrl && p.baseUrl !== cur.baseUrl) loadModels(panel);
       setStatus("已填入「" + (p.label || providerSel.value) + "」接口地址与默认模型，请填写 API Key。");
     });
-    panel.querySelector("#zy-apply-front").addEventListener("click", () => {
-      rebuildFieldsFromSideText();
-      applyFieldsToPage(state.fields, "front");
-    });
-    panel.querySelector("#zy-apply-back").addEventListener("click", () => {
-      rebuildFieldsFromSideText();
-      applyFieldsToPage(state.fields, "back");
-    });
     // P1 根因修复：模板曾移除 #zy-probe 按钮但绑定仍在 → querySelector null → TypeError → 后续绑定全部失效。
     // 防御性绑定：单按钮缺失不再拖垮整块面板（优先绑定 OCR，诊断其次）。
     const ocrBtn = panel.querySelector("#zy-ocr-btn");
@@ -562,6 +576,9 @@
     bindOcrControls(panel, "", () => { renderPanel(); });
     bindOcrSessionControls(panel, "");
     bindMvControls(panel);
+    bindWorkbench(panel);
+    const wbRematchBtn = panel.querySelector("#zy-wb-rematch");
+    if (wbRematchBtn) wbRematchBtn.addEventListener("click", mwRematch);
   }
 
   // 识别方式下拉 + 百度云 OCR（AK/SK 脱敏存取 + 保存 + 测试连接）统一绑定。
@@ -3200,24 +3217,59 @@
   // → 只展示匹配摘要与预览；执行（只 setText）交给 Commit 06 确认路径。旧 applyContentSimilar 保留。
   // Stage 10-G L 阶 Commit 06：确认填充前冻结的可执行计划（lastAiMatch；确认填充按钮消费）
   let lastAiMatch = null;
+  let mw = null; // M4 可编辑匹配工作台状态
+  // ==== M4 可编辑匹配工作台：渲染（左=模板槽位[原模板只读/客户值可编辑]，右=客户文字块）====
+  function mwStatusCn(st) { return ({ matched: "AI 匹配", manual: "手动分配", edited: "手动编辑", unclear: "不确定", empty: "未匹配" })[st] || "未匹配"; }
+  function mwSyncPlan() {
+    if (!mw || !lastAiMatch) return;
+    const snap = mw.snapshot;
+    if (!snap) { lastAiMatch.commands = []; return; }
+    const plan = zyBuildApplyCommandPlan({ snapshot: snap, matches: zyWbRebuildMatches(mw) });
+    lastAiMatch.commands = plan.ok ? plan.commands.slice() : [];
+    lastAiMatch.planErrors = plan.ok ? null : plan.errors.slice(0, 3);
+  }
   function refreshMatchBlock() {
     const block = document.getElementById("zy-match-block");
     const summaryEl = document.getElementById("zy-match-summary");
     const rowsEl = document.getElementById("zy-match-rows");
+    const blocksEl = document.getElementById("zy-wb-blocks");
+    const unEl = document.getElementById("zy-wb-unmatched");
     if (!block || !summaryEl || !rowsEl) return;
-    if (!lastAiMatch) { block.style.display = "none"; return; }
+    if (!mw) { block.style.display = "none"; return; }
     block.style.display = "block";
-    const ref = lastAiMatch.ref || {};
-    const f = lastAiMatch.sideCounts ? lastAiMatch.sideCounts.front : 0;
-    const b = lastAiMatch.sideCounts ? lastAiMatch.sideCounts.back : 0;
-    const fM = (ref.matches || []).filter(function (m) { return m.side === "front"; }).length;
-    const bM = (ref.matches || []).filter(function (m) { return m.side === "back"; }).length;
-    const sm = ref.summary || {};
-    const semN = (sm.semanticallyVerified != null) ? sm.semanticallyVerified : 0;
-    const vTagR = (lastAiMatch && lastAiMatch.versionCount > 1) ? ("第" + ((lastAiMatch.version || 0) + 1) + "版 ｜ ") : "";
-    const staleTag = lastAiMatch.stale ? "⚠ 版已切换，本匹配已失效（请重新匹配）｜ " : "";
-    summaryEl.textContent = staleTag + vTagR + "匹配结果（预览，未修改画布）：正面 " + fM + "/" + f + (b > 0 ? " / 反面 " + bM + "/" + b : "") + "（语义校验 " + semN + "）｜未匹配 " + (sm.unmatched != null ? sm.unmatched : 0) + " ｜不确定 " + (sm.uncertain != null ? sm.uncertain : 0);
-    rowsEl.innerHTML = (ref.matches || []).slice(0, 12).map(function (m) { return "<div class=\"zy-note\">" + escapeHtml((m.side === "back" ? "[反] " : "") + m.slotId + " ← " + String(m.customerText).slice(0, 24)) + "</div>"; }).join("");
+    const sm = zyWbSummary(mw);
+    const staleTag = (lastAiMatch && lastAiMatch.stale) ? "⚠ 版已切换，本匹配已失效（请重新匹配）｜ " : "";
+    const vTag = (mw.versionCount > 1) ? ("第 " + (mw.version + 1) + " 版 ｜ ") : "";
+    summaryEl.textContent = staleTag + vTag + "匹配工作台：已绑定 " + sm.matched + "/" + sm.slots + "（手动编辑 " + sm.edited + "）｜不确定 " + sm.unclear + "｜未匹配客户块 " + sm.unmatched;
+    rowsEl.innerHTML = mw.slots.map(function (s) {
+      const badgeCls = s.edited ? "edit" : (s.status === "unclear" ? "unclear" : (String(s.customerText).trim() ? "ok" : ""));
+      const others = mw.slots.filter(function (x) { return x.slotId !== s.slotId; });
+      return "<div class=\"zy-wb-row\" data-slot=\"" + escapeHtml(s.slotId) + "\">"
+        + "<div class=\"zy-wb-head\"><span class=\"zy-wb-sid\">" + escapeHtml(s.slotId) + "</span><span class=\"zy-wb-badge " + badgeCls + "\">" + mwStatusCn(s.status) + "</span></div>"
+        + "<div class=\"zy-wb-tpl\" title=\"原模板（只读）\">原模板：" + escapeHtml(s.templateText || "（空）") + "</div>"
+        + "<input class=\"zy-input zy-wb-cust\" data-cust=\"" + escapeHtml(s.slotId) + "\" value=\"" + escapeHtml(s.customerText) + "\" placeholder=\"客户值（留空 = 该槽不填）\">"
+        + "<div class=\"zy-wb-ops\">"
+        + "<button class=\"zy-btn secondary zy-wb-mini\" data-assign=\"" + escapeHtml(s.slotId) + "\" type=\"button\">分配所选块</button>"
+        + "<button class=\"zy-btn secondary zy-wb-mini\" data-unbind=\"" + escapeHtml(s.slotId) + "\" type=\"button\">解绑</button>"
+        + "<select class=\"zy-input zy-wb-mini\" data-swap=\"" + escapeHtml(s.slotId) + "\"><option value=\"\">交换…</option>"
+        + others.map(function (x) { return "<option value=\"" + escapeHtml(x.slotId) + "\">" + escapeHtml(x.slotId) + "</option>"; }).join("")
+        + "</select></div></div>";
+    }).join("");
+    if (blocksEl) {
+      blocksEl.innerHTML = mw.blocks.length ? mw.blocks.map(function (b) {
+        const sel = (mw.selectedBlockId === b.blockId) ? " sel" : "";
+        const st = b.boundSlotId ? ("→ " + b.boundSlotId) : (b.unmatchedReason ? "未匹配" : "未绑定");
+        return "<div class=\"zy-wb-chip" + sel + "\" data-block=\"" + escapeHtml(b.blockId) + "\"><span class=\"zy-wb-chip-id\">" + escapeHtml(b.blockId) + "</span><span class=\"zy-wb-chip-tx\">" + escapeHtml(String(b.text).slice(0, 40)) + "</span><span class=\"zy-wb-chip-st\">" + escapeHtml(st) + "</span></div>";
+      }).join("") : "<div class=\"zy-note\">无客户文字块（本地规则回退时可能为空）。</div>";
+    }
+    if (unEl) {
+      const uns = mw.blocks.filter(function (b) { return !b.boundSlotId; });
+      const unc = mw.uncertain.map(function (u) { return u.slotId + "：" + String(u.reason || "").slice(0, 36); });
+      const parts = [];
+      if (uns.length) parts.push("未匹配客户块：" + uns.map(function (b) { return b.blockId + " " + String(b.text).slice(0, 16); }).join(" ｜ "));
+      if (unc.length) parts.push("不确定槽位：" + unc.join(" ｜ "));
+      unEl.textContent = parts.length ? parts.join("\n") : "（全部已绑定）";
+    }
   }
   async function confirmTemplateApply() {
     if (!lastAiMatch) { setStatus("没有可确认的 AI 匹配结果，请先「一键智能填充」。"); return; }
@@ -3228,7 +3280,7 @@
       const r = await bridgeCall("templateApplyV2", 25000, { commands: lastAiMatch.commands, pageId: lastAiMatch.pageId, slotsCount: lastAiMatch.sideCounts || {}, planHash: lastAiMatch.planHash });
       if (r && r.ok) {
         setStatus("AI 填充完成：更新 " + (r.applied || []).length + " 槽（几何/字体/样式/身份/层序冻结，只改文字）。");
-        lastAiMatch = null; refreshMatchBlock();
+        lastAiMatch = null; mw = null; refreshMatchBlock();
       } else {
         const errCode = (r && r.code) || "NO_REPLY";
         const errHint = (errCode === "VERSION_MISMATCH")
@@ -3244,8 +3296,81 @@
   }
   function cancelTemplateApply() {
     lastAiMatch = null;
+    mw = null;
     refreshMatchBlock();
     setStatus("已取消 AI 填充预览。");
+  }
+
+  // ==== M4 工作台交互（点选分配 / 行内编辑 / 解绑 / 交换 / 重新 AI 匹配）====
+  function bindWorkbench(scope) {
+    if (!scope) return;
+    const rowsEl = scope.querySelector("#zy-match-rows");
+    if (rowsEl) {
+      rowsEl.addEventListener("click", function (e) {
+        const t = e.target; if (!t || !t.closest) return;
+        const asg = t.closest("[data-assign]");
+        if (asg) { mwDoAssign(asg.getAttribute("data-assign")); return; }
+        const unb = t.closest("[data-unbind]");
+        if (unb) { mwDoUnbind(unb.getAttribute("data-unbind")); return; }
+      });
+      rowsEl.addEventListener("change", function (e) {
+        const t = e.target; if (!t || !t.matches) return;
+        if (t.matches("select[data-swap]")) { const b = t.value; if (b) mwDoSwap(t.getAttribute("data-swap"), b); return; }
+        if (t.matches("input[data-cust]")) { mwDoEdit(t.getAttribute("data-cust"), t.value); }
+      });
+    }
+    const blocksEl = scope.querySelector("#zy-wb-blocks");
+    if (blocksEl) {
+      blocksEl.addEventListener("click", function (e) {
+        const t = e.target; if (!t || !t.closest || !mw) return;
+        const chip = t.closest("[data-block]");
+        if (!chip) return;
+        const bid = chip.getAttribute("data-block");
+        mw.selectedBlockId = (mw.selectedBlockId === bid) ? null : bid;
+        refreshMatchBlock();
+      });
+    }
+  }
+  function mwGuard() {
+    if (!mw) { setStatus("没有可编辑的匹配，请先「一键智能填充」。"); return false; }
+    if (lastAiMatch && lastAiMatch.stale) { setStatus("版已切换，本匹配已失效，请重新「一键智能填充」。"); return false; }
+    return true;
+  }
+  function mwAfterOp() { mwSyncPlan(); refreshMatchBlock(); }
+  function mwDoAssign(slotId) {
+    if (!mwGuard()) return;
+    if (!mw.selectedBlockId) { setStatus("请先在右侧「客户文字块」点选一个块，再点「分配所选块」。"); return; }
+    const r = zyWbAssign(mw, slotId, mw.selectedBlockId);
+    if (!r.ok) { setStatus("分配失败（" + r.code + "）。"); return; }
+    setStatus("已把客户块分配到 " + slotId + "（未修改画布；点「确认套版」才写入）。");
+    mw.selectedBlockId = null; mwAfterOp();
+  }
+  function mwDoUnbind(slotId) {
+    if (!mwGuard()) return;
+    const r = zyWbUnbind(mw, slotId);
+    if (!r.ok) { setStatus("解绑失败（" + r.code + "）。"); return; }
+    setStatus("已解绑 " + slotId + "（该槽确认套版时不写入）。");
+    mwAfterOp();
+  }
+  function mwDoSwap(a, b) {
+    if (!mwGuard()) return;
+    const r = zyWbSwap(mw, a, b);
+    if (!r.ok) { setStatus("交换失败（" + r.code + "）。"); return; }
+    setStatus("已交换 " + a + " ↔ " + b + "。");
+    mwAfterOp();
+  }
+  function mwDoEdit(slotId, text) {
+    if (!mwGuard()) return;
+    const r = zyWbAssignText(mw, slotId, text);
+    if (!r.ok) { setStatus("编辑失败（" + r.code + "）。"); return; }
+    setStatus("已手动编辑 " + slotId + "（标记 MANUAL_EDIT，已断开逐字来源）。");
+    mwAfterOp();
+  }
+  function mwRematch() {
+    const panel = document.getElementById("zy-card-assistant");
+    const raw = panel && panel.querySelector("#zy-raw") ? panel.querySelector("#zy-raw").value : "";
+    if (!String(raw || "").trim()) { setStatus("请先粘贴客户文字。"); return; }
+    contentApplyFromPanel();
   }
 
   // ==== P2 多版套版（仅当前版）：版标识 / 切版跟切 / 填当前面·填正反面 ====
@@ -3318,7 +3443,7 @@
       const r = await bridgeCall("templateApplyV2", 25000, { commands: cmds, pageId: lastAiMatch.pageId, slotsCount: lastAiMatch.sideCounts || {}, planHash: lastAiMatch.planHash });
       if (r && r.ok) {
         setStatus(label + "完成：更新 " + (r.applied || []).length + " 槽（仅当前版，几何/字体/样式/身份/层序冻结，只改文字）。");
-        lastAiMatch = null; mvStatusMsg = ""; refreshMatchBlock(); mvRenderInto();
+        lastAiMatch = null; mw = null; mvStatusMsg = ""; refreshMatchBlock(); mvRenderInto();
       } else {
         const errCode = (r && r.code) || "NO_REPLY";
         const hint = (errCode === "VERSION_MISMATCH")
@@ -3405,6 +3530,7 @@
       const v2PageId = (invAll && invAll.page && invAll.page.pageId) || null;
       if (cmdPlan.ok && cmdPlan.commands.length && snapHash && v2PageId) {
         lastAiMatch = { ok: true, commands: cmdPlan.commands.slice(), planHash: snapHash, pageId: v2PageId, version: vMetaL, versionCount: vCountL, sideCounts: { front: frontItems.length, back: backItems.length }, total: frontItems.length + backItems.length, ref: { matches: localMatches, summary: { matched: localMatches.length, uncertain: 0, unmatched: 0 } }, localRule: true, ts: Date.now() };
+        mw = zyBuildWorkbench({ slots: snapshot, version: vMetaL, versionCount: vCountL, multi: !!snapshot.multi, sideCounts: { front: frontItems.length, back: backItems.length }, pageId: v2PageId, planHash: snapHash, matches: localMatches, blocks: [], uncertain: [], unmatched: [], snapshot: snapshot });
         const lines = [
           vTagL + "AI 槽位匹配不可用（" + why + "），已改用本地规则库匹配（预览，未修改画布）：",
           "本地规则匹配 " + localMatches.length + "/" + (frontItems.length + backItems.length) + " 槽；确认后仅改文字冻结其余。"
@@ -3413,6 +3539,7 @@
         setStatus(lines.join("\n"));
       } else {
         setStatus("AI 槽位匹配不可用（" + why + "），本地规则计划无效：未自动修改模板。");
+        mw = null;
       }
       refreshMatchBlock();
     } catch (e2) {
@@ -3448,6 +3575,9 @@
       const merged = [];
       const reports = [];
       const sideErrors = [];
+      const allBlocks = [];
+      const allUncertain = [];
+      const allUnmatched = [];
       const SIDES = ["front", "back"];
       for (let si = 0; si < SIDES.length; si += 1) {
         const sd = SIDES[si];
@@ -3482,6 +3612,9 @@
           reports.push({ side: sd, slots: items.length, rows: rows.length, matched: ref.matches.length, verified: ref.summary.semanticallyVerified, uncertain: ref.summary.uncertain, unmatched: ref.summary.unmatched, unaccounted: ref.summary.unaccounted, errors: ref.errors.length });
           if (ref.errors.length) sideErrors.push(label + "：" + ref.errors.slice(0, 3).join("; "));
           (ref.matches || []).forEach(function (m) { merged.push(m); });
+          (ref.blocks || []).forEach(function (b) { allBlocks.push(b); });
+          (ref.uncertain || []).forEach(function (u) { allUncertain.push(u); });
+          (ref.unmatchedCustomer || []).forEach(function (u) { allUnmatched.push(u); });
         } catch (eSide) {
           sideErrors.push(label + " AI 调用失败：" + String(eSide && eSide.message ? eSide.message : eSide).slice(0, 60));
           reports.push({ side: sd, slots: items.length, rows: rows.length, matched: 0, verified: 0, uncertain: 0, unmatched: 0, unaccounted: 0, failed: true });
@@ -3519,8 +3652,10 @@
           ref: { matches: ordered, summary: { matched: ordered.length, semanticallyVerified: verifiedN, uncertain: uncertainN, unmatched: unmatchedN } },
           ts: Date.now()
         };
+        mw = zyBuildWorkbench({ slots: snapshot, version: vMeta, versionCount: vCount, multi: !!snapshot.multi, sideCounts: { front: frontItems.length, back: backItems.length }, pageId: v2PageId, planHash: snapHash, matches: ordered, blocks: allBlocks, uncertain: allUncertain, unmatched: allUnmatched, snapshot: snapshot });
       } else {
         lastAiMatch = null;
+        mw = null;
       }
       refreshMatchBlock();
     } catch (e) {
