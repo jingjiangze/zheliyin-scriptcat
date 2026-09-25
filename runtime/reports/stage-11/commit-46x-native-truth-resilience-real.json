@@ -1,0 +1,175 @@
+{
+  "ts": "2026-09-25T02:09:35.832Z",
+  "stage": "STAGE10-G-NATIVE-TRUTH-RESILIENCE",
+  "cookieSource": "merged",
+  "bverExpect": "0.3.11.89",
+  "rounds": 2,
+  "runs": [
+    {
+      "round": 1,
+      "assist": "1",
+      "errors": [],
+      "steps": {
+        "R1": {
+          "ok": true,
+          "err": null,
+          "mode": "NATIVE_TRUTH",
+          "skipped": false,
+          "reason": null,
+          "totalNative": 2,
+          "matched": 1,
+          "unmatched": 1,
+          "blocksLen": 1,
+          "blockTexts": [
+            {
+              "text": "甲公司",
+              "src": "NATIVE_OCR"
+            }
+          ],
+          "sidecar": null,
+          "gateFail": {
+            "code": "NATIVE_PARTIAL_OK",
+            "message": "Native 识别 2 行，可定位 1 行即将创建；缺失 1 行文字不创建：乙公司"
+          },
+          "gatePass": true,
+          "assist": {
+            "err": null,
+            "mode": "NATIVE_TRUTH",
+            "skipped": false,
+            "reason": null,
+            "totalNative": 2,
+            "unmatched": 2,
+            "sidecar": null,
+            "gateFail": {
+              "code": "NATIVE_GEOMETRY_UNRESOLVED",
+              "message": "Native 识别 2 行，全部无可靠 geometry（NATIVE_GEOMETRY_UNRESOLVED），本批不进入创建"
+            }
+          }
+        },
+        "R3": {
+          "gatePass": true,
+          "gateFail": {
+            "code": "NATIVE_PARTIAL_OK",
+            "message": "Native 识别 2 行，可定位 1 行即将创建；缺失 1 行文字不创建：乙公司"
+          }
+        },
+        "R6": {
+          "err": null,
+          "mode": "NATIVE_TRUTH",
+          "skipped": false,
+          "reason": null,
+          "totalNative": 2,
+          "unmatched": 2,
+          "sidecar": null,
+          "gateFail": {
+            "code": "NATIVE_GEOMETRY_UNRESOLVED",
+            "message": "Native 识别 2 行，全部无可靠 geometry（NATIVE_GEOMETRY_UNRESOLVED），本批不进入创建"
+          }
+        },
+        "R6Note": "assist 分支未进入（策略判定无需本地辅助）",
+        "R4": {
+          "hasRecover": true,
+          "hasSidecar": true,
+          "recoverOk": true,
+          "recoverNeutral": {
+            "recovered": 0,
+            "unresolved": 0
+          },
+          "sidecarIsArray": true,
+          "sidecarLen": 0
+        },
+        "R5": {
+          "lines": [
+            "[zy-ocr][TRUTH] align native=2 geo=1 matched=1 unmatchedNative=1 unusedGeo=0 1:N=0 N:1=0 valid=true",
+            "[zy-ocr][TRUTH] align native=2 geo=0 matched=0 unmatchedNative=2 unusedGeo=0 1:N=0 N:1=0 valid=true"
+          ],
+          "exceptionLines": []
+        }
+      },
+      "bver": "0.3.11.89"
+    },
+    {
+      "round": 2,
+      "assist": "0",
+      "errors": [],
+      "steps": {
+        "R1": {
+          "ok": true,
+          "err": null,
+          "mode": "NATIVE_TRUTH",
+          "skipped": false,
+          "reason": null,
+          "totalNative": 2,
+          "matched": 1,
+          "unmatched": 1,
+          "blocksLen": 1,
+          "blockTexts": [
+            {
+              "text": "甲公司",
+              "src": "NATIVE_OCR"
+            }
+          ],
+          "sidecar": null,
+          "gateFail": {
+            "code": "NATIVE_PARTIAL_OK",
+            "message": "Native 识别 2 行，可定位 1 行即将创建；缺失 1 行文字不创建：乙公司"
+          },
+          "gatePass": true,
+          "assist": {
+            "err": null,
+            "mode": "NATIVE_TRUTH",
+            "skipped": false,
+            "reason": null,
+            "totalNative": 2,
+            "unmatched": 2,
+            "sidecar": null,
+            "gateFail": {
+              "code": "NATIVE_GEOMETRY_UNRESOLVED",
+              "message": "Native 识别 2 行，全部无可靠 geometry（NATIVE_GEOMETRY_UNRESOLVED），本批不进入创建"
+            }
+          }
+        },
+        "R3": {
+          "gatePass": true,
+          "gateFail": {
+            "code": "NATIVE_PARTIAL_OK",
+            "message": "Native 识别 2 行，可定位 1 行即将创建；缺失 1 行文字不创建：乙公司"
+          }
+        },
+        "R6": {
+          "err": null,
+          "mode": "NATIVE_TRUTH",
+          "skipped": false,
+          "reason": null,
+          "totalNative": 2,
+          "unmatched": 2,
+          "sidecar": null,
+          "gateFail": {
+            "code": "NATIVE_GEOMETRY_UNRESOLVED",
+            "message": "Native 识别 2 行，全部无可靠 geometry（NATIVE_GEOMETRY_UNRESOLVED），本批不进入创建"
+          }
+        },
+        "R6Note": "assist 分支未进入（策略判定无需本地辅助）",
+        "R4": {
+          "hasRecover": true,
+          "hasSidecar": true,
+          "recoverOk": true,
+          "recoverNeutral": {
+            "recovered": 0,
+            "unresolved": 0
+          },
+          "sidecarIsArray": true,
+          "sidecarLen": 0
+        },
+        "R5": {
+          "lines": [
+            "[zy-ocr][TRUTH] align native=2 geo=1 matched=1 unmatchedNative=1 unusedGeo=0 1:N=0 N:1=0 valid=true",
+            "[zy-ocr][TRUTH] align native=2 geo=0 matched=0 unmatchedNative=2 unusedGeo=0 1:N=0 N:1=0 valid=true"
+          ],
+          "exceptionLines": []
+        }
+      }
+    }
+  ],
+  "errors": []
+}

@@ -123,5 +123,11 @@ t("G4: 流水线内部异常（skipped）→ NATIVE_TRUTH_PIPELINE_ERROR（不�
   if (r.ok) throw new Error("must stop");
   if (r.code !== "NATIVE_TRUTH_PIPELINE_ERROR") throw new Error("code=" + r.code);
 });
+t("G5: reason=pipeline-error → NATIVE_TRUTH_PIPELINE_ERROR 且透出内部异常文本", () => {
+  const r = G.resolveGate({ blocks: [], mode: "OFF", skipped: true, reason: "pipeline-error", pipelineError: "runLocalGeometrySidecar is not defined" });
+  if (r.ok) throw new Error("must stop");
+  if (r.code !== "NATIVE_TRUTH_PIPELINE_ERROR") throw new Error("code=" + r.code);
+  if (String(r.message).indexOf("runLocalGeometrySidecar is not defined") < 0) throw new Error("message 未透出异常文本: " + r.message);
+});
 console.log("native-gate-every-path: pass=" + passed + " fail=" + failed);
 process.exit(failed ? 1 : 0);

@@ -136,7 +136,8 @@ function resolveGate(tb, o) {
   }
   // 输出 bug 修复（2026-09-24）：totalNative=0 必须区分「真值缺失」/「流水线内部异常」/「原生识别 0 行」，
   // 不得一律报「无 Native 文字真值」（后者会让用户无法得知真实原因）。
-  if (tb.skipped === true && !tb.native) return { ok: false, code: "NATIVE_TRUTH_PIPELINE_ERROR", message: "Native 文字真值流水线异常（内部错误或依赖未就绪，非“无真值”），本批不创建；请重试，若持续出现请反馈该提示。", matched: 0, unresolved: 0, totalNative: 0, missingTexts: [] };
+  if (tb.reason === "pipeline-error") return { ok: false, code: "NATIVE_TRUTH_PIPELINE_ERROR", message: "Native 文字真值流水线异常（内部错误" + (tb.pipelineError ? "：" + String(tb.pipelineError).slice(0, 200) : "") + "），本批不创建；请重试，若持续出现请把本提示反馈给我。", matched: 0, unresolved: 0, totalNative: 0, missingTexts: [], pipelineError: tb.pipelineError || null };
+  if (tb.skipped === true && !tb.native) return { ok: false, code: "NATIVE_TRUTH_PIPELINE_ERROR", message: "Native 文字真值流水线异常（依赖未就绪，非“无真值”），本批不创建；请刷新页面后重试，若持续出现请反馈该提示。", matched: 0, unresolved: 0, totalNative: 0, missingTexts: [] };
   if (tb.native && tb.native.ok === true) return { ok: false, code: "NATIVE_EMPTY", message: "Native OCR 请求成功但未识别到文字（0 行），本批不创建。请确认图片内确有文字，并使用手写体真值通道（textType=2）；若刚更新脚本请刷新页面后重试。", matched: 0, unresolved: 0, totalNative: 0, missingTexts: [] };
   return { ok: false, code: "NATIVE_NO_TRUTH", message: "无 Native 文字真值，本批不创建", matched: 0, unresolved: 0, totalNative: 0, missingTexts: [] };
 }
