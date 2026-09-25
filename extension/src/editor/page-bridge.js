@@ -107,6 +107,21 @@ function pageBridge() {
         } catch (eM) { return null; }
       };
     }
+    // 阶段2 P0-2（2026-09-25）：字号求解【单一入口】——
+    //   优先使用 M5 单一来源 zyFitFontSize（由 installPageBridge 注入 page 世界，见 template-text-fit.js），
+    //   仅当注入缺失时回退历史 zySolveFontSizeFusion（@deprecated，待真机确认后删除）。
+    // 契约：调用方给 baseFontSize（当前字号）+ minFontSize（本路径策略下限；smart=10，v2 不传=0.6·base）。
+    // 红线不变：只写 fontSize；lineHeight/charSpacing/几何/身份/层序一律不动。
+    function zyPickFontSize(input) {
+      var o = input || {};
+      var fitFn = (typeof zyFitFontSize === "function") ? zyFitFontSize : null;
+      if (fitFn) {
+        return fitFn({ text: o.text, targetWidth: o.targetWidth, fontFamily: o.fontFamily, baseFontSize: o.baseFontSize, measurer: o.measurer, minFontSize: o.minFontSize });
+      }
+      // 回退：历史融合求解（其自身下限 10px；返回结构兼容 ok/fontSize/reason）
+      return zySolveFontSizeFusion({ text: o.text, targetVisualWidth: o.targetWidth, fontFamily: o.fontFamily, measurer: o.measurer });
+    }
+    // @deprecated 阶段2：新代码一律走 zyPickFontSize；本函数仅为注入缺失时的回退，确认后删除。
     // fontSize 自适应（advance-width 主路径镜像；无源图墨迹场景 → 按容器宽二分解最大不溢出字号）。
     // 写回只允许 fontSize；lineHeight/charSpacing 由调用方只读取证（Stage 10-C 暂停约束）。
     function zySolveFontSizeFusion(input) {
@@ -165,7 +180,7 @@ function pageBridge() {
           let fsResult = null, fsFrom = before.fontSize, fsTo = before.fontSize;
           const targetW = (typeof so.width === "number" && isFinite(so.width) && so.width > 0) ? so.width : null;
           if (targetW && measurer) {
-            fsResult = zySolveFontSizeFusion({ text: text, targetVisualWidth: targetW, fontFamily: so.fontFamily || "sans-serif", measurer: measurer });
+            fsResult = zyPickFontSize({ text: text, targetWidth: targetW, fontFamily: so.fontFamily || "sans-serif", baseFontSize: fsFrom, minFontSize: 10, measurer: measurer });
             if (fsResult && fsResult.ok && fsResult.fontSize) { fsTo = fsResult.fontSize; if (fsTo !== fsFrom) { try { so.set("fontSize", fsTo); if (typeof so.setCoords === "function") so.setCoords(); syncBusinessFieldsFromObject(so); } catch (eF) { fsTo = fsFrom; } } }
           }
           const rendered = measureFabInkFor(so);
@@ -368,7 +383,7 @@ function pageBridge() {
           const applied = [];
           // M5 模板 Fit（默认开启）：以「槽位原足迹宽」为目标真实测量客户文本，必要时缩小字号；只写 fontSize。
           const v2Measurer = zyMakeCanvasMeasurerFor(cvs);
-          const v2FitFn = (typeof zyFitFontSize === "function") ? zyFitFontSize : null;
+          const v2FitFn = (typeof zyPickFontSize === "function") ? zyPickFontSize : null;
           const fitEvidence = [];
           group.forEach(function (g) {
             try {
@@ -382,7 +397,7 @@ function pageBridge() {
               syncBusinessFieldsFromObject(so);
               let fsTo = fsFrom, fit = null;
               if (v2FitFn && v2Measurer && fsTarget != null && fsFrom != null) {
-                fit = v2FitFn({ text: text, targetWidth: fsTarget, fontFamily: so.fontFamily || "sans-serif", baseFontSize: fsFrom, measurer: v2Measurer });
+                fit = v2FitFn({ text: text, targetWidth: fsTarget, fontFamily: so.fontFamily || "sans-serif", baseFontSize: fsFrom, measurer: v2Measurer, minFontSize: null });
                 if (fit && fit.ok && typeof fit.fontSize === "number" && fit.fontSize !== fsFrom) {
                   try { so.set("fontSize", fit.fontSize); if (typeof so.setCoords === "function") so.setCoords(); syncBusinessFieldsFromObject(so); fsTo = fit.fontSize; } catch (eF) { fsTo = fsFrom; }
                 }
@@ -2326,6 +2341,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.90'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.90' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.91'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.91' };
   }

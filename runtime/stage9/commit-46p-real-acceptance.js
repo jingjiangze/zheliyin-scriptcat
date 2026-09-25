@@ -28,7 +28,7 @@ const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAd
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim().toUpperCase()).filter(Boolean);
 const MERGE = process.env.ZY_MERGE === "1";
 const TRACE_KEY = "__zy46pTrace";
-const BVER = "0.3.11.90";
+const BVER = "0.3.11.91";
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
 const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
@@ -198,7 +198,7 @@ function selfTest() {
   t("frozen-keys", FROZEN_KEYS.indexOf("objectUuid") >= 0 && FROZEN_KEYS.indexOf("angle") >= 0 && FROZEN_KEYS.indexOf("fontId") >= 0 && FROZEN_KEYS.indexOf("width") >= 0);
   t("copy-btns", cc.indexOf('id="zy-copy-both"') >= 0 && cc.indexOf('id="zy-copy-all"') >= 0 && cc.indexOf('id="zy-copy-current"') < 0 && cc.indexOf('id="zy-copy-template"') < 0);
   t("confirm-ui", cc.indexOf('id="zy-match-block"') >= 0 && cc.indexOf('id="zy-apply-confirm"') >= 0);
-  t("bver-const", BVER === "0.3.11.90");
+  t("bver-const", BVER === "0.3.11.91");
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }

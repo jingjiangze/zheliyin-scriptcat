@@ -33,7 +33,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = (process.env.ZY_URL || "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do") + "?zydebug=1";
 const ROUNDS = Number(process.env.ZY_ROUNDS || 2);
 const MERGE = process.env.ZY_MERGE === "1";
-const BVER = "0.3.11.90";
+const BVER = "0.3.11.91";
 const TINY_PNG = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFAAH/q842iQAAAABJRU5ErkJggg==";
 
 function parseCookies(raw) {
@@ -75,7 +75,7 @@ function pageWorldPayloadFor() {
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = injectUserscript();
-  t("bver", BVER === "0.3.11.90");
+  t("bver", BVER === "0.3.11.91");
   t("rounds>=2", ROUNDS >= 2);
   t("safe-wrappers", cc.indexOf("function safeRecoverNativeGeometry(") >= 0 && cc.indexOf("async function safeRunLocalGeometrySidecar(") >= 0);
   t("no-raw-assist-calls", (cc.match(/await runLocalGeometrySidecar\(img\)/g) || []).length === 1 && cc.indexOf("await safeRunLocalGeometrySidecar(img)") >= 0);

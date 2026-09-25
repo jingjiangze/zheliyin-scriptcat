@@ -31,7 +31,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = process.env.ZY_URL || "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const ROUNDS = Number(process.env.ZY_ROUNDS || 2);
 const MERGE = process.env.ZY_MERGE === "1";
-const BVER = "0.3.11.90";
+const BVER = "0.3.11.91";
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
 const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
@@ -90,7 +90,7 @@ const FROZEN = ["objectUuid", "left", "top", "width", "angle", "fontId", "fontFa
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = injectUserscript();
-  t("bver", BVER === "0.3.11.90");
+  t("bver", BVER === "0.3.11.91");
   t("rounds>=2", ROUNDS >= 2);
   t("wb-ui", cc.indexOf("zy-wb-row") >= 0 && cc.indexOf("zy-wb-chip") >= 0 && cc.indexOf("data-assign") >= 0 && cc.indexOf("data-swap") >= 0);
   t("wb-fns", cc.indexOf("mwDoAssign") >= 0 && cc.indexOf("zyWbSwap") >= 0 && cc.indexOf("mwSyncPlan") >= 0);
