@@ -280,11 +280,13 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
         }).catch(() => ({}));
         const st = r && r.st;
         if (st) samples.push(String(st).slice(0, 300));
-        if (st && /AI 槽位匹配完成（预览，未修改画布）/.test(st) && !confirmed && r && r.confirmReady) {
+        // P0-X 第三轮：预览文案有两种 —— AI 分支「AI 槽位匹配完成（预览，未修改画布）」与
+        // 本地规则库降级分支「…已改用本地规则库匹配（预览，未修改画布）…」；统一以「（预览，未修改画布）」通配识别。
+        if (st && /（预览，未修改画布）/.test(st) && !confirmed && r && r.confirmReady) {
           const c = await page.evaluate(() => { const b = document.querySelector("#zy-apply-confirm"); if (b && b.offsetParent) { try { b.click(); return true; } catch (e) {} } return false; }).catch(() => false);
           if (c) { confirmed = true; samples.push("[drive] clicked #zy-apply-confirm"); }
         }
-        if (st && /正面更新 \d+ 槽|智能套版完成|智能套版失败|请先粘贴客户文字|AI 填充完成：更新 \d+ 槽|没有可填槽位|无匹配/.test(st)) return { done: true, st, samples, confirmed };
+        if (st && /正面更新 \d+ 槽|智能套版完成|智能套版失败|请先粘贴客户文字|更新 \d+ 槽|没有可填槽位|无匹配|未找到匹配|无需匹配/.test(st)) return { done: true, st, samples, confirmed };
         await SLEEP(900);
       }
       return { done: false, samples, confirmed };

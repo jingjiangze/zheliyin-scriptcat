@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-25T03:14:59.482Z",
+  "ts": "2026-09-25T11:15:42.114Z",
   "stage": "STAGE10-G-COMMIT-I-CONTENT-SIMILAR-REAL",
   "cases": [
     "C-MAIN",
@@ -21,34 +21,25 @@
           "ok": true
         }
       ],
-      "errors": [
-        "ASSERT_FAIL r1: TEXT@1 期望[13800138000] 实得[1380 0138 000]（非原文逐字） | STATUS_APPLIED 3 不符：",
-        "ASSERT_FAIL r2: TEXT@1 期望[13800138000] 实得[1380 0138 000]（非原文逐字） | STATUS_APPLIED 3 不符：",
-        "ASSERT_FAIL r3: TEXT@1 期望[13800138000] 实得[1380 0138 000]（非原文逐字） | STATUS_APPLIED 3 不符："
-      ],
+      "errors": [],
       "runs": [
         {
           "rnd": 1,
-          "status": null,
+          "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。",
           "samples": [
             "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号"
+            "[drive] clicked #zy-apply-confirm",
+            "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           ],
           "frontCount": 3,
           "invFront": [
             {
-              "objectUuid": "01fd032e-bc04-409b-8b58-387b74774d27",
+              "objectUuid": "26376392-2cea-41d0-877b-f871aad7958d",
               "text": "王小明",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
               "width": 160,
-              "height": 36,
+              "height": 20.339999999999996,
               "fontSize": 18,
               "fontFamily": "方正黑体简体",
               "fontWeight": "normal",
@@ -56,7 +47,7 @@
               "angle": 0,
               "center": {
                 "x": 140.89999999999998,
-                "y": 48.87291666666667
+                "y": 41.04291666666666
               },
               "fontId": "248",
               "markuuid": "",
@@ -71,7 +62,7 @@
                 "left": 60.89999999999999,
                 "top": 30.872916666666665,
                 "width": 160,
-                "height": 36,
+                "height": 20.339999999999996,
                 "angle": 0
               },
               "typography": {
@@ -87,18 +78,18 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "01fd032e-bc04-409b-8b58-387b74774d27",
+                "objectUuid": "26376392-2cea-41d0-877b-f871aad7958d",
                 "markuuid": "",
                 "layerNum": 1
               }
             },
             {
-              "objectUuid": "6021b70c-3165-449e-8db5-a578f97e23e8",
-              "text": "1380 0138 000",
+              "objectUuid": "84cd0f55-d13b-4c24-80de-3e6912a26416",
+              "text": "13800138000",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
               "width": 160,
-              "height": 36,
+              "height": 16.95,
               "fontSize": 15,
               "fontFamily": "方正黑体简体",
               "fontWeight": "normal",
@@ -106,7 +97,7 @@
               "angle": 0,
               "center": {
                 "x": 148.89999999999998,
-                "y": 72.02760416666666
+                "y": 62.502604166666664
               },
               "fontId": "248",
               "markuuid": "",
@@ -121,7 +112,7 @@
                 "left": 68.89999999999999,
                 "top": 54.02760416666666,
                 "width": 160,
-                "height": 36,
+                "height": 16.95,
                 "angle": 0
               },
               "typography": {
@@ -137,18 +128,18 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "6021b70c-3165-449e-8db5-a578f97e23e8",
+                "objectUuid": "84cd0f55-d13b-4c24-80de-3e6912a26416",
                 "markuuid": "",
                 "layerNum": 2
               }
             },
             {
-              "objectUuid": "50e40e02-4c04-4577-b434-b78ea68e2099",
+              "objectUuid": "508df339-f0f1-42d0-b615-71e08126f652",
               "text": "北京市朝阳区建国路88号",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
               "width": 160,
-              "height": 36,
+              "height": 12.43,
               "fontSize": 11,
               "fontFamily": "方正黑体简体",
               "fontWeight": "normal",
@@ -156,7 +147,7 @@
               "angle": 0,
               "center": {
                 "x": 156.89999999999998,
-                "y": 95.18229166666666
+                "y": 83.39729166666666
               },
               "fontId": "248",
               "markuuid": "",
@@ -171,7 +162,7 @@
                 "left": 76.89999999999999,
                 "top": 77.18229166666666,
                 "width": 160,
-                "height": 36,
+                "height": 12.43,
                 "angle": 0
               },
               "typography": {
@@ -187,17 +178,14 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "50e40e02-4c04-4577-b434-b78ea68e2099",
+                "objectUuid": "508df339-f0f1-42d0-b615-71e08126f652",
                 "markuuid": "",
                 "layerNum": 3
               }
             }
           ],
           "statusConfirmed": false,
-          "assertFails": [
-            "TEXT@1 期望[13800138000] 实得[1380 0138 000]（非原文逐字）",
-            "STATUS_APPLIED 3 不符："
-          ],
+          "assertFails": [],
           "clickDiag": {
             "clicked": true,
             "panel": true,
@@ -212,26 +200,21 @@
         },
         {
           "rnd": 2,
-          "status": null,
+          "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。",
           "samples": [
             "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号"
+            "[drive] clicked #zy-apply-confirm",
+            "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           ],
           "frontCount": 3,
           "invFront": [
             {
-              "objectUuid": "01fd032e-bc04-409b-8b58-387b74774d27",
+              "objectUuid": "26376392-2cea-41d0-877b-f871aad7958d",
               "text": "王小明",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
               "width": 160,
-              "height": 36,
+              "height": 20.339999999999996,
               "fontSize": 18,
               "fontFamily": "方正黑体简体",
               "fontWeight": "normal",
@@ -239,7 +222,7 @@
               "angle": 0,
               "center": {
                 "x": 140.89999999999998,
-                "y": 48.87291666666667
+                "y": 41.04291666666666
               },
               "fontId": "248",
               "markuuid": "",
@@ -254,7 +237,7 @@
                 "left": 60.89999999999999,
                 "top": 30.872916666666665,
                 "width": 160,
-                "height": 36,
+                "height": 20.339999999999996,
                 "angle": 0
               },
               "typography": {
@@ -270,18 +253,18 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "01fd032e-bc04-409b-8b58-387b74774d27",
+                "objectUuid": "26376392-2cea-41d0-877b-f871aad7958d",
                 "markuuid": "",
                 "layerNum": 1
               }
             },
             {
-              "objectUuid": "6021b70c-3165-449e-8db5-a578f97e23e8",
-              "text": "1380 0138 000",
+              "objectUuid": "84cd0f55-d13b-4c24-80de-3e6912a26416",
+              "text": "13800138000",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
               "width": 160,
-              "height": 36,
+              "height": 16.95,
               "fontSize": 15,
               "fontFamily": "方正黑体简体",
               "fontWeight": "normal",
@@ -289,7 +272,7 @@
               "angle": 0,
               "center": {
                 "x": 148.89999999999998,
-                "y": 72.02760416666666
+                "y": 62.502604166666664
               },
               "fontId": "248",
               "markuuid": "",
@@ -304,7 +287,7 @@
                 "left": 68.89999999999999,
                 "top": 54.02760416666666,
                 "width": 160,
-                "height": 36,
+                "height": 16.95,
                 "angle": 0
               },
               "typography": {
@@ -320,18 +303,18 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "6021b70c-3165-449e-8db5-a578f97e23e8",
+                "objectUuid": "84cd0f55-d13b-4c24-80de-3e6912a26416",
                 "markuuid": "",
                 "layerNum": 2
               }
             },
             {
-              "objectUuid": "50e40e02-4c04-4577-b434-b78ea68e2099",
+              "objectUuid": "508df339-f0f1-42d0-b615-71e08126f652",
               "text": "北京市朝阳区建国路88号",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
               "width": 160,
-              "height": 36,
+              "height": 12.43,
               "fontSize": 11,
               "fontFamily": "方正黑体简体",
               "fontWeight": "normal",
@@ -339,7 +322,7 @@
               "angle": 0,
               "center": {
                 "x": 156.89999999999998,
-                "y": 95.18229166666666
+                "y": 83.39729166666666
               },
               "fontId": "248",
               "markuuid": "",
@@ -354,7 +337,7 @@
                 "left": 76.89999999999999,
                 "top": 77.18229166666666,
                 "width": 160,
-                "height": 36,
+                "height": 12.43,
                 "angle": 0
               },
               "typography": {
@@ -370,17 +353,14 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "50e40e02-4c04-4577-b434-b78ea68e2099",
+                "objectUuid": "508df339-f0f1-42d0-b615-71e08126f652",
                 "markuuid": "",
                 "layerNum": 3
               }
             }
           ],
           "statusConfirmed": false,
-          "assertFails": [
-            "TEXT@1 期望[13800138000] 实得[1380 0138 000]（非原文逐字）",
-            "STATUS_APPLIED 3 不符："
-          ],
+          "assertFails": [],
           "clickDiag": {
             "clicked": true,
             "panel": true,
@@ -388,33 +368,28 @@
             "btn": true,
             "btnVisible": true,
             "confirm": true,
-            "confirmVisible": true,
-            "statusBefore": "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建",
-            "statusAfterClick": "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建"
+            "confirmVisible": false,
+            "statusBefore": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。",
+            "statusAfterClick": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           }
         },
         {
           "rnd": 3,
-          "status": null,
+          "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。",
           "samples": [
             "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号",
-            "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建国路88号"
+            "[drive] clicked #zy-apply-confirm",
+            "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           ],
           "frontCount": 3,
           "invFront": [
             {
-              "objectUuid": "01fd032e-bc04-409b-8b58-387b74774d27",
+              "objectUuid": "26376392-2cea-41d0-877b-f871aad7958d",
               "text": "王小明",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
               "width": 160,
-              "height": 36,
+              "height": 20.339999999999996,
               "fontSize": 18,
               "fontFamily": "方正黑体简体",
               "fontWeight": "normal",
@@ -422,7 +397,7 @@
               "angle": 0,
               "center": {
                 "x": 140.89999999999998,
-                "y": 48.87291666666667
+                "y": 41.04291666666666
               },
               "fontId": "248",
               "markuuid": "",
@@ -437,7 +412,7 @@
                 "left": 60.89999999999999,
                 "top": 30.872916666666665,
                 "width": 160,
-                "height": 36,
+                "height": 20.339999999999996,
                 "angle": 0
               },
               "typography": {
@@ -453,18 +428,18 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "01fd032e-bc04-409b-8b58-387b74774d27",
+                "objectUuid": "26376392-2cea-41d0-877b-f871aad7958d",
                 "markuuid": "",
                 "layerNum": 1
               }
             },
             {
-              "objectUuid": "6021b70c-3165-449e-8db5-a578f97e23e8",
-              "text": "1380 0138 000",
+              "objectUuid": "84cd0f55-d13b-4c24-80de-3e6912a26416",
+              "text": "13800138000",
               "left": 68.89999999999999,
               "top": 54.02760416666666,
               "width": 160,
-              "height": 36,
+              "height": 16.95,
               "fontSize": 15,
               "fontFamily": "方正黑体简体",
               "fontWeight": "normal",
@@ -472,7 +447,7 @@
               "angle": 0,
               "center": {
                 "x": 148.89999999999998,
-                "y": 72.02760416666666
+                "y": 62.502604166666664
               },
               "fontId": "248",
               "markuuid": "",
@@ -487,7 +462,7 @@
                 "left": 68.89999999999999,
                 "top": 54.02760416666666,
                 "width": 160,
-                "height": 36,
+                "height": 16.95,
                 "angle": 0
               },
               "typography": {
@@ -503,18 +478,18 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "6021b70c-3165-449e-8db5-a578f97e23e8",
+                "objectUuid": "84cd0f55-d13b-4c24-80de-3e6912a26416",
                 "markuuid": "",
                 "layerNum": 2
               }
             },
             {
-              "objectUuid": "50e40e02-4c04-4577-b434-b78ea68e2099",
+              "objectUuid": "508df339-f0f1-42d0-b615-71e08126f652",
               "text": "北京市朝阳区建国路88号",
               "left": 76.89999999999999,
               "top": 77.18229166666666,
               "width": 160,
-              "height": 36,
+              "height": 12.43,
               "fontSize": 11,
               "fontFamily": "方正黑体简体",
               "fontWeight": "normal",
@@ -522,7 +497,7 @@
               "angle": 0,
               "center": {
                 "x": 156.89999999999998,
-                "y": 95.18229166666666
+                "y": 83.39729166666666
               },
               "fontId": "248",
               "markuuid": "",
@@ -537,7 +512,7 @@
                 "left": 76.89999999999999,
                 "top": 77.18229166666666,
                 "width": 160,
-                "height": 36,
+                "height": 12.43,
                 "angle": 0
               },
               "typography": {
@@ -553,17 +528,14 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "50e40e02-4c04-4577-b434-b78ea68e2099",
+                "objectUuid": "508df339-f0f1-42d0-b615-71e08126f652",
                 "markuuid": "",
                 "layerNum": 3
               }
             }
           ],
           "statusConfirmed": false,
-          "assertFails": [
-            "TEXT@1 期望[13800138000] 实得[1380 0138 000]（非原文逐字）",
-            "STATUS_APPLIED 3 不符："
-          ],
+          "assertFails": [],
           "clickDiag": {
             "clicked": true,
             "panel": true,
@@ -571,35 +543,13 @@
             "btn": true,
             "btnVisible": true,
             "confirm": true,
-            "confirmVisible": true,
-            "statusBefore": "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建",
-            "statusAfterClick": "AI 槽位匹配不可用（no-key），已改用本地规则库匹配（预览，未修改画布）：\n本地规则匹配 3/3 槽；确认后仅改文字冻结其余。\nfront-2 ← 13800138000\nfront-1 ← 王小明\nfront-3 ← 北京市朝阳区建"
+            "confirmVisible": false,
+            "statusBefore": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。",
+            "statusAfterClick": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           }
         }
       ],
-      "asserts": [
-        {
-          "rnd": 1,
-          "fails": [
-            "TEXT@1 期望[13800138000] 实得[1380 0138 000]（非原文逐字）",
-            "STATUS_APPLIED 3 不符："
-          ]
-        },
-        {
-          "rnd": 2,
-          "fails": [
-            "TEXT@1 期望[13800138000] 实得[1380 0138 000]（非原文逐字）",
-            "STATUS_APPLIED 3 不符："
-          ]
-        },
-        {
-          "rnd": 3,
-          "fails": [
-            "TEXT@1 期望[13800138000] 实得[1380 0138 000]（非原文逐字）",
-            "STATUS_APPLIED 3 不符："
-          ]
-        }
-      ],
+      "asserts": [],
       "status": null,
       "bver": "0.3.11.91",
       "baseCount": {
@@ -620,21 +570,14 @@
       "runs": [
         {
           "rnd": 1,
-          "status": null,
+          "status": "AI 槽位匹配不可用（no-key），本地规则也未找到匹配：未自动修改模板。",
           "samples": [
-            "AI 槽位匹配不可用（no-key），本地规则也未找到匹配：未自动修改模板。",
-            "AI 槽位匹配不可用（no-key），本地规则也未找到匹配：未自动修改模板。",
-            "AI 槽位匹配不可用（no-key），本地规则也未找到匹配：未自动修改模板。",
-            "AI 槽位匹配不可用（no-key），本地规则也未找到匹配：未自动修改模板。",
-            "AI 槽位匹配不可用（no-key），本地规则也未找到匹配：未自动修改模板。",
-            "AI 槽位匹配不可用（no-key），本地规则也未找到匹配：未自动修改模板。",
-            "AI 槽位匹配不可用（no-key），本地规则也未找到匹配：未自动修改模板。",
             "AI 槽位匹配不可用（no-key），本地规则也未找到匹配：未自动修改模板。"
           ],
           "frontCount": 1,
           "invFront": [
             {
-              "objectUuid": "5ad461da-6559-404e-b388-fce8f95cd350",
+              "objectUuid": "9f573ac9-9186-416b-a9b5-015a169db062",
               "text": "占位电话",
               "left": 60.89999999999999,
               "top": 30.872916666666665,
@@ -678,7 +621,7 @@
                 "fill": "#111111"
               },
               "identity": {
-                "objectUuid": "5ad461da-6559-404e-b388-fce8f95cd350",
+                "objectUuid": "9f573ac9-9186-416b-a9b5-015a169db062",
                 "markuuid": "",
                 "layerNum": 1
               }
@@ -723,15 +666,8 @@
       "runs": [
         {
           "rnd": 1,
-          "status": null,
+          "status": "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。",
           "samples": [
-            "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。",
-            "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。",
-            "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。",
-            "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。",
-            "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。",
-            "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。",
-            "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。",
             "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。"
           ],
           "frontCount": 0,
