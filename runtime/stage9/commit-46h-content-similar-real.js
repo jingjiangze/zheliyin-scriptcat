@@ -2,6 +2,10 @@
 // ---------------------------------------------------------------------
 // 目标验证（Commit I 验收）：
 //   1. C-MAIN：注入与客户内容近似的既有文字图层（含格式略异的电话占位"1380 0138 000"），
+// P0-X（2026-09-25）SUPERSEDED 说明：
+//   「一键智能填充」(#zy-smart-fill) 自 M2/M4 起已改为 AI 槽位匹配【预览】→「确认套版」(#zy-apply-confirm)，
+//   原 templateApplySmart 协议（内容相似）已无 UI 入口 → 本 runner 已现代化到新契约（预览→确认套版）驱动，
+//   断言核心（原文逐字 / 不新建 / lineHeight·charSpacing 冻结）保留；46t/46v/46n 覆盖同一新契约。
 //      粘贴原文（含无格式电话"13800138000"）→ 点真实 #zy-smart-fill → 内容相似套版：
 //      text === 原文逐字（非归一/非剥前缀）、对象数恒定（绝不新建）、fontSize 按容器自适应∈[10,160]、
 //      lineHeight/charSpacing 前后不变（仅字号写回）、3 轮稳定性；
@@ -249,20 +253,28 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       }
       return { clicked: false };
     };
+    // P0-X（2026-09-25）：新契约驱动 —— 「一键智能填充」现为 AI 槽位匹配【预览】，需再点「确认套版」才改画布；
+    // 故本等待器同时承担驱动职责（识别预览文案后自动点 #zy-apply-confirm），并接受新旧两种完成文案。
     const waitApplyDone = async (timeoutMs) => {
       const t0 = Date.now();
       const samples = [];
+      let confirmed = false;
       while (Date.now() - t0 < timeoutMs) {
         const r = await page.evaluate(() => {
           const el = document.querySelector("#zy-native-status") || document.querySelector("#zy-status") || document.querySelector(".zy-status");
-          return { st: el ? String(el.textContent || "").trim().slice(0, 300) : null };
+          const cf = document.querySelector("#zy-apply-confirm");
+          return { st: el ? String(el.textContent || "").trim().slice(0, 300) : null, confirmReady: !!(cf && cf.offsetParent) };
         }).catch(() => ({}));
         const st = r && r.st;
         if (st) samples.push(String(st).slice(0, 300));
-        if (st && /智能套版：正面更新 \d+ 槽|智能套版完成|智能套版失败|请先粘贴客户文字/.test(st)) return { done: true, st, samples };
+        if (st && /AI 槽位匹配完成（预览，未修改画布）/.test(st) && !confirmed && r && r.confirmReady) {
+          const c = await page.evaluate(() => { const b = document.querySelector("#zy-apply-confirm"); if (b && b.offsetParent) { try { b.click(); return true; } catch (e) {} } return false; }).catch(() => false);
+          if (c) { confirmed = true; samples.push("[drive] clicked #zy-apply-confirm"); }
+        }
+        if (st && /正面更新 \d+ 槽|智能套版完成|智能套版失败|请先粘贴客户文字|AI 填充完成：更新 \d+ 槽|没有可填槽位|无匹配/.test(st)) return { done: true, st, samples, confirmed };
         await SLEEP(900);
       }
-      return { done: false, samples };
+      return { done: false, samples, confirmed };
     };
     const waitPanel = async (tries) => {
       for (let i = 0; i < (tries || 15); i += 1) {
@@ -322,13 +334,15 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
             const b = baseInv && baseInv.front && baseInv.front.items && baseInv.front.items[i];
             const exp = def.expectTexts[i];
             if (it.text !== exp) fails.push("TEXT@" + i + " 期望[" + exp + "] 实得[" + String(it.text).slice(0, 24) + "]（非原文逐字）");
-            if (!(it.fontSize >= 10 && it.fontSize <= 160)) fails.push("FONT_SIZE@" + i + " 越界 " + it.fontSize);
+            if (!(it.fontSize >= 8 && it.fontSize <= 160)) fails.push("FONT_SIZE@" + i + " 越界 " + it.fontSize); // P0-X：下界按 M5 契约（min=max(8,0.6*base)）放宽
             if (b && it.lineHeight != null && b.lineHeight != null && Math.abs(it.lineHeight - b.lineHeight) > 0.0001) fails.push("LINE_HEIGHT_CHANGED@" + i + " " + b.lineHeight + "->" + it.lineHeight + "（仅字号可写回）");
             if (b && it.charSpacing != null && b.charSpacing != null && Math.abs(it.charSpacing - b.charSpacing) > 0.0001) fails.push("CHAR_SPACING_CHANGED@" + i + " " + b.charSpacing + "->" + it.charSpacing);
           }
-          // applied 数以状态消息「正面更新 X 槽」为准（内容相同也算已套版）
-          const appliedReg = new RegExp("正面更新 " + def.expectApplied + " 槽");
-          if (def.expectApplied >= 0 && !(runRec.status && appliedReg.test(runRec.status))) fails.push("STATUS_APPLIED " + def.expectApplied + " 不符：" + String(runRec.status || "").slice(0, 60));
+          // P0-X：applied 数以状态文案为准，兼容旧「正面更新 N 槽」与新「AI 填充完成：更新 N 槽」；
+          // 仅在 expectApplied>0 时强制（expectApplied=0 用例以画布断言为准，避免文案差异误报）。
+          const appliedReg = new RegExp("(正面更新|更新) " + def.expectApplied + " 槽");
+          if (def.expectApplied > 0 && !(runRec.status && appliedReg.test(runRec.status))) fails.push("STATUS_APPLIED " + def.expectApplied + " 不符：" + String(runRec.status || "").slice(0, 60));
+          if (def.expectApplied > 0) runRec.statusConfirmed = !!(runRec.confirmed);
           if (def.expectZeroObjects && front.length !== 0) fails.push("ZERO_OBJECTS_FAIL " + front.length);
           runRec.assertFails = fails;
           if (fails.length) { rec.asserts.push({ rnd: rnd, fails: fails }); rec.errors.push("ASSERT_FAIL r" + rnd + ": " + fails.join(" | ")); }
