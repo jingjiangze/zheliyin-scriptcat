@@ -21,7 +21,7 @@ const probeMod = require("./session-probe");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
-const BVER = "0.3.11.77";
+const BVER = "0.3.11.78";
 
 function parseCookies(raw) {
   const out = [];

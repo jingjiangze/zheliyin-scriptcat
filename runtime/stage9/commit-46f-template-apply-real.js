@@ -24,7 +24,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
 const DIAG_KEY = process.env.ZY_DIAG_KEY || "__zyStage9VisualDiag";
-const BVER = "0.3.11.77";
+const BVER = "0.3.11.78";
 
 const DECIMAL = (v, n) => (v != null && isFinite(v)) ? Math.round(v * Math.pow(10, n || 2)) / Math.pow(10, n || 2) : null;
 

@@ -29,7 +29,7 @@ const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAd
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
 const DIAG_KEY = process.env.ZY_DIAG_KEY || "__zyStage9VisualDiag";
 const TRACE_KEY = "__zy7AiTrace"; // Commit J: 页面 fetch 拦截取证（只记 url/model，绝不记 Authorization）
-const BVER = "0.3.11.77";
+const BVER = "0.3.11.78";
 // ---- Commit J：AI key 仅经启动环境变量临时注入（绝不写入任何文件/报告全文；报告只记 keyPresent）----
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
