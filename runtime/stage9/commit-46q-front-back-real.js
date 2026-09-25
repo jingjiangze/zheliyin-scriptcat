@@ -33,7 +33,7 @@ const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAd
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim().toUpperCase()).filter(Boolean);
 const MERGE = process.env.ZY_MERGE === "1";
 const TRACE_KEY = "__zy46qTrace";
-const BVER = "0.3.11.85";
+const BVER = "0.3.11.86";
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
 const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
@@ -182,7 +182,7 @@ function selfTest() {
   t("split-sides", JSON.stringify(splitSides(["正面：", "a", "反面：", "b"])) === JSON.stringify({ front: ["a"], back: ["b"] }));
   t("value-of-line", valueOfLine("电话：13800138000") === "13800138000" && valueOfLine("王小明") === "王小明");
   t("confirm-ui", cc.indexOf('id="zy-match-block"') >= 0 && cc.indexOf('id="zy-apply-confirm"') >= 0);
-  t("bver-const", BVER === "0.3.11.85");
+  t("bver-const", BVER === "0.3.11.86");
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }

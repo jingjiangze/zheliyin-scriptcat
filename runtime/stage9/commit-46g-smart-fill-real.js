@@ -25,7 +25,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
 const DIAG_KEY = process.env.ZY_DIAG_KEY || "__zyStage9VisualDiag";
-const BVER = "0.3.11.85";
+const BVER = "0.3.11.86";
 
 const DECIMAL = (v, n) => (v != null && isFinite(v)) ? Math.round(v * Math.pow(10, n || 2)) / Math.pow(10, n || 2) : null;
 
@@ -79,7 +79,7 @@ function selfTest() {
   t("smart-fill-html", cc.indexOf('id="zy-smart-fill"') >= 0 && cc.indexOf('#zy-smart-fill").addEventListener("click", contentApplyFromPanel)') >= 0);
   t("both-dispatch", cc.indexOf('type: "templateApplySmart", plans: plans, side: "both"') >= 0 && cc.indexOf('bridgeCall("getTextInventoryAll", 2500)') >= 0 && cc.indexOf("planContentSimilar") >= 0 && cc.indexOf("content-similar-planner.js?v=" + BVER) >= 0);
   t("presets", cc.indexOf("AI_PROVIDERS") >= 0 && cc.indexOf("api.siliconflow.cn") >= 0 && cc.indexOf("api.deepseek.com") >= 0);
-  t("bver-const", BVER === "0.3.11.85");
+  t("bver-const", BVER === "0.3.11.86");
   console.log("[selftest] ALL PASS");
 }
 

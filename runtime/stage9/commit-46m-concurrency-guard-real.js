@@ -20,7 +20,7 @@ const applyV2 = require("../../extension/src/editor/template-apply-v2");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
-const BVER = "0.3.11.85";
+const BVER = "0.3.11.86";
 
 function parseCookies(raw) {
   const out = [];
@@ -89,7 +89,7 @@ function selfTest() {
   t("guard-expect", self.indexOf('code === "SLOT_STATE_CHANGED"') >= 0);
   t("tamper-step", cc.indexOf("zyStage9InkGeometry") >= 0 || true);
   t("applyv2-module", fs.existsSync(path.join(ROOT, "extension", "src", "editor", "template-apply-v2.js")));
-  t("bver-const", BVER === "0.3.11.85");
+  t("bver-const", BVER === "0.3.11.86");
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
