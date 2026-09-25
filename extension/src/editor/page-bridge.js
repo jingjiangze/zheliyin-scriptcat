@@ -366,26 +366,41 @@ function pageBridge() {
           let u2 = null;
           try { u2 = getNativeUndoInstance(); if (u2 && typeof u2.save === "function") u2.save(); } catch (eU) {}
           const applied = [];
+          // M5 模板 Fit（默认开启）：以「槽位原足迹宽」为目标真实测量客户文本，必要时缩小字号；只写 fontSize。
+          const v2Measurer = zyMakeCanvasMeasurerFor(cvs);
+          const v2FitFn = (typeof zyFitFontSize === "function") ? zyFitFontSize : null;
+          const fitEvidence = [];
           group.forEach(function (g) {
             try {
               const so = objs[g.slotIdx];
               if (!so) return;
               const text = String(g.customerText != null ? g.customerText : "");
+              const fsFrom = (typeof so.fontSize === "number") ? so.fontSize : null;
+              const fsTarget = (typeof so.width === "number" && isFinite(so.width) && so.width > 0) ? so.width : null;
               setObjectText(so, text); // 只改内容，几何/字体/样式/身份/层序冻结
               if (typeof so.setCoords === "function") so.setCoords();
               syncBusinessFieldsFromObject(so);
-              applied.push({ side: sd, version: v2Version, slotId: g.slotId, slotIdx: g.slotIdx, objectUuid: so.uuid || so.multiUuid || null, text: String(text).slice(0, 24) });
+              let fsTo = fsFrom, fit = null;
+              if (v2FitFn && v2Measurer && fsTarget != null && fsFrom != null) {
+                fit = v2FitFn({ text: text, targetWidth: fsTarget, fontFamily: so.fontFamily || "sans-serif", baseFontSize: fsFrom, measurer: v2Measurer });
+                if (fit && fit.ok && typeof fit.fontSize === "number" && fit.fontSize !== fsFrom) {
+                  try { so.set("fontSize", fit.fontSize); if (typeof so.setCoords === "function") so.setCoords(); syncBusinessFieldsFromObject(so); fsTo = fit.fontSize; } catch (eF) { fsTo = fsFrom; }
+                }
+              }
+              fitEvidence.push({ side: sd, version: v2Version, slotId: g.slotId, slotIdx: g.slotIdx, from: fsFrom, to: fsTo, reason: fit ? fit.reason : "SKIPPED", overflow: !!(fit && fit.overflow), measured: fit ? fit.measured : null });
+              applied.push({ side: sd, version: v2Version, slotId: g.slotId, slotIdx: g.slotIdx, objectUuid: so.uuid || so.multiUuid || null, text: String(text).slice(0, 24), fontSizeFrom: fsFrom, fontSizeTo: fsTo });
             } catch (eT) { v2AnyFail = true; v2Fails.push(sd + ":" + g.slotId + ":" + String(eT && eT.message || eT).slice(0, 80)); }
           });
           if (u2 && typeof u2.save === "function") { try { u2.save(); } catch (eU2) {} }
           if (cvs.requestRenderAll) cvs.requestRenderAll();
           else if (cvs.renderAll) cvs.renderAll();
-          v2Groups.push({ side: sd, version: v2Version, ok: true, count: applied.length, applied: applied });
+          v2Groups.push({ side: sd, version: v2Version, ok: true, count: applied.length, applied: applied, fontSizeEvidence: fitEvidence });
         });
         const v2AppliedAll = [];
-        v2Groups.forEach(function (g) { v2AppliedAll.push.apply(v2AppliedAll, g.applied || []); });
+        const v2FitAll = [];
+        v2Groups.forEach(function (g) { v2AppliedAll.push.apply(v2AppliedAll, g.applied || []); v2FitAll.push.apply(v2FitAll, g.fontSizeEvidence || []); });
         const v2BlockedOnly = v2AnyFail && v2Fails.length > 0 && v2Fails.every(function (f) { return f.indexOf("SLOT_STATE_CHANGED") >= 0; });
-        post("templateApplyV2Result", { ok: !v2AnyFail, code: v2BlockedOnly ? "SLOT_STATE_CHANGED" : (v2AnyFail ? "PARTIAL" : "OK"), applied: v2AppliedAll, sides: v2Groups, message: v2AnyFail ? (v2BlockedOnly ? "画布文字层与 AI 槽位应用指令不一致（可能已编辑），已停止。" : "AI 槽位应用部分失败（" + v2Fails.join(" / ") + "）。") : "AI 槽位应用完成：更新 " + v2AppliedAll.length + " 槽（几何/字体/样式/身份/层序冻结，只改文字）。" });
+        post("templateApplyV2Result", { ok: !v2AnyFail, code: v2BlockedOnly ? "SLOT_STATE_CHANGED" : (v2AnyFail ? "PARTIAL" : "OK"), applied: v2AppliedAll, sides: v2Groups, fontSizeEvidence: v2FitAll, message: v2AnyFail ? (v2BlockedOnly ? "画布文字层与 AI 槽位应用指令不一致（可能已编辑），已停止。" : "AI 槽位应用部分失败（" + v2Fails.join(" / ") + "）。") : "AI 槽位应用完成：更新 " + v2AppliedAll.length + " 槽（几何/样式/身份/层序冻结；文字 + 必要时字号自适应，默认开启）。" });
         return;
       }
       if (event.data.type === "ocrCreate") {
@@ -2311,6 +2326,6 @@ function matchSlots(input) {
     }
 
     // 安装成功后才落 marker，保证 listener 注册异常时不留下“已安装”假象（可重试）。
-    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.84'; } catch (eV) {}
-    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.84' };
+    try { window.__ZY_BRIDGE_VERSION__ = '0.3.11.85'; } catch (eV) {}
+    window.__ZY_CARD_ASSISTANT_BRIDGE__ = { installed: true, ts: Date.now(), ver: '0.3.11.85' };
   }

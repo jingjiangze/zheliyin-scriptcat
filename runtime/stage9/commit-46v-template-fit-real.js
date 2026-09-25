@@ -1,19 +1,20 @@
-// runtime/stage9/commit-46t-workbench-real.js — M4 可编辑匹配工作台真机验收
+// runtime/stage9/commit-46v-template-fit-real.js — M5 模板 Fit 引擎真机验收
 // ---------------------------------------------------------------------
-// 目的：真机验证 M4 工作台「编辑 → 确认套版」闭环（原模板只读 / 客户值可编辑 / 点选分配 / 解绑 / 交换 / MANUAL_EDIT）。
-// 场景：materialize 背面 → 注入正反槽位 → 粘贴客户文字 → 一键智能填充（AI）→ 在工作台编辑 → 确认套版 → 校验画布与冻结。
+// 目的：真机验证「模板 Fit（字号自适应，默认开启）」在真实套版路径生效且不破坏冻结承诺。
+// 场景：materialize 背面 → 注入正反槽位 → 捕获基线 → 粘贴【长文本】客户文字 → 一键智能填充（AI 预览）
+//   → 确认套版（走 templateApplyV2 真实执行路径）→ 读回执 fontSizeEvidence + 读画布复测。
 //
 // 每轮（ROUNDS=2）串行断言：
-//   A1 工作台渲染：可见、槽位行数=注入数、每行「原模板」非空、客户块 ≥1、汇总含「匹配工作台」
-//   A2 解绑：解绑 front-1 → 该行客户值清空
-//   A3 点选分配：点选一个客户块 → 分配所选块 → front-1 客户值 == 该块文本
-//   A4 行内编辑：front-1 设为标记值 → 状态含「已手动编辑」、徽标=手动编辑（MANUAL_EDIT）
-//   A5 交换：front-1 ↔ front-2 客户值互换
-//   A6 确认套版：画布 front 第2槽 == 编辑值；对象数不变（不新建/不删除）
-//   A7 冻结：objectUuid/left/top/width/angle/fontId/fontFamily/fill 全槽零变化（height 记证据不判）
+//   M1 基线：front 槽位 fontSize/width/left/top/angle/fontFamily/fill/objectUuid
+//   M2 预览：一键智能填充产出匹配（AI 预览完成）
+//   M3 执行：确认套版完成（回执含 fontSizeEvidence）
+//   M4 Fit 生效：至少 1 槽字号下降；任一槽字号不增；SHRINK 槽实测宽 ≤ 目标宽（不溢出）
+//   M5 冻结：objectUuid/left/top/angle/fontId/fontFamily/fill 全槽零变化（仅 text + fontSize 可变）
+//   M6 溢出规范：OVERFLOW 只允许出现在「已到最小字号」的槽位（到最小仍放不下 → 标位，不强行缩、不换行）；
+//      且非 OVERFLOW 槽位的实测宽必须 ≤ 目标宽（无未标注溢出）。
 //
 // 凭据：ZY_AI_KEY（仅 env 临时注入，绝不落盘）；会话 cookie 走 session-probe 自动解析。
-// 报告：runtime/reports/stage-11/commit-46t-workbench-real.json
+// 报告：runtime/reports/stage-11/commit-46v-template-fit-real.json
 "use strict";
 const path = require("path");
 const fs = require("fs");
@@ -24,7 +25,7 @@ const PROFILE = process.env.P0_PROFILE || path.join(ROOT, "runtime", "browser", 
 const EXT_ID = "ndcooeababalnlpkfedmmbbbgkljhpjf";
 const USERSCRIPT_PATH = path.join(ROOT, "zheliyin-card-assistant.user.js");
 const REPORT_DIR = path.join(ROOT, "runtime", "reports", "stage-11");
-const REPORT_FILE = path.join(REPORT_DIR, "commit-46t-workbench-real.json");
+const REPORT_FILE = path.join(REPORT_DIR, "commit-46v-template-fit-real.json");
 const adapter = require("../scriptcat-adapter");
 const probeMod = require("./session-probe");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -35,7 +36,6 @@ const BVER = "0.3.11.85";
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
 const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
-const EDIT_MARK = "M4-编辑值";
 
 function parseCookies(raw) {
   const out = [];
@@ -83,19 +83,22 @@ const BACK = [
   { text: "主营：企业咨询", fontSize: 14, fontFamily: "思源黑体 Regular" },
   { text: "服务热线：400-100-1000", fontSize: 12, fontFamily: "思源黑体 Regular" }
 ];
-const PASTE_ROWS = ["正面：", "启诚科技有限公司", "王小明", "销售总监", "电话：13800138000",
-  "反面：", "主营：企业信息化咨询", "服务热线：400-888-6666"];
-const FROZEN = ["objectUuid", "left", "top", "width", "angle", "fontId", "fontFamily", "fill"];
+// 长文本客户值：明显长于模板占位（触发 Fit 缩字号）
+const LONG_FRONT = ["正面：", "上海启诚科技有限公司（华东区域总部）", "王小明（销售总监）", "销售总监兼大客户部负责人", "电话：13800138000"];
+const LONG_BACK = ["反面：", "主营：企业信息化咨询与数字化转型服务", "服务热线：400-888-6666"];
+const FROZEN = ["objectUuid", "left", "top", "angle", "fontId", "fontFamily", "fill"];
 
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = injectUserscript();
+  const pb = fs.readFileSync(path.join(ROOT, "extension", "src", "editor", "page-bridge.js"), "utf8");
+  const fit = fs.readFileSync(path.join(ROOT, "extension", "src", "editor", "template-text-fit.js"), "utf8");
   t("bver", BVER === "0.3.11.85");
   t("rounds>=2", ROUNDS >= 2);
-  t("wb-ui", cc.indexOf("zy-wb-row") >= 0 && cc.indexOf("zy-wb-chip") >= 0 && cc.indexOf("data-assign") >= 0 && cc.indexOf("data-swap") >= 0);
-  t("wb-fns", cc.indexOf("mwDoAssign") >= 0 && cc.indexOf("zyWbSwap") >= 0 && cc.indexOf("mwSyncPlan") >= 0);
-  t("legacy-removed", cc.indexOf("正反面与字段（可编辑）") < 0);
-  t("require-wb", cc.indexOf("template-match-workbench.js") >= 0);
+  t("fit-module", fit.indexOf("function zyFitFontSize") >= 0 && fit.indexOf("function zyFitMatches") >= 0);
+  t("bridge-wired", pb.indexOf("v2FitFn") >= 0 && pb.indexOf("fontSizeEvidence") >= 0 && pb.indexOf("zyFitFontSize") >= 0);
+  t("injected-to-page", cc.indexOf("zyFitSrc") >= 0 && cc.indexOf("template-text-fit.js") >= 0);
+  t("no-native-panel", cc.indexOf("zy-native-ocr-panel") < 0);
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
@@ -104,9 +107,9 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   const sess = await probeMod.resolveStage9Cookie();
   const COOKIE_RAW = sess.raw || "";
-  if (!COOKIE_RAW) { console.error("[commit-46t] 会话 cookie 解析失败：" + (sess.error || "NO_COOKIE")); process.exit(2); }
-  if (!AI_KEY) { console.error("[commit-46t] 缺少 ZY_AI_KEY 环境变量（仅临时注入，绝不落盘）。"); process.exit(2); }
-  let out = { ts: new Date().toISOString(), stage: "STAGE10-G-M4-WORKBENCH-REAL", cookieSource: sess.source || null, aiModel: AI_MODEL, bverExpect: BVER, rounds: ROUNDS, runs: [], errors: [] };
+  if (!COOKIE_RAW) { console.error("[commit-46v] 会话 cookie 解析失败：" + (sess.error || "NO_COOKIE")); process.exit(2); }
+  if (!AI_KEY) { console.error("[commit-46v] 缺少 ZY_AI_KEY 环境变量（仅临时注入，绝不落盘）。"); process.exit(2); }
+  let out = { ts: new Date().toISOString(), stage: "STAGE10-G-M5-TEMPLATE-FIT-REAL", cookieSource: sess.source || null, aiModel: AI_MODEL, bverExpect: BVER, rounds: ROUNDS, runs: [], errors: [] };
   if (MERGE && fs.existsSync(REPORT_FILE)) {
     try { const old = JSON.parse(fs.readFileSync(REPORT_FILE, "utf8")); if (old && Array.isArray(old.runs)) out.runs = old.runs; if (Array.isArray(old.errors)) out.errors = old.errors; } catch (e) {}
   }
@@ -139,7 +142,6 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       return true;
     }, { baseUrl: AI_BASE_URL, model: AI_MODEL, key: AI_KEY });
     const injectPageWorld = (payload) => page.evaluate((code) => { const s = document.createElement("script"); s.textContent = code; (document.head || document.documentElement).appendChild(s); }, payload);
-
     const canvasState = () => page.evaluate(() => {
       try {
         const req = window.requirejs || window.require;
@@ -174,7 +176,7 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
     };
     const waitPanelReady = async (tries) => {
       for (let i = 0; i < (tries || 15); i += 1) {
-        const has = await page.evaluate(() => !!document.querySelector("#zy-raw") && !!document.querySelector("#zy-smart-fill") && !!document.getElementById("zy-match-block")).catch(() => false);
+        const has = await page.evaluate(() => !!document.querySelector("#zy-raw") && !!document.querySelector("#zy-smart-fill") && !!document.querySelector("#zy-apply-confirm")).catch(() => false);
         if (has) return true;
         await SLEEP(900);
       }
@@ -205,7 +207,6 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       if (!r || !r.front) return null;
       return { frontItems: Array.isArray(r.front.items) ? r.front.items : [], backItems: (r.back && Array.isArray(r.back.items)) ? r.back.items : [] };
     };
-    const textsOf = (arr) => (Array.isArray(arr) ? arr.map((it) => String(it.text)) : []);
     const fillRawText = (rows) => page.evaluate((t) => { const ta = document.querySelector("#zy-raw"); if (!ta) return { ok: false }; ta.value = t; ta.dispatchEvent(new Event("input", { bubbles: true })); return { ok: true }; }, rows.join("\n"));
     const clickById = async (sel, timeoutMs) => {
       const t0 = Date.now();
@@ -232,27 +233,19 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       if (!d.done) { await clickById("#zy-smart-fill"); d = await waitStatusContains("AI 槽位匹配完成（预览，未修改画布）", 120000); }
       return d;
     };
-
-    // ---- 工作台 DOM 助手 ----
-    const wbSnapshot = () => page.evaluate(() => {
-      const rows = Array.from(document.querySelectorAll("#zy-match-rows .zy-wb-row")).map((r) => {
-        const sid = r.getAttribute("data-slot");
-        const inp = r.querySelector("input[data-cust=\"" + sid + "\"]");
-        const tpl = r.querySelector(".zy-wb-tpl");
-        const bd = r.querySelector(".zy-wb-badge");
-        return { slotId: sid, tpl: tpl ? String(tpl.textContent || "").trim() : "", cust: inp ? String(inp.value) : null, badge: bd ? String(bd.textContent || "").trim() : "" };
-      });
-      const chips = Array.from(document.querySelectorAll("#zy-wb-blocks .zy-wb-chip")).map((c) => ({ blockId: c.getAttribute("data-block"), text: String((c.querySelector(".zy-wb-chip-tx") || {}).textContent || "").trim(), st: String((c.querySelector(".zy-wb-chip-st") || {}).textContent || "").trim() }));
-      const sum = document.getElementById("zy-match-summary");
-      const blk = document.getElementById("zy-match-block");
-      return { visible: !!(blk && blk.style.display !== "none"), rows: rows, chips: chips, summary: sum ? String(sum.textContent || "").trim() : null };
+    const armV2Recorder = () => page.evaluate(() => {
+      window.__zy46v = { count: 0, last: null };
+      if (!window.__zy46vHook) {
+        window.__zy46vHook = true;
+        window.addEventListener("message", (ev) => {
+          const d = ev.data;
+          if (d && d.source === "zy-card-assistant-page" && d.type === "templateApplyV2Result") { window.__zy46v.count += 1; window.__zy46v.last = d; }
+        });
+      }
+      return true;
     });
-    const wbClickChip = (text) => page.evaluate((t) => { const cs = Array.from(document.querySelectorAll("#zy-wb-blocks .zy-wb-chip")); const c = cs.find((x) => String((x.querySelector(".zy-wb-chip-tx") || {}).textContent || "").trim() === t); if (!c) return false; c.click(); return true; }, text);
-    const wbClickAssign = (slotId) => page.evaluate((s) => { const b = document.querySelector("#zy-match-rows [data-assign=\"" + s + "\"]"); if (!b) return false; b.click(); return true; }, slotId);
-    const wbClickUnbind = (slotId) => page.evaluate((s) => { const b = document.querySelector("#zy-match-rows [data-unbind=\"" + s + "\"]"); if (!b) return false; b.click(); return true; }, slotId);
-    const wbSetCust = (slotId, val) => page.evaluate((a) => { const i = document.querySelector("#zy-match-rows input[data-cust=\"" + a.s + "\"]"); if (!i) return false; const set = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value").set; try { set.call(i, a.v); } catch (e) { i.value = a.v; } i.dispatchEvent(new Event("change", { bubbles: true })); return true; }, { s: slotId, v: val });
-    const wbSetSwap = (slotId, target) => page.evaluate((a) => { const s = document.querySelector("#zy-match-rows select[data-swap=\"" + a.s + "\"]"); if (!s) return false; s.value = a.t; s.dispatchEvent(new Event("change", { bubbles: true })); return true; }, { s: slotId, t: target });
-    const pick = (items, k) => items ? items.map((it) => it[k]) : [];
+    const readV2Recorder = () => page.evaluate(() => (window.__zy46v ? { count: window.__zy46v.count, fit: (window.__zy46v.last && window.__zy46v.last.fontSizeEvidence) || null, applied: (window.__zy46v.last && window.__zy46v.last.applied) || null, code: (window.__zy46v.last && window.__zy46v.last.code) || null } : null));
+    const snapFrozen = (items) => (items || []).map((it) => { const o = {}; FROZEN.forEach((k) => { o[k] = it[k] != null ? String(it[k]) : null; }); o.fontSize = it.fontSize != null ? it.fontSize : null; o.width = it.width != null ? it.width : null; return o; });
 
     for (let rd = 0; rd < ROUNDS; rd += 1) {
       const R = { round: rd + 1, errors: [], steps: {} };
@@ -273,84 +266,59 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
         if (rd === 0) R.bver = ready.bver || null;
         if (rd === 0 && ready.bver && ready.bver !== BVER) R.errors.push("BRIDGE_VERSION_MISMATCH(" + String(ready.bver) + ")");
         if (!(await waitPanelReady(15))) { R.errors.push("PANEL_UNAVAILABLE"); out.runs.push(R); continue; }
-        // 注入正反槽位
+        await armV2Recorder();
         const injF = await injectSlotsOn(0, FRONT, 0);
         const injB = await injectSlotsOn(1, BACK, 500);
         await SLEEP(1800);
         if (!(injF.ok && injB.ok)) R.errors.push("SLOT_INJECT_FAIL " + JSON.stringify({ f: injF, b: injB }).slice(0, 160));
         const before = await readV(0);
-        R.steps.A0 = { front: textsOf(before && before.frontItems), back: textsOf(before && before.backItems), frozenBefore: (before && before.frontItems || []).map((it) => { const o = {}; FROZEN.forEach((k) => { o[k] = it[k] != null ? String(it[k]) : null; }); return o; }) };
+        R.steps.M1 = { front: snapFrozen(before && before.frontItems), back: snapFrozen(before && before.backItems) };
         if (!(before && (before.frontItems || []).length === FRONT.length && (before.backItems || []).length === BACK.length)) R.errors.push("INJECT_COUNT_FAIL");
-        // 一键智能填充（AI 预览 → 生成工作台）
-        const fill = await fillRawText(PASTE_ROWS);
+        // M2 预览
+        const fill = await fillRawText(LONG_FRONT.concat(LONG_BACK));
         const prev = (fill && fill.ok) ? await previewWithRetry() : { done: false };
-        R.steps.A1_preview = { done: !!prev.done };
+        R.steps.M2 = { previewDone: !!prev.done, status: String(prev.st || "").slice(0, 160) };
         if (!prev.done) { R.errors.push("AI_PREVIEW_NOT_DONE"); out.runs.push(R); continue; }
-        // A1 工作台渲染
-        const w1 = await wbSnapshot();
-        const tplOk = w1.rows.filter((r) => r.tpl && r.tpl.indexOf("原模板：") === 0 && r.tpl.length > 4).length;
-        R.steps.A1 = { visible: w1.visible, rowCount: w1.rows.length, chipCount: w1.chips.length, summary: w1.summary, tplNonEmpty: tplOk };
-        if (!w1.visible) R.errors.push("A1_NOT_VISIBLE");
-        if (w1.rows.length !== FRONT.length + BACK.length) R.errors.push("A1_ROW_COUNT " + w1.rows.length + " != " + (FRONT.length + BACK.length));
-        if (!(tplOk === w1.rows.length)) R.errors.push("A1_TPL_EMPTY " + tplOk + "/" + w1.rows.length);
-        if (!(w1.chips.length >= 1)) R.errors.push("A1_NO_CHIPS");
-        if (!(w1.summary && w1.summary.indexOf("匹配工作台") >= 0)) R.errors.push("A1_SUMMARY " + String(w1.summary).slice(0, 80));
-        // A2 解绑 front-1
-        await wbClickUnbind("front-1");
-        const w2 = await wbSnapshot();
-        const r1b = w2.rows.find((r) => r.slotId === "front-1");
-        R.steps.A2 = { front1: r1b };
-        if (!(r1b && String(r1b.cust) === "")) R.errors.push("A2_UNBIND_FAIL " + JSON.stringify(r1b).slice(0, 120));
-        // A3 点选分配：选一个文本非空的客户块 → 分配到 front-1
-        const chip = (w2.chips.find((c) => c.text && c.text.length >= 2 && c.text !== EDIT_MARK)) || w2.chips[0];
-        if (!chip) { R.errors.push("A3_NO_CHIP"); out.runs.push(R); continue; }
-        const ck = await wbClickChip(chip.text);
-        const asg = await wbClickAssign("front-1");
-        const w3 = await wbSnapshot();
-        const r1c = w3.rows.find((r) => r.slotId === "front-1");
-        R.steps.A3 = { chipText: chip.text, chipClicked: ck, assignClicked: asg, front1: r1c && r1c.cust, badge: r1c && r1c.badge };
-        if (!(r1c && String(r1c.cust) === chip.text)) R.errors.push("A3_ASSIGN_FAIL got=" + String(r1c && r1c.cust).slice(0, 30) + " want=" + chip.text.slice(0, 30));
-        // A4 行内编辑（MANUAL_EDIT）
-        await wbSetCust("front-1", EDIT_MARK);
-        const st4 = await waitStatusContains("已手动编辑", 8000);
-        const w4 = await wbSnapshot();
-        const r1d = w4.rows.find((r) => r.slotId === "front-1");
-        R.steps.A4 = { status: st4.done, front1: r1d && r1d.cust, badge: r1d && r1d.badge };
-        if (!(r1d && String(r1d.cust) === EDIT_MARK)) R.errors.push("A4_EDIT_FAIL");
-        if (!st4.done) R.errors.push("A4_STATUS_NO_MARK");
-        if (!(r1d && r1d.badge === "手动编辑")) R.errors.push("A4_BADGE " + String(r1d && r1d.badge));
-        // A5 交换 front-1 ↔ front-2
-        const w5a = await wbSnapshot();
-        const f1 = w5a.rows.find((r) => r.slotId === "front-1");
-        const f2 = w5a.rows.find((r) => r.slotId === "front-2");
-        const v1 = f1 && f1.cust, v2 = f2 && f2.cust;
-        const sw = await wbSetSwap("front-1", "front-2");
-        const w5b = await wbSnapshot();
-        const n1 = w5b.rows.find((r) => r.slotId === "front-1");
-        const n2 = w5b.rows.find((r) => r.slotId === "front-2");
-        R.steps.A5 = { swapSent: sw, before: { f1: v1, f2: v2 }, after: { f1: n1 && n1.cust, f2: n2 && n2.cust } };
-        if (!(n1 && n2 && String(n1.cust) === String(v2) && String(n2.cust) === String(v1))) R.errors.push("A5_SWAP_FAIL");
-        // A6 确认套版 → 画布 front 第 2 槽 == EDIT_MARK
+        // M3 执行（确认套版 → templateApplyV2）
         const cc = await clickById("#zy-apply-confirm");
         const done = cc.clicked ? await waitStatusContains("AI 填充完成", 30000) : { done: false };
-        await SLEEP(1200);
+        await SLEEP(1500);
+        const rec = await readV2Recorder();
         const after = await readV(0);
-        const afterFront = textsOf(after && after.frontItems);
-        R.steps.A6 = { clicked: cc.clicked, status: done.done, afterFront: afterFront };
-        if (!done.done) R.errors.push("A6_APPLY_NOT_DONE");
-        if (!(afterFront[1] === EDIT_MARK)) R.errors.push("A6_SLOT2_NOT_EDITED got=" + String(afterFront[1]).slice(0, 24));
-        if (!((after && after.frontItems || []).length === (before && before.frontItems || []).length)) R.errors.push("A6_OBJECT_COUNT_CHANGED");
-        // A7 冻结（objectUuid/left/top/width/angle/fontId/fontFamily/fill）
         const beforeItems = (before && before.frontItems) || [];
         const afterItems = (after && after.frontItems) || [];
+        R.steps.M3 = { clicked: cc.clicked, statusDone: done.done, v2Count: rec ? rec.count : null, v2Code: rec ? rec.code : null, evidence: rec ? rec.fit : null };
+        if (!done.done) R.errors.push("M3_APPLY_NOT_DONE");
+        if (!(rec && rec.count >= 1)) R.errors.push("M3_NO_V2_RESULT");
+        // M4 Fit 生效：至少 1 槽字号下降；任一槽不增；SHRINK 槽实测宽 ≤ 目标宽
+        const pairs = beforeItems.map((b, i) => ({ i: i, from: b.fontSize, to: (afterItems[i] || {}).fontSize, wFrom: b.width, wTo: (afterItems[i] || {}).width }));
+        const shrunk = pairs.filter((p) => typeof p.from === "number" && typeof p.to === "number" && p.to < p.from);
+        const grew = pairs.filter((p) => typeof p.from === "number" && typeof p.to === "number" && p.to > p.from);
+        const ev = (rec && rec.fit) || [];
+        const shrinkEv = ev.filter((e) => e && e.reason === "SHRINK");
+        const badMeasure = shrinkEv.filter((e) => !(e.measured && typeof e.measured.width === "number" && typeof e.measured.limit === "number" && e.measured.width <= e.measured.limit + 1e-6));
+        R.steps.M4 = { pairs: pairs, shrunkCount: shrunk.length, grewCount: grew.length, shrinkEvCount: shrinkEv.length, badMeasure: badMeasure.slice(0, 3) };
+        if (!(shrunk.length >= 1)) R.errors.push("M4_FIT_NOT_ENGAGED(no slot shrank)");
+        if (grew.length) R.errors.push("M4_FONT_GREW " + grew.slice(0, 2).map((p) => p.i + ":" + p.from + "->" + p.to).join(" | "));
+        if (!(shrinkEv.length >= 1)) R.errors.push("M4_NO_SHRINK_EVIDENCE");
+        if (badMeasure.length) R.errors.push("M4_SHRINK_STILL_OVERFLOW " + JSON.stringify(badMeasure[0]).slice(0, 160));
+        // M5 冻结（仅 text + fontSize 可变）
         const frozenFails = [];
         for (let i = 0; i < beforeItems.length && i < afterItems.length; i += 1) {
           for (const k of FROZEN) {
             if (String(beforeItems[i][k]) !== String(afterItems[i][k])) { frozenFails.push("FROZEN[" + i + "]." + k + " " + String(beforeItems[i][k]).slice(0, 12) + "->" + String(afterItems[i][k]).slice(0, 12)); break; }
           }
         }
-        R.steps.A7 = { frozenFails: frozenFails };
-        if (frozenFails.length) R.errors.push("A7_FROZEN " + frozenFails.slice(0, 3).join(" | "));
+        R.steps.M5 = { frozenFails: frozenFails };
+        if (frozenFails.length) R.errors.push("M5_FROZEN " + frozenFails.slice(0, 3).join(" | "));
+        // M6 溢出规范：OVERFLOW 只能出现在已到最小字号的槽位；非 OVERFLOW 槽位不得实测溢出
+        const ovf = ev.filter((e) => e && e.overflow);
+        const minOf = (f) => Math.max(8, Math.round(f * 0.6));
+        const badOvf = ovf.filter((e) => typeof e.from !== "number" || typeof e.to !== "number" || e.to !== minOf(e.from));
+        const nonOvfOverflow = ev.filter((e) => e && !e.overflow && e.measured && typeof e.measured.width === "number" && typeof e.measured.limit === "number" && e.measured.width > e.measured.limit + 1e-6);
+        R.steps.M6 = { overflowCount: ovf.length, overflowAtMinOnly: badOvf.length === 0, badOverflow: badOvf.slice(0, 3), unflaggedOverflow: nonOvfOverflow.slice(0, 3) };
+        if (badOvf.length) R.errors.push("M6_OVERFLOW_NOT_AT_MIN " + JSON.stringify(badOvf[0]).slice(0, 160));
+        if (nonOvfOverflow.length) R.errors.push("M6_UNFLAGGED_OVERFLOW " + JSON.stringify(nonOvfOverflow[0]).slice(0, 160));
       } catch (e) { R.errors.push("RUN: " + String(e && (e.message || e) || e).slice(0, 300)); }
       out.runs.push(R);
     }
@@ -359,5 +327,5 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
   finally { try { await browser.close(); } catch (e) {} }
   fs.writeFileSync(REPORT_FILE, JSON.stringify(out, null, 2));
   const okRuns = out.runs.filter((r) => (r.errors || []).length === 0).length;
-  console.log("[commit-46t] report -> runtime/reports/stage-11/commit-46t-workbench-real.json runs=" + out.runs.length + " cleanRuns=" + okRuns);
+  console.log("[commit-46v] report -> runtime/reports/stage-11/commit-46v-template-fit-real.json runs=" + out.runs.length + " cleanRuns=" + okRuns);
 })().catch((e) => { console.error("FATAL: " + String(e && (e.message || e) || e).slice(0, 600)); process.exit(1); });
