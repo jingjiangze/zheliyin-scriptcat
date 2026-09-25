@@ -7,6 +7,8 @@
 - [P2-B 真机验收 → P3 主链路审计与最小闭环](./stage-5.5b/003-p2b-acceptance-p3-audit.md) — 2026-09-16，P2-B 八项 Gate、P3 四边界审计（先审计不重构）、Provider 边界/OCRCandidate/Mapper/Textbox、真实最小闭环、三态区分 C>B>A、结束条件。
 - [P4：Local-first / Baidu Fallback / Privacy / Credential UX](./stage-5.5b/004-p4-local-first-fallback.md) — 2026-09-17，五行测试矩阵（Local 成功 Baidu=0 / Local 失败 fallback / 未配置提示 / Baidu 失败终态）、fallbackReason 语义、凭据最低要求（客户端可访问凭据）、日志泄漏审计、真实环境区分（PENDING/BLOCKED 不虚构）。
 
+- [完整工作内容交接（封存态 0.3.11.91）](../HANDOVER.md) — 2026-09-25，本批全部需求原文、逐提交记录（P1 多版地基 / P2 多版套版 / P3 真机 / M4 工作台 / M5 模板 Fit / 阶段1 本地匹配规则 / 阶段2a 字号单一入口 / P0-X 46h 闭环 / 封存与归档）、验收资产矩阵、硬性红线、待办队列与接续步骤。
+
 ## 约定（延续既有纪律）
 
 - 每个逻辑修改 = 独立 commit；每步 commit + push；禁止 force push / squash。
