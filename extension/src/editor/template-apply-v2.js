@@ -10,6 +10,10 @@
 //   4. 不串面 —— slotId 前缀（front-/back-）必须与指令 side 一致；
 //   5. 双因子防错槽 —— slotIdx 须在对应面槽范围内，且 objectUuid（若有）必须匹配；
 //   6. 一槽至多一条指令（重复 slotId → 拒绝）。
+// P1 多版（Stage 10-G P1）：
+//   7. 每条指令携带 version（本批必须同一版；混版 → VERSION_MIXED 拒绝）——
+//      version 来源优先级：match.version > snapshot.version > 0；
+//      version 为 0 时即单版语义，行为与 P1 前逐字一致（向后兼容）。
 // 本模块纯函数、自包含（无 require）；真源为 runtime/stage11/template-apply-v2.test.js。
 // 调用链：Snapshot + validator(ref.matches) → zyBuildApplyCommandPlan → page-bridge templateApplyV2。
 // =====================================================================
@@ -50,6 +54,9 @@ function zyBuildApplyCommandPlan(input) {
   const errors = [];
   const commands = [];
   const seen = {};
+  // P1 多版：本批只允许同一版（batchVersion 由首个 match 或 snapshot.version 确定）
+  const snapVersion = zyIsNum(snapshot.version) ? snapshot.version : 0;
+  let batchVersion = null;
 
   matches.forEach((m, i) => {
     const slotId = zyStr(m && m.slotId);
@@ -59,6 +66,9 @@ function zyBuildApplyCommandPlan(input) {
     const customerText = zyStr(m && m.customerText);
     const confidence = zyIsNum(m && m.confidence) ? m.confidence : 1;
     const reason = zyStr(m && m.reason);
+    const mv = zyIsNum(m && m.version) ? m.version : snapVersion;
+    if (batchVersion == null) batchVersion = mv;
+    if (mv !== batchVersion) { errors.push("CMD[" + i + "] VERSION_MIXED[" + mv + " vs " + batchVersion + "]"); return; }
     // a) slotId 必须真实存在
     const slot = reg[slotId];
     if (!slot) { errors.push("CMD[" + i + "] UNKNOWN_SLOT[" + slotId + "]"); return; }
@@ -77,6 +87,7 @@ function zyBuildApplyCommandPlan(input) {
     // f) customerText 非空
     if (!customerText.trim()) { errors.push("CMD[" + i + "] EMPTY_CUSTOMER_TEXT[" + slotId + "]"); return; }
     commands.push({
+      version: mv,
       side: reg[slotId].side,
       slotId: slotId,
       slotIdx: reg[slotId].index,
@@ -104,6 +115,7 @@ function zyBuildApplyCommandPlan(input) {
 
   return {
     ok: errors.length === 0,
+    version: batchVersion == null ? snapVersion : batchVersion,
     commands: commands,
     sideGroups: sideGroups,
     errors: errors,
@@ -111,6 +123,24 @@ function zyBuildApplyCommandPlan(input) {
   };
 }
 
+// P2 多版套版：按「版 + 面」从已冻结指令中选取子集（仅当前版作用域；跨版指令一律拒绝且不入选）。
+// version=null 表示不按版过滤（通用工具）；side=null 表示不按面过滤。调用侧必须显式传当前版。
+function zySelectCommands(input) {
+  const o = input || {};
+  const commands = Array.isArray(o.commands) ? o.commands : [];
+  const wantVersion = zyIsNum(o.version) ? o.version : null;
+  const wantSide = (o.side === "front" || o.side === "back") ? o.side : null;
+  const errors = [];
+  const picked = [];
+  commands.forEach((c, i) => {
+    const cv = zyIsNum(c && c.version) ? c.version : 0;
+    if (wantVersion != null && cv !== wantVersion) { errors.push("SEL[" + i + "] VERSION_OUT_OF_SCOPE[" + cv + "!=" + wantVersion + "]"); return; }
+    if (wantSide && !(c && c.side === wantSide)) return;
+    picked.push(c);
+  });
+  return { ok: errors.length === 0, version: wantVersion, side: wantSide, commands: picked, errors: errors, summary: { total: commands.length, picked: picked.length, rejected: errors.length } };
+}
+
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { zySlotPrefixOf: zySlotPrefixOf, zySnapshotSlotRegistry: zySnapshotSlotRegistry, zyBuildApplyCommandPlan: zyBuildApplyCommandPlan };
+  module.exports = { zySlotPrefixOf: zySlotPrefixOf, zySnapshotSlotRegistry: zySnapshotSlotRegistry, zyBuildApplyCommandPlan: zyBuildApplyCommandPlan, zySelectCommands: zySelectCommands };
 }

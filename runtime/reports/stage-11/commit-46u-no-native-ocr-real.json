@@ -1,0 +1,79 @@
+{
+  "ts": "2026-09-24T15:52:22.344Z",
+  "stage": "STAGE10-G-NO-NATIVE-OCR-REAL",
+  "cookieSource": "merged",
+  "bverExpect": "0.3.11.84",
+  "rounds": 2,
+  "modes": [
+    "2",
+    "1"
+  ],
+  "runs": [
+    {
+      "round": 1,
+      "mode": "2",
+      "errors": [],
+      "steps": {
+        "N1": {
+          "nativePanel": 0,
+          "nativeToolBtn": 0,
+          "nativeStatus": 0,
+          "panel": 1,
+          "ocrBtn": true,
+          "smartFill": true,
+          "rightBar": true
+        },
+        "N2": {
+          "nativePanel": 0,
+          "nativeToolBtn": 0,
+          "nativeStatus": 0,
+          "panel": 1,
+          "ocrBtn": true,
+          "smartFill": true,
+          "rightBar": true
+        },
+        "N3": {
+          "clicked": true,
+          "statusStarted": true,
+          "status": "正在准备图片…",
+          "nativePanel": 0,
+          "nativeToolBtn": 0
+        }
+      },
+      "bver": "0.3.11.84"
+    },
+    {
+      "round": 2,
+      "mode": "1",
+      "errors": [],
+      "steps": {
+        "N1": {
+          "nativePanel": 0,
+          "nativeToolBtn": 0,
+          "nativeStatus": 0,
+          "panel": 1,
+          "ocrBtn": true,
+          "smartFill": true,
+          "rightBar": true
+        },
+        "N2": {
+          "nativePanel": 0,
+          "nativeToolBtn": 0,
+          "nativeStatus": 0,
+          "panel": 1,
+          "ocrBtn": true,
+          "smartFill": true,
+          "rightBar": true
+        },
+        "N3": {
+          "clicked": true,
+          "statusStarted": true,
+          "status": "正在等待编辑器加载…",
+          "nativePanel": 0,
+          "nativeToolBtn": 0
+        }
+      }
+    }
+  ],
+  "errors": []
+}

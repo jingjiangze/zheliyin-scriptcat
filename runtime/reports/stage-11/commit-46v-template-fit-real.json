@@ -1,0 +1,450 @@
+{
+  "ts": "2026-09-25T01:21:17.189Z",
+  "stage": "STAGE10-G-M5-TEMPLATE-FIT-REAL",
+  "cookieSource": "merged",
+  "aiModel": "Qwen/Qwen2.5-7B-Instruct",
+  "bverExpect": "0.3.11.85",
+  "rounds": 2,
+  "runs": [
+    {
+      "round": 1,
+      "errors": [],
+      "steps": {
+        "M1": {
+          "front": [
+            {
+              "objectUuid": "044a395d-df7c-4d34-ad16-76a03a836aa0",
+              "left": "60.89999999999999",
+              "top": "30.872916666666665",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 16,
+              "width": 160
+            },
+            {
+              "objectUuid": "39cc9bf6-8df9-411c-979f-66bb79c84380",
+              "left": "68.89999999999999",
+              "top": "54.02760416666666",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 22,
+              "width": 160
+            },
+            {
+              "objectUuid": "8cdd203b-a437-41af-b575-ce0995138e3d",
+              "left": "76.89999999999999",
+              "top": "77.18229166666666",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 14,
+              "width": 160
+            },
+            {
+              "objectUuid": "a4a58f2b-565b-4d45-be15-6a604fd05628",
+              "left": "60.89999999999999",
+              "top": "100.33697916666667",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 13,
+              "width": 160
+            }
+          ],
+          "back": [
+            {
+              "objectUuid": "73e3e00e-b925-469d-b1be-5534ed7a5ab4",
+              "left": "60.89999999999999",
+              "top": "30.872916666666665",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 14,
+              "width": 160
+            },
+            {
+              "objectUuid": "d028a7a3-8238-4546-b423-1de26682fc7b",
+              "left": "68.89999999999999",
+              "top": "54.02760416666666",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 12,
+              "width": 160
+            }
+          ]
+        },
+        "M2": {
+          "previewDone": true,
+          "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 2）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4 ｜ [反] 槽 2 / 行 2 → 匹配 2\nfront-1 ← 上海启诚科技有限公司（华东区域总部）\nfront-2 ← 王小明（销售总监）\nfront-3 ← 销售总监兼大客户部负责人"
+        },
+        "M3": {
+          "clicked": true,
+          "statusDone": true,
+          "v2Count": 1,
+          "v2Code": "OK",
+          "evidence": [
+            {
+              "side": "front",
+              "version": 0,
+              "slotId": "front-1",
+              "slotIdx": 0,
+              "from": 16,
+              "to": 10,
+              "reason": "OVERFLOW",
+              "overflow": true,
+              "measured": {
+                "width": 180,
+                "limit": 160
+              }
+            },
+            {
+              "side": "front",
+              "version": 0,
+              "slotId": "front-2",
+              "slotIdx": 1,
+              "from": 22,
+              "to": 17,
+              "reason": "SHRINK",
+              "overflow": false,
+              "measured": {
+                "width": 153,
+                "limit": 160
+              }
+            },
+            {
+              "side": "front",
+              "version": 0,
+              "slotId": "front-3",
+              "slotIdx": 2,
+              "from": 14,
+              "to": 13,
+              "reason": "SHRINK",
+              "overflow": false,
+              "measured": {
+                "width": 156,
+                "limit": 160
+              }
+            },
+            {
+              "side": "front",
+              "version": 0,
+              "slotId": "front-4",
+              "slotIdx": 3,
+              "from": 13,
+              "to": 13,
+              "reason": "FITS",
+              "overflow": false,
+              "measured": {
+                "width": 79.3203125,
+                "limit": 160
+              }
+            },
+            {
+              "side": "back",
+              "version": 0,
+              "slotId": "back-1",
+              "slotIdx": 0,
+              "from": 14,
+              "to": 8,
+              "reason": "SHRINK",
+              "overflow": false,
+              "measured": {
+                "width": 144,
+                "limit": 160
+              }
+            },
+            {
+              "side": "back",
+              "version": 0,
+              "slotId": "back-2",
+              "slotIdx": 1,
+              "from": 12,
+              "to": 12,
+              "reason": "FITS",
+              "overflow": false,
+              "measured": {
+                "width": 140.53125,
+                "limit": 160
+              }
+            }
+          ]
+        },
+        "M4": {
+          "pairs": [
+            {
+              "i": 0,
+              "from": 16,
+              "to": 10,
+              "wFrom": 160,
+              "wTo": 160
+            },
+            {
+              "i": 1,
+              "from": 22,
+              "to": 17,
+              "wFrom": 160,
+              "wTo": 160
+            },
+            {
+              "i": 2,
+              "from": 14,
+              "to": 13,
+              "wFrom": 160,
+              "wTo": 160
+            },
+            {
+              "i": 3,
+              "from": 13,
+              "to": 13,
+              "wFrom": 160,
+              "wTo": 160
+            }
+          ],
+          "shrunkCount": 3,
+          "grewCount": 0,
+          "shrinkEvCount": 3,
+          "badMeasure": []
+        },
+        "M5": {
+          "frozenFails": []
+        },
+        "M6": {
+          "overflowCount": 1,
+          "overflowAtMinOnly": true,
+          "badOverflow": [],
+          "unflaggedOverflow": []
+        }
+      },
+      "bver": "0.3.11.85"
+    },
+    {
+      "round": 2,
+      "errors": [],
+      "steps": {
+        "M1": {
+          "front": [
+            {
+              "objectUuid": "139c5922-21be-46ba-a944-ffd4ad4bd9f4",
+              "left": "60.89999999999999",
+              "top": "30.872916666666665",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 16,
+              "width": 160
+            },
+            {
+              "objectUuid": "4b83af19-a856-422f-9355-20a74c0378a0",
+              "left": "68.89999999999999",
+              "top": "54.02760416666666",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 22,
+              "width": 160
+            },
+            {
+              "objectUuid": "ea733616-070c-40fd-9170-c9b9927ed015",
+              "left": "76.89999999999999",
+              "top": "77.18229166666666",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 14,
+              "width": 160
+            },
+            {
+              "objectUuid": "722a31e4-7525-4a22-b6f0-6026cbb8c568",
+              "left": "60.89999999999999",
+              "top": "100.33697916666667",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 13,
+              "width": 160
+            }
+          ],
+          "back": [
+            {
+              "objectUuid": "50c07721-a040-4112-a92c-338c563a56b3",
+              "left": "60.89999999999999",
+              "top": "30.872916666666665",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 14,
+              "width": 160
+            },
+            {
+              "objectUuid": "f64acf93-7065-462b-9c08-76fd79175b91",
+              "left": "68.89999999999999",
+              "top": "54.02760416666666",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111",
+              "fontSize": 12,
+              "width": 160
+            }
+          ]
+        },
+        "M2": {
+          "previewDone": true,
+          "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 2）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4 ｜ [反] 槽 2 / 行 2 → 匹配 2\nfront-1 ← 上海启诚科技有限公司（华东区域总部）\nfront-2 ← 王小明（销售总监）\nfront-3 ← 销售总监兼大客户部负责人"
+        },
+        "M3": {
+          "clicked": true,
+          "statusDone": true,
+          "v2Count": 1,
+          "v2Code": "OK",
+          "evidence": [
+            {
+              "side": "front",
+              "version": 0,
+              "slotId": "front-1",
+              "slotIdx": 0,
+              "from": 16,
+              "to": 10,
+              "reason": "OVERFLOW",
+              "overflow": true,
+              "measured": {
+                "width": 180,
+                "limit": 160
+              }
+            },
+            {
+              "side": "front",
+              "version": 0,
+              "slotId": "front-2",
+              "slotIdx": 1,
+              "from": 22,
+              "to": 17,
+              "reason": "SHRINK",
+              "overflow": false,
+              "measured": {
+                "width": 153,
+                "limit": 160
+              }
+            },
+            {
+              "side": "front",
+              "version": 0,
+              "slotId": "front-3",
+              "slotIdx": 2,
+              "from": 14,
+              "to": 13,
+              "reason": "SHRINK",
+              "overflow": false,
+              "measured": {
+                "width": 156,
+                "limit": 160
+              }
+            },
+            {
+              "side": "front",
+              "version": 0,
+              "slotId": "front-4",
+              "slotIdx": 3,
+              "from": 13,
+              "to": 13,
+              "reason": "FITS",
+              "overflow": false,
+              "measured": {
+                "width": 79.3203125,
+                "limit": 160
+              }
+            },
+            {
+              "side": "back",
+              "version": 0,
+              "slotId": "back-1",
+              "slotIdx": 0,
+              "from": 14,
+              "to": 8,
+              "reason": "SHRINK",
+              "overflow": false,
+              "measured": {
+                "width": 144,
+                "limit": 160
+              }
+            },
+            {
+              "side": "back",
+              "version": 0,
+              "slotId": "back-2",
+              "slotIdx": 1,
+              "from": 12,
+              "to": 12,
+              "reason": "FITS",
+              "overflow": false,
+              "measured": {
+                "width": 140.53125,
+                "limit": 160
+              }
+            }
+          ]
+        },
+        "M4": {
+          "pairs": [
+            {
+              "i": 0,
+              "from": 16,
+              "to": 10,
+              "wFrom": 160,
+              "wTo": 160
+            },
+            {
+              "i": 1,
+              "from": 22,
+              "to": 17,
+              "wFrom": 160,
+              "wTo": 160
+            },
+            {
+              "i": 2,
+              "from": 14,
+              "to": 13,
+              "wFrom": 160,
+              "wTo": 160
+            },
+            {
+              "i": 3,
+              "from": 13,
+              "to": 13,
+              "wFrom": 160,
+              "wTo": 160
+            }
+          ],
+          "shrunkCount": 3,
+          "grewCount": 0,
+          "shrinkEvCount": 3,
+          "badMeasure": []
+        },
+        "M5": {
+          "frozenFails": []
+        },
+        "M6": {
+          "overflowCount": 1,
+          "overflowAtMinOnly": true,
+          "badOverflow": [],
+          "unflaggedOverflow": []
+        }
+      }
+    }
+  ],
+  "errors": []
+}

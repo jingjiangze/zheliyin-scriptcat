@@ -1,0 +1,240 @@
+{
+  "ts": "2026-09-24T15:45:22.165Z",
+  "stage": "STAGE10-G-M4-WORKBENCH-REAL",
+  "cookieSource": "merged",
+  "aiModel": "Qwen/Qwen2.5-7B-Instruct",
+  "bverExpect": "0.3.11.83",
+  "rounds": 2,
+  "runs": [
+    {
+      "round": 1,
+      "errors": [],
+      "steps": {
+        "A0": {
+          "front": [
+            "启诚科技有限公司",
+            "王晓明",
+            "销售总监",
+            "13800000000"
+          ],
+          "back": [
+            "主营：企业咨询",
+            "服务热线：400-100-1000"
+          ],
+          "frozenBefore": [
+            {
+              "objectUuid": "dbc1d91c-fe1d-4391-a198-3fe3699c2dbf",
+              "left": "60.89999999999999",
+              "top": "30.872916666666665",
+              "width": "160",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111"
+            },
+            {
+              "objectUuid": "a8585eca-c14f-41de-8422-24e6e9eb6efa",
+              "left": "68.89999999999999",
+              "top": "54.02760416666666",
+              "width": "160",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111"
+            },
+            {
+              "objectUuid": "f894970c-ac80-4e42-a2fd-9abf382bcf6d",
+              "left": "76.89999999999999",
+              "top": "77.18229166666666",
+              "width": "160",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111"
+            },
+            {
+              "objectUuid": "ab3515ad-34dd-40f4-925b-7dd314c78283",
+              "left": "60.89999999999999",
+              "top": "100.33697916666667",
+              "width": "160",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111"
+            }
+          ]
+        },
+        "A1_preview": {
+          "done": true
+        },
+        "A1": {
+          "visible": true,
+          "rowCount": 6,
+          "chipCount": 4,
+          "summary": "匹配工作台：已绑定 6/6（手动编辑 0）｜不确定 0｜未匹配客户块 0",
+          "tplNonEmpty": 6
+        },
+        "A2": {
+          "front1": {
+            "slotId": "front-1",
+            "tpl": "原模板：启诚科技有限公司",
+            "cust": "",
+            "badge": "未匹配"
+          }
+        },
+        "A3": {
+          "chipText": "启诚科技有限公司",
+          "chipClicked": true,
+          "assignClicked": true,
+          "front1": "启诚科技有限公司",
+          "badge": "手动分配"
+        },
+        "A4": {
+          "status": true,
+          "front1": "M4-编辑值",
+          "badge": "手动编辑"
+        },
+        "A5": {
+          "swapSent": true,
+          "before": {
+            "f1": "M4-编辑值",
+            "f2": "王小明"
+          },
+          "after": {
+            "f1": "王小明",
+            "f2": "M4-编辑值"
+          }
+        },
+        "A6": {
+          "clicked": true,
+          "status": true,
+          "afterFront": [
+            "王小明",
+            "M4-编辑值",
+            "销售总监",
+            "13800138000"
+          ]
+        },
+        "A7": {
+          "frozenFails": []
+        }
+      },
+      "bver": "0.3.11.83"
+    },
+    {
+      "round": 2,
+      "errors": [],
+      "steps": {
+        "A0": {
+          "front": [
+            "启诚科技有限公司",
+            "王晓明",
+            "销售总监",
+            "13800000000"
+          ],
+          "back": [
+            "主营：企业咨询",
+            "服务热线：400-100-1000"
+          ],
+          "frozenBefore": [
+            {
+              "objectUuid": "33695a50-2563-40b9-8e00-61cfc9d8540f",
+              "left": "60.89999999999999",
+              "top": "30.872916666666665",
+              "width": "160",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111"
+            },
+            {
+              "objectUuid": "2b08bb3c-5853-444b-8b21-9366f2ccabda",
+              "left": "68.89999999999999",
+              "top": "54.02760416666666",
+              "width": "160",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111"
+            },
+            {
+              "objectUuid": "25125420-a59b-4866-9171-4b2df61109f7",
+              "left": "76.89999999999999",
+              "top": "77.18229166666666",
+              "width": "160",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111"
+            },
+            {
+              "objectUuid": "fc66a9a3-1042-4b4d-a2f4-516ed0f2ac07",
+              "left": "60.89999999999999",
+              "top": "100.33697916666667",
+              "width": "160",
+              "angle": "0",
+              "fontId": "248",
+              "fontFamily": "方正黑体简体",
+              "fill": "#111111"
+            }
+          ]
+        },
+        "A1_preview": {
+          "done": true
+        },
+        "A1": {
+          "visible": true,
+          "rowCount": 6,
+          "chipCount": 4,
+          "summary": "匹配工作台：已绑定 6/6（手动编辑 0）｜不确定 0｜未匹配客户块 0",
+          "tplNonEmpty": 6
+        },
+        "A2": {
+          "front1": {
+            "slotId": "front-1",
+            "tpl": "原模板：启诚科技有限公司",
+            "cust": "",
+            "badge": "未匹配"
+          }
+        },
+        "A3": {
+          "chipText": "启诚科技有限公司",
+          "chipClicked": true,
+          "assignClicked": true,
+          "front1": "启诚科技有限公司",
+          "badge": "手动分配"
+        },
+        "A4": {
+          "status": true,
+          "front1": "M4-编辑值",
+          "badge": "手动编辑"
+        },
+        "A5": {
+          "swapSent": true,
+          "before": {
+            "f1": "M4-编辑值",
+            "f2": "王小明"
+          },
+          "after": {
+            "f1": "王小明",
+            "f2": "M4-编辑值"
+          }
+        },
+        "A6": {
+          "clicked": true,
+          "status": true,
+          "afterFront": [
+            "王小明",
+            "M4-编辑值",
+            "销售总监",
+            "13800138000"
+          ]
+        },
+        "A7": {
+          "frozenFails": []
+        }
+      }
+    }
+  ],
+  "errors": []
+}

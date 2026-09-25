@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.78
+// @version      0.3.11.85
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,55 +14,57 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-plan.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-validator.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/rule-match.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply-v2.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-plan.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-validator.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-workbench.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/rule-match.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply-v2.js?v=0.3.11.85
+// @require       https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-text-fit.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.85
 // Stage 12 M3c：PP-OCRv6（ONNX/WASM）本地引擎模块（zyOcrEngine=ppocr 时使用；默认 tesseract 不加载）
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/db-det-postprocess.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/det-params.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-image-ops.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-rec-decode.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-engine-loader.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-ort-session.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-provider.js?v=0.3.11.78
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-bridge.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/db-det-postprocess.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/det-params.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-image-ops.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-rec-decode.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-engine-loader.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-ort-session.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-provider.js?v=0.3.11.85
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-bridge.js?v=0.3.11.85
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -81,12 +83,11 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.78";
+  const VERSION = "0.3.11.85";
 
-  // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
-  // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
-  // GM 开关 zyShowTemplatePanel（默认空/0/1=显示浮窗；存 "2"=OCR-only 仅原生抽屉；历史 "1" 兼容）。
-  const OCR_ONLY_MODE = GM_getValue("zyShowTemplatePanel", "0") === "2"; // 默认显示套版浮窗（含一键智能填充）；显式存 "2" 才回到 OCR-only（仅原生抽屉）
+  // ---- 用户指令（2026-09-24）：去掉原生 OCR 栏（不在 UI 显示，OCR 默认后台执行）----
+  // 历史「OCR-only」演示模式（GM zyShowTemplatePanel="2"）已废弃：原生右栏抽屉/工具按钮不再挂载；
+  // 识别入口统一为套版浮窗内「识别图片文字」按钮（后台执行，仅改文字，不改几何/字体/颜色/层级）。
   const BRIDGE_SOURCE = "zy-card-assistant";
   const PAGE_SOURCE = "zy-card-assistant-page";
   // DEFAULT_BASE_URL / DEFAULT_MODEL 已迁移至 config-core（@require 加载，作用域共享，单一来源）
@@ -317,43 +318,27 @@
         line-height: 1.45;
         word-break: break-all;
       }
-      /* Stage 5.5B P2-B：原生右栏邻接抽屉（复用 zy-* 样式体系） */
-      #zy-native-ocr-panel {
-        position: fixed;
-        top: 0;
-        right: 190px; /* 紧贴 .rightPageBar.rightBar 左缘 */
-        width: 245px;
-        height: 100vh;
-        z-index: 2147483000;
-        background: #ffffff;
-        color: #172033;
-        border-left: 1px solid #d7dce5;
-        box-shadow: -8px 0 24px rgba(16, 24, 40, .12);
-        font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-      }
-      #zy-native-ocr-panel .zy-body {
-        flex: 1;
-        display: grid;
-        gap: 10px;
-        padding: 12px;
-        overflow: auto;
-      }
-      #zy-native-ocr-panel .zy-head { flex: none; }
-      #zy-native-ocr-tool-btn {
-        display: block;
-        width: 100%;
-        height: 52px;
-        border: 0;
-        background: #2e7ff0;
-        color: #fff;
-        font-size: 18px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-      #zy-native-ocr-tool-btn:hover { background: #1f6feb; }
+      .zy-match-block { border: 1px solid #d7e2f5; border-radius: 6px; padding: 8px; background: #f7faff; display: grid; gap: 8px; }
+      .zy-match-summary { font-size: 12px; font-weight: 700; color: #1f3b63; }
+      .zy-wb-cols { display: grid; grid-template-columns: 1.35fr 1fr; gap: 8px; }
+      .zy-wb-col { display: grid; gap: 6px; align-content: start; }
+      .zy-wb-h { font-size: 11px; color: #667085; font-weight: 700; }
+      .zy-wb-row { border: 1px solid #e4e7ec; border-radius: 6px; padding: 6px; background: #fff; display: grid; gap: 4px; }
+      .zy-wb-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+      .zy-wb-sid { font-size: 12px; font-weight: 700; color: #1f2937; }
+      .zy-wb-badge { font-size: 10px; padding: 1px 6px; border-radius: 8px; background: #eef2f7; color: #475467; }
+      .zy-wb-badge.ok { background: #e6f4ea; color: #1b7a3d; }
+      .zy-wb-badge.edit { background: #fff4e5; color: #b25e00; }
+      .zy-wb-badge.unclear { background: #fdecef; color: #b42318; }
+      .zy-wb-tpl { font-size: 11px; color: #667085; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .zy-wb-ops { display: grid; grid-template-columns: auto auto 1fr; gap: 4px; }
+      .zy-wb-mini { min-height: 26px !important; padding: 0 6px; font-size: 11px; }
+      .zy-wb-blocks { display: grid; gap: 4px; max-height: 260px; overflow: auto; }
+      .zy-wb-chip { display: grid; gap: 2px; border: 1px solid #e4e7ec; border-radius: 6px; padding: 5px 6px; background: #fff; cursor: pointer; }
+      .zy-wb-chip.sel { border-color: #1f6feb; box-shadow: 0 0 0 2px rgba(31,111,235,.18); }
+      .zy-wb-chip-id { font-size: 10px; color: #667085; }
+      .zy-wb-chip-tx { font-size: 12px; color: #172033; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .zy-wb-chip-st { font-size: 10px; color: #1f6feb; }
     `);
   }
 
@@ -436,6 +421,7 @@
             <div class="zy-note" id="zy-baidu-status">Key 只保存在本机脚本配置中，不写入画布、不上传第三方。</div>
           </div>
         </details>
+        ${ocrSessionSettingsHtml("")}
         <div class="zy-row">
           <label class="zy-label" for="zy-raw">客户文字（自动拆正反面）</label>
           <textarea class="zy-textarea" id="zy-raw" placeholder="把微信、表格或客户发来的名片资料粘贴到这里，点「一键智能填充」自动拆正反面并填入当前模板槽位（不填 AI Key 也能用本地规则）。"></textarea>
@@ -447,23 +433,24 @@
         
         <div class="zy-match-block" id="zy-match-block" style="display:none">
           <div class="zy-match-summary" id="zy-match-summary"></div>
-          <div class="zy-match-rows" id="zy-match-rows"></div>
-          <div class="zy-actions two">
-            <button class="zy-btn" id="zy-apply-confirm">确认填充</button>
-            <button class="zy-btn secondary" id="zy-apply-cancel">取消</button>
-          </div>
-        </div>
-        <details class="zy-settings">
-          <summary>正反面与字段（可编辑）</summary>
-          <div class="zy-settings-body">
-            <div class="zy-side-grid" id="zy-side-texts">${renderSideTextInputs()}</div>
-            <div class="zy-grid" id="zy-fields">${renderFieldInputs(state.fields)}</div>
-            <div class="zy-actions two">
-              <button class="zy-btn" id="zy-apply-front">填正面</button>
-              <button class="zy-btn secondary" id="zy-apply-back">填反面</button>
+          <div class="zy-wb-cols">
+            <div class="zy-wb-col">
+              <div class="zy-wb-h">模板槽位（原模板只读 ／ 客户值可编辑）</div>
+              <div class="zy-match-rows" id="zy-match-rows"></div>
+            </div>
+            <div class="zy-wb-col">
+              <div class="zy-wb-h">客户文字块（点选后到左侧点「分配所选块」）</div>
+              <div class="zy-wb-blocks" id="zy-wb-blocks"></div>
             </div>
           </div>
-        </details>
+          <div class="zy-note" id="zy-wb-unmatched"></div>
+          <div class="zy-actions">
+            <button class="zy-btn" id="zy-apply-confirm">确认套版</button>
+            <button class="zy-btn secondary" id="zy-apply-cancel">取消</button>
+            <button class="zy-btn secondary" id="zy-wb-rematch" type="button">重新 AI 匹配</button>
+          </div>
+        </div>
+        ${mvSettingsHtml()}
         <div class="zy-actions">
           <button class="zy-btn zy-ocr" id="zy-ocr-btn">识别图片文字</button>
           <button class="zy-btn secondary" id="zy-probe" title="检测画布与桥接状态">诊断</button>
@@ -545,14 +532,6 @@
         if (p.baseUrl && p.baseUrl !== cur.baseUrl) loadModels(panel);
       setStatus("已填入「" + (p.label || providerSel.value) + "」接口地址与默认模型，请填写 API Key。");
     });
-    panel.querySelector("#zy-apply-front").addEventListener("click", () => {
-      rebuildFieldsFromSideText();
-      applyFieldsToPage(state.fields, "front");
-    });
-    panel.querySelector("#zy-apply-back").addEventListener("click", () => {
-      rebuildFieldsFromSideText();
-      applyFieldsToPage(state.fields, "back");
-    });
     // P1 根因修复：模板曾移除 #zy-probe 按钮但绑定仍在 → querySelector null → TypeError → 后续绑定全部失效。
     // 防御性绑定：单按钮缺失不再拖垮整块面板（优先绑定 OCR，诊断其次）。
     const ocrBtn = panel.querySelector("#zy-ocr-btn");
@@ -567,10 +546,15 @@
     if (probeBtn) probeBtn.addEventListener("click", probeCanvas);
     // Stage 5.5B P4 / P2-B：识别方式 + 百度设置共用绑定（suffix 区分浮窗面板与原生抽屉，单一来源）
     bindOcrControls(panel, "", () => { renderPanel(); });
+    bindOcrSessionControls(panel, "");
+    bindMvControls(panel);
+    bindWorkbench(panel);
+    const wbRematchBtn = panel.querySelector("#zy-wb-rematch");
+    if (wbRematchBtn) wbRematchBtn.addEventListener("click", mwRematch);
   }
 
   // 识别方式下拉 + 百度云 OCR（AK/SK 脱敏存取 + 保存 + 测试连接）统一绑定。
-  // suffix: 浮窗 "" / 原生抽屉 "-native"；onSaved: 保存后回调（浮窗需重渲染刷新占位，原生抽屉不需要）。
+  // suffix: 目前仅浮窗 ""（原生抽屉已移除）；onSaved: 保存后回调（浮窗需重渲染刷新占位）。
 
   // Stage 10-G Commit J-2: 读取接口 /models 可用模型下拉（OpenAI 兼容；GET + Bearer）。
   let zyModelListCache = null; // { baseUrl, at, ids } 60s 缓存，面板重渲染不重复请求
@@ -650,6 +634,109 @@
     if (n) n.textContent = text;
   }
 
+  // ---- 用户需求（2026-09-24）：脚本设置自动定期更新原生网页文字识别会话 ----
+  // 语义：原生 OCR（/siteWeb/userCenterJsj/uploadOCR.do）认证 = 站点登录会话 Cookie，
+  //   由「当前页面同域请求」自动携带 —— 默认读取使用者本机浏览器 cookie，
+  //   不手工注入、不写死、不落盘 cookie 值。
+  //   本模块按设定间隔对同域 OCRTool.do 做一次轻量会话 touch（校验登录态，服务端滚动会话随之续期）；
+  //   若识别返回会话过期，立即触发一次刷新并提示重新登录。
+  const OCR_SESSION_URL = "/siteWeb/userCenterJsj/OCRTool.do";
+  const OCR_SESSION_AUTO_DEFAULT = "1";
+  const OCR_SESSION_INTERVAL_DEFAULT = "10";
+  const OCR_SESSION_LOGIN_MARKERS = ["window.open", "jsj/index.do", "login", "<html"];
+  const OCR_SESSION_INTERVALS = [5, 10, 15, 30];
+  let ocrSessionTimer = null;
+
+  function ocrSessionAutoOn() { return GM_getValue("zyOcrSessionAuto", OCR_SESSION_AUTO_DEFAULT) === "1"; }
+  function ocrSessionIntervalMin() {
+    const v = parseInt(GM_getValue("zyOcrSessionIntervalMin", OCR_SESSION_INTERVAL_DEFAULT), 10);
+    return (v >= 1 && v <= 120) ? v : parseInt(OCR_SESSION_INTERVAL_DEFAULT, 10);
+  }
+  function isOcrSessionLoginBody(body) {
+    const bn = String(body || "").toLowerCase();
+    return OCR_SESSION_LOGIN_MARKERS.some((m) => bn.indexOf(m) >= 0);
+  }
+  function setOcrSessionStatus(text) {
+    const t = String(text == null ? "" : text);
+    GM_setValue("zyOcrSessionLastStatus", t.slice(0, 200));
+    GM_setValue("zyOcrSessionLastAt", Date.now());
+    ["zy-ocr-session-status", "zy-ocr-session-status-native"].forEach((id) => {
+      const n = document.getElementById(id);
+      if (n) n.textContent = t;
+    });
+  }
+  // 同域 GET 自动携带使用者会话 Cookie（credentials:same-origin）；只读回执，不解析/不记录 cookie 值。
+  async function touchNativeOcrSession(trigger) {
+    const label = trigger ? "（" + trigger + "）" : "";
+    try {
+      const res = await fetch(OCR_SESSION_URL, { method: "GET", credentials: "same-origin", cache: "no-store", redirect: "follow" });
+      const body = await res.text();
+      if (res.status >= 400 || isOcrSessionLoginBody(body)) {
+        setOcrSessionStatus("识别会话可能已过期" + label + "：请在浏览器重新登录站点后重试。");
+        pipelineEvidence({ stage: "OCR_SESSION", ok: false, code: "NATIVE_SESSION_EXPIRED", httpStatus: res.status });
+        return { ok: false, code: "NATIVE_SESSION_EXPIRED" };
+      }
+      setOcrSessionStatus("会话正常（" + new Date().toLocaleTimeString() + label + "），来源：本机浏览器登录 Cookie。");
+      pipelineEvidence({ stage: "OCR_SESSION", ok: true, code: "SESSION_OK", httpStatus: res.status });
+      return { ok: true, code: "SESSION_OK" };
+    } catch (e) {
+      setOcrSessionStatus("会话刷新请求失败" + label + "：" + String(e && e.message || e).slice(0, 80));
+      pipelineEvidence({ stage: "OCR_SESSION", ok: false, code: "HTTP_FAILED", httpStatus: null });
+      return { ok: false, code: "HTTP_FAILED" };
+    }
+  }
+  function stopOcrSessionKeeper() { if (ocrSessionTimer) { clearInterval(ocrSessionTimer); ocrSessionTimer = null; } }
+  function startOcrSessionKeeper() {
+    stopOcrSessionKeeper();
+    if (!ocrSessionAutoOn()) { setOcrSessionStatus("已关闭自动更新（使用浏览器当前会话）。"); return; }
+    // 延迟首次 touch，避免与页面初始化/首次识别争抢
+    setTimeout(() => { if (ocrSessionAutoOn()) touchNativeOcrSession("启动"); }, 4000);
+    ocrSessionTimer = setInterval(() => { if (ocrSessionAutoOn()) touchNativeOcrSession("定时"); }, ocrSessionIntervalMin() * 60000);
+  }
+  function bindOcrSessionControls(scope, suffix) {
+    if (!scope) return;
+    const q = (id) => scope.querySelector("#" + id + (suffix || ""));
+    const autoSel = q("zy-ocr-session-auto");
+    if (autoSel) autoSel.addEventListener("change", () => {
+      GM_setValue("zyOcrSessionAuto", autoSel.value);
+      if (autoSel.value === "1") startOcrSessionKeeper();
+      else { stopOcrSessionKeeper(); setOcrSessionStatus("已关闭自动更新（使用浏览器当前会话）。"); }
+    });
+    const intSel = q("zy-ocr-session-interval");
+    if (intSel) intSel.addEventListener("change", () => {
+      GM_setValue("zyOcrSessionIntervalMin", intSel.value);
+      if (ocrSessionAutoOn()) startOcrSessionKeeper();
+    });
+    const refBtn = q("zy-ocr-session-refresh");
+    if (refBtn) refBtn.addEventListener("click", async () => { setOcrSessionStatus("正在刷新识别会话…"); await touchNativeOcrSession("手动"); });
+  }
+  function ocrSessionSettingsHtml(suffix) {
+    const s = suffix || "";
+    const iv = String(ocrSessionIntervalMin());
+    const opts = OCR_SESSION_INTERVALS.map((n) => "<option value=\"" + n + "\" " + (iv === String(n) ? "selected" : "") + ">" + n + " 分钟</option>").join("");
+    return `
+      <details class="zy-settings">
+        <summary>原生 OCR 会话（自动更新 Cookie）</summary>
+        <div class="zy-settings-body">
+          <div class="zy-row">
+            <label class="zy-label" for="zy-ocr-session-auto${s}">自动更新会话</label>
+            <select class="zy-input" id="zy-ocr-session-auto${s}">
+              <option value="1" ${ocrSessionAutoOn() ? "selected" : ""}>开启（默认，读取本机浏览器登录 Cookie）</option>
+              <option value="0" ${ocrSessionAutoOn() ? "" : "selected"}>关闭（仅用浏览器当前会话）</option>
+            </select>
+          </div>
+          <div class="zy-row">
+            <label class="zy-label" for="zy-ocr-session-interval${s}">刷新间隔</label>
+            <select class="zy-input" id="zy-ocr-session-interval${s}">${opts}</select>
+          </div>
+          <div class="zy-actions two">
+            <button class="zy-btn secondary" id="zy-ocr-session-refresh${s}" type="button">立即刷新</button>
+          </div>
+          <div class="zy-note" id="zy-ocr-session-status${s}">会话来源：本机浏览器当前登录 Cookie（同域自动携带，不写死、不落盘）。定期校验站点 OCR 工具页以续期会话。</div>
+        </div>
+      </details>`;
+  }
+
   // ---- P4+（用户要求「百度 api 需要加密」）：凭据 AES-GCM 加密落库，明文不进 GM/日志/DOM/Git ----
   const CRED_CRYPTO = (typeof encryptSecret === "function") ? { encryptSecret: encryptSecret, decryptSecret: decryptSecret, isCiphertext: isCiphertext } : null;
   let baiduCfgCache = null; // 解密后的内存缓存 {ak, sk}
@@ -691,96 +778,6 @@
     if (sk) GM_setValue("zyBaiduSk", "");
     await loadBaiduConfig();
     return { ok: true, message: "" };
-  }
-
-  // ---- Stage 5.5B P2-B：原生右栏 OCR 面板（§14-§17，P2-A 审计结论：.rightPageBar.rightBar 稳定）----
-  // 主 UI = 原生右栏邻接抽屉 + 右栏工具按钮；旧浮窗保留为 fallback（§16）。
-  let nativeOcrMounted = false;
-  let nativeObs = null;
-  function renderNativeOcrDrawer() {
-    const existing = document.getElementById("zy-native-ocr-panel");
-    if (existing) return existing;
-    const drawer = document.createElement("aside");
-    drawer.id = "zy-native-ocr-panel";
-    const akPlaceholder = "百度智能云 API Key（" + (baiduConfigured() ? "已配置 " + baiduAkMasked() : "未配置") + "）";
-    drawer.innerHTML = `
-      <div class="zy-head">
-        <div class="zy-title">图片文字识别</div>
-        <div class="zy-head-actions">
-          <button class="zy-icon-btn" id="zy-native-close" title="收起">−</button>
-        </div>
-      </div>
-      <div class="zy-body">
-        <div class="zy-row">
-          <label class="zy-label" for="zy-ocr-mode-native">识别方式</label>
-          <select class="zy-input" id="zy-ocr-mode-native">
-            <option value="auto" ${getOcrMode() === "auto" ? "selected" : ""}>自动（未配云端 Key 用本地；云端不全用本地补位）</option>
-            <option value="local" ${getOcrMode() === "local" ? "selected" : ""}>仅本地（不联网）</option>
-            <option value="baidu" ${getOcrMode() === "baidu" ? "selected" : ""}>百度云端</option>
-          </select>
-          <div class="zy-note">本地 OCR：图片不上传第三方。<br>百度 OCR：图片会发送到百度 OCR 服务识别。</div>
-        </div>
-        <button class="zy-btn" id="zy-native-ocr-btn">识别当前图片</button>
-        <div class="zy-status" id="zy-native-status">就绪</div>
-        <div class="zy-divider"></div>
-        <details class="zy-settings">
-          <summary>百度 OCR（云端备用）</summary>
-          <div class="zy-settings-body">
-            <div class="zy-row">
-              <label class="zy-label" for="zy-baidu-ak-native">API Key</label>
-              <input class="zy-input zy-secret" id="zy-baidu-ak-native" type="text" autocomplete="off" data-form-type="other" spellcheck="false" autocapitalize="off" placeholder="百度智能云 API Key（${akPlaceholder}）">
-            </div>
-            <div class="zy-row">
-              <label class="zy-label" for="zy-baidu-sk-native">Secret Key</label>
-              <input class="zy-input zy-secret" id="zy-baidu-sk-native" type="text" autocomplete="off" data-form-type="other" spellcheck="false" autocapitalize="off" placeholder="留空保持原样">
-            </div>
-            <div class="zy-actions two">
-              <button class="zy-btn" id="zy-baidu-save-native">保存</button>
-              <button class="zy-btn secondary" id="zy-baidu-test-native">测试连接</button>
-            </div>
-            <div class="zy-note" id="zy-baidu-status-native">凭据为客户端可访问凭据，仅存本机脚本配置；请勿使用高权限/长期/不可撤销的 Key。</div>
-          </div>
-        </details>
-      </div>`;
-    document.body.appendChild(drawer);
-    // 绑定（suffix=-native，与浮窗共用 bindOcrControls 单一来源）
-    const closeBtn = drawer.querySelector("#zy-native-close");
-    if (closeBtn) closeBtn.addEventListener("click", () => { drawer.style.display = "none"; });
-    const ocrBtn = drawer.querySelector("#zy-native-ocr-btn");
-    if (ocrBtn) ocrBtn.addEventListener("click", handleOcrImage);
-    bindOcrControls(drawer, "-native", null);
-    return drawer;
-  }
-
-  function mountNativeOcrPanel() {
-    const rightBar = document.querySelector(".rightPageBar.rightBar") || document.querySelector(".rightBar");
-    // 无原生右栏（页面变体）→ 返回 false，由旧浮窗承担主 UI
-    if (!rightBar) return false;
-    const drawer = renderNativeOcrDrawer();
-    if (!document.getElementById("zy-native-ocr-tool-btn")) {
-      const tool = document.createElement("button");
-      tool.id = "zy-native-ocr-tool-btn";
-      tool.title = "图片文字识别";
-      tool.textContent = "识";
-      rightBar.appendChild(tool);
-      tool.addEventListener("click", () => { drawer.style.display = drawer.style.display === "none" ? "flex" : "none"; });
-    }
-    nativeOcrMounted = true;
-    return true;
-  }
-
-  // SPA 重渲染防护：rightBar 可能晚于 init 创建或被页面框架重建/移除，
-  // observer 启动时先 ensure 一次，后续 mutation 再补挂（抽屉/按钮均幂等）。
-  function observeNativeRemount() {
-    if (nativeObs) return;
-    const ensure = () => {
-      const rightBar = document.querySelector(".rightPageBar.rightBar") || document.querySelector(".rightBar");
-      if (rightBar && !document.getElementById("zy-native-ocr-panel")) renderNativeOcrDrawer();
-      if (rightBar && !document.getElementById("zy-native-ocr-tool-btn")) mountNativeOcrPanel();
-    };
-    ensure();
-    nativeObs = new MutationObserver(ensure);
-    nativeObs.observe(document.body, { childList: true, subtree: true });
   }
 
   // ---- Stage 5.5B P1：识别图片文字（本地引擎经 page-world executor + DOM attr 桥接） ----
@@ -1002,6 +999,11 @@
       img._native = native;
       const ok = !!(native && native.ok);
       pipelineEvidence({ stage: "NATIVE", nativeLines: (native && native.texts) ? native.texts.length : 0, ok: ok, code: (native && native.error && native.error.errorCode) || null, httpStatus: (native && native.httpStatus != null) ? native.httpStatus : null });
+      // 会话过期 → 触发一次同域会话刷新（校验登录态），并提示重新登录
+      const _nativeCode = (native && native.error && native.error.errorCode) || null;
+      if (!ok && (_nativeCode === "SESSION_EXPIRED" || _nativeCode === "NATIVE_SESSION_EXPIRED")) {
+        try { touchNativeOcrSession("识别过期触发"); } catch (e) { /* noop */ }
+      }
       ocrLog("TRUTH", "runNativeTruth ok=" + ok + " lines=" + (((native && native.texts) || []).length) + " err=" + String((native && native.error && native.error.errorCode) || "none"));
       return { executed: true, statusCode: ok ? "NATIVE_OK" : ((native && native.error && native.error.errorCode) || "NATIVE_FAIL"), native: native };
     } catch (e) {
@@ -2778,7 +2780,7 @@
   function setStatus(text) {
     state.logs = String(text || "").split("\n").filter(Boolean).slice(-16);
     const value = state.logs.join("\n");
-    // 双显示目标：浮窗 #zy-status 与原生抽屉 #zy-native-status（均带 .zy-status 类）
+    // 状态显示目标：浮窗 #zy-status（.zy-status 类）
     document.querySelectorAll(".zy-status").forEach((node) => { node.textContent = value; });
   }
 
@@ -3356,35 +3358,76 @@
   // → 只展示匹配摘要与预览；执行（只 setText）交给 Commit 06 确认路径。旧 applyContentSimilar 保留。
   // Stage 10-G L 阶 Commit 06：确认填充前冻结的可执行计划（lastAiMatch；确认填充按钮消费）
   let lastAiMatch = null;
+  let mw = null; // M4 可编辑匹配工作台状态
+  // ==== M4 可编辑匹配工作台：渲染（左=模板槽位[原模板只读/客户值可编辑]，右=客户文字块）====
+  function mwStatusCn(st) { return ({ matched: "AI 匹配", manual: "手动分配", edited: "手动编辑", unclear: "不确定", empty: "未匹配" })[st] || "未匹配"; }
+  function mwSyncPlan() {
+    if (!mw || !lastAiMatch) return;
+    const snap = mw.snapshot;
+    if (!snap) { lastAiMatch.commands = []; return; }
+    const plan = zyBuildApplyCommandPlan({ snapshot: snap, matches: zyWbRebuildMatches(mw) });
+    lastAiMatch.commands = plan.ok ? plan.commands.slice() : [];
+    lastAiMatch.planErrors = plan.ok ? null : plan.errors.slice(0, 3);
+  }
   function refreshMatchBlock() {
     const block = document.getElementById("zy-match-block");
     const summaryEl = document.getElementById("zy-match-summary");
     const rowsEl = document.getElementById("zy-match-rows");
+    const blocksEl = document.getElementById("zy-wb-blocks");
+    const unEl = document.getElementById("zy-wb-unmatched");
     if (!block || !summaryEl || !rowsEl) return;
-    if (!lastAiMatch) { block.style.display = "none"; return; }
+    if (!mw) { block.style.display = "none"; return; }
     block.style.display = "block";
-    const ref = lastAiMatch.ref || {};
-    const f = lastAiMatch.sideCounts ? lastAiMatch.sideCounts.front : 0;
-    const b = lastAiMatch.sideCounts ? lastAiMatch.sideCounts.back : 0;
-    const fM = (ref.matches || []).filter(function (m) { return m.side === "front"; }).length;
-    const bM = (ref.matches || []).filter(function (m) { return m.side === "back"; }).length;
-    const sm = ref.summary || {};
-    const semN = (sm.semanticallyVerified != null) ? sm.semanticallyVerified : 0;
-    summaryEl.textContent = "匹配结果（预览，未修改画布）：正面 " + fM + "/" + f + (b > 0 ? " / 反面 " + bM + "/" + b : "") + "（语义校验 " + semN + "）｜未匹配 " + (sm.unmatched != null ? sm.unmatched : 0) + " ｜不确定 " + (sm.uncertain != null ? sm.uncertain : 0);
-    rowsEl.innerHTML = (ref.matches || []).slice(0, 12).map(function (m) { return "<div class=\"zy-note\">" + escapeHtml((m.side === "back" ? "[反] " : "") + m.slotId + " ← " + String(m.customerText).slice(0, 24)) + "</div>"; }).join("");
+    const sm = zyWbSummary(mw);
+    const staleTag = (lastAiMatch && lastAiMatch.stale) ? "⚠ 版已切换，本匹配已失效（请重新匹配）｜ " : "";
+    const vTag = (mw.versionCount > 1) ? ("第 " + (mw.version + 1) + " 版 ｜ ") : "";
+    summaryEl.textContent = staleTag + vTag + "匹配工作台：已绑定 " + sm.matched + "/" + sm.slots + "（手动编辑 " + sm.edited + "）｜不确定 " + sm.unclear + "｜未匹配客户块 " + sm.unmatched;
+    rowsEl.innerHTML = mw.slots.map(function (s) {
+      const badgeCls = s.edited ? "edit" : (s.status === "unclear" ? "unclear" : (String(s.customerText).trim() ? "ok" : ""));
+      const others = mw.slots.filter(function (x) { return x.slotId !== s.slotId; });
+      return "<div class=\"zy-wb-row\" data-slot=\"" + escapeHtml(s.slotId) + "\">"
+        + "<div class=\"zy-wb-head\"><span class=\"zy-wb-sid\">" + escapeHtml(s.slotId) + "</span><span class=\"zy-wb-badge " + badgeCls + "\">" + mwStatusCn(s.status) + "</span></div>"
+        + "<div class=\"zy-wb-tpl\" title=\"原模板（只读）\">原模板：" + escapeHtml(s.templateText || "（空）") + "</div>"
+        + "<input class=\"zy-input zy-wb-cust\" data-cust=\"" + escapeHtml(s.slotId) + "\" value=\"" + escapeHtml(s.customerText) + "\" placeholder=\"客户值（留空 = 该槽不填）\">"
+        + "<div class=\"zy-wb-ops\">"
+        + "<button class=\"zy-btn secondary zy-wb-mini\" data-assign=\"" + escapeHtml(s.slotId) + "\" type=\"button\">分配所选块</button>"
+        + "<button class=\"zy-btn secondary zy-wb-mini\" data-unbind=\"" + escapeHtml(s.slotId) + "\" type=\"button\">解绑</button>"
+        + "<select class=\"zy-input zy-wb-mini\" data-swap=\"" + escapeHtml(s.slotId) + "\"><option value=\"\">交换…</option>"
+        + others.map(function (x) { return "<option value=\"" + escapeHtml(x.slotId) + "\">" + escapeHtml(x.slotId) + "</option>"; }).join("")
+        + "</select></div></div>";
+    }).join("");
+    if (blocksEl) {
+      blocksEl.innerHTML = mw.blocks.length ? mw.blocks.map(function (b) {
+        const sel = (mw.selectedBlockId === b.blockId) ? " sel" : "";
+        const st = b.boundSlotId ? ("→ " + b.boundSlotId) : (b.unmatchedReason ? "未匹配" : "未绑定");
+        return "<div class=\"zy-wb-chip" + sel + "\" data-block=\"" + escapeHtml(b.blockId) + "\"><span class=\"zy-wb-chip-id\">" + escapeHtml(b.blockId) + "</span><span class=\"zy-wb-chip-tx\">" + escapeHtml(String(b.text).slice(0, 40)) + "</span><span class=\"zy-wb-chip-st\">" + escapeHtml(st) + "</span></div>";
+      }).join("") : "<div class=\"zy-note\">无客户文字块（本地规则回退时可能为空）。</div>";
+    }
+    if (unEl) {
+      const uns = mw.blocks.filter(function (b) { return !b.boundSlotId; });
+      const unc = mw.uncertain.map(function (u) { return u.slotId + "：" + String(u.reason || "").slice(0, 36); });
+      const parts = [];
+      if (uns.length) parts.push("未匹配客户块：" + uns.map(function (b) { return b.blockId + " " + String(b.text).slice(0, 16); }).join(" ｜ "));
+      if (unc.length) parts.push("不确定槽位：" + unc.join(" ｜ "));
+      unEl.textContent = parts.length ? parts.join("\n") : "（全部已绑定）";
+    }
   }
   async function confirmTemplateApply() {
     if (!lastAiMatch) { setStatus("没有可确认的 AI 匹配结果，请先「一键智能填充」。"); return; }
+    if (lastAiMatch.stale) { setStatus("版已切换，原匹配已失效，请重新「一键智能填充」后再确认。"); return; }
     if (!lastAiMatch.ok || !lastAiMatch.commands || !lastAiMatch.commands.length) { setStatus("AI 匹配计划无效，无法填充。请重新「一键智能填充」。"); return; }
     setBusy(true);
     try {
       const r = await bridgeCall("templateApplyV2", 25000, { commands: lastAiMatch.commands, pageId: lastAiMatch.pageId, slotsCount: lastAiMatch.sideCounts || {}, planHash: lastAiMatch.planHash });
       if (r && r.ok) {
         setStatus("AI 填充完成：更新 " + (r.applied || []).length + " 槽（几何/字体/样式/身份/层序冻结，只改文字）。");
-        lastAiMatch = null; refreshMatchBlock();
+        lastAiMatch = null; mw = null; refreshMatchBlock();
       } else {
         const errCode = (r && r.code) || "NO_REPLY";
-        setStatus("AI 填充被拦截（" + errCode + "）：快照已变化或画面不一致，请重新「一键智能填充」后再确认。");
+        const errHint = (errCode === "VERSION_MISMATCH")
+          ? "指令版本与当前版不一致（可能已切换多版），请重新「一键智能填充」后再确认。"
+          : "快照已变化或画面不一致，请重新「一键智能填充」后再确认。";
+        setStatus("AI 填充被拦截（" + errCode + "）：" + errHint);
       }
     } catch (e) {
       setStatus("AI 填充执行失败：" + String(e && e.message ? e.message : e) + "（未修改画布）。");
@@ -3394,8 +3437,209 @@
   }
   function cancelTemplateApply() {
     lastAiMatch = null;
+    mw = null;
     refreshMatchBlock();
     setStatus("已取消 AI 填充预览。");
+  }
+
+  // ==== M4 工作台交互（点选分配 / 行内编辑 / 解绑 / 交换 / 重新 AI 匹配）====
+  function bindWorkbench(scope) {
+    if (!scope) return;
+    const rowsEl = scope.querySelector("#zy-match-rows");
+    if (rowsEl) {
+      rowsEl.addEventListener("click", function (e) {
+        const t = e.target; if (!t || !t.closest) return;
+        const asg = t.closest("[data-assign]");
+        if (asg) { mwDoAssign(asg.getAttribute("data-assign")); return; }
+        const unb = t.closest("[data-unbind]");
+        if (unb) { mwDoUnbind(unb.getAttribute("data-unbind")); return; }
+      });
+      rowsEl.addEventListener("change", function (e) {
+        const t = e.target; if (!t || !t.matches) return;
+        if (t.matches("select[data-swap]")) { const b = t.value; if (b) mwDoSwap(t.getAttribute("data-swap"), b); return; }
+        if (t.matches("input[data-cust]")) { mwDoEdit(t.getAttribute("data-cust"), t.value); }
+      });
+    }
+    const blocksEl = scope.querySelector("#zy-wb-blocks");
+    if (blocksEl) {
+      blocksEl.addEventListener("click", function (e) {
+        const t = e.target; if (!t || !t.closest || !mw) return;
+        const chip = t.closest("[data-block]");
+        if (!chip) return;
+        const bid = chip.getAttribute("data-block");
+        mw.selectedBlockId = (mw.selectedBlockId === bid) ? null : bid;
+        refreshMatchBlock();
+      });
+    }
+  }
+  function mwGuard() {
+    if (!mw) { setStatus("没有可编辑的匹配，请先「一键智能填充」。"); return false; }
+    if (lastAiMatch && lastAiMatch.stale) { setStatus("版已切换，本匹配已失效，请重新「一键智能填充」。"); return false; }
+    return true;
+  }
+  function mwAfterOp() { mwSyncPlan(); refreshMatchBlock(); }
+  function mwDoAssign(slotId) {
+    if (!mwGuard()) return;
+    if (!mw.selectedBlockId) { setStatus("请先在右侧「客户文字块」点选一个块，再点「分配所选块」。"); return; }
+    const r = zyWbAssign(mw, slotId, mw.selectedBlockId);
+    if (!r.ok) { setStatus("分配失败（" + r.code + "）。"); return; }
+    setStatus("已把客户块分配到 " + slotId + "（未修改画布；点「确认套版」才写入）。");
+    mw.selectedBlockId = null; mwAfterOp();
+  }
+  function mwDoUnbind(slotId) {
+    if (!mwGuard()) return;
+    const r = zyWbUnbind(mw, slotId);
+    if (!r.ok) { setStatus("解绑失败（" + r.code + "）。"); return; }
+    setStatus("已解绑 " + slotId + "（该槽确认套版时不写入）。");
+    mwAfterOp();
+  }
+  function mwDoSwap(a, b) {
+    if (!mwGuard()) return;
+    const r = zyWbSwap(mw, a, b);
+    if (!r.ok) { setStatus("交换失败（" + r.code + "）。"); return; }
+    setStatus("已交换 " + a + " ↔ " + b + "。");
+    mwAfterOp();
+  }
+  function mwDoEdit(slotId, text) {
+    if (!mwGuard()) return;
+    const r = zyWbAssignText(mw, slotId, text);
+    if (!r.ok) { setStatus("编辑失败（" + r.code + "）。"); return; }
+    setStatus("已手动编辑 " + slotId + "（标记 MANUAL_EDIT，已断开逐字来源）。");
+    mwAfterOp();
+  }
+  function mwRematch() {
+    const panel = document.getElementById("zy-card-assistant");
+    const raw = panel && panel.querySelector("#zy-raw") ? panel.querySelector("#zy-raw").value : "";
+    if (!String(raw || "").trim()) { setStatus("请先粘贴客户文字。"); return; }
+    contentApplyFromPanel();
+  }
+
+  // ==== P2 多版套版（仅当前版）：版标识 / 切版跟切 / 填当前面·填正反面 ====
+  // 作用域硬约束：仅当前版（page-bridge templateApplyV2 校验 version == current.vIdx，跨版一律拒绝）。
+  // 切版跟切：轮询 getMultiVersionInfo（只读，不改画布）；版/面变化即刷新标识，并使已冻结匹配失效。
+  const MV_POLL_MS = 1500;
+  let mvTimer = null;
+  let mvLastKey = null;
+  let mvLayoutNow = null;
+  let mvStatusMsg = "";
+
+  function mvSideCn(side) { return side === "back" ? "背面" : "正面"; }
+  function mvVersionLabel(layout) {
+    if (!layout) return "读取中…";
+    const vc = layout.versionCount || 1;
+    const cur = layout.current || {};
+    const vIdx = (typeof cur.vIdx === "number") ? cur.vIdx : 0;
+    if (vc > 1) return "第 " + (vIdx + 1) + " 版 / 共 " + vc + " 版 ｜ 当前面：" + mvSideCn(cur.side);
+    return "单版 ｜ 当前面：" + mvSideCn(cur.side);
+  }
+  function mvCurrentVersion() {
+    const cur = mvLayoutNow && mvLayoutNow.current;
+    return (cur && typeof cur.vIdx === "number") ? cur.vIdx : 0;
+  }
+  function mvCurrentSide() {
+    const cur = mvLayoutNow && mvLayoutNow.current;
+    return (cur && cur.side) ? cur.side : "front";
+  }
+  function mvRenderInto() {
+    const el = document.getElementById("zy-mv-label");
+    if (el) el.textContent = mvVersionLabel(mvLayoutNow);
+    const st = document.getElementById("zy-mv-status");
+    if (st) st.textContent = mvStatusMsg || "作用范围：仅当前版（切版后自动跟随，需重新匹配）。";
+  }
+  function mvInvalidateMatch() {
+    if (!lastAiMatch) return;
+    const curV = mvCurrentVersion();
+    if (Number(lastAiMatch.version) !== Number(curV)) {
+      lastAiMatch.stale = true;
+      mvStatusMsg = "已切换到第 " + (curV + 1) + " 版；原匹配（第 " + (Number(lastAiMatch.version) + 1) + " 版）已失效，请重新「一键智能填充」。";
+    }
+  }
+  function mvOnLayout(layout) {
+    const key = layout ? (String(layout.versionCount) + "|" + String(layout.current && layout.current.vIdx) + "|" + String(layout.current && layout.current.side)) : "none";
+    if (key === mvLastKey) return;
+    mvLastKey = key;
+    mvLayoutNow = layout || null;
+    mvStatusMsg = "";
+    mvInvalidateMatch();
+    mvRenderInto();
+    refreshMatchBlock();
+  }
+  async function mvPoll() {
+    try {
+      const info = await bridgeCall("getMultiVersionInfo", 1200).catch(function () { return null; });
+      if (info && info.ok !== false) mvOnLayout({ ok: info.ok, code: info.code, multi: info.multi, versionCount: info.versionCount, totalLen: info.totalLen, current: info.current, conflicts: info.conflicts, hardConflicts: info.hardConflicts });
+    } catch (e) { /* 只读轮询失败不打断 UI */ }
+  }
+  function startVersionWatcher() { if (mvTimer) return; mvPoll(); mvTimer = setInterval(mvPoll, MV_POLL_MS); }
+  function stopVersionWatcher() { if (mvTimer) { clearInterval(mvTimer); mvTimer = null; } }
+
+  function mvMatchReady(label) {
+    if (!lastAiMatch) { setStatus("没有可填充的匹配结果，请先「一键智能填充」。"); return false; }
+    if (lastAiMatch.stale) { setStatus("版已切换，原匹配已失效，请重新「一键智能填充」后再" + (label || "填充") + "。"); return false; }
+    return true;
+  }
+  async function mvExecCommands(cmds, label) {
+    setBusy(true);
+    try {
+      const r = await bridgeCall("templateApplyV2", 25000, { commands: cmds, pageId: lastAiMatch.pageId, slotsCount: lastAiMatch.sideCounts || {}, planHash: lastAiMatch.planHash });
+      if (r && r.ok) {
+        setStatus(label + "完成：更新 " + (r.applied || []).length + " 槽（仅当前版，几何/字体/样式/身份/层序冻结，只改文字）。");
+        lastAiMatch = null; mw = null; mvStatusMsg = ""; refreshMatchBlock(); mvRenderInto();
+      } else {
+        const errCode = (r && r.code) || "NO_REPLY";
+        const hint = (errCode === "VERSION_MISMATCH")
+          ? "指令版本与当前版不一致（可能已切换多版），请重新匹配后再试。"
+          : "快照已变化或画面不一致，请重新匹配后再试。";
+        setStatus(label + "被拦截（" + errCode + "）：" + hint);
+      }
+    } catch (e) {
+      setStatus(label + "执行失败：" + String(e && e.message ? e.message : e) + "（未修改画布）。");
+    } finally { setBusy(false); }
+  }
+  async function mvApplyCurrentSide() {
+    if (!mvMatchReady("填充")) return;
+    const side = mvCurrentSide();
+    const sel = zySelectCommands({ commands: lastAiMatch.commands, version: mvCurrentVersion(), side: side });
+    if (!sel.ok) { setStatus("填充被拦截（" + sel.errors[0] + "）：请重新匹配后重试。"); return; }
+    if (!sel.commands.length) { setStatus("当前面（" + mvSideCn(side) + "）没有可填充的槽位。"); return; }
+    await mvExecCommands(sel.commands, "填当前面（" + mvSideCn(side) + "）");
+  }
+  async function mvApplyBothSides() {
+    if (!mvMatchReady("填充")) return;
+    const sel = zySelectCommands({ commands: lastAiMatch.commands, version: mvCurrentVersion(), side: null });
+    if (!sel.ok) { setStatus("填充被拦截（" + sel.errors[0] + "）：请重新匹配后重试。"); return; }
+    if (!sel.commands.length) { setStatus("当前版没有可填充的槽位。"); return; }
+    await mvExecCommands(sel.commands, "填正反面");
+  }
+  function mvSettingsHtml() {
+    return `
+      <details class="zy-settings">
+        <summary>多版套版（仅当前版）</summary>
+        <div class="zy-settings-body">
+          <div class="zy-row">
+            <label class="zy-label">当前版</label>
+            <div class="zy-note" id="zy-mv-label">${escapeHtml(mvVersionLabel(mvLayoutNow))}</div>
+          </div>
+          <div class="zy-row">
+            <label class="zy-label" for="zy-mv-scope">作用范围</label>
+            <select class="zy-input" id="zy-mv-scope">
+              <option value="current" selected>仅当前版（切版跟切，需重新匹配）</option>
+            </select>
+          </div>
+          <div class="zy-actions two">
+            <button class="zy-btn" id="zy-mv-apply-current" type="button">填当前面</button>
+            <button class="zy-btn secondary" id="zy-mv-apply-both" type="button">填正反面</button>
+          </div>
+          <div class="zy-note" id="zy-mv-status">${escapeHtml(mvStatusMsg || "作用范围：仅当前版（切版后自动跟随，需重新匹配）。")}</div>
+        </div>
+      </details>`;
+  }
+  function bindMvControls(scope) {
+    if (!scope) return;
+    const cur = scope.querySelector("#zy-mv-apply-current");
+    if (cur) cur.addEventListener("click", mvApplyCurrentSide);
+    const both = scope.querySelector("#zy-mv-apply-both");
+    if (both) both.addEventListener("click", mvApplyBothSides);
   }
 
   // Stage 10-G Commit 08：本地规则匹配库回退 —— AI 无 key / 失败时用 zyBuildLocalRuleMatch（类型规则+文本证据）
@@ -3404,10 +3648,14 @@
     setBusy(true);
     try {
       const invAll = await bridgeCall("getTextInventoryAll", 2500).catch(function () { return null; });
-      const snapshot = { front: (invAll && invAll.front) || null, back: (invAll && invAll.back) || null };
+      // P1 多版：版元信息（默认读取当前版；versionCount>1 显示版标识）
+      const vMetaL = (invAll && typeof invAll.version === "number") ? invAll.version : 0;
+      const vCountL = (invAll && typeof invAll.versionCount === "number") ? invAll.versionCount : 1;
+      const vTagL = vCountL > 1 ? ("[第" + (vMetaL + 1) + "版] ") : "";
+      const snapshot = { front: (invAll && invAll.front) || null, back: (invAll && invAll.back) || null, version: vMetaL, versionCount: vCountL, multi: !!(invAll && invAll.multi) };
       const frontItems = snapshot.front && Array.isArray(snapshot.front.items) ? snapshot.front.items : [];
       const backItems = snapshot.back && Array.isArray(snapshot.back.items) ? snapshot.back.items : [];
-      if (!frontItems.length && !backItems.length) { setStatus("已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。"); return; }
+      if (!frontItems.length && !backItems.length) { setStatus(vTagL + "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。"); return; }
       const sides = splitLinesByMarkers(String(rawText || "").split(/\r?\n/));
       const localMatches = [];
       ["front", "back"].forEach(function (sd) {
@@ -3422,15 +3670,17 @@
       const snapHash = (invAll && invAll.snapshotHash) || null;
       const v2PageId = (invAll && invAll.page && invAll.page.pageId) || null;
       if (cmdPlan.ok && cmdPlan.commands.length && snapHash && v2PageId) {
-        lastAiMatch = { ok: true, commands: cmdPlan.commands.slice(), planHash: snapHash, pageId: v2PageId, sideCounts: { front: frontItems.length, back: backItems.length }, total: frontItems.length + backItems.length, ref: { matches: localMatches, summary: { matched: localMatches.length, uncertain: 0, unmatched: 0 } }, localRule: true, ts: Date.now() };
+        lastAiMatch = { ok: true, commands: cmdPlan.commands.slice(), planHash: snapHash, pageId: v2PageId, version: vMetaL, versionCount: vCountL, sideCounts: { front: frontItems.length, back: backItems.length }, total: frontItems.length + backItems.length, ref: { matches: localMatches, summary: { matched: localMatches.length, uncertain: 0, unmatched: 0 } }, localRule: true, ts: Date.now() };
+        mw = zyBuildWorkbench({ slots: snapshot, version: vMetaL, versionCount: vCountL, multi: !!snapshot.multi, sideCounts: { front: frontItems.length, back: backItems.length }, pageId: v2PageId, planHash: snapHash, matches: localMatches, blocks: [], uncertain: [], unmatched: [], snapshot: snapshot });
         const lines = [
-          "AI 槽位匹配不可用（" + why + "），已改用本地规则库匹配（预览，未修改画布）：",
+          vTagL + "AI 槽位匹配不可用（" + why + "），已改用本地规则库匹配（预览，未修改画布）：",
           "本地规则匹配 " + localMatches.length + "/" + (frontItems.length + backItems.length) + " 槽；确认后仅改文字冻结其余。"
         ];
         localMatches.slice(0, 6).forEach(function (m) { lines.push((m.side === "back" ? "[反] " : "") + m.slotId + " ← " + String(m.customerText).slice(0, 30)); });
         setStatus(lines.join("\n"));
       } else {
         setStatus("AI 槽位匹配不可用（" + why + "），本地规则计划无效：未自动修改模板。");
+        mw = null;
       }
       refreshMatchBlock();
     } catch (e2) {
@@ -3453,15 +3703,22 @@
     try {
       setStatus("正在读取正反面图层…");
       const invAll = await bridgeCall("getTextInventoryAll", 2500).catch(function () { return null; });
-      const snapshot = { front: (invAll && invAll.front) || null, back: (invAll && invAll.back) || null };
+      // P1 多版：默认只作用于「当前版」（切版后重新读取即跟随）；versionCount>1 时状态与预览块显示版标识
+      const vMeta = (invAll && typeof invAll.version === "number") ? invAll.version : 0;
+      const vCount = (invAll && typeof invAll.versionCount === "number") ? invAll.versionCount : 1;
+      const vTag = vCount > 1 ? ("[第" + (vMeta + 1) + "版] ") : "";
+      const snapshot = { front: (invAll && invAll.front) || null, back: (invAll && invAll.back) || null, version: vMeta, versionCount: vCount, multi: !!(invAll && invAll.multi) };
       const frontItems = snapshot.front && Array.isArray(snapshot.front.items) ? snapshot.front.items : [];
       const backItems = snapshot.back && Array.isArray(snapshot.back.items) ? snapshot.back.items : [];
       const total = frontItems.length + backItems.length;
-      if (!total) { setStatus("已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。"); return; }
+      if (!total) { setStatus(vTag + "已读取：正面 0 / 反面 0（画布无文字图层），无需匹配。"); return; }
 
       const merged = [];
       const reports = [];
       const sideErrors = [];
+      const allBlocks = [];
+      const allUncertain = [];
+      const allUnmatched = [];
       const SIDES = ["front", "back"];
       for (let si = 0; si < SIDES.length; si += 1) {
         const sd = SIDES[si];
@@ -3491,11 +3748,14 @@
           const ext = zyExtractPlanJson(content || "");
           if (!ext || !ext.ok) throw new Error(ext && ext.error ? ext.error : "AI 未返回有效 JSON");
           const norm = zyNormalizePlanShape(ext.plan);
-          const sideSnap = {}; sideSnap[sd] = sec;
-          const ref = zyValidateTemplateMatchPlan({ plan: norm, snapshot: sideSnap, rawText: raw, minConfidence: 0.5, typeDetector: zyDetectType, expectSide: sd });
+          const sideSnap = { version: vMeta, versionCount: vCount }; sideSnap[sd] = sec;
+          const ref = zyValidateTemplateMatchPlan({ plan: norm, snapshot: sideSnap, rawText: raw, minConfidence: 0.5, typeDetector: zyDetectType, expectSide: sd, expectVersion: vMeta });
           reports.push({ side: sd, slots: items.length, rows: rows.length, matched: ref.matches.length, verified: ref.summary.semanticallyVerified, uncertain: ref.summary.uncertain, unmatched: ref.summary.unmatched, unaccounted: ref.summary.unaccounted, errors: ref.errors.length });
           if (ref.errors.length) sideErrors.push(label + "：" + ref.errors.slice(0, 3).join("; "));
           (ref.matches || []).forEach(function (m) { merged.push(m); });
+          (ref.blocks || []).forEach(function (b) { allBlocks.push(b); });
+          (ref.uncertain || []).forEach(function (u) { allUncertain.push(u); });
+          (ref.unmatchedCustomer || []).forEach(function (u) { allUnmatched.push(u); });
         } catch (eSide) {
           sideErrors.push(label + " AI 调用失败：" + String(eSide && eSide.message ? eSide.message : eSide).slice(0, 60));
           reports.push({ side: sd, slots: items.length, rows: rows.length, matched: 0, verified: 0, uncertain: 0, unmatched: 0, unaccounted: 0, failed: true });
@@ -3514,7 +3774,7 @@
         return tag + "槽 " + r.slots + " / 行 " + r.rows + " → 匹配 " + r.matched + (r.failed ? "（调用失败）" : (r.skipped ? "（" + r.skipped + "）" : ""));
       }).join(" ｜ ");
       const lines = [
-        "AI 槽位匹配完成（预览，未修改画布）：匹配 " + ordered.length + "/" + total + " 槽（语义校验 " + verifiedN + "）" + (uncertainN ? "；不确定 " + uncertainN + " 项" : "") + "；未匹配 " + unmatchedN + " 项"
+        vTag + "AI 槽位匹配完成（预览，未修改画布）：匹配 " + ordered.length + "/" + total + " 槽（语义校验 " + verifiedN + "）" + (uncertainN ? "；不确定 " + uncertainN + " 项" : "") + "；未匹配 " + unmatchedN + " 项"
       ];
       if (sideLine) lines.push(sideLine);
       ordered.slice(0, 10).forEach(function (m) { lines.push((m.side === "back" ? "[反] " : "") + m.slotId + " ← " + String(m.customerText).slice(0, 30)); });
@@ -3528,12 +3788,15 @@
       if (cmdPlan.ok && cmdPlan.commands.length && snapHash && v2PageId) {
         lastAiMatch = {
           ok: true, commands: cmdPlan.commands.slice(), planHash: snapHash, pageId: v2PageId,
+          version: vMeta, versionCount: vCount,
           sideCounts: { front: frontItems.length, back: backItems.length }, total: total,
           ref: { matches: ordered, summary: { matched: ordered.length, semanticallyVerified: verifiedN, uncertain: uncertainN, unmatched: unmatchedN } },
           ts: Date.now()
         };
+        mw = zyBuildWorkbench({ slots: snapshot, version: vMeta, versionCount: vCount, multi: !!snapshot.multi, sideCounts: { front: frontItems.length, back: backItems.length }, pageId: v2PageId, planHash: snapHash, matches: ordered, blocks: allBlocks, uncertain: allUncertain, unmatched: allUnmatched, snapshot: snapshot });
       } else {
         lastAiMatch = null;
+        mw = null;
       }
       refreshMatchBlock();
     } catch (e) {
@@ -3643,7 +3906,11 @@
     if (pageBridgeInstalled) return;
     const script = document.createElement("script");
     script.id = "zy-card-assistant-page-bridge";
-    script.textContent = "(" + pageBridge.toString() + ")();";
+    // M5 模板 Fit 引擎：page 世界无 @require 作用域，故连带注入纯函数源码（单一来源 = template-text-fit.js）
+    const zyFitSrc = (typeof zyFitFontSize === "function" && typeof zyFitMatches === "function")
+      ? "var zyFitFontSize = " + zyFitFontSize.toString() + ";\nvar zyFitMatches = " + zyFitMatches.toString() + ";\n"
+      : "";
+    script.textContent = zyFitSrc + "(" + pageBridge.toString() + ")();";
     try {
       (document.head || document.documentElement).appendChild(script);
       pageBridgeInstalled = true;
@@ -3724,17 +3991,17 @@
     installPageBridge();
     // P0 诊断：init 时打印 @require 依赖加载状态（无敏感信息），故障时便于远程定位
     console.info("[zy-ocr][INIT] pageBridge=" + (typeof pageBridge) + " unifyCandidates=" + (typeof unifyCandidates) + " baiduProvider=" + (typeof createBaiduProvider) + " credCrypto=" + (typeof encryptSecret));
-    // Stage 10-F Commit H：套版浮窗与文字识别合并为单窗口（用户指定「只保留图中 UI」）。
-    // 默认不挂原生 OCR 抽屉，识别入口 = 浮窗内「识别图片文字」按钮；显式 GM zyShowTemplatePanel="2" 才回到旧 OCR-only（原生抽屉）。
-    if (OCR_ONLY_MODE) {
-      const nativeOkH = mountNativeOcrPanel();
-      observeNativeRemount();
-    }
+    // 用户指令（2026-09-24）：去掉原生 OCR 栏（不在 UI 显示，OCR 默认后台执行）。
+    // 识别入口统一为套版浮窗内「识别图片文字」按钮；原生右栏抽屉/工具按钮及重挂 observer 已移除。
     // P4+：凭据加密配置预载（README 不落明文；解密后缓存）
     loadBaiduConfig().catch((e) => ocrLog && ocrLog("ERROR", "credential load: " + String(e && e.message || e)));
     // 套版浮窗为唯一主 UI（图中形态）：一键智能填充 + 识别图片文字 + 复制图层文字
     renderPanel();
     checkForUpdateSoon();
+    // 用户需求（2026-09-24）：脚本设置自动定期更新原生 OCR 会话（默认读取使用者本机浏览器 cookie）
+    startOcrSessionKeeper();
+    // P2 多版套版：切版跟切（只读轮询版布局，版/面变化即刷新标识并使冻结匹配失效）
+    startVersionWatcher();
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initZheliyin);

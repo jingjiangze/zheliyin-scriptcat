@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-24T06:50:37.517Z",
+  "ts": "2026-09-24T08:48:28.696Z",
   "stage": "STAGE10-G-COMMIT-L8-REAL-ACCEPTANCE",
   "cases": [
     "A",
@@ -15,7 +15,7 @@
   ],
   "cookieSource": "merged",
   "aiModel": "Qwen/Qwen2.5-7B-Instruct",
-  "bverExpect": "0.3.11.75",
+  "bverExpect": "0.3.11.78",
   "runs": [
     {
       "case": "A",
@@ -52,7 +52,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232030173
+              "ts": 1790239721430
             }
           ],
           "previewFails": [],
@@ -116,7 +116,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232050899
+              "ts": 1790239740328
             }
           ],
           "previewFails": [],
@@ -180,7 +180,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232069748
+              "ts": 1790239758332
             }
           ],
           "previewFails": [],
@@ -219,7 +219,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.75",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -259,7 +259,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232094084
+              "ts": 1790239777350
             }
           ],
           "previewFails": [],
@@ -327,7 +327,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232116703
+              "ts": 1790239800052
             }
           ],
           "previewFails": [],
@@ -395,7 +395,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232137349
+              "ts": 1790239821984
             }
           ],
           "previewFails": [],
@@ -437,7 +437,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.75",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -477,7 +477,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232158946
+              "ts": 1790239842919
             }
           ],
           "previewFails": [],
@@ -542,7 +542,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232179607
+              "ts": 1790239862862
             }
           ],
           "previewFails": [],
@@ -607,7 +607,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232202146
+              "ts": 1790239884769
             }
           ],
           "previewFails": [],
@@ -646,7 +646,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.75",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -690,7 +690,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232228363
+              "ts": 1790239907265
             }
           ],
           "previewFails": [],
@@ -759,7 +759,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232248207
+              "ts": 1790239932570
             }
           ],
           "previewFails": [],
@@ -828,7 +828,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232267004
+              "ts": 1790239956962
             }
           ],
           "previewFails": [],
@@ -867,7 +867,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.75",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -905,7 +905,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232288535
+              "ts": 1790239977644
             }
           ],
           "previewFails": [],
@@ -965,7 +965,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232308285
+              "ts": 1790239996599
             }
           ],
           "previewFails": [],
@@ -1025,7 +1025,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232325366
+              "ts": 1790240012863
             }
           ],
           "previewFails": [],
@@ -1061,7 +1061,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.75",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -1099,7 +1099,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232341472
+              "ts": 1790240029985
             }
           ],
           "previewFails": [],
@@ -1159,7 +1159,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232357528
+              "ts": 1790240049801
             }
           ],
           "previewFails": [],
@@ -1219,7 +1219,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232373737
+              "ts": 1790240068682
             }
           ],
           "previewFails": [],
@@ -1255,7 +1255,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.75",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -1293,7 +1293,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232395393
+              "ts": 1790240088508
             }
           ],
           "previewFails": [],
@@ -1352,7 +1352,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232412528
+              "ts": 1790240106483
             }
           ],
           "previewFails": [],
@@ -1411,7 +1411,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232429528
+              "ts": 1790240125499
             }
           ],
           "previewFails": [],
@@ -1446,7 +1446,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.75",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -1484,7 +1484,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232443890
+              "ts": 1790240145373
             }
           ],
           "previewFails": [],
@@ -1544,7 +1544,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232465494
+              "ts": 1790240163473
             }
           ],
           "previewFails": [],
@@ -1604,7 +1604,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232482934
+              "ts": 1790240184165
             }
           ],
           "previewFails": [],
@@ -1640,7 +1640,201 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.75",
+      "bver": "0.3.11.78",
+      "backExists": false,
+      "passRounds": 3
+    },
+    {
+      "case": "I",
+      "label": "公司/姓名语义相近",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装",
+              "王明",
+              "总经理",
+              "电话: 0531-88886666"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790240203935
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装有限公司",
+              "王明",
+              "总经理",
+              "电话：0531-88886666"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王氏印刷包装有限公司",
+            "front-2": "王明",
+            "front-3": "总经理",
+            "front-4": "电话：0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -19.05,
+              -13.4,
+              -19.05,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装",
+              "王明",
+              "总经理",
+              "电话: 0531-88886666"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790240227285
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装有限公司",
+              "王明",
+              "总经理",
+              "电话：0531-88886666"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王氏印刷包装有限公司",
+            "front-2": "王明",
+            "front-3": "总经理",
+            "front-4": "电话：0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -19.05,
+              -13.4,
+              -19.05,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "before": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装",
+              "王明",
+              "总经理",
+              "电话: 0531-88886666"
+            ],
+            "invSideCounts": {
+              "front": 4,
+              "back": 0
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
+          },
+          "matchedCount": 4,
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790240247949
+            }
+          ],
+          "previewFails": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "count": 4,
+            "texts": [
+              "王氏印刷包装有限公司",
+              "王明",
+              "总经理",
+              "电话：0531-88886666"
+            ]
+          },
+          "matchedBySlot": {
+            "front-1": "王氏印刷包装有限公司",
+            "front-2": "王明",
+            "front-3": "总经理",
+            "front-4": "电话：0531-88886666"
+          },
+          "frozen": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -19.05,
+              -13.4,
+              -19.05,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     },
@@ -1683,7 +1877,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232558228
+              "ts": 1790240269528
             }
           ],
           "previewFails": [],
@@ -1750,7 +1944,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232575207
+              "ts": 1790240292235
             }
           ],
           "previewFails": [],
@@ -1817,7 +2011,7 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232594289
+              "ts": 1790240312885
             }
           ],
           "previewFails": [],
@@ -1855,201 +2049,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.75",
-      "backExists": false,
-      "passRounds": 3
-    },
-    {
-      "case": "I",
-      "label": "公司/姓名语义相近",
-      "rounds": 3,
-      "roundsDone": 3,
-      "note": "A-J 十模板 ×3 轮：AI 槽位匹配应用 + 全字段冻结（height evidence）+ text 逐字",
-      "steps": [],
-      "errors": [],
-      "roundsData": [
-        {
-          "round": 1,
-          "errors": [],
-          "before": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装",
-              "王明",
-              "总经理",
-              "电话: 0531-88886666"
-            ],
-            "invSideCounts": {
-              "front": 4,
-              "back": 0
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
-          },
-          "matchedCount": 4,
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232650155
-            }
-          ],
-          "previewFails": [],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "after": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装有限公司",
-              "王明",
-              "总经理",
-              "电话：0531-88886666"
-            ]
-          },
-          "matchedBySlot": {
-            "front-1": "王氏印刷包装有限公司",
-            "front-2": "王明",
-            "front-3": "总经理",
-            "front-4": "电话：0531-88886666"
-          },
-          "frozen": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -19.05,
-              -13.4,
-              -19.05,
-              -22.44
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 2,
-          "errors": [],
-          "before": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装",
-              "王明",
-              "总经理",
-              "电话: 0531-88886666"
-            ],
-            "invSideCounts": {
-              "front": 4,
-              "back": 0
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
-          },
-          "matchedCount": 4,
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232668978
-            }
-          ],
-          "previewFails": [],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "after": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装有限公司",
-              "王明",
-              "总经理",
-              "电话：0531-88886666"
-            ]
-          },
-          "matchedBySlot": {
-            "front-1": "王氏印刷包装有限公司",
-            "front-2": "王明",
-            "front-3": "总经理",
-            "front-4": "电话：0531-88886666"
-          },
-          "frozen": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -19.05,
-              -13.4,
-              -19.05,
-              -22.44
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 3,
-          "errors": [],
-          "before": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装",
-              "王明",
-              "总经理",
-              "电话: 0531-88886666"
-            ],
-            "invSideCounts": {
-              "front": 4,
-              "back": 0
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 4/4 槽（语义校验 4）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4\nfront-1 ← 王氏印刷包装有限公司\nfront-2 ← 王明\nfront-3 ← 总经理\nfront-4 ← 电话：0531-88886666"
-          },
-          "matchedCount": 4,
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790232686863
-            }
-          ],
-          "previewFails": [],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 4 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "after": {
-            "count": 4,
-            "texts": [
-              "王氏印刷包装有限公司",
-              "王明",
-              "总经理",
-              "电话：0531-88886666"
-            ]
-          },
-          "matchedBySlot": {
-            "front-1": "王氏印刷包装有限公司",
-            "front-2": "王明",
-            "front-3": "总经理",
-            "front-4": "电话：0531-88886666"
-          },
-          "frozen": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -19.05,
-              -13.4,
-              -19.05,
-              -22.44
-            ]
-          },
-          "applyFails": []
-        }
-      ],
-      "bver": "0.3.11.75",
+      "bver": "0.3.11.78",
       "backExists": false,
       "passRounds": 3
     }

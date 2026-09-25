@@ -33,7 +33,7 @@ const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAd
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim().toUpperCase()).filter(Boolean);
 const MERGE = process.env.ZY_MERGE === "1";
 const TRACE_KEY = "__zy46qTrace";
-const BVER = "0.3.11.78";
+const BVER = "0.3.11.85";
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
 const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
@@ -182,7 +182,7 @@ function selfTest() {
   t("split-sides", JSON.stringify(splitSides(["正面：", "a", "反面：", "b"])) === JSON.stringify({ front: ["a"], back: ["b"] }));
   t("value-of-line", valueOfLine("电话：13800138000") === "13800138000" && valueOfLine("王小明") === "王小明");
   t("confirm-ui", cc.indexOf('id="zy-match-block"') >= 0 && cc.indexOf('id="zy-apply-confirm"') >= 0);
-  t("bver-const", BVER === "0.3.11.77");
+  t("bver-const", BVER === "0.3.11.85");
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
@@ -322,6 +322,10 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
         const r = await bridgeCall("getTextInventoryAll", {}, "getTextInventoryAllResult", 8000).catch(() => null);
         if (r && r.front && Array.isArray(r.front.items)) {
           return {
+            version: (typeof r.version === "number") ? r.version : null,
+            versionCount: (typeof r.versionCount === "number") ? r.versionCount : null,
+            multi: !!r.multi,
+            current: r.current || null,
             snapshotHash: r.snapshotHash, page: r.page,
             frontItems: r.front.items,
             backItems: (r.back && Array.isArray(r.back.items)) ? r.back.items : [],
@@ -430,9 +434,13 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
           // 4) 读双侧快照
           const invB = await readAll();
           r1.before = { frontCount: (invB.frontItems || []).length, frontTexts: (invB.frontItems || []).map((it) => it.text), backCount: (invB.backItems || []).length, backTexts: (invB.backItems || []).map((it) => it.text), backExists: invB.backExists, invSideCounts: invB.invSideCounts || null };
+          // P1 诊断：版布局（versionCount / current / conflicts）—— 定位单版场景下 versionCount 异常
+          const mvInfoB = await bridgeCall("getMultiVersionInfo", {}, "getMultiVersionInfoResult", 10000).catch(() => null);
+          r1.mvInfoBefore = mvInfoB ? { ok: mvInfoB.ok, code: mvInfoB.code, vc: mvInfoB.versionCount, tl: mvInfoB.totalLen, cur: mvInfoB.current, li: mvInfoB.dom && mvInfoB.dom.liCount, conflicts: mvInfoB.conflicts, hard: mvInfoB.hardConflicts } : null;
           if (!invB.backExists) r1.errors.push("BACK_NOT_EXISTS_AFTER_MATERIALIZE");
           if ((invB.frontItems || []).length !== def.slots.length) r1.errors.push("FRONT_INJECT_COUNT " + (invB.frontItems || []).length + " != " + def.slots.length);
           if ((invB.backItems || []).length !== def.backSlots.length) r1.errors.push("BACK_INJECT_COUNT " + (invB.backItems || []).length + " != " + def.backSlots.length);
+          r1.snapVersion = { version: invB.version, versionCount: invB.versionCount, multi: invB.multi, current: invB.current };
           if (typeof def.backEmptySlotIdx === "number" && (invB.backItems || [])[def.backEmptySlotIdx]) {
             r1.backEmptySlotBefore = { text: String((invB.backItems || [])[def.backEmptySlotIdx].text), isEmpty: !String((invB.backItems || [])[def.backEmptySlotIdx].text).trim() };
           }
@@ -465,7 +473,9 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
             doneA = await waitStatusContains("AI 填充完成", 30000);
             if (cl2R && cl2R.clicked) r1.confirmRetried = true;
           }
-          r1.apply = { done: !!doneA.done, status: doneA.done ? doneA.st.slice(0, 300) : null };
+          r1.apply = { done: !!doneA.done, status: doneA.done ? doneA.st.slice(0, 300) : null, samples: doneA.done ? undefined : (doneA.samples || []).slice(-3) };
+          const mvInfoA = await bridgeCall("getMultiVersionInfo", {}, "getMultiVersionInfoResult", 10000).catch(() => null);
+          r1.mvInfoAfterConfirm = mvInfoA ? { ok: mvInfoA.ok, code: mvInfoA.code, vc: mvInfoA.versionCount, tl: mvInfoA.totalLen, cur: mvInfoA.current, conflicts: mvInfoA.conflicts, hard: mvInfoA.hardConflicts } : null;
           await SLEEP(1400);
           // 7) 双侧复核
           const invA = await readAll();

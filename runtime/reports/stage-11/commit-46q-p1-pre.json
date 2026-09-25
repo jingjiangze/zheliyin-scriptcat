@@ -1,5 +1,5 @@
 {
-  "ts": "2026-09-24T09:36:59.116Z",
+  "ts": "2026-09-24T06:34:47.461Z",
   "stage": "STAGE10-G-L9-FRONT-BACK-REAL-ACCEPTANCE",
   "cases": [
     "FB1",
@@ -9,7 +9,7 @@
   ],
   "cookieSource": "merged",
   "aiModel": "Qwen/Qwen2.5-7B-Instruct",
-  "bverExpect": "0.3.11.78",
+  "bverExpect": "0.3.11.75",
   "runs": [
     {
       "case": "FB1",
@@ -89,34 +89,6 @@
               "back": 3
             }
           },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
           "preview": {
             "done": true,
             "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 7/7 槽（语义校验 5）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n[反] back-1 ← 主营：企业信息化咨询\n[反] back-2 ← 服务热线：400-888-6666\n[反] back-3 ← 地址：建国路88号"
@@ -125,12 +97,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240398220
+              "ts": 1790231705611
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240415266
+              "ts": 1790231715883
             }
           ],
           "previewFails": [],
@@ -152,21 +124,6 @@
             "done": true,
             "status": "AI 填充完成：更新 7 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
           "after": {
             "frontCount": 4,
             "frontTexts": [
@@ -182,7 +139,7 @@
               "地址：建国路88号"
             ],
             "backExists": true,
-            "snapshotHash": "fa3a47dc"
+            "snapshotHash": "84f706b8"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -274,34 +231,6 @@
               "back": 3
             }
           },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
           "preview": {
             "done": true,
             "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 7/7 槽（语义校验 5）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n[反] back-1 ← 主营：企业信息化咨询\n[反] back-2 ← 服务热线：400-888-6666\n[反] back-3 ← 地址：建国路88号"
@@ -310,12 +239,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240443690
+              "ts": 1790231737339
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240452569
+              "ts": 1790231745281
             }
           ],
           "previewFails": [],
@@ -337,21 +266,6 @@
             "done": true,
             "status": "AI 填充完成：更新 7 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
           "after": {
             "frontCount": 4,
             "frontTexts": [
@@ -367,7 +281,7 @@
               "地址：建国路88号"
             ],
             "backExists": true,
-            "snapshotHash": "32dcd230"
+            "snapshotHash": "7a8bf9ac"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -459,34 +373,6 @@
               "back": 3
             }
           },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
           "preview": {
             "done": true,
             "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 7/7 槽（语义校验 5）；未匹配 0 项\n[正] 槽 4 / 行 4 → 匹配 4 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 山东启诚信息技术有限公司\nfront-2 ← 王小明\nfront-3 ← 销售总监\nfront-4 ← 13800138000\n[反] back-1 ← 主营：企业信息化咨询\n[反] back-2 ← 服务热线：400-888-6666\n[反] back-3 ← 地址：建国路88号"
@@ -495,12 +381,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240474826
+              "ts": 1790231768509
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240481370
+              "ts": 1790231778076
             }
           ],
           "previewFails": [],
@@ -522,21 +408,6 @@
             "done": true,
             "status": "AI 填充完成：更新 7 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
           "after": {
             "frontCount": 4,
             "frontTexts": [
@@ -552,7 +423,7 @@
               "地址：建国路88号"
             ],
             "backExists": true,
-            "snapshotHash": "c7be9d20"
+            "snapshotHash": "3397c2a4"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -576,1041 +447,7 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.78",
-      "passRounds": 3
-    },
-    {
-      "case": "FB3",
-      "label": "侧向隔离反例（客户只有正面内容 → 反面槽不得被填）",
-      "rounds": 3,
-      "roundsDone": 3,
-      "note": "正反面真机验收：UI materialize 反面画布 → 双侧注入槽位 → AI 槽位匹配 → 确认填充 → 双侧全字段冻结 + 侧向隔离",
-      "steps": [],
-      "errors": [],
-      "roundsData": [
-        {
-          "round": 1,
-          "errors": [],
-          "canvasBefore": {
-            "ok": true,
-            "count": 1,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0"
-            ]
-          },
-          "clickBack": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterBack": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 2,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "clickFront": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterFront": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "injFront": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "injBack": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "before": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王晓明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              "电话：1380 0138 000",
-              "邮箱：wx@qq.com"
-            ],
-            "backExists": true,
-            "invSideCounts": {
-              "front": 2,
-              "back": 2
-            }
-          },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 2/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 4 → 匹配 2 ｜ [反] 槽 2 / 行 0 → 匹配 0（无该面客户内容）\nfront-1 ← 王小明\nfront-2 ← 销售总监"
-          },
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240675088
-            }
-          ],
-          "previewFails": [],
-          "matchedBySlot": {
-            "front-1": "王小明",
-            "front-2": "销售总监"
-          },
-          "backMatched": [],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 2 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
-          "after": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王小明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              "电话：1380 0138 000",
-              "邮箱：wx@qq.com"
-            ],
-            "backExists": true,
-            "snapshotHash": "958cc408"
-          },
-          "frozenFront": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -11.14,
-              -19.05
-            ]
-          },
-          "frozenBack": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              0,
-              0
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 2,
-          "errors": [],
-          "canvasBefore": {
-            "ok": true,
-            "count": 1,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0"
-            ]
-          },
-          "clickBack": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterBack": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 2,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "clickFront": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterFront": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "injFront": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "injBack": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "before": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王晓明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              "电话：1380 0138 000",
-              "邮箱：wx@qq.com"
-            ],
-            "backExists": true,
-            "invSideCounts": {
-              "front": 2,
-              "back": 2
-            }
-          },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 2/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 4 → 匹配 2 ｜ [反] 槽 2 / 行 0 → 匹配 0（无该面客户内容）\nfront-1 ← 王小明\nfront-2 ← 销售总监"
-          },
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240696845
-            }
-          ],
-          "previewFails": [],
-          "matchedBySlot": {
-            "front-1": "王小明",
-            "front-2": "销售总监"
-          },
-          "backMatched": [],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 2 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
-          "after": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王小明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              "电话：1380 0138 000",
-              "邮箱：wx@qq.com"
-            ],
-            "backExists": true,
-            "snapshotHash": "6749fbd2"
-          },
-          "frozenFront": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -11.14,
-              -19.05
-            ]
-          },
-          "frozenBack": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              0,
-              0
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 3,
-          "errors": [],
-          "canvasBefore": {
-            "ok": true,
-            "count": 1,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0"
-            ]
-          },
-          "clickBack": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterBack": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 2,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "clickFront": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterFront": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "injFront": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "injBack": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "before": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王晓明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              "电话：1380 0138 000",
-              "邮箱：wx@qq.com"
-            ],
-            "backExists": true,
-            "invSideCounts": {
-              "front": 2,
-              "back": 2
-            }
-          },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 2/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 4 → 匹配 2 ｜ [反] 槽 2 / 行 0 → 匹配 0（无该面客户内容）\nfront-1 ← 王小明\nfront-2 ← 销售总监"
-          },
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240716633
-            }
-          ],
-          "previewFails": [],
-          "matchedBySlot": {
-            "front-1": "王小明",
-            "front-2": "销售总监"
-          },
-          "backMatched": [],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 2 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
-          "after": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王小明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              "电话：1380 0138 000",
-              "邮箱：wx@qq.com"
-            ],
-            "backExists": true,
-            "snapshotHash": "e1f7ed6e"
-          },
-          "frozenFront": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -11.14,
-              -19.05
-            ]
-          },
-          "frozenBack": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              0,
-              0
-            ]
-          },
-          "applyFails": []
-        }
-      ],
-      "bver": "0.3.11.78",
-      "passRounds": 3
-    },
-    {
-      "case": "FB4",
-      "label": "反面空槽（反面含空文字层 → 不得误填）",
-      "rounds": 3,
-      "roundsDone": 3,
-      "note": "正反面真机验收：UI materialize 反面画布 → 双侧注入槽位 → AI 槽位匹配 → 确认填充 → 双侧全字段冻结 + 侧向隔离",
-      "steps": [],
-      "errors": [],
-      "roundsData": [
-        {
-          "round": 1,
-          "errors": [],
-          "canvasBefore": {
-            "ok": true,
-            "count": 1,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0"
-            ]
-          },
-          "clickBack": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterBack": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 2,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "clickFront": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterFront": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "injFront": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "injBack": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "before": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王晓明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              " ",
-              "服务热线：400-100"
-            ],
-            "backExists": true,
-            "invSideCounts": {
-              "front": 2,
-              "back": 2
-            }
-          },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
-          "backEmptySlotBefore": {
-            "text": " ",
-            "isEmpty": true
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 3/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 2 → 匹配 2 ｜ [反] 槽 2 / 行 1 → 匹配 1\nfront-1 ← 王小明\nfront-2 ← 销售总监\n[反] back-2 ← 服务热线：400-888-6666"
-          },
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240738220
-            },
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240744632
-            }
-          ],
-          "previewFails": [],
-          "matchedBySlot": {
-            "front-1": "王小明",
-            "front-2": "销售总监",
-            "back-2": "服务热线：400-888-6666"
-          },
-          "backMatched": [
-            "back-2"
-          ],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
-          "after": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王小明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              " ",
-              "服务热线：400-888-6666"
-            ],
-            "backExists": true,
-            "snapshotHash": "09061638"
-          },
-          "frozenFront": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -11.14,
-              -19.05
-            ]
-          },
-          "frozenBack": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              0,
-              -22.44
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 2,
-          "errors": [],
-          "canvasBefore": {
-            "ok": true,
-            "count": 1,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0"
-            ]
-          },
-          "clickBack": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterBack": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 2,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "clickFront": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterFront": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "injFront": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "injBack": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "before": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王晓明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              " ",
-              "服务热线：400-100"
-            ],
-            "backExists": true,
-            "invSideCounts": {
-              "front": 2,
-              "back": 2
-            }
-          },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
-          "backEmptySlotBefore": {
-            "text": " ",
-            "isEmpty": true
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 3/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 2 → 匹配 2 ｜ [反] 槽 2 / 行 1 → 匹配 1\nfront-1 ← 王小明\nfront-2 ← 销售总监\n[反] back-2 ← 服务热线：400-888-6666"
-          },
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240768924
-            },
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240775497
-            }
-          ],
-          "previewFails": [],
-          "matchedBySlot": {
-            "front-1": "王小明",
-            "front-2": "销售总监",
-            "back-2": "服务热线：400-888-6666"
-          },
-          "backMatched": [
-            "back-2"
-          ],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
-          "after": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王小明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              " ",
-              "服务热线：400-888-6666"
-            ],
-            "backExists": true,
-            "snapshotHash": "b0a8d2ae"
-          },
-          "frozenFront": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -11.14,
-              -19.05
-            ]
-          },
-          "frozenBack": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              0,
-              -22.44
-            ]
-          },
-          "applyFails": []
-        },
-        {
-          "round": 3,
-          "errors": [],
-          "canvasBefore": {
-            "ok": true,
-            "count": 1,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0"
-            ]
-          },
-          "clickBack": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterBack": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 2,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "clickFront": {
-            "clicked": true,
-            "cls": "page-group current"
-          },
-          "canvasAfterFront": {
-            "ok": true,
-            "count": 2,
-            "currentCanvasNum": 1,
-            "idNames": [
-              "c0",
-              "c1"
-            ]
-          },
-          "injFront": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "injBack": {
-            "ok": true,
-            "made": 2,
-            "total": 2,
-            "errs": []
-          },
-          "before": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王晓明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              " ",
-              "服务热线：400-100"
-            ],
-            "backExists": true,
-            "invSideCounts": {
-              "front": 2,
-              "back": 2
-            }
-          },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
-          "backEmptySlotBefore": {
-            "text": " ",
-            "isEmpty": true
-          },
-          "preview": {
-            "done": true,
-            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 3/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 2 → 匹配 2 ｜ [反] 槽 2 / 行 1 → 匹配 1\nfront-1 ← 王小明\nfront-2 ← 销售总监\n[反] back-2 ← 服务热线：400-888-6666"
-          },
-          "trace": [
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240794099
-            },
-            {
-              "url": "https://api.siliconflow.cn/v1/chat/completions",
-              "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790240798619
-            }
-          ],
-          "previewFails": [],
-          "matchedBySlot": {
-            "front-1": "王小明",
-            "front-2": "销售总监",
-            "back-2": "服务热线：400-888-6666"
-          },
-          "backMatched": [
-            "back-2"
-          ],
-          "apply": {
-            "done": true,
-            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
-          },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
-          "after": {
-            "frontCount": 2,
-            "frontTexts": [
-              "王小明",
-              "销售总监"
-            ],
-            "backCount": 2,
-            "backTexts": [
-              " ",
-              "服务热线：400-888-6666"
-            ],
-            "backExists": true,
-            "snapshotHash": "b826959a"
-          },
-          "frozenFront": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              -11.14,
-              -19.05
-            ]
-          },
-          "frozenBack": {
-            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
-            "fails": [],
-            "heightDeltas": [
-              0,
-              -22.44
-            ]
-          },
-          "applyFails": []
-        }
-      ],
-      "bver": "0.3.11.78",
+      "bver": "0.3.11.75",
       "passRounds": 3
     },
     {
@@ -1690,34 +527,6 @@
               "back": 3
             }
           },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
           "preview": {
             "done": true,
             "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 6）；未匹配 0 项\n[正] 槽 3 / 行 3 → 匹配 3 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n[反] back-1 ← 启诚纸业有限公司\n[反] back-2 ← www.qdpaper.cn\n[反] back-3 ← 北京市朝阳区建国路88号"
@@ -1726,12 +535,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790242637130
+              "ts": 1790231801228
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790242645559
+              "ts": 1790231808253
             }
           ],
           "previewFails": [],
@@ -1752,21 +561,6 @@
             "done": true,
             "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
           "after": {
             "frontCount": 3,
             "frontTexts": [
@@ -1781,7 +575,7 @@
               "北京市朝阳区建国路88号"
             ],
             "backExists": true,
-            "snapshotHash": "4b5ee06c"
+            "snapshotHash": "8e868878"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -1871,34 +665,6 @@
               "back": 3
             }
           },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
           "preview": {
             "done": true,
             "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 6）；未匹配 0 项\n[正] 槽 3 / 行 3 → 匹配 3 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n[反] back-1 ← 启诚纸业有限公司\n[反] back-2 ← www.qdpaper.cn\n[反] back-3 ← 北京市朝阳区建国路88号"
@@ -1907,12 +673,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790242666906
+              "ts": 1790231830317
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790242672506
+              "ts": 1790231836662
             }
           ],
           "previewFails": [],
@@ -1933,21 +699,6 @@
             "done": true,
             "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
           "after": {
             "frontCount": 3,
             "frontTexts": [
@@ -1962,7 +713,7 @@
               "北京市朝阳区建国路88号"
             ],
             "backExists": true,
-            "snapshotHash": "524f2bd4"
+            "snapshotHash": "330ce361"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -2052,34 +803,6 @@
               "back": 3
             }
           },
-          "mvInfoBefore": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "li": 1,
-            "conflicts": [],
-            "hard": []
-          },
-          "snapVersion": {
-            "version": 0,
-            "versionCount": 1,
-            "multi": false,
-            "current": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            }
-          },
           "preview": {
             "done": true,
             "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 6/6 槽（语义校验 6）；未匹配 0 项\n[正] 槽 3 / 行 3 → 匹配 3 ｜ [反] 槽 3 / 行 3 → 匹配 3\nfront-1 ← 王小明\nfront-2 ← 销售总监\nfront-3 ← 13800138000\n[反] back-1 ← 启诚纸业有限公司\n[反] back-2 ← www.qdpaper.cn\n[反] back-3 ← 北京市朝阳区建国路88号"
@@ -2088,12 +811,12 @@
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790242692217
+              "ts": 1790231859208
             },
             {
               "url": "https://api.siliconflow.cn/v1/chat/completions",
               "model": "Qwen/Qwen2.5-7B-Instruct",
-              "ts": 1790242698015
+              "ts": 1790231864532
             }
           ],
           "previewFails": [],
@@ -2114,21 +837,6 @@
             "done": true,
             "status": "AI 填充完成：更新 6 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
           },
-          "mvInfoAfterConfirm": {
-            "ok": true,
-            "code": "OK",
-            "vc": 1,
-            "tl": 2,
-            "cur": {
-              "vIdx": 0,
-              "side": "front",
-              "canvasIdx": 0,
-              "source": "canvasObjVO.currentCanvasNum",
-              "materialized": true
-            },
-            "conflicts": [],
-            "hard": []
-          },
           "after": {
             "frontCount": 3,
             "frontTexts": [
@@ -2143,7 +851,7 @@
               "北京市朝阳区建国路88号"
             ],
             "backExists": true,
-            "snapshotHash": "83c9cad5"
+            "snapshotHash": "d21b55d1"
           },
           "frozenFront": {
             "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
@@ -2166,7 +874,783 @@
           "applyFails": []
         }
       ],
-      "bver": "0.3.11.78",
+      "bver": "0.3.11.75",
+      "passRounds": 3
+    },
+    {
+      "case": "FB3",
+      "label": "侧向隔离反例（客户只有正面内容 → 反面槽不得被填）",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "正反面真机验收：UI materialize 反面画布 → 双侧注入槽位 → AI 槽位匹配 → 确认填充 → 双侧全字段冻结 + 侧向隔离",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "canvasBefore": {
+            "ok": true,
+            "count": 1,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0"
+            ]
+          },
+          "clickBack": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterBack": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 2,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "clickFront": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterFront": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "injFront": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "injBack": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "before": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王晓明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              "电话：1380 0138 000",
+              "邮箱：wx@qq.com"
+            ],
+            "backExists": true,
+            "invSideCounts": {
+              "front": 2,
+              "back": 2
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 2/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 4 → 匹配 2 ｜ [反] 槽 2 / 行 0 → 匹配 0（无该面客户内容）\nfront-1 ← 王小明\nfront-2 ← 销售总监"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790231885428
+            }
+          ],
+          "previewFails": [],
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监"
+          },
+          "backMatched": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 2 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王小明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              "电话：1380 0138 000",
+              "邮箱：wx@qq.com"
+            ],
+            "backExists": true,
+            "snapshotHash": "02357540"
+          },
+          "frozenFront": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05
+            ]
+          },
+          "frozenBack": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              0,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "canvasBefore": {
+            "ok": true,
+            "count": 1,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0"
+            ]
+          },
+          "clickBack": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterBack": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 2,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "clickFront": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterFront": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "injFront": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "injBack": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "before": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王晓明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              "电话：1380 0138 000",
+              "邮箱：wx@qq.com"
+            ],
+            "backExists": true,
+            "invSideCounts": {
+              "front": 2,
+              "back": 2
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 2/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 4 → 匹配 2 ｜ [反] 槽 2 / 行 0 → 匹配 0（无该面客户内容）\nfront-1 ← 王小明\nfront-2 ← 销售总监"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790231907071
+            }
+          ],
+          "previewFails": [],
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监"
+          },
+          "backMatched": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 2 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王小明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              "电话：1380 0138 000",
+              "邮箱：wx@qq.com"
+            ],
+            "backExists": true,
+            "snapshotHash": "df0e0980"
+          },
+          "frozenFront": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05
+            ]
+          },
+          "frozenBack": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              0,
+              0
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "canvasBefore": {
+            "ok": true,
+            "count": 1,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0"
+            ]
+          },
+          "clickBack": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterBack": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 2,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "clickFront": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterFront": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "injFront": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "injBack": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "before": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王晓明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              "电话：1380 0138 000",
+              "邮箱：wx@qq.com"
+            ],
+            "backExists": true,
+            "invSideCounts": {
+              "front": 2,
+              "back": 2
+            }
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 2/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 4 → 匹配 2 ｜ [反] 槽 2 / 行 0 → 匹配 0（无该面客户内容）\nfront-1 ← 王小明\nfront-2 ← 销售总监"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790231926030
+            }
+          ],
+          "previewFails": [],
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监"
+          },
+          "backMatched": [],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 2 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王小明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              "电话：1380 0138 000",
+              "邮箱：wx@qq.com"
+            ],
+            "backExists": true,
+            "snapshotHash": "223050a4"
+          },
+          "frozenFront": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05
+            ]
+          },
+          "frozenBack": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              0,
+              0
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.75",
+      "passRounds": 3
+    },
+    {
+      "case": "FB4",
+      "label": "反面空槽（反面含空文字层 → 不得误填）",
+      "rounds": 3,
+      "roundsDone": 3,
+      "note": "正反面真机验收：UI materialize 反面画布 → 双侧注入槽位 → AI 槽位匹配 → 确认填充 → 双侧全字段冻结 + 侧向隔离",
+      "steps": [],
+      "errors": [],
+      "roundsData": [
+        {
+          "round": 1,
+          "errors": [],
+          "canvasBefore": {
+            "ok": true,
+            "count": 1,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0"
+            ]
+          },
+          "clickBack": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterBack": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 2,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "clickFront": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterFront": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "injFront": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "injBack": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "before": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王晓明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              " ",
+              "服务热线：400-100"
+            ],
+            "backExists": true,
+            "invSideCounts": {
+              "front": 2,
+              "back": 2
+            }
+          },
+          "backEmptySlotBefore": {
+            "text": " ",
+            "isEmpty": true
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 3/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 2 → 匹配 2 ｜ [反] 槽 2 / 行 1 → 匹配 1\nfront-1 ← 王小明\nfront-2 ← 销售总监\n[反] back-2 ← 服务热线：400-888-6666"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790231945834
+            },
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790231949544
+            }
+          ],
+          "previewFails": [],
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "back-2": "服务热线：400-888-6666"
+          },
+          "backMatched": [
+            "back-2"
+          ],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王小明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              " ",
+              "服务热线：400-888-6666"
+            ],
+            "backExists": true,
+            "snapshotHash": "c714fd50"
+          },
+          "frozenFront": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05
+            ]
+          },
+          "frozenBack": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              0,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 2,
+          "errors": [],
+          "canvasBefore": {
+            "ok": true,
+            "count": 1,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0"
+            ]
+          },
+          "clickBack": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterBack": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 2,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "clickFront": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterFront": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "injFront": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "injBack": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "before": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王晓明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              " ",
+              "服务热线：400-100"
+            ],
+            "backExists": true,
+            "invSideCounts": {
+              "front": 2,
+              "back": 2
+            }
+          },
+          "backEmptySlotBefore": {
+            "text": " ",
+            "isEmpty": true
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 3/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 2 → 匹配 2 ｜ [反] 槽 2 / 行 1 → 匹配 1\nfront-1 ← 王小明\nfront-2 ← 销售总监\n[反] back-2 ← 服务热线：400-888-6666"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790231968343
+            },
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790231974914
+            }
+          ],
+          "previewFails": [],
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "back-2": "服务热线：400-888-6666"
+          },
+          "backMatched": [
+            "back-2"
+          ],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王小明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              " ",
+              "服务热线：400-888-6666"
+            ],
+            "backExists": true,
+            "snapshotHash": "8d445796"
+          },
+          "frozenFront": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05
+            ]
+          },
+          "frozenBack": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              0,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        },
+        {
+          "round": 3,
+          "errors": [],
+          "canvasBefore": {
+            "ok": true,
+            "count": 1,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0"
+            ]
+          },
+          "clickBack": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterBack": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 2,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "clickFront": {
+            "clicked": true,
+            "cls": "page-group current"
+          },
+          "canvasAfterFront": {
+            "ok": true,
+            "count": 2,
+            "currentCanvasNum": 1,
+            "idNames": [
+              "c0",
+              "c1"
+            ]
+          },
+          "injFront": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "injBack": {
+            "ok": true,
+            "made": 2,
+            "total": 2,
+            "errs": []
+          },
+          "before": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王晓明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              " ",
+              "服务热线：400-100"
+            ],
+            "backExists": true,
+            "invSideCounts": {
+              "front": 2,
+              "back": 2
+            }
+          },
+          "backEmptySlotBefore": {
+            "text": " ",
+            "isEmpty": true
+          },
+          "preview": {
+            "done": true,
+            "status": "AI 槽位匹配完成（预览，未修改画布）：匹配 3/4 槽（语义校验 2）；未匹配 0 项\n[正] 槽 2 / 行 2 → 匹配 2 ｜ [反] 槽 2 / 行 1 → 匹配 1\nfront-1 ← 王小明\nfront-2 ← 销售总监\n[反] back-2 ← 服务热线：400-888-6666"
+          },
+          "trace": [
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790231994502
+            },
+            {
+              "url": "https://api.siliconflow.cn/v1/chat/completions",
+              "model": "Qwen/Qwen2.5-7B-Instruct",
+              "ts": 1790231998774
+            }
+          ],
+          "previewFails": [],
+          "matchedBySlot": {
+            "front-1": "王小明",
+            "front-2": "销售总监",
+            "back-2": "服务热线：400-888-6666"
+          },
+          "backMatched": [
+            "back-2"
+          ],
+          "apply": {
+            "done": true,
+            "status": "AI 填充完成：更新 3 槽（几何/字体/样式/身份/层序冻结，只改文字）。"
+          },
+          "after": {
+            "frontCount": 2,
+            "frontTexts": [
+              "王小明",
+              "销售总监"
+            ],
+            "backCount": 2,
+            "backTexts": [
+              " ",
+              "服务热线：400-888-6666"
+            ],
+            "backExists": true,
+            "snapshotHash": "79bcaa40"
+          },
+          "frozenFront": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              -11.14,
+              -19.05
+            ]
+          },
+          "frozenBack": {
+            "keys": "objectUuid+layerNum+fontId+fontFamily+fontSize+fill+left+top+width+angle",
+            "fails": [],
+            "heightDeltas": [
+              0,
+              -22.44
+            ]
+          },
+          "applyFails": []
+        }
+      ],
+      "bver": "0.3.11.75",
       "passRounds": 3
     }
   ],
