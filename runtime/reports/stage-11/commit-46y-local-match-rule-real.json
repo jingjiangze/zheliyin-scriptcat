@@ -1,0 +1,63 @@
+{
+  "ts": "2026-09-25T02:38:14.260Z",
+  "stage": "STAGE10-G-LOCAL-MATCH-RULE-AB",
+  "cookieSource": "merged",
+  "bverExpect": "0.3.11.90",
+  "rounds": 2,
+  "runs": [
+    {
+      "round": 1,
+      "errors": [],
+      "steps": {
+        "off": {
+          "recovered": 0,
+          "diagErr": null
+        },
+        "onUnique": {
+          "recovered": 1,
+          "source": "LOCAL",
+          "method": "LOCAL_GEOMETRY_ONLY",
+          "score": 0.52,
+          "x": 10,
+          "diagErr": null
+        },
+        "onAmbiguous": {
+          "recovered": 0,
+          "diagErr": null
+        },
+        "onOutside": {
+          "recovered": 0,
+          "diagErr": null
+        }
+      },
+      "bver": "0.3.11.90"
+    },
+    {
+      "round": 2,
+      "errors": [],
+      "steps": {
+        "off": {
+          "recovered": 0,
+          "diagErr": null
+        },
+        "onUnique": {
+          "recovered": 1,
+          "source": "LOCAL",
+          "method": "LOCAL_GEOMETRY_ONLY",
+          "score": 0.52,
+          "x": 10,
+          "diagErr": null
+        },
+        "onAmbiguous": {
+          "recovered": 0,
+          "diagErr": null
+        },
+        "onOutside": {
+          "recovered": 0,
+          "diagErr": null
+        }
+      }
+    }
+  ],
+  "errors": []
+}

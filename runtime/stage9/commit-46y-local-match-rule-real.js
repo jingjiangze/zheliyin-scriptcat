@@ -1,16 +1,16 @@
-// runtime/stage9/commit-46w-no-session-ui-real.js — 去掉「原生 OCR 会话(自动更新 Cookie)」UI 真机验收
+// runtime/stage9/commit-46y-local-match-rule-real.js — 阶段1 P0-0：本地匹配规则真机 A/B 验收
 // ---------------------------------------------------------------------
-// 目的：真机验证 UI 已无会话设置项，且会话保活仍在后台按默认执行。
-// 场景：进入设计编辑页 → 注入 userscript → 校验浮窗内无任何 zy-ocr-session-* 控件
-//   → 等待后台首触（启动后 4s）→ 校验 GM 已写入会话状态（证明后台保活运行，无需 UI）。
+// 目的：在真实页面世界验证「本地 OCR 专用匹配规则」——off 保持历史行为、geometry-only 启用弱文字+唯一性规则。
+// 手段：?zydebug 出口 + safeRecoverNativeGeometry（生产接线路径，ctx.localRule 透传至 recoverNativeGeometry）。
 //
-// 每轮（ROUNDS=2）串行断言：
-//   U1 UI 无会话设置项：#zy-ocr-session-auto / -interval / -refresh / -status 全为 0；浮窗在；识别入口在
-//   U2 后台保活：zyOcrSessionLastAt（时间戳）+ zyOcrSessionLastStatus 均被写入（首触 4s 内）
-//   U3 回归：原生 OCR 栏（上一批移除）仍为 0
+// 每轮断言：
+//   A1 off 对照：低相似本地候选 → recovered=0（历史行为，不得放宽）
+//   A2 geometry-only：弱文字 + 唯一 → recovered=1、source=LOCAL、method=LOCAL_GEOMETRY_ONLY、score<=0.7
+//   A3 唯一性：两个同分候选 → recovered=0（宁缺勿滥）
+//   A4 几何硬门：越界候选 → recovered=0（规则不放宽几何）
 //
-// 凭据：会话 cookie 走 session-probe 自动解析（本 runner 不调 AI）。
-// 报告：runtime/reports/stage-11/commit-46w-no-session-ui-real.json
+// 凭据：会话 cookie 走 session-probe（本 runner 不调 AI、不依赖站点 OCR 会话）
+// 报告：runtime/reports/stage-11/commit-46y-local-match-rule-real.json
 "use strict";
 const path = require("path");
 const fs = require("fs");
@@ -21,11 +21,11 @@ const PROFILE = process.env.P0_PROFILE || path.join(ROOT, "runtime", "browser", 
 const EXT_ID = "ndcooeababalnlpkfedmmbbbgkljhpjf";
 const USERSCRIPT_PATH = path.join(ROOT, "zheliyin-card-assistant.user.js");
 const REPORT_DIR = path.join(ROOT, "runtime", "reports", "stage-11");
-const REPORT_FILE = path.join(REPORT_DIR, "commit-46w-no-session-ui-real.json");
+const REPORT_FILE = path.join(REPORT_DIR, "commit-46y-local-match-rule-real.json");
 const adapter = require("../scriptcat-adapter");
 const probeMod = require("./session-probe");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
-const URL = process.env.ZY_URL || "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
+const URL = (process.env.ZY_URL || "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do") + "?zydebug=1";
 const ROUNDS = Number(process.env.ZY_ROUNDS || 2);
 const MERGE = process.env.ZY_MERGE === "1";
 const BVER = "0.3.11.90";
@@ -69,13 +69,12 @@ function pageWorldPayloadFor() {
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = injectUserscript();
-  const gate = fs.readFileSync(path.join(ROOT, "extension", "src", "ocr", "native-completeness-gate.js"), "utf8");
+  const rec = fs.readFileSync(path.join(ROOT, "extension", "src", "ocr", "native-geometry-recovery.js"), "utf8");
   t("bver", BVER === "0.3.11.90");
   t("rounds>=2", ROUNDS >= 2);
-  t("no-session-ui-src", cc.indexOf("zy-ocr-session-auto") < 0 && cc.indexOf("zy-ocr-session-interval") < 0 && cc.indexOf("zy-ocr-session-refresh") < 0 && cc.indexOf("ocrSessionSettingsHtml") < 0 && cc.indexOf("bindOcrSessionControls") < 0);
-  t("keeper-kept", cc.indexOf("startOcrSessionKeeper") >= 0 && cc.indexOf("touchNativeOcrSession") >= 0);
-  t("no-native-panel", cc.indexOf("zy-native-ocr-panel") < 0);
-  t("gate-split", gate.indexOf("NATIVE_EMPTY") >= 0 && gate.indexOf("NATIVE_TRUTH_PIPELINE_ERROR") >= 0 && gate.indexOf("无 Native 文字真值") >= 0);
+  t("rule-impl", rec.indexOf("function matchLocalGeometryOnly(") >= 0 && rec.indexOf('ctx.localRule === "geometry-only"') >= 0);
+  t("off-default", cc.indexOf('GM_getValue("zyLocalMatchRule", "off")') >= 0 && cc.indexOf("localRule: LOCAL_MATCH_RULE") >= 0);
+  t("debug-hook", cc.indexOf("safeRecoverNativeGeometry: safeRecoverNativeGeometry") >= 0);
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
@@ -84,8 +83,8 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
   fs.mkdirSync(REPORT_DIR, { recursive: true });
   const sess = await probeMod.resolveStage9Cookie();
   const COOKIE_RAW = sess.raw || "";
-  if (!COOKIE_RAW) { console.error("[commit-46w] 会话 cookie 解析失败：" + (sess.error || "NO_COOKIE")); process.exit(2); }
-  let out = { ts: new Date().toISOString(), stage: "STAGE10-G-NO-SESSION-UI-REAL", cookieSource: sess.source || null, bverExpect: BVER, rounds: ROUNDS, runs: [], errors: [] };
+  if (!COOKIE_RAW) { console.error("[commit-46y] 会话 cookie 解析失败：" + (sess.error || "NO_COOKIE")); process.exit(2); }
+  let out = { ts: new Date().toISOString(), stage: "STAGE10-G-LOCAL-MATCH-RULE-AB", cookieSource: sess.source || null, bverExpect: BVER, rounds: ROUNDS, runs: [], errors: [] };
   if (MERGE && fs.existsSync(REPORT_FILE)) {
     try { const old = JSON.parse(fs.readFileSync(REPORT_FILE, "utf8")); if (old && Array.isArray(old.runs)) out.runs = old.runs; if (Array.isArray(old.errors)) out.errors = old.errors; } catch (e) {}
   }
@@ -103,74 +102,52 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
     } catch (eClean) { out.errors.push("CLEAN: " + String(eClean && eClean.message || eClean).slice(0, 120)); }
     for (const c of parseCookies(COOKIE_RAW)) { try { await browser.addCookies([c]); } catch (e) { out.errors.push("COOKIE:" + c.name); } }
 
-    const setGm = () => page.evaluate(() => { try { localStorage.setItem("zy8dshim:zyShowTemplatePanel", JSON.stringify("1")); } catch (e) {} return true; });
     const injectPageWorld = (payload) => page.evaluate((code) => { const s = document.createElement("script"); s.textContent = code; (document.head || document.documentElement).appendChild(s); }, payload);
-    const waitEditorReady = async (tries) => {
+    const waitReady = async (tries) => {
       for (let i = 0; i < (tries || 20); i += 1) {
-        const r = await page.evaluate(() => ({ ok: !!(window.CanvasObjVO || (window.requirejs && window.requirejs.s)), bridge: !!(window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed), bver: (window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.ver) || null })).catch(() => ({}));
-        if (r && r.ok && r.bridge) return r;
+        const r = await page.evaluate(() => ({ ok: !!(window.CanvasObjVO || (window.requirejs && window.requirejs.s)), bridge: !!(window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.installed), bver: (window.__ZY_CARD_ASSISTANT_BRIDGE__ && window.__ZY_CARD_ASSISTANT_BRIDGE__.ver) || null, dbg: !!(window.__ZY_DEBUG__ && typeof window.__ZY_DEBUG__.safeRecoverNativeGeometry === "function") })).catch(() => ({}));
+        if (r && r.ok && r.bridge && r.dbg) return r;
         await SLEEP(1200);
       }
       return { ok: false };
     };
-    const waitPanelReady = async (tries) => {
-      for (let i = 0; i < (tries || 15); i += 1) {
-        const has = await page.evaluate(() => !!document.querySelector("#zy-raw") && !!document.querySelector("#zy-smart-fill")).catch(() => false);
-        if (has) return true;
-        await SLEEP(900);
-      }
-      return false;
-    };
-    const uiProbe = () => page.evaluate(() => ({
-      sessAuto: document.querySelectorAll("#zy-ocr-session-auto").length,
-      sessInterval: document.querySelectorAll("#zy-ocr-session-interval").length,
-      sessRefresh: document.querySelectorAll("#zy-ocr-session-refresh").length,
-      sessStatus: document.querySelectorAll("#zy-ocr-session-status").length,
-      panel: document.querySelectorAll("#zy-card-assistant").length,
-      ocrBtn: !!document.querySelector("#zy-ocr-btn"),
-      nativePanel: document.querySelectorAll("#zy-native-ocr-panel").length,
-      nativeToolBtn: document.querySelectorAll("#zy-native-ocr-tool-btn").length
-    }));
-    const gmProbe = () => page.evaluate(() => {
-      const g = (k) => { try { const v = localStorage.getItem("zy8dshim:" + k); return v == null ? null : JSON.parse(v); } catch (e) { return null; } };
-      return { at: g("zyOcrSessionLastAt"), status: g("zyOcrSessionLastStatus"), auto: g("zyOcrSessionAuto") };
-    });
 
     for (let rd = 0; rd < ROUNDS; rd += 1) {
       const R = { round: rd + 1, errors: [], steps: {} };
       try {
-        // 清掉上一轮可能残留的会话状态，确保是「本轮后台写入」
         await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 60000 }).catch((e) => R.errors.push("GOTO: " + String(e && e.message || e).slice(0, 100)));
         await SLEEP(6000);
-        await page.evaluate(() => { try { localStorage.removeItem("zy8dshim:zyOcrSessionLastAt"); localStorage.removeItem("zy8dshim:zyOcrSessionLastStatus"); } catch (e) {} }).catch(() => {});
-        await setGm();
+        await page.evaluate((rule) => { try { localStorage.setItem("zy8dshim:zyShowTemplatePanel", JSON.stringify("1")); localStorage.setItem("zy8dshim:zyLocalMatchRule", JSON.stringify(rule)); } catch (e) {} }, rd === 0 ? "off" : "geometry-only").catch(() => {});
         await SLEEP(400);
         await injectPageWorld(pageWorldPayloadFor());
         await SLEEP(1600);
-        const ready = await waitEditorReady(20);
-        if (!(ready && ready.ok)) { R.errors.push("EDITOR_UNAVAILABLE"); out.runs.push(R); continue; }
+        const ready = await waitReady(20);
+        if (!(ready && ready.ok)) { R.errors.push("EDITOR_UNAVAILABLE(dbg=" + String(ready && ready.dbg) + ")"); out.runs.push(R); continue; }
         if (rd === 0) R.bver = ready.bver || null;
         if (rd === 0 && ready.bver && ready.bver !== BVER) R.errors.push("BRIDGE_VERSION_MISMATCH(" + String(ready.bver) + ")");
-        if (!(await waitPanelReady(15))) { R.errors.push("PANEL_UNAVAILABLE"); out.runs.push(R); continue; }
-        // U1 UI 无会话设置项
-        const u1 = await uiProbe();
-        R.steps.U1 = u1;
-        if (u1.sessAuto !== 0 || u1.sessInterval !== 0 || u1.sessRefresh !== 0 || u1.sessStatus !== 0) R.errors.push("U1_SESSION_UI_PRESENT " + JSON.stringify(u1));
-        if (u1.panel !== 1) R.errors.push("U1_PANEL_MISSING");
-        if (!u1.ocrBtn) R.errors.push("U1_OCR_ENTRY_MISSING");
-        // U3 回归：上一批移除的原生栏仍为 0
-        R.steps.U3 = { nativePanel: u1.nativePanel, nativeToolBtn: u1.nativeToolBtn };
-        if (u1.nativePanel !== 0 || u1.nativeToolBtn !== 0) R.errors.push("U3_NATIVE_PANEL_REGRESSED");
-        // U2 后台保活：等首触（启动后 4s）写入 GM
-        let gm = null;
-        for (let i = 0; i < 20; i += 1) {
-          gm = await gmProbe();
-          if (gm && typeof gm.at === "number" && gm.at > 0 && gm.status) break;
-          await SLEEP(1000);
-        }
-        R.steps.U2 = gm;
-        if (!(gm && typeof gm.at === "number" && gm.at > 0)) R.errors.push("U2_KEEPER_NOT_RUN(at)");
-        if (!(gm && gm.status)) R.errors.push("U2_KEEPER_NOT_RUN(status)");
+
+        const probe = await page.evaluate(() => {
+          const D = window.__ZY_DEBUG__;
+          const bounds = { x: 0, y: 0, width: 400, height: 300 };
+          const native = [{ id: 1, rawText: "甲公司", order: 0 }];
+          const cand = (t2, x, y) => ({ text: t2, bbox: { x: x, y: y, width: 80, height: 20 }, sourceProvider: "LOCAL" });
+          const run = (ctx) => { try { const r = D.safeRecoverNativeGeometry(native, Object.assign({ imageBounds: bounds }, ctx || {})); return { recovered: (r.recovered || []).length, source: r.recovered[0] && r.recovered[0].source, method: r.recovered[0] && r.recovered[0].method, score: r.recovered[0] && r.recovered[0].score, x: r.recovered[0] && r.recovered[0].geometry && r.recovered[0].geometry.bbox && r.recovered[0].geometry.bbox.x, diagErr: (r.diag && r.diag.error) || null }; } catch (e) { return { threw: String(e && (e.message || e)) }; } };
+          return {
+            off: run({ localCandidates: [cand("甲公旬", 10, 10)] }),
+            onUnique: run({ localCandidates: [cand("甲公旬", 10, 10)], localRule: "geometry-only" }),
+            onAmbiguous: run({ localCandidates: [cand("甲公旬", 10, 10), cand("甲公甸", 10, 120)], localRule: "geometry-only" }),
+            onOutside: run({ localCandidates: [cand("甲公旬", 380, 290)], imageBounds: { x: 0, y: 0, width: 100, height: 60 }, localRule: "geometry-only" })
+          };
+        }).catch((e) => ({ err: String(e && e.message || e).slice(0, 140) }));
+        R.steps = probe;
+        if (probe.err) { R.errors.push("PROBE_FAIL " + probe.err); out.runs.push(R); continue; }
+        const A = [["off", "off"], ["onUnique", "onUnique"], ["onAmbiguous", "onAmbiguous"], ["onOutside", "onOutside"]];
+        A.forEach(([k, label]) => { if (probe[k] && probe[k].threw) R.errors.push("THREW[" + label + "] " + String(probe[k].threw).slice(0, 120)); });
+        if (!(probe.off && probe.off.recovered === 0)) R.errors.push("A1_OFF_NOT_STRICT " + JSON.stringify(probe.off).slice(0, 140));
+        if (!(probe.onUnique && probe.onUnique.recovered === 1 && probe.onUnique.source === "LOCAL" && probe.onUnique.method === "LOCAL_GEOMETRY_ONLY")) R.errors.push("A2_ON_NOT_RECOVERED " + JSON.stringify(probe.onUnique).slice(0, 160));
+        if (!(probe.onUnique && typeof probe.onUnique.score === "number" && probe.onUnique.score <= 0.7 + 1e-9)) R.errors.push("A2_SCORE_CAP " + JSON.stringify(probe.onUnique).slice(0, 120));
+        if (!(probe.onAmbiguous && probe.onAmbiguous.recovered === 0)) R.errors.push("A3_AMBIGUOUS_NOT_REJECTED " + JSON.stringify(probe.onAmbiguous).slice(0, 140));
+        if (!(probe.onOutside && probe.onOutside.recovered === 0)) R.errors.push("A4_GEOMETRY_GATE_LEAK " + JSON.stringify(probe.onOutside).slice(0, 140));
       } catch (e) { R.errors.push("RUN: " + String(e && (e.message || e) || e).slice(0, 300)); }
       out.runs.push(R);
     }
@@ -179,5 +156,5 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
   finally { try { await browser.close(); } catch (e) {} }
   fs.writeFileSync(REPORT_FILE, JSON.stringify(out, null, 2));
   const okRuns = out.runs.filter((r) => (r.errors || []).length === 0).length;
-  console.log("[commit-46w] report -> runtime/reports/stage-11/commit-46w-no-session-ui-real.json runs=" + out.runs.length + " cleanRuns=" + okRuns);
+  console.log("[commit-46y] report -> runtime/reports/stage-11/commit-46y-local-match-rule-real.json runs=" + out.runs.length + " cleanRuns=" + okRuns);
 })().catch((e) => { console.error("FATAL: " + String(e && (e.message || e) || e).slice(0, 600)); process.exit(1); });

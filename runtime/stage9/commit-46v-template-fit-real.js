@@ -32,7 +32,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = process.env.ZY_URL || "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const ROUNDS = Number(process.env.ZY_ROUNDS || 2);
 const MERGE = process.env.ZY_MERGE === "1";
-const BVER = "0.3.11.89";
+const BVER = "0.3.11.90";
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
 const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
@@ -93,7 +93,7 @@ function selfTest() {
   const cc = injectUserscript();
   const pb = fs.readFileSync(path.join(ROOT, "extension", "src", "editor", "page-bridge.js"), "utf8");
   const fit = fs.readFileSync(path.join(ROOT, "extension", "src", "editor", "template-text-fit.js"), "utf8");
-  t("bver", BVER === "0.3.11.89");
+  t("bver", BVER === "0.3.11.90");
   t("rounds>=2", ROUNDS >= 2);
   t("fit-module", fit.indexOf("function zyFitFontSize") >= 0 && fit.indexOf("function zyFitMatches") >= 0);
   t("bridge-wired", pb.indexOf("v2FitFn") >= 0 && pb.indexOf("fontSizeEvidence") >= 0 && pb.indexOf("zyFitFontSize") >= 0);
