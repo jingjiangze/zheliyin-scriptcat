@@ -7,7 +7,7 @@
 //      fontSize 自适应∈[10,160]、lineHeight/charSpacing 不变、对象数恒定；
 //   2. MODELS：面板 #zy-model 为下拉（J-2 loadModels GET /models + Bearer）→
 //      自动加载 + 点「加载可用模型」→ options≥2 且状态「已加载 N 个可用模型」；
-//   3. 版本链：bridge bver === 0.3.11.86（page-bridge stamp 与 @require?v= 同步）。
+//   3. 版本链：bridge bver === 0.3.11.87（page-bridge stamp 与 @require?v= 同步）。
 // 凭据：ZY_AI_KEY（env 临时注入 shim localStorage zy8dshim:zyArkApiKey，绝不写盘/入库/报告全文）、
 //   ZY_AI_BASE_URL（默认 https://api.siliconflow.cn/v1）、ZY_AI_MODEL（默认 Qwen/Qwen2.5-7B-Instruct）、
 //   ZY_STAGE9_COOKIE（会话）。套版路径不经百度 OCR，无需 AK/SK。
@@ -29,7 +29,7 @@ const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAd
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
 const DIAG_KEY = process.env.ZY_DIAG_KEY || "__zyStage9VisualDiag";
 const TRACE_KEY = "__zy7AiTrace"; // Commit J: 页面 fetch 拦截取证（只记 url/model，绝不记 Authorization）
-const BVER = "0.3.11.86";
+const BVER = "0.3.11.87";
 // ---- Commit J：AI key 仅经启动环境变量临时注入（绝不写入任何文件/报告全文；报告只记 keyPresent）----
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
@@ -92,7 +92,7 @@ function selfTest() {
   t("timeout-guard", cc.indexOf("smSmartTimeout") >= 0 && cc.indexOf("setTimeout(function () {") >= 0 && cc.indexOf("8000") >= 0);
   t("bridge-try-catch", payload.indexOf("TEMPLATE_APPLY_SMART_THREW") >= 0 && payload.indexOf("} catch (smErr) {") >= 0);
   t("classify-verbatim", cc.indexOf("绝对禁止修改") >= 0 && cc.indexOf("splitLinesByMarkers") >= 0);
-  t("bver-const", BVER === "0.3.11.86");
+  t("bver-const", BVER === "0.3.11.87");
   console.log("[selftest] ALL PASS");
 }
 

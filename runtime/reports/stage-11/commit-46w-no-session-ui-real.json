@@ -1,0 +1,61 @@
+{
+  "ts": "2026-09-25T01:55:56.456Z",
+  "stage": "STAGE10-G-NO-SESSION-UI-REAL",
+  "cookieSource": "merged",
+  "bverExpect": "0.3.11.87",
+  "rounds": 2,
+  "runs": [
+    {
+      "round": 1,
+      "errors": [],
+      "steps": {
+        "U1": {
+          "sessAuto": 0,
+          "sessInterval": 0,
+          "sessRefresh": 0,
+          "sessStatus": 0,
+          "panel": 1,
+          "ocrBtn": true,
+          "nativePanel": 0,
+          "nativeToolBtn": 0
+        },
+        "U3": {
+          "nativePanel": 0,
+          "nativeToolBtn": 0
+        },
+        "U2": {
+          "at": 1790301375841,
+          "status": "识别会话可能已过期（启动）：请在浏览器重新登录站点后重试。",
+          "auto": null
+        }
+      },
+      "bver": "0.3.11.87"
+    },
+    {
+      "round": 2,
+      "errors": [],
+      "steps": {
+        "U1": {
+          "sessAuto": 0,
+          "sessInterval": 0,
+          "sessRefresh": 0,
+          "sessStatus": 0,
+          "panel": 1,
+          "ocrBtn": true,
+          "nativePanel": 0,
+          "nativeToolBtn": 0
+        },
+        "U3": {
+          "nativePanel": 0,
+          "nativeToolBtn": 0
+        },
+        "U2": {
+          "at": 1790301388041,
+          "status": "识别会话可能已过期（启动）：请在浏览器重新登录站点后重试。",
+          "auto": null
+        }
+      }
+    }
+  ],
+  "errors": []
+}

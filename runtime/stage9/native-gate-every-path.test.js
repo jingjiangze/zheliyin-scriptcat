@@ -111,5 +111,17 @@ t("G2: tb 无 gate 无 blocked → NATIVE_NO_TRUTH STOP（防漏）", () => {
   if (r.code !== "NATIVE_NO_TRUTH") throw new Error("code=" + r.code);
 });
 
+// ---- 输出 bug 修复（2026-09-24）：totalNative=0 三分支不得互相混淆 ----
+t("G3: native 请求成功但 0 行 → NATIVE_EMPTY（不再误报“无 Native 文字真值”）", () => {
+  const tb = { blocks: [], mode: "NATIVE_TRUTH", native: { ok: true, texts: [], meta: { statusCode: "NATIVE_EMPTY" } }, gate: { totalNative: 0, matched: 0, unmatchedNative: 0, matchedGeometry: 0, unusedGeometry: 0 }, matched: { matchedNative: [], unmatchedNative: [], matchedGeometry: [], unusedGeometry: [] } };
+  const r = G.resolveGate(tb);
+  if (r.ok) throw new Error("must stop");
+  if (r.code !== "NATIVE_EMPTY") throw new Error("code=" + r.code);
+});
+t("G4: 流水线内部异常（skipped）→ NATIVE_TRUTH_PIPELINE_ERROR（不再误报“无真值”）", () => {
+  const r = G.resolveGate({ blocks: [], mode: "OFF", skipped: true });
+  if (r.ok) throw new Error("must stop");
+  if (r.code !== "NATIVE_TRUTH_PIPELINE_ERROR") throw new Error("code=" + r.code);
+});
 console.log("native-gate-every-path: pass=" + passed + " fail=" + failed);
 process.exit(failed ? 1 : 0);
