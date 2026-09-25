@@ -1,0 +1,173 @@
+{
+  "ts": "2026-09-25T01:31:17.162Z",
+  "evidence": "REAL_BROWSER_LOCAL",
+  "ortUrl": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/ort.min.js",
+  "ortDist": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/",
+  "profile": "profile-ocr12-m3c",
+  "imageSize": [
+    700,
+    300
+  ],
+  "lines": [
+    "佛山盛盈包装制品有限公司",
+    "王晓明",
+    "销售总监",
+    "电话：13800138000"
+  ],
+  "engine": {
+    "ortBytes": 368025,
+    "moduleCount": 7,
+    "moduleBytes": 75926,
+    "downloaded": 4,
+    "cached": 0,
+    "totalBytes": 7365095,
+    "loadMs": 26,
+    "dictChars": 13808,
+    "durableCache": false
+  },
+  "executor": {
+    "bytes": 447882,
+    "syntaxOk": true,
+    "secureContext": true,
+    "ready": true
+  },
+  "main": {
+    "attrRoundTripMs": 5848,
+    "ok": true,
+    "code": null,
+    "engine": "ppocr",
+    "boxes": 4,
+    "width": 700,
+    "height": 300,
+    "lines": [
+      {
+        "text": "佛山盛盈包装制品有限公司",
+        "conf": 0.997,
+        "x": 39,
+        "y": 28,
+        "w": 411,
+        "h": 39
+      },
+      {
+        "text": "王晓明",
+        "conf": 0.996,
+        "x": 38,
+        "y": 91,
+        "w": 94,
+        "h": 36
+      },
+      {
+        "text": "销售总监",
+        "conf": 1,
+        "x": 38,
+        "y": 150,
+        "w": 106,
+        "h": 32
+      },
+      {
+        "text": "电话：13800138000",
+        "conf": 0.999,
+        "x": 39,
+        "y": 200,
+        "w": 228,
+        "h": 29
+      }
+    ],
+    "rawAttr": "{\"ok\":true,\"engine\":\"ppocr\",\"lines\":[{\"text\":\"佛山盛盈包装制品有限公司\",\"bbox\":{\"x\":38.62978294440631,\"y\":27.655709965437786,\"width\":410.9718170899108,\"height\":38.907330069124434},\"confidence\":0.9968572755654653,\"rotation\":0},{\"text\":\"王晓明\",\"bbox\":{\"x\":37.92856355418366,\"y\":91.16823186528498,\"width\":93.55776650865397,\"height\":35.63228626943004},\"confidence\":0.9956712325414022,\"rotation\":0},{\"text\":\"销售总监\",\"bbox\":{\"x\":38.46330253675933,\"y\":149.54269909385823,\"width\":106.47147026024902,\"height\":31.65508973504248},\"confidence\":0.9996512234210968,\"rotation\":0},{\"text\":\"电话：13800138000\",\"bbox\":{\"x\":38.56550766964973,\"y\":200.39543808256207,\"width\":228.18373408249266,\"height\":29.34641063033098},\"confidence\":0.9991701458181653,\"rotation\":0}],\"words\":[],\"w\":700,\"h\":300,\"boxes\":4,\"ms\":916,\"candidates\":4}"
+  },
+  "baselineCompare": {
+    "baselineTs": "2026-09-24T08:14:42.040Z",
+    "baselinePicked": {
+      "channelOrder": "bgr",
+      "useSpaceChar": false
+    },
+    "expect": [
+      "佛山盛盈包装制品有限公司",
+      "王晓明",
+      "销售总监",
+      "电话：13800138000"
+    ],
+    "rows": [
+      {
+        "expect": "佛山盛盈包装制品有限公司",
+        "got": "佛山盛盈包装制品有限公司",
+        "acc": 1,
+        "dy": 0.3
+      },
+      {
+        "expect": "王晓明",
+        "got": "王晓明",
+        "acc": 1,
+        "dy": 0.2
+      },
+      {
+        "expect": "销售总监",
+        "got": "销售总监",
+        "acc": 1,
+        "dy": 0.5
+      },
+      {
+        "expect": "电话：13800138000",
+        "got": "电话：13800138000",
+        "acc": 1,
+        "dy": 0.4
+      }
+    ],
+    "meanAcc": 1,
+    "maxDy": 0.5
+  },
+  "sidecar": {
+    "attrRoundTripMs": 1608,
+    "ok": true,
+    "code": null,
+    "lines": [
+      {
+        "text": "佛山盛盈包装制品有限公司",
+        "conf": 0.997,
+        "x": 39,
+        "y": 28,
+        "w": 411,
+        "h": 39
+      },
+      {
+        "text": "王晓明",
+        "conf": 0.996,
+        "x": 38,
+        "y": 91,
+        "w": 94,
+        "h": 36
+      },
+      {
+        "text": "销售总监",
+        "conf": 1,
+        "x": 38,
+        "y": 150,
+        "w": 106,
+        "h": 32
+      },
+      {
+        "text": "电话：13800138000",
+        "conf": 0.999,
+        "x": 39,
+        "y": 200,
+        "w": 228,
+        "h": 29
+      }
+    ],
+    "boxes": 4,
+    "mainUntouched": true
+  },
+  "failure": {
+    "writeMs": 6,
+    "ok": false,
+    "code": "request-missing:det",
+    "message": "request-missing:det: ",
+    "rawAttr": "{\"ok\":false,\"code\":\"request-missing:det\",\"message\":\"request-missing:det\",\"err\":\"request-missing:det: \"}"
+  },
+  "crossSource": {
+    "attrAfter": null,
+    "ignored": true
+  },
+  "ok": true,
+  "browserExe": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+}

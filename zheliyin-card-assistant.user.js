@@ -1,7 +1,7 @@
 ﻿// ==UserScript==
 // @name         折立印名片套版助手 (OCR Demo 版)
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
-// @version      0.3.11.77
+// @version      0.3.11.78
 // @description  【Demo/实验版】在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层；支持「识别图片文字」(本地 Tesseract.js，或自动模式本地失败时切换到百度云端 OCR)。持续更新试装版，非正式稳定版。
 // @author       jingjiangze
 // @match        https://diy.zheliyin.com/diyWeb/third/*
@@ -14,46 +14,55 @@
 // @match        http://diy.zheliyin.com/diyWeb/third/*/*/*/thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdDiyAdd.do*
 // @match        http://diy.zheliyin.com/diyWeb/*thirdLoginDiyEdit.do*
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-plan.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-validator.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/rule-match.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply-v2.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.77
-// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.77
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/field-core.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/core/config-core.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/ai-client.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-plan.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/template-match-validator.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ai/rule-match.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/page-bridge.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-transform.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-space.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-containment.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/multiline-typography.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/text-fit-fusion.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/ink-measure.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/diy-font-registry.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/template-apply-v2.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/content-similar-planner.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/fields/smart-plan.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/baidu-provider.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-ocr-provider.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/fallback-policy.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/candidate-normalizer.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-candidate-gate.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/font-source.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-completeness-gate.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-aligner.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/native-geometry-recovery.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/text-truth-gate.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/transaction-identity.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/recognition-mode.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/image-ink-target.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/visual-geometry-resolver.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/native-color.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/editor/font-target-source.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/credential-crypto.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-quality.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-sanitizer.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-size-analyzer.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ocr-text-safety-gate.js?v=0.3.11.78
+// Stage 12 M3c：PP-OCRv6（ONNX/WASM）本地引擎模块（zyOcrEngine=ppocr 时使用；默认 tesseract 不加载）
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/db-det-postprocess.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/det-params.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-image-ops.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-rec-decode.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-engine-loader.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-ort-session.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-provider.js?v=0.3.11.78
+// @require      https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/ppocr-bridge.js?v=0.3.11.78
 // @run-at       document-idle
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setValue
@@ -72,7 +81,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "0.3.11.77";
+  const VERSION = "0.3.11.78";
 
   // ---- Stage 5.6（用户指令 2026-09-17）：OCR-only Demo ----
   // Demo 主 UI = 原生右栏 OCR 抽屉；旧套版浮窗停用挂载（renderPanel 函数体与全部套版代码保留）。
@@ -774,12 +783,28 @@
     nativeObs.observe(document.body, { childList: true, subtree: true });
   }
 
-  // ---- Stage 5.5B P1：识别图片文字（本地 Tesseract.js，经 page-world executor + DOM attr 桥接） ----
+  // ---- Stage 5.5B P1：识别图片文字（本地引擎经 page-world executor + DOM attr 桥接） ----
+  // 本地引擎二选一（Stage 12 M3c）：Tesseract.js（默认，zyOcrEngine=tesseract）| PP-OCRv6（zyOcrEngine=ppocr）
+  // 两条路产出同一桥接契约（lines/words/w/h）→ 下游候选归一/质量门/TextBlock/Native Truth 完全共用。
   // §52 状态机：IDLE → PREPARING → LOCAL_LOADING → LOCAL_RECOGNIZING → BUILDING → SUCCESS / ERROR
   const OCR_CDN = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
   const OCR_TIMEOUT_TRIES = 240; // 500ms × 240 ≈ 120s（§27 超时）
   let ocrRunning = false;
   let ocrEngineCache = null;
+  // ---- Stage 12 M3c：本地引擎选择（zyOcrEngine = tesseract 默认 | ppocr）----
+  // ppocr = PP-OCRv6（det+cls+rec，ONNX/WASM via onnxruntime-web）：行级原生 bbox + 方向（cls）；
+  // 模型随仓库同源分发（raw.githubusercontent），字节 SHA-256 校验，CacheStorage 缓存（失败仅内存缓存）。
+  // 纪律：引擎只负责「几何 + 本地兜底文字」，最终文字真值仍由站点 Native OCR 决定（Native Truth Gate 不变）。
+  const PPOCR_ORT_CDN = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/ort.min.js";
+  const PPOCR_ORT_DIST = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/";
+  const PPOCR_DIST_BASE = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/extension/src/ocr/";
+  const PPOCR_MANIFEST_URL = "https://raw.githubusercontent.com/jingjiangze/zheliyin-scriptcat/test/assets/ocr/ppocrv6/ppocrv6-models.json";
+  const PPOCR_MODULE_FILES = ["db-det-postprocess.js", "det-params.js", "ppocr-image-ops.js", "ppocr-rec-decode.js", "ppocr-engine-loader.js", "ppocr-ort-session.js", "ppocr-provider.js"];
+  const PPOCR_READY_ATTR = "data-zy-ppocr-ready"; // 页面世界执行器已注入标记（避免重复内联 ~1MB 引擎文本）
+  const PPOCR_MAIN_ATTR = "data-zy-ocr-result"; // 主链结果桥（与 Tesseract 执行器同一属性）
+  const PPOCR_SIDE_ATTR = "data-zy-sidecar-result"; // 几何 sidecar 结果桥（与 Tesseract sidecar 同属性）
+  let ppocrEngineCache = null; // {ortText, modulesText, assets:{det,rec,cls}, dict, tier}
+  const ppocrMemCache = new Map(); // CacheStorage 不可用时的会话内缓存（模型字节）
   let ocrTarget = null; // 本次 OCR 事务的目标图片 {obj, kind}，供重建时复用同一几何
   const stage9TxByPage = {}; // Stage 9 V4 §26：每页最近事务（pageId → {imageFingerprint, ts}），供 RETRY 判定
 
@@ -1395,37 +1420,224 @@
     });
   }
   
-  async function runLocalOcr(img, diag) {
-    setStatus("正在加载 OCR（首次约需下载 20MB 中文识别库，请耐心等待）…");
-    const run = (engineText) => {
-      const executor = "(function(){" +
-        "var module={exports:{}};var exports=module.exports;var define;var require;" +
-        engineText + "\n" +
-        "var T=module.exports;" +
-        "if(!T||typeof T.createWorker!=='function'){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:'engine'}));return;}" +
-        "window.addEventListener('message',function(ev){if(!ev.data||ev.data.source!=='zy-ocr-req')return;" +
-        "T.createWorker('chi_sim',1,{cacheMethod:'indexeddb'}).then(function(w){return w.recognize(ev.data.dataUrl).then(function(r){" +
-        "var lines=(r.data.lines||[]).map(function(l){return {text:l.text.trim(),bbox:l.bbox};});" +
-        "var words=(r.data.words||[]).map(function(wo){return {text:(wo.text||'').trim(),bbox:wo.bbox,confidence:typeof wo.confidence==='number'?wo.confidence:null};}).filter(function(wo){return wo.text&&wo.bbox;});" +
-        "w.terminate();" +
-        "document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:true,lines:lines,words:words,w:r.data.imageWidth,h:r.data.imageHeight}));" +
-        "});" +
-        "}).catch(function(e){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));});" +
-        "});" +
-        "})();";
-      GM_addElement("script", { textContent: executor });
-      document.documentElement.setAttribute("data-zy-ocr-result", "");
-      window.postMessage({ source: "zy-ocr-req", dataUrl: img.dataUrl }, location.origin);
-      setStatus("OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…");
+  // =====================================================================
+  // Stage 12 M3c：PP-OCRv6 本地引擎（可选，zyOcrEngine=ppocr）
+  // ---------------------------------------------------------------------
+  // 分工（与 M3b 真实浏览器验证 harness 同一调用方式，仅把 fetch 换成 GM_xmlhttpRequest）：
+  //   沙箱侧：GM_xmlhttpRequest 下载 ORT/模块源码/模型/字典 → WebCrypto SHA-256 校验
+  //           → CacheStorage 缓存（不可用则本次会话内存缓存）→ postMessage 传字节
+  //   页面世界：内联 ORT + 7 个 ppocr 模块 → createOrtSessions（numThreads=1/proxy=false，不建 worker）
+  //           → 画布取像素 → createPaddleOcrProvider.recognize → 写结果桥属性
+  // 失败策略：任一步失败返回 {ok:false}，调用方回退 Tesseract（本地为末端，绝不中断识别）。
+  // 约束：引擎只产「几何 + 本地兜底文字」；最终文字真值仍由站点 Native OCR 决定（Native Truth Gate 不变）。
+  // =====================================================================
+  function getLocalOcrEngineKind() {
+    return GM_getValue("zyOcrEngine", "tesseract") === "ppocr" ? "ppocr" : "tesseract";
+  }
+  function gmFetchText(url) {
+    return new Promise((resolve) => {
+      GM_xmlhttpRequest({
+        method: "GET", url: url, timeout: 60000,
+        onload: (x) => resolve((x.status >= 200 && x.status < 300 && x.responseText) ? x.responseText : null),
+        onerror: () => resolve(null),
+        ontimeout: () => resolve(null)
+      });
+    });
+  }
+  function gmFetchBytes(url) {
+    return new Promise((resolve) => {
+      GM_xmlhttpRequest({
+        method: "GET", url: url, responseType: "arraybuffer", timeout: 180000,
+        onload: (x) => {
+          const b = x.response;
+          if (x.status >= 200 && x.status < 300 && b && b.byteLength) resolve(new Uint8Array(b));
+          else resolve(null);
+        },
+        onerror: () => resolve(null),
+        ontimeout: () => resolve(null)
+      });
+    });
+  }
+  function ppocrSha256(bytes) {
+    if (typeof crypto === "undefined" || !crypto.subtle || typeof crypto.subtle.digest !== "function") return Promise.resolve(null);
+    return crypto.subtle.digest("SHA-256", bytes)
+      .then((d) => Array.from(new Uint8Array(d)).map((b) => b.toString(16).padStart(2, "0")).join(""))
+      .catch(() => null);
+  }
+  // CacheStorage 适配（字节以 Response 存储）；不可用 → 内存 Map（仅本次会话，诚实降级不假装持久化）
+  function ppocrCache() {
+    const durable = (typeof caches !== "undefined" && caches && typeof caches.open === "function" && typeof Response === "function");
+    const keyOf = (k) => "https://zy-ppocr.local/" + encodeURIComponent(String(k));
+    return {
+      durable: durable,
+      get: async (key) => {
+        if (durable) {
+          try {
+            const c = await caches.open("zy-ppocr-v1");
+            const hit = await c.match(keyOf(key));
+            if (hit) { const buf = await hit.arrayBuffer(); if (buf && buf.byteLength) return new Uint8Array(buf); }
+          } catch (e) { /* 落到内存缓存 */ }
+        }
+        const m = ppocrMemCache.get(key);
+        return m ? m : null;
+      },
+      put: async (key, bytes) => {
+        ppocrMemCache.set(key, bytes);
+        if (!durable) return;
+        try {
+          const c = await caches.open("zy-ppocr-v1");
+          await c.put(keyOf(key), new Response(bytes));
+        } catch (e) { /* 仅内存缓存 */ }
+      }
+    };
+  }
+  // 引擎资产准备（一次性）：ORT 源码 + 模块源码 + 模型字节（SHA-256 校验）+ 字典
+  async function ensurePpocrEngine() {
+    if (ppocrEngineCache) return { ok: true, bundle: ppocrEngineCache, cached: true };
+    const tier = GM_getValue("zyPpocrTier", "tiny") === "small" ? "small" : "tiny";
+    if (typeof parseModelManifest !== "function" || typeof resolveModelPlan !== "function" || typeof loadModelAssets !== "function") {
+      return { ok: false, code: "PPOCR_MODULES_MISSING", reason: "@require 未加载 ppocr-engine-loader", tier: tier };
+    }
+    setStatus("正在加载本地引擎（PP-OCRv6 " + tier + "，首次约 7MB）…");
+    const ortText = await gmFetchText(PPOCR_ORT_CDN);
+    if (!ortText || ortText.length < 10000) return { ok: false, code: "PPOCR_ORT_FETCH_FAILED", reason: "ONNX 运行时下载失败", tier: tier };
+    const modTexts = await Promise.all(PPOCR_MODULE_FILES.map((f) => gmFetchText(PPOCR_DIST_BASE + f + "?v=" + VERSION)));
+    const missing = PPOCR_MODULE_FILES.filter((f, i) => !modTexts[i] || modTexts[i].length < 200);
+    if (missing.length) return { ok: false, code: "PPOCR_MODULE_FETCH_FAILED", reason: "模块源码缺失：" + missing.join(","), tier: tier };
+    const manifestRaw = await gmFetchText(PPOCR_MANIFEST_URL);
+    const parsed = manifestRaw ? parseModelManifest(manifestRaw) : { ok: false, errors: ["MANIFEST_FETCH_FAILED"] };
+    if (!parsed.ok) return { ok: false, code: "PPOCR_MANIFEST_INVALID", reason: JSON.stringify(parsed.errors || []).slice(0, 160), tier: tier };
+    const plan = resolveModelPlan(parsed.manifest, { tier: tier, needCls: true });
+    if (!plan.ok) return { ok: false, code: "PPOCR_PLAN_INVALID", reason: JSON.stringify(plan.errors || []).slice(0, 160), tier: tier };
+    const loaded = await loadModelAssets({
+      plan: plan.plan,
+      fetchBytes: gmFetchBytes,
+      sha256: ppocrSha256,
+      cache: ppocrCache(),
+      onStatus: (st, d) => { if (st === "loading" && d && d.role) setStatus("正在下载本地模型（" + d.role + " " + ((d.index || 0) + 1) + "/" + d.total + "）…"); }
+    });
+    if (!loaded.ok) return { ok: false, code: loaded.errorCode || "PPOCR_LOAD_FAILED", reason: JSON.stringify(loaded.errors || []).slice(0, 160), tier: tier };
+    ppocrEngineCache = {
+      ortText: ortText,
+      modulesText: modTexts.join("\n;\n"),
+      assets: { det: loaded.assets.det, rec: loaded.assets.rec, cls: loaded.assets.cls || null },
+      dict: loaded.assets.dict,
+      tier: tier,
+      meta: { downloaded: loaded.meta.downloaded, cached: loaded.meta.cached, totalBytes: loaded.meta.totalBytes, elapsed: loaded.meta.elapsed, durableCache: ppocrCache().durable }
+    };
+    ocrLog("LOCAL_LOADING", "ppocr assets ready tier=" + tier + " downloaded=" + loaded.meta.downloaded + " cacheHit=" + loaded.meta.cached + " bytes=" + loaded.meta.totalBytes + " ms=" + loaded.meta.elapsed);
+    pipelineEvidence({ stage: "LOCAL_ENGINE", engine: "ppocr", tier: tier, downloaded: loaded.meta.downloaded, cacheHit: loaded.meta.cached, bytes: loaded.meta.totalBytes, loadMs: loaded.meta.elapsed });
+    return { ok: true, bundle: ppocrEngineCache, cached: false };
+  }
+  // 页面世界执行器注入（幂等：ready 属性存在即跳过，避免重复内联大约 1MB 引擎文本）
+  // 执行器源码由 ppocr-bridge（@require，离线单测护栏）生成 —— 字段表/校验/桥属性单一来源，
+  // 避免手写长字符串在真实浏览器才暴露语法或字段漂移。
+  function ensurePpocrExecutor(bundle) {
+    return new Promise((resolve) => {
+      if (document.documentElement.getAttribute(PPOCR_READY_ATTR) === "1") { resolve({ ok: true, reused: true }); return; }
+      if (typeof buildPpocrExecutorSource !== "function") { resolve({ ok: false, reason: "ppocr-bridge 未加载" }); return; }
+      let driver = "";
+      try {
+        driver = buildPpocrExecutorSource({
+          ortText: bundle.ortText,
+          modulesText: bundle.modulesText,
+          mainAttr: PPOCR_MAIN_ATTR,
+          sideAttr: PPOCR_SIDE_ATTR,
+          readyAttr: PPOCR_READY_ATTR
+        });
+        // 生成前先自检语法（防止内联文本导致脚本不执行 → 死等超时）
+        // eslint-disable-next-line no-new-func
+        new Function(driver);
+      } catch (e) {
+        resolve({ ok: false, reason: "driver build/syntax: " + String(e && e.message || e).slice(0, 120) });
+        return;
+      }
+      try { GM_addElement("script", { textContent: driver }); }
+      catch (e) { resolve({ ok: false, reason: "inject " + String(e && e.message || e).slice(0, 120) }); return; }
       let tries = 0;
-      const timer = setInterval(async () => {
+      const timer = setInterval(() => {
         tries += 1;
-        const out = document.documentElement.getAttribute("data-zy-ocr-result");
+        if (document.documentElement.getAttribute(PPOCR_READY_ATTR) === "1") { clearInterval(timer); resolve({ ok: true, reused: false }); }
+        else if (tries > 40) { clearInterval(timer); resolve({ ok: false, reason: "executor not ready（注入被拦截？）" }); }
+      }, 250);
+    });
+  }
+  // 发请求到页面世界（不 transfer：字节留在沙箱缓存中供复用；结构化克隆复制一次）
+  function postPpocrRequest(bundle, img, target) {
+    const attr = target === "sidecar" ? PPOCR_SIDE_ATTR : PPOCR_MAIN_ATTR;
+    document.documentElement.setAttribute(attr, "");
+    if (typeof buildPpocrRequest !== "function") throw new Error("ppocr-bridge 未加载");
+    window.postMessage(buildPpocrRequest({
+      target: target || "main",
+      dataUrl: img.dataUrl,
+      dict: bundle.dict,
+      tier: bundle.tier,
+      ortDist: PPOCR_ORT_DIST,
+      assets: bundle.assets
+    }), location.origin);
+  }
+  // PP-OCRv6 主链识别；交接到桥接轮询返回 true，引擎不可用返回 false（调用方回退 Tesseract）
+  async function runLocalOcrPpocr(img, diag) {
+    const eng = await ensurePpocrEngine();
+    if (!eng.ok) {
+      ocrLog("ERROR", "ppocr engine: " + eng.code + " " + String(eng.reason || "").slice(0, 120));
+      pipelineEvidence({ stage: "LOCAL_ENGINE", engine: "ppocr", fail: eng.code, tier: eng.tier || null });
+      emitOcrDiag(Object.assign({}, diag, { fallback: !!(diag && diag.fallback), reason: "http-error", error: "ppocr " + eng.code }));
+      return false;
+    }
+    const inj = await ensurePpocrExecutor(eng.bundle);
+    if (!inj.ok) {
+      ocrLog("ERROR", "ppocr executor: " + inj.reason);
+      emitOcrDiag(Object.assign({}, diag, { fallback: !!(diag && diag.fallback), reason: "exception", error: "ppocr executor" }));
+      return false;
+    }
+    try { postPpocrRequest(eng.bundle, img, "main"); }
+    catch (e) { ocrLog("ERROR", "ppocr post: " + String(e && e.message || e).slice(0, 120)); return false; }
+    setStatus("PP-OCRv6 本地识别中（" + eng.bundle.tier + "）…");
+    ocrLog("LOCAL_RECOGNIZING", "engine=ppocr tier=" + eng.bundle.tier + " executor=" + (inj.reused ? "reused" : "injected") + " assets=" + (eng.bundle.meta && eng.bundle.meta.durableCache ? "cachestorage" : "memory"));
+    pollLocalOcrResult(img, diag, "ppocr");
+    return true;
+  }
+  // PP-OCRv6 几何 sidecar（只产 line 级几何；text 恒来自 Native）；不可用返回 null → 回退 Tesseract sidecar
+  async function runLocalGeometrySidecarPpocr(img) {
+    const eng = await ensurePpocrEngine();
+    if (!eng.ok) { ocrLog("SIDECAR", "ppocr engine not ready " + (eng.code || "?")); return null; }
+    const inj = await ensurePpocrExecutor(eng.bundle);
+    if (!inj.ok) { ocrLog("SIDECAR", "ppocr executor not ready " + String(inj.reason || "").slice(0, 100)); return null; }
+    return await new Promise((resolve) => {
+      let settled = false;
+      const finish = (cands) => { if (settled) return; settled = true; resolve(Array.isArray(cands) ? cands : []); };
+      try { postPpocrRequest(eng.bundle, img, "sidecar"); }
+      catch (e) { resolve(null); return; }
+      let tries = 0;
+      const timer = setInterval(() => {
+        tries += 1;
+        const out = document.documentElement.getAttribute(PPOCR_SIDE_ATTR);
         if (out) {
           clearInterval(timer);
+          settled = true;
+          try {
+            const r = (typeof parsePpocrResult === "function")
+              ? parsePpocrResult(out)
+              : { ok: false, code: "BRIDGE_MISSING", message: "ppocr-bridge 未加载" };
+            if (!r.ok) { ocrLog("SIDECAR", "ppocr fail " + r.code + " " + String(r.message || "").slice(0, 90)); resolve([]); return; }
+            const size = { width: r.width || img.width, height: r.height || img.height };
+            ocrLog("SIDECAR", "ppocr engine=" + r.engine + " lines=" + r.lines.length + " gen=" + (r.elapsed || 0) + "ms boxes=" + (r.boxes == null ? "?" : r.boxes));
+            resolve(unifyCandidates(r.lines, size, { sourceProvider: "LOCAL" }));
+          } catch (e) { resolve([]); }
+          return;
+        }
+        if (tries > 120) { clearInterval(timer); finish(null); } // ~60s 超时 → null 交给调用方决定回退
+      }, 500);
+    });
+  }
+
+  // 本地识别结果统一解析（Tesseract / PP-OCRv6 共用，§8.1）：
+  // 桥接 JSON → 候选归一（行优先）→ 质量门 → TextBlock → Native Truth → 创建
+  async function handleLocalOcrResult(rawOut, img, diag) {
           // 锁保持到 BUILDING/CREATING：释放收敛到 buildItemsFromOcr（回复/超时/空结果）及各错误终态
           try {
-            const r = JSON.parse(out);
+            const r = JSON.parse(rawOut);
             if (!r.ok) {
               // 本地已是 manual/fallback 路径末端，无再上层 fallback → 终态报错
               ocrRunning = false; setStatus("OCR 失败：" + r.err); ocrLog("ERROR", "local ocr failed: " + r.err);
@@ -1507,18 +1719,69 @@
             ocrRunning = false; setStatus("OCR 结果解析失败"); ocrLog("ERROR", "parse8d: " + String(e && (e.stack || (e.message ? "msg:" + e.message : e)) || e).slice(0, 600));
             emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "exception" }));
           }
-        } else if (tries > OCR_TIMEOUT_TRIES) {
-          clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试"); ocrLog("ERROR", "timeout");
-          emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "timeout" }));
-        }
-      }, 500);
+  }
+
+  // 本地识别结果轮询（Tesseract / PP-OCRv6 共用）：结果桥出现即交 handleLocalOcrResult，超时终态报错
+  function pollLocalOcrResult(img, diag, engineLabel) {
+    let tries = 0;
+    const timer = setInterval(() => {
+      tries += 1;
+      const out = document.documentElement.getAttribute(PPOCR_MAIN_ATTR);
+      if (out) {
+        clearInterval(timer);
+        Promise.resolve(handleLocalOcrResult(out, img, diag)).catch((eH) => {
+          ocrRunning = false;
+          setStatus("识别异常：" + String(eH && eH.message || eH).slice(0, 100));
+          ocrLog("ERROR", "handleLocalOcrResult(" + (engineLabel || "?") + "): " + String(eH && (eH.stack || eH.message) || eH).slice(0, 300));
+        });
+      } else if (tries > OCR_TIMEOUT_TRIES) {
+        clearInterval(timer); ocrRunning = false; setStatus("OCR 超时（超过 120 秒），请稍后重试");
+        ocrLog("ERROR", "timeout engine=" + (engineLabel || "?"));
+        emitOcrDiag(Object.assign({}, diag, { fallback: !!(diag && diag.fallback), reason: "timeout" }));
+      }
+    }, 500);
+  }
+
+  // manual local / auto 下 Cloud 失败后的 local-fallback 共用入口（§8.1）。
+  // Stage 12 M3c：本地引擎二选一（zyOcrEngine=ppocr → PP-OCRv6；否则 Tesseract），
+  // ppocr 任一步不可用 → 回退 Tesseract（本地为末端，绝不中断识别）。
+  async function runLocalOcr(img, diag) {
+    if (getLocalOcrEngineKind() === "ppocr") {
+      const handed = await runLocalOcrPpocr(img, diag);
+      if (handed) return;
+      ocrLog("FALLBACK", "ppocr unavailable → tesseract（本地为末端，继续识别）");
+      setStatus("PP-OCRv6 不可用，回退到本地识别库…");
+      diag = Object.assign({}, diag, { engineFallback: "ppocr→tesseract" });
+    }
+    setStatus("正在加载 OCR（首次约需下载 20MB 中文识别库，请耐心等待）…");
+    const run = (engineText) => {
+      const executor = "(function(){" +
+        "var module={exports:{}};var exports=module.exports;var define;var require;" +
+        engineText + "\n" +
+        "var T=module.exports;" +
+        "if(!T||typeof T.createWorker!=='function'){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:'engine'}));return;}" +
+        "window.addEventListener('message',function(ev){if(!ev.data||ev.data.source!=='zy-ocr-req')return;" +
+        "T.createWorker('chi_sim',1,{cacheMethod:'indexeddb'}).then(function(w){return w.recognize(ev.data.dataUrl).then(function(r){" +
+        "var lines=(r.data.lines||[]).map(function(l){return {text:l.text.trim(),bbox:l.bbox};});" +
+        "var words=(r.data.words||[]).map(function(wo){return {text:(wo.text||'').trim(),bbox:wo.bbox,confidence:typeof wo.confidence==='number'?wo.confidence:null};}).filter(function(wo){return wo.text&&wo.bbox;});" +
+        "w.terminate();" +
+        "document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:true,lines:lines,words:words,w:r.data.imageWidth,h:r.data.imageHeight}));" +
+        "});" +
+        "}).catch(function(e){document.documentElement.setAttribute('data-zy-ocr-result',JSON.stringify({ok:false,err:String(e&&e.message||e).slice(0,120)}));});" +
+        "});" +
+        "})();";
+      GM_addElement("script", { textContent: executor });
+      document.documentElement.setAttribute(PPOCR_MAIN_ATTR, "");
+      window.postMessage({ source: "zy-ocr-req", dataUrl: img.dataUrl }, location.origin);
+      setStatus("OCR 加载完成，正在识别（LOCAL_RECOGNIZING）…");
+      pollLocalOcrResult(img, diag, "tesseract");
     };
     const eng = await ensureLocalOcrEngine(); // OCR-P1 Commit 3c：复用共享 loader（下载逻辑收敛）
     if (eng.ok) { run(eng.engine); return; }
     ocrRunning = false;
     setStatus("OCR 引擎加载失败（" + String(eng.reason || eng.code || "?") + "）");
     ocrLog("ERROR", "engine: " + String(eng.code || "?") + " " + String(eng.reason || ""));
-    emitOcrDiag(Object.assign({}, diag, { fallback: !!diag.fallback, reason: "http-error", error: "engine load " + String(eng.reason || eng.code) }));
+    emitOcrDiag(Object.assign({}, diag, { fallback: !!(diag && diag.fallback), reason: "http-error", error: "engine load " + String(eng.reason || eng.code) }));
     // OCR-P1 Commit 3c：旧下载逻辑已收敛至 ensureLocalOcrEngine()
   }
   // OCR-P1 Commit 3b：LOCAL geometry sidecar —— 仅供 geometry 补位使用。
@@ -1527,6 +1790,13 @@
   // 不碰 ocrRunning 锁；引擎缺失/失败/超时返回 []（不阻断主链 Native Truth）。
   async function runLocalGeometrySidecar(img) {
     if ((typeof unifyCandidates !== "function") || (typeof GM_addElement !== "function")) return [];
+    // Stage 12 M3c：sidecar 引擎与主链一致 —— ppocr 可用则用 PP-OCRv6（行级原生 bbox + 方向）；
+    // 返回 null（引擎/执行器不可用、超时）→ 回退下面 Tesseract sidecar；返回 []（跑通但无行）则不再回退。
+    if (getLocalOcrEngineKind() === "ppocr") {
+      const pc = await runLocalGeometrySidecarPpocr(img);
+      if (pc) return pc;
+      ocrLog("SIDECAR", "ppocr unavailable → tesseract sidecar");
+    }
     const eng = await ensureLocalOcrEngine(); // OCR-P1 Commit 3c：首次使用真正加载引擎
     if (!eng.ok) { ocrLog("SIDECAR", "engine not ready " + (eng.code || "?") + " " + (eng.reason || "")); return []; }
     return await new Promise((resolve) => {
