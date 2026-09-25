@@ -1,19 +1,19 @@
 {
-  "ts": "2026-09-24T03:14:59.969Z",
+  "ts": "2026-09-25T02:01:38.072Z",
   "stage": "STAGE10-G-COMMIT-L7-COPY-LAYER-MODES",
   "cases": [
     "P-COPY-MODES"
   ],
-  "cookieSource": "probe",
-  "bverExpect": "0.3.11.73",
+  "cookieSource": "merged",
+  "bverExpect": "0.3.11.88",
   "runs": [
     {
       "case": "P-COPY-MODES",
-      "note": "复制三模式（current/both/template）拦截剪贴板断言 + 画布零变化",
+      "note": "复制两模式（both/all）拦截剪贴板断言 + 画布零变化",
       "steps": [],
       "errors": [],
       "runs": [],
-      "bver": "0.3.11.73",
+      "bver": "0.3.11.88",
       "before": {
         "count": 5,
         "texts": [
@@ -34,14 +34,6 @@
         "width": 507.49999999999994,
         "height": 308.72916666666663
       },
-      "current": {
-        "clicked": true,
-        "done": true,
-        "status": "已复制当前面 6 行到剪贴板。",
-        "copied": "【正面】\n山东启诚信息技术股份\n王晓明\n销售副总监\n1380 0138 000\n北京市朝阳区建国路89号",
-        "lines": 6
-      },
-      "currentFails": [],
       "both": {
         "clicked": true,
         "done": true,
@@ -50,14 +42,14 @@
         "lines": 6
       },
       "bothFails": [],
-      "template": {
+      "allText": {
         "clicked": true,
         "done": true,
-        "status": "已复制套版结构 7 行到剪贴板。",
-        "copied": "页面：canvas:c0\n【正面】\n[front-1] \"山东启诚信息技术股份\" 字号=14 位置=(60.9,30.9) 尺寸=160x36 颜色=#111111\n[front-2] \"王晓明\" 字号=18 位置=(68.9,54) 尺寸=160x36 颜色=#111111\n[front-3] \"销售副总监\" 字号=24 位置=(76.9,77.2) 尺寸=160x36 颜色=#111111\n[front-4] \"1380 0138 000\" 字号=15 位置=(60.9,100.3) 尺寸=160x36 颜色=#111111\n[front-5] \"北京市朝阳区建国路89号\" 字号=11 位置=(68.9,123.5) 尺寸=160x36 颜色=#111111",
-        "lines": 7
+        "status": "已复制全部文字 5 行到剪贴板。",
+        "copied": "山东启诚信息技术股份\n王晓明\n销售副总监\n1380 0138 000\n北京市朝阳区建国路89号",
+        "lines": 5
       },
-      "templateFails": [],
+      "allTextFails": [],
       "after": {
         "count": 5,
         "texts": [

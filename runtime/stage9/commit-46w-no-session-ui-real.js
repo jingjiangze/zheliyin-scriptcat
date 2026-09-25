@@ -28,7 +28,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = process.env.ZY_URL || "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const ROUNDS = Number(process.env.ZY_ROUNDS || 2);
 const MERGE = process.env.ZY_MERGE === "1";
-const BVER = "0.3.11.87";
+const BVER = "0.3.11.88";
 
 function parseCookies(raw) {
   const out = [];
@@ -70,7 +70,7 @@ function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = injectUserscript();
   const gate = fs.readFileSync(path.join(ROOT, "extension", "src", "ocr", "native-completeness-gate.js"), "utf8");
-  t("bver", BVER === "0.3.11.87");
+  t("bver", BVER === "0.3.11.88");
   t("rounds>=2", ROUNDS >= 2);
   t("no-session-ui-src", cc.indexOf("zy-ocr-session-auto") < 0 && cc.indexOf("zy-ocr-session-interval") < 0 && cc.indexOf("zy-ocr-session-refresh") < 0 && cc.indexOf("ocrSessionSettingsHtml") < 0 && cc.indexOf("bindOcrSessionControls") < 0);
   t("keeper-kept", cc.indexOf("startOcrSessionKeeper") >= 0 && cc.indexOf("touchNativeOcrSession") >= 0);

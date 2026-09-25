@@ -32,7 +32,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = process.env.ZY_URL || "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const ROUNDS = Number(process.env.ZY_ROUNDS || 2);
 const MERGE = process.env.ZY_MERGE === "1";
-const BVER = "0.3.11.87";
+const BVER = "0.3.11.88";
 const SLEEP_SWITCH = Number(process.env.ZY_SWITCH_SLEEP || 4500);
 
 function parseCookies(raw) {
@@ -83,7 +83,7 @@ function selfTest() {
   const cc = injectUserscript();
   t("cases", ["L1", "L2", "L3", "L4", "L5", "L6", "L7"].length === 7);
   t("rounds>=2", ROUNDS >= 2);
-  t("bver", BVER === "0.3.11.87");
+  t("bver", BVER === "0.3.11.88");
   t("has-multi-version-msg", cc.indexOf("getMultiVersionInfo") >= 0 || true);
   t("frozen-note", true);
   console.log("[selftest] ALL PASS");

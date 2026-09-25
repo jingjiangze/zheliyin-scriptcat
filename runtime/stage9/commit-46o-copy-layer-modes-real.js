@@ -1,5 +1,5 @@
 // runtime/stage9/commit-46o-copy-layer-modes-real.js — Stage 10-G Commit 07：图层文字复制三模式真机验收
-// 目标（端到端）：注入 5 槽正面文字层 → 分别点真实 #zy-copy-current/#zy-copy-both/#zy-copy-template →
+// 目标（端到端）：注入 5 槽正面文字层 → 分别点真实 #zy-copy-both/#zy-copy-all →
 //   拦截 navigator.clipboard.writeText / document.execCommand 到 window.__zyLastCopy 读取复制内容断言：
 //   - current（当前面）：含【正面】块 + 注入文本行，不含【反面】；状态「已复制当前面 N 行到剪贴板」
 //   - both（正反面）：含【正面】块（若反面存在则含【反面】块）；状态「已复制正反面 N 行到剪贴板」
@@ -21,7 +21,7 @@ const probeMod = require("./session-probe");
 const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
-const BVER = "0.3.11.87";
+const BVER = "0.3.11.88";
 
 function parseCookies(raw) {
   const out = [];
@@ -83,12 +83,12 @@ function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = injectUserscript();
   t("cases-1", P_CASES.length === 1 && P_CASES[0].id === "P-COPY-MODES");
-  t("html-3btns", cc.indexOf('id="zy-copy-current"') >= 0 && cc.indexOf('id="zy-copy-both"') >= 0 && cc.indexOf('id="zy-copy-template"') >= 0);
+  t("html-2btns", cc.indexOf('id="zy-copy-both"') >= 0 && cc.indexOf('id="zy-copy-all"') >= 0 && cc.indexOf('id="zy-copy-current"') < 0 && cc.indexOf('id="zy-copy-template"') < 0 && cc.indexOf('id="zy-probe"') < 0 && cc.indexOf('id="zy-append"') < 0);
   t("side-block", cc.indexOf("function zySideTextBlock(") >= 0 && cc.indexOf("【正面】") >= 0 && cc.indexOf("【反面】") >= 0);
   t("build-copy", cc.indexOf("function zyBuildCopyText(") >= 0 && cc.indexOf('mode === "template"') >= 0);
   t("copy-fn", cc.indexOf("async function copyLayerTexts(") >= 0 && cc.indexOf("getCurrentPage") >= 0 && cc.indexOf("GM_setClipboard") >= 0);
   t("template-row", cc.indexOf('" 字号=" + fsV') >= 0 && cc.indexOf('" 位置=(" + x') >= 0 && cc.indexOf('") 尺寸=" + w') >= 0 && cc.indexOf('" 颜色=" + fill') >= 0);
-  t("bver-const", BVER === "0.3.11.87");
+  t("bver-const", BVER === "0.3.11.88");
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
@@ -218,7 +218,7 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
     const readCopy = () => page.evaluate(() => window.__zyLastCopy || null).catch(() => null);
     const waitPanelReady = async (tries) => {
       for (let i = 0; i < (tries || 15); i += 1) {
-        const has = await page.evaluate(() => !!document.querySelector("#zy-copy-current") && !!document.querySelector("#zy-copy-both") && !!document.querySelector("#zy-copy-template")).catch(() => false);
+        const has = await page.evaluate(() => !!document.querySelector("#zy-copy-both") && !!document.querySelector("#zy-copy-all") && !document.querySelector("#zy-copy-current") && !document.querySelector("#zy-copy-template") && !document.querySelector("#zy-probe") && !document.querySelector("#zy-append")).catch(() => false);
         if (has) return true;
         await SLEEP(900);
       }
@@ -227,7 +227,7 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
 
     for (const def of P_CASES) {
       if (WHITELIST.length && WHITELIST.indexOf(def.id) < 0) continue;
-      const rec = { case: def.id, note: "复制三模式（current/both/template）拦截剪贴板断言 + 画布零变化", steps: [], errors: [], runs: [] };
+      const rec = { case: def.id, note: "复制两模式（both/all）拦截剪贴板断言 + 画布零变化", steps: [], errors: [], runs: [] };
       out.runs.push(rec);
       try {
         await page.goto(URL, { waitUntil: "domcontentloaded", timeout: 60000 }).catch((e) => rec.errors.push("GOTO: " + String(e && e.message || e).slice(0, 120)));
@@ -251,24 +251,6 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
         rec.pageOf = invB.page || null;
         if (rec.before.count !== def.slots.length) rec.errors.push("INJECT_COUNT " + rec.before.count + "!=" + def.slots.length);
 
-        // ---- ① 复制当前面 ----
-        await page.evaluate(() => { try { window.__zyLastCopy = null; } catch (e) {} });
-        const cl1 = await clickById("#zy-copy-current");
-        if (!(cl1 && cl1.clicked)) { rec.errors.push("CURRENT_BTN_NOT_FOUND"); continue; }
-        const st1 = await waitStatusContains("已复制当前面", 12000);
-        await SLEEP(600);
-        const cp1 = await readCopy();
-        rec.current = { clicked: !!(cl1 && cl1.clicked), done: !!st1.done, status: st1.done ? st1.st.slice(0, 120) : null, copied: cp1 ? String(cp1).slice(0, 300) : null, lines: cp1 ? String(cp1).split("\n").filter(Boolean).length : 0 };
-        const f1 = [];
-        if (!st1.done) f1.push("STATUS_MISSING_当前面");
-        if (!cp1) { f1.push("CLIP_EMPTY"); } else {
-          if (cp1.indexOf("【正面】") < 0) f1.push("NO_FRONT_MARKER");
-          if (cp1.indexOf("【反面】") >= 0) f1.push("HAS_BACK_MARKER");
-          for (let i = 0; i < def.slots.length; i += 1) { if (cp1.indexOf(def.slots[i].text) < 0) { f1.push("MISSING_TEXT[" + i + "]"); break; } }
-        }
-        rec.currentFails = f1;
-        if (f1.length) rec.errors.push("ASSERT_FAIL current: " + f1.join(" | "));
-
         // ---- ② 复制正反面 ----
         await page.evaluate(() => { try { window.__zyLastCopy = null; } catch (e) {} });
         const cl2 = await clickById("#zy-copy-both");
@@ -289,32 +271,23 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
         rec.bothFails = f2;
         if (f2.length) rec.errors.push("ASSERT_FAIL both: " + f2.join(" | "));
 
-        // ---- ③ 复制套版结构 ----
+        // ---- ③ 复制全部文字（#zy-copy-all：正反面全部文字，纯文本逐行、不带标题/结构字段）----
         await page.evaluate(() => { try { window.__zyLastCopy = null; } catch (e) {} });
-        const cl3 = await clickById("#zy-copy-template");
-        if (!(cl3 && cl3.clicked)) { rec.errors.push("TEMPLATE_BTN_NOT_FOUND"); continue; }
-        const st3 = await waitStatusContains("已复制套版结构", 12000);
+        const cl3 = await clickById("#zy-copy-all");
+        if (!(cl3 && cl3.clicked)) { rec.errors.push("ALL_BTN_NOT_FOUND"); continue; }
+        const st3 = await waitStatusContains("已复制全部文字", 12000);
         await SLEEP(600);
         const cp3 = await readCopy();
-        rec.template = { clicked: !!(cl3 && cl3.clicked), done: !!st3.done, status: st3.done ? st3.st.slice(0, 120) : null, copied: cp3 ? String(cp3).slice(0, 900) : null, lines: cp3 ? String(cp3).split("\n").filter(Boolean).length : 0 };
+        rec.allText = { clicked: !!(cl3 && cl3.clicked), done: !!st3.done, status: st3.done ? st3.st.slice(0, 120) : null, copied: cp3 ? String(cp3).slice(0, 500) : null, lines: cp3 ? String(cp3).split("\n").filter(Boolean).length : 0 };
         const f3 = [];
-        if (!st3.done) f3.push("STATUS_MISSING_套版结构");
+        if (!st3.done) f3.push("STATUS_MISSING_全部文字");
         if (!cp3) { f3.push("CLIP_EMPTY"); } else {
-          if (cp3.indexOf("页面：") < 0) f3.push("NO_PAGE_ID");
-          if (cp3.indexOf("【正面】") < 0) f3.push("NO_FRONT_MARKER");
-          for (let i = 0; i < def.slots.length; i += 1) {
-            const tag = "front-" + (i + 1);
-            if (cp3.indexOf("[" + tag + "]") < 0) { f3.push("NO_SLOT[" + tag + "]"); break; }
-          }
-          if (cp3.indexOf("字号=") < 0) f3.push("NO_FONTSIZE");
-          if (cp3.indexOf("位置=(") < 0) f3.push("NO_POSITION");
-          if (cp3.indexOf("尺寸=") < 0) f3.push("NO_SIZE");
-          if (cp3.indexOf("颜色=") < 0) f3.push("NO_COLOR");
-          const hasFs14 = cp3.indexOf("字号=14 ") >= 0 || cp3.indexOf("字号=14 位置") >= 0;
-          if (!hasFs14) f3.push("NO_FS_14_VALUE");
+          if (cp3.indexOf("【正面】") >= 0 || cp3.indexOf("【反面】") >= 0) f3.push("HAS_SIDE_MARKER");
+          if (cp3.indexOf("字号=") >= 0 || cp3.indexOf("位置=(") >= 0) f3.push("HAS_STRUCT_FIELDS");
+          for (let i = 0; i < def.slots.length; i += 1) { if (cp3.indexOf(def.slots[i].text) < 0) { f3.push("MISSING_TEXT[" + i + "]"); break; } }
         }
-        rec.templateFails = f3;
-        if (f3.length) rec.errors.push("ASSERT_FAIL template: " + f3.join(" | "));
+        rec.allTextFails = f3;
+        if (f3.length) rec.errors.push("ASSERT_FAIL allText: " + f3.join(" | "));
 
         // ---- ④ 画布零变化 ----
         const invE = await readFront();

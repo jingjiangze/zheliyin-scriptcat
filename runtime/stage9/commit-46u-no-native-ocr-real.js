@@ -28,7 +28,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = process.env.ZY_URL || "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const ROUNDS = Number(process.env.ZY_ROUNDS || 2);
 const MERGE = process.env.ZY_MERGE === "1";
-const BVER = "0.3.11.87";
+const BVER = "0.3.11.88";
 const MODES = ["2", "1"]; // 轮1 旧 OCR-only；轮2 常规
 
 function parseCookies(raw) {
@@ -70,7 +70,7 @@ function pageWorldPayloadFor() {
 function selfTest() {
   const t = (n, c) => { if (!c) throw new Error("SELFTEST FAIL " + n); console.log("[selftest] PASS " + n); };
   const cc = injectUserscript();
-  t("bver", BVER === "0.3.11.87");
+  t("bver", BVER === "0.3.11.88");
   t("rounds>=2", ROUNDS >= 2);
   t("no-native-panel-src", cc.indexOf("zy-native-ocr-panel") < 0 && cc.indexOf("mountNativeOcrPanel") < 0 && cc.indexOf("OCR_ONLY_MODE") < 0);
   t("ocr-entry-kept", cc.indexOf("handleOcrImage") >= 0 && cc.indexOf('id="zy-ocr-btn"') >= 0);

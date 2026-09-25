@@ -21,7 +21,7 @@ const SLEEP = (ms) => new Promise((r) => setTimeout(r, ms));
 const URL = "https://diy.zheliyin.com/diyWeb/third/252438/2114747/999/thirdDiyAdd.do";
 const WHITELIST = (process.env.ZY_CASE || "").split(",").map((s) => s.trim()).filter(Boolean);
 const TRACE_KEY = "__zy7AiTrace";
-const BVER = "0.3.11.87";
+const BVER = "0.3.11.88";
 const AI_KEY = process.env.ZY_AI_KEY || "";
 const AI_BASE_URL = process.env.ZY_AI_BASE_URL || "https://api.siliconflow.cn/v1";
 const AI_MODEL = process.env.ZY_AI_MODEL || "Qwen/Qwen2.5-7B-Instruct";
@@ -95,7 +95,7 @@ function selfTest() {
   t("confirm-fn", cc.indexOf("async function confirmTemplateApply(") >= 0 && cc.indexOf("templateApplyV2") >= 0);
   t("cancel-fn", cc.indexOf("function cancelTemplateApply(") >= 0);
   t("plan-cache", cc.indexOf("let lastAiMatch = null") >= 0 && cc.indexOf("planHash") >= 0);
-  t("bver-const", BVER === "0.3.11.87");
+  t("bver-const", BVER === "0.3.11.88");
   console.log("[selftest] ALL PASS");
 }
 if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0); } catch (e) { console.error(String(e && e.message || e)); process.exit(1); } }
