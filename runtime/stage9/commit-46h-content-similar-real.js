@@ -240,14 +240,27 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
       ta.dispatchEvent(new Event("input", { bubbles: true }));
       return { ok: true };
     }, rawLines.join("\n"));
+    let lastClickDiag = null; // P0-X 探针：点击生效性/可见性/瞬间状态
     const clickSmartFill = async (timeoutMs) => {
       const t0 = Date.now();
       while (Date.now() - t0 < (timeoutMs || 20000)) {
         const r = await page.evaluate(() => {
+          // P0-X 探针：面板/按钮可见性 + 点击瞬间状态（判定点击是否真正生效）
+          const panel = document.getElementById("zy-card-assistant");
           const btn = document.querySelector("#zy-smart-fill");
-          if (btn && btn.offsetParent) { try { btn.click(); return { clicked: true }; } catch (e) {} }
-          return { clicked: false };
+          const cf = document.querySelector("#zy-apply-confirm");
+          const st = document.querySelector("#zy-status");
+          const diag = {
+            panel: !!panel,
+            panelMinimized: !!(panel && panel.querySelector(".zy-body") && !panel.querySelector(".zy-body").offsetParent),
+            btn: !!btn, btnVisible: !!(btn && btn.offsetParent),
+            confirm: !!cf, confirmVisible: !!(cf && cf.offsetParent),
+            statusBefore: st ? String(st.textContent || "").trim().slice(0, 120) : null
+          };
+          if (btn && btn.offsetParent) { try { btn.click(); return Object.assign({ clicked: true }, diag, { statusAfterClick: st ? String(st.textContent || "").trim().slice(0, 120) : null }); } catch (e) { return Object.assign({ clicked: false, clickErr: String(e && (e.message || e)) }, diag); } }
+          return Object.assign({ clicked: false }, diag);
         }).catch(() => ({ clicked: false }));
+        lastClickDiag = r;
         if (r && r.clicked) return r;
         await SLEEP(900);
       }
@@ -345,6 +358,7 @@ if (process.argv.indexOf("--selftest") >= 0) { try { selfTest(); process.exit(0)
           if (def.expectApplied > 0) runRec.statusConfirmed = !!(runRec.confirmed);
           if (def.expectZeroObjects && front.length !== 0) fails.push("ZERO_OBJECTS_FAIL " + front.length);
           runRec.assertFails = fails;
+          runRec.clickDiag = lastClickDiag; // P0-X 探针取证
           if (fails.length) { rec.asserts.push({ rnd: rnd, fails: fails }); rec.errors.push("ASSERT_FAIL r" + rnd + ": " + fails.join(" | ")); }
         }
         rec.steps.push({ step: "rollback", ok: true });
