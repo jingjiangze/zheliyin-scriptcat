@@ -1,0 +1,25 @@
+fix(ocr): 修复「无 Native 文字真值」误报 + 去掉原生 OCR 会话设置 UI @0.3.11.87
+
+输出 bug 根因：native-completeness-gate 的 resolveGate 兜底分支把 totalNative=0 一律报成
+NATIVE_NO_TRUTH「无 Native 文字真值，本批不创建」；该分支实际混合了三种不同原因，真实状态
+被掩盖 —— 真机表现就像「脚本坏了 / 没有真值源」，用户无法得知原因。
+
+- 修复（纯模块 + userscript 兜底镜像同语义）：totalNative=0 拆三分支 ——
+  1) tb.skipped && !tb.native -> NATIVE_TRUTH_PIPELINE_ERROR（流水线内部异常/依赖未就绪，非无真值）
+  2) tb.native.ok === true   -> NATIVE_EMPTY（请求成功但识别 0 行；附可执行提示：确认图内有文字、
+     走手写体真值 textType=2、刷新后重试）
+  3) 其余                    -> NATIVE_NO_TRUTH（保持历史兜底语义，G1/G2 契约不变）
+
+- 去掉「原生 OCR 会话（自动更新 Cookie）」设置 UI（不在 UI 显示）：移除设置区插入与绑定调用，
+  并删除已成死代码的 bindOcrSessionControls / ocrSessionSettingsHtml；后台会话保活
+  （startOcrSessionKeeper / touchNativeOcrSession，默认开启）保留不变。
+
+- 测试：native-gate-every-path 新增 G3(NATIVE_EMPTY) / G4(NATIVE_TRUTH_PIPELINE_ERROR) -> 14/14 全绿；
+  真机 runner commit-46w 两轮 errors=[]（UI 无 zy-ocr-session-*；后台首触已写入 GM 会话状态；
+  原生栏回归 0）。同轮真机观测到测试 profile 的 OCR 会话实为过期 —— 正是旧文案所掩盖的真实原因。
+
+- 集成：远端另一工作流（stage-12 PP-OCRv6 本地引擎）已推进 test 至 1c561fa 并占用 0.3.11.86；
+  本次以 stash -> ff-only -> stash pop 整合（无 force/reset/rebase，符合 RULE-22），唯一冲突为
+  @require 块（保留远端新增 8 条 ppocr 模块），@require 共 50 条。
+
+- 版本 bump 0.3.11.86 -> 0.3.11.87（RULE-18）；本地回归 56/57（唯一失败为既有无关项 stage8d/text-fit-fusion）。

@@ -1,0 +1,548 @@
+==== maybeApplyNativeTruth（demo=0.3.11.74） ====
+async function maybeApplyNativeTruth(blocks, img, diag) {
+    if (!STAGE9_NATIVE_TRUTH) {
+      return { blocks: blocks || [], mode: "OFF", skipped: true }; // feature off：保留历史降级（Completeness Gate 不适用）
+    }
+    if (typeof alignNativeGeometry !== "function" || typeof evaluateCompleteness !== "function" || typeof recognizeWithFallback !== "function") {
+      ocrLog("TRUTH", "native dependencies missing (align/evaluate/recognize)");
+      return { blocks: [], mode: "OFF", skipped: true, reason: "dependency-missing", blocked: true };
+    }
+    try {
+      // OCR-P0.2：复用 runNativeTruth 已执行的第一主链结果；仅在直接进入（manual-local 等）时补执行
+      let native = (img && img._native) || null;
+      if (!native) {
+        if (typeof recognizeWithFallback !== "function") return { blocks: blocks || [], mode: "OFF", skipped: true };
+        try { native = await recognizeWithFallback(img.dataUrl, {
+          textType: "2", // OCR-P1 Commit 1：生产 Truth 固定 textType=2
+          pageId: (img && img.pageId) || null,
+          transactionId: (img && img.transactionId) || null,
+          imageFingerprint: (img && img.imageFingerprint) || null
+        }); img._native = native; } catch (eN) { native = null; }
+      }
+      if (!(native && native.ok)) {
+        const ncode = String((native && native.error && native.error.errorCode) || "?");
+        ocrLog("TRUTH", "native unavailable " + ncode + " -> block create (禁止其它 OCR text 进入画布)");
+        return { blocks: [], mode: "OFF", skipped: true, reason: "unavailable", blocked: true, nativeFailCode: ncode };
+      }
+      // OCR-P0.3-F（行级摊平）：aligner 按 Native 行配对行级几何；buildTextBlocks 合并块（多行）会
+      // 让几何槽位 < nativeLines（如 6 块 vs 10 行）→ 误配 INCOMPLETE。此处优先摊平 block.lines，
+      // 每行发布一个候选（仅几何 + 行文本匹配因子，不写 text truth）；无 lines 时回退整块。
+      const geoBlocks = [];
+      (blocks || []).forEach(function (b) {
+        if (!b || !b.bbox) return;
+        const lines = (Array.isArray(b.lines) && b.lines.length) ? b.lines : null;
+        if (lines) {
+          lines.forEach(function (ln, li) {
+            if (!ln || !ln.bbox) return;
+            geoBlocks.push({
+              text: ln.text != null ? String(ln.text) : null,
+              bbox: ln.bbox,
+              words: (ln.wordBoxes || ln.words) ? (ln.wordBoxes || ln.words) : null,
+              sourceProvider: b.sourceProvider || "BAIDU",
+              kind: "line",
+              lineIndex: li,
+              blockIndex: b.blockIndex != null ? b.blockIndex : null,
+              _raw: ln,
+              _block: b
+            });
+          });
+        } else {
+          geoBlocks.push({ text: b.text != null ? String(b.text) : null, bbox: b.bbox || null, words: (b.wordBoxes || b.words) ? (b.wordBoxes || b.words) : null, sourceProvider: b.sourceProvider || "BAIDU", kind: "line", _raw: b, _block: b });
+        }
+      });
+      const matched = alignNativeGeometry(native.texts || [], geoBlocks, {});
+      // OCR-P1 Commit 3c.1：真机 runner 用初始 aligner 快照（recovery 前）
+      try { window.__zyInitialGate = { matched: (matched.matchedNative || []).length, unmatched: (matched.unmatchedNative || []).length, totalNative: (matched.gate && matched.gate.totalNative) || 0 }; } catch (e) {}
+      // OCR-P1 Commit 2：Native Geometry Recovery —— aligner 未匹配的 Native 行沿搜索链
+      // 恢复 geometry（BAIDU LINE → BAIDU WORD；LOCAL/ANCHOR/INK 为后续 Commit）。
+      // 恢复产物并入 matchedNative（text 恒为 native.rawText），再交由 Completeness Gate。
+      // 硬规则：禁止固定间距/offset/居中/随机/multiplier 猜测；不可恢复 → 仍 INCOMPLETE/UNRESOLVED。
+      // OCR-P1 Commit 4.4：Native Anchor 候选（只读 getTextInventory，page-bridge 零改动）。
+      //   Anchor = 当前编辑页画布已有 textbox；identity=原生 uuid；几何 = canvas→源图逆投影
+      //   （buildImageTransform 仿射 + mapCanvasPointToImage），供 recovery 阶段 0 NATIVE_ANCHOR
+      //   与阶段 4 IMAGE_INK（region→ink，仅几何不产 text）使用。
+      let anchorCandidates = null;
+      let inkResolver39 = null;
+      try {
+        const geo4 = ocrTarget && ocrTarget.geo;
+        const tG4 = (geo4 && geo4.aCoords && geo4.naturalWidth > 0 && geo4.naturalHeight > 0 && typeof buildImageTransform === "function" && typeof mapCanvasPointToImage === "function")
+          ? buildImageTransform({ naturalWidth: geo4.naturalWidth, naturalHeight: geo4.naturalHeight, width: geo4.width, height: geo4.height, aCoords: geo4.aCoords }) : null;
+        if (tG4) {
+          const inv4 = await bridgeCall("getTextInventory", 2500);
+          if (inv4 && inv4.ok && Array.isArray(inv4.items) && inv4.items.length) {
+            anchorCandidates = inv4.items.map(function (it) {
+              if (!it || !it.text || !it.center) return null;
+              const crect = { x: (it.left != null ? it.left : 0), y: (it.top != null ? it.top : 0), width: (it.width || 0), height: (it.height || 0) };
+              const cq = [{ x: crect.x, y: crect.y }, { x: crect.x + crect.width, y: crect.y }, { x: crect.x + crect.width, y: crect.y + crect.height }, { x: crect.x, y: crect.y + crect.height }];
+              const iq = cq.map(function (pt) { try { return mapCanvasPointToImage(pt, tG4); } catch (e) { return null; } }).filter(Boolean);
+              let imgRect = null;
+              if (iq.length === 4) { var xs = iq.map(function (q) { return q.x; }), ys = iq.map(function (q) { return q.y; }); imgRect = { x: Math.min.apply(null, xs), y: Math.min.apply(null, ys), width: Math.max.apply(null, xs) - Math.min.apply(null, xs), height: Math.max.apply(null, ys) - Math.min.apply(null, ys) }; }
+              return {
+                text: String(it.text), normalizedText: null,
+                center: it.center || null, yIndex: null,
+                width: (it.width != null ? it.width : null), height: (it.height != null ? it.height : null),
+                angle: (it.angle != null ? it.angle : null),
+                identity: { uuid: it.objectUuid || null },
+                geometry: imgRect ? { bbox: imgRect } : null,
+                imageRegion: imgRect
+              };
+            }).filter(Boolean).filter(function (a) { return a.geometry; });
+            if (!anchorCandidates.length) anchorCandidates = null;
+          }
+        }
+      } catch (eA) { anchorCandidates = null; ocrLog("TRUTH", "anchor-collect exception " + String(eA && eA.message || eA).slice(0, 120)); }
+      // ImageInk resolver（同步闭包）：deocded gray + anchor imageRegion → resolveInkGeometry；
+      //   无区域 / 无 gray → 明确 NO_ANCHOR_REGION（不猜位置）。
+      try {
+        if (anchorCandidates && img && img.dataUrl) {
+          const gray4 = await new Promise(function (resolve) {
+            const im4 = new Image();
+            im4.onload = function () { try { var cv4 = document.createElement("canvas"); cv4.width = im4.naturalWidth; cv4.height = im4.naturalHeight; var g4 = cv4.getContext("2d", { willReadFrequently: true }); g4.drawImage(im4, 0, 0); var d4 = g4.getImageData(0, 0, cv4.width, cv4.height); var out = new Uint8Array(cv4.width * cv4.height); for (var k = 0; k < out.length; k += 1) { var j4 = k * 4; out[k] = Math.round(0.299 * d4.data[j4] + 0.587 * d4.data[j4 + 1] + 0.114 * d4.data[j4 + 2]); } resolve({ gray: out, width: cv4.width, height: cv4.height }); } catch (e) { resolve(null); } };
+            im4.onerror = function () { resolve(null); };
+            im4.src = img.dataUrl;
+          });
+          if (gray4) {
+            inkResolver39 = function (n) {
+              if (typeof resolveInkGeometry !== "function") return { ok: false, reason: "NO_RESOLVER" };
+              var keyText = (n && n.rawText != null) ? String(n.rawText) : "";
+              var acSel = null;
+              if (anchorCandidates) {
+                var kn = function (s) { return String(s || "").toLowerCase().replace(/[\s\u3000\u00a0]+/g, "").replace(/[·•．。，，、；“”‘’（）【】［］：：-]/g, ""); };
+                var nk5 = kn(keyText);
+                if (nk5) acSel = anchorCandidates.find(function (a) { return a.text && kn(a.text) === nk5; }) || null;
+              }
+              if (!acSel || !acSel.imageRegion) return { ok: false, reason: "NO_ANCHOR_REGION" };
+              return resolveInkGeometry({ native: n, region: acSel.imageRegion, gray: gray4.gray, imageWidth: gray4.width, imageHeight: gray4.height });
+            };
+          }
+        }
+      } catch (eInk) { inkResolver39 = null; }
+
+      let recovery = null;
+      if ((matched.unmatchedNative || []).length > 0 && typeof recoverNativeGeometry === "function") {
+        const imgNW = (img && (img.naturalWidth || img.width)) || null;
+        const imgNH = (img && (img.naturalHeight || img.height)) || null;
+        recovery = recoverNativeGeometry(matched.unmatchedNative, {
+          lineCandidates: matched.unusedGeometry || [],      // 剩余 line 级候选（含 wordBoxes 展开）
+          occupiedGeometries: matched.matchedGeometry || [], // 已被 aligner 消费的几何
+          anchorCandidates: anchorCandidates || [],       // Commit 4.4：NATIVE_ANCHOR（首选；canvas→源图逆投影几何）
+          inkResolver: inkResolver39 || null,              // Commit 4.4：IMAGE_INK（末位；无区域不猜）
+          imageBounds: (imgNW && imgNH) ? { x: 0, y: 0, width: imgNW, height: imgNH } : null,
+          thresholds: { rowTol: 8 }
+        });
+        (recovery.recovered || []).forEach(function (rc) {
+          matched.matchedNative.push({ native: rc.native, geometry: rc.geometry, match: { score: rc.score, method: rc.source, factors: rc.evidence, recovery: true } });
+        });
+        matched.unmatchedNative = recovery.unresolved || [];
+        matched.gate = matched.gate || {};
+        matched.gate.matched = matched.matchedNative.length;
+        matched.gate.unmatchedNative = matched.unmatchedNative.length;
+        matched.gate.geometryRecovered = (recovery.recovered || []).length;
+        matched.gate.geometryRecoverySource = (recovery.recovered || []).map(function (rr) { return rr.source; });
+        matched.gate.geometryRecoveryRejected = (recovery.rejected || []).map(function (rj) { return { reason: rj.reason, of: rj.native && rj.native.rawText }; });
+        matched.recovery = recovery;
+      }
+      // OCR-P1 Commit 3b：LOCAL sidecar 第二段 —— 第一段(line/word)后仍 unresolved 且开关开启时
+      // 对同图跑本地识别拿 line 级几何补位（只提供 geometry；text 恒来自 Native）。
+      try { window.__zySidecarCond = { unmatched: (matched.unmatchedNative || []).length, flag: STAGE9_LOCAL_SIDECAR, fnSide: typeof runLocalGeometrySidecar === "function", fnRec: typeof recoverNativeGeometry === "function" }; } catch (e) {}
+            if ((matched.unmatchedNative || []).length > 0 && STAGE9_LOCAL_SIDECAR && typeof runLocalGeometrySidecar === "function" && typeof recoverNativeGeometry === "function") {
+      // entered 标记已迁移至 await 后
+                const localCands = await runLocalGeometrySidecar(img);
+        matched.gate = matched.gate || {};
+        if (localCands && localCands.length) {
+          const occ = (matched.matchedGeometry || []).map(function (og) { return { bbox: og.bbox }; });
+          if (recovery && Array.isArray(recovery.recovered)) recovery.recovered.forEach(function (rr) { occ.push({ bbox: rr.geometry && rr.geometry.bbox }); });
+          const rec2 = recoverNativeGeometry(matched.unmatchedNative, {
+            lineCandidates: [],                       // 第一阶段已尽力，不重复 BAIDU
+            localCandidates: localCands,              // LOCAL 级（第三优先）
+            occupiedGeometries: occ.filter(function (x) { return x && x.bbox; }),
+            imageBounds: ((img && (img.naturalWidth || img.width)) && (img.naturalHeight || img.height)) ? { x: 0, y: 0, width: img.naturalWidth || img.width, height: img.naturalHeight || img.height } : null,
+            thresholds: { rowTol: 8 }
+          });
+          (rec2.recovered || []).forEach(function (rc) {
+            matched.matchedNative.push({ native: rc.native, geometry: rc.geometry, match: { score: rc.score, method: rc.source, factors: rc.evidence, recovery: true } });
+          });
+          matched.unmatchedNative = rec2.unresolved || [];
+          matched.gate.matched = matched.matchedNative.length;
+          matched.gate.unmatchedNative = matched.unmatchedNative.length;
+          matched.gate.geometryRecovered = (matched.gate.geometryRecovered || 0) + (rec2.recovered || []).length;
+          matched.gate.geometryRecoverySource = [].concat(matched.gate.geometryRecoverySource || [], (rec2.recovered || []).map(function (rr) { return rr.source; }));
+          matched.gate.localSidecar = { used: true, candidates: localCands.length, recovered: (rec2.recovered || []).length }; try { window.__zySidecarCond = Object.assign({}, window.__zySidecarCond || {}, { branch: "if", localTexts: (localCands || []).map(function (lc) { return String(lc.text || "").slice(0, 24); }) }); } catch (e) {} // IF
+        } else {
+          try { window.__zySidecarCond = Object.assign({}, window.__zySidecarCond || {}, { branch: "else" }); } catch (e) {}
+          matched.gate.localSidecar = { used: true, candidates: (localCands || []).length, recovered: 0 };
+        }
+        ocrLog("TRUTH", "local-sidecar: candidates=" + ((localCands || []).length) + " recovered=" + ((matched.gate.localSidecar && matched.gate.localSidecar.recovered) || 0) + " unresolvedAfter=" + matched.unmatchedNative.length);
+      }
+
+      // 构造 kept block（text 恒 = native.rawText；geometry 取自匹配候选 —— P0.3-C Provider 不提供最终 text）
+      const kept = (matched.matchedNative || []).map(function (m) {
+        const g = m.geometry;
+        const raw = (g && g._raw) || (g && g.synthetic ? null : null) || null;
+        const bbox = (g && g.bbox) || (raw && raw.bbox) || null;
+        return Object.assign({}, raw || {}, {
+          text: m.native.rawText,
+          rawText: m.native.rawText,
+          textSource: "NATIVE_OCR",
+          textTruth: { nativeId: m.native.id != null ? m.native.id : null, order: m.native.order != null ? m.native.order : null, nativeRawText: m.native.rawText, geometryStatus: (g && g.synthetic) ? "GEOMETRY_SYNTHETIC_UNION" : "GEOMETRY_FROM_CANDIDATE", matchMethod: m.match && m.match.method },
+          bbox: bbox
+        });
+      });
+      const gate = {
+        totalNative: (native.texts || []).length,
+        totalBlocks: geoBlocks.length,
+        matched: (matched.matchedNative || []).length,
+        unmatchedNative: (matched.unmatchedNative || []).length,
+        matchedGeometry: (matched.matchedGeometry || []).length,
+        unusedGeometry: (matched.unusedGeometry || []).length,
+        oneToMany: matched.gate ? matched.gate.oneToMany : 0,
+        manyToOne: matched.gate ? matched.gate.manyToOne : 0,
+        allTextTruthValid: true,
+        localSidecar: (matched.gate && matched.gate.localSidecar) || null, // OCR-P1 Commit 3c.5：sidecar 诊断透传（否则报表 sidecarUsed=false）
+        geometryRecovered: (matched.gate && matched.gate.geometryRecovered) || 0,
+        geometryRecoverySource: (matched.gate && matched.gate.geometryRecoverySource) || [],
+        geometryRecoveryRejected: (matched.gate && matched.gate.geometryRecoveryRejected) || [],
+        failureCode: null
+      };
+      // Text Truth Gate：kept.text 必须 === native.rawText（历史语义保留）
+      if (typeof validateNativeText === "function") {
+        for (let gi = 0; gi < kept.length; gi += 1) {
+          const v = validateNativeText({ text: kept[gi].text, textSource: kept[gi].textSource }, { rawText: kept[gi].rawText });
+          if (!v.ok) { gate.allTextTruthValid = false; gate.failureCode = v.code; break; }
+        }
+      }
+      pipelineEvidence({ stage: "NATIVE", nativeLines: gate.totalNative, nativeMode: (native.meta && native.meta.modeUsed) || null, nativeFallback: !!(native.meta && native.meta.fallbackUsed), statusCode: (native.meta && native.meta.statusCode) || null, kept: gate.matched, nativeBlocks: gate.totalBlocks, unmatchedNative: gate.unmatchedNative, unusedGeometry: gate.unusedGeometry, oneToMany: gate.oneToMany, manyToOne: gate.manyToOne, fail: (!gate.matched) ? ((gate.allTextTruthValid) ? "NATIVE_UNMATCHED" : (gate.failureCode || "NATIVE_EMPTY")) : null });
+      ocrLog("TRUTH", "align native=" + gate.totalNative + " geo=" + gate.totalBlocks + " matched=" + gate.matched + " unmatchedNative=" + gate.unmatchedNative + " unusedGeo=" + gate.unusedGeometry + " 1:N=" + gate.oneToMany + " N:1=" + gate.manyToOne + " valid=" + gate.allTextTruthValid);
+      try { window.__zyNativeGateSummary = { totalNative: gate.totalNative, initialMatched: (window.__zyInitialGate && window.__zyInitialGate.matched) || 0, initialUnmatched: (window.__zyInitialGate && window.__zyInitialGate.unmatched) || 0, finalMatched: gate.matched, finalUnmatched: gate.unmatchedNative, missingTexts: ((matched.unmatchedNative || []).map(function (x) { return x && x.rawText != null ? String(x.rawText) : ""; }).filter(Boolean)), geometryRecovered: gate.geometryRecovered || 0, geometryRecoverySource: gate.geometryRecoverySource || [], localSidecar: gate.localSidecar || null }; } catch (e) {}
+      return { blocks: kept, mode: "NATIVE_TRUTH", native: native, matched: matched, gate: gate };
+    } catch (e) {
+      ocrLog("TRUTH", "exception " + String(e && (e.message || e) || "").slice(0, 160));
+      return { blocks: blocks || [], mode: "OFF", skipped: true };
+    }
+  }
+
+
+
+==== maybeApplyNativeTruth（test=0.3.11.88） ====
+async function maybeApplyNativeTruth(blocks, img, diag) {
+    if (!STAGE9_NATIVE_TRUTH) {
+      return { blocks: blocks || [], mode: "OFF", skipped: true }; // feature off：保留历史降级（Completeness Gate 不适用）
+    }
+    if (typeof alignNativeGeometry !== "function" || typeof evaluateCompleteness !== "function" || typeof recognizeWithFallback !== "function") {
+      ocrLog("TRUTH", "native dependencies missing (align/evaluate/recognize)");
+      return { blocks: [], mode: "OFF", skipped: true, reason: "dependency-missing", blocked: true };
+    }
+    try {
+      // OCR-P0.2：复用 runNativeTruth 已执行的第一主链结果；仅在直接进入（manual-local 等）时补执行
+      let native = (img && img._native) || null;
+      if (!native) {
+        if (typeof recognizeWithFallback !== "function") return { blocks: blocks || [], mode: "OFF", skipped: true };
+        try { native = await recognizeWithFallback(img.dataUrl, {
+          textType: "2", // OCR-P1 Commit 1：生产 Truth 固定 textType=2
+          pageId: (img && img.pageId) || null,
+          transactionId: (img && img.transactionId) || null,
+          imageFingerprint: (img && img.imageFingerprint) || null
+        }); img._native = native; } catch (eN) { native = null; }
+      }
+      if (!(native && native.ok)) {
+        const ncode = String((native && native.error && native.error.errorCode) || "?");
+        ocrLog("TRUTH", "native unavailable " + ncode + " -> block create (禁止其它 OCR text 进入画布)");
+        return { blocks: [], mode: "OFF", skipped: true, reason: "unavailable", blocked: true, nativeFailCode: ncode };
+      }
+      // OCR-P0.3-F（行级摊平）：aligner 按 Native 行配对行级几何；buildTextBlocks 合并块（多行）会
+      // 让几何槽位 < nativeLines（如 6 块 vs 10 行）→ 误配 INCOMPLETE。此处优先摊平 block.lines，
+      // 每行发布一个候选（仅几何 + 行文本匹配因子，不写 text truth）；无 lines 时回退整块。
+      const geoBlocks = [];
+      (blocks || []).forEach(function (b) {
+        if (!b || !b.bbox) return;
+        const lines = (Array.isArray(b.lines) && b.lines.length) ? b.lines : null;
+        if (lines) {
+          lines.forEach(function (ln, li) {
+            if (!ln || !ln.bbox) return;
+            geoBlocks.push({
+              text: ln.text != null ? String(ln.text) : null,
+              bbox: ln.bbox,
+              words: (ln.wordBoxes || ln.words) ? (ln.wordBoxes || ln.words) : null,
+              sourceProvider: b.sourceProvider || "BAIDU",
+              kind: "line",
+              lineIndex: li,
+              blockIndex: b.blockIndex != null ? b.blockIndex : null,
+              _raw: ln,
+              _block: b
+            });
+          });
+        } else {
+          geoBlocks.push({ text: b.text != null ? String(b.text) : null, bbox: b.bbox || null, words: (b.wordBoxes || b.words) ? (b.wordBoxes || b.words) : null, sourceProvider: b.sourceProvider || "BAIDU", kind: "line", _raw: b, _block: b });
+        }
+      });
+      const matched = alignNativeGeometry(native.texts || [], geoBlocks, {});
+      // OCR-P1 Commit 3c.1：真机 runner 用初始 aligner 快照（recovery 前）
+      try { window.__zyInitialGate = { matched: (matched.matchedNative || []).length, unmatched: (matched.unmatchedNative || []).length, totalNative: (matched.gate && matched.gate.totalNative) || 0 }; } catch (e) {}
+      // OCR-P1 Commit 2：Native Geometry Recovery —— aligner 未匹配的 Native 行沿搜索链
+      // 恢复 geometry（BAIDU LINE → BAIDU WORD；LOCAL/ANCHOR/INK 为后续 Commit）。
+      // 恢复产物并入 matchedNative（text 恒为 native.rawText），再交由 Completeness Gate。
+      // 硬规则：禁止固定间距/offset/居中/随机/multiplier 猜测；不可恢复 → 仍 INCOMPLETE/UNRESOLVED。
+      // OCR-P1 Commit 4.4：Native Anchor 候选（只读 getTextInventory，page-bridge 零改动）。
+      //   Anchor = 当前编辑页画布已有 textbox；identity=原生 uuid；几何 = canvas→源图逆投影
+      //   （buildImageTransform 仿射 + mapCanvasPointToImage），供 recovery 阶段 0 NATIVE_ANCHOR
+      //   与阶段 4 IMAGE_INK（region→ink，仅几何不产 text）使用。
+      let anchorCandidates = null;
+      let inkResolver39 = null;
+      try {
+        const geo4 = ocrTarget && ocrTarget.geo;
+        const tG4 = (geo4 && geo4.aCoords && geo4.naturalWidth > 0 && geo4.naturalHeight > 0 && typeof buildImageTransform === "function" && typeof mapCanvasPointToImage === "function")
+          ? buildImageTransform({ naturalWidth: geo4.naturalWidth, naturalHeight: geo4.naturalHeight, width: geo4.width, height: geo4.height, aCoords: geo4.aCoords }) : null;
+        if (tG4) {
+          const inv4 = await bridgeCall("getTextInventory", 2500);
+          if (inv4 && inv4.ok && Array.isArray(inv4.items) && inv4.items.length) {
+            anchorCandidates = inv4.items.map(function (it) {
+              if (!it || !it.text || !it.center) return null;
+              const crect = { x: (it.left != null ? it.left : 0), y: (it.top != null ? it.top : 0), width: (it.width || 0), height: (it.height || 0) };
+              const cq = [{ x: crect.x, y: crect.y }, { x: crect.x + crect.width, y: crect.y }, { x: crect.x + crect.width, y: crect.y + crect.height }, { x: crect.x, y: crect.y + crect.height }];
+              const iq = cq.map(function (pt) { try { return mapCanvasPointToImage(pt, tG4); } catch (e) { return null; } }).filter(Boolean);
+              let imgRect = null;
+              if (iq.length === 4) { var xs = iq.map(function (q) { return q.x; }), ys = iq.map(function (q) { return q.y; }); imgRect = { x: Math.min.apply(null, xs), y: Math.min.apply(null, ys), width: Math.max.apply(null, xs) - Math.min.apply(null, xs), height: Math.max.apply(null, ys) - Math.min.apply(null, ys) }; }
+              return {
+                text: String(it.text), normalizedText: null,
+                center: it.center || null, yIndex: null,
+                width: (it.width != null ? it.width : null), height: (it.height != null ? it.height : null),
+                angle: (it.angle != null ? it.angle : null),
+                identity: { uuid: it.objectUuid || null },
+                geometry: imgRect ? { bbox: imgRect } : null,
+                imageRegion: imgRect
+              };
+            }).filter(Boolean).filter(function (a) { return a.geometry; });
+            if (!anchorCandidates.length) anchorCandidates = null;
+          }
+        }
+      } catch (eA) { anchorCandidates = null; ocrLog("TRUTH", "anchor-collect exception " + String(eA && eA.message || eA).slice(0, 120)); }
+      // ImageInk resolver（同步闭包）：deocded gray + anchor imageRegion → resolveInkGeometry；
+      //   无区域 / 无 gray → 明确 NO_ANCHOR_REGION（不猜位置）。
+      try {
+        if (anchorCandidates && img && img.dataUrl) {
+          const gray4 = await new Promise(function (resolve) {
+            const im4 = new Image();
+            im4.onload = function () { try { var cv4 = document.createElement("canvas"); cv4.width = im4.naturalWidth; cv4.height = im4.naturalHeight; var g4 = cv4.getContext("2d", { willReadFrequently: true }); g4.drawImage(im4, 0, 0); var d4 = g4.getImageData(0, 0, cv4.width, cv4.height); var out = new Uint8Array(cv4.width * cv4.height); for (var k = 0; k < out.length; k += 1) { var j4 = k * 4; out[k] = Math.round(0.299 * d4.data[j4] + 0.587 * d4.data[j4 + 1] + 0.114 * d4.data[j4 + 2]); } resolve({ gray: out, width: cv4.width, height: cv4.height }); } catch (e) { resolve(null); } };
+            im4.onerror = function () { resolve(null); };
+            im4.src = img.dataUrl;
+          });
+          if (gray4) {
+            inkResolver39 = function (n) {
+              if (typeof resolveInkGeometry !== "function") return { ok: false, reason: "NO_RESOLVER" };
+              var keyText = (n && n.rawText != null) ? String(n.rawText) : "";
+              var acSel = null;
+              if (anchorCandidates) {
+                var kn = function (s) { return String(s || "").toLowerCase().replace(/[\s\u3000\u00a0]+/g, "").replace(/[·•．。，，、；“”‘’（）【】［］：：-]/g, ""); };
+                var nk5 = kn(keyText);
+                if (nk5) acSel = anchorCandidates.find(function (a) { return a.text && kn(a.text) === nk5; }) || null;
+              }
+              if (!acSel || !acSel.imageRegion) return { ok: false, reason: "NO_ANCHOR_REGION" };
+              return resolveInkGeometry({ native: n, region: acSel.imageRegion, gray: gray4.gray, imageWidth: gray4.width, imageHeight: gray4.height });
+            };
+          }
+        }
+      } catch (eInk) { inkResolver39 = null; }
+
+      let recovery = null;
+      if ((matched.unmatchedNative || []).length > 0 && typeof recoverNativeGeometry === "function") {
+        const imgNW = (img && (img.naturalWidth || img.width)) || null;
+        const imgNH = (img && (img.naturalHeight || img.height)) || null;
+        recovery = recoverNativeGeometry(matched.unmatchedNative, {
+          lineCandidates: matched.unusedGeometry || [],      // 剩余 line 级候选（含 wordBoxes 展开）
+          occupiedGeometries: matched.matchedGeometry || [], // 已被 aligner 消费的几何
+          anchorCandidates: anchorCandidates || [],       // Commit 4.4：NATIVE_ANCHOR（首选；canvas→源图逆投影几何）
+          inkResolver: inkResolver39 || null,              // Commit 4.4：IMAGE_INK（末位；无区域不猜）
+          imageBounds: (imgNW && imgNH) ? { x: 0, y: 0, width: imgNW, height: imgNH } : null,
+          thresholds: { rowTol: 8 }
+        });
+        (recovery.recovered || []).forEach(function (rc) {
+          matched.matchedNative.push({ native: rc.native, geometry: rc.geometry, match: { score: rc.score, method: rc.source, factors: rc.evidence, recovery: true } });
+        });
+        matched.unmatchedNative = recovery.unresolved || [];
+        matched.gate = matched.gate || {};
+        matched.gate.matched = matched.matchedNative.length;
+        matched.gate.unmatchedNative = matched.unmatchedNative.length;
+        matched.gate.geometryRecovered = (recovery.recovered || []).length;
+        matched.gate.geometryRecoverySource = (recovery.recovered || []).map(function (rr) { return rr.source; });
+        matched.gate.geometryRecoveryRejected = (recovery.rejected || []).map(function (rj) { return { reason: rj.reason, of: rj.native && rj.native.rawText }; });
+        matched.recovery = recovery;
+      }
+      // OCR-P1 Commit 3b：LOCAL sidecar 第二段 —— 第一段(line/word)后仍 unresolved 且开关开启时
+      // 对同图跑本地识别拿 line 级几何补位（只提供 geometry；text 恒来自 Native）。
+      // Stage 12：本地辅助决策（decideLocalAssist）——
+      //   auto 已配置云端 + 云端结果不全（native-unmatched）→ 默认触发本地补位（无需 zyStage9LocalSidecar）；
+      //   云端未返回结果/质量门失败已由 cloud-primary 失败路径整批换路，不在此分支；
+      //   manual 模式 → 决策 scope=none → 不触发（零额外开销）。
+      let localAssistScope = "none";
+      try {
+        const assistAllowed = STAGE9_LOCAL_SIDECAR || STAGE12_LOCAL_ASSIST; // 旧开关（强制开）或 Stage 12 默认开
+        const las = (assistAllowed && LOCAL_ASSIST_POLICY)
+          ? LOCAL_ASSIST_POLICY({
+            mode: getOcrMode(),
+            cloudRows: (blocks || []).length,                                   // 云端交付的几何行数（本函数拿到的几何块）
+            cloudQualityOk: true,                                               // 质量门失败已在 cloud-primary 路径整批换路
+            nativeTotal: (matched.gate && matched.gate.totalNative) || (native.texts || []).length,
+            nativeUnmatched: (matched.unmatchedNative || []).length
+          })
+          : null;
+        localAssistScope = (las && las.assist) ? (las.scope || "none") : "none";
+        if (las && las.assist) pipelineEvidence({ stage: "LOCAL_ASSIST", reason: las.reason || "native-unmatched", scope: las.scope, nativeTotal: (matched.gate && matched.gate.totalNative) || (native.texts || []).length, nativeUnmatched: (matched.unmatchedNative || []).length });
+      } catch (eLA) { localAssistScope = "none"; }
+      try { window.__zySidecarCond = Object.assign({}, window.__zySidecarCond || {}, { assistScope: localAssistScope, flag: STAGE9_LOCAL_SIDECAR, fnSide: typeof runLocalGeometrySidecar === "function", fnRec: typeof recoverNativeGeometry === "function" }); } catch (e) {}
+            if ((matched.unmatchedNative || []).length > 0 && localAssistScope !== "none" && typeof runLocalGeometrySidecar === "function" && typeof recoverNativeGeometry === "function") {
+      // entered 标记已迁移至 await 后
+                const localCands = await runLocalGeometrySidecar(img);
+        matched.gate = matched.gate || {};
+        if (localCands && localCands.length) {
+          const occ = (matched.matchedGeometry || []).map(function (og) { return { bbox: og.bbox }; });
+          if (recovery && Array.isArray(recovery.recovered)) recovery.recovered.forEach(function (rr) { occ.push({ bbox: rr.geometry && rr.geometry.bbox }); });
+          const rec2 = recoverNativeGeometry(matched.unmatchedNative, {
+            lineCandidates: [],                       // 第一阶段已尽力，不重复 BAIDU
+            localCandidates: localCands,              // LOCAL 级（第三优先）
+            occupiedGeometries: occ.filter(function (x) { return x && x.bbox; }),
+            imageBounds: ((img && (img.naturalWidth || img.width)) && (img.naturalHeight || img.height)) ? { x: 0, y: 0, width: img.naturalWidth || img.width, height: img.naturalHeight || img.height } : null,
+            thresholds: { rowTol: 8 }
+          });
+          (rec2.recovered || []).forEach(function (rc) {
+            matched.matchedNative.push({ native: rc.native, geometry: rc.geometry, match: { score: rc.score, method: rc.source, factors: rc.evidence, recovery: true } });
+          });
+          matched.unmatchedNative = rec2.unresolved || [];
+          matched.gate.matched = matched.matchedNative.length;
+          matched.gate.unmatchedNative = matched.unmatchedNative.length;
+          matched.gate.geometryRecovered = (matched.gate.geometryRecovered || 0) + (rec2.recovered || []).length;
+          matched.gate.geometryRecoverySource = [].concat(matched.gate.geometryRecoverySource || [], (rec2.recovered || []).map(function (rr) { return rr.source; }));
+          matched.gate.localSidecar = { used: true, candidates: localCands.length, recovered: (rec2.recovered || []).length }; try { window.__zySidecarCond = Object.assign({}, window.__zySidecarCond || {}, { branch: "if", localTexts: (localCands || []).map(function (lc) { return String(lc.text || "").slice(0, 24); }) }); } catch (e) {} // IF
+        } else {
+          try { window.__zySidecarCond = Object.assign({}, window.__zySidecarCond || {}, { branch: "else" }); } catch (e) {}
+          matched.gate.localSidecar = { used: true, candidates: (localCands || []).length, recovered: 0 };
+        }
+        ocrLog("TRUTH", "local-sidecar: candidates=" + ((localCands || []).length) + " recovered=" + ((matched.gate.localSidecar && matched.gate.localSidecar.recovered) || 0) + " unresolvedAfter=" + matched.unmatchedNative.length);
+      }
+
+      // 构造 kept block（text 恒 = native.rawText；geometry 取自匹配候选 —— P0.3-C Provider 不提供最终 text）
+      const kept = (matched.matchedNative || []).map(function (m) {
+        const g = m.geometry;
+        const raw = (g && g._raw) || (g && g.synthetic ? null : null) || null;
+        const bbox = (g && g.bbox) || (raw && raw.bbox) || null;
+        return Object.assign({}, raw || {}, {
+          text: m.native.rawText,
+          rawText: m.native.rawText,
+          textSource: "NATIVE_OCR",
+          textTruth: { nativeId: m.native.id != null ? m.native.id : null, order: m.native.order != null ? m.native.order : null, nativeRawText: m.native.rawText, geometryStatus: (g && g.synthetic) ? "GEOMETRY_SYNTHETIC_UNION" : "GEOMETRY_FROM_CANDIDATE", matchMethod: m.match && m.match.method },
+          bbox: bbox
+        });
+      });
+      const gate = {
+        totalNative: (native.texts || []).length,
+        totalBlocks: geoBlocks.length,
+        matched: (matched.matchedNative || []).length,
+        unmatchedNative: (matched.unmatchedNative || []).length,
+        matchedGeometry: (matched.matchedGeometry || []).length,
+        unusedGeometry: (matched.unusedGeometry || []).length,
+        oneToMany: matched.gate ? matched.gate.oneToMany : 0,
+        manyToOne: matched.gate ? matched.gate.manyToOne : 0,
+        allTextTruthValid: true,
+        localSidecar: (matched.gate && matched.gate.localSidecar) || null, // OCR-P1 Commit 3c.5：sidecar 诊断透传（否则报表 sidecarUsed=false）
+        geometryRecovered: (matched.gate && matched.gate.geometryRecovered) || 0,
+        geometryRecoverySource: (matched.gate && matched.gate.geometryRecoverySource) || [],
+        geometryRecoveryRejected: (matched.gate && matched.gate.geometryRecoveryRejected) || [],
+        failureCode: null
+      };
+      // Text Truth Gate：kept.text 必须 === native.rawText（历史语义保留）
+      if (typeof validateNativeText === "function") {
+        for (let gi = 0; gi < kept.length; gi += 1) {
+          const v = validateNativeText({ text: kept[gi].text, textSource: kept[gi].textSource }, { rawText: kept[gi].rawText });
+          if (!v.ok) { gate.allTextTruthValid = false; gate.failureCode = v.code; break; }
+        }
+      }
+      pipelineEvidence({ stage: "NATIVE", nativeLines: gate.totalNative, nativeMode: (native.meta && native.meta.modeUsed) || null, nativeFallback: !!(native.meta && native.meta.fallbackUsed), statusCode: (native.meta && native.meta.statusCode) || null, kept: gate.matched, nativeBlocks: gate.totalBlocks, unmatchedNative: gate.unmatchedNative, unusedGeometry: gate.unusedGeometry, oneToMany: gate.oneToMany, manyToOne: gate.manyToOne, fail: (!gate.matched) ? ((gate.allTextTruthValid) ? "NATIVE_UNMATCHED" : (gate.failureCode || "NATIVE_EMPTY")) : null });
+      ocrLog("TRUTH", "align native=" + gate.totalNative + " geo=" + gate.totalBlocks + " matched=" + gate.matched + " unmatchedNative=" + gate.unmatchedNative + " unusedGeo=" + gate.unusedGeometry + " 1:N=" + gate.oneToMany + " N:1=" + gate.manyToOne + " valid=" + gate.allTextTruthValid);
+      try { window.__zyNativeGateSummary = { totalNative: gate.totalNative, initialMatched: (window.__zyInitialGate && window.__zyInitialGate.matched) || 0, initialUnmatched: (window.__zyInitialGate && window.__zyInitialGate.unmatched) || 0, finalMatched: gate.matched, finalUnmatched: gate.unmatchedNative, missingTexts: ((matched.unmatchedNative || []).map(function (x) { return x && x.rawText != null ? String(x.rawText) : ""; }).filter(Boolean)), geometryRecovered: gate.geometryRecovered || 0, geometryRecoverySource: gate.geometryRecoverySource || [], localSidecar: gate.localSidecar || null }; } catch (e) {}
+      return { blocks: kept, mode: "NATIVE_TRUTH", native: native, matched: matched, gate: gate };
+    } catch (e) {
+      ocrLog("TRUTH", "exception " + String(e && (e.message || e) || "").slice(0, 160));
+      return { blocks: blocks || [], mode: "OFF", skipped: true };
+    }
+  }
+
+
+
+==== nativeTruthGatePassed/Fail（demo） ====
+function nativeTruthGatePassed(tb) {
+    if (!STAGE9_NATIVE_TRUTH) return true; // feature off：保留历史降级
+    if (typeof resolveGate === "function") { const _rg = resolveGate(tb, { allowPartial: true }); return !!(_rg && _rg.ok); } // OCR-P1 Commit 1+3a：纯模块统一判定（allowPartial=可靠行部分创建）
+    if (!tb || tb.blocked) return false;   // 兜底：unavailable / 依赖缺失 / 显式拦截
+    if (tb.gate && tb.gate.totalNative > 0) { // 兜底：Completeness 门禁（OCR-P1 3a 对齐 allowPartial）
+      const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
+      if (cg && cg.ok) return true;
+      // NATIVE_GEOMETRY_INCOMPLETE 但已有可靠行（matched>0）→ 放行可靠行部分创建（与 resolveGate allowPartial 一致）
+      if (cg && cg.code === "NATIVE_GEOMETRY_INCOMPLETE" && (cg.matched || 0) > 0) return true;
+      return false;
+    }
+    return false;                          // 兜底：无 Native 真值 → 无创建
+  }
+  function nativeTruthGateFail(tb) {
+    if (typeof resolveGate === "function") {
+      const rg = resolveGate(tb, { allowPartial: true }); // OCR-P1 Commit 3c：与 passed 同一 allowPartial（PARTIAL_OK 携缺失文字)
+      return { code: rg && rg.code, message: rg && rg.message, missingTexts: (rg && rg.missingTexts) || [] };
+    }
+    if (!tb) return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截（无结果），本批不创建", missingTexts: [] };
+    if (tb.blocked) {
+      if (tb.reason === "unavailable") return { code: "NATIVE_UNAVAILABLE", message: "Native OCR 不可用（" + String(tb.nativeFailCode || "?") + "），本批不创建（禁止用其它 OCR 文本进入画布）", missingTexts: [] };
+      if (tb.reason === "dependency-missing") return { code: "NATIVE_DEPENDENCY_MISSING", message: "Native Truth 依赖缺失，本批不创建", missingTexts: [] };
+      return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截，本批不创建", missingTexts: [] };
+    }
+    if (tb.gate && tb.gate.totalNative > 0) {
+      const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
+      // OCR-P1 Commit 4.5：兜底分支对齐 allowPartial —— INCOMPLETE 且可靠行 matched>0 时
+      // 放行可靠行创建并明确告知缺失文字（与 resolveGate({allowPartial:true}) 语义一致）。
+      if (cg && cg.code === "NATIVE_GEOMETRY_INCOMPLETE" && (cg.matched || 0) > 0) {
+        const missFb = (tb.matched && Array.isArray(tb.matched.unmatchedNative)) ? tb.matched.unmatchedNative.map(function (n) { return n && n.rawText != null ? String(n.rawText) : ""; }).filter(Boolean) : [];
+        return { code: "NATIVE_PARTIAL_OK", message: "Native 识别 " + (cg.totalNative || 0) + " 行，可定位 " + (cg.matched || 0) + " 行即将创建；缺失 " + (cg.unresolved || 0) + " 行文字不创建：" + (missFb.join("、") || "（无）"), missingTexts: missFb };
+      }
+      return { code: (cg && cg.code) || "NATIVE_GEOMETRY_INCOMPLETE", message: (cg && cg.message) || "几何不完整，本批不创建", missingTexts: [] };
+    }
+    return { code: "NATIVE_NO_TRUTH", message: "无 Native 文字真值，本批不创建", missingTexts: [] };
+  }
+
+
+==== nativeTruthGatePassed/Fail（test） ====
+function nativeTruthGatePassed(tb) {
+    if (!STAGE9_NATIVE_TRUTH) return true; // feature off：保留历史降级
+    if (typeof resolveGate === "function") { const _rg = resolveGate(tb, { allowPartial: true }); return !!(_rg && _rg.ok); } // OCR-P1 Commit 1+3a：纯模块统一判定（allowPartial=可靠行部分创建）
+    if (!tb || tb.blocked) return false;   // 兜底：unavailable / 依赖缺失 / 显式拦截
+    if (tb.gate && tb.gate.totalNative > 0) { // 兜底：Completeness 门禁（OCR-P1 3a 对齐 allowPartial）
+      const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
+      if (cg && cg.ok) return true;
+      // NATIVE_GEOMETRY_INCOMPLETE 但已有可靠行（matched>0）→ 放行可靠行部分创建（与 resolveGate allowPartial 一致）
+      if (cg && cg.code === "NATIVE_GEOMETRY_INCOMPLETE" && (cg.matched || 0) > 0) return true;
+      return false;
+    }
+    return false;                          // 兜底：无 Native 真值 → 无创建
+  }
+  function nativeTruthGateFail(tb) {
+    if (typeof resolveGate === "function") {
+      const rg = resolveGate(tb, { allowPartial: true }); // OCR-P1 Commit 3c：与 passed 同一 allowPartial（PARTIAL_OK 携缺失文字)
+      return { code: rg && rg.code, message: rg && rg.message, missingTexts: (rg && rg.missingTexts) || [] };
+    }
+    if (!tb) return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截（无结果），本批不创建", missingTexts: [] };
+    if (tb.blocked) {
+      if (tb.reason === "unavailable") return { code: "NATIVE_UNAVAILABLE", message: "Native OCR 不可用（" + String(tb.nativeFailCode || "?") + "），本批不创建（禁止用其它 OCR 文本进入画布）", missingTexts: [] };
+      if (tb.reason === "dependency-missing") return { code: "NATIVE_DEPENDENCY_MISSING", message: "Native Truth 依赖缺失，本批不创建", missingTexts: [] };
+      return { code: "NATIVE_TRUTH_BLOCKED", message: "Native Truth 门禁拦截，本批不创建", missingTexts: [] };
+    }
+    if (tb.gate && tb.gate.totalNative > 0) {
+      const cg = (typeof evaluateCompleteness === "function") ? evaluateCompleteness(tb.matched) : null;
+      // OCR-P1 Commit 4.5：兜底分支对齐 allowPartial —— INCOMPLETE 且可靠行 matched>0 时
+      // 放行可靠行创建并明确告知缺失文字（与 resolveGate({allowPartial:true}) 语义一致）。
+      if (cg && cg.code === "NATIVE_GEOMETRY_INCOMPLETE" && (cg.matched || 0) > 0) {
+        const missFb = (tb.matched && Array.isArray(tb.matched.unmatchedNative)) ? tb.matched.unmatchedNative.map(function (n) { return n && n.rawText != null ? String(n.rawText) : ""; }).filter(Boolean) : [];
+        return { code: "NATIVE_PARTIAL_OK", message: "Native 识别 " + (cg.totalNative || 0) + " 行，可定位 " + (cg.matched || 0) + " 行即将创建；缺失 " + (cg.unresolved || 0) + " 行文字不创建：" + (missFb.join("、") || "（无）"), missingTexts: missFb };
+      }
+      return { code: (cg && cg.code) || "NATIVE_GEOMETRY_INCOMPLETE", message: (cg && cg.message) || "几何不完整，本批不创建", missingTexts: [] };
+    }
+    // 输出 bug 修复（2026-09-24）：与纯模块同语义，禁止把「内部异常/识别 0 行」误报为「无真值」
+    if (tb.skipped === true && !tb.native) return { code: "NATIVE_TRUTH_PIPELINE_ERROR", message: "Native 文字真值流水线异常（内部错误或依赖未就绪，非“无真值”），本批不创建；请重试，若持续出现请反馈该提示。", missingTexts: [] };
+    if (tb.native && tb.native.ok === true) return { code: "NATIVE_EMPTY", message: "Native OCR 请求成功但未识别到文字（0 行），本批不创建。请确认图片内确有文字，并使用手写体真值通道（textType=2）；若刚更新脚本请刷新页面后重试。", missingTexts: [] };
+    return { code: "NATIVE_NO_TRUTH", message: "无 Native 文字真值，本批不创建", missingTexts: [] };
+  }

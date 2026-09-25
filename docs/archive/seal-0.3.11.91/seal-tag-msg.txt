@@ -1,0 +1,25 @@
+【封存】折立印名片套版助手 test 轨 0.3.11.91（P0-X 闭环）
+
+封存范围：仅内部开发轨 test = stage-9-altq-baidu-reconstruction = a3411f6；
+公开轨 demo 保持 69995db（0.3.11.74，未随本次推进，需另行授权才发布）。
+
+本阶段更改记录（自 0e2eca5 起，5 个提交，均已双推）：
+- f658849 0.3.11.90 阶段1 P0-0：本地 OCR 专用几何匹配规则 matchLocalGeometryOnly
+  （弱文字+唯一性硬门+占位约束）；开关 zyLocalMatchRule 默认 off（零行为变化）；
+  真机 46y 两轮 A/B 全绿（off->0 恢复 / geometry-only->1 恢复 score<=0.7 / 歧义->0 / 越界->0）。
+- e370feb 0.3.11.91 阶段2a P0-2：字号求解单一入口 zyPickFontSize
+  （优先 M5 zyFitFontSize，缺注入回退 zySolveFontSizeFusion 并标 @deprecated）；
+  smart 显式 minFontSize=10 保 [10,160]；v2 同源。
+- f9f5233 / 4fa8e45 / a3411f6 P0-X：46h 过期验收口径定位与收尾
+  （新契约「预览->确认套版」现代化 -> 点击后探针 -> 通配预览文案 + 终止文案扩充）；
+  真机 46h 3/3 用例、3 轮全绿（「AI 填充完成：更新 3 槽…」）；产品代码零改动。
+
+验证与纪律：
+- 全量回归 57/58（唯一失败为既有无关项 stage8d/text-fit-fusion）；
+- 每提交可 revert；产品默认行为零变化（新能力均在开关后）；
+- 双推非 force，三方 HEAD 一致，工作树干净，零未推送。
+
+已知遗留（下阶段队列）：
+- 阶段5：zyLocalMatchRule 默认转 geometry-only（需真机 A/B 达标后、经用户真机确认）；
+- 阶段2b 删 zySolveFontSizeFusion；阶段3 执行器合一 3->1；阶段4 zyNativeTruthStage 抽取；
+- 审计清单：P2 死代码清理（tesseract-loader.js 等）、page-bridge apply 协议 3->1。

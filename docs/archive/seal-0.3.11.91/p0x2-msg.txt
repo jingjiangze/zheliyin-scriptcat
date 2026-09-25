@@ -1,0 +1,6 @@
+test(46h): P0-X 加点击后探针（第1轮未命中探测点）
+
+- clickSmartFill 采集 面板/按钮/确认键可见性 + 点击瞬间状态，并写入 runRec.clickDiag。
+- 真机结果：clickDiag 未被记录（JSON 省略 -> lastClickDiag 未赋值）-> 探测点未被执行到，说明 C-MAIN 的实际驱动路径与探针插入点不同。
+- C-MAIN 仍 open：TEXT@1 未按原文逐字、status 为空。下一步：把探针下移到调用点与粘贴步骤（#zy-raw 写入后）逐点埋点，定位流程在哪一步停止。
+- C-NO_MATCH / C-EMPTY 保持绿；回归 57/58；仅测试改动不动脚本版本。

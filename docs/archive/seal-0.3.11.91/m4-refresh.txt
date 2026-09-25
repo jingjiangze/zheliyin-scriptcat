@@ -1,0 +1,53 @@
+  // ==== M4 可编辑匹配工作台：渲染（左=模板槽位[原模板只读/客户值可编辑]，右=客户文字块）====
+  function mwStatusCn(st) { return ({ matched: "AI 匹配", manual: "手动分配", edited: "手动编辑", unclear: "不确定", empty: "未匹配" })[st] || "未匹配"; }
+  function mwSyncPlan() {
+    if (!mw || !lastAiMatch) return;
+    const snap = mw.snapshot;
+    if (!snap) { lastAiMatch.commands = []; return; }
+    const plan = zyBuildApplyCommandPlan({ snapshot: snap, matches: zyWbRebuildMatches(mw) });
+    lastAiMatch.commands = plan.ok ? plan.commands.slice() : [];
+    lastAiMatch.planErrors = plan.ok ? null : plan.errors.slice(0, 3);
+  }
+  function refreshMatchBlock() {
+    const block = document.getElementById("zy-match-block");
+    const summaryEl = document.getElementById("zy-match-summary");
+    const rowsEl = document.getElementById("zy-match-rows");
+    const blocksEl = document.getElementById("zy-wb-blocks");
+    const unEl = document.getElementById("zy-wb-unmatched");
+    if (!block || !summaryEl || !rowsEl) return;
+    if (!mw) { block.style.display = "none"; return; }
+    block.style.display = "block";
+    const sm = zyWbSummary(mw);
+    const staleTag = (lastAiMatch && lastAiMatch.stale) ? "⚠ 版已切换，本匹配已失效（请重新匹配）｜ " : "";
+    const vTag = (mw.versionCount > 1) ? ("第 " + (mw.version + 1) + " 版 ｜ ") : "";
+    summaryEl.textContent = staleTag + vTag + "匹配工作台：已绑定 " + sm.matched + "/" + sm.slots + "（手动编辑 " + sm.edited + "）｜不确定 " + sm.unclear + "｜未匹配客户块 " + sm.unmatched;
+    rowsEl.innerHTML = mw.slots.map(function (s) {
+      const badgeCls = s.edited ? "edit" : (s.status === "unclear" ? "unclear" : (String(s.customerText).trim() ? "ok" : ""));
+      const others = mw.slots.filter(function (x) { return x.slotId !== s.slotId; });
+      return "<div class=\"zy-wb-row\" data-slot=\"" + escapeHtml(s.slotId) + "\">"
+        + "<div class=\"zy-wb-head\"><span class=\"zy-wb-sid\">" + escapeHtml(s.slotId) + "</span><span class=\"zy-wb-badge " + badgeCls + "\">" + mwStatusCn(s.status) + "</span></div>"
+        + "<div class=\"zy-wb-tpl\" title=\"原模板（只读）\">原模板：" + escapeHtml(s.templateText || "（空）") + "</div>"
+        + "<input class=\"zy-input zy-wb-cust\" data-cust=\"" + escapeHtml(s.slotId) + "\" value=\"" + escapeHtml(s.customerText) + "\" placeholder=\"客户值（留空 = 该槽不填）\">"
+        + "<div class=\"zy-wb-ops\">"
+        + "<button class=\"zy-btn secondary zy-wb-mini\" data-assign=\"" + escapeHtml(s.slotId) + "\" type=\"button\">分配所选块</button>"
+        + "<button class=\"zy-btn secondary zy-wb-mini\" data-unbind=\"" + escapeHtml(s.slotId) + "\" type=\"button\">解绑</button>"
+        + "<select class=\"zy-input zy-wb-mini\" data-swap=\"" + escapeHtml(s.slotId) + "\"><option value=\"\">交换…</option>"
+        + others.map(function (x) { return "<option value=\"" + escapeHtml(x.slotId) + "\">" + escapeHtml(x.slotId) + "</option>"; }).join("")
+        + "</select></div></div>";
+    }).join("");
+    if (blocksEl) {
+      blocksEl.innerHTML = mw.blocks.length ? mw.blocks.map(function (b) {
+        const sel = (mw.selectedBlockId === b.blockId) ? " sel" : "";
+        const st = b.boundSlotId ? ("→ " + b.boundSlotId) : (b.unmatchedReason ? "未匹配" : "未绑定");
+        return "<div class=\"zy-wb-chip" + sel + "\" data-block=\"" + escapeHtml(b.blockId) + "\"><span class=\"zy-wb-chip-id\">" + escapeHtml(b.blockId) + "</span><span class=\"zy-wb-chip-tx\">" + escapeHtml(String(b.text).slice(0, 40)) + "</span><span class=\"zy-wb-chip-st\">" + escapeHtml(st) + "</span></div>";
+      }).join("") : "<div class=\"zy-note\">无客户文字块（本地规则回退时可能为空）。</div>";
+    }
+    if (unEl) {
+      const uns = mw.blocks.filter(function (b) { return !b.boundSlotId; });
+      const unc = mw.uncertain.map(function (u) { return u.slotId + "：" + String(u.reason || "").slice(0, 36); });
+      const parts = [];
+      if (uns.length) parts.push("未匹配客户块：" + uns.map(function (b) { return b.blockId + " " + String(b.text).slice(0, 16); }).join(" ｜ "));
+      if (unc.length) parts.push("不确定槽位：" + unc.join(" ｜ "));
+      unEl.textContent = parts.length ? parts.join("\n") : "（全部已绑定）";
+    }
+  }

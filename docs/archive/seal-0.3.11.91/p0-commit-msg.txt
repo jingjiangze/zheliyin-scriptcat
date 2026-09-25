@@ -1,0 +1,30 @@
+Commit P0 (Stage 10-G P0, Credential Field Semantics): 消除 Chrome「要保存密码吗」弹窗 + 多版真机探测取证
+
+P0 — 凭据输入框表单语义修复（根因非猜测）：
+- 根因：面板 5 个凭据输入框均为 type="password" 且无 autocomplete → Chrome 密码管理器把邻近「二维码」
+  文本当用户名、把该字段当密码，任一提交/导航即弹「要保存密码吗」。
+- 修法：type="password" → type="text" + CSS -webkit-text-security: disc（视觉仍为圆点遮罩，值读写逻辑不变
+  仍走 .value），并加 autocomplete="off" / data-form-type="other" / spellcheck="false" / autocapitalize="off"。
+  面板内不再存在任何 password 字段 → 密码管理器不再触发保存提示。
+- 覆盖：zy-api-key / zy-baidu-ak / zy-baidu-sk（浮窗）+ zy-baidu-ak-native / zy-baidu-sk-native（原生抽屉），
+  共 5 处；静态校验 type="password" 残留 0。
+
+多版（MultiCanvas）真机探测取证（5 轮，P1 事实基础；结论存 runtime/reports/stage-11/multiversion-probe.json）：
+- totalCanvasArray 为扁平数组，每版占 2 个连续条目：[v1正面c0, v1背面c1, v2正面c2, v2背面c3, ...]；
+  第 vIdx 版第 side 面 canvas 索引 = 2*vIdx + (side==='back' ? 1 : 0)。
+- 版数来源 = .pageWrapMulti li 数量（真机 1=单版 / 2=多版）；CanvasObjVO.multiCanvas 真机恒为 true，无区分力
+  （证伪源码默认值推断）。
+- 当前版判定三源交叉：currentCanvasNum（1 基）↔ .pageWrapMulti .page-group.current 全局索引 ↔ li.currentLi 索引。
+- 开启多版操作序列（站点硬约束）：① 先点「背面」materialize c1（否则弹「开启多版前请先确认背面设计」）
+  ② 点当前版 li 内 a.copy-template（多版设计）③ #modleNum=依据第几版（必须 ≤ li 数，否则 layer.msg 拒绝且弹窗不关）
+  ④ #multiNum=本次新增版数 ⑤ 确定 → 异步渲染。
+- 切版 = 点击 .pageWrapMulti .page-group[canvasIdx]（点 li 本身无效）；切换后 currentCanvasNum / .page-group.current /
+  li.currentLi / 可见 .canvas-container 同步变化（仅当前面显示）。
+- DOM：多版下 .pageNum 文本变为「第N版正面/背面」；第 1 版 li class=currentLi 且删除按钮 del-first，
+  第 2 版起 class=otherLi 且 icon-del。
+- 风险定性：page-bridge findCanvasForSide() 硬编码 total[side==='back'?1:0] → 多版下恒取第 1 版；
+  单版（totalLen=2 → vIdx=0 → canvasIdx=0/1）行为与现状逐字一致，改造可保持向后兼容。
+
+回归：单测 33/33、runner selftest 11/11、release-audit dev-mode PASS、
+版本链一致性 PASS（40 @require 全 test 且 ?v 与 @version 一致）。
+版本链 0.3.11.75 → 0.3.11.76（userscript 42 处 + page-bridge stamp 2 处 + 12 个 stage9 runner BVER，共 67 处）。

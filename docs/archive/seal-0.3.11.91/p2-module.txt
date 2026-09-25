@@ -1,0 +1,127 @@
+  // ==== P2 多版套版（仅当前版）：版标识 / 切版跟切 / 填当前面·填正反面 ====
+  // 作用域硬约束：仅当前版（page-bridge templateApplyV2 校验 version == current.vIdx，跨版一律拒绝）。
+  // 切版跟切：轮询 getMultiVersionInfo（只读，不改画布）；版/面变化即刷新标识，并使已冻结匹配失效。
+  const MV_POLL_MS = 1500;
+  let mvTimer = null;
+  let mvLastKey = null;
+  let mvLayoutNow = null;
+  let mvStatusMsg = "";
+
+  function mvSideCn(side) { return side === "back" ? "背面" : "正面"; }
+  function mvVersionLabel(layout) {
+    if (!layout) return "读取中…";
+    const vc = layout.versionCount || 1;
+    const cur = layout.current || {};
+    const vIdx = (typeof cur.vIdx === "number") ? cur.vIdx : 0;
+    if (vc > 1) return "第 " + (vIdx + 1) + " 版 / 共 " + vc + " 版 ｜ 当前面：" + mvSideCn(cur.side);
+    return "单版 ｜ 当前面：" + mvSideCn(cur.side);
+  }
+  function mvCurrentVersion() {
+    const cur = mvLayoutNow && mvLayoutNow.current;
+    return (cur && typeof cur.vIdx === "number") ? cur.vIdx : 0;
+  }
+  function mvCurrentSide() {
+    const cur = mvLayoutNow && mvLayoutNow.current;
+    return (cur && cur.side) ? cur.side : "front";
+  }
+  function mvRenderInto() {
+    const el = document.getElementById("zy-mv-label");
+    if (el) el.textContent = mvVersionLabel(mvLayoutNow);
+    const st = document.getElementById("zy-mv-status");
+    if (st) st.textContent = mvStatusMsg || "作用范围：仅当前版（切版后自动跟随，需重新匹配）。";
+  }
+  function mvInvalidateMatch() {
+    if (!lastAiMatch) return;
+    const curV = mvCurrentVersion();
+    if (Number(lastAiMatch.version) !== Number(curV)) {
+      lastAiMatch.stale = true;
+      mvStatusMsg = "已切换到第 " + (curV + 1) + " 版；原匹配（第 " + (Number(lastAiMatch.version) + 1) + " 版）已失效，请重新「一键智能填充」。";
+    }
+  }
+  function mvOnLayout(layout) {
+    const key = layout ? (String(layout.versionCount) + "|" + String(layout.current && layout.current.vIdx) + "|" + String(layout.current && layout.current.side)) : "none";
+    if (key === mvLastKey) return;
+    mvLastKey = key;
+    mvLayoutNow = layout || null;
+    mvStatusMsg = "";
+    mvInvalidateMatch();
+    mvRenderInto();
+    refreshMatchBlock();
+  }
+  async function mvPoll() {
+    try {
+      const info = await bridgeCall("getMultiVersionInfo", 1200).catch(function () { return null; });
+      if (info && info.ok !== false) mvOnLayout({ ok: info.ok, code: info.code, multi: info.multi, versionCount: info.versionCount, totalLen: info.totalLen, current: info.current, conflicts: info.conflicts, hardConflicts: info.hardConflicts });
+    } catch (e) { /* 只读轮询失败不打断 UI */ }
+  }
+  function startVersionWatcher() { if (mvTimer) return; mvPoll(); mvTimer = setInterval(mvPoll, MV_POLL_MS); }
+  function stopVersionWatcher() { if (mvTimer) { clearInterval(mvTimer); mvTimer = null; } }
+
+  function mvMatchReady(label) {
+    if (!lastAiMatch) { setStatus("没有可填充的匹配结果，请先「一键智能填充」。"); return false; }
+    if (lastAiMatch.stale) { setStatus("版已切换，原匹配已失效，请重新「一键智能填充」后再" + (label || "填充") + "。"); return false; }
+    return true;
+  }
+  async function mvExecCommands(cmds, label) {
+    setBusy(true);
+    try {
+      const r = await bridgeCall("templateApplyV2", 25000, { commands: cmds, pageId: lastAiMatch.pageId, slotsCount: lastAiMatch.sideCounts || {}, planHash: lastAiMatch.planHash });
+      if (r && r.ok) {
+        setStatus(label + "完成：更新 " + (r.applied || []).length + " 槽（仅当前版，几何/字体/样式/身份/层序冻结，只改文字）。");
+        lastAiMatch = null; mvStatusMsg = ""; refreshMatchBlock(); mvRenderInto();
+      } else {
+        const errCode = (r && r.code) || "NO_REPLY";
+        const hint = (errCode === "VERSION_MISMATCH")
+          ? "指令版本与当前版不一致（可能已切换多版），请重新匹配后再试。"
+          : "快照已变化或画面不一致，请重新匹配后再试。";
+        setStatus(label + "被拦截（" + errCode + "）：" + hint);
+      }
+    } catch (e) {
+      setStatus(label + "执行失败：" + String(e && e.message ? e.message : e) + "（未修改画布）。");
+    } finally { setBusy(false); }
+  }
+  async function mvApplyCurrentSide() {
+    if (!mvMatchReady("填充")) return;
+    const side = mvCurrentSide();
+    const sel = zySelectCommands({ commands: lastAiMatch.commands, version: mvCurrentVersion(), side: side });
+    if (!sel.ok) { setStatus("填充被拦截（" + sel.errors[0] + "）：请重新匹配后重试。"); return; }
+    if (!sel.commands.length) { setStatus("当前面（" + mvSideCn(side) + "）没有可填充的槽位。"); return; }
+    await mvExecCommands(sel.commands, "填当前面（" + mvSideCn(side) + "）");
+  }
+  async function mvApplyBothSides() {
+    if (!mvMatchReady("填充")) return;
+    const sel = zySelectCommands({ commands: lastAiMatch.commands, version: mvCurrentVersion(), side: null });
+    if (!sel.ok) { setStatus("填充被拦截（" + sel.errors[0] + "）：请重新匹配后重试。"); return; }
+    if (!sel.commands.length) { setStatus("当前版没有可填充的槽位。"); return; }
+    await mvExecCommands(sel.commands, "填正反面");
+  }
+  function mvSettingsHtml() {
+    return `
+      <details class="zy-settings">
+        <summary>多版套版（仅当前版）</summary>
+        <div class="zy-settings-body">
+          <div class="zy-row">
+            <label class="zy-label">当前版</label>
+            <div class="zy-note" id="zy-mv-label">${escapeHtml(mvVersionLabel(mvLayoutNow))}</div>
+          </div>
+          <div class="zy-row">
+            <label class="zy-label" for="zy-mv-scope">作用范围</label>
+            <select class="zy-input" id="zy-mv-scope">
+              <option value="current" selected>仅当前版（切版跟切，需重新匹配）</option>
+            </select>
+          </div>
+          <div class="zy-actions two">
+            <button class="zy-btn" id="zy-mv-apply-current" type="button">填当前面</button>
+            <button class="zy-btn secondary" id="zy-mv-apply-both" type="button">填正反面</button>
+          </div>
+          <div class="zy-note" id="zy-mv-status">${escapeHtml(mvStatusMsg || "作用范围：仅当前版（切版后自动跟随，需重新匹配）。")}</div>
+        </div>
+      </details>`;
+  }
+  function bindMvControls(scope) {
+    if (!scope) return;
+    const cur = scope.querySelector("#zy-mv-apply-current");
+    if (cur) cur.addEventListener("click", mvApplyCurrentSide);
+    const both = scope.querySelector("#zy-mv-apply-both");
+    if (both) both.addEventListener("click", mvApplyBothSides);
+  }

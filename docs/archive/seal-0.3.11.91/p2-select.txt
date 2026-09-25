@@ -1,0 +1,17 @@
+// P2 多版套版：按「版 + 面」从已冻结指令中选取子集（仅当前版作用域；跨版指令一律拒绝且不入选）。
+// version=null 表示不按版过滤（通用工具）；side=null 表示不按面过滤。调用侧必须显式传当前版。
+function zySelectCommands(input) {
+  const o = input || {};
+  const commands = Array.isArray(o.commands) ? o.commands : [];
+  const wantVersion = zyIsNum(o.version) ? o.version : null;
+  const wantSide = (o.side === "front" || o.side === "back") ? o.side : null;
+  const errors = [];
+  const picked = [];
+  commands.forEach((c, i) => {
+    const cv = zyIsNum(c && c.version) ? c.version : 0;
+    if (wantVersion != null && cv !== wantVersion) { errors.push("SEL[" + i + "] VERSION_OUT_OF_SCOPE[" + cv + "!=" + wantVersion + "]"); return; }
+    if (wantSide && !(c && c.side === wantSide)) return;
+    picked.push(c);
+  });
+  return { ok: errors.length === 0, version: wantVersion, side: wantSide, commands: picked, errors: errors, summary: { total: commands.length, picked: picked.length, rejected: errors.length } };
+}

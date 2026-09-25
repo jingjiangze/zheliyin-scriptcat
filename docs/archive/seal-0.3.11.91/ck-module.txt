@@ -1,0 +1,102 @@
+  // ---- 用户需求（2026-09-24）：脚本设置自动定期更新原生网页文字识别会话 ----
+  // 语义：原生 OCR（/siteWeb/userCenterJsj/uploadOCR.do）认证 = 站点登录会话 Cookie，
+  //   由「当前页面同域请求」自动携带 —— 默认读取使用者本机浏览器 cookie，
+  //   不手工注入、不写死、不落盘 cookie 值。
+  //   本模块按设定间隔对同域 OCRTool.do 做一次轻量会话 touch（校验登录态，服务端滚动会话随之续期）；
+  //   若识别返回会话过期，立即触发一次刷新并提示重新登录。
+  const OCR_SESSION_URL = "/siteWeb/userCenterJsj/OCRTool.do";
+  const OCR_SESSION_AUTO_DEFAULT = "1";
+  const OCR_SESSION_INTERVAL_DEFAULT = "10";
+  const OCR_SESSION_LOGIN_MARKERS = ["window.open", "jsj/index.do", "login", "<html"];
+  const OCR_SESSION_INTERVALS = [5, 10, 15, 30];
+  let ocrSessionTimer = null;
+
+  function ocrSessionAutoOn() { return GM_getValue("zyOcrSessionAuto", OCR_SESSION_AUTO_DEFAULT) === "1"; }
+  function ocrSessionIntervalMin() {
+    const v = parseInt(GM_getValue("zyOcrSessionIntervalMin", OCR_SESSION_INTERVAL_DEFAULT), 10);
+    return (v >= 1 && v <= 120) ? v : parseInt(OCR_SESSION_INTERVAL_DEFAULT, 10);
+  }
+  function isOcrSessionLoginBody(body) {
+    const bn = String(body || "").toLowerCase();
+    return OCR_SESSION_LOGIN_MARKERS.some((m) => bn.indexOf(m) >= 0);
+  }
+  function setOcrSessionStatus(text) {
+    const t = String(text == null ? "" : text);
+    GM_setValue("zyOcrSessionLastStatus", t.slice(0, 200));
+    GM_setValue("zyOcrSessionLastAt", Date.now());
+    ["zy-ocr-session-status", "zy-ocr-session-status-native"].forEach((id) => {
+      const n = document.getElementById(id);
+      if (n) n.textContent = t;
+    });
+  }
+  // 同域 GET 自动携带使用者会话 Cookie（credentials:same-origin）；只读回执，不解析/不记录 cookie 值。
+  async function touchNativeOcrSession(trigger) {
+    const label = trigger ? "（" + trigger + "）" : "";
+    try {
+      const res = await fetch(OCR_SESSION_URL, { method: "GET", credentials: "same-origin", cache: "no-store", redirect: "follow" });
+      const body = await res.text();
+      if (res.status >= 400 || isOcrSessionLoginBody(body)) {
+        setOcrSessionStatus("识别会话可能已过期" + label + "：请在浏览器重新登录站点后重试。");
+        pipelineEvidence({ stage: "OCR_SESSION", ok: false, code: "NATIVE_SESSION_EXPIRED", httpStatus: res.status });
+        return { ok: false, code: "NATIVE_SESSION_EXPIRED" };
+      }
+      setOcrSessionStatus("会话正常（" + new Date().toLocaleTimeString() + label + "），来源：本机浏览器登录 Cookie。");
+      pipelineEvidence({ stage: "OCR_SESSION", ok: true, code: "SESSION_OK", httpStatus: res.status });
+      return { ok: true, code: "SESSION_OK" };
+    } catch (e) {
+      setOcrSessionStatus("会话刷新请求失败" + label + "：" + String(e && e.message || e).slice(0, 80));
+      pipelineEvidence({ stage: "OCR_SESSION", ok: false, code: "HTTP_FAILED", httpStatus: null });
+      return { ok: false, code: "HTTP_FAILED" };
+    }
+  }
+  function stopOcrSessionKeeper() { if (ocrSessionTimer) { clearInterval(ocrSessionTimer); ocrSessionTimer = null; } }
+  function startOcrSessionKeeper() {
+    stopOcrSessionKeeper();
+    if (!ocrSessionAutoOn()) { setOcrSessionStatus("已关闭自动更新（使用浏览器当前会话）。"); return; }
+    // 延迟首次 touch，避免与页面初始化/首次识别争抢
+    setTimeout(() => { if (ocrSessionAutoOn()) touchNativeOcrSession("启动"); }, 4000);
+    ocrSessionTimer = setInterval(() => { if (ocrSessionAutoOn()) touchNativeOcrSession("定时"); }, ocrSessionIntervalMin() * 60000);
+  }
+  function bindOcrSessionControls(scope, suffix) {
+    if (!scope) return;
+    const q = (id) => scope.querySelector("#" + id + (suffix || ""));
+    const autoSel = q("zy-ocr-session-auto");
+    if (autoSel) autoSel.addEventListener("change", () => {
+      GM_setValue("zyOcrSessionAuto", autoSel.value);
+      if (autoSel.value === "1") startOcrSessionKeeper();
+      else { stopOcrSessionKeeper(); setOcrSessionStatus("已关闭自动更新（使用浏览器当前会话）。"); }
+    });
+    const intSel = q("zy-ocr-session-interval");
+    if (intSel) intSel.addEventListener("change", () => {
+      GM_setValue("zyOcrSessionIntervalMin", intSel.value);
+      if (ocrSessionAutoOn()) startOcrSessionKeeper();
+    });
+    const refBtn = q("zy-ocr-session-refresh");
+    if (refBtn) refBtn.addEventListener("click", async () => { setOcrSessionStatus("正在刷新识别会话…"); await touchNativeOcrSession("手动"); });
+  }
+  function ocrSessionSettingsHtml(suffix) {
+    const s = suffix || "";
+    const iv = String(ocrSessionIntervalMin());
+    const opts = OCR_SESSION_INTERVALS.map((n) => "<option value=\"" + n + "\" " + (iv === String(n) ? "selected" : "") + ">" + n + " 分钟</option>").join("");
+    return `
+      <details class="zy-settings">
+        <summary>原生 OCR 会话（自动更新 Cookie）</summary>
+        <div class="zy-settings-body">
+          <div class="zy-row">
+            <label class="zy-label" for="zy-ocr-session-auto${s}">自动更新会话</label>
+            <select class="zy-input" id="zy-ocr-session-auto${s}">
+              <option value="1" ${ocrSessionAutoOn() ? "selected" : ""}>开启（默认，读取本机浏览器登录 Cookie）</option>
+              <option value="0" ${ocrSessionAutoOn() ? "" : "selected"}>关闭（仅用浏览器当前会话）</option>
+            </select>
+          </div>
+          <div class="zy-row">
+            <label class="zy-label" for="zy-ocr-session-interval${s}">刷新间隔</label>
+            <select class="zy-input" id="zy-ocr-session-interval${s}">${opts}</select>
+          </div>
+          <div class="zy-actions two">
+            <button class="zy-btn secondary" id="zy-ocr-session-refresh${s}" type="button">立即刷新</button>
+          </div>
+          <div class="zy-note" id="zy-ocr-session-status${s}">会话来源：本机浏览器当前登录 Cookie（同域自动携带，不写死、不落盘）。定期校验站点 OCR 工具页以续期会话。</div>
+        </div>
+      </details>`;
+  }

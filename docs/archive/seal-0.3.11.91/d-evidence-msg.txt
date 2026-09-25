@@ -1,0 +1,9 @@
+test(demo): demo 轨真机验收证据 0.3.11.74（46p A-J 十模板 ×3 轮 = 30/30 绿）
+
+- 对 demo 分支发布内容（0.3.11.74）执行 46p 真机验收：真实点击「一键智能填充」→「确认填充」
+- 30/30 轮全绿：冻结字段 objectUuid/layerNum/fontId/fontFamily/fontSize/fill/left/top/width/angle 0 fails
+- text 逐字正确；height 变化仅记 heightDeltas evidence（平台行为，不判 FAIL）
+- bridge bver 实测 0.3.11.74，与 @version 一致；AI 模型 Qwen/Qwen2.5-7B-Instruct；cookieSource=merged
+- 首跑 J r1 偶发 PREVIEW_NOT_DONE：AI 调用已发出但 90s 未回包（provider 超时 → 本地规则回退）；
+  J 单独复跑 3/3 全绿（matched 4/4/4），确认非版本缺陷。两次记录均保留在报告中（firstRun.flake）
+- 证据：runtime/reports/stage-11/commit-46p-demo-real-acceptance.json + commit-46p-demo-run.log

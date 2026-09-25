@@ -1,0 +1,12 @@
+release: promote 0.3.11.74 to demo (demo-only closure)
+
+- merge test (ce875f1) 以 test 内容为准（demo 分叉不可 ff，非破坏保留演示历史）
+- @require 全部回退 demo 分支（40 处 test→demo）+ @updateURL/@downloadURL 自洽（release-audit --branch demo PASS：allDemo=true, testReferences=0, allResolved=true）
+- 版本 0.3.11.74（与 test 轨一致）：L 阶 Template First / AI 槽位匹配（Commit L1-L8）
+  · TemplateSnapshot 严格正反隔离 + 槽位匹配协议与硬校验
+  · AI 槽位匹配预览 + 一键填充 UI（预览→确认填充/取消）
+  · Template Apply V2 执行内核：slotId 精确绑定、只改 text、几何/字体/样式/身份/层序全冻结
+  · Snapshot 并发防护（planHash 执行前现场重算比对）
+  · 复制图层文字三模式 current/both/template
+  · 无 key / AI 失败时本地规则匹配库回退（rule-match.js）
+- 真机验收：46p A-J 十模板 ×3 轮 = 30/30 全绿，冻结字段 0 fails，text 逐字正确

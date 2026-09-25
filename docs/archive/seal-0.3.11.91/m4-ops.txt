@@ -1,0 +1,71 @@
+  // ==== M4 工作台交互（点选分配 / 行内编辑 / 解绑 / 交换 / 重新 AI 匹配）====
+  function bindWorkbench(scope) {
+    if (!scope) return;
+    const rowsEl = scope.querySelector("#zy-match-rows");
+    if (rowsEl) {
+      rowsEl.addEventListener("click", function (e) {
+        const t = e.target; if (!t || !t.closest) return;
+        const asg = t.closest("[data-assign]");
+        if (asg) { mwDoAssign(asg.getAttribute("data-assign")); return; }
+        const unb = t.closest("[data-unbind]");
+        if (unb) { mwDoUnbind(unb.getAttribute("data-unbind")); return; }
+      });
+      rowsEl.addEventListener("change", function (e) {
+        const t = e.target; if (!t || !t.matches) return;
+        if (t.matches("select[data-swap]")) { const b = t.value; if (b) mwDoSwap(t.getAttribute("data-swap"), b); return; }
+        if (t.matches("input[data-cust]")) { mwDoEdit(t.getAttribute("data-cust"), t.value); }
+      });
+    }
+    const blocksEl = scope.querySelector("#zy-wb-blocks");
+    if (blocksEl) {
+      blocksEl.addEventListener("click", function (e) {
+        const t = e.target; if (!t || !t.closest || !mw) return;
+        const chip = t.closest("[data-block]");
+        if (!chip) return;
+        const bid = chip.getAttribute("data-block");
+        mw.selectedBlockId = (mw.selectedBlockId === bid) ? null : bid;
+        refreshMatchBlock();
+      });
+    }
+  }
+  function mwGuard() {
+    if (!mw) { setStatus("没有可编辑的匹配，请先「一键智能填充」。"); return false; }
+    if (lastAiMatch && lastAiMatch.stale) { setStatus("版已切换，本匹配已失效，请重新「一键智能填充」。"); return false; }
+    return true;
+  }
+  function mwAfterOp() { mwSyncPlan(); refreshMatchBlock(); }
+  function mwDoAssign(slotId) {
+    if (!mwGuard()) return;
+    if (!mw.selectedBlockId) { setStatus("请先在右侧「客户文字块」点选一个块，再点「分配所选块」。"); return; }
+    const r = zyWbAssign(mw, slotId, mw.selectedBlockId);
+    if (!r.ok) { setStatus("分配失败（" + r.code + "）。"); return; }
+    setStatus("已把客户块分配到 " + slotId + "（未修改画布；点「确认套版」才写入）。");
+    mw.selectedBlockId = null; mwAfterOp();
+  }
+  function mwDoUnbind(slotId) {
+    if (!mwGuard()) return;
+    const r = zyWbUnbind(mw, slotId);
+    if (!r.ok) { setStatus("解绑失败（" + r.code + "）。"); return; }
+    setStatus("已解绑 " + slotId + "（该槽确认套版时不写入）。");
+    mwAfterOp();
+  }
+  function mwDoSwap(a, b) {
+    if (!mwGuard()) return;
+    const r = zyWbSwap(mw, a, b);
+    if (!r.ok) { setStatus("交换失败（" + r.code + "）。"); return; }
+    setStatus("已交换 " + a + " ↔ " + b + "。");
+    mwAfterOp();
+  }
+  function mwDoEdit(slotId, text) {
+    if (!mwGuard()) return;
+    const r = zyWbAssignText(mw, slotId, text);
+    if (!r.ok) { setStatus("编辑失败（" + r.code + "）。"); return; }
+    setStatus("已手动编辑 " + slotId + "（标记 MANUAL_EDIT，已断开逐字来源）。");
+    mwAfterOp();
+  }
+  function mwRematch() {
+    const panel = document.getElementById("zy-card-assistant");
+    const raw = panel && panel.querySelector("#zy-raw") ? panel.querySelector("#zy-raw").value : "";
+    if (!String(raw || "").trim()) { setStatus("请先粘贴客户文字。"); return; }
+    contentApplyFromPanel();
+  }

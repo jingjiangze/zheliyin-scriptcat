@@ -1,0 +1,6 @@
+test(P0): 凭据字段语义修复真机验证证据（面板内 password 字段 0；剩余 4 个为站点隐藏登录表单）
+
+- 浮窗 3 处验证通过：type=text / .zy-secret / autocomplete=off / data-form-type=other / -webkit-text-security: disc / 可写可读可还原
+- 注入脚本后全页 input[type=password] = 4，全部属站点自身隐藏登录注册表单（div.login-tab > form.register-area，visible:false），本脚本面板内为 0
+- 面板功能未回归：粘贴框可写、一键智能填充按钮可见
+- 原生抽屉 2 处因当前为浮窗模式未挂载（OCR-only 模式才渲染），同模式代码改动 + 静态校验 type=password 残留 0

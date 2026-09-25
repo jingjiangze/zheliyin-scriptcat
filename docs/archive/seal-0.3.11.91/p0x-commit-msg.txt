@@ -1,0 +1,19 @@
+test(46h): 现代化内容相似套版验收到新契约（预览→确认套版）P0-X 部分完成
+
+背景（P0-X 定位结论）：46h 的前提（一次点击即改画布 + 文案「正面更新 N 槽」）已被 M2/M4 之后的新契约取代 ——
+「一键智能填充」(#zy-smart-fill) 现由 contentApplyFromPanel 转调 aiTemplateSlotMatch（AI 槽位匹配【预览】），
+需再点「确认套版」(#zy-apply-confirm) 才写画布；原 templateApplySmart 协议已无 UI 入口。故 46h 属过期验收口径，
+非产品回归（已用 0.90 基线复跑逐字相同失败佐证）。
+
+本次改动（仅 runner，不改产品代码/不动脚本版本，故 46h 报告版本仍与 HEAD 0.3.11.91 一致）：
+- waitApplyDone 升级为「等待 + 驱动」：识别预览文案后自动点 #zy-apply-confirm；完成文案兼容新旧两种。
+- 状态计数断言放宽为 (正面更新|更新) N 槽，且仅在 expectApplied>0 时强制（0 用例以画布断言为准）。
+- 字号下界按 M5 契约放宽为 [8,160]（min=max(8,0.6*base)）。
+- 头部加 SUPERSEDED 说明，保留原断言核心（原文逐字 / 不新建 / lineHeight·charSpacing 冻结）。
+
+真机结果（0.3.11.91，3 轮）：
+- C-NO_MATCH 通过（原失败）；
+- C-EMPTY 通过（原失败）；
+- C-MAIN 仍失败：TEXT@1 未变为原文逐字且 status 为空 → 定位为「点击后未产生任何预览状态文本 → 驱动未生效」，
+  下一步需在 runner 内加点击后探针（__zyOcrPipelineEvidence / panel 存在性 / 按钮 offsetParent）再判定是
+  AI 预览前置条件未满足（如 API Key 未生效/网络）还是按钮不可点。P0-X 保持 open（仅 C-MAIN 一项）。

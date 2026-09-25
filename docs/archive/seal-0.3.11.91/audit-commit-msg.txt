@@ -1,0 +1,35 @@
+fix(ocr): 修复「Native 文字真值流水线异常」——几何恢复/本地辅助层非致命化 + 异常文本透出 @0.3.11.89
+
+用户反馈（test 轨）：出现「Native 文字真值流水线异常（内部错误或依赖未就绪，非“无真值”），本批不创建」，
+而 demo 轨 Native 文字可用。按用户要求对比代码并审计修复。
+
+审计结论（代码对比 demo=0.3.11.74 vs test=0.3.11.88）：
+- 两分支 maybeApplyNativeTruth 仅差一处：Stage 12「本地辅助」块（含 decideLocalAssist 决策 + 本地 sidecar + 二次几何恢复）。
+- 默认值相反：demo 走 STAGE9_LOCAL_SIDECAR（默认关）→ 该 if 分支主体从未执行；
+  test 走 STAGE12_LOCAL_ASSIST（zyLocalAssist 默认 "1" 开）→ 分支首次真正执行。
+- 该分支主体（两分支逐字相同）中 recoverNativeGeometry / runLocalGeometrySidecar 调用无 try 防护，
+  任一抛出即冒泡至 maybeApplyNativeTruth 外层 catch → 被归类为「流水线异常」并整批拒绝创建。
+
+修复（不改判定语义、不产生任何几何猜测）：
+- 新增 safeRecoverNativeGeometry / safeRunLocalGeometrySidecar 两个非致命包装：
+  失败返回中性结果（recovered:[], unresolved=原样 / []）并写 pipelineEvidence + 日志，绝不中断识别；
+  对齐 Stage 12 文档既定契约「本地为末端，绝不中断识别」。
+- 两处 recoverNativeGeometry 与一处 sidecar 调用改用安全包装（原始调用仅剩包装内部一次）。
+- 流水线异常时把真实异常文本透出：返回 reason="pipeline-error" + pipelineError；
+  resolveGate 与 userscript 兜底镜像据此输出「内部错误：<msg>」，并区分「依赖未就绪」与「内部错误」。
+- 新增 ?zydebug 出口（maybeApplyNativeTruth / nativeTruthGateFail / safeRunLocalGeometrySidecar /
+  safeRecoverNativeGeometry 等），供真机直接驱动与取证。
+
+验证：
+- 门禁测试 native-gate-every-path 新增 G5（pipeline-error 必须透出内部异常文本）→ 15/15 全绿。
+- 真机验收 runtime/stage9/commit-46x-native-truth-resilience-real.js（两个 round：assist 开 / 关）errors=[]：
+  · 合成流水线 mode=NATIVE_TRUTH、skipped=false、totalNative=2、blocks 文本来源 NATIVE_OCR（逐字）；
+  · 门禁给出精确结论 NATIVE_PARTIAL_OK（可定位 1 行创建，缺失 1 行如实告知），非「流水线异常」；
+  · 零几何块场景（全部未匹配）仍 mode=NATIVE_TRUTH、零异常，门禁给出 NATIVE_GEOMETRY_UNRESOLVED（精确 STOP）；
+  · 控制台零 [TRUTH] exception；
+  · 直接调用包装：safeRecoverNativeGeometry(null,{}) 返回中性对象不抛；safeRunLocalGeometrySidecar(无效图) resolve 为数组不 reject。
+- 本地回归 56/57（唯一失败为既有无关项 stage8d/text-fit-fusion）。
+
+说明：本机真机环境无有效站点 OCR 会话，无法复现用户侧的具体抛出点；因此本次为「根因收敛 + 防御性保证」，
+并让任何后续异常都能在 UI 直接显示真实原因。若仍出现该提示，请把新提示中的「内部错误：…」文本反馈。
+版本 bump 0.3.11.88 -> 0.3.11.89（RULE-18）。

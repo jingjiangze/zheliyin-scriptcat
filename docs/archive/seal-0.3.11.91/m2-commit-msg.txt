@@ -1,0 +1,50 @@
+Commit M2 (Stage 10-G L 阶 M2, AI Match Prompt V2 + Validator V2): 正反面填充修复（按面调用两层协议）+ 完整性/侧向/语义硬校验
+
+背景（真机 46q 定位，非猜测）：
+- 46p case D 实测 backExists=false → 反面填充路径从未被真机验证；新增 46q 先经 UI「背面」页入口
+  materialize 第二画布（该产品 totalCanvasArray 初始仅 1 页，反面懒创建），再跑双侧注入+确认填充。
+- 首轮 46q：机制全通（反面画布 materialize / 双侧注入 / back.exists=true / 双侧冻结 0 fails），
+  但 AI 只匹配 4/7 且全为正面，反面 3 槽 0 匹配、unmatchedCustomer 为空 → 反面内容被静默丢弃。
+- 逐项排除（均有原始记录）：补规则 / 置顶分步指令 / 改 back 输入说明 / JSON 示例加 back → 仍 4/7；
+  payload 瘦身 1183→1127 prompt tokens → 仍 4/7；max_tokens 4096 → 仍 356 completion、finish=stop（非截断）；
+  极简 prompt 单次调用 → 7/7（模型看得见 back）。结论：Qwen2.5-7B 在「单次调用处理两面+两层输出」下确定性只处理第一面。
+
+方案（用户选定「按文档 M2 全量重写」；仅 test 轨，暂不发 demo）：
+- 保留文档 M2 的两层协议：AI 先拆块 customerBlocks[{blockId,lineNo,text,type}]，再按 blockId 匹配
+  matches[{slotId,blockId,confidence,reason}]；customerText 一律由本地从 blockId 回填，模型不直接决定写入画布的文字。
+- 偏离文档的一点并附证据：改为「按面调用」而非单次调用 —— 每次只给该面槽位与该面客户行，
+  side 由 zySplitCustomerLines 本地确定性判定（不交给模型）。结构上不存在整面跳过与串面空间。
+  实测 front 4/4 + back 3/3 = 7/7。
+
+template-match-plan.js V2：
+- zySplitCustomerLines / zyCustomerContentLines / zySideLines：本地确定性正反面分段（正面：/反面：/背面：，无标记全前）
+- zySlotContextOf / zySideSlots：槽位上下文（templateText/fontSize/layerNum/x/y/w/h）
+- zyTemplateMatchSidePrompt / zySnapshotToAiInput / zyBuildTemplateMatchMessages：单面 prompt 与输入（含标签约定铁律）
+- zyNormalizePlanShape（V2 形状）/ zyMergeSideMatches（front 组在前、组内 slotIdx 升序）
+
+template-match-validator.js V2（blockId 回填 + 六类硬校验）：
+- Schema/逐字：blockId 唯一、lineNo 命中非标记行、block.text 逐字来自该行、matches 的 slotId/blockId 必须真实存在
+- 侧向硬门禁：block.side（本地真值）必须等于槽位 side；expectSide 越界 → SIDE_OUT_OF_SCOPE
+- 全局一对一：槽位与块双向去重
+- 语义一致性：类型族归并（phone-generic/mobile/landline 同族），跨族强冲突 → uncertain，同族差异 → 仅 warning
+- 完整性：所有块必须交代，未交代 → NOT_ACCOUNTED_BY_AI 显式列未匹配 + warning + 计数（严禁静默丢弃）
+- 标签规范化 zyNormalizeLabeledText：随模板标签约定（模板有标签则补/留标签，模板无标签则去标签）
+- refined.matches 形状与 template-apply-v2.zyBuildApplyCommandPlan 完全兼容（执行层未改动）
+
+userscript：
+- aiTemplateSlotMatch 改为按面循环（front→back），逐面 try/catch 隔离（单面失败不丢另一面结果）
+- 状态摘要含「语义校验 N」、逐面「槽/行/匹配」、未交代告警、校验拦截明细
+- setStatus 行数上限 8→16（原 8 行窗口会把完成标志句挤出，导致断言取不到；状态区本已限高可滚动）
+- refreshMatchBlock 摘要增加语义校验计数
+
+验收（全绿）：
+- 46q 正反面 12/12 轮：FB1 front4+back3 / FB2 front3+back3 / FB3 反面 0 填充（侧向隔离成立）/
+  FB4 反面空槽不误填；双侧冻结字段 0 fails
+- 46p A-J 30/30 轮：A5 B6 C3 D5 E4 F4 G3 H4 I4 J4（均 ≥ V1 基线：A 4→5、D 4/5→5、F 3→4），冻结 0 fails
+- 单测：新增 template-match-v2.test.js 12 组（分段/单面输入/单面 prompt/解析合并/合格计划/blockId 回填/
+  结构性拒绝 13 项/完整性/透传/语义与置信/类型族/标签规范化）；全量 33/33 PASS
+- runner selftest 11/11、release-audit dev-mode PASS、版本链 0.3.11.75（40 @require 全 test 且 ?v 一致）
+- 偶发（均单独复跑 3/3 全绿，记录在 commit-46m2-evidence.json.flakeAccepted）：两次真机导航中断 ERR_ABORTED
+
+版本链 0.3.11.74 → 0.3.11.75（userscript 42 处含 @version/VERSION/@require?v= + page-bridge stamp +
+12 个 stage9 runner BVER，共 67 处）

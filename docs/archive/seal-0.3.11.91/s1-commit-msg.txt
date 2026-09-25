@@ -1,0 +1,31 @@
+feat(ocr): 阶段1 P0-0 本地 OCR 专用几何匹配规则（默认关，可回滚）@0.3.11.90
+
+用户反馈：本地 OCR 与 Native 文字真值差距大 → 不创建；应设置本地匹配规则。
+
+再审结论（仓库复审 + 代码复核）：
+- 远端无新提交（origin/test = origin/stage = 0e2eca5 = 本地），方案与实现基线一致。
+- SOURCE_LOCAL 阶段其实「早已存在」（native-geometry-recovery 阶段 3），但照抄了 BAIDU 的硬门槛
+  `if (lsim < T.minSim) continue`（minSim 默认 0.8），代码注释亦自认「LOCAL 文本精度低于 Baidu/native，
+  匹配同门槛」。手写体真值（textType=2）与本地印刷体识别串天然 sim 很低 → 本地几何 100% 被跳过
+  → Completeness Gate 判 UNRESOLVED/INCOMPLETE → 本批不创建。这就是机制级根因。
+
+本次实现（阶段1）：
+- 新增 matchLocalGeometryOnly()：本地专用规则（弱文字 + 唯一性），只在 ctx.localRule === "geometry-only" 时启用。
+  L2 几何硬门沿用 gateCheck（INVALID/TOO_SMALL/ASPECT/OVERLAP/OUTSIDE 一项不过即淘汰）；
+  L5 禁用已被消费几何（occupied）；
+  L6 文字降权为弱因子（sim 不再设硬门；sim>=0.8 仍加分，保留既有高分路径）；
+  L4 唯一性硬门：最优弱分 - 次优弱分 < localMargin(默认 0.2) 且最优非高相似 → NONE（宁缺勿滥）；
+  L7 结果记为 LOCAL_GEOMETRY_ONLY、score 上限 0.7、evidence 携 rule/text-sim/len/type/uniq-gap。
+- 阶段 3 改为 if(off)/else(原逻辑) 分支：**默认路径逐字不变**（可回滚、零行为变化）。
+- userscript 新增开关 zyLocalMatchRule（默认 "off"）+ 两处 recover 调用点透传 localRule。
+- 红线未动：本地只提供 geometry；textbox.text 恒为 native.rawText。
+
+验证：
+- 新单测 runtime/stage9/local-geometry-match.test.js 6/6：off 严格拒、geometry-only 恢复并合规、
+  歧义必拒、高相似优先、几何硬门不放宽、已占用不复用。
+- 真机 A/B（commit-46y，2 轮 errors=[]）：off → recovered=0；geometry-only → recovered=1、
+  source=LOCAL、method=LOCAL_GEOMETRY_ONLY、score=0.52(<=0.7)；歧义 → 0；越界 → 0。
+- 全量回归 57/58（唯一失败为既有无关项 stage8d/text-fit-fusion）。
+- 版本 bump 0.3.11.89 -> 0.3.11.90（RULE-18）。
+
+回滚：git revert 本提交即恢复默认行为（开关默认 off，且 off 分支为原逻辑）。

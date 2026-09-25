@@ -1,0 +1,16 @@
+refactor(apply): 阶段2a P0-2 字号求解单一入口 zyPickFontSize @0.3.11.91
+
+- page-bridge 新增 zyPickFontSize()：优先使用 M5 单一来源 zyFitFontSize（page 世界由 installPageBridge 注入），
+  仅当注入缺失时回退历史 zySolveFontSizeFusion；后者标注 @deprecated（阶段 2b 真机确认后删除）。
+- smart 路径改用单一入口并显式传 minFontSize=10 —— 保持其既有 [10,160] 字号契约；因 targetW 取自
+  setObjectText 之后的 bbox，Fit 在 base 下判 FITS（≈无行为变更）。
+- v2 路径改用同一入口（不传 minFontSize -> Fit 默认 0.6*base），与 M5 行为逐字一致。
+
+验证：
+- 单测 template-text-fit 9/9；46v / 46h selftest 全绿；全量回归 57/58（唯一失败为既有无关项 stage8d/text-fit-fusion）。
+- 真机责任归属核查（重要）：46h（内容相似智能套版）在 0.91 出现 3 轮断言失败；为判定是否本阶段引入，
+  以 git stash 隔离本阶段改动回到 0.90 基线重跑 46h，结果【逐字相同失败】-> 判定为【既有回归，与本阶段无关】。
+  该失败报告已丢弃（不把失败当验收证据），既有回归转入下一阶段专项（P0-X：bisect 0.66->0.90 区间智能套版链路）。
+- 版本 bump 0.3.11.90 -> 0.3.11.91（RULE-18）。
+
+回滚：git revert 本提交（zySolveFontSizeFusion 仍在，回退即恢复 Fusion 调用路径）。
