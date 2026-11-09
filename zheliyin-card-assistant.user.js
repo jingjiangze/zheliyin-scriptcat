@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         折立印名片套版助手
 // @namespace    https://github.com/jingjiangze/zheliyin-scriptcat
+// @license      GPL-3.0-or-later
 // @version      0.3.0.0
 // @description  在 diy.zheliyin.com 设计器里识别客户名片资料，优先填入当前模板已有文字图层，缺少图层时再按原样式补充。
 // @author       jingjiangze
